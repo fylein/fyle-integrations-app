@@ -14,7 +14,6 @@ describe('RedirectComponent', () => {
 
     fixture = TestBed.createComponent(RedirectComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should create', () => {
