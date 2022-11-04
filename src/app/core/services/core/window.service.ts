@@ -6,4 +6,12 @@ import { Injectable } from '@angular/core';
 export class WindowService {
 
   constructor() { }
+
+  get nativeWindow(): Window {
+    return window;
+  }
+
+  redirect(url: string): void {
+    this.nativeWindow.location.href = url;
+  }
 }
