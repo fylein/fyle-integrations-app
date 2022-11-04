@@ -5,6 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// External Libraries
+import { IconSpriteModule } from 'ng-svg-icon-sprite';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -12,7 +15,8 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   providers: [],
   bootstrap: [AppComponent]
