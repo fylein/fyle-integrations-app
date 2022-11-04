@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+    @apply tw-h-[100%];
+}
+
+body {
+    @apply tw-m-0-px tw-text-normal-text-color tw-font-aktiv-grotesk tw-text-16-px;
+}
+
+p {
+    @apply tw-m-0-px;
+}
