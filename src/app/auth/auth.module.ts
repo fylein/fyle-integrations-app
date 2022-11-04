@@ -5,6 +5,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { RedirectComponent } from './redirect/redirect.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { RedirectComponent } from './redirect/redirect.component';
   ],
   imports: [
     CommonModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule
   ]
 })
 export class AuthModule { }
