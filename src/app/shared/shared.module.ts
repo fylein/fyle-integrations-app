@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/core/loader/loader.component';
 import { AppHeaderComponent } from './components/apps/app-header/app-header.component';
 
+// External Libraries
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -11,7 +13,11 @@ import { AppHeaderComponent } from './components/apps/app-header/app-header.comp
     AppHeaderComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ProgressSpinnerModule
+  ],
+  exports: [
+    LoaderComponent
   ]
 })
 export class SharedModule { }
