@@ -25,12 +25,22 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/fyle-integrations-settings-app'),
+      dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
       reporters: [
         { type: 'html' },
-        { type: 'text-summary' }
-      ]
+        { type: 'text-summary' },
+        { type: 'lcovonly'},
+        { type: 'json-summary' }
+      ],
+      check: {
+        global: {
+          statements: 10,
+          branches: 10,
+          functions: 10,
+          lines: 10
+        }
+      }
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
