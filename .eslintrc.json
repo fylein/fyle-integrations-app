@@ -1,0 +1,130 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": ["Page", "Component"]
+          }
+        ],
+        "@typescript-eslint/naming-convention": [
+          "off",
+          {
+            "selector": "variable",
+            "format": ["camelCase"]
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app"
+          }
+        ],
+        "indent": "off",
+        "semi": "error",
+        "no-underscore-dangle": "off",
+        "@angular-eslint/template/no-negated-async": "off",
+        "@typescript-eslint/prefer-for-of": "off",
+        "prefer-arrow/prefer-arrow-functions": "off",
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/consistent-type-assertions": "off",
+        "@angular-eslint/no-conflicting-lifecycle": "off",
+        "lines-between-class-members": ["error", "always"],
+        "@typescript-eslint/no-shadow": "off",
+        "complexity": [2, 10],
+        "max-depth": ["error", 4],
+        // "max-params-no-constructor/max-params-no-constructor": ["error", 4],
+        "max-len": "off",
+        "space-before-function-paren": "off",
+        "@typescript-eslint/quotes": "off",
+        "@angular-eslint/no-empty-lifecycle-method": "off",
+        "linebreak-style": "off",
+        "key-spacing": ["error", { "beforeColon": false }],
+        "keyword-spacing": ["error", { "before": true }],
+        "brace-style": "error",
+        "no-trailing-spaces": "error",
+        "no-console": ["error", {"allow": ["error"]}],
+        "no-debugger": "warn",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "max-nested-callbacks": [2,3],
+        "prefer-const": ["error"],
+        "no-use-before-define": ["error"],
+        "constructor-super": ["error"],
+        "array-callback-return": ["error"],
+        "for-direction": ["error"],
+        "no-cond-assign": ["error"],
+        "no-const-assign": ["error"],
+        "no-constant-condition": ["error"],
+        "no-dupe-else-if": ["error"],
+        "no-dupe-keys": ["error"],
+        "no-duplicate-case": ["error"],
+        "no-irregular-whitespace": ["error"],
+        "no-unexpected-multiline": ["error"],
+        "valid-typeof": ["error"],
+        "block-scoped-var": ["error"],
+        "capitalized-comments": ["error"],
+        "consistent-return": ["error"],
+        "consistent-this": ["error"],
+        "curly": ["error"],
+        "default-param-last": ["error"],
+        "dot-notation": ["error"],
+        "eqeqeq": ["error"],
+        "no-confusing-arrow": ["error"],
+        "no-else-return": ["error"],
+        "no-empty": ["error"],
+        "no-eq-null": ["error"],
+        "no-extra-semi": ["error"],
+        "no-global-assign": ["error"],
+        "no-implicit-globals": ["error"],
+        "no-mixed-operators": ["error"],
+        "no-multi-str": ["error"],
+        "spaced-comment": ["error"],
+        "vars-on-top": ["error"],
+        "arrow-spacing": ["error"],
+        "block-spacing": ["error"],
+        "comma-dangle": ["error"],
+        "comma-spacing": ["error"],
+        "comma-style": ["error"],
+        "computed-property-spacing": ["error"],
+        "switch-colon-spacing": ["error"]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}
