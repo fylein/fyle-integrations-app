@@ -1,0 +1,100 @@
+<div class="tw-text-slightly-normal-text-color">
+    <div class="tw-flex tw-text-14-px tw-h-56-px">
+        <div class="tw-pl-24-px tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ALL)">
+            All
+            <p *ngIf="integrationTabs.ALL" class="landing--active-tag"></p>
+        </div>
+        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ACCOUNTING)">
+            Accounting
+            <p *ngIf="integrationTabs.ACCOUNTING" class="landing--active-tag"></p>
+        </div>
+        <!-- Commenting these tabs for v1 release -->
+        <!-- <div class="tw-pr-48-px landing--tab">
+            HRMS
+            <p *ngIf="false" class="landing--active-tag"></p>
+        </div>
+        <div class="landing--tab">
+            Travel
+            <p *ngIf="false" class="landing--active-tag"></p>
+        </div> -->
+    </div>
+
+    <p class="tw-mt-1-px landing--divider"></p>
+
+    <div class="tw-pt-40-px tw-ml-126-px tw-mr-126-px">
+        <p class="landing--section-heading">
+            Accounting
+        </p>
+        <p class="landing--section-caption">
+            If your company uses any of the accounting systems below, you can easily integrate your Fyle account with it.
+        </p>
+
+        <div class="tw-flex">
+            <div class="landing--accounting-app tw-mr-20-px">
+                <img src="assets/logos/netsuite-logo.png" width="110px" height="60px" />
+                <span class="landing--accounting-app-name">
+                    NetSuite
+                    <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="landing--accounting-app-open"></svg-icon-sprite>
+                </span>
+            </div>
+            <div class="landing--accounting-app tw-mr-20-px">
+                <img src="assets/logos/intacct-logo.png" width="110px" height="60px" />
+                <span class="landing--accounting-app-name">
+                    Sage Intacct
+                    <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="landing--accounting-app-open"></svg-icon-sprite>
+                </span>
+            </div>
+            <div class="landing--accounting-app tw-mr-20-px">
+                <img src="assets/logos/quickbooks-logo.png" width="110px" height="60px" />
+                <span class="landing--accounting-app-name">
+                    QuickBooks Online
+                    <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="landing--accounting-app-open"></svg-icon-sprite>
+                </span>
+            </div>
+            <div class="landing--accounting-app">
+                <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="50px" height="60px" />
+                <span class="landing--accounting-app-name">
+                    Xero
+                    <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="landing--accounting-app-open"></svg-icon-sprite>
+                </span>
+            </div>
+        </div>
+
+        <div *ngIf="integrationTabs.ALL">
+            <p class="tw-my-40-px landing--divider"></p>
+
+            <p class="landing--section-heading">
+                Looking for something else?
+            </p>
+            <p class="landing--section-caption">
+                We are looking forward to building integrations with a few other applications in the market, as listed below. 
+                If you have a use case to integrate with these, we would love to hear them at <span class="tw-text-hyperlink-color">support@fylehq.com</span>
+            </p>
+
+            <div class="tw-rounded-4-px tw-border-1-px">
+                <div class="landing--other-integrations">
+                    <div class="landing--other-integration-app">
+                        <img src="assets/logos/sage-logo.png" width="80px" height="80px" />
+                    </div>
+                    <div class="landing--other-integration-app">
+                        <img src="assets/logos/msdynamics-logo.png" width="150px" height="80px" />
+                    </div>
+                    <div class="landing--other-integration-app">
+                        <img src="assets/logos/financial-force-logo.png" width="150px" height="80px" />
+                    </div>
+                </div>
+                <div class="landing--other-integrations tw-pb-30-px">
+                    <div class="landing--other-integration-app">
+                        <img src="assets/logos/oracle-logo.png" width="120px" height="70px" />
+                    </div>
+                    <div class="landing--other-integration-app">
+                        <img src="assets/logos/bill-dot-com-logo.png" width="120px" height="70px" />
+                    </div>
+                    <div class="landing--other-integration-app">
+                        <img src="assets/logos/myob-logo.png" width="120px" height="70px" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
