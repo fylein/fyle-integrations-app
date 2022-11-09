@@ -1,0 +1,41 @@
+.landing {
+    &--active-tag {
+        @apply tw-bg-slightly-normal-text-color tw-h-2-px tw-w-18-px tw-rounded-tr-4-px tw-rounded-tl-4-px;
+    }
+
+    &--tab {
+        @apply tw-mt-20-px tw-flex tw-flex-col tw-justify-between tw-items-center tw-h-36-px tw-w-100-px tw-cursor-pointer;
+    }
+
+    &--divider {
+        @apply tw-h-1-px tw-w-[100%] tw-bg-separator;
+    }
+
+    &--accounting-app {
+        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px;
+    }
+
+    &--accounting-app-name {
+        @apply tw-pt-22-px tw-text-14-px tw-flex;
+    }
+
+    &--accounting-app-open {
+        @apply tw-pl-6-px tw-pt-3-px tw-text-slightly-normal-text-color;
+    }
+
+    &--section-heading {
+        @apply tw-text-18-px tw-pb-8-px;
+    }
+
+    &--section-caption {
+        @apply tw-text-sub-text-color tw-text-14-px tw-pb-24-px;
+    }
+
+    &--other-integrations {
+        @apply tw-grid tw-grid-cols-3 tw-mt-30-px;
+    }
+
+    &--other-integration-app {
+        @apply tw-flex tw-items-center tw-justify-center;
+    }
+}

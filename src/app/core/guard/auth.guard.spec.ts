@@ -50,6 +50,6 @@ describe('AuthGuard', () => {
     expect(result).toBeFalse();
 
     expect(authService.isLoggedIn).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalledWith(['/']);
+    expect(router.navigate).toHaveBeenCalledWith(['/auth']);
   });
 });

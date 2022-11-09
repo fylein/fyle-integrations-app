@@ -14,4 +14,8 @@ export class WindowService {
   redirect(url: string): void {
     this.nativeWindow.location.href = url;
   }
+
+  openInNewTab(url: string): void {
+    this.nativeWindow.open(url, '_blank');
+  }
 }
