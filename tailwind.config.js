@@ -2,7 +2,12 @@
 
 const customColors = {
   white: '#FFFFFF',
-  'normal-text-color': '#161528'
+  separator: '#ECECEE',
+  'normal-text-color': '#161528',
+  'slightly-normal-text-color': '#2C304E',
+  'sub-text-color': '#414562',
+  'border-color': '#DFDFE2',
+  'hyperlink-color': '#0062FF'
 };
 
 module.exports = {
@@ -63,6 +68,7 @@ module.exports = {
       },
       padding: {
         '2-px': '2px',
+        '3-px': '3px',
         '4-px': '4px',
         '5-px': '5px',
         '6-px': '6px',
@@ -92,6 +98,7 @@ module.exports = {
       },
       margin: {
         '0-px': '0px',
+        '1-px': '1px',
         '2-px': '2px',
         '4-px': '4px',
         '6-px': '6px',
@@ -114,10 +121,12 @@ module.exports = {
         '48-px': '48px',
         '56-px': '56px',
         '80-px': '80px',
+        '126-px': '126px',
         '282-px': '282px'
       },
       height: {
         '1-px': '1px',
+        '2-px': '2px',
         '8-px': '8px',
         '10-px': '10px',
         '12-px': '12px',
@@ -143,6 +152,7 @@ module.exports = {
         '74-px': '74px',
         '92-px': '92px',
         '100-px': '100px',
+        '168-px': '168px',
         '192-px': '192px',
         '282-px': '282px',
         '756-px': '756px',
@@ -187,6 +197,7 @@ module.exports = {
         '354-px': '354px',
         '420-px': '420px',
         '466-px': '466px',
+        '20-vw': '20vw',
         '100-vh': '100vh'
       },
       minWidth: {
