@@ -13,7 +13,7 @@ export class EventsService {
 
   receiveEvent(): void {
     this.windowService.nativeWindow.addEventListener('message', (message) => {
-      if (message.origin === environment.fyle_app_url && message.data && message.data.redirectUri) {
+      if (message.data && message.data.redirectUri && message.origin === environment.fyle_app_url) {
         this.windowService.openInNewTab(message.data.redirectUri);
       }
     }, false);
