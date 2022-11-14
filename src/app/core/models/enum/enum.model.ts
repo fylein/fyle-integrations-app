@@ -1,6 +1,7 @@
 export enum IntegrationView {
     ALL = 'ALL',
-    ACCOUNTING = 'ACCOUNTING'
+    ACCOUNTING = 'ACCOUNTING',
+    HRMS = 'HRMS'
 }
 
 export enum AccountingIntegrationApp {
@@ -8,4 +9,8 @@ export enum AccountingIntegrationApp {
     NETSUITE = 'NetSuite',
     SAGE_INTACCT = 'Sage Intacct',
     XERO = 'Xero'
+}
+
+export enum InAppIntegration {
+    BAMBOO_HR = 'Bamboo HR'
 }

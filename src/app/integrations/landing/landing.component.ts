@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountingIntegrationApp, IntegrationView } from 'src/app/core/models/enum/enum.model';
-import { IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
+import { Router } from '@angular/router';
+import { AccountingIntegrationApp, InAppIntegration, IntegrationView } from 'src/app/core/models/enum/enum.model';
+import { InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/core/events.service';
 import { environment } from 'src/environments/environment';
 
@@ -15,13 +16,17 @@ export class LandingComponent implements OnInit {
 
   AccountingIntegrationApp = AccountingIntegrationApp;
 
+  InAppIntegration = InAppIntegration;
+
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
+    [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: false
   };
 
   integrationTabs: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
+    [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: true
   };
 
@@ -32,8 +37,13 @@ export class LandingComponent implements OnInit {
     [AccountingIntegrationApp.XERO]: [environment.xero_callback_url, environment.xero_client_id]
   };
 
+  private readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
+    [InAppIntegration.BAMBOO_HR]: '/integrations/bamboo_hr/'
+  };
+
   constructor(
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private router: Router
   ) { }
 
   switchView(clickedView: IntegrationView): void {
@@ -46,6 +56,10 @@ export class LandingComponent implements OnInit {
 
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
     this.eventsService.postEvent(this.integrationCallbackUrlMap[accountingIntegrationApp][0], this.integrationCallbackUrlMap[accountingIntegrationApp][1]);
+  }
+
+  openInAppIntegration(inAppIntegration: InAppIntegration): void {
+    this.router.navigate([this.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 
   ngOnInit(): void {
