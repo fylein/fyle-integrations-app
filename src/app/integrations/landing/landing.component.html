@@ -29,7 +29,7 @@
             If your company uses any of the accounting systems below, you can easily integrate your Fyle account with it.
         </p>
 
-        <div class="tw-flex">
+        <div class="tw-grid tw-grid-cols-4 max-xl:tw-grid-cols-2 max-lg:tw-grid-cols-1 max-xl:tw-justify-items-center">
             <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
                 <img src="assets/logos/netsuite-logo.png" width="110px" height="60px" />
                 <span class="landing--accounting-app-name">
@@ -51,7 +51,7 @@
                     <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="landing--accounting-app-open"></svg-icon-sprite>
                 </span>
             </div>
-            <div class="landing--accounting-app" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+            <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
                 <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="50px" height="60px" />
                 <span class="landing--accounting-app-name">
                     Xero

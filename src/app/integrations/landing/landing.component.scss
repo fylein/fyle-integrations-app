@@ -12,7 +12,7 @@
     }
 
     &--accounting-app {
-        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px tw-shadow-app-card;
+        @apply tw-flex tw-flex-col tw-min-w-[20vh] tw-min-h-[18vh] tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px tw-shadow-app-card max-xl:tw-mt-30-px max-xl:tw-p-10-px max-lg:tw-p-10-px max-xl:tw-min-w-[30vh] max-lg:tw-min-w-[30vh];
     }
 
     &--accounting-app-name {

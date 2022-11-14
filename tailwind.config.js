@@ -239,7 +239,8 @@ module.exports = {
       dropShadow: {
       },
       screens: {
-        'max-xl': {'max': '1440px'}
+        'max-xl': {'max': '1040px'},
+        'max-lg': {'max': '780px'}
       },
       spacing: {
         '12-px': '12px',
