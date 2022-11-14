@@ -119,6 +119,7 @@ module.exports = {
         '38-px': '38px',
         '40-px': '40px',
         '48-px': '48px',
+        '50-px': '50px',
         '56-px': '56px',
         '80-px': '80px',
         '126-px': '126px',
@@ -233,6 +234,7 @@ module.exports = {
         'aktiv-grotesk': '"aktiv-grotesk", sans-serif'
       },
       boxShadow: {
+        'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)'
       },
       dropShadow: {
       },
