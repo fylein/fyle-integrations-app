@@ -19,7 +19,9 @@ export class LoginComponent implements OnInit {
   ) { }
 
   private saveUserProfileAndNavigate(code: string): void {
+    console.log('final block before /login', code)
     this.authService.login(code).subscribe(response => {
+      console.log('got response', response)
       const user: MinimalUser = {
         'email': response.user.email,
         'access_token': response.access_token,
@@ -31,12 +33,16 @@ export class LoginComponent implements OnInit {
       };
       this.userService.storeUserProfile(user);
 
+      console.log('pre navigate')
       this.router.navigate(['/integrations']);
     });
   }
 
   private login(): void {
+    console.log('login is called')
     this.route.queryParams.subscribe(params => {
+      console.log('params', params)
+      console.log('params.code', params.code)
       if (params.code) {
         this.saveUserProfileAndNavigate(params.code);
       }
