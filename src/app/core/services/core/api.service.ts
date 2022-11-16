@@ -22,6 +22,7 @@ export class ApiService {
   ) { }
 
   private handleError(error: HttpErrorResponse, httpMethod: string) {
+    console.error('An error occurred:', error.error.message);
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
@@ -34,6 +35,9 @@ export class ApiService {
 
   // Having any here is ok
   post(endpoint: string, body: {}): Observable<any> {
+    console.log('url', API_BASE_URL + endpoint)
+    console.log('body',body)
+    console.log('httpOptions',httpOptions)
     return this.http.post(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'POST');
     }));
