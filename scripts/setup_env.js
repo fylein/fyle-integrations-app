@@ -1,7 +1,5 @@
 const { writeFile } = require("fs");
 
-// TODO: add sentry
-
 const environment = {
   production: false,
   fyle_client_id: `${process.env.FYLE_CLIENT_ID ? process.env.FYLE_CLIENT_ID : '{{FYLE_CLIENT_ID}}'}`,
