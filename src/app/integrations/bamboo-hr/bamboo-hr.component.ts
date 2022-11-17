@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BambooHrComponent implements OnInit {
 
+  showDialog: boolean = false;
+
   constructor() { }
+
+  openDialog(): void {
+   this.showDialog = true;
+  }
 
   ngOnInit(): void {
   }

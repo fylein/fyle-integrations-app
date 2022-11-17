@@ -14,3 +14,7 @@ export enum AccountingIntegrationApp {
 export enum InAppIntegration {
     BAMBOO_HR = 'Bamboo HR'
 }
+
+export enum RedirectLink {
+    BAMBOO_HR = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+}

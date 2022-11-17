@@ -19,3 +19,25 @@ p {
 .p-progress-spinner-circle {
     @apply tw-animate-progress-spinner #{!important};
 }
+
+// Button CTA
+.p-button {
+    @apply tw-w-[100%] tw-text-14-px tw-shadow-none tw-border-none tw-bg-btn-cta #{!important};
+}
+
+.p-button.p-button-raised {
+    @apply tw-justify-center #{!important};
+}
+
+.p-button-label {
+    @apply tw-flex-none #{!important};
+}
+
+.p-button:enabled:hover {
+    @apply tw-shadow-btn-cta-shadow #{!important};
+}
+
+// Dialog
+.p-dialog .p-dialog-content {
+    @apply tw-p-0 #{!important};
+}

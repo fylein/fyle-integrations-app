@@ -5,6 +5,7 @@ import { AppHeaderComponent } from './components/apps/app-header/app-header.comp
 
 // External Libraries
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ButtonModule } from 'primeng/button';
 
 
 @NgModule({
@@ -14,10 +15,12 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   ],
   imports: [
     CommonModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ButtonModule
   ],
   exports: [
-    LoaderComponent
+    LoaderComponent,
+    AppHeaderComponent
   ]
 })
 export class SharedModule { }

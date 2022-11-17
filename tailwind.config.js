@@ -6,8 +6,10 @@ const customColors = {
   'normal-text-color': '#161528',
   'slightly-normal-text-color': '#2C304E',
   'sub-text-color': '#414562',
-  'border-color': '#DFDFE2',
-  'hyperlink-color': '#0062FF'
+  'faded-text-color': '#5A5D72',
+  'box-color': '#DFDFE2',
+  'hyperlink-color': '#0062FF',
+  'mandatory-field-color': '#FF3366'
 };
 
 module.exports = {
@@ -120,6 +122,7 @@ module.exports = {
         '38-px': '38px',
         '40-px': '40px',
         '48-px': '48px',
+        '50-px': '50px',
         '56-px': '56px',
         '80-px': '80px',
         '126-px': '126px',
@@ -229,11 +232,14 @@ module.exports = {
       borderColor: {
       },
       backgroundImage: {
+        'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
       },
       fontFamily: {
         'aktiv-grotesk': '"aktiv-grotesk", sans-serif'
       },
       boxShadow: {
+        'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
+        'btn-cta-shadow': '0px 4px 4px rgba(44, 48, 78, 0.1)',
       },
       dropShadow: {
       },

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-app-header',
@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppHeaderComponent implements OnInit {
 
+  @Output() openDialog = new EventEmitter<void>();
+
   constructor() { }
+
+  connectBambooHR(): void {
+    this.openDialog.emit();
+  }
 
   ngOnInit(): void {
   }
