@@ -9,7 +9,9 @@ const customColors = {
   'faded-text-color': '#5A5D72',
   'box-color': '#DFDFE2',
   'hyperlink-color': '#0062FF',
-  'mandatory-field-color': '#FF3366'
+  'mandatory-field-color': '#FF3366',
+  'disabled-bg-color': '#F5F5F5',
+  'configuration-bg': '#FAFCFF'
 };
 
 module.exports = {
@@ -124,6 +126,7 @@ module.exports = {
         '48-px': '48px',
         '50-px': '50px',
         '56-px': '56px',
+        '70-px': '70px',
         '80-px': '80px',
         '126-px': '126px',
         '282-px': '282px'
@@ -154,11 +157,13 @@ module.exports = {
         '68-px': '68px',
         '70-px': '70px',
         '74-px': '74px',
+        '84-px': '84px',
         '92-px': '92px',
         '100-px': '100px',
         '168-px': '168px',
         '192-px': '192px',
         '282-px': '282px',
+        '498-px': '498px',
         '756-px': '756px',
         '62-vh': '62vh',
         '68-vh': '68vh'
@@ -188,20 +193,26 @@ module.exports = {
         '56-px': '56px',
         '60-px': '60px',
         '64-px': '64px',
+        '68-px': '68px',
         '70-px': '70px',
         '80-px': '80px',
         '92-px': '92px',
         '100-px': '100px',
+        '118-px': '118px',
         '120-px': '120px',
         '150-px': '150px',
         '160-px': '160px',
         '200-px': '200px',
         '246-px': '246px',
+        '300-px': '300px',
         '302-px': '302px',
+        '320-px': '320px',
         '354-px': '354px',
+        '388-px': '388px',
         '420-px': '420px',
         '466-px': '466px',
         '20-vw': '20vw',
+        '75-vw': '75vw',
         '100-vh': '100vh'
       },
       minWidth: {
@@ -230,6 +241,9 @@ module.exports = {
         '12-px': '12px',
       },
       borderColor: {
+        'box-color': customColors['box-color'],
+        'faded-text-color': customColors['faded-text-color'],
+        'slightly-normal-text-color': customColors['slightly-normal-text-color']
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
@@ -249,6 +263,7 @@ module.exports = {
       spacing: {
         '12-px': '12px',
         '14-px': '14px',
+        '30-px': '30px'
       }
     },
   },

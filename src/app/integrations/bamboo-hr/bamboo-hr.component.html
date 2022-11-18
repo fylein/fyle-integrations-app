@@ -1,21 +1,48 @@
-<app-app-header (openDialog)="openDialog()"></app-app-header>
+<app-app-header [isBambooConnected]="isBambooConnected" [isRecipeActive]="isRecipeActive" (openDialog)="openDialog()"></app-app-header>
 
-<app-landing></app-landing>
+<app-landing *ngIf="!isBambooConnected"></app-landing>
 
-<p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px', height: '466px'}">
-    <div class="tw-pt-22-px tw-flex tw-justify-center">
-        <img src="assets/logos/bamboo-hr-logo.png" width="120px" height="40px" />
+<p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
+    <div *ngIf="isBambooConnectionInProgress" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-498-px">
+        <app-loader></app-loader>
     </div>
+    <div *ngIf="!isBambooConnectionInProgress">
+        <div class="tw-pt-22-px tw-flex tw-justify-center">
+            <img src="assets/logos/bamboo-hr-logo.png" width="120px" height="40px" />
+        </div>
 
-    <div class="tw-pt-34-px tw-px-40-px">
-        <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">Connect to BambooHR</p>
-        <p class="tw-pt-10-px tw-text-faded-text-color tw-text-12-px">Please enter your credentials to connect your BambooHR account</p>
+        <div class="tw-pt-34-px tw-px-40-px" [formGroup]="bambooConnectionForm">
+            <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">Connect to BambooHR</p>
+            <p class="tw-pt-10-px tw-text-faded-text-color tw-text-12-px">Please enter your credentials to connect your BambooHR account</p>
 
-        <div class="tw-pt-32-px">
-            <p class="tw-text-sub-text-color tw-text-14-px">
-                API token <span class="tw-text-mandatory-field-color tw-mb-2-px">*</span>
-            </p>
-            <p-password [feedback]="false" [toggleMask]="true" placeholder="Enter API token"></p-password>
+            <div class="tw-pt-32-px">
+                <p class="tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
+                    API Token <span class="tw-text-mandatory-field-color">*</span>
+                </p>
+                <p-password formControlName="apiToken" inputStyleClass="tw-w-388-px tw-h-48-px" [feedback]="false" [toggleMask]="true" placeholder="Enter API token"></p-password>
+
+                <p class="tw-pt-16-px tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
+                    Sub-domain <span class="tw-text-mandatory-field-color">*</span>
+                </p>
+
+                <div class="tw-flex">
+                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-68-px tw-border-box-color tw-border-1-px tw-border-r-0 tw-text-slightly-normal-text-color">
+                        https://
+                    </div>
+                    <input formControlName="subDomain" type="text" inputStyleClass="!tw-rounded-0" class="!tw-rounded-0" pInputText placeholder="fyletest" />
+                    <div class="tw-flex tw-justify-center tw-items-center tw-text-14-px tw-bg-disabled-bg-color tw-h-48-px tw-w-118-px tw-border-box-color tw-border-1-px tw-border-l-0 tw-text-slightly-normal-text-color">
+                        .bamboohr.com
+                    </div>
+                </div>
+
+                <div class="tw-flex tw-items-center tw-pt-24-px tw-pb-40-px">
+                    <button pButton type="button" class="p-button-raised" [disabled]="!bambooConnectionForm.valid" (click)="connectBambooHR()">
+                        Connect
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </p-dialog>
+
+<app-configuration></app-configuration>

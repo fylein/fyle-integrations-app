@@ -8,8 +8,14 @@ import { ConfigurationComponent } from './configuration/configuration.component'
 import { SharedModule } from 'src/app/shared/shared.module';
 
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DialogModule } from 'primeng/dialog';
 import { PasswordModule } from 'primeng/password';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { DropdownModule } from 'primeng/dropdown';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 @NgModule({
@@ -24,6 +30,13 @@ import { PasswordModule } from 'primeng/password';
     SharedModule,
     DialogModule,
     PasswordModule,
+    InputTextModule,
+    ButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    InputSwitchModule,
+    DropdownModule,
+    MultiSelectModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
