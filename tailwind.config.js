@@ -2,6 +2,7 @@
 
 const customColors = {
   white: '#FFFFFF',
+  placeholder: '#A9ACBC',
   separator: '#ECECEE',
   'normal-text-color': '#161528',
   'slightly-normal-text-color': '#2C304E',
@@ -11,7 +12,9 @@ const customColors = {
   'hyperlink-color': '#0062FF',
   'mandatory-field-color': '#FF3366',
   'disabled-bg-color': '#F5F5F5',
-  'configuration-bg': '#FAFCFF'
+  'configuration-bg': '#FAFCFF',
+  'dropdown-hover': '#e9ecef',
+  'check-box': '#ced4da'
 };
 
 module.exports = {
@@ -141,6 +144,7 @@ module.exports = {
         '16-px': '16px',
         '18-px': '18px',
         '20-px': '20px',
+        '22-px': '22px',
         '24-px': '24px',
         '30-px': '30px',
         '32-px': '32px',
@@ -151,6 +155,7 @@ module.exports = {
         '44-px': '44px',
         '48-px': '48px',
         '50-px': '50px',
+        '54-px': '54px',
         '56-px': '56px',
         '60-px': '60px',
         '64-px': '64px',
@@ -208,6 +213,7 @@ module.exports = {
         '302-px': '302px',
         '320-px': '320px',
         '354-px': '354px',
+        '360-px': '360px',
         '388-px': '388px',
         '420-px': '420px',
         '466-px': '466px',
@@ -243,7 +249,8 @@ module.exports = {
       borderColor: {
         'box-color': customColors['box-color'],
         'faded-text-color': customColors['faded-text-color'],
-        'slightly-normal-text-color': customColors['slightly-normal-text-color']
+        'slightly-normal-text-color': customColors['slightly-normal-text-color'],
+        'check-box': customColors['check-box']
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
@@ -261,6 +268,7 @@ module.exports = {
         'max-xl': {'max': '1440px'}
       },
       spacing: {
+        '10-px': '10px',
         '12-px': '12px',
         '14-px': '14px',
         '30-px': '30px'

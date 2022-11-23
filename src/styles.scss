@@ -122,11 +122,19 @@ p {
 }
 
 .p-multiselect .p-multiselect-label {
-    @apply tw-text-sub-text-color tw-py-10-px tw-pl-14-px tw-text-14-px #{!important};
+    @apply tw-text-sub-text-color tw-py-8-px tw-pl-14-px tw-text-14-px #{!important};
 }
 
 .p-multiselect:not(.p-disabled):hover {
     @apply tw-border-faded-text-color #{!important};
+}
+
+.p-multiselect:not(.p-disabled).p-focus {
+    @apply tw-shadow-none #{!important};
+}
+
+.p-multiselect.p-focus:not(.p-disabled) {
+    @apply tw-shadow-none #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-header .p-checkbox {
@@ -143,4 +151,40 @@ p {
 
 .p-multiselect-panel {
     @apply tw-w-320-px;
+}
+
+.p-dropdown .p-dropdown-label.p-placeholder {
+    @apply tw-text-placeholder #{!important};
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+    @apply tw-h-54-px tw-mb-4-px #{!important};
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
+    @apply tw-mr-10-px #{!important};
+}
+
+.p-checkbox .p-checkbox-box {
+    @apply tw-h-16-px tw-w-16-px tw-rounded-4-px tw-transition-none #{!important};
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+    @apply tw-bg-dropdown-hover #{!important};
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+    @apply tw-shadow-none #{!important};
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+    @apply tw-bg-sub-text-color tw-border-none #{!important};
+}
+
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+    @apply tw-border-check-box #{!important};
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
+    @apply tw-p-0 tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
 }

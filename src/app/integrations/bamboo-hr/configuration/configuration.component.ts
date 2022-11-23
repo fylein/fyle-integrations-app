@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FrequencyFormOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DropdownFilterOptions } from 'primeng/dropdown';
+import { EmailOption, FrequencyFormOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 
 @Component({
   selector: 'app-configuration',
@@ -15,11 +17,87 @@ export class ConfigurationComponent implements OnInit {
     };
   });
 
-  emails: string[] = ['ashwin.t@fyle.in', 'hello@ashwin.com', 'hey@ashwin.com'];
+  emails: EmailOption[] = [
+    {
+      name: 'Ashwin',
+      email: 'ashwin.t@fyle.in'
+    },
+    {
+      name: 'Shwetabh',
+      email: 'ashwin.t2@fyle.in'
+    },
+    {
+      name: 'Musk',
+      email: 'ashwin3.t@fyle.in'
+    }
+  ];
 
-  constructor() { }
+  selectedEmail: string | null;
+
+  cofigurationForm: FormGroup;
+
+  addEmailForm: FormGroup = this.formBuilder.group({
+    email: [null, Validators.compose([Validators.email, Validators.required])],
+    name: [null, Validators.required]
+  });
+
+  showDialog: boolean;
+
+  constructor(
+    private formBuilder: FormBuilder
+  ) { }
+
+  clearSearch(options: DropdownFilterOptions): void {
+    if (options.reset) {
+      options.reset();
+    }
+    this.cofigurationForm.controls.search.reset();
+  }
+
+  removeEmail(): void {
+    this.emails.splice(0, 1);
+  }
+
+  addEmail(): void {
+    const selectedEmails = this.cofigurationForm.value.emails || [];
+    selectedEmails.push(this.addEmailForm.value);
+    this.emails.push(this.addEmailForm.value);
+
+    this.cofigurationForm.controls.emails.patchValue(selectedEmails);
+    this.addEmailForm.reset();
+    this.showDialog = false;
+  }
+
+  saveSettings(): void {
+    // TODO
+  }
+
+  private createEmailAdditionWatcher(): void {
+    this.cofigurationForm.controls.emails.valueChanges.subscribe((emails: EmailOption[]) => {
+      if (emails.length) {
+        this.selectedEmail = emails[0].email;
+      } else {
+        this.selectedEmail = null;
+      }
+    });
+  }
+
+  private setupPage(): void {
+    this.cofigurationForm = this.formBuilder.group({
+      emails: [],
+      frequencyInterval: [],
+      search: []
+    });
+
+    this.createEmailAdditionWatcher();
+  }
+
+  openDialog(): void {
+    this.showDialog = true;
+  }
 
   ngOnInit(): void {
+    this.setupPage();
   }
 
 }
