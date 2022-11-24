@@ -14,7 +14,9 @@ const customColors = {
   'disabled-bg-color': '#F5F5F5',
   'configuration-bg': '#FAFCFF',
   'dropdown-hover': '#e9ecef',
-  'check-box': '#ced4da'
+  'check-box': '#ced4da',
+  'info-section': '#EFF5FC',
+  'info': '#5C98E5'
 };
 
 module.exports = {
@@ -153,6 +155,7 @@ module.exports = {
         '40-px': '40px',
         '42-px': '42px',
         '44-px': '44px',
+        '46-px': '46px',
         '48-px': '48px',
         '50-px': '50px',
         '54-px': '54px',
@@ -265,7 +268,8 @@ module.exports = {
       dropShadow: {
       },
       screens: {
-        'max-xl': {'max': '1440px'}
+        'max-xl': {'max': '1440px'},
+        'max-lg': {'max': '1024px'}
       },
       spacing: {
         '10-px': '10px',

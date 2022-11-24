@@ -43,6 +43,8 @@ export class ConfigurationComponent implements OnInit {
 
   showDialog: boolean;
 
+  isEmployeeDimensionEnabled: boolean;
+
   constructor(
     private formBuilder: FormBuilder
   ) { }
@@ -55,7 +57,11 @@ export class ConfigurationComponent implements OnInit {
   }
 
   removeEmail(): void {
-    this.emails.splice(0, 1);
+    const selectedEmails = this.cofigurationForm.value.emails;
+    selectedEmails.splice(0, 1);
+
+    this.cofigurationForm.controls.emails.patchValue(selectedEmails);
+    this.selectedEmail = this.cofigurationForm.value.emails ? this.cofigurationForm.value.emails[0].email : null;
   }
 
   addEmail(): void {
@@ -97,6 +103,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isEmployeeDimensionEnabled = true;
     this.setupPage();
   }
 
