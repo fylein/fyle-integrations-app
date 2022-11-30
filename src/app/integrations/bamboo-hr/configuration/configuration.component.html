@@ -1,5 +1,5 @@
 <div [formGroup]="cofigurationForm" class="tw-pt-20-px tw-flex tw-justify-center tw-items-center tw-flex-col">
-    <div class="tw-w-[75vw]">
+    <div class="tw-w-75-vw">
         <div class="tw-bg-configuration-bg tw-border-separator tw-border-1-px tw-rounded-4-px">
             <div class="tw-py-16-px tw-pl-24-px">
                 <p class="tw-text-slightly-normal-text-color tw-text-20-px tw-font-500">
@@ -28,14 +28,14 @@
 
             <p class="tw-h-1-px tw-w-[100%] tw-bg-separator tw-mb-16-px"></p>
             <div class="tw-pl-24-px tw-pb-20-px">
-                <div class="tw-bg-info-section tw-h-46-px tw-flex tw-items-center tw-w-[52vw]">
+                <div class="tw-bg-info-section tw-h-46-px tw-flex tw-items-center tw-w-52-vw">
                     <svg-icon-sprite src="info" width="16px" height="16px" class="tw-text-info tw-ml-14-px tw-mr-8-px"></svg-icon-sprite>
                     <p class="tw-text-faded-text-color tw-text-14-px tw-pr-8-px">Default fields such as email, name and approving manager will be automatically imported.</p>
                 </div>
             </div>
 
             <div class="tw-flex tw-justify-center">
-                <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-w-[45vw] tw-mb-20-px">
+                <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-w-45-vw tw-mb-20-px">
                     <div class="tw-flex">
                         <p class="tw-flex tw-flex-1 tw-pl-20-px tw-pt-20-px tw-text-slightly-normal-text-color">BambooHR Field</p>
                         <p class="tw-flex tw-flex-1 tw-pt-20-px tw-text-slightly-normal-text-color ">Fyle Field</p>
@@ -44,13 +44,13 @@
 
                     <div class="tw-flex tw-h-40-px tw-items-center tw-mb-20-px">
                         <p class="tw-flex-auto tw-pl-20-px tw-text-sub-text-color tw-text-14-px">Dept</p>
-                        <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-[20vw] tw-h-40-px tw-mr-20-px" [options]="frequencyIntervals"
+                        <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-20-vw tw-h-40-px tw-mr-20-px" [options]="frequencyIntervals"
                         [autoDisplayFirst]="false" optionLabel="label" optionValue="value"
                         placeholder="Select Frequency"></p-dropdown>
                     </div>
                     <div class="tw-flex tw-h-40-px tw-items-center tw-mb-20-px">
                         <p class="tw-flex-auto tw-pl-20-px tw-text-sub-text-color tw-text-14-px">Dept</p>
-                        <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-[20vw] tw-h-40-px tw-mr-20-px" [options]="frequencyIntervals"
+                        <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-20-vw tw-h-40-px tw-mr-20-px" [options]="frequencyIntervals"
                         [autoDisplayFirst]="false" optionLabel="label" optionValue="value"
                         placeholder="Select Frequency"></p-dropdown>
                     </div>
@@ -69,7 +69,7 @@
                     </p>
                 </div>
                 <div>
-                    <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-[27vw] max-lg:tw-w-[20vw] tw-h-40-px" [options]="frequencyIntervals"
+                    <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-27-vw max-lg:tw-w-20-vw tw-h-40-px" [options]="frequencyIntervals"
                         [autoDisplayFirst]="false" optionLabel="label" optionValue="value"
                         placeholder="Select Frequency"></p-dropdown>
                 </div>
@@ -87,7 +87,7 @@
                     </p>
                 </div>
                 <div>
-                    <p-multiSelect formControlName="emails" styleClass="tw-w-[27vw] max-lg:tw-w-[20vw] tw-h-40-px" [options]="emails" [filter]="true"
+                    <p-multiSelect formControlName="emails" styleClass="tw-w-27-vw max-lg:tw-w-20-vw tw-h-40-px" [options]="emails" [filter]="true"
                         [filterBy]="'email,name'" defaultLabel="Select Email Address" optionLabel="email"
                         display="chip">
                         <ng-template let-value pTemplate="selectedItems">
@@ -128,7 +128,7 @@
                         </ng-template>
                     </p-multiSelect>
 
-                    <div class="tw-flex tw-pt-12-px tw-w-[27vw] max-lg:tw-w-[20vw]">
+                    <div class="tw-flex tw-pt-12-px tw-w-27-vw max-lg:tw-w-20-vw">
                         <p class="tw-text-faded-text-color tw-text-12-px tw-pr-12-px">or</p>
                         <div class="tw-flex tw-cursor-pointer" (click)="openDialog()">
                             <svg-icon-sprite src="add" width="18px" height="18px"

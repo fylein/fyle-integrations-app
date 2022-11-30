@@ -9,8 +9,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
-import { JwtHelperService, JwtInterceptor, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { GlobalErrorHandler } from './app.error-handling';
+import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 
 @NgModule({
   declarations: [

@@ -13,6 +13,8 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() isRecipeActive: boolean = false;
 
+  @Input() isBambooSetupInProgress: boolean;
+
   constructor() { }
 
   connectBambooHR(): void {

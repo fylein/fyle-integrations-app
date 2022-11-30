@@ -10,6 +10,10 @@
                     <svg-icon-sprite *ngIf="isBambooConnected" pTooltip="Sync Data" tooltipPosition="right" src="sync" width="18px" height="14px" class="tw-cursor-pointer tw-ml-10-px tw-pt-6-px tw-text-faded-text-color"></svg-icon-sprite>
                 </div>
                 <p class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">Auto sync employee details between Fyle and Bamboo HR.</p>
+                <div *ngIf="isBambooSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
+                    <app-loader></app-loader>
+                    <p class="tw-pl-10-px">We are syncing your data between your Fyle - Bamboo HR account and this may take a few seconds</p>
+                </div>
                 <div *ngIf="isBambooConnected" class="tw-relative tw-top-30-px tw-flex tw-items-center">
                     <div>
                         {{ isRecipeActive ? 'Recipe is running' : 'Recipe not running'}}
@@ -23,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="tw-flex tw-items-center">
+        <div *ngIf="!isBambooSetupInProgress" class="tw-flex tw-items-center">
             <button *ngIf="!isBambooConnected" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
                 Connect
             </button>
@@ -35,4 +39,4 @@
         </div>
     </div>
 </div>
-<p class="tw-h-1-px tw-w-[100%] tw-bg-separator" [ngClass]="isBambooConnected ? 'tw-mt-70-px': ''"></p>
+<p class="tw-h-1-px tw-w-[100%] tw-bg-separator" [ngClass]="[isBambooConnected ? 'tw-mt-70-px': '', isBambooSetupInProgress ? 'tw-mt-18-px': '']"></p>
