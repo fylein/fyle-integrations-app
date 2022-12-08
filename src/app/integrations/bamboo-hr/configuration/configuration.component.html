@@ -11,7 +11,8 @@
             </div>
         </div>
 
-        <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-my-16-px">
+        <!-- Commenting for v2 scope -->
+        <!-- <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-my-16-px">
             <div class="tw-p-24-px tw-flex tw-justify-between" [ngClass]="isEmployeeDimensionEnabled ? 'tw-pb-18-px' : ''">
                 <div>
                     <p class="tw-text-slightly-normal-text-color tw-text-18-px tw-font-500">
@@ -56,9 +57,10 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
 
-        <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-my-16-px">
+        <!-- Frequency is not needed, preserving stylings so that it could be used in some other pages without much effort -->
+        <!-- <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-my-16-px">
             <div class="tw-p-24-px tw-flex tw-justify-between">
                 <div>
                     <p class="tw-text-slightly-normal-text-color tw-text-18-px tw-font-500">
@@ -74,7 +76,7 @@
                         placeholder="Select Frequency"></p-dropdown>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-my-16-px">
             <div class="tw-p-24-px tw-flex tw-justify-between">
@@ -143,7 +145,7 @@
 
         <div class="tw-flex tw-justify-end tw-pt-12-px tw-pb-48-px">
             <div>
-                <button pButton type="button" class="p-button-raised" (click)="saveSettings()">
+                <button [disabled]="!cofigurationForm.valid" pButton type="button" class="p-button-raised" (click)="saveSettings()">
                     Save Settings
                 </button>
             </div>

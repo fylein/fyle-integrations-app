@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BambooHr } from '../../models/bamboo-hr/bamboo-hr.model';
+import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrConnection, RecipeStatus } from '../../models/bamboo-hr/bamboo-hr.model';
 import { ApiService } from '../core/api.service';
 import { OrgService } from '../org/org.service';
 
@@ -26,5 +26,25 @@ export class BambooHrService {
 
   uploadPackage(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.orgId}/bamboohr/packages/`, {});
+  }
+
+  connectBambooHR(payload: BambooHrConnection): Observable<{}> {
+    return this.apiService.post(`/orgs/${this.orgId}/bamboohr/bamboo_connection/`, payload);
+  }
+
+  getConfigurations(): Observable<BambooHRConfiguration> {
+    return this.apiService.get(`/orgs/${this.orgId}/bamboohr/configuration/`, {});
+  }
+
+  postConfigurations(payload: BambooHRConfigurationPost): Observable<BambooHRConfiguration> {
+    return this.apiService.post(`/orgs/${this.orgId}/bamboohr/configuration/`, payload);
+  }
+
+  updateRecipeStatus(payload: RecipeStatus): Observable<{}> {
+    return this.apiService.post(`/orgs/${this.orgId}/bamboohr/start&stop/`, payload);
+  }
+
+  syncEmployees(): Observable<{}> {
+    return this.apiService.post(`/orgs/${this.orgId}/bamboohr/refresh_employees/`, {});
   }
 }

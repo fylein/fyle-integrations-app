@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
-import { EmailOption, FrequencyFormOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { BambooHRConfiguration, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { Org } from 'src/app/core/models/org/org.model';
+import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
+import { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
   selector: 'app-configuration',
@@ -10,12 +13,9 @@ import { EmailOption, FrequencyFormOption } from 'src/app/core/models/bamboo-hr/
 })
 export class ConfigurationComponent implements OnInit {
 
-  frequencyIntervals: FrequencyFormOption[] = [...Array(24).keys()].map(day => {
-    return {
-      label: (day + 1) === 1 ? (day + 1) + ' Hour' : (day + 1) + ' Hours',
-      value: day + 1
-    };
-  });
+  @Input() bambooHrConfiguration: BambooHRConfiguration;
+
+  @Output() updateConfiguration = new EventEmitter<BambooHRConfiguration>();
 
   emails: EmailOption[] = [
     {
@@ -45,8 +45,12 @@ export class ConfigurationComponent implements OnInit {
 
   isEmployeeDimensionEnabled: boolean;
 
+  private readonly org: Org = this.orgService.getCachedOrg();
+
   constructor(
-    private formBuilder: FormBuilder
+    private bambooHrService: BambooHrService,
+    private formBuilder: FormBuilder,
+    private orgService: OrgService
   ) { }
 
   clearSearch(options: DropdownFilterOptions): void {
@@ -75,7 +79,10 @@ export class ConfigurationComponent implements OnInit {
   }
 
   saveSettings(): void {
-    // TODO
+    const payload = BambooHrModel.constructBambooConfigurationPayload(this.cofigurationForm, this.org.id);
+    this.bambooHrService.postConfigurations(payload).subscribe((updatedConfiguration: BambooHRConfiguration) => {
+      this.updateConfiguration.emit(updatedConfiguration);
+    });
   }
 
   private createEmailAdditionWatcher(): void {
@@ -89,9 +96,10 @@ export class ConfigurationComponent implements OnInit {
   }
 
   private setupPage(): void {
+    // TODO: Get the additional emails from backend and assign to additionalEmails
     this.cofigurationForm = this.formBuilder.group({
-      emails: [],
-      frequencyInterval: [],
+      additionalEmails: [null],
+      emails: [this.bambooHrConfiguration?.emails_selected, Validators.required],
       search: []
     });
 

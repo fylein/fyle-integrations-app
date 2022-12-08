@@ -37,4 +37,8 @@ export class OrgService {
   createWorkatoWorkspace(): Observable<{}> {
     return this.apiService.patch(`/orgs/${this.getOrgId()}/workato_workspace/`, {});
   }
+
+  connectFyle(): Observable<{}> {
+    return this.apiService.post(`/orgs/${this.getOrgId()}/connect_fyle/`, {});
+  }
 }

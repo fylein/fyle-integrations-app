@@ -8,6 +8,7 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { TooltipModule } from 'primeng/tooltip';
     ProgressSpinnerModule,
     ButtonModule,
     TooltipModule,
+    SkeletonModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
