@@ -9,7 +9,3 @@
 .disconnect {
     border: 1px solid #FF3366 !important;
 }
-
-::ng-deep .p-progress-spinner {
-    @apply tw-w-16-px tw-h-16-px tw-top-2-px #{!important};
-}

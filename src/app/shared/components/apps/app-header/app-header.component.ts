@@ -15,13 +15,13 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() isBambooConnected: boolean = false;
 
-  @Input() isRecipeActive: boolean = false;
-
   @Input() isBambooSetupInProgress: boolean;
 
   @Input() isLoading: boolean;
 
   @Input() bambooHrConfiguration: BambooHRConfiguration;
+
+  @Input() showErrorScreen: boolean;
 
   constructor(
     private bambooHrService: BambooHrService
@@ -39,10 +39,11 @@ export class AppHeaderComponent implements OnInit {
   }
 
   updateRecipeStatus(): void {
+    const isRecipeActive = this.bambooHrConfiguration?.recipe_status ? this.bambooHrConfiguration.recipe_status : false;
     this.recipeUpdateInProgress.emit(true);
-    const payload = BambooHrModel.constructRecipeUpdatePayload(this.isRecipeActive);
+    const payload = BambooHrModel.constructRecipeUpdatePayload(isRecipeActive);
     this.bambooHrService.updateRecipeStatus(payload).subscribe(() => {
-      this.isRecipeActive = !this.isRecipeActive;
+      this.bambooHrConfiguration.recipe_status = !isRecipeActive;
       this.recipeUpdateInProgress.emit(false);
     });
   }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrConnection, RecipeStatus } from '../../models/bamboo-hr/bamboo-hr.model';
+import { Observable, throwError } from 'rxjs';
+import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrConnection, EmailOption, RecipeStatus } from '../../models/bamboo-hr/bamboo-hr.model';
 import { ApiService } from '../core/api.service';
 import { OrgService } from '../org/org.service';
 
@@ -33,7 +33,9 @@ export class BambooHrService {
   }
 
   getConfigurations(): Observable<BambooHRConfiguration> {
-    return this.apiService.get(`/orgs/${this.orgId}/bamboohr/configuration/`, {});
+    return this.apiService.get(`/orgs/${this.orgId}/bamboohr/configuration/`, {
+      org_id: this.orgId
+    });
   }
 
   postConfigurations(payload: BambooHRConfigurationPost): Observable<BambooHRConfiguration> {
@@ -41,7 +43,7 @@ export class BambooHrService {
   }
 
   updateRecipeStatus(payload: RecipeStatus): Observable<{}> {
-    return this.apiService.post(`/orgs/${this.orgId}/bamboohr/start&stop/`, payload);
+    return this.apiService.post(`/orgs/${this.orgId}/bamboohr/update_recipe_status/`, payload);
   }
 
   syncEmployees(): Observable<{}> {

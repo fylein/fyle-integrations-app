@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
-import { BambooHRConfiguration, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
@@ -15,22 +14,11 @@ export class ConfigurationComponent implements OnInit {
 
   @Input() bambooHrConfiguration: BambooHRConfiguration;
 
-  @Output() updateConfiguration = new EventEmitter<BambooHRConfiguration>();
+  @Input() additionalEmails: EmailOption[];
 
-  emails: EmailOption[] = [
-    {
-      name: 'Ashwin',
-      email: 'ashwin.t@fyle.in'
-    },
-    {
-      name: 'Shwetabh',
-      email: 'ashwin.t2@fyle.in'
-    },
-    {
-      name: 'Musk',
-      email: 'ashwin3.t@fyle.in'
-    }
-  ];
+  @Output() updateConfiguration = new EventEmitter<BambooHRConfigurationPost>();
+
+  emails: EmailOption[];
 
   selectedEmail: string | null;
 
@@ -43,12 +31,9 @@ export class ConfigurationComponent implements OnInit {
 
   showDialog: boolean;
 
-  isEmployeeDimensionEnabled: boolean;
-
   private readonly org: Org = this.orgService.getCachedOrg();
 
   constructor(
-    private bambooHrService: BambooHrService,
     private formBuilder: FormBuilder,
     private orgService: OrgService
   ) { }
@@ -71,37 +56,54 @@ export class ConfigurationComponent implements OnInit {
   addEmail(): void {
     const selectedEmails = this.cofigurationForm.value.emails || [];
     selectedEmails.push(this.addEmailForm.value);
+
+    const additionalEmails = this.cofigurationForm.value.additionalEmails || [];
+    additionalEmails.push(this.addEmailForm.value);
+
     this.emails.push(this.addEmailForm.value);
 
     this.cofigurationForm.controls.emails.patchValue(selectedEmails);
+    this.cofigurationForm.controls.additionalEmails.patchValue(additionalEmails);
     this.addEmailForm.reset();
     this.showDialog = false;
   }
 
   saveSettings(): void {
     const payload = BambooHrModel.constructBambooConfigurationPayload(this.cofigurationForm, this.org.id);
-    this.bambooHrService.postConfigurations(payload).subscribe((updatedConfiguration: BambooHRConfiguration) => {
-      this.updateConfiguration.emit(updatedConfiguration);
-    });
+    this.updateConfiguration.emit(payload);
+  }
+
+  private assignSelectedEmail(emails: EmailOption[]): void {
+    if (emails.length) {
+      this.selectedEmail = emails[0].email;
+    } else {
+      this.selectedEmail = null;
+    }
   }
 
   private createEmailAdditionWatcher(): void {
+    this.assignSelectedEmail(this.cofigurationForm.value.emails);
     this.cofigurationForm.controls.emails.valueChanges.subscribe((emails: EmailOption[]) => {
-      if (emails.length) {
-        this.selectedEmail = emails[0].email;
-      } else {
-        this.selectedEmail = null;
-      }
+      this.assignSelectedEmail(emails);
+    });
+  }
+
+  private getEmailOptions(additionalEmails: EmailOption[], selectedEmails: EmailOption[]): EmailOption[] {
+    return additionalEmails.concat(selectedEmails).filter((email: EmailOption, index: number, self: EmailOption[]) => {
+      return index === self.findIndex((e: EmailOption) => {
+        return e.email === email.email;
+      });
     });
   }
 
   private setupPage(): void {
-    // TODO: Get the additional emails from backend and assign to additionalEmails
     this.cofigurationForm = this.formBuilder.group({
-      additionalEmails: [null],
-      emails: [this.bambooHrConfiguration?.emails_selected, Validators.required],
+      additionalEmails: [this.bambooHrConfiguration?.additional_email_options ? this.bambooHrConfiguration.additional_email_options : this.additionalEmails],
+      emails: [this.bambooHrConfiguration?.emails_selected ? this.bambooHrConfiguration?.emails_selected : [], Validators.required],
       search: []
     });
+
+    this.emails = this.getEmailOptions(this.cofigurationForm.value.additionalEmails, this.cofigurationForm.value.emails);
 
     this.createEmailAdditionWatcher();
   }
@@ -111,7 +113,6 @@ export class ConfigurationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isEmployeeDimensionEnabled = true;
     this.setupPage();
   }
 

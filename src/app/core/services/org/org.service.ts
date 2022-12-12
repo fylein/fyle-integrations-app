@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
+import { EmailOption } from '../../models/bamboo-hr/bamboo-hr.model';
 import { Org } from '../../models/org/org.model';
 import { ApiService } from '../core/api.service';
 import { StorageService } from '../core/storage.service';
@@ -40,5 +41,9 @@ export class OrgService {
 
   connectFyle(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.getOrgId()}/connect_fyle/`, {});
+  }
+
+  getAdditionalEmails(): Observable<EmailOption[]> {
+    return this.apiService.get(`/orgs/${this.getOrgId()}/admins/`, {});
   }
 }

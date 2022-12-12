@@ -23,7 +23,7 @@ export type BambooHRConfiguration = {
   recipe_data: string;
   recipe_status: boolean;
   additional_email_options: EmailOption[];
-  emails_selected: string[];
+  emails_selected: EmailOption[];
 }
 
 export type BambooHRConfigurationPost = {
@@ -56,8 +56,8 @@ export class BambooHrModel {
   static constructBambooConfigurationPayload(bambooHrConfigurationForm: FormGroup, orgId: number): BambooHRConfigurationPost {
     return {
       org: orgId,
-      additional_email_options: bambooHrConfigurationForm.value.additional_email_options ? bambooHrConfigurationForm.value.additional_email_options : [],
-      emails_selected: bambooHrConfigurationForm.value.emails.map((option: EmailOption) => option.email)
+      additional_email_options: bambooHrConfigurationForm.value.additionalEmails ? bambooHrConfigurationForm.value.additionalEmails : [],
+      emails_selected: bambooHrConfigurationForm.value.emails
     };
   }
 

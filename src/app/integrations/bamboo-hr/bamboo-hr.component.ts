@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { concat, forkJoin, toArray } from 'rxjs';
-import { BambooHr, BambooHRConfiguration, BambooHrModel } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -19,8 +19,6 @@ export class BambooHrComponent implements OnInit {
 
   isBambooConnectionInProgress: boolean;
 
-  isRecipeActive: boolean;
-
   isBambooSetupInProgress: boolean;
 
   isLoading: boolean = true;
@@ -36,6 +34,10 @@ export class BambooHrComponent implements OnInit {
 
   bambooHrConfiguration: BambooHRConfiguration;
 
+  additionalEmails: EmailOption[];
+
+  showErrorScreen: boolean;
+
   constructor(
     private bambooHrService: BambooHrService,
     private formBuilder: FormBuilder,
@@ -47,22 +49,26 @@ export class BambooHrComponent implements OnInit {
   }
 
   connectBambooHR(): void {
-    if (this.bambooConnectionForm.valid) {
-      this.isBambooConnectionInProgress = true;
-      const bambooConnectionPayload = BambooHrModel.constructBambooConnectionPayload(this.bambooConnectionForm);
-      forkJoin([
-        this.bambooHrService.connectBambooHR(bambooConnectionPayload),
-        this.orgService.connectFyle()
-      ]).subscribe(() => {
-        this.isBambooConnected = true;
-        this.isBambooConnectionInProgress = false;
-        this.showDialog = false;
-      });
-    }
+    this.isBambooConnectionInProgress = true;
+    const bambooConnectionPayload = BambooHrModel.constructBambooConnectionPayload(this.bambooConnectionForm);
+    forkJoin([
+      this.bambooHrService.connectBambooHR(bambooConnectionPayload),
+      this.orgService.connectFyle()
+    ]).subscribe(() => {
+      this.isBambooConnected = true;
+      this.isBambooConnectionInProgress = false;
+      this.showDialog = false;
+
+      // TODO: error handling
+    });
   }
 
-  configurationUpdatesHandler(updateConfiguration: BambooHRConfiguration): void {
-    this.bambooHrConfiguration = updateConfiguration;
+  configurationUpdatesHandler(payload: BambooHRConfigurationPost): void {
+    this.isLoading = true;
+    this.bambooHrService.postConfigurations(payload).subscribe((updatedConfiguration: BambooHRConfiguration) => {
+      this.bambooHrConfiguration = updatedConfiguration;
+      this.isLoading = false;
+    });
   }
 
   recipeUpdateHandler(isRecipeUpdateInProgress: boolean): void {
@@ -87,22 +93,25 @@ export class BambooHrComponent implements OnInit {
 
     concat(...syncData).pipe(
       toArray()
-    ).subscribe((a) => {
-      this.isLoading = false;
+    ).subscribe(() => {
+      this.getBambooHrConfiguration();
       this.isBambooSetupInProgress = false;
     }, () => {
       this.isLoading = false;
       this.isBambooSetupInProgress = false;
+      this.showErrorScreen = true;
     });
   }
 
   private getBambooHrConfiguration(): void {
     this.bambooHrService.getConfigurations().subscribe((configurations) => {
       this.bambooHrConfiguration = configurations;
-      this.isRecipeActive = configurations.recipe_status;
       this.isLoading = false;
     }, () => {
-      this.isLoading = false;
+      this.orgService.getAdditionalEmails().subscribe((additionalEmails) => {
+        this.additionalEmails = additionalEmails;
+        this.isLoading = false;
+      });
     });
   }
 

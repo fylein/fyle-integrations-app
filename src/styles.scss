@@ -188,3 +188,20 @@ p {
 .p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
     @apply tw-p-0 tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
 }
+
+@mixin spinner($height, $width) {
+    &.p-progress-spinner {
+      @apply
+      tw-h-#{$height}
+      tw-w-#{$width};
+    }
+
+    .p-progress-spinner-circle {
+      @apply
+      tw-animate-progress-spinner
+    }
+}
+
+.spinner-16 {
+    @include spinner('16-px', '16-px');
+}

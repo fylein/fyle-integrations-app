@@ -17,6 +17,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { SkeletonModule } from 'primeng/skeleton';
     DropdownModule,
     MultiSelectModule,
     SkeletonModule,
+    ProgressSpinnerModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
