@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <app-app-header [isLoading]="isLoading" [showErrorScreen]="showErrorScreen" [bambooHrConfiguration]="bambooHrConfiguration" [isBambooSetupInProgress]="isBambooSetupInProgress" [isBambooConnected]="isBambooConnected" (openDialog)="openDialog()" (recipeUpdateInProgress)="recipeUpdateHandler($event)"></app-app-header>
 
 <app-landing *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"></app-landing>

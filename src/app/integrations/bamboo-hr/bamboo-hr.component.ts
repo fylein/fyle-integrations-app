@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import { concat, forkJoin, toArray } from 'rxjs';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -41,6 +42,7 @@ export class BambooHrComponent implements OnInit {
   constructor(
     private bambooHrService: BambooHrService,
     private formBuilder: FormBuilder,
+    private messageService: MessageService,
     private orgService: OrgService
   ) { }
 
@@ -58,8 +60,13 @@ export class BambooHrComponent implements OnInit {
       this.isBambooConnected = true;
       this.isBambooConnectionInProgress = false;
       this.showDialog = false;
-
-      // TODO: error handling
+    }, () => {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Connecting Bamboo HR Failed',
+        detail: `Invalid Credentials`,
+        life: 7000
+      });
     });
   }
 

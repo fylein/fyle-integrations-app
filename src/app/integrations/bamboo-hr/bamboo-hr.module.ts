@@ -18,6 +18,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ToastModule } from 'primeng/toast';
+
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -41,7 +44,11 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
     MultiSelectModule,
     SkeletonModule,
     ProgressSpinnerModule,
+    ToastModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+  ],
+  providers: [
+    MessageService
   ]
 })
 export class BambooHrModule { }
