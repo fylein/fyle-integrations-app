@@ -17,12 +17,12 @@
 
                 <div *ngIf="!isLoading && isBambooConnected && bambooHrConfiguration" class="tw-relative tw-top-30-px tw-flex tw-items-center">
                     <div>
-                        {{ bambooHrConfiguration?.recipe_status ? 'Recipe is running' : 'Recipe not running'}}
+                        {{ bambooHrConfiguration && bambooHrConfiguration.recipe_status ? 'Recipe is running' : 'Recipe not running'}}
                     </div>
                     <div class="tw-flex tw-items-center tw-pl-12-px">
-                        <button pButton type="button" class="remove-bg tw-text-14-px" [ngClass]="bambooHrConfiguration?.recipe_status ? 'recipe-active !tw-bg-white !tw-text-slightly-normal-text-color': '!tw-bg-slightly-normal-text-color'" (click)="updateRecipeStatus()">
-                            {{ bambooHrConfiguration?.recipe_status ? 'Stop Recipe' : 'Start Recipe'}}
-                            <svg-icon-sprite src="on" width="16px" height="18px" class="tw-ml-10-px tw-pt-4-px" [ngClass]="bambooHrConfiguration?.recipe_status ? 'tw-text-slightly-normal-text-color': 'tw-text-white'"></svg-icon-sprite>
+                        <button pButton type="button" class="remove-bg tw-text-14-px" [ngClass]="bambooHrConfiguration && bambooHrConfiguration.recipe_status ? 'recipe-active !tw-bg-white !tw-text-slightly-normal-text-color': '!tw-bg-slightly-normal-text-color'" (click)="updateRecipeStatus()">
+                            {{ bambooHrConfiguration && bambooHrConfiguration.recipe_status ? 'Stop Recipe' : 'Start Recipe'}}
+                            <svg-icon-sprite src="on" width="16px" height="18px" class="tw-ml-10-px tw-pt-4-px" [ngClass]="bambooHrConfiguration && bambooHrConfiguration.recipe_status ? 'tw-text-slightly-normal-text-color': 'tw-text-white'"></svg-icon-sprite>
                         </button>
                     </div>
                 </div>
