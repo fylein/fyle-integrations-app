@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BambooHRConfiguration, BambooHrModel } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
+import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 
 @Component({
   selector: 'app-app-header',
@@ -11,7 +10,9 @@ export class AppHeaderComponent implements OnInit {
 
   @Output() openDialog = new EventEmitter<void>();
 
-  @Output() recipeUpdateInProgress = new EventEmitter<boolean>();
+  @Output() disconnectBambooHr = new EventEmitter<void>();
+
+  @Output() syncEmployees = new EventEmitter<void>();
 
   @Input() isBambooConnected: boolean = false;
 
@@ -23,29 +24,18 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() showErrorScreen: boolean;
 
-  constructor(
-    private bambooHrService: BambooHrService
-  ) { }
+  constructor() { }
 
   syncData(): void {
-    this.recipeUpdateInProgress.emit(true);
-    this.bambooHrService.syncEmployees().subscribe(() => {
-      this.recipeUpdateInProgress.emit(false);
-    });
+    this.syncEmployees.emit();
   }
 
   connectBambooHR(): void {
     this.openDialog.emit();
   }
 
-  updateRecipeStatus(): void {
-    const isRecipeActive = this.bambooHrConfiguration?.recipe_status ? this.bambooHrConfiguration.recipe_status : false;
-    this.recipeUpdateInProgress.emit(true);
-    const payload = BambooHrModel.constructRecipeUpdatePayload(isRecipeActive);
-    this.bambooHrService.updateRecipeStatus(payload).subscribe(() => {
-      this.bambooHrConfiguration.recipe_status = !isRecipeActive;
-      this.recipeUpdateInProgress.emit(false);
-    });
+  disconnect(): void {
+    this.disconnectBambooHr.emit();
   }
 
   ngOnInit(): void {

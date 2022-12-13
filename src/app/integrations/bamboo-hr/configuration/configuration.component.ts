@@ -88,8 +88,8 @@ export class ConfigurationComponent implements OnInit {
     });
   }
 
-  private getEmailOptions(additionalEmails: EmailOption[], selectedEmails: EmailOption[]): EmailOption[] {
-    return additionalEmails.concat(selectedEmails).filter((email: EmailOption, index: number, self: EmailOption[]) => {
+  private getEmailOptions(additionalEmails: EmailOption[], adminEmails: EmailOption[]): EmailOption[] {
+    return additionalEmails.concat(adminEmails).filter((email: EmailOption, index: number, self: EmailOption[]) => {
       return index === self.findIndex((e: EmailOption) => {
         return e.email === email.email;
       });
@@ -98,12 +98,12 @@ export class ConfigurationComponent implements OnInit {
 
   private setupPage(): void {
     this.cofigurationForm = this.formBuilder.group({
-      additionalEmails: [this.bambooHrConfiguration?.additional_email_options ? this.bambooHrConfiguration.additional_email_options : this.additionalEmails],
+      additionalEmails: [this.bambooHrConfiguration?.additional_email_options ? this.bambooHrConfiguration.additional_email_options : []],
       emails: [this.bambooHrConfiguration?.emails_selected ? this.bambooHrConfiguration?.emails_selected : [], Validators.required],
       search: []
     });
 
-    this.emails = this.getEmailOptions(this.cofigurationForm.value.additionalEmails, this.cofigurationForm.value.emails);
+    this.emails = this.getEmailOptions(this.cofigurationForm.value.additionalEmails, this.additionalEmails);
 
     this.createEmailAdditionWatcher();
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { concat, forkJoin, toArray } from 'rxjs';
+import { catchError, concat, forkJoin, merge, of, toArray } from 'rxjs';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
@@ -67,6 +67,7 @@ export class BambooHrComponent implements OnInit {
         detail: `Invalid Credentials`,
         life: 7000
       });
+      this.isBambooConnectionInProgress = false;
     });
   }
 
@@ -78,8 +79,17 @@ export class BambooHrComponent implements OnInit {
     });
   }
 
-  recipeUpdateHandler(isRecipeUpdateInProgress: boolean): void {
-    this.isLoading = isRecipeUpdateInProgress;
+  syncEmployees(): void {
+    this.isLoading = true;
+    this.bambooHrService.syncEmployees().subscribe(() => this.isLoading = false);
+  }
+
+  disconnectBambooHr(): void {
+    this.isLoading = true;
+    this.bambooHrService.disconnectBambooHr().subscribe(() => {
+      this.isBambooConnected = false;
+      this.isLoading = false;
+    });
   }
 
   private setupBambooHr(): void {
@@ -111,14 +121,20 @@ export class BambooHrComponent implements OnInit {
   }
 
   private getBambooHrConfiguration(): void {
-    this.bambooHrService.getConfigurations().subscribe((configurations) => {
-      this.bambooHrConfiguration = configurations;
-      this.isLoading = false;
-    }, () => {
-      this.orgService.getAdditionalEmails().subscribe((additionalEmails) => {
-        this.additionalEmails = additionalEmails;
-        this.isLoading = false;
+    const data = merge(
+      this.orgService.getAdditionalEmails(),
+      this.bambooHrService.getConfigurations().pipe(catchError(() => of(null)))
+    );
+
+    data.pipe(toArray()).subscribe((responses) => {
+      responses.forEach((response: any) => {
+        if (Array.isArray(response) && response.length) {
+          this.additionalEmails = response;
+        } else if (response?.hasOwnProperty('additional_email_options')) {
+          this.bambooHrConfiguration = response;
+        }
       });
+      this.isLoading = false;
     });
   }
 

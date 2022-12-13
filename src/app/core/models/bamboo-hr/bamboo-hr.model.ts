@@ -39,10 +39,6 @@ export type BambooHrConnection = {
   }
 }
 
-export type RecipeStatus = {
-  payload: 'stop' | 'start';
-}
-
 export class BambooHrModel {
   static constructBambooConnectionPayload(bambooConnectionForm: FormGroup): BambooHrConnection {
     return {
@@ -58,12 +54,6 @@ export class BambooHrModel {
       org: orgId,
       additional_email_options: bambooHrConfigurationForm.value.additionalEmails ? bambooHrConfigurationForm.value.additionalEmails : [],
       emails_selected: bambooHrConfigurationForm.value.emails
-    };
-  }
-
-  static constructRecipeUpdatePayload(currentStatus: boolean): RecipeStatus {
-    return {
-      payload: currentStatus ? 'stop' : 'start'
     };
   }
 }
