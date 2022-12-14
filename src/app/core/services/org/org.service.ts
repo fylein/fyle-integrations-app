@@ -46,4 +46,8 @@ export class OrgService {
   getAdditionalEmails(): Observable<EmailOption[]> {
     return this.apiService.get(`/orgs/${this.getOrgId()}/admins/`, {});
   }
+
+  connectSendgrid(): Observable<{}> {
+    return this.apiService.post(`/orgs/${this.getOrgId()}/sendgrid_connection/`, {});
+  }
 }

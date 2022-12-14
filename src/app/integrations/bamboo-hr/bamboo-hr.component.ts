@@ -53,10 +53,7 @@ export class BambooHrComponent implements OnInit {
   connectBambooHR(): void {
     this.isBambooConnectionInProgress = true;
     const bambooConnectionPayload = BambooHrModel.constructBambooConnectionPayload(this.bambooConnectionForm);
-    forkJoin([
-      this.bambooHrService.connectBambooHR(bambooConnectionPayload),
-      this.orgService.connectFyle()
-    ]).subscribe(() => {
+    this.bambooHrService.connectBambooHR(bambooConnectionPayload).subscribe(() => {
       this.isBambooConnected = true;
       this.isBambooConnectionInProgress = false;
       this.showDialog = false;
@@ -106,6 +103,11 @@ export class BambooHrComponent implements OnInit {
 
     if (!this.bambooHrData || !this.bambooHrData.package_id) {
       syncData.push(this.bambooHrService.uploadPackage());
+    }
+
+    if (syncData.length) {
+      syncData.push(this.orgService.connectSendgrid());
+      syncData.push(this.orgService.connectFyle());
     }
 
     concat(...syncData).pipe(
