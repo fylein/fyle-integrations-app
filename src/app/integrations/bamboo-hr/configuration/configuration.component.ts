@@ -50,7 +50,7 @@ export class ConfigurationComponent implements OnInit {
     selectedEmails.splice(0, 1);
 
     this.cofigurationForm.controls.emails.patchValue(selectedEmails);
-    this.selectedEmail = this.cofigurationForm.value.emails ? this.cofigurationForm.value.emails[0].email : null;
+    this.selectedEmail = this.cofigurationForm.value.emails.length ? this.cofigurationForm.value.emails[0].email : null;
   }
 
   addEmail(): void {
