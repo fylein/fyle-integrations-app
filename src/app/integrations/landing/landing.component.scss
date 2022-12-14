@@ -11,6 +11,11 @@
         @apply tw-h-1-px tw-w-[100%] tw-bg-separator;
     }
 
+    &--section-divider {
+        @extend .landing--divider;
+        @apply tw-my-40-px;
+    }
+
     &--accounting-app {
         @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px tw-shadow-app-card;
     }

@@ -2,12 +2,21 @@
 
 const customColors = {
   white: '#FFFFFF',
+  placeholder: '#A9ACBC',
   separator: '#ECECEE',
   'normal-text-color': '#161528',
   'slightly-normal-text-color': '#2C304E',
   'sub-text-color': '#414562',
-  'border-color': '#DFDFE2',
-  'hyperlink-color': '#0062FF'
+  'faded-text-color': '#5A5D72',
+  'box-color': '#DFDFE2',
+  'hyperlink-color': '#0062FF',
+  'mandatory-field-color': '#FF3366',
+  'disabled-bg-color': '#F5F5F5',
+  'configuration-bg': '#FAFCFF',
+  'dropdown-hover': '#e9ecef',
+  'check-box': '#ced4da',
+  'info-section': '#EFF5FC',
+  'info': '#5C98E5'
 };
 
 module.exports = {
@@ -95,6 +104,7 @@ module.exports = {
         '48-px': '48px',
         '56-px': '56px',
         '80-px': '80px',
+        '100-px': '100px'
       },
       margin: {
         '0-px': '0px',
@@ -107,6 +117,7 @@ module.exports = {
         '12-px': '12px',
         '14-px': '14px',
         '16-px': '16px',
+        '18-px': '18px',
         '20-px': '20px',
         '22-px': '22px',
         '24-px': '24px',
@@ -121,6 +132,7 @@ module.exports = {
         '48-px': '48px',
         '50-px': '50px',
         '56-px': '56px',
+        '70-px': '70px',
         '80-px': '80px',
         '126-px': '126px',
         '282-px': '282px'
@@ -135,6 +147,7 @@ module.exports = {
         '16-px': '16px',
         '18-px': '18px',
         '20-px': '20px',
+        '22-px': '22px',
         '24-px': '24px',
         '30-px': '30px',
         '32-px': '32px',
@@ -143,19 +156,24 @@ module.exports = {
         '40-px': '40px',
         '42-px': '42px',
         '44-px': '44px',
+        '46-px': '46px',
         '48-px': '48px',
         '50-px': '50px',
+        '54-px': '54px',
         '56-px': '56px',
         '60-px': '60px',
         '64-px': '64px',
         '68-px': '68px',
         '70-px': '70px',
         '74-px': '74px',
+        '78-px': '78px',
+        '84-px': '84px',
         '92-px': '92px',
         '100-px': '100px',
         '168-px': '168px',
         '192-px': '192px',
         '282-px': '282px',
+        '498-px': '498px',
         '756-px': '756px',
         '62-vh': '62vh',
         '68-vh': '68vh'
@@ -185,20 +203,33 @@ module.exports = {
         '56-px': '56px',
         '60-px': '60px',
         '64-px': '64px',
+        '68-px': '68px',
         '70-px': '70px',
         '80-px': '80px',
         '92-px': '92px',
         '100-px': '100px',
+        '118-px': '118px',
         '120-px': '120px',
+        '138-px': '138px',
         '150-px': '150px',
         '160-px': '160px',
         '200-px': '200px',
         '246-px': '246px',
+        '300-px': '300px',
         '302-px': '302px',
+        '320-px': '320px',
         '354-px': '354px',
+        '360-px': '360px',
+        '388-px': '388px',
         '420-px': '420px',
         '466-px': '466px',
+        '14-vw': '14vw',
         '20-vw': '20vw',
+        '27-vw': '27vw',
+        '45-vw': '45vw',
+        '50-vw': '50vw',
+        '52-vw': '52vw',
+        '75-vw': '75vw',
         '100-vh': '100vh'
       },
       minWidth: {
@@ -227,23 +258,33 @@ module.exports = {
         '12-px': '12px',
       },
       borderColor: {
+        'box-color': customColors['box-color'],
+        'faded-text-color': customColors['faded-text-color'],
+        'slightly-normal-text-color': customColors['slightly-normal-text-color'],
+        'check-box': customColors['check-box']
       },
       backgroundImage: {
+        'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
       },
       fontFamily: {
         'aktiv-grotesk': '"aktiv-grotesk", sans-serif'
       },
       boxShadow: {
-        'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)'
+        'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
+        'btn-cta-shadow': '0px 4px 4px rgba(44, 48, 78, 0.1)',
       },
       dropShadow: {
       },
       screens: {
-        'max-xl': {'max': '1440px'}
+        'max-xl': {'max': '1440px'},
+        'max-lg': {'max': '1024px'}
       },
       spacing: {
+        '2-px': '2px',
+        '10-px': '10px',
         '12-px': '12px',
         '14-px': '14px',
+        '30-px': '30px'
       }
     },
   },

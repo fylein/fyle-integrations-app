@@ -4,7 +4,11 @@ import { LoaderComponent } from './components/core/loader/loader.component';
 import { AppHeaderComponent } from './components/apps/app-header/app-header.component';
 
 // External Libraries
+import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ButtonModule } from 'primeng/button';
+import { TooltipModule } from 'primeng/tooltip';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 @NgModule({
@@ -14,10 +18,15 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
   ],
   imports: [
     CommonModule,
-    ProgressSpinnerModule
+    ProgressSpinnerModule,
+    ButtonModule,
+    TooltipModule,
+    SkeletonModule,
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
-    LoaderComponent
+    LoaderComponent,
+    AppHeaderComponent
   ]
 })
 export class SharedModule { }

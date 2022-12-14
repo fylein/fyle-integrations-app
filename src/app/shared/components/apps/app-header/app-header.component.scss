@@ -1,0 +1,11 @@
+.remove-bg {
+    @apply tw-bg-none #{!important};
+}
+
+.recipe-active {
+    border: 1px solid #DFDFE2 !important;
+}
+
+.disconnect {
+    border: 1px solid #FF3366 !important;
+}
