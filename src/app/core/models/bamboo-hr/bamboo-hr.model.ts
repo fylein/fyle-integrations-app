@@ -29,7 +29,7 @@ export type BambooHRConfiguration = {
 export type BambooHRConfigurationPost = {
   org: number;
   additional_email_options: EmailOption[];
-  emails_selected: string[];
+  emails_selected: EmailOption[];
 }
 
 export type BambooHrConnection = {
