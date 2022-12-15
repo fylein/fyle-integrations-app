@@ -1,7 +1,7 @@
-<div class="tw-p-24-px tw-text-slightly-normal-text-color">
+<div class="tw-p-24-px tw-text-slightly-normal-text-color tw-bg-header">
     <div class="tw-h-68-px tw-flex tw-justify-between">
         <div class="tw-flex">
-            <div class="tw-rounded-4-px tw-border-1-px tw-border-box-color tw-flex tw-justify-center">
+            <div class="tw-rounded-4-px tw-border-1-px tw-border-box-color tw-flex tw-justify-center tw-bg-white tw-w-176-px">
                 <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="44px" class="tw-py-10-px tw-px-20-px" />
             </div>
             <div class="tw-pl-16-px tw-flex tw-flex-col">
@@ -19,6 +19,7 @@
         <div *ngIf="!isBambooSetupInProgress && !isLoading && !showErrorScreen" class="tw-flex tw-items-center">
             <button *ngIf="!isBambooConnected" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
                 Connect
+                <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
             </button>
             <button *ngIf="isBambooConnected && bambooHrConfiguration?.recipe_status" pButton type="button" class="remove-bg disconnect !tw-bg-white !tw-text-mandatory-field-color" (click)="disconnect()">
                 Disconnect

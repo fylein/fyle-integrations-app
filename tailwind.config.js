@@ -213,6 +213,7 @@ module.exports = {
         '138-px': '138px',
         '150-px': '150px',
         '160-px': '160px',
+        '176-px': '176px',
         '200-px': '200px',
         '246-px': '246px',
         '300-px': '300px',
@@ -265,6 +266,7 @@ module.exports = {
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
+        'header': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)'
       },
       fontFamily: {
         'aktiv-grotesk': '"aktiv-grotesk", sans-serif'
