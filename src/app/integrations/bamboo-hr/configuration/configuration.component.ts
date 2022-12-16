@@ -16,6 +16,8 @@ export class ConfigurationComponent implements OnInit {
 
   @Input() additionalEmails: EmailOption[];
 
+  @Input() isConfigurationSaveInProgress: boolean;
+
   @Output() updateConfiguration = new EventEmitter<BambooHRConfigurationPost>();
 
   emails: EmailOption[];

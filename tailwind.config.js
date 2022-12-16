@@ -16,7 +16,9 @@ const customColors = {
   'dropdown-hover': '#e9ecef',
   'check-box': '#ced4da',
   'info-section': '#EFF5FC',
-  'info': '#5C98E5'
+  'info': '#5C98E5',
+  'success-toast': '#24A148',
+  'alert-toast': '#DA1E28',
 };
 
 module.exports = {

@@ -18,3 +18,8 @@ export enum InAppIntegration {
 export enum RedirectLink {
     BAMBOO_HR = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
+
+export enum ToastSeverity {
+    SUCCESS = 'success',
+    ERROR = 'error'
+}

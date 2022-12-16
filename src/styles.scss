@@ -209,3 +209,27 @@ p {
 .p-skeleton {
     @apply tw-bg-disabled-bg-color #{!important};
 }
+
+.p-toast .p-toast-message.p-toast-message-success {
+    @apply tw-border-none #{!important};
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+    @apply tw-border-none #{!important};
+}
+
+.p-toast .p-toast-message .p-toast-message-content {
+    @apply tw-border-0 tw-p-0 tw-text-white #{!important};
+}
+
+.p-toast .p-toast-message .p-toast-icon-close {
+    @apply tw-hidden #{!important};
+}
+
+.p-toast-icon-close-icon {
+    @apply tw-hidden #{!important};
+}
+
+.p-toast-message-content {
+    @apply tw-block #{!important};
+}
