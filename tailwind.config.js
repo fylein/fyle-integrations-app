@@ -170,6 +170,7 @@ module.exports = {
         '84-px': '84px',
         '92-px': '92px',
         '100-px': '100px',
+        '110-px': '110px',
         '168-px': '168px',
         '192-px': '192px',
         '282-px': '282px',
@@ -266,7 +267,8 @@ module.exports = {
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
-        'header': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)'
+        'header-1': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)',
+        'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)'
       },
       fontFamily: {
         'aktiv-grotesk': '"aktiv-grotesk", sans-serif'
