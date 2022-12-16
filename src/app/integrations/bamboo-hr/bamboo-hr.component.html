@@ -18,7 +18,7 @@
 <app-landing *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"></app-landing>
 
 <p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
-    <div *ngIf="isBambooConnectionInProgress" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-498-px">
+    <div *ngIf="isBambooConnectionInProgress" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-465-px">
         <app-loader></app-loader>
     </div>
     <div *ngIf="!isBambooConnectionInProgress">
