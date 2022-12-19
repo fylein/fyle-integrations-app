@@ -19,6 +19,7 @@ const customColors = {
   'info': '#5C98E5',
   'success-toast': '#24A148',
   'alert-toast': '#DA1E28',
+  'cta-disabled': '#FFC2D6'
 };
 
 module.exports = {
@@ -69,12 +70,17 @@ module.exports = {
     },
     extend: {
       animation: {
-        'progress-spinner': 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-color 6s ease-in-out infinite'
+        'progress-spinner': 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-color 6s ease-in-out infinite',
+        'progress-spinner-cta': 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-cta-color 6s ease-in-out infinite'
       },
       keyframes: {
         'p-progress-spinner-color': {
           '0%': { 'stroke': '#ff3863'},
           '100%': { 'stroke': '#ff3863'}
+        },
+        'p-progress-spinner-cta-color': {
+          '0%': { 'stroke': '#ffffff'},
+          '100%': { 'stroke': '#ffffff'}
         }
       },
       padding: {

@@ -71,8 +71,10 @@ export class ConfigurationComponent implements OnInit {
   }
 
   saveSettings(): void {
-    const payload = BambooHrModel.constructBambooConfigurationPayload(this.cofigurationForm, this.org.id);
-    this.updateConfiguration.emit(payload);
+    if (!this.isConfigurationSaveInProgress) {
+      const payload = BambooHrModel.constructBambooConfigurationPayload(this.cofigurationForm, this.org.id);
+      this.updateConfiguration.emit(payload);
+    }
   }
 
   private assignSelectedEmail(emails: EmailOption[]): void {

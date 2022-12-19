@@ -80,12 +80,10 @@ export class BambooHrComponent implements OnInit {
   }
 
   configurationUpdatesHandler(payload: BambooHRConfigurationPost): void {
-    this.isLoading = true;
     this.isConfigurationSaveInProgress = true;
     this.bambooHrService.postConfigurations(payload).subscribe((updatedConfiguration: BambooHRConfiguration) => {
       this.bambooHrConfiguration = updatedConfiguration;
       this.isConfigurationSaveInProgress = false;
-      this.isLoading = false;
       this.displayToastMessage(ToastSeverity.SUCCESS, 'Configuration saved successfully');
     });
   }
