@@ -96,6 +96,7 @@ export class BambooHrComponent implements OnInit {
   disconnectBambooHr(): void {
     this.isLoading = true;
     this.bambooHrService.disconnectBambooHr().subscribe(() => {
+      this.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Bamboo HR Successfully');
       this.isBambooConnected = false;
       this.isLoading = false;
     });
