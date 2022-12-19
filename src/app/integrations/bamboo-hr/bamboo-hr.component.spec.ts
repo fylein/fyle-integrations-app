@@ -116,9 +116,9 @@ describe('BambooHrComponent', () => {
   });
 
   it('should update/create configurations', () => {
-    component.isLoading = true;
+    component.isConfigurationSaveInProgress = true;
     component.configurationUpdatesHandler(bambooHRMockConfigurationPayload);
-    expect(component.isLoading).toBeFalse();
+    expect(component.isConfigurationSaveInProgress).toBeFalse();
   });
 
   it('should open dialog', () => {
