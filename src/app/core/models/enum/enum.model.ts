@@ -23,3 +23,25 @@ export enum ToastSeverity {
     SUCCESS = 'success',
     ERROR = 'error'
 }
+
+export enum Page {
+    LANDING = 'Landing',
+    BAMBOO_HR_LANDING = 'Bamboo HR Landing',
+    CONNECT_BAMBOO_HR = 'Connect Bamboo HR',
+    CONFIGURE_BAMBOO_HR = 'Bamboo HR Configuration',
+}
+
+export enum ClickEvent {
+    OPEN_QBO_INTEGRATION = 'Open QBO Integration',
+    OPEN_NETSUITE_INTEGRATION = 'Open NetSuite Integration',
+    OPEN_SAGE_INTACCT_INTEGRATION = 'Open Sage Intacct Integration',
+    OPEN_XERO_INTEGRATION = 'Open Xero Integration',
+    OPEN_BAMBOO_HR_INTEGRATION = 'Open Bamboo HR Integration',
+    INTEGRATION_TABS = 'Integration Tabs',
+    CONNECT_BAMBOO_HR = 'Connect Bamboo HR',
+    CONFIGURE_BAMBOO_HR = 'Configure Bamboo HR',
+    DISCONNECT_BAMBOO_HR = 'Disconnect Bamboo HR',
+    COPY_SUPPORT_EMAIL = 'Copy Support Email',
+    SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
+    ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually'
+}

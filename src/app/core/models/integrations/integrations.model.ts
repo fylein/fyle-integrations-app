@@ -1,4 +1,4 @@
-import { AccountingIntegrationApp, InAppIntegration, IntegrationView } from "../enum/enum.model";
+import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView } from "../enum/enum.model";
 
 export type IntegrationsView = {
     [IntegrationView.ACCOUNTING]: boolean,
@@ -11,6 +11,13 @@ export type IntegrationCallbackUrl = {
     [AccountingIntegrationApp.QBO]: [string, string],
     [AccountingIntegrationApp.SAGE_INTACCT]: [string, string],
     [AccountingIntegrationApp.XERO]: [string, string]
+}
+
+export type AccountingIntegrationEvent = {
+    [AccountingIntegrationApp.NETSUITE]: ClickEvent,
+    [AccountingIntegrationApp.QBO]: ClickEvent,
+    [AccountingIntegrationApp.SAGE_INTACCT]: ClickEvent,
+    [AccountingIntegrationApp.XERO]: ClickEvent
 }
 
 export type InAppIntegrationUrlMap = {

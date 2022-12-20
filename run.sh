@@ -15,7 +15,6 @@ do
     sed -i $SED_EXTRA_ARGS "s?{{SENTRY_ENV}}?${SENTRY_ENV}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{CLARITY_PROJECT_ID}}?${CLARITY_PROJECT_ID}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{SEGMENT_ID}}?${SEGMENT_ID}?g" $f;
-    sed -i $SED_EXTRA_ARGS "s?{{SEGMENT_ID}}?${SEGMENT_ID}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{QBO_CALLBACK_URL}}?${QBO_CALLBACK_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{NS_CALLBACK_URL}}?${NS_CALLBACK_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{SI_CALLBACK_URL}}?${SI_CALLBACK_URL}?g" $f;

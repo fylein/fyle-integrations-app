@@ -4,6 +4,7 @@ import { MinimalUser } from '../core/models/db/user.model';
 import { Org } from '../core/models/org/org.model';
 import { StorageService } from '../core/services/core/storage.service';
 import { WindowService } from '../core/services/core/window.service';
+import { TrackingService } from '../core/services/integration/tracking.service';
 import { UserService } from '../core/services/misc/user.service';
 import { OrgService } from '../core/services/org/org.service';
 
@@ -24,6 +25,7 @@ export class IntegrationsComponent implements OnInit {
     private orgService: OrgService,
     private router: Router,
     private storageService: StorageService,
+    private trackingService: TrackingService,
     private userService: UserService,
     private windowService: WindowService
   ) {
@@ -55,6 +57,7 @@ export class IntegrationsComponent implements OnInit {
     this.user = this.userService.getUserProfile();
     this.getOrCreateOrg().then((org: Org | undefined) => {
       if (org) {
+        this.trackingService.onOpenLandingPage(this.user?.email, org.id, org.name, org.fyle_org_id);
         this.org = org;
         this.storageService.set('orgId', this.org.id);
         this.storageService.set('org', this.org);

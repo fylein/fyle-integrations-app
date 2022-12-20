@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
@@ -37,7 +39,8 @@ export class ConfigurationComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private trackingService: TrackingService
   ) { }
 
   clearSearch(options: DropdownFilterOptions): void {
@@ -56,6 +59,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   addEmail(): void {
+    this.trackingService.onClickEvent(ClickEvent.ADD_BAMBOO_HR_EMAIL_MANUALLY);
     const selectedEmails = this.cofigurationForm.value.emails || [];
     selectedEmails.push(this.addEmailForm.value);
 
