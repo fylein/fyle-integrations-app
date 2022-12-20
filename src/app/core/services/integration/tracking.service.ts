@@ -71,6 +71,6 @@ export class TrackingService {
 
   trackTimeSpent(page: Page, sessionStartTime: Date): void {
     const differenceInMs = new Date().getTime() - sessionStartTime.getTime();
-    this.eventTrack(`Time Spent on ${page} page`, {durationInSeconds: differenceInMs});
+    this.eventTrack(`Time Spent on ${page} page`, {durationInSeconds: differenceInMs / 1000});
   }
 }
