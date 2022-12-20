@@ -1,0 +1,9 @@
+<div class="tw-flex tw-flex-col tw-h-[87%] tw-justify-center tw-items-center">
+    <img src="assets/illustrations/error.svg">
+    <p class="tw-pt-24-px">Something unexpected happened while setting up connection</p>
+    <p class="tw-pt-8-px tw-text-14-px tw-text-faded-text-color">Connect our support team to get it resolved</p>
+    <div class="tw-flex tw-cursor-pointer tw-text-14-px tw-text-hyperlink-color tw-pt-12-px">
+        <p (click)="windowService.redirect('mailto:support@fylehq.com')">support@fylehq.com</p>
+        <svg-icon-sprite src="copy" width="12px" height="16px" class="tw-ml-10-px tw-mt-2-px" (click)="copyToClipboard()"></svg-icon-sprite>
+    </div>
+</div>
