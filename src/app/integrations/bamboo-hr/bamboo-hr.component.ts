@@ -178,7 +178,7 @@ export class BambooHrComponent implements OnInit {
       this.getBambooHrConfiguration();
     }, () => {
       this.isBambooConnected = false;
-      this.setupBambooHr();
+      this.getBambooHrConfiguration();
     });
   }
 
