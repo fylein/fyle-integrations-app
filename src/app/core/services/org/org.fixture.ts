@@ -8,6 +8,8 @@ export const orgMockData: Org = {
     managed_user_id: '1',
     cluster_domain: 'fyle',
     is_bamboo_connector: true,
+    is_fyle_connected: true,
+    is_sendgrid_connected: true,
     created_at: new Date(),
     updated_at: new Date()
 };

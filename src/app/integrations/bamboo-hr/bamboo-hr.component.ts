@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { catchError, concat, forkJoin, merge, of, toArray } from 'rxjs';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
 @Component({
@@ -42,15 +43,19 @@ export class BambooHrComponent implements OnInit {
 
   showErrorScreen: boolean;
 
+  private sessionStartTime = new Date();
+
   constructor(
     private bambooHrService: BambooHrService,
     private formBuilder: FormBuilder,
     private messageService: MessageService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private trackingService: TrackingService
   ) { }
 
   openDialog(): void {
-   this.showDialog = true;
+    this.trackingService.onClickEvent(ClickEvent.CONNECT_BAMBOO_HR);
+    this.showDialog = true;
   }
 
   displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000): void {
@@ -69,6 +74,8 @@ export class BambooHrComponent implements OnInit {
       this.isBambooConnectionInProgress = false;
       this.showDialog = false;
       this.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Bamboo HR Successfully');
+      this.trackingService.trackTimeSpent(Page.BAMBOO_HR_LANDING, this.sessionStartTime);
+      this.sessionStartTime = new Date();
     }, () => {
       this.displayToastMessage(ToastSeverity.ERROR, 'Connecting Bamboo HR Failed', 5000);
       this.isBambooConnectionInProgress = false;
@@ -80,20 +87,24 @@ export class BambooHrComponent implements OnInit {
   }
 
   configurationUpdatesHandler(payload: BambooHRConfigurationPost): void {
+    this.trackingService.onClickEvent(ClickEvent.CONFIGURE_BAMBOO_HR);
     this.isConfigurationSaveInProgress = true;
     this.bambooHrService.postConfigurations(payload).subscribe((updatedConfiguration: BambooHRConfiguration) => {
       this.bambooHrConfiguration = updatedConfiguration;
       this.isConfigurationSaveInProgress = false;
       this.displayToastMessage(ToastSeverity.SUCCESS, 'Configuration saved successfully');
+      this.trackingService.trackTimeSpent(Page.CONFIGURE_BAMBOO_HR, this.sessionStartTime);
     });
   }
 
   syncEmployees(): void {
+    this.trackingService.onClickEvent(ClickEvent.SYNC_BAMBOO_HR_EMPLOYEES);
     this.isLoading = true;
     this.bambooHrService.syncEmployees().subscribe(() => this.isLoading = false);
   }
 
   disconnectBambooHr(): void {
+    this.trackingService.onClickEvent(ClickEvent.DISCONNECT_BAMBOO_HR);
     this.isLoading = true;
     this.bambooHrService.disconnectBambooHr().subscribe(() => {
       this.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Bamboo HR Successfully');
@@ -103,7 +114,6 @@ export class BambooHrComponent implements OnInit {
   }
 
   private setupBambooHr(): void {
-    this.isBambooSetupInProgress = true;
     const syncData = [];
 
     if (!this.org.managed_user_id) {
@@ -118,21 +128,29 @@ export class BambooHrComponent implements OnInit {
       syncData.push(this.bambooHrService.uploadPackage());
     }
 
-    if (syncData.length) {
-      syncData.push(this.orgService.connectSendgrid());
+    if (!this.org.is_fyle_connected) {
       syncData.push(this.orgService.connectFyle());
     }
 
-    concat(...syncData).pipe(
-      toArray()
-    ).subscribe(() => {
-      this.getBambooHrConfiguration();
-      this.isBambooSetupInProgress = false;
-    }, () => {
+    if (!this.org.is_sendgrid_connected) {
+      syncData.push(this.orgService.connectSendgrid());
+    }
+
+    if (syncData.length) {
+      this.isBambooSetupInProgress = true;
+      concat(...syncData).pipe(
+        toArray()
+      ).subscribe(() => {
+        this.isLoading = false;
+        this.isBambooSetupInProgress = false;
+      }, () => {
+        this.isLoading = false;
+        this.isBambooSetupInProgress = false;
+        this.showErrorScreen = true;
+      });
+    } else {
       this.isLoading = false;
-      this.isBambooSetupInProgress = false;
-      this.showErrorScreen = true;
-    });
+    }
   }
 
   private getBambooHrConfiguration(): void {
@@ -149,7 +167,7 @@ export class BambooHrComponent implements OnInit {
           this.bambooHrConfiguration = response;
         }
       });
-      this.isLoading = false;
+      this.setupBambooHr();
     });
   }
 
