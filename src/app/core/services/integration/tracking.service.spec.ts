@@ -23,6 +23,10 @@ describe('TrackingService', () => {
     expect(service.onErrorPage()).toBeUndefined();
   });
 
+  it('should track Open Landing Page event', () => {
+    expect(service.onOpenLandingPage('ashwin.t@fyle.in', 1, 'Lolo Org', 'or767asdih5')).toBeUndefined();
+  });
+
   it('should track Click event', () => {
     expect(service.onClickEvent(ClickEvent.ADD_BAMBOO_HR_EMAIL_MANUALLY)).toBeUndefined();
   });
