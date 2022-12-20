@@ -9,12 +9,14 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ErrorComponent } from './components/core/error/error.component';
 
 
 @NgModule({
   declarations: [
     LoaderComponent,
-    AppHeaderComponent
+    AppHeaderComponent,
+    ErrorComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { SkeletonModule } from 'primeng/skeleton';
   ],
   exports: [
     LoaderComponent,
-    AppHeaderComponent
+    AppHeaderComponent,
+    ErrorComponent
   ]
 })
 export class SharedModule { }

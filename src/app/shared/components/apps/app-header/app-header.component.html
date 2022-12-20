@@ -24,7 +24,7 @@
                 Connect
                 <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
             </button>
-            <button *ngIf="isBambooConnected && bambooHrConfiguration?.recipe_status" pButton type="button" class="!tw-text-slightly-normal-text-color remove-bg disconnect !tw-bg-white" (click)="disconnect()">
+            <button *ngIf="isBambooConnected && bambooHrConfiguration?.recipe_status" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                 Disconnect
             </button>
         </div>
