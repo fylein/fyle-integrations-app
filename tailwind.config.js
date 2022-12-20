@@ -16,7 +16,10 @@ const customColors = {
   'dropdown-hover': '#e9ecef',
   'check-box': '#ced4da',
   'info-section': '#EFF5FC',
-  'info': '#5C98E5'
+  'info': '#5C98E5',
+  'success-toast': '#24A148',
+  'alert-toast': '#DA1E28',
+  'cta-disabled': '#FFC2D6'
 };
 
 module.exports = {
@@ -67,12 +70,17 @@ module.exports = {
     },
     extend: {
       animation: {
-        'progress-spinner': 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-color 6s ease-in-out infinite'
+        'progress-spinner': 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-color 6s ease-in-out infinite',
+        'progress-spinner-cta': 'p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-cta-color 6s ease-in-out infinite'
       },
       keyframes: {
         'p-progress-spinner-color': {
           '0%': { 'stroke': '#ff3863'},
           '100%': { 'stroke': '#ff3863'}
+        },
+        'p-progress-spinner-cta-color': {
+          '0%': { 'stroke': '#ffffff'},
+          '100%': { 'stroke': '#ffffff'}
         }
       },
       padding: {
@@ -103,6 +111,7 @@ module.exports = {
         '44-px': '44px',
         '48-px': '48px',
         '56-px': '56px',
+        '70-px': '70px',
         '80-px': '80px',
         '100-px': '100px'
       },
@@ -170,10 +179,11 @@ module.exports = {
         '84-px': '84px',
         '92-px': '92px',
         '100-px': '100px',
+        '110-px': '110px',
         '168-px': '168px',
         '192-px': '192px',
         '282-px': '282px',
-        '498-px': '498px',
+        '465-px': '465px',
         '756-px': '756px',
         '62-vh': '62vh',
         '68-vh': '68vh'
@@ -213,6 +223,7 @@ module.exports = {
         '138-px': '138px',
         '150-px': '150px',
         '160-px': '160px',
+        '176-px': '176px',
         '200-px': '200px',
         '246-px': '246px',
         '300-px': '300px',
@@ -265,6 +276,8 @@ module.exports = {
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
+        'header-1': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)',
+        'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)'
       },
       fontFamily: {
         'aktiv-grotesk': '"aktiv-grotesk", sans-serif'

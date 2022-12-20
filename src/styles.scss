@@ -15,11 +15,6 @@ p {
     @apply tw-m-0-px;
 }
 
-// Spinner
-.p-progress-spinner-circle {
-    @apply tw-animate-progress-spinner #{!important};
-}
-
 // Button CTA
 .p-button {
     @apply tw-w-[100%] tw-text-14-px tw-shadow-none tw-border-none tw-bg-btn-cta #{!important};
@@ -189,19 +184,55 @@ p {
     @apply tw-p-0 tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
 }
 
-@mixin spinner($height, $width) {
+@mixin spinner($height, $width, $animation) {
     &.p-progress-spinner {
-      @apply
-      tw-h-#{$height}
-      tw-w-#{$width};
+        @apply
+        tw-h-#{$height}
+        tw-w-#{$width};
     }
 
     .p-progress-spinner-circle {
-      @apply
-      tw-animate-progress-spinner
+        @apply
+        tw-animate-#{$animation} #{!important};
     }
 }
 
 .spinner-16 {
-    @include spinner('16-px', '16-px');
+    @include spinner('16-px', '16-px', 'progress-spinner');
+}
+
+.spinner-16-white {
+    @include spinner('16-px', '16-px', 'progress-spinner-cta');
+}
+
+.spinner-default {
+    @include spinner('100-px', '100-px', 'progress-spinner');
+}
+
+.p-skeleton {
+    @apply tw-bg-disabled-bg-color #{!important};
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+    @apply tw-border-none #{!important};
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+    @apply tw-border-none #{!important};
+}
+
+.p-toast .p-toast-message .p-toast-message-content {
+    @apply tw-border-0 tw-p-0 tw-text-white #{!important};
+}
+
+.p-toast .p-toast-message .p-toast-icon-close {
+    @apply tw-hidden #{!important};
+}
+
+.p-toast-icon-close-icon {
+    @apply tw-hidden #{!important};
+}
+
+.p-toast-message-content {
+    @apply tw-block #{!important};
 }

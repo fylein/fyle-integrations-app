@@ -1,8 +1,9 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload } from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
+import { orgMockData } from 'src/app/core/services/org/org.fixture';
+import { OrgService } from 'src/app/core/services/org/org.service';
 
 import { ConfigurationComponent } from './configuration.component';
 
@@ -10,6 +11,11 @@ describe('ConfigurationComponent', () => {
   let component: ConfigurationComponent;
   let fixture: ComponentFixture<ConfigurationComponent>;
   let formBuilder: FormBuilder;
+  let orgService: OrgService;
+
+  const service1 = {
+    getCachedOrg: () => orgMockData
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -18,7 +24,8 @@ describe('ConfigurationComponent', () => {
       ],
       declarations: [ ConfigurationComponent ],
       providers: [
-        FormBuilder
+        FormBuilder,
+        { provide: OrgService, useValue: service1 }
       ]
     })
     .compileComponents();
@@ -26,6 +33,7 @@ describe('ConfigurationComponent', () => {
     fixture = TestBed.createComponent(ConfigurationComponent);
     formBuilder = TestBed.inject(FormBuilder);
     component = fixture.componentInstance;
+    orgService = TestBed.inject(OrgService);
     component.additionalEmails = bambooHRMockConfigurationPayload.additional_email_options;
     component.bambooHrConfiguration = bambooHRMockConfiguration;
     fixture.detectChanges();

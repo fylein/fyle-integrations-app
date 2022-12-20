@@ -1,12 +1,15 @@
+<div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+<div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+
 <div class="tw-p-24-px tw-text-slightly-normal-text-color">
     <div class="tw-h-68-px tw-flex tw-justify-between">
         <div class="tw-flex">
-            <div class="tw-rounded-4-px tw-border-1-px tw-border-box-color">
-                <img src="assets/logos/bamboo-hr-logo.png" width="110px" height="40px" />
+            <div class="tw-rounded-4-px tw-border-1-px tw-border-box-color tw-flex tw-justify-center tw-bg-white tw-w-176-px">
+                <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="44px" class="tw-py-10-px tw-px-20-px" />
             </div>
             <div class="tw-pl-16-px tw-flex tw-flex-col">
                 <div class="tw-flex tw-pt-6-px">
-                    <p class="tw-text-18-px tw-font-500">BambooHR</p>
+                    <p class="tw-text-20-px tw-font-500">BambooHR</p>
                     <svg-icon-sprite *ngIf="isBambooConnected && !isLoading && bambooHrConfiguration?.recipe_status" pTooltip="Sync Data" tooltipPosition="right" src="sync" width="18px" height="14px" class="tw-cursor-pointer tw-ml-10-px tw-pt-6-px tw-text-faded-text-color" (click)="syncData()"></svg-icon-sprite>
                 </div>
                 <p *ngIf="!isBambooSetupInProgress" class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">Auto sync employee details between Fyle and Bamboo HR.</p>
@@ -19,8 +22,9 @@
         <div *ngIf="!isBambooSetupInProgress && !isLoading && !showErrorScreen" class="tw-flex tw-items-center">
             <button *ngIf="!isBambooConnected" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
                 Connect
+                <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
             </button>
-            <button *ngIf="isBambooConnected && bambooHrConfiguration?.recipe_status" pButton type="button" class="remove-bg disconnect !tw-bg-white !tw-text-mandatory-field-color" (click)="disconnect()">
+            <button *ngIf="isBambooConnected && bambooHrConfiguration?.recipe_status" pButton type="button" class="!tw-text-slightly-normal-text-color remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                 Disconnect
             </button>
         </div>
