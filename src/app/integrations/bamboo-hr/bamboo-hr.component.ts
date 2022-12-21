@@ -26,6 +26,8 @@ export class BambooHrComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  hideRefreshIcon: boolean;
+
   isConfigurationSaveInProgress: boolean;
 
   bambooHrData: BambooHr;
@@ -99,8 +101,11 @@ export class BambooHrComponent implements OnInit {
 
   syncEmployees(): void {
     this.trackingService.onClickEvent(ClickEvent.SYNC_BAMBOO_HR_EMPLOYEES);
-    this.isLoading = true;
-    this.bambooHrService.syncEmployees().subscribe(() => this.isLoading = false);
+    this.hideRefreshIcon = true;
+    this.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing Employees Started');
+    this.bambooHrService.syncEmployees().subscribe(() => {
+      this.hideRefreshIcon = false;
+    });
   }
 
   disconnectBambooHr(): void {
