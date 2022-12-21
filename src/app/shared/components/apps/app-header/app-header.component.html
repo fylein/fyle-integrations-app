@@ -12,7 +12,7 @@
                     <p class="tw-text-20-px tw-font-500">BambooHR</p>
                     <svg-icon-sprite *ngIf="isBambooConnected && !isLoading && bambooHrConfiguration?.recipe_status" pTooltip="Sync Data" tooltipPosition="right" src="sync" width="18px" height="14px" class="tw-cursor-pointer tw-ml-10-px tw-pt-6-px tw-text-faded-text-color" (click)="syncData()"></svg-icon-sprite>
                 </div>
-                <p *ngIf="!isBambooSetupInProgress" class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">Auto sync employee details between Fyle and Bamboo HR.</p>
+                <p *ngIf="!isBambooSetupInProgress" class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">Auto sync employee details between Bamboo HR and Fyle.</p>
                 <div *ngIf="isBambooSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
                     <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
                     <p class="tw-pl-10-px">We are syncing your data between your Fyle - Bamboo HR account and this may take a few seconds</p>
