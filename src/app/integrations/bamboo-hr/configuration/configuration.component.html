@@ -15,7 +15,7 @@
                     <div class="tw-flex tw-justify-between">
                         <div class="tw-flex">
                             <svg-icon-sprite src="document" width="18px" height="20px" class="tw-text-mandatory-field-color tw-mr-20-px"></svg-icon-sprite>
-                            <div class="tw-text-14-px tw-w-452-px">
+                            <div class="tw-text-14-px tw-w-360-px max-lg:tw-w-260-px">
                                 <p class="tw-text-slightly-normal-text-color">
                                     Send email notification to
                                 </p>
@@ -25,7 +25,7 @@
                             </div>
                         </div>
                         <div>
-                            <p-multiSelect formControlName="emails" styleClass="tw-w-27-vw max-lg:tw-w-20-vw tw-h-40-px" [options]="emails" [filter]="true"
+                            <p-multiSelect formControlName="emails" styleClass="tw-z-1 tw-w-27-vw max-lg:tw-w-20-vw tw-h-40-px" [options]="emails" [filter]="true"
                                 [filterBy]="'email,name'" defaultLabel="Select Email Address" optionLabel="email"
                                 display="chip">
                                 <ng-template let-value pTemplate="selectedItems">

@@ -83,6 +83,9 @@ module.exports = {
           '100%': { 'stroke': '#ffffff'}
         }
       },
+      zIndex: {
+        '1': '1',
+      },
       padding: {
         '2-px': '2px',
         '3-px': '3px',
@@ -226,6 +229,7 @@ module.exports = {
         '176-px': '176px',
         '200-px': '200px',
         '246-px': '246px',
+        '260-px': '260px',
         '300-px': '300px',
         '302-px': '302px',
         '320-px': '320px',
