@@ -24,6 +24,8 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() showErrorScreen: boolean;
 
+  @Input() hideRefreshIcon: boolean;
+
   constructor() { }
 
   syncData(): void {
