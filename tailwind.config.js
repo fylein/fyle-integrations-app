@@ -233,6 +233,7 @@ module.exports = {
         '360-px': '360px',
         '388-px': '388px',
         '420-px': '420px',
+        '452-px': '452px',
         '466-px': '466px',
         '14-vw': '14vw',
         '20-vw': '20vw',
@@ -272,7 +273,8 @@ module.exports = {
         'box-color': customColors['box-color'],
         'faded-text-color': customColors['faded-text-color'],
         'slightly-normal-text-color': customColors['slightly-normal-text-color'],
-        'check-box': customColors['check-box']
+        'check-box': customColors['check-box'],
+        'disabled-bg-color': customColors['disabled-bg-color']
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
@@ -284,7 +286,7 @@ module.exports = {
       },
       boxShadow: {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
-        'btn-cta-shadow': '0px 4px 4px rgba(44, 48, 78, 0.1)',
+        'btn-cta-shadow': '0px 4px 4px rgba(44, 48, 78, 0.1)'
       },
       dropShadow: {
       },
