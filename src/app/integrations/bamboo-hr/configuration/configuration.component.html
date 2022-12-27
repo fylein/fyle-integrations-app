@@ -1,149 +1,89 @@
-<div [formGroup]="cofigurationForm" class="tw-pt-20-px tw-flex tw-justify-center tw-items-center tw-flex-col">
-    <div class="tw-w-75-vw">
-        <div class="tw-bg-configuration-bg tw-border-separator tw-border-1-px tw-rounded-4-px">
-            <div class="tw-py-16-px tw-pl-24-px">
-                <p class="tw-text-slightly-normal-text-color tw-text-20-px tw-font-500">
-                    Configuration
-                </p>
-                <p class="tw-pt-8-px tw-text-sub-text-color tw-text-14-px">
-                    Set how you want your Fyle-BambooHR integration to work
-                </p>
-            </div>
+<div class="tw-pt-70-px tw-flex tw-justify-center tw-items-center tw-flex-col">
+    <div class="tw-w-75-vw tw-rounded-12-px tw-border-1-px tw-border-separator tw-shadow-app-card">
+        <div class="tw-p-24-px">
+            <p class="tw-text-18-px">Configuration</p>
+            <p class="tw-pt-8-px tw-text-14-px tw-text-sub-text-color">
+                Setup your Fyle Bamboo HR integration to sync employee details from Bamboo HR to Fyle and notify admins when the import fails
+            </p>
         </div>
 
-        <!-- Commenting for v2 scope -->
-        <!-- <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-my-16-px">
-            <div class="tw-p-24-px tw-flex tw-justify-between" [ngClass]="isEmployeeDimensionEnabled ? 'tw-pb-18-px' : ''">
-                <div>
-                    <p class="tw-text-slightly-normal-text-color tw-text-18-px tw-font-500">
-                        Map Employee Dimensions
-                    </p>
-                    <p class="tw-pt-8-px tw-text-faded-text-color tw-text-14-px">
-                        Map employee dimensions in Bamboo HR to a corresponding user field in Fyle to import
-                    </p>
-                </div>
-                <div>
-                    <p-inputSwitch></p-inputSwitch>
-                </div>
-            </div>
+        <p class="tw-h-1-px tw-w-[100%] tw-bg-separator"></p>
 
-            <p class="tw-h-1-px tw-w-[100%] tw-bg-separator tw-mb-16-px"></p>
-            <div class="tw-pl-24-px tw-pb-20-px">
-                <div class="tw-bg-info-section tw-h-46-px tw-flex tw-items-center tw-w-52-vw">
-                    <svg-icon-sprite src="info" width="16px" height="16px" class="tw-text-info tw-ml-14-px tw-mr-8-px"></svg-icon-sprite>
-                    <p class="tw-text-faded-text-color tw-text-14-px tw-pr-8-px">Default fields such as email, name and approving manager will be automatically imported.</p>
-                </div>
-            </div>
-
-            <div class="tw-flex tw-justify-center">
-                <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-w-45-vw tw-mb-20-px">
-                    <div class="tw-flex">
-                        <p class="tw-flex tw-flex-1 tw-pl-20-px tw-pt-20-px tw-text-slightly-normal-text-color">BambooHR Field</p>
-                        <p class="tw-flex tw-flex-1 tw-pt-20-px tw-text-slightly-normal-text-color ">Fyle Field</p>
-                    </div>
-                    <p class="tw-h-1-px tw-w-[100%] tw-bg-separator tw-mt-16-px tw-mb-20-px"></p>
-
-                    <div class="tw-flex tw-h-40-px tw-items-center tw-mb-20-px">
-                        <p class="tw-flex-auto tw-pl-20-px tw-text-sub-text-color tw-text-14-px">Dept</p>
-                        <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-20-vw tw-h-40-px tw-mr-20-px" [options]="frequencyIntervals"
-                        [autoDisplayFirst]="false" optionLabel="label" optionValue="value"
-                        placeholder="Select Frequency"></p-dropdown>
-                    </div>
-                    <div class="tw-flex tw-h-40-px tw-items-center tw-mb-20-px">
-                        <p class="tw-flex-auto tw-pl-20-px tw-text-sub-text-color tw-text-14-px">Dept</p>
-                        <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-20-vw tw-h-40-px tw-mr-20-px" [options]="frequencyIntervals"
-                        [autoDisplayFirst]="false" optionLabel="label" optionValue="value"
-                        placeholder="Select Frequency"></p-dropdown>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-        <!-- Frequency is not needed, preserving stylings so that it could be used in some other pages without much effort -->
-        <!-- <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-my-16-px">
-            <div class="tw-p-24-px tw-flex tw-justify-between">
-                <div>
-                    <p class="tw-text-slightly-normal-text-color tw-text-18-px tw-font-500">
-                        Frequency of employee import
-                    </p>
-                    <p class="tw-pt-8-px tw-text-faded-text-color tw-text-14-px tw-w-360-px">
-                        Select the frequency to import employees from BambooHR to Fyle
-                    </p>
-                </div>
-                <div>
-                    <p-dropdown formControlName="frequencyInterval" styleClass="tw-w-27-vw max-lg:tw-w-20-vw tw-h-40-px" [options]="frequencyIntervals"
-                        [autoDisplayFirst]="false" optionLabel="label" optionValue="value"
-                        placeholder="Select Frequency"></p-dropdown>
-                </div>
-            </div>
-        </div> -->
-
-        <div class="tw-border-separator tw-border-1-px tw-rounded-4-px tw-my-16-px">
-            <div class="tw-p-24-px tw-flex tw-justify-between">
-                <div>
-                    <p class="tw-text-slightly-normal-text-color tw-text-18-px tw-font-500">
-                        Notification updates upon failure
-                    </p>
-                    <p class="tw-pt-8-px tw-text-faded-text-color tw-text-14-px tw-w-360-px">
-                        As an email to receive notifications upon import failure or intergration time out
-                    </p>
-                </div>
-                <div>
-                    <p-multiSelect formControlName="emails" styleClass="tw-w-27-vw max-lg:tw-w-20-vw tw-h-40-px" [options]="emails" [filter]="true"
-                        [filterBy]="'email,name'" defaultLabel="Select Email Address" optionLabel="email"
-                        display="chip">
-                        <ng-template let-value pTemplate="selectedItems">
-                            <div *ngIf="selectedEmail"
-                                class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
-                                <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px">{{ selectedEmail }}</p>
-                                <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
-                                <svg-icon-sprite (click)="removeEmail()" src="close" width="10px" height="10px"
-                                    class="tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color"></svg-icon-sprite>
-                            </div>
-                            <div *ngIf="selectedEmail && cofigurationForm.value.emails.length > 1" class="tw-pl-8-px">
-                                <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-disabled-bg-color tw-text-12-px tw-text-faded-text-color tw-rounded-12-px">
-                                    +{{ cofigurationForm.value.emails.length - 1 }}
+        <div class="tw-p-24-px">
+            <div class="tw-rounded-12-px tw-border-1-px tw-border-disabled-bg-color">
+                <div class="tw-p-24-px">
+                    <div class="tw-flex tw-justify-between">
+                        <div class="tw-flex">
+                            <svg-icon-sprite src="document" width="18px" height="20px" class="tw-text-mandatory-field-color tw-mr-20-px"></svg-icon-sprite>
+                            <div class="tw-text-14-px tw-w-360-px max-lg:tw-w-260-px">
+                                <p class="tw-text-slightly-normal-text-color">
+                                    Send email notification to
+                                </p>
+                                <p class="tw-text-faded-text-color tw-pt-8-px">
+                                    Select or add an email address to notify upon import failure or integration error.
                                 </p>
                             </div>
-                            <div *ngIf="!selectedEmail" class="tw-text-placeholder">
-                                Select Email Address
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="filter" let-options="options">
-                            <div *ngIf="emails.length" class="p-inputgroup">
-                                <div class="p-input-icon-left">
-                                    <i class="pi pi-search"></i>
-                                    <input type="text" class="!tw-h-32-px !tw-w-300-px" (keyup)="options.filter($event)"
-                                        pInputText placeholder="Search by Name / Email" formControlName="search" />
-                                    <svg-icon-sprite *ngIf="10 > 0" src="clear" width="16px" height="16px"
-                                        class="tw-text-faded-text-color tw-absolute tw-top-10-px tw-right-12-px tw-cursor-pointer"
-                                        (click)="clearSearch(options)">
+                        </div>
+                        <div>
+                            <p-multiSelect formControlName="emails" styleClass="tw-z-1 tw-w-27-vw max-lg:tw-w-20-vw tw-h-40-px" [options]="emails" [filter]="true"
+                                [filterBy]="'email,name'" defaultLabel="Select Email Address" optionLabel="email"
+                                display="chip">
+                                <ng-template let-value pTemplate="selectedItems">
+                                    <div *ngIf="selectedEmail"
+                                        class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
+                                        <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px">{{ selectedEmail }}</p>
+                                        <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
+                                        <svg-icon-sprite (click)="removeEmail()" src="close" width="10px" height="10px"
+                                            class="tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color"></svg-icon-sprite>
+                                    </div>
+                                    <div *ngIf="selectedEmail && cofigurationForm.value.emails.length > 1" class="tw-pl-8-px">
+                                        <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-disabled-bg-color tw-text-12-px tw-text-faded-text-color tw-rounded-12-px">
+                                            +{{ cofigurationForm.value.emails.length - 1 }}
+                                        </p>
+                                    </div>
+                                    <div *ngIf="!selectedEmail" class="tw-text-placeholder">
+                                        Select Email Address
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="filter" let-options="options">
+                                    <div *ngIf="emails.length" class="p-inputgroup">
+                                        <div class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input type="text" class="!tw-h-32-px !tw-w-300-px" (keyup)="options.filter($event)"
+                                                pInputText placeholder="Search by Name / Email" formControlName="search" />
+                                            <svg-icon-sprite *ngIf="10 > 0" src="clear" width="16px" height="16px"
+                                                class="tw-text-faded-text-color tw-absolute tw-top-10-px tw-right-12-px tw-cursor-pointer"
+                                                (click)="clearSearch(options)">
+                                            </svg-icon-sprite>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-user pTemplate="item">
+                                    <div>
+                                        <p class="tw-text-sub-text-color tw-text-14-px">{{ user.name }}</p>
+                                        <p class="tw-pt-4-px tw-text-placeholder tw-text-12-px">{{ user.email }}</p>
+                                    </div>
+                                </ng-template>
+                            </p-multiSelect>
+
+                            <div class="tw-flex tw-pt-24-px tw-w-27-vw max-lg:tw-w-20-vw">
+                                <p class="tw-text-slightly-normal-text-color tw-text-14-px tw-pr-12-px">or</p>
+                                <div class="tw-flex tw-cursor-pointer" (click)="openDialog()">
+                                    <svg-icon-sprite src="add" width="18px" height="18px"
+                                        class="tw-text-mandatory-field-color">
                                     </svg-icon-sprite>
+                                    <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">Add new Email address</p>
                                 </div>
                             </div>
-                        </ng-template>
-                        <ng-template let-user pTemplate="item">
-                            <div>
-                                <p class="tw-text-sub-text-color tw-text-14-px">{{ user.name }}</p>
-                                <p class="tw-pt-4-px tw-text-placeholder tw-text-12-px">{{ user.email }}</p>
-                            </div>
-                        </ng-template>
-                    </p-multiSelect>
-
-                    <div class="tw-flex tw-pt-12-px tw-w-27-vw max-lg:tw-w-20-vw">
-                        <p class="tw-text-faded-text-color tw-text-12-px tw-pr-12-px">or</p>
-                        <div class="tw-flex tw-cursor-pointer" (click)="openDialog()">
-                            <svg-icon-sprite src="add" width="18px" height="18px"
-                                class="tw-text-mandatory-field-color">
-                            </svg-icon-sprite>
-                            <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">Add new Email address</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="tw-flex tw-justify-end tw-pt-12-px tw-pb-48-px">
+        <p class="tw-h-1-px tw-w-[100%] tw-bg-separator"></p>
+
+        <div class="tw-flex tw-justify-end tw-p-24-px">
             <div>
                 <button [disabled]="!cofigurationForm.valid" pButton type="button" class="remove-bg p-button-raised" [ngClass]="isConfigurationSaveInProgress ? '!tw-bg-cta-disabled !tw-cursor-no-drop' : '!tw-bg-mandatory-field-color'" (click)="saveSettings()">
                     {{ isConfigurationSaveInProgress ? 'Saving': 'Save' }}

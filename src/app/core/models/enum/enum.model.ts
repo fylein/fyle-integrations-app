@@ -16,7 +16,7 @@ export enum InAppIntegration {
 }
 
 export enum RedirectLink {
-    BAMBOO_HR = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+    BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration'
 }
 
 export enum ToastSeverity {
