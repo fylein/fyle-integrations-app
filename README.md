@@ -24,5 +24,11 @@ Follow instructions mentioned in [Integrations Central](https://github.com/fylei
 * Run app
 
     ```bash
-    npm start
+    ng serve
+    ```
+
+* App url
+
+    ```bash
+    http://localhost:4200/auth/redirect
     ```
