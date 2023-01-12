@@ -14,28 +14,28 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: LandingComponent,
-        // canActivate: [WorkspacesGuard]
+        component: LandingComponent
+        // CanActivate: [WorkspacesGuard]
       },
       {
         path: 'export_settings',
-        component: OnboardingExportSettingComponent,
-        // canActivate: [WorkspacesGuard]
+        component: OnboardingExportSettingComponent
+        // CanActivate: [WorkspacesGuard]
       },
       {
-        path: 'field_mapping',
-        component: OnboardingFieldSettingComponent,
-        // canActivate: [WorkspacesGuard]
+        path: 'field_mappings',
+        component: OnboardingFieldSettingComponent
+        // CanActivate: [WorkspacesGuard]
       },
       {
         path: 'advanced_settings',
-        component: OnboardingAdvancedSettingComponent,
-        // canActivate: [WorkspacesGuard]
+        component: OnboardingAdvancedSettingComponent
+        // CanActivate: [WorkspacesGuard]
       },
       {
         path: 'done',
-        component: OnboardingDoneComponent,
-        // canActivate: [WorkspacesGuard]
+        component: OnboardingDoneComponent
+        // CanActivate: [WorkspacesGuard]
       }
     ]
   }

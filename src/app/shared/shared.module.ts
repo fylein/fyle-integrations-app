@@ -69,7 +69,8 @@ import { AddEmailDialogComponent } from './qbd/components/configuration/advanced
   exports: [
     LoaderComponent,
     AppHeaderComponent,
-    ErrorComponent
+    ErrorComponent,
+    PostOnboardingHeaderComponent
   ]
 })
 export class SharedModule { }
