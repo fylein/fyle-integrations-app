@@ -70,7 +70,26 @@ import { AddEmailDialogComponent } from './qbd/components/configuration/advanced
     LoaderComponent,
     AppHeaderComponent,
     ErrorComponent,
-    PostOnboardingHeaderComponent
+    TrimCharacterPipe,
+    DateFilterPipe,
+    SnakeCaseToSpaceCasePipe,
+    PaginatorComponent,
+    MandatoryFieldComponent,
+    MandatoryErrorMessageComponent,
+    ZeroStateWithIllustrationComponent,
+    PostOnboardingHeaderComponent,
+    DateFilterComponent,
+    OnboardingStepperComponent,
+    ExportSettingComponent,
+    AdvancedSettingComponent,
+    FieldMappingComponent,
+    ConfigurationToggleFieldComponent,
+    ConfigurationSelectFieldComponent,
+    ConfigurationRadioFieldComponent,
+    ConfigurationStepFooterComponent,
+    ConfigurationStepHeaderComponent,
+    EmailMultiSelectFieldComponent,
+    AddEmailDialogComponent
   ]
 })
 export class SharedModule { }
