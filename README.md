@@ -1,9 +1,9 @@
 # Fyle Integrations Settings App
 Frontend Repository for Fyle Integrations Settings Dashboard App
 
-## Pre-request repos
+## Pre-requisite repo
 required for running Integration setting app
-[Integration setting api](https://github.com/fylein/fyle-integrations-settings-api)
+[Integration Settings API](https://github.com/fylein/fyle-integrations-settings-api)
 
 required based on the your needs
 [qbd-api](https://github.com/fylein/fyle-qbd-api) while working in QBD
@@ -31,10 +31,10 @@ Follow instructions mentioned in [Integrations Central](https://github.com/fylei
 * Run app
 
     ```bash
-    ng serve
+    npm start
     ```
 
-* App url
+* Login to app
 
     ```bash
     http://localhost:4200/auth/redirect
