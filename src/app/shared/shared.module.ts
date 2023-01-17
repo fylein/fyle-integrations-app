@@ -77,7 +77,7 @@ import { AddEmailDialogComponent } from './components/qbd/configuration/advanced
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
     ZeroStateWithIllustrationComponent,
-    PostOnboardingHeaderComponent,
+    QbdPostOnboardingHeaderComponent,
     DateFilterComponent,
     OnboardingStepperComponent,
     ExportSettingComponent,
