@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PostOnboardingHeaderComponent } from './post-onboarding-header.component';
+import { QbdPostOnboardingHeaderComponent } from './qbd-post-onboarding-header.component';
 
 describe('PostOnboardingHeaderComponent', () => {
-  let component: PostOnboardingHeaderComponent;
-  let fixture: ComponentFixture<PostOnboardingHeaderComponent>;
+  let component: QbdPostOnboardingHeaderComponent;
+  let fixture: ComponentFixture<QbdPostOnboardingHeaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PostOnboardingHeaderComponent ]
+      declarations: [ QbdPostOnboardingHeaderComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PostOnboardingHeaderComponent);
+    fixture = TestBed.createComponent(QbdPostOnboardingHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

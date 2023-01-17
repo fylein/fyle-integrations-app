@@ -16,20 +16,20 @@ import { SnakeCaseToSpaceCasePipe } from './pipes/snake-case-to-space-case.pipe'
 import { PaginatorComponent } from './helper/paginator/paginator.component';
 import { MandatoryFieldComponent } from './helper/mandatory-field/mandatory-field.component';
 import { MandatoryErrorMessageComponent } from './helper/mandatory-error-message/mandatory-error-message.component';
-import { ZeroStateWithIllustrationComponent } from './qbd/components/core/zero-state-with-illustration/zero-state-with-illustration.component';
-import { PostOnboardingHeaderComponent } from './qbd/components/core/post-onboarding-header/post-onboarding-header.component';
-import { DateFilterComponent } from './qbd/components/helper/date-filter/date-filter.component';
-import { OnboardingStepperComponent } from './qbd/components/helper/onboarding-stepper/onboarding-stepper.component';
-import { ExportSettingComponent } from './qbd/components/configuration/export-setting/export-setting.component';
-import { AdvancedSettingComponent } from './qbd/components/configuration/advanced-setting/advanced-setting.component';
-import { FieldMappingComponent } from './qbd/components/configuration/field-mapping/field-mapping.component';
-import { ConfigurationToggleFieldComponent } from './qbd/components/configuration/configuration-toggle-field/configuration-toggle-field.component';
-import { ConfigurationSelectFieldComponent } from './qbd/components/configuration/configuration-select-field/configuration-select-field.component';
-import { ConfigurationRadioFieldComponent } from './qbd/components/configuration/configuration-radio-field/configuration-radio-field.component';
-import { ConfigurationStepFooterComponent } from './qbd/components/configuration/configuration-step-footer/configuration-step-footer.component';
-import { ConfigurationStepHeaderComponent } from './qbd/components/configuration/configuration-step-header/configuration-step-header.component';
-import { EmailMultiSelectFieldComponent } from './qbd/components/configuration/email-multi-select-field/email-multi-select-field.component';
-import { AddEmailDialogComponent } from './qbd/components/configuration/advanced-setting/add-email-dialog/add-email-dialog.component';
+import { ZeroStateWithIllustrationComponent } from './components/qbd/core/zero-state-with-illustration/zero-state-with-illustration.component';
+import { QbdPostOnboardingHeaderComponent } from './components/qbd/core/qbd-post-onboarding-header/qbd-post-onboarding-header.component';
+import { DateFilterComponent } from './components/qbd/helper/date-filter/date-filter.component';
+import { OnboardingStepperComponent } from './components/qbd/helper/onboarding-stepper/onboarding-stepper.component';
+import { ExportSettingComponent } from './components/qbd/configuration/export-setting/export-setting.component';
+import { AdvancedSettingComponent } from './components/qbd/configuration/advanced-setting/advanced-setting.component';
+import { FieldMappingComponent } from './components/qbd/configuration/field-mapping/field-mapping.component';
+import { ConfigurationToggleFieldComponent } from './components/qbd/configuration/configuration-toggle-field/configuration-toggle-field.component';
+import { ConfigurationSelectFieldComponent } from './components/qbd/configuration/configuration-select-field/configuration-select-field.component';
+import { ConfigurationRadioFieldComponent } from './components/qbd/configuration/configuration-radio-field/configuration-radio-field.component';
+import { ConfigurationStepFooterComponent } from './components/qbd/configuration/configuration-step-footer/configuration-step-footer.component';
+import { ConfigurationStepHeaderComponent } from './components/qbd/configuration/configuration-step-header/configuration-step-header.component';
+import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
+import { AddEmailDialogComponent } from './components/qbd/configuration/advanced-setting/add-email-dialog/add-email-dialog.component';
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import { AddEmailDialogComponent } from './qbd/components/configuration/advanced
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
     ZeroStateWithIllustrationComponent,
-    PostOnboardingHeaderComponent,
+    QbdPostOnboardingHeaderComponent,
     DateFilterComponent,
     OnboardingStepperComponent,
     ExportSettingComponent,
