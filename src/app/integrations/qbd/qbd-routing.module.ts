@@ -9,8 +9,13 @@ const routes: Routes = [
     component: QbdComponent,
     children: [
       {
-        path: 'landing',
-        component: LandingComponent
+        path: 'onboarding',
+        loadChildren: () => import('./onboarding/onboarding.module').then(m => m.OnboardingModule)
+      },
+      {
+        path: 'main',
+        loadChildren: () => import('./main/main.module').then(m => m.MainModule)
+        // CanActivate: [WorkspacesGuard]
       }
     ]
   }

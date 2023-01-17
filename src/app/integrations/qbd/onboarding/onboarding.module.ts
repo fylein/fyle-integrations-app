@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 import { OnboardingRoutingModule } from './onboarding-routing.module';
 
 
@@ -8,7 +8,8 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    OnboardingRoutingModule
+    OnboardingRoutingModule,
+    SharedModule
   ]
 })
 export class OnboardingModule { }

@@ -11,6 +11,7 @@ import { OnboardingDoneComponent } from './onboarding/onboarding-done/onboarding
 import { OnboardingExportSettingComponent } from './onboarding/onboarding-export-setting/onboarding-export-setting.component';
 import { OnboardingFieldSettingComponent } from './onboarding/onboarding-field-setting/onboarding-field-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding/onboarding-advanced-setting/onboarding-advanced-setting.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { OnboardingAdvancedSettingComponent } from './onboarding/onboarding-adva
   ],
   imports: [
     CommonModule,
-    QbdRoutingModule
+    QbdRoutingModule,
+    SharedModule
   ]
 })
 export class QbdModule { }
