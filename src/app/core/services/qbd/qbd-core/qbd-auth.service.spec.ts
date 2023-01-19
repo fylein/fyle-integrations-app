@@ -10,7 +10,7 @@ describe('QbdAuthService', () => {
   let service: QbdAuthService;
   let injector: TestBed;
   let httpMock: HttpTestingController;
-  const API_BASE_URL = environment.qbd_api_url
+  const API_BASE_URL = environment.qbd_api_url;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -56,5 +56,5 @@ describe('QbdAuthService', () => {
       url: `${API_BASE_URL}/auth/login_with_refresh_token/`
     });
     req.flush(qbdLoginResponse);
-  })
+  });
 });

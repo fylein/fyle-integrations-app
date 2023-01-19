@@ -127,12 +127,11 @@ describe('OrgService', () => {
   });
 
   it("getCachedOrg service check", () => {
-    const org = service.getCachedOrg()
-    if (org == null) { 
-      expect(org).toBeNull
+    const org = service.getCachedOrg();
+    if (org === null) {
+      expect(org).toBeNull;
+    } else {
+      expect(org).toBeGreaterThan(0);
     }
-    else {
-      expect(org).toBeGreaterThan(0)
-    }
-  })
+  });
 });
