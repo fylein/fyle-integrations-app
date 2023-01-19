@@ -125,4 +125,14 @@ describe('OrgService', () => {
 
     req.flush(orgMockData);
   });
+
+  it("getCachedOrg service check", () => {
+    const org = service.getCachedOrg()
+    if (org == null) { 
+      expect(org).toBeNull
+    }
+    else {
+      expect(org).toBeGreaterThan(0)
+    }
+  })
 });
