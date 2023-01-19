@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { loginResponse } from 'src/app/core/interceptor/jwt.fixture';
@@ -11,6 +11,9 @@ import { LoginComponent } from './login.component';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let authService: AuthService;
+  let router: Router;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
 
   const service1 = {
     checkLoginStatusAndLogout: () => undefined,
@@ -33,7 +36,8 @@ describe('LoginComponent', () => {
             })
           }
         },
-        { provide: AuthService, useValue: service1}
+        { provide: AuthService, useValue: service1},
+        { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();
@@ -41,9 +45,14 @@ describe('LoginComponent', () => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    router = TestBed.inject(Router);
+    authService = TestBed.inject(AuthService);
+    fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    fixture.detectChanges();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations']);
   });
 });

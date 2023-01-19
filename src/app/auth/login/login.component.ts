@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AuthService } from 'src/app/core/services/core/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
-
+import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private qbdAuthService: QbdAuthService
   ) { }
 
   private saveUserProfileAndNavigate(code: string): void {
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
         'org_name': response.user.org_name
       };
       this.userService.storeUserProfile(user);
-
+      this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
       this.router.navigate(['/integrations']);
     });
   }
