@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
   selector: 'app-landing',
@@ -7,7 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
-  constructor() { }
+  RedirectLink = RedirectLink;
+
+  isQBDSetupInProgress: boolean;
+
+  isQBDConnected: boolean;
+
+  isLoading: boolean;
+
+  constructor(
+    public windowService: WindowService
+  ) { }
 
   ngOnInit(): void {
   }

@@ -13,7 +13,7 @@
     </ng-template>
 </p-toast>
 
-<app-app-header [isLoading]="isLoading" [hideRefreshIcon]="hideRefreshIcon" [showErrorScreen]="showErrorScreen" [bambooHrConfiguration]="bambooHrConfiguration" [isBambooSetupInProgress]="isBambooSetupInProgress" [isBambooConnected]="isBambooConnected" (openDialog)="openDialog()" (disconnectBambooHr)="disconnectBambooHr()" (syncEmployees)="syncEmployees()"></app-app-header>
+<app-app-header [appHeader]="'BambooHR'" [isLoading]="isLoading" [hideRefreshIcon]="hideRefreshIcon" [showErrorScreen]="showErrorScreen" [bambooHrConfiguration]="bambooHrConfiguration" [isIntegrationSetupInProgress]="isBambooSetupInProgress" [isIntegrationConnected]="isBambooConnected" (openDialog)="openDialog()" (disconnectBambooHr)="disconnectBambooHr()" (syncEmployees)="syncEmployees()"></app-app-header>
 
 <app-landing *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"></app-landing>
 

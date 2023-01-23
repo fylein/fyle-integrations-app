@@ -54,3 +54,11 @@ export enum ClickEvent {
     SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
     ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually'
 }
+
+export enum OnboardingState {
+    CONNECTION = 'CONNECTION',
+    EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+    FIELD_MAPPING = 'IMPORT_SETTINGS',
+    ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+    COMPLETE = 'COMPLETE'
+  }
