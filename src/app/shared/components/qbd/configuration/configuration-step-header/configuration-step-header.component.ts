@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
   selector: 'app-configuration-step-header',
@@ -7,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigurationStepHeaderComponent implements OnInit {
 
-  constructor() { }
+  @Input() headerText: string;
+
+  @Input() contentText: string;
+
+  RedirectLink = RedirectLink;
+
+  constructor(
+    public windowService: WindowService
+  ) { }
 
   ngOnInit(): void {
   }
