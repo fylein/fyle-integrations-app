@@ -242,20 +242,8 @@ p {
       @apply tw-pb-100-px ;
     }
   
-    // &--onboarding-section {
-    //   margin: 0px 50px;
-    // }
-  
-    // &--post-onboarding-section {
-    //   margin-top: 100px;
-    // }
-  
     &--contents {
-        box-sizing: border-box;
-        background: #FFFFFF;
-        border: 1px solid #ECECEE;
+        @apply tw-box-border tw-bg-white tw-border-separator tw-border-radius-12-px tw-my-0-px tw-mx-50-px ;
         box-shadow: 0px 2px 10px rgba(44, 48, 78, 0.1);
-        border-radius: 12px;
-        margin: 0px 50px;
     }
 }
