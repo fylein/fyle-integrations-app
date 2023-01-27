@@ -2,20 +2,20 @@
 <div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 
 <div class="tw-p-24-px tw-text-slightly-normal-text-color">
-    <div *ngIf="appHeader === 'BambooHR'" class="tw-h-68-px tw-flex tw-justify-between">
+    <div class="tw-h-68-px tw-flex tw-justify-between">
             <div class="tw-flex">
                 <div class="tw-rounded-4-px tw-border-1-px tw-border-box-color tw-flex tw-justify-center tw-bg-white tw-w-176-px">
                     <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="44px" class="tw-py-10-px tw-px-20-px" />
                 </div>
                 <div class="tw-pl-16-px tw-flex tw-flex-col">
                     <div class="tw-flex tw-pt-6-px">
-                        <p class="tw-text-20-px tw-font-500">BambooHR</p>
+                        <p class="tw-text-20-px tw-font-500">{{ appName }}</p>
                         <svg-icon-sprite *ngIf="isIntegrationConnected && !isLoading && bambooHrConfiguration?.recipe_status && !hideRefreshIcon" pTooltip="Sync Data" tooltipPosition="right" src="sync" width="18px" height="14px" class="tw-cursor-pointer tw-ml-10-px tw-pt-6-px tw-text-faded-text-color" (click)="syncData()"></svg-icon-sprite>
                     </div>
-                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">Auto sync employee details between Bamboo HR and Fyle.</p>
+                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">{{ appDesc }}</p>
                     <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
                         <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
-                        <p class="tw-pl-10-px">We are syncing your data between your Fyle - Bamboo HR account and this may take a few seconds</p>
+                        <p class="tw-pl-10-px">We are syncing your data between your Fyle - {{ appName }} account and this may take a few seconds</p>
                     </div>
                 </div>
             </div>
@@ -27,31 +27,12 @@
                 <button *ngIf="isIntegrationConnected && bambooHrConfiguration?.recipe_status" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                     Disconnect
                 </button>
-            </div>
-        </div>
-        <div *ngIf="appHeader === 'QBD'" class="tw-h-68-px tw-flex tw-justify-between">
-            <div class="tw-flex">
-                <div class="tw-rounded-4-px tw-border-1-px tw-border-box-color tw-flex tw-justify-center tw-bg-white tw-w-176-px">
-                    <img src="assets/logos/quickbooks-desktop.svg" width="160px" height="44px" class="tw-py-10-px tw-px-20-px" />
-                </div>
-                <div class="tw-pl-16-px tw-flex tw-flex-col">
-                    <div class="tw-flex tw-pt-6-px">
-                        <p class="tw-text-20-px tw-font-500">QuickBooks Desktop</p>
-                    </div>
-                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">Generate IIF file to export the expenses from Fyle to QBD.</p>
-                    <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
-                        <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
-                        <p class="tw-pl-10-px">Generate IIF file to export the expenses from Fyle to QBD.</p>
-                    </div>
-                </div>
-            </div>
-            <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center">
-                <button *ngIf="!isIntegrationConnected" pButton type="button" class="p-button-raised" (click)="connectQBD()">
+                <button *ngIf="appName === 'QuickBooks Desktop'" pButton type="button" class="p-button-raised" (click)="connectQBD()">
                     Start
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
             </div>
-    </div>
+        </div>
 </div>
 
 <p class="tw-h-1-px tw-w-[100%] tw-bg-separator"></p>

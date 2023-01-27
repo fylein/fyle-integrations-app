@@ -55,10 +55,10 @@ export enum ClickEvent {
     ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually'
 }
 
-export enum OnboardingState {
+export enum QBDOnboardingState {
     CONNECTION = 'CONNECTION',
     EXPORT_SETTINGS = 'EXPORT_SETTINGS',
-    FIELD_MAPPING = 'IMPORT_SETTINGS',
+    FIELD_MAPPING = 'FIELD_MAPPING',
     ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
     COMPLETE = 'COMPLETE'
   }

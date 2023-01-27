@@ -24,7 +24,7 @@ describe('QbdWorkspaceService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('qbdCreateWorkspace service check', () => {
+  it('postQBDWorkspace service check', () => {
     const workspaceResponse = {
       "id": 1,
       "name": "Anagha Org",
@@ -36,7 +36,7 @@ describe('QbdWorkspaceService', () => {
       "updated_at": "2023-01-23T05:37:56.908051Z",
       "user": [1]
     };
-    service.qbdCreateWorkspace().subscribe((value) => {
+    service.postQBDWorkspace().subscribe((value) => {
       const responseKeys = Object.keys(workspaceResponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);
@@ -48,7 +48,7 @@ describe('QbdWorkspaceService', () => {
     req.flush(workspaceResponse);
   });
 
-  it('qbdGetWorkspace service check', () => {
+  it('getQBDWorkspace service check', () => {
     const workspaceResponse = {
       "id": 1,
       "name": "Anagha Org",
@@ -60,7 +60,7 @@ describe('QbdWorkspaceService', () => {
       "updated_at": "2023-01-23T05:37:56.908051Z",
       "user": [1]
     };
-    service.qbdGetWorkspace("orHVw3ikkCxJ").subscribe((value) => {
+    service.getQBDWorkspace("orHVw3ikkCxJ").subscribe((value) => {
       const responseKeys = Object.keys(workspaceResponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);

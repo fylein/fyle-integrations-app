@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { OnboardingState } from 'src/app/core/models/enum/enum.model';
+import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
@@ -36,24 +36,24 @@ export class QbdComponent implements OnInit {
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/qbd') {
       const onboardingStateComponentMap = {
-        [OnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
-        [OnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/export_settings',
-        [OnboardingState.FIELD_MAPPING]: '/integrations/qbd/onboarding/import_settings',
-        [OnboardingState.ADVANCED_CONFIGURATION]: '/integrations/qbd/onboarding/advanced_settings',
-        [OnboardingState.COMPLETE]: '/integrations/qbd/main'
+        [QBDOnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
+        [QBDOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/export_settings',
+        [QBDOnboardingState.FIELD_MAPPING]: '/integrations/qbd/onboarding/import_settings',
+        [QBDOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/qbd/onboarding/advanced_settings',
+        [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
 
-      this.router.navigateByUrl(onboardingStateComponentMap[OnboardingState.CONNECTION]);
+      this.router.navigateByUrl(onboardingStateComponentMap[QBDOnboardingState.CONNECTION]);
     }
   }
 
   getOrCreateWorkspace(): Promise<Workspace> {
-    return this.workspaceService.qbdGetWorkspace(this.user.org_id).toPromise().then((workspaces) => {
+    return this.workspaceService.getQBDWorkspace(this.user.org_id).toPromise().then((workspaces) => {
       if (workspaces?.id) {
         return workspaces;
       }
 
-      return this.workspaceService.qbdCreateWorkspace().toPromise().then((workspaces: any) => {
+      return this.workspaceService.postQBDWorkspace().toPromise().then((workspaces: any) => {
         return workspaces;
       });
     });
@@ -64,8 +64,7 @@ export class QbdComponent implements OnInit {
     this.getOrCreateWorkspace().then((workspace: Workspace) => {
       this.workspace = workspace;
       this.storageService.set('workspaceId', this.workspace.id);
-      this.storageService.set('onboardingState', 'Landing');
-      this.storageService.set('workspaceCreatedAt', workspace.created_at);
+      this.storageService.set('QBDOnboardingState', 'Landing');
       this.isLoading = false;
       this.navigate();
     });

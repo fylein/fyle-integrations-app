@@ -20,8 +20,8 @@ describe('QbdComponent', () => {
     };
     localStorage.setItem('user', JSON.stringify(localStorageDump));
     const service1 = {
-      qbdGetWorkspace: () => of(workspaceResponse),
-      qbdCreateWorkspace: () => of(workspaceResponse)
+      getQBDWorkspace: () => of(workspaceResponse),
+      postQBDWorkspace: () => of(workspaceResponse)
     };
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule, HttpClientTestingModule],
@@ -43,7 +43,7 @@ describe('QbdComponent', () => {
   });
 
   it('ngOnIng function check', async () => {
-    spyOn(workspace, 'qbdGetWorkspace').and.returnValue(await Promise.resolve(of()));
+    spyOn(workspace, 'getQBDWorkspace').and.returnValue(await Promise.resolve(of()));
     expect(await (component as any).getOrCreateWorkspace()).toBeTruthy();
   });
 });
