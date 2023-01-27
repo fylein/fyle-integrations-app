@@ -21,7 +21,7 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() appName: string;
 
-  @Input() appDesc: string;
+  @Input() appDescription: string;
 
   @Input() isLoading: boolean;
 
