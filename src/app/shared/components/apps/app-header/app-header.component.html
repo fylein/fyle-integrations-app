@@ -12,7 +12,7 @@
                         <p class="tw-text-20-px tw-font-500">{{ appName }}</p>
                         <svg-icon-sprite *ngIf="isIntegrationConnected && !isLoading && bambooHrConfiguration?.recipe_status && !hideRefreshIcon" pTooltip="Sync Data" tooltipPosition="right" src="sync" width="18px" height="14px" class="tw-cursor-pointer tw-ml-10-px tw-pt-6-px tw-text-faded-text-color" (click)="syncData()"></svg-icon-sprite>
                     </div>
-                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">{{ appDesc }}</p>
+                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-sub-text-color tw-pt-8-px tw-text-14-px">{{ appDescription }}</p>
                     <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
                         <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
                         <p class="tw-pl-10-px">We are syncing your data between your Fyle - {{ appName }} account and this may take a few seconds</p>
@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center">
-                <button *ngIf="!isIntegrationConnected" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
+                <button *ngIf="!isIntegrationConnected && appName !== 'QuickBooks Desktop'" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
                     Connect
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
