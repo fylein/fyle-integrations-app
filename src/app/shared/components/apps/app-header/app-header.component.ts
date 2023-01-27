@@ -19,7 +19,9 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() isIntegrationSetupInProgress: boolean;
 
-  @Input() appHeader: string;
+  @Input() appName: string;
+
+  @Input() appDesc: string;
 
   @Input() isLoading: boolean;
 

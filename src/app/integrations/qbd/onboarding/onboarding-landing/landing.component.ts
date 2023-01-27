@@ -11,11 +11,11 @@ export class LandingComponent implements OnInit {
 
   RedirectLink = RedirectLink;
 
-  isQBDSetupInProgress: boolean;
+  isQBDSetupInProgress: boolean = false;
 
-  isQBDConnected: boolean;
+  isQBDConnected: boolean = false;
 
-  isLoading: boolean;
+  isLoading: boolean = false;
 
   constructor(
     public windowService: WindowService
