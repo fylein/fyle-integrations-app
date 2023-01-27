@@ -17,7 +17,6 @@ import { PaginatorComponent } from './helper/paginator/paginator.component';
 import { MandatoryFieldComponent } from './helper/mandatory-field/mandatory-field.component';
 import { MandatoryErrorMessageComponent } from './helper/mandatory-error-message/mandatory-error-message.component';
 import { ZeroStateWithIllustrationComponent } from './components/qbd/core/zero-state-with-illustration/zero-state-with-illustration.component';
-import { QbdHeaderComponent } from './components/qbd/core/qbd-header/qbd-header.component';
 import { DateFilterComponent } from './components/qbd/helper/date-filter/date-filter.component';
 import { OnboardingStepperComponent } from './components/qbd/helper/onboarding-stepper/onboarding-stepper.component';
 import { ExportSettingComponent } from './components/qbd/configuration/export-setting/export-setting.component';
@@ -44,7 +43,6 @@ import { AddEmailDialogComponent } from './components/qbd/configuration/advanced
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
     ZeroStateWithIllustrationComponent,
-    QbdHeaderComponent,
     DateFilterComponent,
     OnboardingStepperComponent,
     ExportSettingComponent,
@@ -77,7 +75,6 @@ import { AddEmailDialogComponent } from './components/qbd/configuration/advanced
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
     ZeroStateWithIllustrationComponent,
-    QbdHeaderComponent,
     DateFilterComponent,
     OnboardingStepperComponent,
     ExportSettingComponent,

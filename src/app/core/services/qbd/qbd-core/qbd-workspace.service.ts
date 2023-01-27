@@ -12,11 +12,11 @@ export class QbdWorkspaceService {
     private apiService: QbdApiService
   ) { }
 
-  qbdGetWorkspace(orgId: string): Observable<Workspace> {
+  getQBDWorkspace(orgId: string): Observable<Workspace> {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
 
-  qbdCreateWorkspace(): Observable<Workspace> {
+  postQBDWorkspace(): Observable<Workspace> {
     return this.apiService.post('/workspaces/', {});
   }
 }
