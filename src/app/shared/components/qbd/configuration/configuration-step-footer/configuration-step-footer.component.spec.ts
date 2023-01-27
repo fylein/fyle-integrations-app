@@ -34,7 +34,7 @@ describe('ConfigurationStepFooterComponent', () => {
     component.showBackButton = true;
     spyOn(component.navigateToPreviousStep, 'emit');
     fixture.detectChanges();
-    const button = fixture.nativeElement.querySelector('.backBtn');
+    const button = fixture.nativeElement.querySelector('.back-btn');
     button.click();
     expect(component.navigateToPreviousStep.emit).toHaveBeenCalled();
   });
