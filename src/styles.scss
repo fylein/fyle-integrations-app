@@ -239,7 +239,7 @@ p {
 
 .configuration {
     &--section {
-      padding-bottom: 100px;
+      @apply tw-pb-100-px;
     }
   
     // &--onboarding-section {
