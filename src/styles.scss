@@ -236,3 +236,14 @@ p {
 .p-toast-message-content {
     @apply tw-block #{!important};
 }
+
+.configuration {
+    &--section {
+      @apply tw-pb-100-px ;
+    }
+  
+    &--contents {
+        @apply tw-box-border tw-bg-white tw-rounded-xl tw-my-0-px tw-mx-50-px ;
+        box-shadow: 0px 2px 10px rgba(44, 48, 78, 0.1);
+    }
+}
