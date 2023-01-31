@@ -4,4 +4,7 @@
         [headerText]="'Export Settings'"
         [contentText]="'In this section, you will configure how and when expenses from Fyle can be exported to Quickbooks Desktop.'"></app-configuration-step-header>
     </div>
+    <div>
+        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [showBackButton]="isOnboarding" [isButtonDisabled]="saveInProgress" (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()"></app-configuration-step-footer>
+    </div>
 </div>

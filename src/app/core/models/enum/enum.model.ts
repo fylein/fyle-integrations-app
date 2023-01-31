@@ -62,3 +62,10 @@ export enum QBDOnboardingState {
     ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
     COMPLETE = 'COMPLETE'
   }
+
+  export enum QBDConfigurationCtaText {
+    SAVE = 'Save',
+    SAVE_AND_CONTINUE = 'Save and Continue',
+    CONTINUE = 'Continue',
+    SAVING = 'Saving'
+  }
