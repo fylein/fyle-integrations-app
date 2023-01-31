@@ -10,7 +10,7 @@ import { QBDConfigurationCtaText } from 'src/app/core/models/enum/enum.model';
 })
 export class ExportSettingComponent implements OnInit {
 
-  // IsLoading: boolean = true;
+  isLoading: boolean = true;
 
   saveInProgress: boolean = false;
 
@@ -23,10 +23,6 @@ export class ExportSettingComponent implements OnInit {
   constructor(
     private router: Router
   ) { }
-
-  navigateToPreviousStep(): void {
-    this.router.navigate([`/integrations/qbd/onboarding/field_mapping`]);
-  }
 
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');

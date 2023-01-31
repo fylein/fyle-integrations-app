@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/core/loader/loader.component';
 import { AppHeaderComponent } from './components/apps/app-header/app-header.component';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -62,6 +63,7 @@ import { AddEmailDialogComponent } from './components/qbd/configuration/advanced
     ButtonModule,
     TooltipModule,
     SkeletonModule,
+    InputSwitchModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
