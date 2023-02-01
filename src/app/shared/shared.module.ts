@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/core/loader/loader.component';
 import { AppHeaderComponent } from './components/apps/app-header/app-header.component';
-import {InputSwitchModule} from 'primeng/inputswitch';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -30,6 +30,7 @@ import { ConfigurationStepFooterComponent } from './components/qbd/configuration
 import { ConfigurationStepHeaderComponent } from './components/qbd/configuration/configuration-step-header/configuration-step-header.component';
 import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
 import { AddEmailDialogComponent } from './components/qbd/configuration/advanced-setting/add-email-dialog/add-email-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { AddEmailDialogComponent } from './components/qbd/configuration/advanced
     TooltipModule,
     SkeletonModule,
     InputSwitchModule,
+    FormsModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
