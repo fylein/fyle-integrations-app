@@ -111,6 +111,32 @@ describe('QbdApiService', () => {
     failedReq.flush(null, error);
   });
 
+  it('should do a put call', () => {
+    service.put('/org/', {}).subscribe(value => {
+      expect(value).toEqual({});
+    });
+
+    const req = httpMock.expectOne({
+      method: 'PUT',
+      url: `${API_BASE_URL}/org/`
+    });
+
+    req.flush({});
+
+    service.put('/org/', {}).subscribe(value => {
+      expect(value).toEqual({});
+    }, (err) => {
+      expect(err.status).toBe(400);
+    });
+
+    const failedReq = httpMock.expectOne({
+      method: 'PUT',
+      url: `${API_BASE_URL}/org/`
+    });
+
+    failedReq.flush(null, error);
+  });
+
   it('should handle error', () => {
     const errors = new ErrorEvent('Some Error XYZ', { message: 'Bad request', error: new Error('Error')});
 

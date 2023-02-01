@@ -1,1 +1,17 @@
-<p>configuration-radio-field works!</p>
+<div [formGroup]="form" class="tw-p-24-px tw-flex tw-justify-between">
+    <div class="tw-min-w-300-px tw-flex">
+        <div class="tw-pr-20-px">
+            <img *ngIf="iconPath" src="{{ iconPath }}">
+        </div>
+        <div class="tw-font-500 tw-leading-normal">
+            <h5 class="tw-text-14-px">{{ label }}</h5>
+            <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
+        </div>
+    </div>
+    <div class="tw-flex">
+        <div *ngFor="let option of options" class="p-field-checkbox tw-mr-20-px">
+            <p-radioButton class="tw-mr-10-px" [value]="option.value" [formControlName]="formControllerName"></p-radioButton>
+            <label>{{option.label}}</label>
+        </div>
+    </div>
+  </div>

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
+import { StorageService } from '../../core/storage.service';
 import { QbdApiService } from './qbd-api.service';
 
 @Injectable({
@@ -9,7 +11,8 @@ import { QbdApiService } from './qbd-api.service';
 export class QbdWorkspaceService {
 
   constructor(
-    private apiService: QbdApiService
+    private apiService: QbdApiService,
+    private storageService: StorageService
   ) { }
 
   getQBDWorkspace(orgId: string): Observable<Workspace> {
@@ -18,5 +21,17 @@ export class QbdWorkspaceService {
 
   postQBDWorkspace(): Observable<Workspace> {
     return this.apiService.post('/workspaces/', {});
+  }
+
+  getWorkspaceId(): string {
+    return this.storageService.get('workspaceId');
+  }
+
+  setOnboardingState(onboardingState: QBDOnboardingState): void {
+    return this.storageService.set('onboardingState', onboardingState);
+  }
+
+  getOnboardingState(): QBDOnboardingState {
+    return this.storageService.get('onboardingState');
   }
 }

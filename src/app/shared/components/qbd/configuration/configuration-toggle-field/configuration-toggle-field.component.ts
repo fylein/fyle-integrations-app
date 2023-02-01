@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControlName, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-configuration-toggle-field',
@@ -8,13 +8,15 @@ import { FormGroup } from '@angular/forms';
 })
 export class ConfigurationToggleFieldComponent implements OnInit {
 
-  // @Input() form: FormGroup;
+  @Input() form: FormGroup;
 
   @Input() formControllerName: string;
 
   @Input() label: string;
 
   @Input() subLabel: string;
+
+  checked = true;
 
   constructor() { }
 

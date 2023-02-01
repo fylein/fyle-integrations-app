@@ -1,4 +1,4 @@
-<div class="tw-p-24-px tw-flex tw-justify-between">
+<div [formGroup]="form" class="tw-p-24-px tw-flex tw-justify-between">
     <div class="tw-min-w-300-px">
       <div class="tw-font-500 tw-leading-normal">
         <h4 class="tw-text-16-px">{{ label }}</h4>
@@ -6,6 +6,6 @@
       </div>
     </div>
     <div class="configuration--input-toggle-section">
-      <p-inputSwitch></p-inputSwitch>
+      <p-inputSwitch formControllerName="enabled"></p-inputSwitch>
     </div>
   </div>
