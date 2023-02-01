@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-configuration-toggle-field',
@@ -6,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./configuration-toggle-field.component.scss']
 })
 export class ConfigurationToggleFieldComponent implements OnInit {
+
+  // @Input() form: FormGroup;
+
+  @Input() formControllerName: string;
+
+  @Input() label: string;
+
+  @Input() subLabel: string;
 
   constructor() { }
 

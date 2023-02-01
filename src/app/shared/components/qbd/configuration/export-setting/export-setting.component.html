@@ -1,10 +1,29 @@
-<div class="configuration--contents tw-border-separator">
+<div class="configuration--contents tw-border-separator tw-mt-6">
     <div>
         <app-configuration-step-header 
         [headerText]="'Export Settings'"
         [contentText]="'In this section, you will configure how and when expenses from Fyle can be exported to Quickbooks Desktop.'"></app-configuration-step-header>
     </div>
+    <div class="tw-p-24-px">
+        <div class="tw-mb-16-px">
+            <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                <app-configuration-toggle-field 
+                [label]="'Export Reimbursable Expenses'" 
+                [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QBD.'" 
+                [formControllerName]="'reimbursableExpense'"></app-configuration-toggle-field>
+            </div>
+        </div>
+
+        <div>
+            <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                <app-configuration-toggle-field 
+                [label]="'Export Corporate Card Expenses'" 
+                [subLabel]="'Enable the export of credit card expenses from Fyle to QBD.'" 
+                [formControllerName]="'creditCardExpense'"></app-configuration-toggle-field>
+            </div>
+        </div>
+    </div>
     <div>
-        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [showBackButton]="isOnboarding" [isButtonDisabled]="saveInProgress" (navigateToPreviousStep)="navigateToPreviousStep()" (save)="save()"></app-configuration-step-footer>
+        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="saveInProgress" (save)="save()"></app-configuration-step-footer>
     </div>
 </div>
