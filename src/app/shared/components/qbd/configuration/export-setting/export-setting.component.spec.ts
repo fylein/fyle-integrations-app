@@ -5,13 +5,13 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MessageService, SharedModule } from 'primeng/api';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { QBDCorporateCreditCardExpensesObject, QBDExpenseState, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 import { ExportSettingComponent } from './export-setting.component';
-import { QBDExportSettingResponse } from './export-setting.fixture';
+import { errorResponse, QBDExportSettingResponse } from './export-setting.fixture';
 
 describe('ExportSettingComponent', () => {
   let component: ExportSettingComponent;
@@ -19,6 +19,7 @@ describe('ExportSettingComponent', () => {
   let service1: any;
   let service2: any;
   let formbuilder: FormBuilder;
+  let qbdExportSettingService: QbdExportSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
 
@@ -51,6 +52,22 @@ describe('ExportSettingComponent', () => {
     component.exportSettings = QBDExportSettingResponse;
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
+    qbdExportSettingService = TestBed.inject(QbdExportSettingService)
+    component.exportSettingsForm = formbuilder.group({
+      reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
+      reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],
+      reimbursableExportGroup: [component.exportSettings?.reimbursable_expense_grouped_by ? component.exportSettings?.reimbursable_expense_grouped_by : null],
+      reimbursableExportDate: [component.exportSettings?.reimbursable_expense_date ? component.exportSettings?.reimbursable_expense_date : null],
+      creditCardExpense: [component.exportSettings?.credit_card_expense_export_type ? true : false, (component as any).exportSelectionValidator()],
+      cccExportType: [component.exportSettings?.credit_card_expense_export_type ? component.exportSettings?.credit_card_expense_export_type : null],
+      cccExportGroup: [component.exportSettings?.credit_card_expense_grouped_by ? component.exportSettings?.credit_card_expense_grouped_by : null],
+      cccExportDate: [component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null],
+      bankAccount: [component.exportSettings?.bank_account_name ? component.exportSettings?.bank_account_name : null],
+      cccEntityName: [component.exportSettings?.credit_card_entity_name_preference ? component.exportSettings?.credit_card_entity_name_preference : null],
+      cccAccountName: [component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null],
+      reimbursableExpenseState: [component.exportSettings?.reimbursable_expense_state ? component.exportSettings?.reimbursable_expense_state : null],
+      cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
+    });
     fixture.detectChanges();
   });
 
@@ -64,6 +81,13 @@ describe('ExportSettingComponent', () => {
 
   it('Save function check', () => {
     component.isOnboarding = true;
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+  });
+
+  it('Save function check with failed api response', () => {
+    component.isOnboarding = true;
+    spyOn(qbdExportSettingService, 'postQbdExportSettings').and.returnValue(throwError(errorResponse));
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
   });
@@ -86,13 +110,30 @@ describe('ExportSettingComponent', () => {
   });
 
   it('exportSelectionValidator function check', () => {
-    const control = { value: QBDExpenseState.APPROVED, parent: formbuilder.group({
-      reimbursableExpense: QBDReimbursableExpensesObject.BILL
+    component.exportSettingsForm = formbuilder.group({
+      reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
+      reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],
+      reimbursableExportGroup: [component.exportSettings?.reimbursable_expense_grouped_by ? component.exportSettings?.reimbursable_expense_grouped_by : null],
+      reimbursableExportDate: [component.exportSettings?.reimbursable_expense_date ? component.exportSettings?.reimbursable_expense_date : null],
+      creditCardExpense: [component.exportSettings?.credit_card_expense_export_type ? true : false, (component as any).exportSelectionValidator()],
+      cccExportType: [component.exportSettings?.credit_card_expense_export_type ? component.exportSettings?.credit_card_expense_export_type : null],
+      cccExportGroup: [component.exportSettings?.credit_card_expense_grouped_by ? component.exportSettings?.credit_card_expense_grouped_by : null],
+      cccExportDate: [component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null],
+      bankAccount: [component.exportSettings?.bank_account_name ? component.exportSettings?.bank_account_name : null],
+      cccEntityName: [component.exportSettings?.credit_card_entity_name_preference ? component.exportSettings?.credit_card_entity_name_preference : null],
+      cccAccountName: [component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null],
+      reimbursableExpenseState: [component.exportSettings?.reimbursable_expense_state ? component.exportSettings?.reimbursable_expense_state : null],
+      cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
+    });
+    fixture.detectChanges();
+    const control = { value: QBDExpenseState.PAID, parent: formbuilder.group({
+      reimbursableExpense: QBDReimbursableExpensesObject.JOURNAL_ENTRY
     }) };
-    expect((component as any).exportSelectionValidator()(control as AbstractControl)).toBeUndefined;
+    console.log("ssio",(component as any).exportSelectionValidator()(control as AbstractControl))
+    expect((component as any).exportSelectionValidator()(control as AbstractControl)).toBeDefined();
     const control1 = { value: QBDExpenseState.PAYMENT_PROCESSING, parent: formbuilder.group({
-      creditCardExpense: QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
+      creditCardExpense: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
     }) };
-    expect((component as any).exportSelectionValidator()(control1 as AbstractControl)).toBeUndefined;
+    expect((component as any).exportSelectionValidator()(control1 as AbstractControl)).toBeNull();
   });
 });

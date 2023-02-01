@@ -18,3 +18,13 @@ export const QBDExportSettingResponse:QBDExportSettingGet = {
     credit_card_expense_date: QBDExportDateType.LAST_SPENT_AT,
     workspace: 1
 };
+
+export const errorResponse = {
+    status: 404,
+    statusText: "Not Found",
+    error: {
+      id: 1,
+      is_expired: true,
+      company_name: 'QBO'
+    }
+  };

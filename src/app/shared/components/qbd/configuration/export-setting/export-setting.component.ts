@@ -138,7 +138,7 @@ export class ExportSettingComponent implements OnInit {
   private exportSelectionValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: object} | null => {
       let forbidden = true;
-      if (this.exportSettingsForm && this.exportSettingsForm.value.expenseState) {
+      if (this.exportSettingsForm && this.exportSettingsForm.value.reimbursableExpenseState && this.exportSettingsForm.value.cccExpenseState) {
         if (typeof control.value === 'boolean') {
           if (control.value) {
             forbidden = false;
