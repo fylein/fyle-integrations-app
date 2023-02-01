@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingComponent } from './onboarding/onboarding-landing/landing.component';
 import { QbdComponent } from './qbd.component';
 
 const routes: Routes = [
@@ -15,7 +14,6 @@ const routes: Routes = [
       {
         path: 'main',
         loadChildren: () => import('./main/main.module').then(m => m.MainModule)
-        // CanActivate: [WorkspacesGuard]
       }
     ]
   }

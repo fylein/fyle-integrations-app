@@ -12,6 +12,7 @@ import { OnboardingExportSettingComponent } from './onboarding/onboarding-export
 import { OnboardingFieldSettingComponent } from './onboarding/onboarding-field-setting/onboarding-field-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding/onboarding-advanced-setting/onboarding-advanced-setting.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { IconSpriteModule } from 'ng-svg-icon-sprite';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     QbdRoutingModule,
-    SharedModule
+    SharedModule,
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
 export class QbdModule { }

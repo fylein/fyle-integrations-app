@@ -54,3 +54,18 @@ export enum ClickEvent {
     SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
     ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually'
 }
+
+export enum QBDOnboardingState {
+    CONNECTION = 'CONNECTION',
+    EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+    FIELD_MAPPING = 'FIELD_MAPPING',
+    ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+    COMPLETE = 'COMPLETE'
+  }
+
+  export enum QBDConfigurationCtaText {
+    SAVE = 'Save',
+    SAVE_AND_CONTINUE = 'Save and Continue',
+    CONTINUE = 'Continue',
+    SAVING = 'Saving'
+  }

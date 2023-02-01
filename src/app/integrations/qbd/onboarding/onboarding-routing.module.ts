@@ -15,27 +15,22 @@ const routes: Routes = [
       {
         path: 'landing',
         component: LandingComponent
-        // CanActivate: [WorkspacesGuard]
       },
       {
         path: 'export_settings',
         component: OnboardingExportSettingComponent
-        // CanActivate: [WorkspacesGuard]
       },
       {
         path: 'field_mappings',
         component: OnboardingFieldSettingComponent
-        // CanActivate: [WorkspacesGuard]
       },
       {
         path: 'advanced_settings',
         component: OnboardingAdvancedSettingComponent
-        // CanActivate: [WorkspacesGuard]
       },
       {
         path: 'done',
         component: OnboardingDoneComponent
-        // CanActivate: [WorkspacesGuard]
       }
     ]
   }

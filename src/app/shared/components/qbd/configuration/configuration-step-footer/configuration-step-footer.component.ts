@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-configuration-step-footer',
@@ -7,9 +7,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConfigurationStepFooterComponent implements OnInit {
 
+  @Input() ctaText: string;
+
+  @Input() isButtonDisabled: boolean;
+
+  @Input() showBackButton: boolean;
+
+  @Output() save = new EventEmitter();
+
+  @Output() navigateToPreviousStep = new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  navigate(): void {
+    this.navigateToPreviousStep.emit();
+  }
+
+  saveChanges(): void {
+    this.save.emit();
   }
 
 }

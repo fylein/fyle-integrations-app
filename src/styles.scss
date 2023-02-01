@@ -92,7 +92,6 @@ p {
     @apply tw-shadow-none #{!important};
 }
 
-
 // Dropdown
 .p-dropdown .p-dropdown-label {
     &.p-inputtext {
@@ -235,4 +234,15 @@ p {
 
 .p-toast-message-content {
     @apply tw-block #{!important};
+}
+
+.configuration {
+    &--section {
+      @apply tw-pb-100-px ;
+    }
+  
+    &--contents {
+        @apply tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px tw-mx-50-px tw-mt-50-px ;
+        box-shadow: 0px 2px 10px rgba(44, 48, 78, 0.1);
+    }
 }
