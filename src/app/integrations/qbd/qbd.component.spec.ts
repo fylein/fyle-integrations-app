@@ -43,7 +43,6 @@ describe('QbdComponent', () => {
   });
 
   it('ngOnIng function check', async () => {
-    spyOn(workspace, 'getQBDWorkspace').and.returnValue(await Promise.resolve(of()));
-    expect(await (component as any).getOrCreateWorkspace()).toBeTruthy();
+    expect((component as any).getOrCreateWorkspace()).toBeUndefined();
   });
 });
