@@ -140,5 +140,5 @@ describe('ExportSettingComponent', () => {
     spyOn(qbdExportSettingService, 'getQbdExportSettings').and.returnValue(of(QBDExportSettingResponse2));
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
-  })
+  });
 });

@@ -24,7 +24,7 @@ export const QBDExportSettingResponse2:QBDExportSettingGet = {
   created_at: new Date('2023-02-01T08:42:45.803382Z'),
   updated_at: new Date('2023-02-01T08:42:45.803382Z'),
   reimbursable_expenses_export_type: null,
-  bank_account_name:null,
+  bank_account_name: null,
   reimbursable_expense_state: null,
   reimbursable_expense_date: null,
   reimbursable_expense_grouped_by: null,

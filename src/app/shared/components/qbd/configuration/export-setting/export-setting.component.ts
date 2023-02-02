@@ -189,7 +189,28 @@ export class ExportSettingComponent implements OnInit {
       });
       this.setCustomValidatorsAndWatchers();
       this.isLoading = false;
-    });
+    }, (error) => {
+      if (error.status === 404) {
+        this.exportSettingsForm = this.formBuilder.group({
+          reimbursableExportType: [null],
+          reimbursableExpense: [false, this.exportSelectionValidator()],
+          reimbursableExportGroup: [null],
+          reimbursableExportDate: [null],
+          creditCardExpense: [false, this.exportSelectionValidator()],
+          cccExportType: [null],
+          cccExportGroup: [null],
+          cccExportDate: [null],
+          bankAccount: [null],
+          cccEntityName: [null],
+          cccAccountName: [null],
+          reimbursableExpenseState: [null],
+          cccExpenseState: [null]
+        });
+        this.setCustomValidatorsAndWatchers();
+      this.isLoading = false;
+      }
+    }
+    );
   }
 
   private constructPayloadAndSave(): void {

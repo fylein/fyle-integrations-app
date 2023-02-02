@@ -6,6 +6,7 @@ import { IntegrationsComponent } from './integrations.component';
 import { LandingComponent } from './landing/landing.component';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { QbdComponent } from './qbd/qbd.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { QbdComponent } from './qbd/qbd.component';
   imports: [
     CommonModule,
     IntegrationsRoutingModule,
+    SharedModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
