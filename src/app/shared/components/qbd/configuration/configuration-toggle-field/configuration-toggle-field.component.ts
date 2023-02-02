@@ -16,8 +16,6 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   @Input() subLabel: string;
 
-  checked = true;
-
   constructor() { }
 
   ngOnInit(): void {

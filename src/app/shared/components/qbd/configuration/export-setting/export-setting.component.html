@@ -15,14 +15,38 @@
                         [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QBD.'" 
                         [formControllerName]="'reimbursableExpense'"></app-configuration-toggle-field>
                     </div>
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-radio-field
-                        [form]="exportSettingsForm"
-                        [label]="'How should the expenses be exported?'"
-                        [subLabel]="'Choose the type of transaction in Quickbooks Desktop to export your Fyle expenses.'"
-                        [options]="reimbursableExportTypes"
-                        [iconPath]="'../../../../../../assets/icons/expense.svg'"
-                        [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
+                    <div *ngIf="exportSettingsForm.value.reimbursableExpense">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            <app-configuration-radio-field
+                            [form]="exportSettingsForm"
+                            [label]="'How should the expenses be exported?'"
+                            [subLabel]="'Choose the type of transaction in Quickbooks Desktop to export your Fyle expenses.'"
+                            [options]="reimbursableExportTypes"
+                            [iconPath]="'../../../../../../assets/icons/expense.svg'"
+                            [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
+
+                            <div *ngIf="exportSettingsForm.value.reimbursableExportType">
+                                <div class="tw-pl-16 tw-pt-30-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                    <div class="tw-w-3/5">
+                                        <h4 class="tw-text-14-px">To which {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} account should the {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? reimbursableExportTypes[0].label : reimbursableExportTypes[1].label }} be posted to?</h4>
+                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? reimbursableExportTypes[0].label : reimbursableExportTypes[1].label }} are posted in QBD. </h5>
+                                    </div>
+
+                                    <div class="tw-pl-24-px">
+                                        <input type="text" class="tw-w-80 tw-px-10-px tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name"> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            <app-configuration-radio-field
+                            [form]="exportSettingsForm"
+                            [label]="'How would you like to group your expenses? *'"
+                            [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
+                            [options]="expenseGroupingFieldOptions"
+                            [iconPath]="'../../../../../../assets/icons/copyV2.svg'"
+                            [formControllerName]="'reimbursableExportGroup'"></app-configuration-radio-field>
+                        </div>
                     </div>
                 </div>
                 <div>
@@ -32,6 +56,39 @@
                         [label]="'Export Corporate Card Expenses'" 
                         [subLabel]="'Enable the export of credit card expenses from Fyle to QBD.'" 
                         [formControllerName]="'creditCardExpense'"></app-configuration-toggle-field>
+                    </div>
+                    <div *ngIf="exportSettingsForm.value.creditCardExpense">
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            <app-configuration-radio-field
+                            [form]="exportSettingsForm"
+                            [label]="'How should the expenses be exported?'"
+                            [subLabel]="'Choose the type of transaction in Quickbooks Desktop to export your Fyle expenses.'"
+                            [options]="creditCardExportTypes"
+                            [iconPath]="'../../../../../../assets/icons/expense.svg'"
+                            [formControllerName]="'cccExportType'"></app-configuration-radio-field>
+
+                            <div *ngIf="exportSettingsForm.value.cccExportType">
+                                <div class="tw-pl-16 tw-pt-30-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                    <div class="tw-w-3/5">
+                                        <h4 class="tw-text-14-px">Enter the Credit card account name</h4>
+                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value ? creditCardExportTypes[0].label : creditCardExportTypes[1].label }} are posted in QBD. </h5>
+                                    </div>
+
+                                    <div class="tw-pl-24-px">
+                                        <input type="text" class="tw-w-80 tw-px-10-px tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" pInputText formControlName="cccAccountName" placeholder="Enter Credit Card Account Name"> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            <app-configuration-radio-field
+                            [form]="exportSettingsForm"
+                            [label]="'How would you like to group your expenses?'"
+                            [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
+                            [options]="expenseGroupingFieldOptions"
+                            [iconPath]="'../../../../../../assets/icons/copyV2.svg'"
+                            [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
+                        </div>
                     </div>
                 </div>
             </div>

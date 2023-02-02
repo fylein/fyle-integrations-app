@@ -72,12 +72,12 @@ export enum QBDOnboardingState {
 
   export enum QBDReimbursableExpensesObject {
     BILL = 'BILL',
-    JOURNAL_ENTRY = 'JOURNAL ENTRY',
+    JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   }
 
   export enum QBDCorporateCreditCardExpensesObject {
-    CREDIT_CARD_PURCHASE = 'CREDIT CARD PURCHASE',
-    JOURNAL_ENTRY = 'JOURNAL ENTRY',
+    CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE',
+    JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   }
 
   export enum QBDExpenseState {

@@ -25,6 +25,8 @@ export class ExportSettingComponent implements OnInit {
 
   ConfigurationCtaText = QBDConfigurationCtaText;
 
+  QBDReimbursableExpensesObject= QBDReimbursableExpensesObject;
+
   expenseStateOptions: QBDExportSettingFormOption[] = [
     {
       value: QBDExpenseState.PAYMENT_PROCESSING,
@@ -186,7 +188,7 @@ export class ExportSettingComponent implements OnInit {
         cccExpenseState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null]
       });
       this.setCustomValidatorsAndWatchers();
-    this.isLoading = false;
+      this.isLoading = false;
     });
   }
 

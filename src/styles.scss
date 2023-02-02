@@ -46,7 +46,7 @@ p {
     @apply tw-text-14-px tw-border-box-color #{!important};
 }
 
-.p-inputtext:enabled:focus {
+.p-inputtext:enabled:focus-visible {
     @apply tw-shadow-none tw-border-faded-text-color #{!important};
 }
 

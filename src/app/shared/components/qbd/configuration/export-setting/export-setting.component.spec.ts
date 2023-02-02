@@ -52,7 +52,7 @@ describe('ExportSettingComponent', () => {
     component.exportSettings = QBDExportSettingResponse;
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
-    qbdExportSettingService = TestBed.inject(QbdExportSettingService)
+    qbdExportSettingService = TestBed.inject(QbdExportSettingService);
     component.exportSettingsForm = formbuilder.group({
       reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
       reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],
@@ -129,7 +129,6 @@ describe('ExportSettingComponent', () => {
     const control = { value: QBDExpenseState.PAID, parent: formbuilder.group({
       reimbursableExpense: QBDReimbursableExpensesObject.JOURNAL_ENTRY
     }) };
-    console.log("ssio",(component as any).exportSelectionValidator()(control as AbstractControl))
     expect((component as any).exportSelectionValidator()(control as AbstractControl)).toBeDefined();
     const control1 = { value: QBDExpenseState.PAYMENT_PROCESSING, parent: formbuilder.group({
       creditCardExpense: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY

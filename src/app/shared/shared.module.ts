@@ -6,6 +6,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { RippleModule } from 'primeng/ripple';
+import { InputTextModule } from 'primeng/inputtext';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -73,6 +74,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     ToastModule,
     RippleModule,
+    InputTextModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
