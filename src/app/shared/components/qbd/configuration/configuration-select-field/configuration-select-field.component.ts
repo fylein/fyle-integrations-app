@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -6,6 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./configuration-select-field.component.scss']
 })
 export class ConfigurationSelectFieldComponent implements OnInit {
+
+  @Input() options: any;
+
+  @Input() form: FormGroup;
+
+  @Input() iconPath: string;
+
+  @Input() label: string;
+
+  @Input() subLabel: string;
+
+  @Input() placeholder: string;
+
+  @Input() formControllerName: string;
 
   constructor() { }
 

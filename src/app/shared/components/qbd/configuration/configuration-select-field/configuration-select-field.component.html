@@ -1,1 +1,16 @@
-<p>configuration-select-field works!</p>
+<div [formGroup]="form" class="tw-p-24-px tw-flex tw-flex-row tw-space-between">
+    <div class="tw-w-3/5 tw-flex">
+        <div class="tw-pr-20-px">
+            <img *ngIf="iconPath" src="{{ iconPath }}">
+        </div>
+        <div class="tw-font-500 tw-leading-normal">
+            <h5 class="tw-text-14-px">{{ label }}</h5>
+            <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
+        </div>
+    </div>
+    <div class="tw-flex tw-pl-40-px">
+        <div class="p-field-checkbox tw-mr-20-px">
+            <p-dropdown [options]="options" class="!tw-w-80" formControlName="formControllerName" [placeholder]="placeholder"></p-dropdown>
+        </div>
+    </div>
+</div>

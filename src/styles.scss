@@ -107,6 +107,9 @@ p {
 }
 
 // Dropdown
+.p-dropdown {
+    @apply tw-w-80 #{!important};
+}
 .p-dropdown .p-dropdown-label {
     &.p-inputtext {
         @apply tw-px-3 tw-py-2 #{!important};
