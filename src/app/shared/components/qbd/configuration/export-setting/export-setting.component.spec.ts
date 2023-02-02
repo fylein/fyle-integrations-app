@@ -11,7 +11,7 @@ import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configura
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 import { ExportSettingComponent } from './export-setting.component';
-import { errorResponse, QBDExportSettingResponse } from './export-setting.fixture';
+import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } from './export-setting.fixture';
 
 describe('ExportSettingComponent', () => {
   let component: ExportSettingComponent;
@@ -135,4 +135,10 @@ describe('ExportSettingComponent', () => {
     }) };
     expect((component as any).exportSelectionValidator()(control1 as AbstractControl)).toBeNull();
   });
+
+  it('form with null data', () => {
+    spyOn(qbdExportSettingService, 'getQbdExportSettings').and.returnValue(of(QBDExportSettingResponse2));
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+  })
 });

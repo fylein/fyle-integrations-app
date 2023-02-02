@@ -19,6 +19,24 @@ export const QBDExportSettingResponse:QBDExportSettingGet = {
     workspace: 1
 };
 
+export const QBDExportSettingResponse2:QBDExportSettingGet = {
+  id: 1,
+  created_at: new Date('2023-02-01T08:42:45.803382Z'),
+  updated_at: new Date('2023-02-01T08:42:45.803382Z'),
+  reimbursable_expenses_export_type: null,
+  bank_account_name:null,
+  reimbursable_expense_state: null,
+  reimbursable_expense_date: null,
+  reimbursable_expense_grouped_by: null,
+  credit_card_expense_export_type: null,
+  credit_card_expense_state: null,
+  credit_card_entity_name_preference: null,
+  credit_card_account_name: null,
+  credit_card_expense_grouped_by: null,
+  credit_card_expense_date: null,
+  workspace: 1
+};
+
 export const errorResponse = {
     status: 404,
     statusText: "Not Found",
