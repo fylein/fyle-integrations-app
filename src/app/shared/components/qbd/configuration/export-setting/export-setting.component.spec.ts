@@ -140,5 +140,18 @@ describe('ExportSettingComponent', () => {
     spyOn(qbdExportSettingService, 'getQbdExportSettings').and.returnValue(of(QBDExportSettingResponse2));
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+    expect((component as any).constructPayloadAndSave()).toBeUndefined();
+  });
+
+  it('accountName function check', () => {
+    component.exportSettingsForm.controls.reimbursableExportType.patchValue(QBDReimbursableExpensesObject.JOURNAL_ENTRY);
+    fixture.detectChanges();
+    expect(component.accountName()).toBe('Bank');
+  });
+
+  it('getsettingsAndsetupForm fuunction check', () => {
+    spyOn(qbdExportSettingService, 'getQbdExportSettings').and.returnValue(throwError(errorResponse));
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
   });
 });

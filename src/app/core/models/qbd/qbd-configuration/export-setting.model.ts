@@ -44,14 +44,14 @@ export class ExportSettingModel {
             reimbursable_expenses_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
             bank_account_name: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : null,
             reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
-            reimbursable_expense_date: exportSettingsForm.get('reimbursableExpenseDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
+            reimbursable_expense_date: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
             reimbursable_expense_grouped_by: exportSettingsForm.get('reimbursableExportGroup')?.value ? exportSettingsForm.get('reimbursableExportGroup')?.value : null,
             credit_card_expense_export_type: exportSettingsForm.get('cccExportType')?.value ? exportSettingsForm.get('cccExportType')?.value : null,
             credit_card_expense_state: exportSettingsForm.get('cccExpenseState')?.value ? exportSettingsForm.get('cccExpenseState')?.value : null,
             credit_card_entity_name_preference: exportSettingsForm.get('cccEntityName')?.value ? exportSettingsForm.get('cccEntityName')?.value : null,
             credit_card_account_name: exportSettingsForm.get('cccAccountName')?.value ? exportSettingsForm.get('cccAccountName')?.value : null,
             credit_card_expense_grouped_by: exportSettingsForm.get('cccExportGroup')?.value ? exportSettingsForm.get('cccExportGroup')?.value : null,
-            credit_card_expense_date: exportSettingsForm.get('cccExpenseDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null
+            credit_card_expense_date: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null
       };
       return exportSettingPayload;
     }

@@ -10,8 +10,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 @Component({
   selector: 'app-export-setting',
   templateUrl: './export-setting.component.html',
-  styleUrls: ['./export-setting.component.scss'],
-  providers: [MessageService]
+  styleUrls: ['./export-setting.component.scss']
 })
 export class ExportSettingComponent implements OnInit {
 
@@ -97,6 +96,14 @@ export class ExportSettingComponent implements OnInit {
     private primengConfig: PrimeNGConfig
   ) { }
 
+  accountName(): string {
+    return this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank';
+  }
+
+  exportType(exportTypeValue:string, exportTypeOptions: QBDExportSettingFormOption[]) {
+    return exportTypeValue === exportTypeOptions[0].value ? exportTypeOptions[0].label : exportTypeOptions[1].label;
+  }
+
   private createReimbursableExpenseWatcher(): void {
     this.exportSettingsForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
       if (isReimbursableExpenseSelected) {
@@ -152,14 +159,12 @@ export class ExportSettingComponent implements OnInit {
         } else if ((control.value === QBDExpenseState.PAID || control.value === QBDExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
           forbidden = false;
         }
-
         if (!forbidden) {
           control.parent?.get('reimbursableExpense')?.setErrors(null);
           control.parent?.get('creditCardExpense')?.setErrors(null);
           return null;
         }
       }
-
       return {
         forbiddenOption: {
           value: control.value
@@ -207,7 +212,7 @@ export class ExportSettingComponent implements OnInit {
           cccExpenseState: [null]
         });
         this.setCustomValidatorsAndWatchers();
-      this.isLoading = false;
+        this.isLoading = false;
       }
     }
     );

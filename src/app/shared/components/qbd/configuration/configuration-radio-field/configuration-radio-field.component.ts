@@ -11,7 +11,7 @@ export class ConfigurationRadioFieldComponent implements OnInit {
 
   constructor() { }
 
-  @Input() options: any;
+  @Input() options: QBDExportSettingFormOption[];
 
   @Input() form: FormGroup;
 
