@@ -134,18 +134,18 @@ export class ExportSettingComponent implements OnInit {
         this.exportSettingsForm.controls.cccExportGroup.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExportDate.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccEntityName.setValidators(Validators.required);
-        // This.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
-        // This.exportSettingsForm.controls.cccAccountName.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccAccountName.setValidators(Validators.required);
       } else {
         this.exportSettingsForm.controls.cccExportType.clearValidators();
         this.exportSettingsForm.controls.cccExportGroup.clearValidators();
         this.exportSettingsForm.controls.cccExportDate.clearValidators();
         this.exportSettingsForm.controls.cccEntityName.clearValidators();
-        // This.exportSettingsForm.controls.cccExpenseState.clearValidators();
-        // This.exportSettingsForm.controls.cccAccountName.clearValidators();
+        this.exportSettingsForm.controls.cccExpenseState.clearValidators();
+        this.exportSettingsForm.controls.cccAccountName.clearValidators();
         this.exportSettingsForm.controls.cccExportType.setValue(null);
-        // This.exportSettingsForm.controls.cccExpenseState.setValue(null);
-        // This.exportSettingsForm.controls.cccAccountName.setValue(null);
+        this.exportSettingsForm.controls.cccExpenseState.setValue(null);
+        this.exportSettingsForm.controls.cccAccountName.setValue(null);
         this.exportSettingsForm.controls.cccExportGroup.setValue(null);
         this.exportSettingsForm.controls.cccExportDate.setValue(null);
         this.exportSettingsForm.controls.cccEntityName.setValue(null);
