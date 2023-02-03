@@ -13,6 +13,7 @@ describe('QbdWorkspaceService', () => {
   const workspaceId = localStorage.getItem('workspaceId');
   const workspace_id = workspaceId  ? JSON.parse(workspaceId) : null;
   beforeEach(() => {
+    localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [QbdWorkspaceService]
