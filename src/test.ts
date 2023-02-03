@@ -21,7 +21,6 @@ getTestBed().initTestEnvironment(
 );
 
 // Then we find all the tests.
-localStorage.setItem('workspaceId', '1');
 const context = require.context('./', true, /\.spec\.ts$/);
 // And load the modules.
 context.keys().forEach(context);

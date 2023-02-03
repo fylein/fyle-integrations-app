@@ -34,6 +34,7 @@ export class QbdWorkspaceService {
   }
 
   getOnboardingState(): QBDOnboardingState {
-    return this.storageService.get('onboardingState');
+    const onboardingState = this.storageService.get('onboardingState');
+    return onboardingState ? onboardingState : QBDOnboardingState.CONNECTION;
   }
 }

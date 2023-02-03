@@ -31,8 +31,8 @@
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType">
                                 <div class="tw-pl-16 tw-pt-30-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="tw-w-3/5">
-                                        <h4 class="tw-text-14-px">To which {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} account should the {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? reimbursableExportTypes[0].label : reimbursableExportTypes[1].label }} be posted to?</h4>
-                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? reimbursableExportTypes[0].label : reimbursableExportTypes[1].label }} are posted in QBD. </h5>
+                                        <h4 class="tw-text-14-px">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} be posted to?</h4>
+                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} are posted in QBD. </h5>
                                     </div>
 
                                     <div class="tw-pl-24-px">
@@ -44,10 +44,10 @@
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <app-configuration-radio-field
                             [form]="exportSettingsForm"
-                            [label]="'How would you like to group your expenses? *'"
+                            [label]="'How would you like to group your expenses?'"
                             [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
                             [options]="expenseGroupingFieldOptions"
-                            [iconPath]="'../../../../../../assets/icons/copyV2.svg'"
+                            [iconPath]="'../../../../../../assets/icons/copy-v2.svg'"
                             [formControllerName]="'reimbursableExportGroup'"></app-configuration-radio-field>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                                 <div class="tw-pl-16 tw-pt-30-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="tw-w-3/5">
                                         <h4 class="tw-text-14-px">Enter the Credit card account name</h4>
-                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value ? creditCardExportTypes[0].label : creditCardExportTypes[1].label }} are posted in QBD. </h5>
+                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportType(exportSettingsForm.value.cccExportType, creditCardExportTypes) }} are posted in QBD. </h5>
                                     </div>
 
                                     <div class="tw-pl-24-px">
@@ -89,7 +89,7 @@
                             [label]="'How would you like to group your expenses?'"
                             [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
                             [options]="expenseGroupingFieldOptions"
-                            [iconPath]="'../../../../../../assets/icons/copyV2.svg'"
+                            [iconPath]="'../../../../../../assets/icons/copy-v2.svg'"
                             [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
                         </div>
                     </div>

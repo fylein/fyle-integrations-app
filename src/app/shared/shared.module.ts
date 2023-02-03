@@ -5,7 +5,6 @@ import { AppHeaderComponent } from './components/apps/app-header/app-header.comp
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
-import { RippleModule } from 'primeng/ripple';
 import { InputTextModule } from 'primeng/inputtext';
 
 // External Libraries
@@ -35,6 +34,7 @@ import { ConfigurationStepHeaderComponent } from './components/qbd/configuration
 import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
 import { AddEmailDialogComponent } from './components/qbd/configuration/advanced-setting/add-email-dialog/add-email-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -73,7 +73,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     ToastModule,
-    RippleModule,
     InputTextModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
@@ -100,6 +99,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
     AddEmailDialogComponent
-  ]
+  ],
+  providers: [MessageService]
 })
 export class SharedModule { }

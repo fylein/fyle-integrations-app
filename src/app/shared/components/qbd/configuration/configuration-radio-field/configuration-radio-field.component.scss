@@ -1,9 +1,0 @@
-:host ::ng-deep .p-radiobutton 
-    .p-radiobutton-box.p-highlight, 
-:host ::ng-deep .p-radiobutton 
-    .p-radiobutton-box.p-highlight:hover {
-        @apply tw-shadow-none tw-border-slightly-normal-text-color tw-bg-white ;
-}
-:host ::ng-deep .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-    @apply tw-bg-slightly-normal-text-color ;
-}

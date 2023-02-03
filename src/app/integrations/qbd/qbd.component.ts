@@ -48,27 +48,26 @@ export class QbdComponent implements OnInit {
     }
   }
 
-  getOrCreateWorkspace(): void {
+  private getOrCreateWorkspace(): void {
     this.workspaceService.getQBDWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
-        this.workspace = workspaces;
-        this.storageService.set('workspaceId', this.workspace.id);
-        // TODO change it later to workspace.onboarding_state
-        this.storageService.set('QBDOnboardingState', 'Landing');
-        this.isLoading = false;
-        this.navigate();
+        this.workspaceSetting(workspaces);
       }
     }, (error) => {
       this.workspaceService.postQBDWorkspace().subscribe((workspaces: any) => {
-        this.workspace = workspaces;
-        this.storageService.set('workspaceId', this.workspace.id);
-        // TODO change it later to workspace.onboarding_state
-        this.storageService.set('QBDOnboardingState', 'Landing');
-        this.isLoading = false;
-        this.navigate();
+        this.workspaceSetting(workspaces);
       });
     }
     );
+  }
+
+  workspaceSetting(workspace:Workspace) {
+    this.workspace = workspace;
+    this.storageService.set('workspaceId', this.workspace.id);
+    // TODO change it later to workspace.onboarding_state
+    this.storageService.set('QBDOnboardingState', 'Landing');
+    this.isLoading = false;
+    this.navigate();
   }
 
   setupWorkspace() {
