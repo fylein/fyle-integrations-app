@@ -10,8 +10,6 @@ describe('QbdWorkspaceService', () => {
   let injector: TestBed;
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.qbd_api_url;
-  const workspaceId = localStorage.getItem('workspaceId');
-  const workspace_id = workspaceId  ? JSON.parse(workspaceId) : null;
   beforeEach(() => {
     localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
@@ -76,6 +74,8 @@ describe('QbdWorkspaceService', () => {
   });
 
   it('getWorkspaceid service', () => {
+    const workspaceId = localStorage.getItem('workspaceId');
+    const workspace_id = workspaceId  ? JSON.parse(workspaceId) : null;
     const id = service.getWorkspaceId();
     const org = workspace_id;
     expect(id).toEqual(org);

@@ -209,8 +209,7 @@ export class ExportSettingComponent implements OnInit {
       });
       this.setCustomValidatorsAndWatchers();
       this.isLoading = false;
-    }, (error) => {
-      if (error.status === 404) {
+    }, () => {
         this.exportSettingsForm = this.formBuilder.group({
           reimbursableExportType: [null],
           reimbursableExpense: [false, this.exportSelectionValidator()],
@@ -229,7 +228,6 @@ export class ExportSettingComponent implements OnInit {
         this.setCustomValidatorsAndWatchers();
         this.isLoading = false;
       }
-    }
     );
   }
 
