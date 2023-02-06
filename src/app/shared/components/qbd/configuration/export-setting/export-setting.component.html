@@ -25,7 +25,7 @@
                             [label]="'How should the expenses be exported?'"
                             [subLabel]="'Choose the type of transaction in Quickbooks Desktop to export your Fyle expenses.'"
                             [options]="reimbursableExportTypes"
-                            [iconPath]="'../../../../../../assets/icons/expense.svg'"
+                            [iconPath]="'expense'"
                             [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
 
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType">
@@ -47,7 +47,7 @@
                             [label]="'How would you like to group your expenses?'"
                             [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
                             [options]="expenseGroupingFieldOptions"
-                            [iconPath]="'../../../../../../assets/icons/copy-v2.svg'"
+                            [iconPath]="'copy-v2'"
                             [formControllerName]="'reimbursableExportGroup'"></app-configuration-radio-field>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -87,7 +87,7 @@
                             [label]="'How should the expenses be exported?'"
                             [subLabel]="'Choose the type of transaction in Quickbooks Desktop to export your Fyle expenses.'"
                             [options]="creditCardExportTypes"
-                            [iconPath]="'../../../../../../assets/icons/expense.svg'"
+                            [iconPath]="'expense'"
                             [formControllerName]="'cccExportType'"></app-configuration-radio-field>
 
                             <div *ngIf="exportSettingsForm.value.cccExportType">
@@ -120,7 +120,7 @@
                             [label]="'How would you like to group your expenses?'"
                             [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
                             [options]="expenseGroupingFieldOptions"
-                            [iconPath]="'../../../../../../assets/icons/copy-v2.svg'"
+                            [iconPath]="'copy-v2'"
                             [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

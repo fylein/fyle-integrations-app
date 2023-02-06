@@ -1,7 +1,7 @@
 <div [formGroup]="form" class="tw-p-24-px tw-flex tw-flex-row tw-space-between">
     <div class="tw-w-3/5 tw-flex">
         <div class="tw-pr-20-px">
-            <img *ngIf="iconPath" src="{{ iconPath }}">
+            <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
         </div>
         <div class="tw-font-500 tw-leading-normal">
             <h5 class="tw-text-14-px">{{ label }}</h5>
