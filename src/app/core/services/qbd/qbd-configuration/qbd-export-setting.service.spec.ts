@@ -93,7 +93,7 @@ describe('QbdExportSettingService', () => {
       expect(value).toEqual(response);
     });
     const req = httpMock.expectOne({
-      method: 'PUT',
+      method: 'POST',
       url: `${API_BASE_URL}/workspaces/${workspace_id}/export_settings/`
     });
     req.flush(response);

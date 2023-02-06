@@ -15,6 +15,8 @@ export class AppHeaderComponent implements OnInit {
 
   @Output() syncEmployees = new EventEmitter<void>();
 
+  @Input() iconPath: string;
+
   @Input() isIntegrationConnected: boolean = false;
 
   @Input() isIntegrationSetupInProgress: boolean;

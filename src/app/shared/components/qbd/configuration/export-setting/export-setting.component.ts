@@ -250,7 +250,9 @@ export class ExportSettingComponent implements OnInit {
 
 
   save(): void {
-    this.constructPayloadAndSave();
+    if (this.exportSettingsForm.valid) {
+      this.constructPayloadAndSave();
+    }
   }
 
   ngOnInit(): void {

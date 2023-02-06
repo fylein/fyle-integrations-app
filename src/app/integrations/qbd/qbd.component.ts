@@ -65,7 +65,7 @@ export class QbdComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     // TODO change it later to workspace.onboarding_state
-    this.storageService.set('QBDOnboardingState', 'Landing');
+    this.storageService.set('QBDOnboardingState', 'EXPORT_SETTINGS');
     this.isLoading = false;
     this.navigate();
   }
