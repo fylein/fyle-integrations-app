@@ -30,11 +30,11 @@ export class QbdWorkspaceService {
   }
 
   setOnboardingState(onboardingState: QBDOnboardingState): void {
-    return this.storageService.set('QBDonboardingState', onboardingState);
+    return this.storageService.set('QBDOnboardingState', onboardingState);
   }
 
   getOnboardingState(): QBDOnboardingState {
-    const onboardingState = this.storageService.get('QBDonboardingState');
+    const onboardingState = this.storageService.get('QBDOnboardingState');
     return onboardingState ? onboardingState : QBDOnboardingState.EXPORT_SETTINGS;
   }
 }
