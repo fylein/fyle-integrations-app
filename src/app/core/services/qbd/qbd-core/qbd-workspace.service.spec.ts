@@ -89,8 +89,8 @@ describe('QbdWorkspaceService', () => {
   });
 
   it('setOnboardingState and getOnboardingState service', () => {
-    localStorage.removeItem('onboardingState');
-    const state = 'CONNECTION';
+    localStorage.removeItem('QBDonboardingState');
+    const state = 'EXPORT_SETTINGS';
     const response = service.getOnboardingState();
     expect(state).toEqual(response);
   });
