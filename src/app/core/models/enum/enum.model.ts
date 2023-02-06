@@ -100,3 +100,9 @@ export enum QBDOnboardingState {
     EMPLOYEE = 'EMPLOYEE',
     VENDOR = 'VENDOR'
   }
+
+  export enum QBDRepresentation {
+    PROJECT = 'PROJECT',
+    COST_CENTER = 'COST_CENTER',
+    CUSTOME_FIELD = 'CUSTOME_FIELD'
+  }
