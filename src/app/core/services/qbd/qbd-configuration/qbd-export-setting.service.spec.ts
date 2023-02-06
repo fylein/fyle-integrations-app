@@ -14,6 +14,7 @@ describe('QbdExportSettingService', () => {
   const workspace_id = 1;
 
   beforeEach(() => {
+    localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [QbdExportSettingService]

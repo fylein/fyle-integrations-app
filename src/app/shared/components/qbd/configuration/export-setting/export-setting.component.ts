@@ -110,10 +110,16 @@ export class ExportSettingComponent implements OnInit {
         this.exportSettingsForm.controls.reimbursableExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportGroup.setValidators(Validators.required);
         this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
+        this.exportSettingsForm.controls.reimbursableExpenseState.setValidators(Validators.required);
+        this.exportSettingsForm.controls.bankAccount.setValidators(Validators.required);
       } else {
         this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportGroup.clearValidators();
         this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
+        this.exportSettingsForm.controls.reimbursableExpenseState.clearValidators();
+        this.exportSettingsForm.controls.bankAccount.clearValidators();
+        this.exportSettingsForm.controls.bankAccount.setValue(null);
+        this.exportSettingsForm.controls.reimbursableExpenseState.setValue(null);
         this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
         this.exportSettingsForm.controls.reimbursableExportGroup.setValue(null);
         this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
@@ -127,13 +133,22 @@ export class ExportSettingComponent implements OnInit {
         this.exportSettingsForm.controls.cccExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExportGroup.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExportDate.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccEntityName.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccAccountName.setValidators(Validators.required);
       } else {
         this.exportSettingsForm.controls.cccExportType.clearValidators();
         this.exportSettingsForm.controls.cccExportGroup.clearValidators();
         this.exportSettingsForm.controls.cccExportDate.clearValidators();
+        this.exportSettingsForm.controls.cccEntityName.clearValidators();
+        this.exportSettingsForm.controls.cccExpenseState.clearValidators();
+        this.exportSettingsForm.controls.cccAccountName.clearValidators();
         this.exportSettingsForm.controls.cccExportType.setValue(null);
+        this.exportSettingsForm.controls.cccExpenseState.setValue(null);
+        this.exportSettingsForm.controls.cccAccountName.setValue(null);
         this.exportSettingsForm.controls.cccExportGroup.setValue(null);
         this.exportSettingsForm.controls.cccExportDate.setValue(null);
+        this.exportSettingsForm.controls.cccEntityName.setValue(null);
       }
     });
   }
@@ -147,7 +162,7 @@ export class ExportSettingComponent implements OnInit {
   private exportSelectionValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: object} | null => {
       let forbidden = true;
-      if (this.exportSettingsForm && this.exportSettingsForm.value.reimbursableExpenseState && this.exportSettingsForm.value.cccExpenseState) {
+      if (this.exportSettingsForm ) {
         if (typeof control.value === 'boolean') {
           if (control.value) {
             forbidden = false;
