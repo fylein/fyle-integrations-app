@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
@@ -18,7 +19,7 @@ export class QbdComponent implements OnInit {
 
   workspace: Workspace;
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   windowReference: Window;
 
@@ -38,7 +39,7 @@ export class QbdComponent implements OnInit {
       const onboardingStateComponentMap = {
         [QBDOnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
         [QBDOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/export_settings',
-        [QBDOnboardingState.FIELD_MAPPING]: '/integrations/qbd/onboarding/import_settings',
+        [QBDOnboardingState.FIELD_MAPPING]: '/integrations/qbd/onboarding/field_mappings',
         [QBDOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
@@ -47,28 +48,31 @@ export class QbdComponent implements OnInit {
     }
   }
 
-  getOrCreateWorkspace(): Promise<Workspace> {
-    return this.workspaceService.getQBDWorkspace(this.user.org_id).toPromise().then((workspaces) => {
+  private getOrCreateWorkspace(): void {
+    this.workspaceService.getQBDWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
-        return workspaces;
+        this.workspaceSetting(workspaces);
       }
-
-      return this.workspaceService.postQBDWorkspace().toPromise().then((workspaces: any) => {
-        return workspaces;
+    }, (error) => {
+      this.workspaceService.postQBDWorkspace().subscribe((workspaces: any) => {
+        this.workspaceSetting(workspaces);
       });
-    });
+    }
+    );
+  }
+
+  workspaceSetting(workspace:Workspace) {
+    this.workspace = workspace;
+    this.storageService.set('workspaceId', this.workspace.id);
+    // TODO change it later to workspace.onboarding_state
+    this.storageService.set('QBDOnboardingState', 'EXPORT_SETTINGS');
+    this.isLoading = false;
+    this.navigate();
   }
 
   setupWorkspace() {
     this.user = this.userService.qbdGetUserProfile();
-    this.getOrCreateWorkspace().then((workspace: Workspace) => {
-      this.workspace = workspace;
-      this.storageService.set('workspaceId', this.workspace.id);
-      // TODO change it later to workspace.onboarding_state
-      this.storageService.set('QBDOnboardingState', 'Landing');
-      this.isLoading = false;
-      this.navigate();
-    });
+      this.getOrCreateWorkspace();
   }
 
   ngOnInit(): void {

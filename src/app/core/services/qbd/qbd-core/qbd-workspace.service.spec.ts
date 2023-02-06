@@ -1,5 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
+import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { environment } from 'src/environments/environment';
 
 import { QbdWorkspaceService } from './qbd-workspace.service';
@@ -9,8 +10,8 @@ describe('QbdWorkspaceService', () => {
   let injector: TestBed;
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.qbd_api_url;
-
   beforeEach(() => {
+    localStorage.setItem('workspaceId', '1');
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [QbdWorkspaceService]
@@ -71,6 +72,29 @@ describe('QbdWorkspaceService', () => {
     });
     req.flush(workspaceResponse);
   });
+
+  it('getWorkspaceid service', () => {
+    const workspaceId = localStorage.getItem('workspaceId');
+    const workspace_id = workspaceId  ? JSON.parse(workspaceId) : null;
+    const id = service.getWorkspaceId();
+    const org = workspace_id;
+    expect(id).toEqual(org);
+  });
+
+  it('setOnboardingState and getOnboardingState service', () => {
+    service.setOnboardingState(QBDOnboardingState.COMPLETE);
+    const state = 'COMPLETE';
+    const response = service.getOnboardingState();
+    expect(state).toEqual(response);
+  });
+
+  it('setOnboardingState and getOnboardingState service', () => {
+    localStorage.removeItem('QBDOnboardingState');
+    const state = 'EXPORT_SETTINGS';
+    const response = service.getOnboardingState();
+    expect(state).toEqual(response);
+  });
+
 });
 
 

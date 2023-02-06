@@ -57,4 +57,11 @@ export class QbdApiService {
       return this.handleError(error, 'PATCH');
     }));
   }
+
+  // Having any here is ok
+  put(endpoint: string, body: {}): Observable<any> {
+    return this.http.put(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
+      return this.handleError(error, 'PUT');
+    }));
+  }
 }

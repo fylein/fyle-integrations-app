@@ -69,3 +69,34 @@ export enum QBDOnboardingState {
     CONTINUE = 'Continue',
     SAVING = 'Saving'
   }
+
+  export enum QBDReimbursableExpensesObject {
+    BILL = 'BILL',
+    JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  }
+
+  export enum QBDCorporateCreditCardExpensesObject {
+    CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE',
+    JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  }
+
+  export enum QBDExpenseState {
+    PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
+    PAID = 'PAID',
+    APPROVED = 'APPROVED'
+  }
+
+  export enum QBDExpenseGroupedBy {
+    EXPENSE = 'EXPENSE',
+    REPORT = 'REPORT'
+  }
+
+  export enum QBDExportDateType {
+    LAST_SPENT_AT = 'last_spent_at',
+    SPENT_AT = 'spent_at'
+  }
+
+  export enum QBDEntity {
+    EMPLOYEE = 'EMPLOYEE',
+    VENDOR = 'VENDOR'
+  }

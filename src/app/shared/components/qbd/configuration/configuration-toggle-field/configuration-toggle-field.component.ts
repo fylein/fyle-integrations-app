@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class ConfigurationToggleFieldComponent implements OnInit {
 
-  // @Input() form: FormGroup;
+  @Input() form: FormGroup;
 
   @Input() formControllerName: string;
 
