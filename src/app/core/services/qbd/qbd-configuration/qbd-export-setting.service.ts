@@ -19,6 +19,6 @@ export class QbdExportSettingService {
   }
 
   postQbdExportSettings(exportSettingsPayload: QBDExportSettingPost): Observable<QBDExportSettingGet> {
-    return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 }

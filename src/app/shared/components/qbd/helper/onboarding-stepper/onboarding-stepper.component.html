@@ -9,18 +9,17 @@
         <div class="tw-flex tw-justify-center">
             <div *ngFor="let onboardingStep of onboardingSteps">
                 <div class="tw-flex tw-justify-center tw-items-center">
-                    <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.completed ? 'step-completed tw-border-success-toast tw-cursor-pointer':'']">
+                    <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast tw-cursor-pointer':'',]">
                         <img *ngIf="onboardingStep.active" src='{{ "assets/icons/stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
-                        <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="assets/icons/general/tick.svg" class="icon">
+                        <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="assets/icons/tick.svg" class="icon">
                         <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "assets/icons/stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
                     </div>
                     <div *ngIf="onboardingStep.number !== 4" >
                         <div *ngIf="!onboardingStep.completed">
-                            <img src="../../../../../../assets/icons/line-inactive.svg" alt="" srcset="">
-                            <!-- <svg-icon-sprite src="line" hight="2px" class="tw-text-mandatory-field-color"></svg-icon-sprite> -->
+                            <hr class="line-active">
                         </div>
-                        <div *ngIf="onboardingStep.completed">
-                            <img src="../../../../../../assets/icons/line.svg" alt="" srcset="">
+                        <div *ngIf="onboardingStep.completed" class="">
+                            <hr class="line-inactive">
                         </div>
                     </div>
                 </div>
@@ -28,7 +27,7 @@
         </div>
         <div class="tw-flex tw-justify-center tw-pt-10-px">
             <div *ngFor="let onboardingStep of onboardingSteps">
-                <div class="tw-mr-10-px" [ngClass]="onboardingStep.number === 3 ? 'tw-px-28 tw-mx-8-px' : '' ">
+                <div class="tw-mr-10-px" [ngClass]="onboardingStep.number === 3 ? 'tw-px-24 tw-mx-8-px' : '' ">
                     {{ onboardingStep.step }}
                 </div>
             </div>

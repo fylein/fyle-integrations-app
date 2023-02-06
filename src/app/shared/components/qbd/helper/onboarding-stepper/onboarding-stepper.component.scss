@@ -2,14 +2,18 @@
   @apply tw-w-48-px tw-h-48-px tw-rounded-full tw-box-border ; 
 }
 
-.step-completed {
-  @apply tw-bg-success-toast tw-border ;
-}
-
 .step-state {
   @apply tw-bg-white tw-border ;
 }
 
 .icon {
   @apply tw-w-24-px tw-h-24-px tw-m-10-px ;
+}
+
+.line-active {
+  @apply tw-border-t-2-px tw-border-dashed tw-border-line-inactive tw-w-40 tw-h-2-px ;
+}
+
+.line-inactive {
+  @apply tw-border-t-2-px tw-border-solid tw-border-success-toast tw-w-40 tw-h-2-px ;
 }
