@@ -79,7 +79,7 @@ export class OnboardingStepperComponent implements OnInit {
 
   navigate(canNavigate: boolean, route: string): void {
     if (canNavigate) {
-      this.router.navigate([`/workspaces/onboarding/${route}`]);
+      this.router.navigate([`/integrations/qbd/onboarding/${route}`]);
     }
   }
 

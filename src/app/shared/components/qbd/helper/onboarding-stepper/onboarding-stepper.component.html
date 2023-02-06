@@ -9,7 +9,7 @@
         <div class="tw-flex tw-justify-center">
             <div *ngFor="let onboardingStep of onboardingSteps">
                 <div class="tw-flex tw-justify-center tw-items-center">
-                    <div class="tw-flex tw-justify-center step" [ngClass]="[onboardingStep.active ? 'step-state tw-border-success-toast' : 'step-state tw-border-box-color', onboardingStep.completed ? 'step-completed tw-border-success-toast':'']">
+                    <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.completed ? 'step-completed tw-border-success-toast tw-cursor-pointer':'']">
                         <img *ngIf="onboardingStep.active" src='{{ "assets/icons/stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
                         <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="assets/icons/general/tick.svg" class="icon">
                         <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "assets/icons/stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
@@ -17,6 +17,7 @@
                     <div *ngIf="onboardingStep.number !== 4" >
                         <div *ngIf="!onboardingStep.completed">
                             <img src="../../../../../../assets/icons/line-inactive.svg" alt="" srcset="">
+                            <!-- <svg-icon-sprite src="line" hight="2px" class="tw-text-mandatory-field-color"></svg-icon-sprite> -->
                         </div>
                         <div *ngIf="onboardingStep.completed">
                             <img src="../../../../../../assets/icons/line.svg" alt="" srcset="">
