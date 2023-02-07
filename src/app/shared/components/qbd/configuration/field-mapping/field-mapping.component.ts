@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { QBDConfigurationCtaText, QBDRepresentation } from 'src/app/core/models/enum/enum.model';
+import { QBDConfigurationCtaText, QBDOnboardingState, QBDRepresentation } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
+import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
+import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
   selector: 'app-field-mapping',
@@ -11,10 +14,13 @@ import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configur
   styleUrls: ['./field-mapping.component.scss']
 })
 export class FieldMappingComponent implements OnInit {
+  fieldMapping: QBDFieldMappingGet;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
+    private fieldMappingService: QbdFieldMappingService,
+    private workspaceService: QbdWorkspaceService,
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig
   ) { }
@@ -48,31 +54,46 @@ export class FieldMappingComponent implements OnInit {
     this.getSettingsAndSetupForm();
   }
 
-  save() {
-    const a = 'sss';
+  constructPayloadAndSave(): void {
+    this.saveInProgress = true;
+    const fieldMappingPayload = FieldMappingModel.constructPayload(this.fieldMappingForm);
+
+    this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
+      this.saveInProgress = false;
+      this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Field mapping saved successfully'});
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(QBDOnboardingState.ADVANCED_CONFIGURATION);
+        this.router.navigate([`/integrations/qbd/onboarding/advanced_settings`]);
+      }
+    }, () => {
+      this.saveInProgress = false;
+      this.messageService.add({key: 'tl', severity: 'error', summary: 'Error', detail: 'Error saving field mapping, please try again later'});
+      });
+  }
+
+  save(): void {
+    if (this.fieldMappingForm.valid) {
+      this.constructPayloadAndSave();
+    }
   }
 
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.fieldMappingForm = this.formBuilder.group({
-      representClass: [null],
-      representCustomer: [null]
+    this.fieldMappingService.getQbdFieldMapping().subscribe((fielsMappingResponse : QBDFieldMappingGet) => {
+      this.fieldMapping = fielsMappingResponse;
+      this.fieldMappingForm = this.formBuilder.group({
+        classType: [this.fieldMapping?.class_type ? this.fieldMapping?.class_type : null],
+        customerType: [this.fieldMapping?.project_type ? this.fieldMapping?.project_type : null]
+      });
+      this.isLoading = false;
+    }, () => {
+        this.fieldMappingForm = this.formBuilder.group({
+          classType: [null, Validators.required],
+          customerType: [null, Validators.required]
         });
-    // This.fieldMappingService.getQbdFieldMapping().subscribe((fielsMappingResponse : QBDFieldMappingGet) => {
-    //   This.fieldMapping = fielsMappingResponse;
-    //   This.fieldMappingForm = this.formBuilder.group({
-      // RepresentClass: [this.fieldMapping?.class_type ? this.fieldMapping?.class_type : null, Validators.required],
-      // RepresentCustomer: [this.fieldMapping?.project_type ? this.fieldMapping?.project_type : null, Validators.required]
-    //   });
-    //   This.isLoading = false;
-    // }, () => {
-    //     This.fieldMappingForm = this.formBuilder.group({
-            // RepresentClass: [null],
-            // RepresentCustomer: [null]
-            //   });
-    //     This.isLoading = false;
-    //   }
-    // );
+        this.isLoading = false;
+      }
+    );
   }
 
 
