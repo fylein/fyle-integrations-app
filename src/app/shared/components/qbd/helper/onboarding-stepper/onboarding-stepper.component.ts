@@ -69,7 +69,7 @@ export class OnboardingStepperComponent implements OnInit {
       [QBDOnboardingState.CONNECTION]: 1,
       [QBDOnboardingState.EXPORT_SETTINGS]: 2,
       [QBDOnboardingState.FIELD_MAPPING]: 3,
-      [QBDOnboardingState.ADVANCED_CONFIGURATION]: 4,
+      [QBDOnboardingState.ADVANCED_SETTINGS]: 4,
       [QBDOnboardingState.COMPLETE]: 5
     };
     for (let index = onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {

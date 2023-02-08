@@ -40,7 +40,7 @@ export class QbdComponent implements OnInit {
         [QBDOnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
         [QBDOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/export_settings',
         [QBDOnboardingState.FIELD_MAPPING]: '/integrations/qbd/onboarding/field_mappings',
-        [QBDOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/qbd/onboarding/advanced_settings',
+        [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
 
@@ -65,7 +65,7 @@ export class QbdComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     // TODO change it later to workspace.onboarding_state
-    this.storageService.set('QBDOnboardingState', 'EXPORT_SETTINGS');
+    this.storageService.set('QBDOnboardingState', 'ADVANCED_SETTINGS');
     this.isLoading = false;
     this.navigate();
   }

@@ -33,7 +33,6 @@ import { ConfigurationRadioFieldComponent } from './components/qbd/configuration
 import { ConfigurationStepFooterComponent } from './components/qbd/configuration/configuration-step-footer/configuration-step-footer.component';
 import { ConfigurationStepHeaderComponent } from './components/qbd/configuration/configuration-step-header/configuration-step-header.component';
 import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
-import { AddEmailDialogComponent } from './components/qbd/configuration/advanced-setting/add-email-dialog/add-email-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
@@ -60,8 +59,7 @@ import { MessageService } from 'primeng/api';
     ConfigurationRadioFieldComponent,
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
-    EmailMultiSelectFieldComponent,
-    AddEmailDialogComponent
+    EmailMultiSelectFieldComponent
   ],
   imports: [
     CommonModule,
@@ -99,8 +97,7 @@ import { MessageService } from 'primeng/api';
     ConfigurationRadioFieldComponent,
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
-    EmailMultiSelectFieldComponent,
-    AddEmailDialogComponent
+    EmailMultiSelectFieldComponent
   ],
   providers: [MessageService]
 })
