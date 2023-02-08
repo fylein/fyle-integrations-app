@@ -1,1 +1,41 @@
-<p>field-mapping works!</p>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+    <div>
+        <app-configuration-step-header 
+        [headerText]="'Field Mapping'"
+        [contentText]="'In this section, choose appropriate representation of your Customers & Classes on Fyle.'"></app-configuration-step-header>
+    </div>
+    <div>
+        <form [formGroup]="fieldMappingForm">
+            <div class="tw-p-24-px">
+                <div class="tw-mb-16-px">
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="fieldMappingForm"
+                        [label]="'How do you represent Customers on Fyle?'"
+                        [subLabel]="'Select the Fyle dimension that corresponds to QuickBooks Desktops Customers.'"
+                        [options]="representationOption"
+                        [iconPath]="'people'"
+                        [placeholder]="'Select representation'"
+                        [formControllerName]="'classType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="fieldMappingForm"
+                        [label]="'How do you represent Classes on Fyle?'"
+                        [subLabel]="'Select the Fyle dimension that corresponds to QuickBooks Desktops Class.'"
+                        [options]="representationOption"
+                        [iconPath]="'expense'"
+                        [placeholder]="'Select representation'"
+                        [formControllerName]="'customerType'"></app-configuration-select-field>
+                    </div>
+                </div> 
+            </div>
+            <div>
+                <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!fieldMappingForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+            </div>
+        </form>
+    </div>
+</div>

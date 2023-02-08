@@ -59,7 +59,7 @@ export enum QBDOnboardingState {
     CONNECTION = 'CONNECTION',
     EXPORT_SETTINGS = 'EXPORT_SETTINGS',
     FIELD_MAPPING = 'FIELD_MAPPING',
-    ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+    ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
     COMPLETE = 'COMPLETE'
   }
 
@@ -99,4 +99,9 @@ export enum QBDOnboardingState {
   export enum QBDEntity {
     EMPLOYEE = 'EMPLOYEE',
     VENDOR = 'VENDOR'
+  }
+
+  export enum QBDFyleField {
+    PROJECT = 'PROJECT',
+    COST_CENTER = 'COST_CENTER'
   }

@@ -40,7 +40,7 @@ export class QbdComponent implements OnInit {
         [QBDOnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
         [QBDOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/export_settings',
         [QBDOnboardingState.FIELD_MAPPING]: '/integrations/qbd/onboarding/field_mappings',
-        [QBDOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/qbd/onboarding/advanced_settings',
+        [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
 
