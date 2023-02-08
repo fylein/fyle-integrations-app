@@ -106,3 +106,7 @@ export enum QBDOnboardingState {
     WEEKLY = 'WEEKLY',
     MONTHLY = 'MONTHLY'
   }
+  export enum QBDFyleField {
+    PROJECT = 'PROJECT',
+    COST_CENTER = 'COST_CENTER'
+  }
