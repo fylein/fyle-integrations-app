@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { QBDConfigurationCtaText, QBDOnboardingState, QBDRepresentation } from 'src/app/core/models/enum/enum.model';
+import { QBDConfigurationCtaText, QBDOnboardingState, QBDFyleField } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
@@ -28,11 +28,11 @@ export class FieldMappingComponent implements OnInit {
   representationOption: QBDExportSettingFormOption[] = [
     {
       label: 'Project',
-      value: QBDRepresentation.PROJECT
+      value: QBDFyleField.PROJECT
     },
     {
       label: 'Cost Center',
-      value: QBDRepresentation.COST_CENTER
+      value: QBDFyleField.COST_CENTER
     }
   ];
 

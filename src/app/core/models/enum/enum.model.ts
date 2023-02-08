@@ -101,7 +101,7 @@ export enum QBDOnboardingState {
     VENDOR = 'VENDOR'
   }
 
-  export enum QBDRepresentation {
+  export enum QBDFyleField {
     PROJECT = 'PROJECT',
     COST_CENTER = 'COST_CENTER'
   }
