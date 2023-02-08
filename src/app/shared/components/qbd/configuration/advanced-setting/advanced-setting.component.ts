@@ -3,8 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingModel, QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
@@ -45,7 +46,7 @@ export class AdvancedSettingComponent implements OnInit {
 
   defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
 
-  adminEmails: string[] = ['dhaarani.s@fyle.in'];
+  adminEmails: QBDEmailOption[];
 
   weeklyOptions: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -62,10 +63,11 @@ export class AdvancedSettingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
     private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
+    private primengConfig: PrimeNGConfig,
+    private orgService: OrgService
   ) { }
 
-  private setFrequencyInterval(day: number) {
+  private setFrequencyInterval(day: number): string {
     if (day === 1) {
       return day + ' st';
     } else if (day === 2) {
@@ -76,35 +78,50 @@ export class AdvancedSettingComponent implements OnInit {
     return day + ' th';
   }
 
+  private merdiemType(): string {
+    const time = this.advancedSettings.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
+    return time < 12 ? 'AM' : 'PM';
+  }
+
+  private initialTime(): string {
+    const time = this.advancedSettings.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
+    const seconds = this.advancedSettings.time_of_day ? this.advancedSettings.time_of_day.slice(3, 5) : '00';
+    return time === 0 ? '12:00' : time.toString() + ':' + seconds;
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
+    this.orgService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOption[]) => {
+      this.adminEmails = emailResponse;
+    });
     this.advancedSettingService.getQbdAdvancedSettings().subscribe((advancedSettingResponse : QBDAdvancedSettingsGet) => {
       this.advancedSettings = advancedSettingResponse;
+      const emails: any[] = [];
       this.advancedSettingsForm = this.formBuilder.group({
         expenseMemoStructure: [this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : null],
           topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure : null],
-          exportSchedule: [this.advancedSettings?.schedule_is_enabled ? true : false],
+          exportSchedule: [this.advancedSettings?.schedule_is_enabled ? this.advancedSettings?.schedule_is_enabled : false],
           exportScheduleFrequency: [this.advancedSettings?.interval_hours ? this.advancedSettings?.interval_hours : null],
-          email: [this.advancedSettings?.emails.length > 0 ? this.advancedSettings?.emails : null],
+          email: [this.advancedSettings?.emails.length > 0 ? emails : emails],
           frequency: [this.advancedSettings?.frequency ? this.advancedSettings?.frequency : null],
           dayOfMonth: [this.advancedSettings?.day_of_month ? this.advancedSettings?.day_of_month : null],
           dayOfWeek: [this.advancedSettings?.day_of_week ? this.advancedSettings?.day_of_week : null],
-          timeOfDay: [this.advancedSettings?.time_of_day ? this.advancedSettings?.time_of_day : null],
-          meridiem: [null]
+          timeOfDay: [this.initialTime()],
+          meridiem: [this.merdiemType()]
       });
       this.isLoading = false;
     }, () => {
         this.advancedSettingsForm = this.formBuilder.group({
           expenseMemoStructure: [null],
           topMemoStructure: [null],
-          exportSchedule: [null],
+          exportSchedule: [false],
           exportScheduleFrequency: [null],
           email: [null],
           frequency: [null],
           dayOfMonth: [null],
           dayOfWeek: [null],
-          timeOfDay: [null],
-          meridiem: [null]
+          timeOfDay: [this.initialTime()],
+          meridiem: [this.merdiemType()]
         });
         this.isLoading = false;
       }

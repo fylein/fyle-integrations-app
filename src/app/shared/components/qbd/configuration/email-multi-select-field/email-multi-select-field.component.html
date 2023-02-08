@@ -8,9 +8,9 @@
             <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
         </div>
     </div>
-    <div>
-        <p-multiSelect [formControlName]="formControllerName" [placeholder]="placeholder" styleClass="tw-z-1 tw-w-27-vw max-lg:tw-w-20-vw tw-h-40-px" [options]="emails"
-            [filter]="true" [filterBy]="'email,name'" defaultLabel="Select Email Address" optionLabel="email" display="chip">
+    <div class="tw-pl-40-px">
+        <p-multiSelect [options]="options" styleClass="tw-z-1" [formControlName]="formControllerName" [defaultLabel]="placeholder" optionLabel="email"
+	    display="chip" [filter]="true" [filterBy]="'email,name'">
             <ng-template let-value pTemplate="selectedItems">
                 <div *ngIf="selectedEmail"
                     class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
@@ -19,10 +19,9 @@
                     <svg-icon-sprite (click)="removeEmail()" src="close" width="10px" height="10px"
                         class="tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color"></svg-icon-sprite>
                 </div>
-                <div *ngIf="selectedEmail && form.value.emails.length > 1" class="tw-pl-8-px">
-                    <p
-                        class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-disabled-bg-color tw-text-12-px tw-text-faded-text-color tw-rounded-12-px">
-                        +{{ form.value.emails.length - 1 }}
+                <div *ngIf="selectedEmail && form.value.email.length > 1" class="tw-pl-8-px">
+                    <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-disabled-bg-color tw-text-12-px tw-text-faded-text-color tw-rounded-12-px">
+                        +{{ form.value.email.length - 1 }}
                     </p>
                 </div>
                 <div *ngIf="!selectedEmail" class="tw-text-placeholder">
@@ -30,11 +29,11 @@
                 </div>
             </ng-template>
             <ng-template pTemplate="filter" let-options="options">
-                <div *ngIf="emails.length" class="p-inputgroup">
+                <div *ngIf="form.value.email.length" class="p-inputgroup">
                     <div class="p-input-icon-left">
                         <i class="pi pi-search"></i>
-                        <input type="text" class="!tw-h-32-px !tw-w-300-px" (keyup)="options.filter($event)" pInputText
-                            placeholder="Search by Name / Email" formControlName="search" />
+                        <input type="text" class="!tw-h-32-px !tw-w-270-px" (keyup)="options.filter($event)"
+                            pInputText placeholder="Search by Name / Email" formControlName="search" />
                         <svg-icon-sprite *ngIf="10 > 0" src="clear" width="16px" height="16px"
                             class="tw-text-faded-text-color tw-absolute tw-top-10-px tw-right-12-px tw-cursor-pointer"
                             (click)="clearSearch(options)">
@@ -49,6 +48,17 @@
                 </div>
             </ng-template>
         </p-multiSelect>
+        <div>
+            <div class="tw-flex tw-pt-24-px tw-w-27-vw max-lg:tw-w-20-vw">
+                <p class="tw-text-slightly-normal-text-color tw-text-14-px tw-pr-12-px">or</p>
+                <div class="tw-flex tw-cursor-pointer" (click)="openDialog()">
+                    <svg-icon-sprite src="add" width="18px" height="18px"
+                        class="tw-text-mandatory-field-color">
+                    </svg-icon-sprite>
+                    <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">Add new Email address</p>
+                </div>
+            </div> 
+        </div>
     </div>
 </div>
 

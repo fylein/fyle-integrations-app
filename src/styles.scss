@@ -167,6 +167,10 @@ p {
     @apply tw-text-placeholder #{!important};
 }
 
+.p-multiselect .p-multiselect-label.p-placeholder {
+    @apply tw-text-placeholder #{!important};
+}
+
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
     @apply tw-h-54-px tw-mb-4-px #{!important};
 }

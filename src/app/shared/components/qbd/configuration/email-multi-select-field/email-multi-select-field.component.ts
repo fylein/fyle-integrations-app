@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfigurationPost, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -11,9 +11,9 @@ import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configur
 })
 export class EmailMultiSelectFieldComponent implements OnInit {
 
-  selectedEmail: string;
+  selectedEmail: string | null;
 
-  @Input() options: QBDExportSettingFormOption[] | string[];
+  @Input() options: QBDEmailOption[];
 
   @Input() form: FormGroup;
 
@@ -27,6 +27,14 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   @Input() formControllerName: string;
 
+  cities = [
+    { name: "New York", code: "NY" },
+    { name: "Rome", code: "RM" },
+    { name: "London", code: "LDN" },
+    { name: "Istanbul", code: "IST" },
+    { name: "Paris", code: "PRS" }
+  ];
+
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],
     name: [null, Validators.required]
@@ -36,7 +44,11 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   showDialog: boolean;
 
-  emails: any;
+  emails = [
+    {
+
+    }
+  ];
 
   constructor(
     private formBuilder: FormBuilder
@@ -50,35 +62,34 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   removeEmail(): void {
-    const selectedEmails = this.form.value.emails;
+    const selectedEmails = this.form.value.email;
     selectedEmails.splice(0, 1);
 
     this.form.controls.emails.patchValue(selectedEmails);
-    this.selectedEmail = this.form.value.emails.length ? this.form.value.emails[0].email : null;
+    this.selectedEmail = this.form.value.email.length ? this.form.value.email[0].email : null;
   }
 
   addEmail(): void {
-    const selectedEmails = this.form.value.emails || [];
+    const selectedEmails = this.form.value.email || [];
     selectedEmails.push(this.addEmailForm.value);
-
-    const additionalEmails = this.form.value.additionalEmails || [];
-    additionalEmails.push(this.addEmailForm.value);
-
     this.emails.push(this.addEmailForm.value);
-
-    this.form.controls.emails.patchValue(selectedEmails);
-    this.form.controls.additionalEmails.patchValue(additionalEmails);
+    this.assignSelectedEmail(selectedEmails);
+    this.form.controls.email.patchValue(selectedEmails);
     this.addEmailForm.reset();
     this.showDialog = false;
   }
 
   private assignSelectedEmail(emails: EmailOption[]): void {
-    this.selectedEmail = this.form.value.emails.length ? this.form.value.emails[0] : null;
+    if (emails.length) {
+      this.selectedEmail = emails[0].email;
+    } else {
+      this.selectedEmail = null;
+    }
   }
 
   private createEmailAdditionWatcher(): void {
-    this.assignSelectedEmail(this.form.value.emails);
-    this.form.controls.emails.valueChanges.subscribe((emails: EmailOption[]) => {
+    this.assignSelectedEmail(this.form.value.email);
+    this.form.controls.email.valueChanges.subscribe((emails: EmailOption[]) => {
       this.assignSelectedEmail(emails);
     });
   }
@@ -91,24 +102,18 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     });
   }
 
-  // Private setupPage(): void {
-  //   This.form = this.formBuilder.group({
-  //     AdditionalEmails: [this.bambooHrConfiguration?.additional_email_options ? this.bambooHrConfiguration.additional_email_options : []],
-  //     Emails: [this.bambooHrConfiguration?.emails_selected ? this.bambooHrConfiguration?.emails_selected : [], Validators.required],
-  //     Search: []
-  //   });
+  private setupPage(): void {
+    this.emails = this.getEmailOptions(this.form.value.email, this.options);
 
-  //   This.emails = this.getEmailOptions(this.form.value.additionalEmails, this.additionalEmails);
-
-  //   This.createEmailAdditionWatcher();
-  // }
+    this.createEmailAdditionWatcher();
+  }
 
   openDialog(): void {
     this.showDialog = true;
   }
 
   ngOnInit(): void {
-    this.selectedEmail = this.form.value.emails.length ? this.form.value.emails[0] : null;
+    this.setupPage();
   }
 
 }
