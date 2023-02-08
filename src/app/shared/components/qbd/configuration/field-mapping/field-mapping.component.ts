@@ -14,16 +14,6 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
   styleUrls: ['./field-mapping.component.scss']
 })
 export class FieldMappingComponent implements OnInit {
-  fieldMapping: QBDFieldMappingGet;
-
-  constructor(
-    private router: Router,
-    private formBuilder: FormBuilder,
-    private fieldMappingService: QbdFieldMappingService,
-    private workspaceService: QbdWorkspaceService,
-    private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
-  ) { }
 
   isLoading: boolean;
 
@@ -43,16 +33,17 @@ export class FieldMappingComponent implements OnInit {
     {
       label: 'Cost Center',
       value: QBDRepresentation.COST_CENTER
-    },
-    {
-      label: 'Select type custom field',
-      value: QBDRepresentation.CUSTOME_FIELD
     }
   ];
 
-  ngOnInit(): void {
-    this.getSettingsAndSetupForm();
-  }
+  constructor(
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private fieldMappingService: QbdFieldMappingService,
+    private workspaceService: QbdWorkspaceService,
+    private messageService: MessageService,
+    private primengConfig: PrimeNGConfig
+  ) { }
 
   constructPayloadAndSave(): void {
     this.saveInProgress = true;
@@ -62,7 +53,7 @@ export class FieldMappingComponent implements OnInit {
       this.saveInProgress = false;
       this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Field mapping saved successfully'});
       if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(QBDOnboardingState.ADVANCED_CONFIGURATION);
+        this.workspaceService.setOnboardingState(QBDOnboardingState.ADVANCED_SETTINGS);
         this.router.navigate([`/integrations/qbd/onboarding/advanced_settings`]);
       }
     }, () => {
@@ -79,22 +70,24 @@ export class FieldMappingComponent implements OnInit {
 
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.fieldMappingService.getQbdFieldMapping().subscribe((fielsMappingResponse : QBDFieldMappingGet) => {
-      this.fieldMapping = fielsMappingResponse;
+    this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
+      const fieldMapping = fieldMappingResponse;
       this.fieldMappingForm = this.formBuilder.group({
-        classType: [this.fieldMapping?.class_type ? this.fieldMapping?.class_type : null],
-        customerType: [this.fieldMapping?.project_type ? this.fieldMapping?.project_type : null]
+        classType: [fieldMapping?.class_type ? fieldMapping?.class_type : null],
+        customerType: [fieldMapping?.project_type ? fieldMapping?.project_type : null]
       });
       this.isLoading = false;
     }, () => {
         this.fieldMappingForm = this.formBuilder.group({
-          classType: [null, Validators.required],
-          customerType: [null, Validators.required]
+          classType: [null],
+          customerType: [null]
         });
         this.isLoading = false;
       }
     );
   }
 
-
+  ngOnInit(): void {
+    this.getSettingsAndSetupForm();
+  }
 }

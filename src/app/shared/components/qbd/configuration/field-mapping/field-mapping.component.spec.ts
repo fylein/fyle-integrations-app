@@ -46,13 +46,12 @@ describe('FieldMappingComponent', () => {
 
     fixture = TestBed.createComponent(FieldMappingComponent);
     component = fixture.componentInstance;
-    component.fieldMapping = QBDFieldMappingResponse;
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
     qbdFieldMappingService = TestBed.inject(QbdFieldMappingService);
     component.fieldMappingForm = formbuilder.group({
-      classType: [component.fieldMapping?.class_type ? component.fieldMapping?.class_type : null],
-      customerType: [component.fieldMapping?.project_type ? component.fieldMapping?.project_type : null]
+      classType: ['CLASS'],
+      customerType: ['PROJECT']
     });
     fixture.detectChanges();
   });
