@@ -7,17 +7,19 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MessageService, SharedModule } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 import { AdvancedSettingComponent } from './advanced-setting.component';
-import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2 } from './advanced-setting.fixture';
+import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDEmailOptioResponse } from './advanced-setting.fixture';
 
 describe('AdvancedSettingComponent', () => {
   let component: AdvancedSettingComponent;
   let fixture: ComponentFixture<AdvancedSettingComponent>;
   let service1: any;
   let service2: any;
+  let service3: any;
   let formbuilder: FormBuilder;
   let qbdAdvancedSettingService: QbdAdvancedSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
@@ -32,6 +34,10 @@ describe('AdvancedSettingComponent', () => {
       getOnboardingState: () => QBDOnboardingState.ADVANCED_SETTINGS,
       setOnboardingState: () => undefined
     };
+
+    service3 = {
+      getAdditionalEmails: () => of(QBDEmailOptioResponse)
+    };
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
       declarations: [ AdvancedSettingComponent ],
@@ -39,7 +45,8 @@ describe('AdvancedSettingComponent', () => {
         MessageService, FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdAdvancedSettingService, useValue: service1 },
-        { provide: QbdWorkspaceService, useValue: service2 }
+        { provide: QbdWorkspaceService, useValue: service2 },
+        { provide: OrgService, useValue: service3 }
       ]
     })
     .compileComponents();
@@ -50,12 +57,12 @@ describe('AdvancedSettingComponent', () => {
     router = TestBed.inject(Router);
     qbdAdvancedSettingService = TestBed.inject(QbdAdvancedSettingService);
     component.advancedSettings = QBDAdvancedSettingResponse;
+    component.memoStructure = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
     component.advancedSettingsForm = formbuilder.group({
-      expenseMemoStructure: [component.advancedSettings?.expense_memo_structure ? component.advancedSettings?.expense_memo_structure : null],
+      expenseMemoStructure: [component.advancedSettings?.expense_memo_structure.length>0 ? component.advancedSettings?.expense_memo_structure : null],
         topMemoStructure: [component.advancedSettings?.top_memo_structure ? component.advancedSettings?.top_memo_structure : null],
-        AdvancedSchedule: [component.advancedSettings?.schedule_is_enabled ? component.advancedSettings?.schedule_is_enabled : null],
-        AdvancedScheduleFrequency: [component.advancedSettings?.interval_hours ? component.advancedSettings?.interval_hours : null],
-        email: [component.advancedSettings?.emails ? component.advancedSettings?.emails : null],
+        exportSchedule: [component.advancedSettings?.schedule_is_enabled ? component.advancedSettings?.schedule_is_enabled : null],
+        email: [component.advancedSettings?.emails_selected ? component.advancedSettings?.emails_selected : null],
         frequency: [component.advancedSettings?.frequency ? component.advancedSettings?.frequency : null],
         dayOfMonth: [component.advancedSettings?.day_of_month ? component.advancedSettings?.day_of_month : null],
         dayOfWeek: [component.advancedSettings?.day_of_week ? component.advancedSettings?.day_of_week : null],
@@ -67,7 +74,10 @@ describe('AdvancedSettingComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    component.advancedSettingsForm.controls.expenseMemoStructure.patchValue(['brande']);
+    expect((component as any).createMemoStructureWatcher()).toBeUndefined();
   });
+
   it('Save function check', () => {
     expect(component.save()).toBeUndefined();
   });

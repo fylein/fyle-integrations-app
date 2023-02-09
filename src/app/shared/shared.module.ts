@@ -9,6 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { DragDropModule } from 'primeng/dragdrop';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -37,7 +38,7 @@ import { ConfigurationStepHeaderComponent } from './components/qbd/configuration
 import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-
+import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { MessageService } from 'primeng/api';
     ConfigurationRadioFieldComponent,
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
-    EmailMultiSelectFieldComponent
+    EmailMultiSelectFieldComponent,
+    ConfigurationMultiSelectComponent
   ],
   imports: [
     CommonModule,
@@ -78,6 +80,7 @@ import { MessageService } from 'primeng/api';
     DropdownModule,
     DialogModule,
     MultiSelectModule,
+    DragDropModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -101,7 +104,8 @@ import { MessageService } from 'primeng/api';
     ConfigurationRadioFieldComponent,
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
-    EmailMultiSelectFieldComponent
+    EmailMultiSelectFieldComponent,
+    ConfigurationMultiSelectComponent
   ],
   providers: [MessageService]
 })

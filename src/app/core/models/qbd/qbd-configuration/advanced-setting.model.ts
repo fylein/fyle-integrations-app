@@ -9,8 +9,7 @@ export type QBDAdvancedSettingsPost = {
     expense_memo_structure: string[],
     top_memo_structure: string[],
     schedule_is_enabled: boolean,
-    interval_hours: number | null,
-    emails: QBDEmailOption[],
+    emails_selected: QBDEmailOption[],
     day_of_month: string | null,
     day_of_week: string | null,
     frequency: QBDScheduleFrequency | null,
@@ -24,9 +23,8 @@ export type QBDAdvancedSettingsGet = {
     expense_memo_structure: string[],
     top_memo_structure: string[],
     schedule_is_enabled: boolean,
-    interval_hours: number | null,
     schedule_id: number | null,
-    emails: QBDEmailOption[],
+    emails_selected: QBDEmailOption[],
     day_of_month: string | null,
     day_of_week: string | null,
     frequency: QBDScheduleFrequency | null,
@@ -39,13 +37,12 @@ export class AdvancedSettingModel {
         const advancedSettingPayload: QBDAdvancedSettingsPost = {
             expense_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : null,
             top_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? advancedSettingForm.get('topMemoStructure')?.value : null,
-            schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : null,
-            interval_hours: advancedSettingForm.get('exportScheduleFrequency')?.value ? advancedSettingForm.get('exportScheduleFrequency')?.value : null,
-            emails: advancedSettingForm.get('email')?.value ? advancedSettingForm.get('email')?.value : null,
+            schedule_is_enabled: advancedSettingForm.get('exportSchedule')?.value ? advancedSettingForm.get('exportSchedule')?.value : false,
+            emails_selected: advancedSettingForm.get('email')?.value ? advancedSettingForm.get('email')?.value : null,
             day_of_month: advancedSettingForm.get('dayOfMonth')?.value ? advancedSettingForm.get('dayOfMonth')?.value : null,
             day_of_week: advancedSettingForm.get('dayOfWeek')?.value ? advancedSettingForm.get('dayOfWeek')?.value : null,
             frequency: advancedSettingForm.get('frequency')?.value ? advancedSettingForm.get('frequency')?.value : null,
-            time_of_day: advancedSettingForm.get('timeOfDay')?.value ? advancedSettingForm.get('timeOfDay')?.value : null
+            time_of_day: advancedSettingForm.get('timeOfDay')?.value ? advancedSettingForm.get('timeOfDay')?.value.concat(':00') : null
         };
         return advancedSettingPayload;
     }

@@ -82,18 +82,18 @@
                     [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                    <app-configuration-select-field
+                    <app-configuration-multi-select
                     [form]="advancedSettingsForm"
                     [label]="'Set description field in Quick Book Office'"
                     [subLabel]="'Customize the data set you would like to pass to the description field of QBD while exporting expenses from Fyle.'"
                     [options]="defaultMemoFields"
                     [iconPath]="'expense'"
                     [placeholder]="'Select Memo Types'"
-                    [formControllerName]="'expenseMemoStructure'"></app-configuration-select-field>
+                    [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
                     <div class="tw-p-24-px">
                         <p class="tw-text-12-px tw-mb-12-px tw-text-faded-text-color">Preview in Quickbooks Desktop</p>
                         <div class="tw-bg-disabled-bg-color tw-text-14-px tw-pl-8-px tw-px-8-px">
-                            <span>Pizza Hut - Client Meeting - 22/12/2021</span>
+                            <span>{{ memoPreviewText }}</span>
                         </div>
                     </div>
                 </div>

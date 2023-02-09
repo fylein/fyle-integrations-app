@@ -44,11 +44,8 @@ describe('QbdAdvancedSettingService', () => {
         "expense_link"
       ],
       schedule_is_enabled: false,
-      interval_hours: 100,
       schedule_id: null,
-      emails: [
-        "shwetabh.kumar@fylehq.com"
-      ],
+      emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
       workspace: 1,
       day_of_month: null,
       day_of_week: "MONDAY",
@@ -79,10 +76,7 @@ describe('QbdAdvancedSettingService', () => {
         "purpose"
       ],
       schedule_is_enabled: false,
-      interval_hours: 100,
-      emails: [
-        "shwetabh.kumar@fylehq.com"
-      ],
+      emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
       day_of_month: null,
       day_of_week: "MONDAY",
       frequency: QBDScheduleFrequency.WEEKLY,
@@ -105,9 +99,7 @@ describe('QbdAdvancedSettingService', () => {
       schedule_is_enabled: false,
       interval_hours: 100,
       schedule_id: null,
-      emails: [
-          "shwetabh.kumar@fylehq.com"
-      ],
+      emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
       day_of_month: null,
       day_of_week: "MONDAY",
       frequency: QBDScheduleFrequency.WEEKLY,

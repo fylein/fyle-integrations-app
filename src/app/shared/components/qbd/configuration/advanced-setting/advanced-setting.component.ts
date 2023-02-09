@@ -48,7 +48,7 @@ export class AdvancedSettingComponent implements OnInit {
 
   adminEmails: QBDEmailOption[];
 
-  weeklyOptions: string[] = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  weeklyOptions: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
 
   frequencyIntervals:QBDExportSettingFormOption[] = [...Array(30).keys()].map(day => {
     return {
@@ -56,6 +56,10 @@ export class AdvancedSettingComponent implements OnInit {
       value: day + 1
     };
   });
+
+  memoPreviewText: string;
+
+  memoStructure: string[] = [];
 
   constructor(
     private router: Router,
@@ -66,6 +70,30 @@ export class AdvancedSettingComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private orgService: OrgService
   ) { }
+
+  private formatMemoPreview(): void {
+    const time = Date.now();
+    const today = new Date(time);
+
+    const previewValues: { [key: string]: string } = {
+      employee_email: 'john.doe@acme.com',
+      category: 'Meals and Entertainment',
+      purpose: 'Client Meeting',
+      merchant: 'Pizza Hut',
+      report_number: 'C/2021/12/R/1',
+      spent_on: today.toLocaleDateString(),
+      expense_link: 'https://app.fylehq.com/app/main/#/enterprise/view_expense/'
+    };
+    this.memoPreviewText = '';
+    this.memoStructure.forEach((field, index) => {
+      if (field in previewValues) {
+        this.memoPreviewText += previewValues[field];
+        if (index + 1 !== this.memoStructure.length) {
+          this.memoPreviewText = this.memoPreviewText + ' - ';
+        }
+      }
+    });
+  }
 
   private setFrequencyInterval(day: number): string {
     if (day === 1) {
@@ -89,6 +117,15 @@ export class AdvancedSettingComponent implements OnInit {
     return time === 0 ? '12:00' : time.toString() + ':' + seconds;
   }
 
+  private createMemoStructureWatcher(): void {
+    this.memoStructure = this.advancedSettingsForm.value.expenseMemoStructure;
+    this.formatMemoPreview();
+    this.advancedSettingsForm.controls.expenseMemoStructure.valueChanges.subscribe((memoChanges) => {
+      this.memoStructure = memoChanges;
+      this.formatMemoPreview();
+    });
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     this.orgService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOption[]) => {
@@ -96,13 +133,11 @@ export class AdvancedSettingComponent implements OnInit {
     });
     this.advancedSettingService.getQbdAdvancedSettings().subscribe((advancedSettingResponse : QBDAdvancedSettingsGet) => {
       this.advancedSettings = advancedSettingResponse;
-      const emails: any[] = [];
       this.advancedSettingsForm = this.formBuilder.group({
-        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : null],
+        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : []],
           topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure : null],
           exportSchedule: [this.advancedSettings?.schedule_is_enabled ? this.advancedSettings?.schedule_is_enabled : false],
-          exportScheduleFrequency: [this.advancedSettings?.interval_hours ? this.advancedSettings?.interval_hours : null],
-          email: [this.advancedSettings?.emails.length > 0 ? emails : emails],
+          email: [this.advancedSettings?.emails_selected.length > 0 ? this.advancedSettings?.emails_selected : []],
           frequency: [this.advancedSettings?.frequency ? this.advancedSettings?.frequency : null],
           dayOfMonth: [this.advancedSettings?.day_of_month ? this.advancedSettings?.day_of_month : null],
           dayOfWeek: [this.advancedSettings?.day_of_week ? this.advancedSettings?.day_of_week : null],
@@ -110,12 +145,12 @@ export class AdvancedSettingComponent implements OnInit {
           meridiem: [this.merdiemType()]
       });
       this.isLoading = false;
+      this.createMemoStructureWatcher();
     }, () => {
         this.advancedSettingsForm = this.formBuilder.group({
           expenseMemoStructure: [null],
           topMemoStructure: [null],
           exportSchedule: [false],
-          exportScheduleFrequency: [null],
           email: [null],
           frequency: [null],
           dayOfMonth: [null],
@@ -131,7 +166,6 @@ export class AdvancedSettingComponent implements OnInit {
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
-
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Advanced settings saved successfully'});
