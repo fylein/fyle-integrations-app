@@ -147,6 +147,7 @@ describe('ExportSettingComponent', () => {
     component.exportSettingsForm.controls.reimbursableExportType.patchValue(QBDReimbursableExpensesObject.JOURNAL_ENTRY);
     fixture.detectChanges();
     expect(component.accountName()).toBe('Bank');
+    expect(component.namePreference()).toContain('Journal Entry');
   });
 
   it('getsettingsAndsetupForm fuunction check', () => {

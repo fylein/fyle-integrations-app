@@ -27,14 +27,6 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   @Input() formControllerName: string;
 
-  cities = [
-    { name: "New York", code: "NY" },
-    { name: "Rome", code: "RM" },
-    { name: "London", code: "LDN" },
-    { name: "Istanbul", code: "IST" },
-    { name: "Paris", code: "PRS" }
-  ];
-
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],
     name: [null, Validators.required]
@@ -44,7 +36,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   showDialog: boolean;
 
-  emails: any;
+  emails: QBDEmailOption[];
 
   constructor(
     private formBuilder: FormBuilder
@@ -58,19 +50,19 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   removeEmail(): void {
-    const selectedEmails = this.form.value.emails_selected;
+    const selectedEmails = this.form.value.email;
     selectedEmails.splice(0, 1);
 
-    this.form.controls.emails_selected.patchValue(selectedEmails);
-    this.selectedEmail = this.form.value.emails_selected.length ? this.form.value.emails_selected[0].email : null;
+    this.form.controls.email.patchValue(selectedEmails);
+    this.selectedEmail = this.form.value.email.length ? this.form.value.email[0].email : null;
   }
 
   addEmail(): void {
-    const selectedEmails = this.form.value.emails_selected;
+    const selectedEmails = this.form.value.email;
     selectedEmails.push(this.addEmailForm.value);
     this.emails.push(this.addEmailForm.value);
     this.assignSelectedEmail(selectedEmails);
-    this.form.controls.emails_selected.patchValue(selectedEmails);
+    this.form.controls.email.patchValue(selectedEmails);
     this.addEmailForm.reset();
     this.showDialog = false;
   }
@@ -84,8 +76,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   private createEmailAdditionWatcher(): void {
-    this.assignSelectedEmail(this.form.value.emails_selected);
-    this.form.controls.emails_selected.valueChanges.subscribe((emails: QBDEmailOption[]) => {
+    this.assignSelectedEmail(this.form.value.email);
+    this.form.controls.email.valueChanges.subscribe((emails: QBDEmailOption[]) => {
       this.assignSelectedEmail(emails);
     });
   }
@@ -99,8 +91,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   private setupPage(): void {
-    this.emails = this.getEmailOptions(this.form.value.emails_selected, this.options);
-
+    this.assignSelectedEmail(this.form.value.email);
+    this.emails = this.getEmailOptions(this.form.value.email, this.options);
     this.createEmailAdditionWatcher();
   }
 

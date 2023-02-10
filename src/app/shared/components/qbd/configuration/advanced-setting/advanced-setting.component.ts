@@ -107,13 +107,13 @@ export class AdvancedSettingComponent implements OnInit {
   }
 
   private merdiemType(): string {
-    const time = this.advancedSettings.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
+    const time = this.advancedSettings?.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
     return time < 12 ? 'AM' : 'PM';
   }
 
   private initialTime(): string {
-    const time = this.advancedSettings.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
-    const seconds = this.advancedSettings.time_of_day ? this.advancedSettings.time_of_day.slice(3, 5) : '00';
+    const time = this.advancedSettings?.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
+    const seconds = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day.slice(3, 5) : '00';
     return time === 0 ? '12:00' : time.toString() + ':' + seconds;
   }
 
@@ -126,16 +126,21 @@ export class AdvancedSettingComponent implements OnInit {
     });
   }
 
-  private getSettingsAndSetupForm(): void {
-    this.isOnboarding = this.router.url.includes('onboarding');
+  getAdminEmails() {
+    this.isLoading= true;
     this.orgService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOption[]) => {
       this.adminEmails = emailResponse;
+      this.getSettingsAndSetupForm();
     });
+  }
+
+  private getSettingsAndSetupForm(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
     this.advancedSettingService.getQbdAdvancedSettings().subscribe((advancedSettingResponse : QBDAdvancedSettingsGet) => {
       this.advancedSettings = advancedSettingResponse;
       this.advancedSettingsForm = this.formBuilder.group({
-        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : []],
-          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure : null],
+        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : this.defaultMemoFields],
+          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure : this.defaultMemoFields.slice(0, 3)],
           exportSchedule: [this.advancedSettings?.schedule_is_enabled ? this.advancedSettings?.schedule_is_enabled : false],
           email: [this.advancedSettings?.emails_selected.length > 0 ? this.advancedSettings?.emails_selected : []],
           frequency: [this.advancedSettings?.frequency ? this.advancedSettings?.frequency : null],
@@ -146,12 +151,12 @@ export class AdvancedSettingComponent implements OnInit {
       });
       this.isLoading = false;
       this.createMemoStructureWatcher();
-    }, () => {
+    }, error => {
         this.advancedSettingsForm = this.formBuilder.group({
-          expenseMemoStructure: [null],
-          topMemoStructure: [null],
+          expenseMemoStructure: [this.defaultMemoFields],
+          topMemoStructure: [this.defaultMemoFields.slice(0, 3)],
           exportSchedule: [false],
-          email: [null],
+          email: [[]],
           frequency: [null],
           dayOfMonth: [null],
           dayOfWeek: [null],
@@ -159,19 +164,24 @@ export class AdvancedSettingComponent implements OnInit {
           meridiem: [this.merdiemType()]
         });
         this.isLoading = false;
+        this.createMemoStructureWatcher();
       }
     );
   }
 
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
+    const currentTime = +this.advancedSettingsForm.controls.timeOfDay.value.slice(0, 2);
+    const currentMins = this.advancedSettingsForm.controls.timeOfDay.value.slice(3, 5);
+    const time = this.advancedSettingsForm.value.meridiem === 'PM' ? `${currentTime+12}:${currentMins}:00`: currentTime === 12 ? `00:${currentMins}:00` : `${currentTime}:${currentMins}:00`;
+    this.advancedSettingsForm.controls.timeOfDay.patchValue(time);
     const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Advanced settings saved successfully'});
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
-        this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);
+        this.router.navigate([`/integrations/qbd/onboarding/done`]);
       }
     }, () => {
       this.saveInProgress = false;
@@ -186,7 +196,7 @@ export class AdvancedSettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSettingsAndSetupForm();
+    this.getAdminEmails();
   }
 
 }

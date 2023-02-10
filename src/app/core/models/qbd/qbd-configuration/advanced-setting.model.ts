@@ -42,7 +42,7 @@ export class AdvancedSettingModel {
             day_of_month: advancedSettingForm.get('dayOfMonth')?.value ? advancedSettingForm.get('dayOfMonth')?.value : null,
             day_of_week: advancedSettingForm.get('dayOfWeek')?.value ? advancedSettingForm.get('dayOfWeek')?.value : null,
             frequency: advancedSettingForm.get('frequency')?.value ? advancedSettingForm.get('frequency')?.value : null,
-            time_of_day: advancedSettingForm.get('timeOfDay')?.value ? advancedSettingForm.get('timeOfDay')?.value.concat(':00') : null
+            time_of_day: advancedSettingForm.get('timeOfDay')?.value ? advancedSettingForm.get('timeOfDay')?.value : null
         };
         return advancedSettingPayload;
     }

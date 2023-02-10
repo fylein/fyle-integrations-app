@@ -23,7 +23,7 @@ describe('EmailMultiSelectFieldComponent', () => {
     formbuilder = TestBed.inject(FormBuilder);
     component.options = [{name: 'dhaarani', email: "dhaarani@fylehq.com"}];
     component.form = formbuilder.group({
-      emails_selected: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
+      email: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
       search: []
     });
     fixture.detectChanges();
@@ -60,7 +60,7 @@ describe('EmailMultiSelectFieldComponent', () => {
   it('removeEmail function check', () => {
     expect(component.removeEmail()).toBeUndefined();
     component.form = formbuilder.group({
-      emails_selected: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}, {name: 'shwetabhww', email: "shwetabhoop.kumar@fylehq.com"}]],
+      email: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}, {name: 'shwetabhww', email: "shwetabhoop.kumar@fylehq.com"}]],
       search: []
     });
     fixture.detectChanges();

@@ -8,7 +8,7 @@ export type Workspace = {
   currency: string;
   reimbursable_last_synced_at: Date | null;
   ccc_last_synced_at: Date | null;
-//   Onboarding_state: QBDOnboardingState;
+  onboarding_state: QBDOnboardingState;
   created_at: Date;
   updated_at: Date;
 }

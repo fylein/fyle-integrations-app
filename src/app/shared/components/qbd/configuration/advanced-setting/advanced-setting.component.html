@@ -72,14 +72,14 @@
                     </div>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                    <app-configuration-select-field
+                    <app-configuration-multi-select
                     [form]="advancedSettingsForm"
                     [label]="'Set Top level description field in Quick Book Office'"
                     [subLabel]="'Customize the data set you would like to pass to the description field of QBD while exporting expenses from Fyle.'"
                     [options]="defaultMemoFields"
                     [iconPath]="'expense'"
                     [placeholder]="'Select Top Memo Type'"
-                    [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
+                    [formControllerName]="'topMemoStructure'"></app-configuration-multi-select>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-multi-select

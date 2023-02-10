@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { QBDCorporateCreditCardExpensesObject, QBDConfigurationCtaText, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { QBDCorporateCreditCardExpensesObject, QBDConfigurationCtaText, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
@@ -85,6 +85,17 @@ export class ExportSettingComponent implements OnInit {
     }
   ];
 
+  cccEntityNameOptions: QBDExportSettingFormOption[] = [
+    {
+      label: 'Employee',
+      value: QBDEntity.EMPLOYEE
+    },
+    {
+      label: 'Vendor',
+      value: QBDEntity.VENDOR
+    }
+  ];
+
   exportSettings: QBDExportSettingGet;
 
   constructor(
@@ -95,6 +106,10 @@ export class ExportSettingComponent implements OnInit {
     private messageService: MessageService,
     private primengConfig: PrimeNGConfig
   ) { }
+
+  namePreference(): string {
+    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.value.cccExportType, this.creditCardExportTypes) } are posted in QBD.`;
+  }
 
   accountName(): string {
     return this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank';
@@ -189,6 +204,7 @@ export class ExportSettingComponent implements OnInit {
   }
 
   private getSettingsAndSetupForm(): void {
+    this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
     this.exportSettingService.getQbdExportSettings().subscribe((exportSettingResponse : QBDExportSettingGet) => {
       this.exportSettings = exportSettingResponse;
