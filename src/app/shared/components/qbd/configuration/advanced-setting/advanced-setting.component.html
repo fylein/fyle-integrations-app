@@ -27,6 +27,7 @@
                                 [form]="advancedSettingsForm"
                                 [label]="'Select the time of the file to be generated'"
                                 [subLabel]="'Select the frequency at which you want your IIF file to be sent via email.'"
+                                [options]="weeklyOptions"
                                 [formControllerName]="'timeOfDay'"></app-configuration-select-field>
                             </div>
                             <div *ngIf="advancedSettingsForm.value.frequency === QBDScheduleFrequency.WEEKLY" >
@@ -72,14 +73,14 @@
                     </div>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                    <app-configuration-multi-select
+                    <app-configuration-select-field
                     [form]="advancedSettingsForm"
                     [label]="'Set Top level description field in Quick Book Office'"
                     [subLabel]="'Customize the data set you would like to pass to the description field of QBD while exporting expenses from Fyle.'"
-                    [options]="defaultMemoFields"
+                    [simpleOptions]="defaultTopMemoOptions"
                     [iconPath]="'expense'"
                     [placeholder]="'Select Top Memo Type'"
-                    [formControllerName]="'topMemoStructure'"></app-configuration-multi-select>
+                    [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
                 </div>
                 <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                     <app-configuration-multi-select

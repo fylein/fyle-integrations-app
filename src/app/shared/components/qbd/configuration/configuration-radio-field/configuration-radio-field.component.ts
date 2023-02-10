@@ -13,6 +13,8 @@ export class ConfigurationRadioFieldComponent implements OnInit {
 
   @Input() options: QBDExportSettingFormOption[];
 
+  @Input() expensesGroup: QBDExportSettingFormOption;
+
   @Input() form: FormGroup;
 
   @Input() iconPath: string;

@@ -45,6 +45,12 @@ export class FieldMappingComponent implements OnInit {
     private primengConfig: PrimeNGConfig
   ) { }
 
+  mappingFieldFormOptionsFunction(formControllerName: string): QBDExportSettingFormOption[] {
+    return this.representationOption.filter(option => {
+      return option.value !== this.fieldMappingForm.value[formControllerName];
+    });
+  }
+
   constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const fieldMappingPayload = FieldMappingModel.constructPayload(this.fieldMappingForm);

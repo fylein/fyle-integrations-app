@@ -118,7 +118,7 @@
                             [form]="exportSettingsForm"
                             [label]="'How would you like to group your expenses?'"
                             [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
-                            [options]="expenseGroupingFieldOptions"
+                            [expensesGroup]="expenseGroupingFieldOptions[1]"
                             [iconPath]="'copy-v2'"
                             [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
                         </div>
@@ -127,7 +127,7 @@
                             [form]="exportSettingsForm"
                             [label]="'Set the transaction date'"
                             [subLabel]="'The selected date will reflect in expenses exported to QBD'"
-                            [options]="reimbursableExpenseGroupingDateOptions"
+                            [cccDate]="reimbursableExpenseGroupingDateOptions[0]"
                             [iconPath]="'calender'"
                             [placeholder]="'Select date type'"
                             [formControllerName]="'cccExportDate'"></app-configuration-select-field>

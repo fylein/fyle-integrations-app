@@ -36,7 +36,7 @@ export class AdvancedSettingComponent implements OnInit {
     },
     {
       value: QBDScheduleFrequency.WEEKLY,
-      label: 'Weelky'
+      label: 'Weekly'
     },
     {
       value: QBDScheduleFrequency.MONTHLY,
@@ -45,6 +45,8 @@ export class AdvancedSettingComponent implements OnInit {
   ];
 
   defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+
+  defaultTopMemoOptions: string[] = ["employee_email", "employee_name", "purpose"];
 
   adminEmails: QBDEmailOption[];
 
@@ -114,7 +116,16 @@ export class AdvancedSettingComponent implements OnInit {
   private initialTime(): string {
     const time = this.advancedSettings?.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
     const seconds = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day.slice(3, 5) : '00';
-    return time === 0 ? '12:00' : time.toString() + ':' + seconds;
+    const finnaltime = time-12;
+    if (time<=12) {
+      if (time>0 && time <=9) {
+        return "0" + time.toString() + ":" + seconds;
+      } else if (time === 0) {
+        return "12:" + seconds;
+      }
+      return time.toString() + ':' + seconds;
+    }
+    return finnaltime > 9 ? finnaltime + ":" + seconds : "0" + finnaltime.toString() + ":" + seconds;
   }
 
   private createMemoStructureWatcher(): void {
@@ -140,7 +151,7 @@ export class AdvancedSettingComponent implements OnInit {
       this.advancedSettings = advancedSettingResponse;
       this.advancedSettingsForm = this.formBuilder.group({
         expenseMemoStructure: [this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : this.defaultMemoFields],
-          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure : this.defaultMemoFields.slice(0, 3)],
+          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure[0] : this.defaultTopMemoOptions[0]],
           exportSchedule: [this.advancedSettings?.schedule_is_enabled ? this.advancedSettings?.schedule_is_enabled : false],
           email: [this.advancedSettings?.emails_selected.length > 0 ? this.advancedSettings?.emails_selected : []],
           frequency: [this.advancedSettings?.frequency ? this.advancedSettings?.frequency : null],
@@ -154,7 +165,7 @@ export class AdvancedSettingComponent implements OnInit {
     }, error => {
         this.advancedSettingsForm = this.formBuilder.group({
           expenseMemoStructure: [this.defaultMemoFields],
-          topMemoStructure: [this.defaultMemoFields.slice(0, 3)],
+          topMemoStructure: [this.defaultTopMemoOptions[0]],
           exportSchedule: [false],
           email: [[]],
           frequency: [null],
@@ -171,11 +182,13 @@ export class AdvancedSettingComponent implements OnInit {
 
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
+    const topMemo = [this.advancedSettingsForm.value.topMemoStructure[0]];
     const currentTime = +this.advancedSettingsForm.controls.timeOfDay.value.slice(0, 2);
     const currentMins = this.advancedSettingsForm.controls.timeOfDay.value.slice(3, 5);
-    const time = this.advancedSettingsForm.value.meridiem === 'PM' ? `${currentTime+12}:${currentMins}:00`: currentTime === 12 ? `00:${currentMins}:00` : `${currentTime}:${currentMins}:00`;
-    this.advancedSettingsForm.controls.timeOfDay.patchValue(time);
+    const time = this.advancedSettingsForm.value.meridiem === 'PM' && currentTime !== 12 ? currentTime+12 + ":" + currentMins+":00" : currentTime === 12 ? "00:" + currentMins+":00" : currentTime + ":" + currentMins + ":00";
     const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
+    advancedSettingPayload.time_of_day = time;
+    advancedSettingPayload.top_memo_structure = topMemo;
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Advanced settings saved successfully'});

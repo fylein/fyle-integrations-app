@@ -16,7 +16,7 @@
                         [form]="fieldMappingForm"
                         [label]="'How do you represent Customers on Fyle?'"
                         [subLabel]="'Select the Fyle dimension that corresponds to QuickBooks Desktops Customers.'"
-                        [options]="representationOption"
+                        [options]="mappingFieldFormOptionsFunction('customerType')"
                         [iconPath]="'people'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'classType'"></app-configuration-select-field>
@@ -26,7 +26,7 @@
                         [form]="fieldMappingForm"
                         [label]="'How do you represent Classes on Fyle?'"
                         [subLabel]="'Select the Fyle dimension that corresponds to QuickBooks Desktops Class.'"
-                        [options]="representationOption"
+                        [options]="mappingFieldFormOptionsFunction('classType')"
                         [iconPath]="'expense'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'customerType'"></app-configuration-select-field>

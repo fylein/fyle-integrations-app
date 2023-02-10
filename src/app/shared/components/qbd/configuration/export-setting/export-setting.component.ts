@@ -34,10 +34,6 @@ export class ExportSettingComponent implements OnInit {
     {
       value: QBDExpenseState.PAID,
       label: 'Paid'
-    },
-    {
-      value: QBDExpenseState.APPROVED,
-      label: 'Approved'
     }
   ];
 

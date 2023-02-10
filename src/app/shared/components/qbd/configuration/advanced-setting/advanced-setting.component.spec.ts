@@ -86,6 +86,13 @@ describe('AdvancedSettingComponent', () => {
     component.isOnboarding = true;
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
+    component.advancedSettingsForm.controls.meridiem.patchValue('AM');
+    component.advancedSettingsForm.controls.timeOfDay.patchValue('01:00');
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+    component.advancedSettingsForm.controls.meridiem.patchValue('PM');
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
   });
 
   it('Save function check with failed api response', () => {
@@ -106,5 +113,15 @@ describe('AdvancedSettingComponent', () => {
     spyOn(qbdAdvancedSettingService, 'getQbdAdvancedSettings').and.returnValue(throwError(errorResponse));
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+    component.advancedSettings.time_of_day = "09:00:00";
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+    component.advancedSettings.time_of_day = "19:00:00";
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+    component.advancedSettings.time_of_day = "22:00:00";
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
   });
+
 });
