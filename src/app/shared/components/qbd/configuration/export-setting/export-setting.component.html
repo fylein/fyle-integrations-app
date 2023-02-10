@@ -114,23 +114,48 @@
                             </div>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                            <app-configuration-radio-field
-                            [form]="exportSettingsForm"
-                            [label]="'How would you like to group your expenses?'"
-                            [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
-                            [expensesGroup]="expenseGroupingFieldOptions[1]"
-                            [iconPath]="'copy-v2'"
-                            [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
+                            <div *ngIf="exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value">
+                                <app-configuration-radio-field
+                                [form]="exportSettingsForm"
+                                [label]="'How would you like to group your expenses?'"
+                                [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
+                                [expensesGroup]="expenseGroupingFieldOptions[1]"
+                                [iconPath]="'copy-v2'"
+                                [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
+                            </div>
+                            <div *ngIf="exportSettingsForm.value.cccExportType !== creditCardExportTypes[0].value">
+                                <app-configuration-radio-field
+                                [form]="exportSettingsForm"
+                                [label]="'How would you like to group your expenses?'"
+                                [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
+                                [options]="expenseGroupingFieldOptions"
+                                [iconPath]="'copy-v2'"
+                                [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
+                            </div>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                            <app-configuration-select-field
-                            [form]="exportSettingsForm"
-                            [label]="'Set the transaction date'"
-                            [subLabel]="'The selected date will reflect in expenses exported to QBD'"
-                            [cccDate]="reimbursableExpenseGroupingDateOptions[0]"
-                            [iconPath]="'calender'"
-                            [placeholder]="'Select date type'"
-                            [formControllerName]="'cccExportDate'"></app-configuration-select-field>
+                            <div *ngIf="exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value">
+                                <app-configuration-select-field
+                                    [form]="exportSettingsForm"
+                                    [label]="'Set the transaction date'"
+                                    [subLabel]="'The selected date will reflect in expenses exported to QBD'"
+                                    [cccDate]="reimbursableExpenseGroupingDateOptions[0]"
+                                    [iconPath]="'calender'"
+                                    [placeholder]="'Select date type'"
+                                    [formControllerName]="'cccExportDate'">
+                                </app-configuration-select-field>
+                            </div>
+                            <div *ngIf="exportSettingsForm.value.cccExportType !== creditCardExportTypes[0].value">
+                                <app-configuration-select-field
+                                    [form]="exportSettingsForm"
+                                    [label]="'Set the transaction date'"
+                                    [subLabel]="'The selected date will reflect in expenses exported to QBD'"
+                                    [options]="reimbursableExpenseGroupingDateOptions"
+                                    [iconPath]="'calender'"
+                                    [placeholder]="'Select date type'"
+                                    [formControllerName]="'cccExportDate'">
+                                </app-configuration-select-field>
+                            </div>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <app-configuration-select-field

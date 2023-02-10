@@ -50,8 +50,8 @@ export class ExportSettingModel {
             credit_card_expense_state: exportSettingsForm.get('cccExpenseState')?.value ? exportSettingsForm.get('cccExpenseState')?.value : null,
             credit_card_entity_name_preference: exportSettingsForm.get('cccEntityName')?.value ? exportSettingsForm.get('cccEntityName')?.value : null,
             credit_card_account_name: exportSettingsForm.get('cccAccountName')?.value ? exportSettingsForm.get('cccAccountName')?.value : null,
-            credit_card_expense_grouped_by: exportSettingsForm.get('cccExportGroup')?.value ? exportSettingsForm.get('cccExportGroup')?.value : null,
-            credit_card_expense_date: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null
+            credit_card_expense_grouped_by: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('cccExportGroup')?.value ? exportSettingsForm.get('cccExportGroup')?.value : null,
+            credit_card_expense_date: exportSettingsForm.get('creditCardExpense')?.value && exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null
       };
       return exportSettingPayload;
     }

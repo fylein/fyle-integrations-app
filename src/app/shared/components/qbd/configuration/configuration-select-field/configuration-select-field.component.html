@@ -40,6 +40,7 @@
                     </p-dropdown>
                 </div>
                 <div *ngIf="formControllerName === 'dayOfMonth'" class="p-field-checkbox tw-mr-20-px tw-pl-40-px">
+                    <p class="tw-font-400 tw-text-faded-text-color tw-text-14-px">Day</p>
                     <p-dropdown [options]="options" class="dropdown-monthy" [formControlName]="formControllerName" [placeholder]="placeholder"></p-dropdown>
                 </div>
                 <div class="tw-mr-18-px" [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
