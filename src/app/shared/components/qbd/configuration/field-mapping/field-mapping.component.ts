@@ -69,6 +69,7 @@ export class FieldMappingComponent implements OnInit {
   }
 
   private getSettingsAndSetupForm(): void {
+    this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
     this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
       const fieldMapping = fieldMappingResponse;

@@ -7,6 +7,9 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { DragDropModule } from 'primeng/dragdrop';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -33,10 +36,9 @@ import { ConfigurationRadioFieldComponent } from './components/qbd/configuration
 import { ConfigurationStepFooterComponent } from './components/qbd/configuration/configuration-step-footer/configuration-step-footer.component';
 import { ConfigurationStepHeaderComponent } from './components/qbd/configuration/configuration-step-header/configuration-step-header.component';
 import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
-import { AddEmailDialogComponent } from './components/qbd/configuration/advanced-setting/add-email-dialog/add-email-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-
+import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,7 @@ import { MessageService } from 'primeng/api';
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
-    AddEmailDialogComponent
+    ConfigurationMultiSelectComponent
   ],
   imports: [
     CommonModule,
@@ -76,6 +78,9 @@ import { MessageService } from 'primeng/api';
     ToastModule,
     InputTextModule,
     DropdownModule,
+    DialogModule,
+    MultiSelectModule,
+    DragDropModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -100,7 +105,7 @@ import { MessageService } from 'primeng/api';
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
-    AddEmailDialogComponent
+    ConfigurationMultiSelectComponent
   ],
   providers: [MessageService]
 })

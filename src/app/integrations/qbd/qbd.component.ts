@@ -38,13 +38,12 @@ export class QbdComponent implements OnInit {
     if (pathName === '/integrations/qbd') {
       const onboardingStateComponentMap = {
         [QBDOnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
-        [QBDOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/export_settings',
+        [QBDOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/landing',
         [QBDOnboardingState.FIELD_MAPPING]: '/integrations/qbd/onboarding/field_mappings',
         [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
-
-      this.router.navigateByUrl(onboardingStateComponentMap[QBDOnboardingState.CONNECTION]);
+      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
 
@@ -64,8 +63,7 @@ export class QbdComponent implements OnInit {
   workspaceSetting(workspace:Workspace) {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
-    // TODO change it later to workspace.onboarding_state
-    this.storageService.set('QBDOnboardingState', 'EXPORT_SETTINGS');
+    this.storageService.set('QBDOnboardingState', this.workspace.onboarding_state);
     this.isLoading = false;
     this.navigate();
   }

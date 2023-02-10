@@ -107,7 +107,7 @@ p {
 
 // Dropdown
 .p-dropdown {
-    @apply tw-w-80 #{!important};
+    @apply tw-w-80 ;
 }
 .p-dropdown .p-dropdown-label {
     &.p-inputtext {
@@ -164,6 +164,10 @@ p {
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {
+    @apply tw-text-placeholder #{!important};
+}
+
+.p-multiselect .p-multiselect-label.p-placeholder {
     @apply tw-text-placeholder #{!important};
 }
 

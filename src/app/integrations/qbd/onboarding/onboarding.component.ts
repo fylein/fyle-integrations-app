@@ -13,7 +13,6 @@ export class OnboardingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.router.navigate(['/integrations/qbd/onboarding/landing']);
   }
 
 }

@@ -1,0 +1,11 @@
+:host ::ng-deep .dropdown-time-alone .p-dropdown {
+    @apply tw-w-150-px #{!important};
+}
+
+:host ::ng-deep .dropdown-time .p-dropdown {
+    @apply tw-w-120-px #{!important};
+}
+
+:host ::ng-deep .dropdown-monthy .p-dropdown {
+    @apply tw-w-176-px #{!important};
+}

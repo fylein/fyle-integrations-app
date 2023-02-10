@@ -102,15 +102,14 @@
                                     </div>
                                 </div>
 
-                                <div class="tw-pl-16 tw-pt-30-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                    <div class="tw-w-3/5">
-                                        <h4 class="tw-text-14-px">Enter the Credit card entity name preference</h4>
-                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportType(exportSettingsForm.value.cccExportType, creditCardExportTypes) }} are posted in QBD. </h5>
-                                    </div>
-
-                                    <div class="tw-pl-24-px">
-                                        <input type="text" class="tw-w-80 tw-px-10-px tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" pInputText formControlName="cccEntityName" placeholder="Enter Credit Card Entity Name Preference"> 
-                                    </div>
+                                <div>
+                                    <app-configuration-select-field
+                                        [form]="exportSettingsForm"
+                                        [label]="'Enter the Credit card entity name preference'"
+                                        [subLabel]="namePreference()"
+                                        [options]="cccEntityNameOptions"
+                                        [placeholder]="'Select Credit Card Entity Name Preference'"
+                                        [formControllerName]="'cccEntityName'"></app-configuration-select-field>
                                 </div>
                             </div>
                         </div>

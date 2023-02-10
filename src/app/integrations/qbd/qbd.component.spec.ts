@@ -2,11 +2,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 import { QbdComponent } from './qbd.component';
-import { workspaceResponse } from './qbd.fixture';
+import { errorResponse, workspaceResponse } from './qbd.fixture';
 
 describe('QbdComponent', () => {
   let component: QbdComponent;
@@ -43,6 +43,12 @@ describe('QbdComponent', () => {
   });
 
   it('ngOnIng function check', async () => {
+    expect((component as any).getOrCreateWorkspace()).toBeUndefined();
+  });
+
+  it('workspace error handling', () => {
+    spyOn(workspace, 'getQBDWorkspace').and.returnValue(throwError(errorResponse));
+    fixture.detectChanges();
     expect((component as any).getOrCreateWorkspace()).toBeUndefined();
   });
 });
