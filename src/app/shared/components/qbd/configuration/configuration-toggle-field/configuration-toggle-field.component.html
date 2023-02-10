@@ -1,0 +1,11 @@
+<div [formGroup]="form" class="tw-p-24-px tw-flex tw-justify-between">
+    <div class="tw-min-w-300-px">
+      <div class="tw-font-500 tw-leading-normal">
+        <h4 class="tw-text-16-px">{{ label }}</h4>
+        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px" [innerHTML]="subLabel"></h5>
+      </div>
+    </div>
+    <div class="configuration--input-toggle-section">
+      <p-inputSwitch [formControlName]="formControllerName"></p-inputSwitch>
+    </div>
+  </div>

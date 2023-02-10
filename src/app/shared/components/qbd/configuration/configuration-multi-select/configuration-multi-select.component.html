@@ -1,0 +1,35 @@
+<div [formGroup]="form" class="tw-p-24-px tw-flex tw-flex-row tw-space-between">
+    <div class="tw-w-3/5 tw-flex">
+        <div class="tw-pr-20-px">
+            <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+        </div>
+        <div class="tw-font-500 tw-leading-normal">
+            <h5 class="tw-text-14-px">{{ label }}</h5>
+            <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
+        </div>
+    </div>
+    <div class="tw-pl-40-px">
+        <p-multiSelect [options]="options" styleClass="tw-z-2" [formControlName]="formControllerName" [defaultLabel]="placeholder">
+            <ng-template let-value pTemplate="selectedItems" >
+                <div *ngIf="form.value[formControllerName].length>0" class="tw-flex">
+                    <p *ngFor="let name of value;let i = index">{{ name | titlecase | snakeCaseToSpaceCase }} <span *ngIf="i !== value.length-1">,</span></p>
+                </div>
+                <div *ngIf="!form.value[formControllerName]" class="tw-text-placeholder">
+                    {{ placeholder }}
+                </div>
+            </ng-template>
+            <ng-template let-memo pTemplate="item">
+                <!-- <div pDraggable="memo" 
+                (onDragStart)="dragStart(memo);"
+                (onDragEnd)="dragEnd()"
+                pDroppable="memo" 
+                (onDrop)="drop()" >
+                    <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | titlecase | snakeCaseToSpaceCase }}</p>
+                </div> -->
+                <div>
+                    <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | titlecase | snakeCaseToSpaceCase }}</p>
+                </div>
+            </ng-template>
+        </p-multiSelect>
+    </div>
+</div>

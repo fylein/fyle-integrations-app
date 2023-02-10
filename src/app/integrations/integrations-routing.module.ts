@@ -15,6 +15,10 @@ const routes: Routes = [
       {
         path: 'bamboo_hr',
         loadChildren: () => import('./bamboo-hr/bamboo-hr.module').then(m => m.BambooHrModule)
+      },
+      {
+        path: 'qbd',
+        loadChildren: () => import('./qbd/qbd.module').then(m => m.QbdModule)
       }
     ]
   }

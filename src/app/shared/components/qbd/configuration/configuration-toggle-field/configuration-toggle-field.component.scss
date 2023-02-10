@@ -1,0 +1,13 @@
+:host ::ng-deep
+    .p-inputswitch.p-inputswitch-checked
+    .p-inputswitch-slider::after {
+    content: 'Yes';
+    @apply tw-flex tw-justify-center tw-items-center tw-absolute tw-left-2 tw-bottom-px tw-text-12-px tw-text-white tw-font-500 ;
+}
+
+:host ::ng-deep
+    .p-inputswitch:not(.p-inputswitch-checked)
+    .p-inputswitch-slider::after {
+    content: 'No';
+    @apply tw-flex tw-justify-center tw-items-center tw-absolute tw-left-6 tw-bottom-px tw-text-12-px tw-text-white tw-font-500 ;
+}

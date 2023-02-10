@@ -12,11 +12,13 @@ export enum AccountingIntegrationApp {
 }
 
 export enum InAppIntegration {
-    BAMBOO_HR = 'Bamboo HR'
+    BAMBOO_HR = 'Bamboo HR',
+    QBD = 'QuickBooks Desktop'
 }
 
 export enum RedirectLink {
-    BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration'
+    BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
+    QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
 
 export enum ToastSeverity {
@@ -29,6 +31,9 @@ export enum Page {
     BAMBOO_HR_LANDING = 'Bamboo HR Landing',
     CONNECT_BAMBOO_HR = 'Connect Bamboo HR',
     CONFIGURE_BAMBOO_HR = 'Bamboo HR Configuration',
+    QBD_LANDING = 'QuickBooks Desktop Landing',
+    CONNECT_QBD = 'Connect QuickBooks Desktop',
+    CONFIGURE_QBD = 'QuickBooks Desktop Configuration',
 }
 
 export enum ClickEvent {
@@ -37,11 +42,71 @@ export enum ClickEvent {
     OPEN_SAGE_INTACCT_INTEGRATION = 'Open Sage Intacct Integration',
     OPEN_XERO_INTEGRATION = 'Open Xero Integration',
     OPEN_BAMBOO_HR_INTEGRATION = 'Open Bamboo HR Integration',
+    OPEN_QBD_INTEGRATION = 'Open QBD Integration',
     INTEGRATION_TABS = 'Integration Tabs',
     CONNECT_BAMBOO_HR = 'Connect Bamboo HR',
     CONFIGURE_BAMBOO_HR = 'Configure Bamboo HR',
     DISCONNECT_BAMBOO_HR = 'Disconnect Bamboo HR',
+    CONNECT_QBD = 'Connect QBD',
+    CONFIGURE_QBD = 'Configure QBD',
+    DISCONNECT_QBD = 'Disconnect QBD',
     COPY_SUPPORT_EMAIL = 'Copy Support Email',
     SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
     ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually'
 }
+
+export enum QBDOnboardingState {
+    CONNECTION = 'CONNECTION',
+    EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+    FIELD_MAPPING = 'FIELD_MAPPING',
+    ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+    COMPLETE = 'COMPLETE'
+  }
+
+  export enum QBDConfigurationCtaText {
+    SAVE = 'Save',
+    SAVE_AND_CONTINUE = 'Save and Continue',
+    CONTINUE = 'Continue',
+    SAVING = 'Saving'
+  }
+
+  export enum QBDReimbursableExpensesObject {
+    BILL = 'BILL',
+    JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  }
+
+  export enum QBDCorporateCreditCardExpensesObject {
+    CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE',
+    JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  }
+
+  export enum QBDExpenseState {
+    PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
+    PAID = 'PAID',
+    APPROVED = 'APPROVED'
+  }
+
+  export enum QBDExpenseGroupedBy {
+    EXPENSE = 'EXPENSE',
+    REPORT = 'REPORT'
+  }
+
+  export enum QBDExportDateType {
+    LAST_SPENT_AT = 'last_spent_at',
+    SPENT_AT = 'spent_at'
+  }
+
+  export enum QBDEntity {
+    EMPLOYEE = 'EMPLOYEE',
+    VENDOR = 'VENDOR'
+  }
+
+  export enum QBDScheduleFrequency {
+    DAILY = 'DAILY',
+    WEEKLY = 'WEEKLY',
+    MONTHLY = 'MONTHLY'
+  }
+  export enum QBDFyleField {
+    PROJECT = 'PROJECT',
+    COST_CENTER = 'COST_CENTER'
+  }

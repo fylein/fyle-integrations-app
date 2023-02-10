@@ -1,22 +1,28 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 
 import { AppHeaderComponent } from './app-header.component';
 
 describe('AppHeaderComponent', () => {
   let component: AppHeaderComponent;
   let fixture: ComponentFixture<AppHeaderComponent>;
+  let router: Router;
+  const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ AppHeaderComponent ],
       imports: [
         HttpClientModule, HttpClientTestingModule
+      ],
+      providers: [
+        { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();
-
+    router = TestBed.inject(Router);
     fixture = TestBed.createComponent(AppHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -45,5 +51,10 @@ describe('AppHeaderComponent', () => {
 
     component.disconnect();
     expect(component.disconnectBambooHr.emit).toHaveBeenCalled();
+  });
+
+  it('should navigate to onboarding page', () => {
+    expect(component.connectQBD()).toBeUndefined();
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbd/onboarding/export_settings']);
   });
 });

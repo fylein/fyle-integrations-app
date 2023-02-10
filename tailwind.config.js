@@ -19,7 +19,8 @@ const customColors = {
   'info': '#5C98E5',
   'success-toast': '#24A148',
   'alert-toast': '#DA1E28',
-  'cta-disabled': '#FFC2D6'
+  'cta-disabled': '#FFC2D6',
+  'line-inactive': '#CCCDD7'
 };
 
 module.exports = {
@@ -230,6 +231,7 @@ module.exports = {
         '200-px': '200px',
         '246-px': '246px',
         '260-px': '260px',
+        '270-px': '270px',
         '300-px': '300px',
         '302-px': '302px',
         '320-px': '320px',
@@ -278,7 +280,10 @@ module.exports = {
         'faded-text-color': customColors['faded-text-color'],
         'slightly-normal-text-color': customColors['slightly-normal-text-color'],
         'check-box': customColors['check-box'],
-        'disabled-bg-color': customColors['disabled-bg-color']
+        'disabled-bg-color': customColors['disabled-bg-color'],
+        'success-toast': customColors['success-toast'],
+        'separator': customColors['separator'],
+        'line-inactive': customColors['line-inactive']
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',

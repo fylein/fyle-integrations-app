@@ -1,0 +1,44 @@
+<div [formGroup]="form" class="tw-p-24-px tw-flex tw-flex-row tw-space-between tw-items-center">
+    <div class="tw-w-3/5 tw-flex">
+        <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-20-px' : 'tw-pr-40-px']">
+            <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+        </div>
+        
+        <div class="tw-font-500 tw-leading-normal">
+            <h5 class="tw-text-14-px">{{ label }}</h5>
+            <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
+        </div>
+    </div>
+    <div>
+        <div class="p-field-checkbox tw-mr-20-px tw-pl-40-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay'">
+            <p-dropdown [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder"></p-dropdown>
+        </div>
+        <div class="tw-mr-20-px tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
+            <div *ngIf="formControllerName ===  'dayOfMonth' || formControllerName === 'dayOfWeek'" class="tw-mr-18-px dropdown-monthy">
+                <p class="tw-font-400 tw-text-faded-text-color tw-text-14-px">Day</p>
+                <p-dropdown [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder">
+                    <ng-template let-value pTemplate="selectedItem" >
+                        <div *ngIf="form.value[formControllerName]" class="tw-flex">
+                            <p>{{ value | titlecase | snakeCaseToSpaceCase }}</p>
+                        </div>
+                        <div *ngIf="!form.value[formControllerName]" class="tw-text-placeholder">
+                            {{ placeholder }}
+                        </div>
+                    </ng-template>
+                    <ng-template let-day pTemplate="item">
+                        <div>
+                            <p class="tw-text-sub-text-color tw-text-14-px">{{ day | titlecase | snakeCaseToSpaceCase }}</p>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+            </div>
+            <div class="tw-mr-18-px" [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
+                <p class="tw-font-400 tw-text-faded-text-color tw-text-14-px">Time</p>
+                <p-dropdown [options]="timeOption" formControlName="timeOfDay" placeholder="Select Time for export" ></p-dropdown>
+            </div>
+            <div [ngClass]="[formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' ? 'dropdown-time' : 'dropdown-time-alone']">
+                <p-dropdown [options]="meridiemOption" formControlName="meridiem" placeholder="Select meridiem of time" ></p-dropdown>
+            </div>
+        </div>
+    </div>
+</div>

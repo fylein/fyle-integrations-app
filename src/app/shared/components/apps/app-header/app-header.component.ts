@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 
 @Component({
@@ -14,9 +15,15 @@ export class AppHeaderComponent implements OnInit {
 
   @Output() syncEmployees = new EventEmitter<void>();
 
-  @Input() isBambooConnected: boolean = false;
+  @Input() iconPath: string;
 
-  @Input() isBambooSetupInProgress: boolean;
+  @Input() isIntegrationConnected: boolean = false;
+
+  @Input() isIntegrationSetupInProgress: boolean;
+
+  @Input() appName: string;
+
+  @Input() appDescription: string;
 
   @Input() isLoading: boolean;
 
@@ -26,7 +33,9 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() hideRefreshIcon: boolean;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   syncData(): void {
     this.syncEmployees.emit();
@@ -38,6 +47,10 @@ export class AppHeaderComponent implements OnInit {
 
   disconnect(): void {
     this.disconnectBambooHr.emit();
+  }
+
+  connectQBD(): void {
+    this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
   }
 
   ngOnInit(): void {

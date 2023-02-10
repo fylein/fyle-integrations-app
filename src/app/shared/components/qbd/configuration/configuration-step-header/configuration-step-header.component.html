@@ -1,0 +1,15 @@
+<div class="tw-p-24-px tw-border-b tw-border-b-gray-200">
+    <h3 class="tw-text-normal-text-color tw-text-20-px tw-font-500">
+        {{ headerText }}
+    </h3>
+    <h5 class="tw-text-faded-text-color tw-text-14-px tw-pt-12-px tw-flex">
+        {{ contentText }} &nbsp;
+        <span *ngIf="headerText === 'Advanced Settings'"
+            class="tw-text-hyperlink-color tw-flex tw-cursor-pointer"
+            (click)="windowService.openInNewTab(RedirectLink.QBD)">
+            Learn More
+            <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px"
+                class="tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px"></svg-icon-sprite>
+        </span>
+    </h5>
+</div>
