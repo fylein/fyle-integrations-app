@@ -1,0 +1,18 @@
+<div [formGroup]="form" class="tw-p-24-px">
+    <div class="tw-flex tw-flex-row tw-space-between">
+        <div class="tw-w-3/5 tw-flex">
+            <div class="tw-pr-20-px">
+                <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+            </div>
+            <div class="tw-font-500 tw-leading-normal">
+                <h5 class="tw-text-14-px">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
+                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
+            </div>
+        </div>
+        <div class="tw-flex tw-pl-40-px">
+            <h4>
+                {{ expensesGroup.label }}
+            </h4>
+        </div>
+    </div>
+</div>

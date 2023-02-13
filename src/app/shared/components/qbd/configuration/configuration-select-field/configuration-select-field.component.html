@@ -10,11 +10,6 @@
         </div>
     </div>
     <div>
-        <div *ngIf="!options && !simpleOptions">
-            <div class="tw-mr-20-px tw-pl-40-px">
-                <h4>{{ cccDate.label }}</h4>
-            </div>
-        </div>
         <div *ngIf="options && !simpleOptions">
             <div class="p-field-checkbox tw-mr-20-px tw-pl-40-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay'">
                 <p-dropdown [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder">

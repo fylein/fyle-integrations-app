@@ -23,8 +23,6 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() formControllerName: string;
 
-  @Input() cccDate: QBDExportSettingFormOption;
-
   @Input() simpleOptions: string[];
 
   @Input() isFieldMandatory: boolean;
