@@ -15,11 +15,11 @@ describe('ConfigurationLabelComponent', () => {
 
     fixture = TestBed.createComponent(ConfigurationLabelComponent);
     component = fixture.componentInstance;
-    component.expensesGroup = 
+    component.expensesGroup =
       {
         label: 'Spend Date',
         value: QBDExportDateType.SPENT_AT
-      }
+      };
     fixture.detectChanges();
   });
 
