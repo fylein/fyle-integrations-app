@@ -55,7 +55,7 @@ export class AdvancedSettingComponent implements OnInit {
   frequencyIntervals:QBDExportSettingFormOption[] = [...Array(30).keys()].map(day => {
     return {
       label: this.setFrequencyInterval(day+1) + ' of every month',
-      value: day + 1
+      value: (day + 1).toString()
     };
   });
 
@@ -114,18 +114,22 @@ export class AdvancedSettingComponent implements OnInit {
   }
 
   private initialTime(): string {
-    const time = this.advancedSettings?.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
-    const seconds = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day.slice(3, 5) : '00';
-    const finaltime = time - 12;
-    if (time <= 12) {
-      if (time > 0 && time <= 9) {
-        return "0" + time.toString() + ":" + seconds;
-      } else if (time === 0) {
-        return "12:" + seconds;
-      }
-      return time.toString() + ':' + seconds;
+    const time = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day.split(":") : "12:00".split(":");
+    let hour = time[0];
+    const minutes = time[1];
+    let hours = parseInt(hour);
+    if (hours > 12) {
+        hours -= 12;
+        hour = hours.toString();
     }
-    return finaltime > 9 ? finaltime + ":" + seconds : "0" + finaltime.toString() + ":" + seconds;
+    if (hours === 0) {
+      hours = 12;
+      hour = hours.toString();
+    }
+    if (hours < 10) {
+        hour = "0" + hours;
+    }
+    return `${hour}:${minutes}`;
   }
 
   private createMemoStructureWatcher(): void {

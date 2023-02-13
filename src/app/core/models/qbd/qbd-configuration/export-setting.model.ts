@@ -3,7 +3,7 @@ import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, Q
 
 export type QBDExportSettingFormOption = {
     label: string,
-    value: QBDExpenseState | QBDReimbursableExpensesObject | QBDCorporateCreditCardExpensesObject | QBDExportDateType | QBDExpenseGroupedBy | QBDScheduleFrequency | QBDFyleField | number | QBDEntity;
+    value: QBDExpenseState | QBDReimbursableExpensesObject | QBDCorporateCreditCardExpensesObject | QBDExportDateType | QBDExpenseGroupedBy | QBDScheduleFrequency | QBDFyleField | string | QBDEntity;
 }
 
 export type QBDExportSettingGet = {
