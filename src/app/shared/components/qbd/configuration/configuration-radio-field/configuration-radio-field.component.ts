@@ -27,8 +27,13 @@ export class ConfigurationRadioFieldComponent implements OnInit {
 
   @Input() formControllerName: string;
 
-  ngOnInit(): void {
+  @Input() isFieldMandatory: boolean;
 
+  @Input() mandatoryErrorListName: string;
+
+  @Input() customErrorMessage: string;
+
+  ngOnInit(): void {
   }
 
 }

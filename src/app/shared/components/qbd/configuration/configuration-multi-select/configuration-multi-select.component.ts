@@ -22,6 +22,12 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 
   @Input() formControllerName: string;
 
+  @Input() isFieldMandatory: boolean;
+
+  @Input() mandatoryErrorListName: string;
+
+  @Input() customErrorMessage: string;
+
   currentlyDragging: string | null;
 
   selected: any[];

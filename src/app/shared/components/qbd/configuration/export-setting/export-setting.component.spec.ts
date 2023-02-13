@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { MessageService, SharedModule } from 'primeng/api';
 import { of, throwError } from 'rxjs';
-import { QBDCorporateCreditCardExpensesObject, QBDExpenseState, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { QBDCorporateCreditCardExpensesObject, QBDExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
@@ -154,5 +155,15 @@ describe('ExportSettingComponent', () => {
     spyOn(qbdExportSettingService, 'getQbdExportSettings').and.returnValue(throwError(errorResponse));
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+  });
+
+  it('reimbursableExpenseGroupingDateOptionsFn function check', () => {
+    const reimbursableExpenseGroupingDateOptions: QBDExportSettingFormOption[] = [
+      {
+        label: 'Date of export',
+        value: QBDExportDateType.LAST_SPENT_AT
+      }
+    ];
+    expect(component.reimbursableExpenseGroupingDateOptionsFn()).toEqual(reimbursableExpenseGroupingDateOptions);
   });
 });

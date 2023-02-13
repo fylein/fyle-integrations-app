@@ -5,7 +5,7 @@
         </div>
         
         <div class="tw-font-500 tw-leading-normal">
-            <h5 class="tw-text-14-px">{{ label }}</h5>
+            <h5 class="tw-text-14-px">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
             <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
         </div>
     </div>
@@ -69,5 +69,8 @@
                 </ng-template>
             </p-dropdown>
         </div>
+        <div class="tw-pl-40-px">
+            <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+        </div> 
     </div>
 </div>

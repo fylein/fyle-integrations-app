@@ -103,6 +103,12 @@ export class ExportSettingComponent implements OnInit {
     private primengConfig: PrimeNGConfig
   ) { }
 
+  reimbursableExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
+    const reimbursableExpenseGroup: QBDExportSettingFormOption[] = [];
+    reimbursableExpenseGroup.push(this.reimbursableExpenseGroupingDateOptions[1]);
+    return reimbursableExpenseGroup;
+  }
+
   namePreference(): string {
     return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.value.cccExportType, this.creditCardExportTypes) } are posted in QBD.`;
   }
@@ -225,7 +231,7 @@ export class ExportSettingComponent implements OnInit {
         this.exportSettingsForm = this.formBuilder.group({
           reimbursableExportType: [null],
           reimbursableExpense: [false, this.exportSelectionValidator()],
-          reimbursableExportGroup: [null],
+          reimbursableExportGroup: [this.expenseGroupingFieldOptions[1].value],
           reimbursableExportDate: [null],
           creditCardExpense: [false, this.exportSelectionValidator()],
           cccExportType: [null],
