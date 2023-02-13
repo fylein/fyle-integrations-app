@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MainRoutingModule } from './main-routing.module';
-
+// Import { TabMenuModule } from 'primeng/tabmenu';
 
 @NgModule({
   declarations: [],
@@ -10,6 +10,7 @@ import { MainRoutingModule } from './main-routing.module';
     CommonModule,
     MainRoutingModule,
     SharedModule
+    // TabMenuModule,
   ]
 })
 export class MainModule { }

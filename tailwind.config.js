@@ -6,6 +6,7 @@ const customColors = {
   separator: '#ECECEE',
   'normal-text-color': '#161528',
   'slightly-normal-text-color': '#2C304E',
+  'menu-inactive-text-color': '#A9ACBC',
   'sub-text-color': '#414562',
   'faded-text-color': '#5A5D72',
   'box-color': '#DFDFE2',
