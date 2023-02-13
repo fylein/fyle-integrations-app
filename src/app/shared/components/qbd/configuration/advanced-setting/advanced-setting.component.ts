@@ -116,16 +116,16 @@ export class AdvancedSettingComponent implements OnInit {
   private initialTime(): string {
     const time = this.advancedSettings?.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
     const seconds = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day.slice(3, 5) : '00';
-    const finnaltime = time-12;
-    if (time<=12) {
-      if (time>0 && time <=9) {
+    const finaltime = time - 12;
+    if (time <= 12) {
+      if (time > 0 && time <= 9) {
         return "0" + time.toString() + ":" + seconds;
       } else if (time === 0) {
         return "12:" + seconds;
       }
       return time.toString() + ':' + seconds;
     }
-    return finnaltime > 9 ? finnaltime + ":" + seconds : "0" + finnaltime.toString() + ":" + seconds;
+    return finaltime > 9 ? finaltime + ":" + seconds : "0" + finaltime.toString() + ":" + seconds;
   }
 
   private createMemoStructureWatcher(): void {
@@ -182,13 +182,7 @@ export class AdvancedSettingComponent implements OnInit {
 
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
-    const topMemo = [this.advancedSettingsForm.value.topMemoStructure[0]];
-    const currentTime = +this.advancedSettingsForm.controls.timeOfDay.value.slice(0, 2);
-    const currentMins = this.advancedSettingsForm.controls.timeOfDay.value.slice(3, 5);
-    const time = this.advancedSettingsForm.value.meridiem === 'PM' && currentTime !== 12 ? currentTime+12 + ":" + currentMins+":00" : currentTime === 12 ? "00:" + currentMins+":00" : currentTime + ":" + currentMins + ":00";
     const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
-    advancedSettingPayload.time_of_day = time;
-    advancedSettingPayload.top_memo_structure = topMemo;
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Advanced settings saved successfully'});
