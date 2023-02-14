@@ -23,10 +23,17 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() formControllerName: string;
 
+  @Input() simpleOptions: string[];
+
+  @Input() isFieldMandatory: boolean;
+
+  @Input() mandatoryErrorListName: string;
+
+  @Input() customErrorMessage: string;
 
   meridiemOption: string[] = ['AM', 'PM'];
 
-  timeOption: string[] = ['1:00', '1:30', '2:00', '2:30', '3:00', '3:30', '4:00', '4:30', '5:00', '5:30', '6:00', '6:30', '7:00', '7:30', '8:00', '8:30', '9:00', '9:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'];
+  timeOption: string[] = ['01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'];
 
 
   constructor() { }

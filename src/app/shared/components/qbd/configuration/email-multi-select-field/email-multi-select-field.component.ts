@@ -27,6 +27,12 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   @Input() formControllerName: string;
 
+  @Input() isFieldMandatory: boolean;
+
+  @Input() mandatoryErrorListName: string;
+
+  @Input() customErrorMessage: string;
+
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],
     name: [null, Validators.required]

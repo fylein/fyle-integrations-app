@@ -1,1 +1,5 @@
-<p>mandatory-error-message works!</p>
+<div class="tw-text-mandatory-field-color tw-text-14-px tw-pt-4-px">
+    <span *ngIf="listName">Please select {{ listName }} from the list</span>
+    <span *ngIf="customErrorMessage">{{ customErrorMessage }}</span>
+  </div>
+  

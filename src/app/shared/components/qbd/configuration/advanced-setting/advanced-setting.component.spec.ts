@@ -86,6 +86,21 @@ describe('AdvancedSettingComponent', () => {
     component.isOnboarding = true;
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
+    component.advancedSettingsForm.controls.meridiem.patchValue('AM');
+    component.advancedSettingsForm.controls.timeOfDay.patchValue('01:00');
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+    component.advancedSettingsForm.controls.meridiem.patchValue('PM');
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+    component.advancedSettingsForm.controls.meridiem.patchValue('PM');
+    component.advancedSettingsForm.controls.timeOfDay.patchValue('12:00');
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+    component.advancedSettingsForm.controls.meridiem.patchValue('AM');
+    component.advancedSettingsForm.controls.timeOfDay.patchValue('10:00');
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
   });
 
   it('Save function check with failed api response', () => {
@@ -100,11 +115,27 @@ describe('AdvancedSettingComponent', () => {
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
     expect((component as any).constructPayloadAndSave()).toBeUndefined();
+    component.advancedSettingsForm.controls.expenseMemoStructure.patchValue([]);
+    component.advancedSettingsForm.controls.topMemoStructure.patchValue([]);
+    expect((component as any).constructPayloadAndSave()).toBeUndefined();
   });
 
   it('getsettingsAndsetupForm fuunction check', () => {
     spyOn(qbdAdvancedSettingService, 'getQbdAdvancedSettings').and.returnValue(throwError(errorResponse));
     fixture.detectChanges();
     expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+    component.advancedSettings.time_of_day = "09:00:00";
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+    component.advancedSettings.time_of_day = "19:00:00";
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+    component.advancedSettings.time_of_day = "22:00:00";
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
+    component.advancedSettings.time_of_day = "00:00:00";
+    fixture.detectChanges();
+    expect((component as any).getSettingsAndSetupForm()).toBeUndefined();
   });
+
 });

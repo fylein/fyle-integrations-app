@@ -39,6 +39,7 @@ import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/e
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
+import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { ConfigurationMultiSelectComponent } from './components/qbd/configuratio
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
-    ConfigurationMultiSelectComponent
+    ConfigurationMultiSelectComponent,
+    ConfigurationLabelComponent
   ],
   imports: [
     CommonModule,

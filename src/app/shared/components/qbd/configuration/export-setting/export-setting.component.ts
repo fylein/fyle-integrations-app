@@ -34,10 +34,6 @@ export class ExportSettingComponent implements OnInit {
     {
       value: QBDExpenseState.PAID,
       label: 'Paid'
-    },
-    {
-      value: QBDExpenseState.APPROVED,
-      label: 'Approved'
     }
   ];
 
@@ -107,6 +103,12 @@ export class ExportSettingComponent implements OnInit {
     private primengConfig: PrimeNGConfig
   ) { }
 
+  reimbursableExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
+    const reimbursableExpenseGroup: QBDExportSettingFormOption[] = [];
+    reimbursableExpenseGroup.push(this.reimbursableExpenseGroupingDateOptions[1]);
+    return reimbursableExpenseGroup;
+  }
+
   namePreference(): string {
     return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.value.cccExportType, this.creditCardExportTypes) } are posted in QBD.`;
   }
@@ -147,7 +149,9 @@ export class ExportSettingComponent implements OnInit {
       if (isCreditCardExpenseSelected) {
         this.exportSettingsForm.controls.cccExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExportGroup.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExportGroup.patchValue(this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions[1].value);
         this.exportSettingsForm.controls.cccExportDate.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExportDate.patchValue(this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.reimbursableExpenseGroupingDateOptions[0].value);
         this.exportSettingsForm.controls.cccEntityName.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccAccountName.setValidators(Validators.required);
@@ -215,8 +219,8 @@ export class ExportSettingComponent implements OnInit {
         reimbursableExportDate: [this.exportSettings?.reimbursable_expense_date ? this.exportSettings?.reimbursable_expense_date : null],
         creditCardExpense: [this.exportSettings?.credit_card_expense_export_type ? true : false, this.exportSelectionValidator()],
         cccExportType: [this.exportSettings?.credit_card_expense_export_type ? this.exportSettings?.credit_card_expense_export_type : null],
-        cccExportGroup: [this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : null],
-        cccExportDate: [this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : null],
+        cccExportGroup: [this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions[1].value],
+        cccExportDate: [this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.reimbursableExpenseGroupingDateOptions[0].value],
         bankAccount: [this.exportSettings?.bank_account_name ? this.exportSettings?.bank_account_name : null],
         cccEntityName: [this.exportSettings?.credit_card_entity_name_preference ? this.exportSettings?.credit_card_entity_name_preference : null],
         cccAccountName: [this.exportSettings?.credit_card_account_name ? this.exportSettings?.credit_card_account_name : null],
@@ -229,12 +233,12 @@ export class ExportSettingComponent implements OnInit {
         this.exportSettingsForm = this.formBuilder.group({
           reimbursableExportType: [null],
           reimbursableExpense: [false, this.exportSelectionValidator()],
-          reimbursableExportGroup: [null],
+          reimbursableExportGroup: [this.expenseGroupingFieldOptions[1].value],
           reimbursableExportDate: [null],
           creditCardExpense: [false, this.exportSelectionValidator()],
           cccExportType: [null],
-          cccExportGroup: [null],
-          cccExportDate: [null],
+          cccExportGroup: [this.expenseGroupingFieldOptions[1].value],
+          cccExportDate: [this.reimbursableExpenseGroupingDateOptions[0].value],
           bankAccount: [null],
           cccEntityName: [null],
           cccAccountName: [null],

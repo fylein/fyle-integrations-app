@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
+import { QBDExpenseState } from 'src/app/core/models/enum/enum.model';
 
 import { ConfigurationSelectFieldComponent } from './configuration-select-field.component';
 
@@ -17,6 +18,16 @@ describe('ConfigurationSelectFieldComponent', () => {
     fixture = TestBed.createComponent(ConfigurationSelectFieldComponent);
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(FormBuilder);
+    component.options = [
+      {
+        value: QBDExpenseState.PAYMENT_PROCESSING,
+        label: 'Payment Processing'
+      },
+      {
+        value: QBDExpenseState.PAID,
+        label: 'Paid'
+      }
+    ];
     component.formControllerName = 'dayOfMonth';
     component.form = formbuilder.group({
         timeOfDay: [null],
