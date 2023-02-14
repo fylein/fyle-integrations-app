@@ -85,6 +85,8 @@
                     [form]="advancedSettingsForm"
                     [label]="'Set Top level description field in Quick Book Office'"
                     [subLabel]="'Customize the data set you would like to pass to the description field of QBD while exporting expenses from Fyle.'"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'top level memo'"
                     [simpleOptions]="defaultTopMemoOptions"
                     [iconPath]="'expense'"
                     [placeholder]="'Select Top Memo Type'"
