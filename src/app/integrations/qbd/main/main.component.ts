@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
 
 @Component({
@@ -15,11 +16,13 @@ export class MainComponent implements OnInit {
 
   activeModule: MenuItem;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.activeModule = this.modules[0];
-    this.activeModule.routerLinkActiveOptions = this.modules[0].routerLink;
+    this.router.navigateByUrl(this.modules[0].routerLink);
   }
 
 }
