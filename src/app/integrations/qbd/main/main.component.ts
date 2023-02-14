@@ -8,18 +8,18 @@ import { MenuItem } from 'primeng/api/menuitem';
 })
 export class MainComponent implements OnInit {
 
-  items: MenuItem[] = [
+  modules: MenuItem[] = [
     {label: 'Dashboard', routerLink: '/integrations/qbd/main/dashboard'},
     {label: 'Configuration', routerLink: '/integrations/qbd/main/configuration'}
   ];
 
-  activeItem: MenuItem;
+  activeModule: MenuItem;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.activeItem = this.items[0];
-    this.activeItem.routerLinkActiveOptions = this.items[0].routerLink;
+    this.activeModule = this.modules[0];
+    this.activeModule.routerLinkActiveOptions = this.modules[0].routerLink;
   }
 
 }
