@@ -15,7 +15,7 @@ describe('ConfigurationLabelComponent', () => {
 
     fixture = TestBed.createComponent(ConfigurationLabelComponent);
     component = fixture.componentInstance;
-    component.expensesGroup =
+    component.labelValue =
       {
         label: 'Spend Date',
         value: QBDExportDateType.SPENT_AT

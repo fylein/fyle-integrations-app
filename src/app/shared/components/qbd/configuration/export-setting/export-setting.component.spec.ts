@@ -108,6 +108,12 @@ describe('ExportSettingComponent', () => {
     fixture.detectChanges();
     component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
     expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
+    component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
+    expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
+    component.exportSettings.credit_card_expense_grouped_by = null;
+    component.exportSettings.credit_card_expense_date = null;
+    component.exportSettingsForm.controls.creditCardExpense.patchValue(!component.exportSettingsForm.controls.creditCardExpense.value);
+    expect((component as any).createCreditCardExpenseWatcher()).toBeUndefined();
   });
 
   it('exportSelectionValidator function check', () => {

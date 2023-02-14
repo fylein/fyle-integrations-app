@@ -144,13 +144,10 @@
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <div *ngIf="exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value">
                                 <app-configuration-label
-                                [form]="exportSettingsForm"
                                 [label]="'How would you like to group your expenses?'"
                                 [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
-                                [isFieldMandatory]="true"
-                                [expensesGroup]="expenseGroupingFieldOptions[1]"
-                                [iconPath]="'copy-v2'"
-                                [formControllerName]="'cccExportGroup'"></app-configuration-label>
+                                [labelValue]="expenseGroupingFieldOptions[1]"
+                                [iconPath]="'copy-v2'"></app-configuration-label>
                             </div>
                             <div *ngIf="exportSettingsForm.value.cccExportType !== creditCardExportTypes[0].value">
                                 <app-configuration-radio-field
@@ -167,14 +164,11 @@
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <div *ngIf="exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value">
                                 <app-configuration-label
-                                    [form]="exportSettingsForm"
                                     [label]="'Set the transaction date'"
                                     [subLabel]="'The selected date will reflect in expenses exported to QBD'"
-                                    [isFieldMandatory]="true"
-                                    [expensesGroup]="reimbursableExpenseGroupingDateOptions[0]"
+                                    [labelValue]="reimbursableExpenseGroupingDateOptions[0]"
                                     [iconPath]="'calender'"
-                                    [placeholder]="'Select date type'"
-                                    [formControllerName]="'cccExportDate'">
+                                    [placeholder]="'Select date type'">
                                 </app-configuration-label>
                             </div>
                             <div *ngIf="exportSettingsForm.value.cccExportType !== creditCardExportTypes[0].value && exportSettingsForm.value.cccExportGroup === expenseGroupingFieldOptions[0].value">

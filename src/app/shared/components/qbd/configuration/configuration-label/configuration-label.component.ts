@@ -9,9 +9,7 @@ import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configur
 })
 export class ConfigurationLabelComponent implements OnInit {
 
-  @Input() expensesGroup: QBDExportSettingFormOption;
-
-  @Input() form: FormGroup;
+  @Input() labelValue: QBDExportSettingFormOption;
 
   @Input() iconPath: string;
 
@@ -20,10 +18,6 @@ export class ConfigurationLabelComponent implements OnInit {
   @Input() subLabel: string;
 
   @Input() placeholder: string;
-
-  @Input() formControllerName: string;
-
-  @Input() isFieldMandatory: boolean;
 
   constructor() { }
 

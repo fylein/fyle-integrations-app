@@ -149,7 +149,9 @@ export class ExportSettingComponent implements OnInit {
       if (isCreditCardExpenseSelected) {
         this.exportSettingsForm.controls.cccExportType.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExportGroup.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExportGroup.patchValue(this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions[1].value);
         this.exportSettingsForm.controls.cccExportDate.setValidators(Validators.required);
+        this.exportSettingsForm.controls.cccExportDate.patchValue(this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.reimbursableExpenseGroupingDateOptions[0].value);
         this.exportSettingsForm.controls.cccEntityName.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
         this.exportSettingsForm.controls.cccAccountName.setValidators(Validators.required);
