@@ -2,6 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload, bambooHrMockData, bambooHrMockWithoutToken } from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
@@ -141,5 +142,16 @@ describe('BambooHrComponent', () => {
     spyOn(bambooHrService, 'connectBambooHR').and.returnValue(throwError({}));
     component.connectBambooHR();
     expect(component.isBambooConnectionInProgress).toBeFalse();
+  });
+
+  it('closeToast function check', () => {
+    expect(component.closeToast()).toBeUndefined();
+  });
+
+  it('setupbambooHr function else case', () => {
+    component.org = orgMockData;
+    component.org.is_fyle_connected;
+    fixture.detectChanges();
+    expect((component as any).setupBambooHr()).toBeUndefined();
   });
 });

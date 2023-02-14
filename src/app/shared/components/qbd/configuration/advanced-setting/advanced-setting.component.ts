@@ -36,7 +36,7 @@ export class AdvancedSettingComponent implements OnInit {
     },
     {
       value: QBDScheduleFrequency.WEEKLY,
-      label: 'Weelky'
+      label: 'Weekly'
     },
     {
       value: QBDScheduleFrequency.MONTHLY,
@@ -46,6 +46,8 @@ export class AdvancedSettingComponent implements OnInit {
 
   defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
 
+  defaultTopMemoOptions: string[] = ["employee_email", "employee_name", "purpose"];
+
   adminEmails: QBDEmailOption[];
 
   weeklyOptions: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
@@ -53,7 +55,7 @@ export class AdvancedSettingComponent implements OnInit {
   frequencyIntervals:QBDExportSettingFormOption[] = [...Array(30).keys()].map(day => {
     return {
       label: this.setFrequencyInterval(day+1) + ' of every month',
-      value: day + 1
+      value: (day + 1).toString()
     };
   });
 
@@ -112,9 +114,22 @@ export class AdvancedSettingComponent implements OnInit {
   }
 
   private initialTime(): string {
-    const time = this.advancedSettings?.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
-    const seconds = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day.slice(3, 5) : '00';
-    return time === 0 ? '12:00' : time.toString() + ':' + seconds;
+    const time = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day.split(":") : "12:00".split(":");
+    let hour = time[0];
+    const minutes = time[1];
+    let hours = parseInt(hour);
+    if (hours > 12) {
+        hours -= 12;
+        hour = hours.toString();
+    }
+    if (hours === 0) {
+      hours = 12;
+      hour = hours.toString();
+    }
+    if (hours < 10) {
+        hour = "0" + hours;
+    }
+    return `${hour}:${minutes}`;
   }
 
   private createMemoStructureWatcher(): void {
@@ -139,8 +154,8 @@ export class AdvancedSettingComponent implements OnInit {
     this.advancedSettingService.getQbdAdvancedSettings().subscribe((advancedSettingResponse : QBDAdvancedSettingsGet) => {
       this.advancedSettings = advancedSettingResponse;
       this.advancedSettingsForm = this.formBuilder.group({
-        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : this.defaultMemoFields],
-          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure : this.defaultMemoFields.slice(0, 3)],
+        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure && this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : this.defaultMemoFields],
+          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure[0] : this.defaultTopMemoOptions[0]],
           exportSchedule: [this.advancedSettings?.schedule_is_enabled ? this.advancedSettings?.schedule_is_enabled : false],
           email: [this.advancedSettings?.emails_selected.length > 0 ? this.advancedSettings?.emails_selected : []],
           frequency: [this.advancedSettings?.frequency ? this.advancedSettings?.frequency : null],
@@ -154,7 +169,7 @@ export class AdvancedSettingComponent implements OnInit {
     }, error => {
         this.advancedSettingsForm = this.formBuilder.group({
           expenseMemoStructure: [this.defaultMemoFields],
-          topMemoStructure: [this.defaultMemoFields.slice(0, 3)],
+          topMemoStructure: [this.defaultTopMemoOptions[0]],
           exportSchedule: [false],
           email: [[]],
           frequency: [null],
@@ -171,10 +186,6 @@ export class AdvancedSettingComponent implements OnInit {
 
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
-    const currentTime = +this.advancedSettingsForm.controls.timeOfDay.value.slice(0, 2);
-    const currentMins = this.advancedSettingsForm.controls.timeOfDay.value.slice(3, 5);
-    const time = this.advancedSettingsForm.value.meridiem === 'PM' ? `${currentTime+12}:${currentMins}:00`: currentTime === 12 ? `00:${currentMins}:00` : `${currentTime}:${currentMins}:00`;
-    this.advancedSettingsForm.controls.timeOfDay.patchValue(time);
     const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
