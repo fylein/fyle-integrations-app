@@ -1,19 +1,39 @@
 <div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 <div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 
-<div class="tw-p-40-px">
-    <div class="tw-shadow-lg tw-p-24-px tw-flex tw-justify-between tw-items-center tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
-        <div>
-            <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">Instantly download expenses from Fyle as an IIF file.</h3>
-            <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-8-px">The IIF files are automatically generated based on your configuration.</h5>
-        </div>
-        <div class="tw-flex tw-items-end tw-justify-end">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+
+<div *ngIf="!isLoading" class="tw-p-40-px">
+    <div class="tw-shadow-lg tw-p-24-px tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+        <div *ngIf="accountingExports.count > 0" class="tw-flex tw-justify-between tw-items-center ">
             <div>
-                <button pButton type="button" class="tw-float-right tw-flex tw-justify-between tw-items-center p-button-raised tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px">
-                    <svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite>
-                    <p class="tw-text-14-px tw-font-400 tw-pl-5px">Download IIF file</p>
-                </button><br>
-                <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-faded-text-color">IIF file scheduled to be sent via email on 4th Feb, 2022</p>
+                <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">Instantly download expenses from Fyle as an IIF file.</h3>
+                <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-8-px">The IIF files are automatically generated based on your configuration.</h5>
+            </div>
+            <div class="tw-flex tw-items-end tw-justify-end">
+                <div>
+                    <button pButton type="button" class="tw-float-right tw-flex tw-justify-between tw-items-center p-button-raised tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px">
+                        <svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite>
+                        <p class="tw-text-14-px tw-font-400 tw-pl-5px">Download IIF file</p>
+                    </button><br>
+                    <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-faded-text-color">IIF file scheduled to be sent via email on 4th Feb, 2022</p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="accountingExports.count === 0" class="tw-flex tw-justify-between tw-items-center ">
+            <div class="tw-flex tw-items-start">
+                <div class="tw-pr-14-px">
+                    <img src="assets/icons/pinktick.svg" >
+                </div>
+                <div>
+                    <h3 class="tw-text-20-px tw-font-500 tw-text-normal-text-color">You are all caught up!</h3>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-faded-text-color tw-pt-8-px"> There are no expense in Fyle as per the configuration setup to export.</h5>
+                </div>
+            </div>
+            <div>
+                <img src="assets/icons/export.svg" alt="">
             </div>
         </div>
     </div>
@@ -22,50 +42,69 @@
             <div>
                 <h4 class="tw-font-500">IIF file logs</h4>
             </div>
-            <div class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-16-px tw-rounded-4-px drop-down">
+            <div [formGroup]="exportLogForm" *ngIf="accountingExports.count > 0" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-16-px tw-rounded-4-px drop-down">
                 <div>
                     <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
                 </div>
-                <p-dropdown [options]="listItems">
+                <p-dropdown [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilterFn($event)">
                     <ng-template let-item pTemplate="selectedItem">
-                        <div *ngIf="selectedItem">
+                        <div *ngIf="exportLogForm.controls.dateRange.value">
                             <div class="my-dropdown-selected-item">
-                                {{selectedItem.value}}
+                                {{exportLogForm.controls.dateRange.value.dateRange}}
                               </div>
                         </div>
-                        <div *ngIf="!selectedItem">
+                        <div *ngIf="!exportLogForm.controls.dateRange.value">
                             <div class="my-dropdown-selected-item tw-text-placeholder">
                                 Select date range
                               </div>
                         </div>
-                      </ng-template> 
+                    </ng-template>
+                    <ng-template let-date pTemplate="item">
+                        <div>
+                            <p class="tw-text-sub-text-color tw-text-14-px">{{ date.dateRange | titlecase | snakeCaseToSpaceCase }}</p>
+                        </div>
+                    </ng-template> 
                 </p-dropdown>
             </div>
         </div>
-        <div class="tw-pt-24-px tw-border-y tw-border-y-separator tw-px-24-px tw-pt-24-px">
-            <p-table [value]="cars">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Date and Time of Export</th>
-                        <th>Exported to QBD as</th>
-                        <th>Expense Type</th>
-                        <th>Download IIF File</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-car>
-                    <tr>
-                        <td>{{car.vin}}</td>
-                        <td>{{car.year}}</td>
-                        <td>{{car.brand}}</td>
-                        <td class="!tw-pl-70-px">
-                            <button><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite></button>
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
+        <div class="tw-pt-24-px tw-border-y-2-px tw-border-y-separator tw-box-border tw-px-24-px tw-pt-24-px">
+            <div *ngIf="offsetAccountingExports.length > 0">
+                <p-table [value]="offsetAccountingExports">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Date and Time of Export</th>
+                            <th>Exported to QBD as</th>
+                            <th>Expense Type</th>
+                            <th>Download IIF File</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-exports>
+                        <tr>
+                            <td>
+                                <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
+                                <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{getExportTime(exports)}}</span>
+                            </td>
+                            <td>{{exports.type.split("_")[1]| titlecase }}</td>
+                            <td>{{exports.type.split("_")[1]| titlecase }}</td>
+                            <td>
+                                <div *ngIf="isDownloadLinkReady">
+                                    <button (click)="getDownloadLink(exports)"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite></button>
+                                </div>
+                                <div *ngIf="!isDownloadLinkReady" class="tw-flex tw-items-center">
+                                    <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>
+                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px"> downloading...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div *ngIf="offsetAccountingExports.length === 0">
+                <app-zero-state-with-illustration></app-zero-state-with-illustration>
+            </div>
         </div>
-        <div class="tw-p-24-px">
-            <app-paginator></app-paginator>
+        <div *ngIf="offsetAccountingExports.length > 0" class="tw-p-24-px">
+            <app-paginator [totalCount]="totalCount" (offsetChangeEvent)="offsetChanges($event)" (pageChangeEvent)="pageChanges($event)"></app-paginator>
         </div>
     </div>
 </div>

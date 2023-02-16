@@ -1,27 +1,27 @@
 <div class="tw-flex tw-justify-between tw-items-center">
     <div>
-        <span>Page 1 of 10</span>
+        <span>Page {{page}} of {{totalPages}}</span>
     </div>
     <div class="tw-flex tw-items-center">
         <div class="tw-flex tw-items-center tw-pr-30-px">
             <span class="tw-pr-10-px">Show</span>
             <div>
-                <p-dropdown [options]="listItems"></p-dropdown>
+                <p-dropdown [options]="listItems" (onChange)="offsetChanges($event)" [(ngModel)]="dropDownValue"></p-dropdown>
             </div>
         </div>
         <div class="tw-flex tw-items-center">
             <span class="tw-pr-10-px">Page</span>
             <div class="tw-border tw-border-separator tw-flex tw-items-center tw-rounded-4-px">
                 <div class="tw-border-r tw-border-r-separator">
-                    <button type="button" class="tw-h-32-px tw-w-30-px">
+                    <button type="button" class="tw-h-32-px tw-w-30-px prevBtn" (click)="previousPageChange(page)" [disabled]="page === 1" >
                         <i class="pi pi-angle-left tw-w-6-px tw-h-12-px tw-pt-6-px"></i>
                     </button>
                 </div>
                 <div class="tw-w-30-px tw-h-32-px tw-flex tw-items-center tw-justify-center">
-                    1
+                    {{page}}
                 </div>
                 <div class="tw-border-l tw-border-l-separator">
-                    <button type="button" class="tw-h-32-px tw-w-30-px">
+                    <button type="button" class="tw-h-32-px tw-w-30-px nextBtn" (click)="nextPageChange(page)" [disabled]="page === totalPages">
                         <i class="pi pi-angle-right tw-w-6-px tw-h-12-px tw-pt-6-px"></i>
                     </button>
                 </div>

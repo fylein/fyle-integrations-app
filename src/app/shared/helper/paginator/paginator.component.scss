@@ -5,3 +5,7 @@
 :host ::ng-deep span {
     @apply tw-text-faded-text-color tw-text-12-px tw-font-400 #{!important};
 }
+
+.prevBtn:disabled, .nextBtn:disabled {
+    @apply tw-cursor-not-allowed tw-bg-disabled-bg-color #{!important};
+}
