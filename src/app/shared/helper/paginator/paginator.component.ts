@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PaginatorComponent implements OnInit {
 
+  listItems:number[] = [10, 50, 100, 200];
+
   constructor() { }
 
   ngOnInit(): void {

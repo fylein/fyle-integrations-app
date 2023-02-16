@@ -107,7 +107,8 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
-    ConfigurationMultiSelectComponent
+    ConfigurationMultiSelectComponent,
+    DropdownModule
   ],
   providers: [MessageService]
 })
