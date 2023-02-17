@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
 import { AccountingExportsResult, QbdAccountingExportsGet, GetQbdAccountingExportsPayload, QbdAccountingExportsPost } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
@@ -24,8 +23,6 @@ export class DashboardComponent implements OnInit {
   end: number = 10;
 
   accountingExports: QbdAccountingExportsGet;
-
-  isDownloadLinkReady: boolean = true;
 
   totalCount: number;
 
@@ -54,6 +51,12 @@ export class DashboardComponent implements OnInit {
   ];
 
   exportLogForm: any;
+
+  downloadingExportId: number[];
+
+  exportInProgress: boolean = false;
+
+  value: any = 100;
 
   constructor(
     private iifLogsService: QbdIifLogsService,
@@ -102,7 +105,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getDownloadLink(exports: AccountingExportsResult) {
-    this.isDownloadLinkReady = false;
+    this.downloadingExportId[exports.id] = 1;
     this.iifLogsService.postQbdAccountingExports(exports.id).subscribe((postQbdAccountingExports: QbdAccountingExportsPost) => {
       const link = document.createElement('a');
       link.setAttribute('href', postQbdAccountingExports.download_url);
@@ -110,7 +113,9 @@ export class DashboardComponent implements OnInit {
       document.body.appendChild(link);
       link.click();
       link.remove();
-      this.isDownloadLinkReady = true;
+      this.downloadingExportId[exports.id] = 0;
+    }, () => {
+      this.downloadingExportId[exports.id] = 0;
     });
   }
 
@@ -156,7 +161,7 @@ export class DashboardComponent implements OnInit {
                 workspace: 1
             },
             {
-              id: 2,
+              id: 3,
               type: "EXPORT_BILLS",
               file_id: "fieZ6GMSmgkb",
               task_id: null,
@@ -167,7 +172,7 @@ export class DashboardComponent implements OnInit {
               workspace: 1
           },
           {
-              id: 1,
+              id: 4,
               type: "FETCHING_REIMBURSABLE_EXPENSES",
               file_id: null,
               task_id: null,
@@ -178,7 +183,7 @@ export class DashboardComponent implements OnInit {
               workspace: 1
           },
           {
-            id: 2,
+            id: 5,
             type: "EXPORT_BILLS",
             file_id: "fieZ6GMSmgkb",
             task_id: null,
@@ -189,7 +194,7 @@ export class DashboardComponent implements OnInit {
             workspace: 1
         },
         {
-            id: 1,
+            id: 6,
             type: "FETCHING_REIMBURSABLE_EXPENSES",
             file_id: null,
             task_id: null,
@@ -200,7 +205,7 @@ export class DashboardComponent implements OnInit {
             workspace: 1
         },
         {
-          id: 2,
+          id: 7,
           type: "EXPORT_BILLS",
           file_id: "fieZ6GMSmgkb",
           task_id: null,
@@ -211,7 +216,7 @@ export class DashboardComponent implements OnInit {
           workspace: 1
       },
       {
-          id: 1,
+          id: 8,
           type: "FETCHING_REIMBURSABLE_EXPENSES",
           file_id: null,
           task_id: null,
@@ -222,7 +227,7 @@ export class DashboardComponent implements OnInit {
           workspace: 1
       },
       {
-        id: 2,
+        id: 9,
         type: "EXPORT_BILLS",
         file_id: "fieZ6GMSmgkb",
         task_id: null,
@@ -233,7 +238,7 @@ export class DashboardComponent implements OnInit {
         workspace: 1
     },
     {
-        id: 1,
+        id: 10,
         type: "FETCHING_REIMBURSABLE_EXPENSES",
         file_id: null,
         task_id: null,
@@ -244,7 +249,7 @@ export class DashboardComponent implements OnInit {
         workspace: 1
     },
     {
-      id: 2,
+      id: 12,
       type: "EXPORT_BILLS",
       file_id: "fieZ6GMSmgkb",
       task_id: null,
@@ -255,7 +260,7 @@ export class DashboardComponent implements OnInit {
       workspace: 1
   },
   {
-      id: 1,
+      id: 11,
       type: "FETCHING_REIMBURSABLE_EXPENSESss",
       file_id: null,
       task_id: null,
@@ -266,7 +271,7 @@ export class DashboardComponent implements OnInit {
       workspace: 1
   },
   {
-    id: 2,
+    id: 13,
     type: "EXPORT_BILLSss",
     file_id: "fieZ6GMSmgkb",
     task_id: null,
@@ -277,7 +282,7 @@ export class DashboardComponent implements OnInit {
     workspace: 1
 },
 {
-    id: 1,
+    id: 14,
     type: "FETCHING_REIMBURSABLE_EXPENSESss",
     file_id: null,
     task_id: null,
@@ -289,6 +294,9 @@ export class DashboardComponent implements OnInit {
 }
         ]
     };
+    this.downloadingExportId =  [...Array(this.accountingExports.count+1).keys()].map(() => {
+return 0;
+});
       this.offsetAccountingExports = this.accountingExports.results.slice(this.start, this.end);
       this.totalCount = this.accountingExports.count;
       this.isLoading = false;

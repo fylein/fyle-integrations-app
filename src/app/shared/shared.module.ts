@@ -10,6 +10,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -83,6 +84,7 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
     DialogModule,
     MultiSelectModule,
     DragDropModule,
+    ProgressBarModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -109,7 +111,8 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
     DropdownModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule, ProgressBarModule,
+    ToastModule
   ],
   providers: [MessageService]
 })

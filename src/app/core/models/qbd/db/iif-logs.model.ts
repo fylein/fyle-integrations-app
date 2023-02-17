@@ -30,3 +30,7 @@ export type GetQbdAccountingExportsPayload = {
     type: string;
     status: string;
 }
+
+export type QbdExportTriggerGet = {
+    message: string;
+}

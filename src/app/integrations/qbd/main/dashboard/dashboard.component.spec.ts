@@ -57,7 +57,7 @@ describe('DashboardComponent', () => {
 
   it('getDownloadLink function check', () => {
     expect(component.getDownloadLink(getQbdAccountingExports.results[0])).toBeUndefined();
-    expect(component.isDownloadLinkReady).toBeTrue();
+    expect(component.downloadingExportId[0]).toEqual(0);
   });
 
   it('offsetChanges function check', () => {

@@ -15,7 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({

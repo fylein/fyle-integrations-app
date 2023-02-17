@@ -6,35 +6,40 @@
 </div>
 
 <div *ngIf="!isLoading" class="tw-p-40-px">
-    <div class="tw-shadow-lg tw-p-24-px tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
-        <div *ngIf="accountingExports.count > 0" class="tw-flex tw-justify-between tw-items-center ">
-            <div>
-                <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">Instantly download expenses from Fyle as an IIF file.</h3>
-                <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-8-px">The IIF files are automatically generated based on your configuration.</h5>
-            </div>
-            <div class="tw-flex tw-items-end tw-justify-end">
+    <div class="tw-shadow-lg tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+        <div class="tw-p-24-px">
+            <div *ngIf="accountingExports.count > 0" class="tw-flex tw-justify-between tw-items-center ">
                 <div>
-                    <button pButton type="button" class="tw-float-right tw-flex tw-justify-between tw-items-center p-button-raised tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px">
-                        <svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite>
-                        <p class="tw-text-14-px tw-font-400 tw-pl-5px">Download IIF file</p>
-                    </button><br>
-                    <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-faded-text-color">IIF file scheduled to be sent via email on 4th Feb, 2022</p>
+                    <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">Instantly download expenses from Fyle as an IIF file.</h3>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-8-px">The IIF files are automatically generated based on your configuration.</h5>
+                </div>
+                <div class="tw-flex tw-items-end tw-justify-end">
+                    <div>
+                        <button pButton type="button" class="tw-float-right tw-flex tw-justify-between tw-items-center p-button-raised tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px">
+                            <svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite>
+                            <p class="tw-text-14-px tw-font-400 tw-pl-5px">Download IIF file</p>
+                        </button><br>
+                        <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-faded-text-color">IIF file scheduled to be sent via email on 4th Feb, 2022</p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="accountingExports.count === 0" class="tw-flex tw-justify-between tw-items-center ">
+                <div class="tw-flex tw-items-start">
+                    <div class="tw-pr-14-px">
+                        <img src="assets/icons/pinktick.svg" >
+                    </div>
+                    <div>
+                        <h3 class="tw-text-20-px tw-font-500 tw-text-normal-text-color">You are all caught up!</h3>
+                        <h5 class="tw-text-14-px tw-font-400 tw-text-faded-text-color tw-pt-8-px"> There are no expense in Fyle as per the configuration setup to export.</h5>
+                    </div>
+                </div>
+                <div>
+                    <img src="assets/icons/export.svg" alt="">
                 </div>
             </div>
         </div>
-        <div *ngIf="accountingExports.count === 0" class="tw-flex tw-justify-between tw-items-center ">
-            <div class="tw-flex tw-items-start">
-                <div class="tw-pr-14-px">
-                    <img src="assets/icons/pinktick.svg" >
-                </div>
-                <div>
-                    <h3 class="tw-text-20-px tw-font-500 tw-text-normal-text-color">You are all caught up!</h3>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-faded-text-color tw-pt-8-px"> There are no expense in Fyle as per the configuration setup to export.</h5>
-                </div>
-            </div>
-            <div>
-                <img src="assets/icons/export.svg" alt="">
-            </div>
+        <div  *ngIf="exportInProgress">
+            <p-progressBar class="!tw-h-6-px" [value]="value" [showValue]='false'></p-progressBar>
         </div>
     </div>
     <div class="tw-mt-40-px tw-shadow-md tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
@@ -87,12 +92,12 @@
                             <td>{{exports.type.split("_")[1]| titlecase }}</td>
                             <td>{{exports.type.split("_")[1]| titlecase }}</td>
                             <td>
-                                <div *ngIf="isDownloadLinkReady">
+                                <div *ngIf="downloadingExportId[exports.id] === 0">
                                     <button (click)="getDownloadLink(exports)"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite></button>
                                 </div>
-                                <div *ngIf="!isDownloadLinkReady" class="tw-flex tw-items-center">
+                                <div *ngIf="downloadingExportId[exports.id] === 1" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>
-                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px"> downloading...</p>
+                                    <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">downloading...</p>
                                 </div>
                             </td>
                         </tr>

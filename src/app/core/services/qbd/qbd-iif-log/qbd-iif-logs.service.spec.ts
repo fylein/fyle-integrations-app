@@ -80,7 +80,7 @@ describe('QbdIifLogsService', () => {
   it('postQbdAccountingExports service check', () => {
     const response={
       accounting_export_id: 2,
-      download_url: "https://fyle-storage-mumbai-3.s3.amazonaws.com/2023-02-09/orHVw3ikkCxJ/integrations/fieZ6GMSmgkb.Anagha%2520Org2bills20230209.iif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA54Z3LIXTX6CFH4VG%2F20230216%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20230216T124434Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=34b35a8aa7a56ba3642896d9e19df1f9b687de3afa3ce7bc3ab86ffcdf17ca0f",
+      download_url: "fyle_qbd",
       file_id: "fieZ6GMSmgkb",
       workspace_id: 1
     };
@@ -94,6 +94,20 @@ describe('QbdIifLogsService', () => {
     });
     req.flush(response);
 
+  });
+
+  it('postQbdTriggerExport service check', () => {
+    const response = {
+      "message": "Export triggered successfully"
+  };
+    service.postQbdTriggerExport().subscribe((value) => {
+      expect(value).toEqual(response);
+    });
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/workspaces/${workspace_id}/trigger_export/`
+    });
+    req.flush(response);
   });
 
 });
