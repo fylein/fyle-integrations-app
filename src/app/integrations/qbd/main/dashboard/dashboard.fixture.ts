@@ -12,8 +12,8 @@ export const getQbdAccountingExports: QbdAccountingExportsGet = {
             task_id: null,
             status: "COMPLETE",
             errors: null,
-            created_at: new Date("2023-02-09T12:39:31.005110Z"),
-            updated_at: new Date("2023-02-09T12:39:31.005110Z"),
+            created_at: new Date("2023-02-09"),
+            updated_at: new Date("2023-02-09"),
             workspace: 1
         },
         {

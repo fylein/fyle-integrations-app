@@ -52,7 +52,7 @@ describe('DashboardComponent', () => {
   });
 
   it('getExportTime function check', () => {
-    expect(component.getExportTime(getQbdAccountingExports.results[0])).toEqual('18:09');
+    expect(component.getExportTime(getQbdAccountingExports.results[0])).toEqual(new Date("2023-02-09").toTimeString().slice(0, 5));
   });
 
   it('getDownloadLink function check', () => {
