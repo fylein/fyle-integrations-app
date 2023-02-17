@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { QbdAccountingExportsGet, GetQbdAccountingExportsPayload, QbdAccountingExportsPost, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
+import { QbdExportTriggerResponse, QbdAccountingExportDownload, triggerQBDExport } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdApiService } from '../qbd-core/qbd-api.service';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
@@ -15,7 +15,7 @@ export class QbdIifLogsService {
     private workspaceService: QbdWorkspaceService
   ) { }
 
-  getQbdAccountingExports(state: string | String[], limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, type: string[] | null): Observable<QbdAccountingExportsGet> {
+  getQbdAccountingExports(state: string | String[], limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, type: string[] | null): Observable<QbdExportTriggerResponse> {
     const params: any = {
       limit,
       offset,
@@ -35,11 +35,11 @@ export class QbdIifLogsService {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/`, params);
   }
 
-  postQbdAccountingExports(id: number): Observable<QbdAccountingExportsPost> {
+  postQbdAccountingExports(id: number): Observable<QbdAccountingExportDownload> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/accounting_exports/${id}/download/`, {});
   }
 
-  postQbdTriggerExport(): Observable<QbdExportTriggerGet> {
+  postQbdTriggerExport(): Observable<triggerQBDExport> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/trigger_export/`, {});
   }
 }

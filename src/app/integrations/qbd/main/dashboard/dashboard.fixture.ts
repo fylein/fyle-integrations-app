@@ -1,6 +1,6 @@
-import { QbdAccountingExportsGet, QbdAccountingExportsPost, QbdExportTriggerGet } from "src/app/core/models/qbd/db/iif-logs.model";
+import { QbdExportTriggerResponse, QbdAccountingExportDownload, triggerQBDExport } from "src/app/core/models/qbd/db/iif-logs.model";
 
-export const getQbdAccountingExports: QbdAccountingExportsGet = {
+export const getQbdAccountingExports: QbdExportTriggerResponse = {
     count: 4,
     next: null,
     previous: null,
@@ -31,13 +31,13 @@ export const getQbdAccountingExports: QbdAccountingExportsGet = {
     ]
 };
 
-export const postQbdAccountingExports: QbdAccountingExportsPost = {
+export const postQbdAccountingExports: QbdAccountingExportDownload = {
     accounting_export_id: 2,
     download_url: "fyle",
     file_id: "fieZ6GMSmgkb",
     workspace_id: 1
 };
 
-export const postQbdTriggerExportResponse: QbdExportTriggerGet = {
+export const postQbdTriggerExportResponse: triggerQBDExport = {
     message: "Trigger successful"
 };

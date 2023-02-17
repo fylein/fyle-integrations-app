@@ -11,26 +11,20 @@ export type AccountingExportsResult = {
     download?: string
 }
 
-export type QbdAccountingExportsGet = {
+export type QbdExportTriggerResponse = {
     count: number;
     next: string | null;
     previous: string | null;
     results: AccountingExportsResult[]
 }
 
-export type QbdAccountingExportsPost = {
+export type QbdAccountingExportDownload = {
     download_url: string;
     file_id: string;
     accounting_export_id: number;
     workspace_id: number;
 }
 
-export type GetQbdAccountingExportsPayload = {
-    id: number;
-    type: string;
-    status: string;
-}
-
-export type QbdExportTriggerGet = {
+export type triggerQBDExport = {
     message: string;
 }

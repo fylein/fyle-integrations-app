@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { from, interval, switchMap, takeWhile } from 'rxjs';
 import { QBDAccountingExportsState, QBDAccountingExportsType } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportsResult, QbdAccountingExportsGet, QbdAccountingExportsPost } from 'src/app/core/models/qbd/db/iif-logs.model';
+import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 
@@ -15,11 +15,9 @@ export class DashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  selectedDateFilter: any = null;
+  selectedDateFilter: DateFilter | null = null;
 
-  first: number = 0;
-
-  accountingExports: QbdAccountingExportsGet;
+  accountingExports: QbdExportTriggerResponse;
 
   totalCount: number;
 
@@ -45,7 +43,7 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  exportLogForm: any;
+  exportLogForm: FormGroup;
 
   downloadingExportId: number[];
 
@@ -64,7 +62,7 @@ export class DashboardComponent implements OnInit {
 
   dateFilterFn(event:any): void {
     this.selectedDateFilter = event.value;
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdAccountingExportsGet) => {
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
     });
@@ -74,7 +72,7 @@ export class DashboardComponent implements OnInit {
     this.limit = limit;
     this.pageNo = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdAccountingExportsGet) => {
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
     });
@@ -83,7 +81,7 @@ export class DashboardComponent implements OnInit {
   pageChanges(pageNo: number): void {
     this.pageNo = pageNo;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdAccountingExportsGet) => {
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
     });
@@ -111,18 +109,18 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getDownloadLink(exports: AccountingExportsResult): void {
-    this.downloadingExportId[exports.id] = 1;
-    this.iifLogsService.postQbdAccountingExports(exports.id).subscribe((postQbdAccountingExports: QbdAccountingExportsPost) => {
+  getDownloadLink(exportData: AccountingExportsResult): void {
+    this.downloadingExportId[exportData.id] = 1;
+    this.iifLogsService.postQbdAccountingExports(exportData.id).subscribe((postQbdAccountingExports: QbdAccountingExportDownload) => {
       const link = document.createElement('a');
       link.setAttribute('href', postQbdAccountingExports.download_url);
       link.setAttribute('download', `qcd.iif`);
       document.body.appendChild(link);
       link.click();
       link.remove();
-      this.downloadingExportId[exports.id] = 0;
+      this.downloadingExportId[exportData.id] = 0;
     }, () => {
-      this.downloadingExportId[exports.id] = 0;
+      this.downloadingExportId[exportData.id] = 0;
     });
   }
 
@@ -134,10 +132,10 @@ export class DashboardComponent implements OnInit {
       start: [''],
       end: ['']
     });
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null).subscribe((accountingExportResponse: QbdAccountingExportsGet) => {
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null).subscribe((accountingExportResponse: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportResponse;
       this.downloadingExportId =  [...Array(this.accountingExports.count+1).keys()].map(() => {
-return 0;
+ return 0;
 });
       this.totalCount = this.accountingExports.count;
       this.isLoading = false;

@@ -29,13 +29,13 @@ export class PaginatorComponent implements OnInit {
   }
 
   previousPageChange(currentPage: number) {
-    this.page = this.page-1;
-    this.pageChangeEvent.emit(currentPage-1);
+    this.page = this.page - 1;
+    this.pageChangeEvent.emit(currentPage - 1);
   }
 
   nextPageChange(currentPage: number) {
-    this.page = this.page+1;
-    this.pageChangeEvent.emit(currentPage+1);
+    this.page = this.page + 1;
+    this.pageChangeEvent.emit(currentPage + 1);
   }
 
   ngOnInit(): void {
