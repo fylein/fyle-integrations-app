@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
 
   exportInProgress: boolean = false;
 
-  value: any = 100;
+  value: number = 100;
 
   constructor(
     private iifLogsService: QbdIifLogsService,
