@@ -1,4 +1,4 @@
-import { QbdAccountingExportsGet, QbdAccountingExportsPost } from "src/app/core/models/qbd/db/iif-logs.model";
+import { QbdAccountingExportsGet, QbdAccountingExportsPost, QbdExportTriggerGet } from "src/app/core/models/qbd/db/iif-logs.model";
 
 export const getQbdAccountingExports: QbdAccountingExportsGet = {
     count: 4,
@@ -21,7 +21,7 @@ export const getQbdAccountingExports: QbdAccountingExportsGet = {
             type: "FETCHING_REIMBURSABLE_EXPENSES",
             file_id: null,
             task_id: null,
-            status: "COMPLETE",
+            status: "IN_PROGRESS",
             errors: null,
             created_at: new Date("2023-02-09T12:39:31.005110Z"),
             updated_at: new Date("2023-02-09T12:39:31.005110Z"),
@@ -36,4 +36,8 @@ export const postQbdAccountingExports: QbdAccountingExportsPost = {
     download_url: "fyle",
     file_id: "fieZ6GMSmgkb",
     workspace_id: 1
+};
+
+export const postQbdTriggerExportResponse: QbdExportTriggerGet = {
+    message: "Trigger successful"
 };

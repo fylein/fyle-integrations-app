@@ -15,7 +15,7 @@
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <button pButton type="button" class="tw-float-right tw-flex tw-justify-between tw-items-center p-button-raised tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px">
+                        <button pButton type="button" class="tw-float-right tw-flex tw-justify-between tw-items-center p-button-raised tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="triggerExports()">
                             <svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite>
                             <p class="tw-text-14-px tw-font-400 tw-pl-5px">Download IIF file</p>
                         </button><br>
@@ -73,8 +73,8 @@
             </div>
         </div>
         <div class="tw-pt-24-px tw-border-y-2-px tw-border-y-separator tw-box-border tw-px-24-px tw-pt-24-px">
-            <div *ngIf="offsetAccountingExports.length > 0">
-                <p-table [value]="offsetAccountingExports">
+            <div *ngIf="accountingExports.count > 0">
+                <p-table [value]="accountingExports.results">
                     <ng-template pTemplate="header">
                         <tr>
                             <th>Date and Time of Export</th>
@@ -89,7 +89,7 @@
                                 <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
                                 <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{getExportTime(exports)}}</span>
                             </td>
-                            <td>{{exports.type.split("_")[1]| titlecase }}</td>
+                            <td>{{getTypeString(exports.type)| titlecase }}</td>
                             <td>{{exports.type.split("_")[1]| titlecase }}</td>
                             <td>
                                 <div *ngIf="downloadingExportId[exports.id] === 0">
@@ -104,11 +104,11 @@
                     </ng-template>
                 </p-table>
             </div>
-            <div *ngIf="offsetAccountingExports.length === 0">
+            <div *ngIf="accountingExports.count === 0">
                 <app-zero-state-with-illustration></app-zero-state-with-illustration>
             </div>
         </div>
-        <div *ngIf="offsetAccountingExports.length > 0" class="tw-p-24-px">
+        <div *ngIf="accountingExports.count > 0" class="tw-p-24-px">
             <app-paginator [totalCount]="totalCount" (offsetChangeEvent)="offsetChanges($event)" (pageChangeEvent)="pageChanges($event)"></app-paginator>
         </div>
     </div>

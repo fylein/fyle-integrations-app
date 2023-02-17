@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { AccountingExportsResult, QbdAccountingExportsGet, GetQbdAccountingExportsPayload, QbdAccountingExportsPost } from 'src/app/core/models/qbd/db/iif-logs.model';
+import { from, interval, switchMap, takeWhile } from 'rxjs';
+import { QBDAccountingExportsState, QBDAccountingExportsType } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportsResult, QbdAccountingExportsGet, QbdAccountingExportsPost } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 
 @Component({
@@ -18,19 +19,13 @@ export class DashboardComponent implements OnInit {
 
   first: number = 0;
 
-  start: number = 0;
-
-  end: number = 10;
-
   accountingExports: QbdAccountingExportsGet;
 
   totalCount: number;
 
-  offsetAccountingExports: AccountingExportsResult[];
+  limit: number = 10;
 
-  offset: number = 10;
-
-  pageNo: any;
+  pageNo: number = 0;
 
   dateOptions: DateFilter[] = [
     {
@@ -60,43 +55,38 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private iifLogsService: QbdIifLogsService,
-    private workspaceService: QbdWorkspaceService,
     private formBuilder: FormBuilder
   ) { }
 
-  dateFilterFn(event:any) {
+  getTypeString(type:string): string {
+    return type.split("_").slice(1).join(' ').split(",").join('');
+  }
+
+  dateFilterFn(event:any): void {
     this.selectedDateFilter = event.value;
-    this.offsetAccountingExports = this.accountingExports.results.filter((data:AccountingExportsResult) => {
-      return new Date(data.created_at) > this.selectedDateFilter.startDate && new Date(data.created_at) < this.selectedDateFilter.endDate;
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdAccountingExportsGet) => {
+      this.accountingExports = accountingExportsResult;
+      this.totalCount = this.accountingExports.count;
     });
-    this.offsetAccountingExports.slice(this.start, this.end);
-    this.totalCount = this.offsetAccountingExports.length;
   }
 
-  dateFilterChanges() {
-    if (this.selectedDateFilter) {
-      this.offsetAccountingExports = this.accountingExports.results.filter((data:AccountingExportsResult) => {
-        return new Date(data.created_at) > this.selectedDateFilter.startDate && new Date(data.created_at) < this.selectedDateFilter.endDate;
-      });
-      this.offsetAccountingExports.slice(this.start, this.end);
-    } else {
-      this.offsetAccountingExports = this.accountingExports.results.slice(this.start, this.end);
-    }
-  }
-
-  offsetChanges(offset: number) {
-    this.offset = offset;
+  offsetChanges(limit: number): void {
+    this.limit = limit;
     this.pageNo = 1;
-    this.end = this.pageNo * this.offset;
-    this.start = this.end - this.offset;
-    this.dateFilterChanges();
+    this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdAccountingExportsGet) => {
+      this.accountingExports = accountingExportsResult;
+      this.totalCount = this.accountingExports.count;
+    });
   }
 
-  pageChanges(pageNo: number) {
+  pageChanges(pageNo: number): void {
     this.pageNo = pageNo;
-    this.end = this.pageNo * this.offset;
-    this.start = this.end - this.offset;
-    this.dateFilterChanges();
+    this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdAccountingExportsGet) => {
+      this.accountingExports = accountingExportsResult;
+      this.totalCount = this.accountingExports.count;
+    });
   }
 
   getExportTime(dateTime: AccountingExportsResult): string {
@@ -104,7 +94,24 @@ export class DashboardComponent implements OnInit {
     return date.toTimeString().slice(0, 5);
   }
 
-  getDownloadLink(exports: AccountingExportsResult) {
+  triggerExports(): void {
+    this.exportInProgress = true;
+    this.iifLogsService.postQbdTriggerExport().subscribe(() => {
+      // This.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED,QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null).subscribe(()=>{
+      //   This.exportInProgress = false;
+      // })
+      interval(3000).pipe(
+        switchMap(() => from(this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null))),
+        takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
+      ).subscribe((res) => {
+        const processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
+        this.value = Math.round((processedCount / res.count) * 100);
+        this.exportInProgress = false;
+      });
+    });
+  }
+
+  getDownloadLink(exports: AccountingExportsResult): void {
     this.downloadingExportId[exports.id] = 1;
     this.iifLogsService.postQbdAccountingExports(exports.id).subscribe((postQbdAccountingExports: QbdAccountingExportsPost) => {
       const link = document.createElement('a');
@@ -119,7 +126,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  setUpDashboard() {
+  setUpDashboard(): void {
     this.isLoading = true;
     this.exportLogForm = this.formBuilder.group({
       searchOption: [''],
@@ -127,177 +134,11 @@ export class DashboardComponent implements OnInit {
       start: [''],
       end: ['']
     });
-    const data:GetQbdAccountingExportsPayload = {
-      id: +this.workspaceService.getWorkspaceId(),
-      type: "FETCHING_REIMBURSABLE_EXPENSES",
-      status: 'COMPLETE'
-    };
-    this.iifLogsService.getQbdAccountingExports(data).subscribe((accountingExportResponse: QbdAccountingExportsGet) => {
-      this.accountingExports = {
-        count: 14,
-        next: null,
-        previous: null,
-        results: [
-            {
-                id: 2,
-                type: "EXPORT_BILLS",
-                file_id: "fieZ6GMSmgkb",
-                task_id: null,
-                status: "COMPLETE",
-                errors: null,
-                created_at: new Date("2023-02-09T12:39:31.005110Z"),
-                updated_at: new Date("2023-02-09T12:39:31.005110Z"),
-                workspace: 1
-            },
-            {
-                id: 1,
-                type: "FETCHING_REIMBURSABLE_EXPENSES",
-                file_id: null,
-                task_id: null,
-                status: "COMPLETE",
-                errors: null,
-                created_at: new Date("2023-02-09T12:39:31.005110Z"),
-                updated_at: new Date("2023-02-09T12:39:31.005110Z"),
-                workspace: 1
-            },
-            {
-              id: 3,
-              type: "EXPORT_BILLS",
-              file_id: "fieZ6GMSmgkb",
-              task_id: null,
-              status: "COMPLETE",
-              errors: null,
-              created_at: new Date("2022-02-09T12:39:31.005110Z"),
-              updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-              workspace: 1
-          },
-          {
-              id: 4,
-              type: "FETCHING_REIMBURSABLE_EXPENSES",
-              file_id: null,
-              task_id: null,
-              status: "COMPLETE",
-              errors: null,
-              created_at: new Date("2022-02-09T12:39:31.005110Z"),
-              updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-              workspace: 1
-          },
-          {
-            id: 5,
-            type: "EXPORT_BILLS",
-            file_id: "fieZ6GMSmgkb",
-            task_id: null,
-            status: "COMPLETE",
-            errors: null,
-            created_at: new Date("2022-02-09T12:39:31.005110Z"),
-            updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-            workspace: 1
-        },
-        {
-            id: 6,
-            type: "FETCHING_REIMBURSABLE_EXPENSES",
-            file_id: null,
-            task_id: null,
-            status: "COMPLETE",
-            errors: null,
-            created_at: new Date("2022-02-09T12:39:31.005110Z"),
-            updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-            workspace: 1
-        },
-        {
-          id: 7,
-          type: "EXPORT_BILLS",
-          file_id: "fieZ6GMSmgkb",
-          task_id: null,
-          status: "COMPLETE",
-          errors: null,
-          created_at: new Date("2022-02-09T12:39:31.005110Z"),
-          updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-          workspace: 1
-      },
-      {
-          id: 8,
-          type: "FETCHING_REIMBURSABLE_EXPENSES",
-          file_id: null,
-          task_id: null,
-          status: "COMPLETE",
-          errors: null,
-          created_at: new Date("2022-02-09T12:39:31.005110Z"),
-          updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-          workspace: 1
-      },
-      {
-        id: 9,
-        type: "EXPORT_BILLS",
-        file_id: "fieZ6GMSmgkb",
-        task_id: null,
-        status: "COMPLETE",
-        errors: null,
-        created_at: new Date("2022-02-09T12:39:31.005110Z"),
-        updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-        workspace: 1
-    },
-    {
-        id: 10,
-        type: "FETCHING_REIMBURSABLE_EXPENSES",
-        file_id: null,
-        task_id: null,
-        status: "COMPLETE",
-        errors: null,
-        created_at: new Date("2022-02-09T12:39:31.005110Z"),
-        updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-        workspace: 1
-    },
-    {
-      id: 12,
-      type: "EXPORT_BILLS",
-      file_id: "fieZ6GMSmgkb",
-      task_id: null,
-      status: "COMPLETE",
-      errors: null,
-      created_at: new Date("2022-02-09T12:39:31.005110Z"),
-      updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-      workspace: 1
-  },
-  {
-      id: 11,
-      type: "FETCHING_REIMBURSABLE_EXPENSESss",
-      file_id: null,
-      task_id: null,
-      status: "COMPLETE",
-      errors: null,
-      created_at: new Date("2022-02-09T12:39:31.005110Z"),
-      updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-      workspace: 1
-  },
-  {
-    id: 13,
-    type: "EXPORT_BILLSss",
-    file_id: "fieZ6GMSmgkb",
-    task_id: null,
-    status: "COMPLETE",
-    errors: null,
-    created_at: new Date("2022-02-09T12:39:31.005110Z"),
-    updated_at: new Date("2022-02-09T12:39:31.005110Z"),
-    workspace: 1
-},
-{
-    id: 14,
-    type: "FETCHING_REIMBURSABLE_EXPENSESss",
-    file_id: null,
-    task_id: null,
-    status: "COMPLETE",
-    errors: null,
-    created_at: new Date("2023-02-09T12:39:31.005110Z"),
-    updated_at: new Date("2023-02-09T12:39:31.005110Z"),
-    workspace: 1
-}
-        ]
-    };
-    this.downloadingExportId =  [...Array(this.accountingExports.count+1).keys()].map(() => {
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null).subscribe((accountingExportResponse: QbdAccountingExportsGet) => {
+      this.accountingExports = accountingExportResponse;
+      this.downloadingExportId =  [...Array(this.accountingExports.count+1).keys()].map(() => {
 return 0;
 });
-      this.offsetAccountingExports = this.accountingExports.results.slice(this.start, this.end);
       this.totalCount = this.accountingExports.count;
       this.isLoading = false;
     });

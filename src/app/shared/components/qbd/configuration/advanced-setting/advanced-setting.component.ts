@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
+import { QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -72,6 +72,18 @@ export class AdvancedSettingComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private orgService: OrgService
   ) { }
+
+  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000): void {
+    this.messageService.add({
+      severity,
+      summary,
+      life
+    });
+  }
+
+  closeToast(): void {
+    this.messageService.clear('');
+  }
 
   private formatMemoPreview(): void {
     const time = Date.now();

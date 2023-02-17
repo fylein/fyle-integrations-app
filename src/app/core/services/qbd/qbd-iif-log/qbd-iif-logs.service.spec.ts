@@ -31,11 +31,7 @@ describe('QbdIifLogsService', () => {
   });
 
   it('getQbdAccountingExports service check attributes check', () => {
-    const accountingExportsPayload = {
-      id: 1,
-      type: "FETCHING_REIMBURSABLE_EXPENSES",
-      status: 'COMPLETE'
-    };
+    const state= 'string', limit= 1, offset= 10, selectedDateFilter=null;
     const response: QbdAccountingExportsGet = {
       count: 2,
       next: null,
@@ -66,16 +62,65 @@ describe('QbdIifLogsService', () => {
 
       ]
   };
-    service.getQbdAccountingExports(accountingExportsPayload).subscribe((value) => {
+    service.getQbdAccountingExports(state, limit, offset, selectedDateFilter, null).subscribe((value) => {
       expect(value).toEqual(response);
     });
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/workspaces/${workspace_id}/accounting_exports/?id=1&type=FETCHING_REIMBURSABLE_EXPENSES&status=COMPLETE`
-    });
+    const req = httpMock.expectOne(
+      req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/workspaces/${workspace_id}/accounting_exports`)
+    );
+
+    expect(req.request.params.get('limit')).toBe(limit.toString());
+    expect(req.request.params.get('state')).toBe(state);
+    expect(req.request.params.get('offset')).toBe(offset.toString());
     req.flush(response);
 
   });
+
+  it('getQbdAccountingExports service check attributes check', () => {
+    const state= ['string'], limit= 1, offset= 10, selectedDateFilter={dateRange: 'This Week', startDate: new Date("2023-02-17"), endDate: new Date("2023-02-27")};
+    const response: QbdAccountingExportsGet = {
+      count: 2,
+      next: null,
+      previous: null,
+      results: [
+          {
+              id: 2,
+              type: "EXPORT_BILLS",
+              file_id: "fieZ6GMSmgkb",
+              task_id: null,
+              status: "COMPLETE",
+              errors: null,
+              created_at: new Date("2023-02-09T12:39:31.005110Z"),
+              updated_at: new Date("2023-02-09T12:39:31.005110Z"),
+              workspace: 1
+          },
+          {
+              id: 1,
+              type: "FETCHING_REIMBURSABLE_EXPENSES",
+              file_id: null,
+              task_id: null,
+              status: "COMPLETE",
+              errors: null,
+              created_at: new Date("2023-02-09T12:39:31.005110Z"),
+              updated_at: new Date("2023-02-09T12:39:31.005110Z"),
+              workspace: 1
+          }
+
+      ]
+  };
+    service.getQbdAccountingExports(state, limit, offset, selectedDateFilter, ['EXPORT_BILLS']).subscribe((value) => {
+      expect(value).toEqual(response);
+    });
+    const req = httpMock.expectOne(
+      req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/workspaces/${workspace_id}/accounting_exports`)
+    );
+
+    expect(req.request.params.get('limit')).toBe(limit.toString());
+    expect(req.request.params.get('state')).toBe(state[0]);
+    expect(req.request.params.get('offset')).toBe(offset.toString());
+    req.flush(response);
+  });
+
 
   it('postQbdAccountingExports service check', () => {
     const response={
