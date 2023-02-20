@@ -1,24 +1,25 @@
 import { HttpClientModule } from '@angular/common/http';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 
 import { DashboardComponent } from './dashboard.component';
-import { getQbdAccountingExports, postQbdAccountingExports } from './dashboard.fixture';
+import { errorResponse, getQbdAccountingExports, postQbdAccountingExports, postQbdTriggerExportResponse } from './dashboard.fixture';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
   let service1: any;
+  let iifLogsService: QbdIifLogsService;
 
   beforeEach(async () => {
 
     service1 = {
       getQbdAccountingExports: () => of(getQbdAccountingExports),
       postQbdAccountingExports: () => of(postQbdAccountingExports),
-      postQbdTriggerExport: () => of()
+      postQbdTriggerExport: () => of(postQbdTriggerExportResponse)
     };
 
     await TestBed.configureTestingModule({
@@ -31,6 +32,7 @@ describe('DashboardComponent', () => {
     .compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
+    iifLogsService = TestBed.inject(QbdIifLogsService);
     component = fixture.componentInstance;
     component.limit = 10;
     component.selectedDateFilter = {
@@ -50,16 +52,28 @@ describe('DashboardComponent', () => {
   });
 
   it('getDownloadLink function check', () => {
-    expect(component.getDownloadLink(getQbdAccountingExports.results[0])).toBeUndefined();
+    expect(component.getDownloadLink(getQbdAccountingExports.results[0], 0)).toBeUndefined();
+    expect(component.downloadingExportId[0]).toEqual(0);
+    fixture.detectChanges();
+    spyOn(iifLogsService, 'postQbdAccountingExports').and.returnValue(throwError(errorResponse));
+    expect(component.getDownloadLink(getQbdAccountingExports.results[0], 0)).toBeUndefined();
     expect(component.downloadingExportId[0]).toEqual(0);
   });
 
   it('offsetChanges function check', () => {
     expect(component.offsetChanges(10)).toBeUndefined();
     expect(component.pageNo).toEqual(1);
+    component.selectedDateFilter = null;
+    fixture.detectChanges();
+    expect(component.offsetChanges(10)).toBeUndefined();
+    expect(component.pageNo).toEqual(1);
   });
 
   it('pageChanges function check', () => {
+    expect(component.pageChanges(2)).toBeUndefined();
+    expect(component.pageNo).toEqual(2);
+    component.selectedDateFilter = null;
+    fixture.detectChanges();
     expect(component.pageChanges(2)).toBeUndefined();
     expect(component.pageNo).toEqual(2);
   });
@@ -75,4 +89,16 @@ describe('DashboardComponent', () => {
   it('triggerExports function check', () => {
     expect(component.triggerExports()).toBeUndefined();
   });
+
+  it("pollExportStatus function check", fakeAsync(() => {
+    const result = component.triggerExports();
+    tick(3002);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(result).toBeUndefined();
+      expect(component.exportInProgress).toBeFalse();
+    });
+    discardPeriodicTasks();
+    expect(component.exportInProgress).toBeFalse();
+  }));
 });

@@ -157,6 +157,7 @@ module.exports = {
       height: {
         '1-px': '1px',
         '2-px': '2px',
+        '6-px': '6px',
         '8-px': '8px',
         '10-px': '10px',
         '12-px': '12px',

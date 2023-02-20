@@ -41,3 +41,13 @@ export const postQbdAccountingExports: QbdAccountingExportDownload = {
 export const postQbdTriggerExportResponse: triggerQBDExport = {
     message: "Trigger successful"
 };
+
+export const errorResponse = {
+    status: 404,
+    statusText: "Not Found",
+    error: {
+      id: 1,
+      is_expired: true,
+      company_name: 'QBO'
+    }
+};

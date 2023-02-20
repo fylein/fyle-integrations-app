@@ -15,9 +15,13 @@
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <button pButton type="button" class="tw-float-right tw-flex tw-justify-between tw-items-center p-button-raised tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="triggerExports()">
-                            <svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite>
-                            <p class="tw-text-14-px tw-font-400 tw-pl-5px">Download IIF file</p>
+                        <button pButton type="button" class="export-btn tw-float-right tw-flex tw-justify-between tw-items-center p-button-raised tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="triggerExports()" [disabled]="exportInProgress" >
+                            <!-- <svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite> -->
+                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="!exportInProgress">Export IIF file
+                                <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                            </p>
+                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="exportInProgress">Exporting ...
+                            </p>
                         </button><br>
                         <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-faded-text-color">IIF file scheduled to be sent via email on 4th Feb, 2022</p>
                     </div>
@@ -83,7 +87,7 @@
                             <th>Download IIF File</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-exports>
+                    <ng-template pTemplate="body" let-exports let-i="rowIndex">
                         <tr>
                             <td>
                                 <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
@@ -92,10 +96,10 @@
                             <td>{{getTypeString(exports.type)| titlecase }}</td>
                             <td>{{exports.type.split("_")[1]| titlecase }}</td>
                             <td>
-                                <div *ngIf="downloadingExportId[exports.id] === 0">
-                                    <button (click)="getDownloadLink(exports)"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite></button>
+                                <div *ngIf="downloadingExportId[i] === 0">
+                                    <button (click)="getDownloadLink(exports,i)"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite></button>
                                 </div>
-                                <div *ngIf="downloadingExportId[exports.id] === 1" class="tw-flex tw-items-center">
+                                <div *ngIf="downloadingExportId[i] === 1" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>
                                     <p class="tw-text-14-px tw-text-sub-text-color tw-pl-10-px">downloading...</p>
                                 </div>

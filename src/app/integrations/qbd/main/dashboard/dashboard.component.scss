@@ -15,13 +15,17 @@
 }
 
 :host ::ng-deep .p-progressbar {
-    @apply tw-h-8-px #{!important};
+    @apply tw-h-1.5 #{!important};
 }
 
 :host ::ng-deep .p-progressbar .p-progressbar-value {
-    @apply tw-bg-mandatory-field-color #{!important};
+    @apply tw-bg-mandatory-field-color tw-rounded-tr-xl  #{!important};
 }
 
 :host ::ng-deep .p-progressbar-determinate .p-progressbar-value {
     content: none #{!important};
+}
+
+.export-btn:disabled {
+    @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
 }

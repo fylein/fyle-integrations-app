@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
 
   exportInProgress: boolean = false;
 
-  value: number = 100;
+  value: number;
 
   constructor(
     private iifLogsService: QbdIifLogsService,
@@ -94,10 +94,9 @@ export class DashboardComponent implements OnInit {
 
   triggerExports(): void {
     this.exportInProgress = true;
+    this.value = 25;
     this.iifLogsService.postQbdTriggerExport().subscribe(() => {
-      // This.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED,QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null).subscribe(()=>{
-      //   This.exportInProgress = false;
-      // })
+      this.value = 50;
       interval(3000).pipe(
         switchMap(() => from(this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null))),
         takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
@@ -109,8 +108,8 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getDownloadLink(exportData: AccountingExportsResult): void {
-    this.downloadingExportId[exportData.id] = 1;
+  getDownloadLink(exportData: AccountingExportsResult, index: number): void {
+    this.downloadingExportId[index] = 1;
     this.iifLogsService.postQbdAccountingExports(exportData.id).subscribe((postQbdAccountingExports: QbdAccountingExportDownload) => {
       const link = document.createElement('a');
       link.setAttribute('href', postQbdAccountingExports.download_url);
@@ -118,9 +117,9 @@ export class DashboardComponent implements OnInit {
       document.body.appendChild(link);
       link.click();
       link.remove();
-      this.downloadingExportId[exportData.id] = 0;
+      this.downloadingExportId[index] = 0;
     }, () => {
-      this.downloadingExportId[exportData.id] = 0;
+      this.downloadingExportId[index] = 0;
     });
   }
 
@@ -134,9 +133,9 @@ export class DashboardComponent implements OnInit {
     });
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null).subscribe((accountingExportResponse: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportResponse;
-      this.downloadingExportId =  [...Array(this.accountingExports.count+1).keys()].map(() => {
- return 0;
-});
+      this.downloadingExportId =  [...Array(this.accountingExports.count).keys()].map(() => {
+        return 0;
+      });
       this.totalCount = this.accountingExports.count;
       this.isLoading = false;
     });
