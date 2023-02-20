@@ -12,9 +12,9 @@
         <p-multiSelect [options]="options" styleClass="tw-z-2" [formControlName]="formControllerName" [defaultLabel]="placeholder">
             <ng-template let-value pTemplate="selectedItems" >
                 <div *ngIf="form.value[formControllerName].length>0" class="tw-flex">
-                    <p *ngFor="let name of value;let i = index">{{ name | titlecase | snakeCaseToSpaceCase }} <span *ngIf="i !== value.length-1">,</span></p>
+                    <p *ngFor="let name of value;let i = index">{{ name | titlecase | snakeCaseToSpaceCase }}<span *ngIf="i !== value.length-1">,&nbsp;</span></p>
                 </div>
-                <div *ngIf="!form.value[formControllerName]" class="tw-text-placeholder">
+                <div *ngIf="form.value[formControllerName].length === 0" class="tw-text-placeholder">
                     {{ placeholder }}
                 </div>
             </ng-template>
@@ -32,7 +32,7 @@
             </ng-template>
         </p-multiSelect>
         <div>
-            <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+            <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && form.value[formControllerName].length === 0" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
         </div>
     </div>
 </div>

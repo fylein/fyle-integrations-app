@@ -162,7 +162,8 @@ export class AdvancedSettingComponent implements OnInit {
           dayOfMonth: [this.advancedSettings?.day_of_month ? this.advancedSettings?.day_of_month : null],
           dayOfWeek: [this.advancedSettings?.day_of_week ? this.advancedSettings?.day_of_week : null],
           timeOfDay: [this.initialTime()],
-          meridiem: [this.merdiemType()]
+          meridiem: [this.merdiemType()],
+          search: []
       });
       this.isLoading = false;
       this.createMemoStructureWatcher();
@@ -176,7 +177,8 @@ export class AdvancedSettingComponent implements OnInit {
           dayOfMonth: [null],
           dayOfWeek: [null],
           timeOfDay: [this.initialTime()],
-          meridiem: [this.merdiemType()]
+          meridiem: [this.merdiemType()],
+          search: []
         });
         this.isLoading = false;
         this.createMemoStructureWatcher();
