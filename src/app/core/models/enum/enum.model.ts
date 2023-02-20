@@ -1,7 +1,8 @@
 export enum IntegrationView {
     ALL = 'ALL',
     ACCOUNTING = 'ACCOUNTING',
-    HRMS = 'HRMS'
+    HRMS = 'HRMS',
+    TRAVEL = 'TRAVEL'
 }
 
 export enum AccountingIntegrationApp {
@@ -13,7 +14,8 @@ export enum AccountingIntegrationApp {
 
 export enum InAppIntegration {
     BAMBOO_HR = 'Bamboo HR',
-    QBD = 'QuickBooks Desktop'
+    QBD = 'QuickBooks Desktop',
+    TRAVELPERK = 'TravelPerk'
 }
 
 export enum RedirectLink {

@@ -22,13 +22,15 @@ export class LandingComponent implements OnInit {
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
-    [IntegrationView.ALL]: false
+    [IntegrationView.ALL]: false,
+    [IntegrationView.TRAVEL]: false
   };
 
   integrationTabs: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
-    [IntegrationView.ALL]: true
+    [IntegrationView.ALL]: true,
+    [IntegrationView.TRAVEL] : false
   };
 
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
@@ -40,7 +42,8 @@ export class LandingComponent implements OnInit {
 
   private readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
     [InAppIntegration.BAMBOO_HR]: '/integrations/bamboo_hr/',
-    [InAppIntegration.QBD]: '/integrations/qbd/'
+    [InAppIntegration.QBD]: '/integrations/qbd/',
+    [InAppIntegration.TRAVELPERK]: '/integrations/travelperk/'
   };
 
   private readonly accountingIntegrationEventMap: AccountingIntegrationEvent = {
