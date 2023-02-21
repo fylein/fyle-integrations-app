@@ -85,6 +85,8 @@
                     [form]="advancedSettingsForm"
                     [label]="'Set Top level description field in Quick Book Office'"
                     [subLabel]="'Customize the data set you would like to pass to the description field of QBD while exporting expenses from Fyle.'"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'top level memo'"
                     [simpleOptions]="defaultTopMemoOptions"
                     [iconPath]="'expense'"
                     [placeholder]="'Select Top Memo Type'"
@@ -94,7 +96,7 @@
                     <app-configuration-multi-select
                     [form]="advancedSettingsForm"
                     [isFieldMandatory]="true"
-                    [mandatoryErrorListName]="'memo type'"
+                    [customErrorMessage]="'Please select atleast one memo type from the list'"
                     [label]="'Set description field in Quick Book Office'"
                     [subLabel]="'Customize the data set you would like to pass to the description field of QBD while exporting expenses from Fyle.'"
                     [options]="defaultMemoFields"
@@ -110,7 +112,7 @@
                 </div>
             </div>
             <div>
-                <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+                <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress || advancedSettingsForm.value.expenseMemoStructure.length === 0" (save)="save()"></app-configuration-step-footer>
             </div>
         </form>
     </div>

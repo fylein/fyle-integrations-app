@@ -93,6 +93,14 @@ p {
 }
 
 // Radio Button
+.p-radiobutton {
+    @apply tw-w-fit tw-h-19-px #{!important};
+}
+
+.p-radiobutton .p-radiobutton-box {
+    @apply tw-w-16-px tw-h-16-px #{!important};
+}
+
 .p-radiobutton .p-radiobutton-box:hover {
     @apply tw-border-slightly-normal-text-color #{!important};
 }
@@ -102,7 +110,7 @@ p {
 }
 
 .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-    @apply tw-bg-slightly-normal-text-color #{!important};
+    @apply tw-w-8-px tw-h-8-px tw-bg-slightly-normal-text-color #{!important};
 }
 
 // Dropdown
