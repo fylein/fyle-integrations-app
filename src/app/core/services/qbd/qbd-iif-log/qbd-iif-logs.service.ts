@@ -15,11 +15,11 @@ export class QbdIifLogsService {
     private workspaceService: QbdWorkspaceService
   ) { }
 
-  getQbdAccountingExports(state: string | String[], limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, type: string[] | null): Observable<QbdExportTriggerResponse> {
+  getQbdAccountingExports(status: string | String[], limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, type: string[] | null): Observable<QbdExportTriggerResponse> {
     const params: any = {
       limit,
       offset,
-      state
+      status
     };
 
     if (selectedDateFilter) {

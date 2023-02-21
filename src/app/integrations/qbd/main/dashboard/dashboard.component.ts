@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
 
   offsetChanges(limit: number): void {
     this.limit = limit;
-    this.pageNo = 1;
+    this.pageNo = 0;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
   }
 
   pageChanges(pageNo: number): void {
-    this.pageNo = pageNo;
+    this.pageNo = (pageNo-1) * this.limit;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
@@ -94,9 +94,7 @@ export class DashboardComponent implements OnInit {
 
   triggerExports(): void {
     this.exportInProgress = true;
-    this.value = 25;
     this.iifLogsService.postQbdTriggerExport().subscribe(() => {
-      this.value = 50;
       interval(3000).pipe(
         switchMap(() => from(this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null))),
         takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
