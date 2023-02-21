@@ -290,7 +290,8 @@ module.exports = {
         'disabled-bg-color': customColors['disabled-bg-color'],
         'success-toast': customColors['success-toast'],
         'separator': customColors['separator'],
-        'line-inactive': customColors['line-inactive']
+        'line-inactive': customColors['line-inactive'],
+        'alert-toast': customColors['alert-toast']
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',

@@ -98,7 +98,7 @@ p {
 }
 
 .p-radiobutton .p-radiobutton-box {
-    @apply tw-w-16-px tw-h-16-px #{!important};
+    @apply tw-w-16-px tw-h-16-px tw-border #{!important};
 }
 
 .p-radiobutton .p-radiobutton-box:hover {
@@ -110,7 +110,7 @@ p {
 }
 
 .p-radiobutton .p-radiobutton-box .p-radiobutton-icon {
-    @apply tw-w-8-px tw-h-8-px tw-bg-slightly-normal-text-color #{!important};
+    @apply tw-w-10-px tw-h-10-px tw-bg-slightly-normal-text-color #{!important};
 }
 
 // Dropdown
@@ -123,8 +123,12 @@ p {
     }
 }
 
+.p-dropdown-panel .p-dropdown-items {
+    @apply tw-pt-px tw-pr-0 tw-pb-8-px tw-border tw-border-box-color tw-rounded-b-8-px #{!important};
+}
+
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-h-32-px tw-py-8-px tw-pl-14-px tw-text-14-px #{!important};
+    @apply tw-h-32-px tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-m-px #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
@@ -270,7 +274,7 @@ p {
     }
   
     &--contents {
-        @apply tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px tw-mx-50-px ;
+        @apply tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px tw-mx-70-px ;
         box-shadow: 0px 2px 10px rgba(44, 48, 78, 0.1);
     }
 }

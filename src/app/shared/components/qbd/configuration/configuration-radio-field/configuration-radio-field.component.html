@@ -4,15 +4,15 @@
             <div class="tw-pr-20-px">
                 <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
             </div>
-            <div class="tw-leading-normal">
+            <div>
                 <h5 class="!tw-text-14-px !tw-font-500 ">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
-                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 " [innerHTML]="subLabel"></h5>
+                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel"></h5>
             </div>
         </div>
         <div *ngIf="options" class="tw-flex tw-items-center tw-pl-40-px">
             <div *ngFor="let option of options" class="p-field-checkbox tw-mr-20-px">
-                <p-radioButton class="tw-mr-10-px" [value]="option.value" [formControlName]="formControllerName"></p-radioButton>
-                <label class="!tw-text-14-px !tw-text-sub-text-color">{{option.label}}</label>
+                <p-radioButton class="tw-mr-10-px" [value]="option.value" [formControlName]="formControllerName"[inputId]="option.value" ></p-radioButton>
+                <label class="!tw-text-14-px !tw-text-sub-text-color" [for]="option.value">{{option.label}}</label>
             </div>
         </div>
     </div>
