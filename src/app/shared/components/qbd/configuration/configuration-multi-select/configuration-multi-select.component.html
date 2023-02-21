@@ -3,18 +3,18 @@
         <div class="tw-pr-20-px">
             <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
         </div>
-        <div class="tw-font-500 tw-leading-normal">
-            <h5 class="tw-text-14-px">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
-            <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
+        <div class="tw-leading-normal">
+            <h5 class="tw-text-14-px !tw-font-500">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
+            <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400" [innerHTML]="subLabel"></h5>
         </div>
     </div>
     <div class="tw-pl-40-px">
         <p-multiSelect [options]="options" styleClass="tw-z-2" [formControlName]="formControllerName" [defaultLabel]="placeholder">
             <ng-template let-value pTemplate="selectedItems" >
                 <div *ngIf="form.value[formControllerName].length>0" class="tw-flex">
-                    <p *ngFor="let name of value;let i = index">{{ name | titlecase | snakeCaseToSpaceCase }} <span *ngIf="i !== value.length-1">,</span></p>
+                    <p *ngFor="let name of value;let i = index">{{ name | titlecase | snakeCaseToSpaceCase }}<span *ngIf="i !== value.length-1">,&nbsp;</span></p>
                 </div>
-                <div *ngIf="!form.value[formControllerName]" class="tw-text-placeholder">
+                <div *ngIf="form.value[formControllerName].length === 0" class="tw-text-placeholder">
                     {{ placeholder }}
                 </div>
             </ng-template>
@@ -32,7 +32,7 @@
             </ng-template>
         </p-multiSelect>
         <div>
-            <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+            <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && form.value[formControllerName].length === 0" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
         </div>
     </div>
 </div>

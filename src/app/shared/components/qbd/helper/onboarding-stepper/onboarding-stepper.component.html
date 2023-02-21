@@ -3,32 +3,30 @@
 
 <div class="tw-p-24-px tw-text-slightly-normal-text-color">
     <div>
-        <div class="tw-normal-text-color tw-text-center tw-pb-16-px">
-            <p>Complete the following steps to generate the IIF file for QBD.</p>
+        <div class="tw-normal-text-color tw-text-center tw-pb-16-px ">
+            <p class="!tw-font-400">Complete the following steps to generate the IIF file for QBD.</p>
         </div>
         <div class="tw-flex tw-justify-center">
             <div *ngFor="let onboardingStep of onboardingSteps">
-                <div class="tw-flex tw-justify-center tw-items-center">
-                    <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
-                        <img *ngIf="onboardingStep.active" src='{{ "assets/icons/stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
-                        <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="assets/icons/tick.svg" class="icon">
-                        <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "assets/icons/stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
-                    </div>
-                    <div *ngIf="onboardingStep.number !== 4" >
-                        <div *ngIf="!onboardingStep.completed">
-                            <hr class="line-active">
+                <div class="tw-grip tw-grid-cols-1">
+                    <div class="tw-flex tw-items-center">
+                        <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
+                            <img *ngIf="onboardingStep.active" src='{{ "assets/icons/stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
+                            <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="assets/icons/tick.svg" class="icon">
+                            <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "assets/icons/stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
                         </div>
-                        <div *ngIf="onboardingStep.completed" class="">
-                            <hr class="line-inactive">
+                        <div *ngIf="onboardingStep.number !== 4" >
+                            <div *ngIf="!onboardingStep.completed">
+                                <hr class="line-active">
+                            </div>
+                            <div *ngIf="onboardingStep.completed" class="">
+                                <hr class="line-inactive">
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="tw-flex tw-justify-center tw-pt-10-px">
-            <div *ngFor="let onboardingStep of onboardingSteps">
-                <div class="tw-mr-10-px" [ngClass]="onboardingStep.number === 3 ? 'tw-px-24 tw-mx-8-px' : '' ">
-                    {{ onboardingStep.step }}
+                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[onboardingStep.step === 'Export Settings' ? 'step-name-export' : '', onboardingStep.step === 'Field Mapping' ? 'step-name-field' : '', onboardingStep.step === 'Advanced' ? 'step-name-advanced' : '', !onboardingStep.active ? 'tw-text-faded-text-color' : '' ]">
+                        {{ onboardingStep.step }}
+                    </div>
                 </div>
             </div>
         </div>
