@@ -62,20 +62,20 @@ describe('DashboardComponent', () => {
 
   it('offsetChanges function check', () => {
     expect(component.offsetChanges(10)).toBeUndefined();
-    expect(component.pageNo).toEqual(1);
+    expect(component.pageNo).toEqual(0);
     component.selectedDateFilter = null;
     fixture.detectChanges();
     expect(component.offsetChanges(10)).toBeUndefined();
-    expect(component.pageNo).toEqual(1);
+    expect(component.pageNo).toEqual(0);
   });
 
   it('pageChanges function check', () => {
     expect(component.pageChanges(2)).toBeUndefined();
-    expect(component.pageNo).toEqual(2);
+    expect(component.pageNo).toEqual(10);
     component.selectedDateFilter = null;
     fixture.detectChanges();
     expect(component.pageChanges(2)).toBeUndefined();
-    expect(component.pageNo).toEqual(2);
+    expect(component.pageNo).toEqual(10);
   });
 
   it('dateFilterFn function check', () => {

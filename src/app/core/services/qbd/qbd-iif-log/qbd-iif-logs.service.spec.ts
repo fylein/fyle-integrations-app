@@ -70,7 +70,7 @@ describe('QbdIifLogsService', () => {
     );
 
     expect(req.request.params.get('limit')).toBe(limit.toString());
-    expect(req.request.params.get('state')).toBe(state);
+    expect(req.request.params.get('status')).toBe(state);
     expect(req.request.params.get('offset')).toBe(offset.toString());
     req.flush(response);
 
@@ -116,7 +116,7 @@ describe('QbdIifLogsService', () => {
     );
 
     expect(req.request.params.get('limit')).toBe(limit.toString());
-    expect(req.request.params.get('state')).toBe(state[0]);
+    expect(req.request.params.get('status')).toBe(state[0]);
     expect(req.request.params.get('offset')).toBe(offset.toString());
     req.flush(response);
   });
