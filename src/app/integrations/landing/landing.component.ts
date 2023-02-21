@@ -30,7 +30,7 @@ export class LandingComponent implements OnInit {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: true,
-    [IntegrationView.TRAVEL] : false
+    [IntegrationView.TRAVEL]: false
   };
 
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {

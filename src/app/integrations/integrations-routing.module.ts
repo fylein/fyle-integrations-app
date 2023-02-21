@@ -20,9 +20,9 @@ const routes: Routes = [
         path: 'qbd',
         loadChildren: () => import('./qbd/qbd.module').then(m => m.QbdModule)
       },
-      { 
+      {
         path: 'travelperk',
-        loadChildren: () => import('./travelperk/travelperk.module').then(m => m.TravelperkModule) 
+        loadChildren: () => import('./travelperk/travelperk.module').then(m => m.TravelperkModule)
       }
     ]
   }
