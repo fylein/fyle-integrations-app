@@ -8,6 +8,7 @@ export const getQbdAccountingExports: QbdExportTriggerResponse = {
         {
             id: 2,
             type: "EXPORT_BILLS",
+            fund_source: 'CCC',
             file_id: "fieZ6GMSmgkb",
             task_id: null,
             status: "COMPLETE",
@@ -19,6 +20,7 @@ export const getQbdAccountingExports: QbdExportTriggerResponse = {
         {
             id: 1,
             type: "FETCHING_REIMBURSABLE_EXPENSES",
+            fund_source: 'Reimbursable',
             file_id: null,
             task_id: null,
             status: "IN_PROGRESS",

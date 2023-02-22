@@ -1,6 +1,7 @@
 export type AccountingExportsResult = {
     id: number;
     type: string;
+    fund_source: string;
     file_id: string | null,
     task_id: number | null,
     status: string,

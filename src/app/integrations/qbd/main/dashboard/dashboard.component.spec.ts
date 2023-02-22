@@ -83,7 +83,12 @@ describe('DashboardComponent', () => {
   });
 
   it('getTypeString function check', () => {
-    expect(component.getTypeString('Export_Reimbesable_Expense')).toEqual('Reimbesable Expense');
+    expect(component.getTypeString('Export_Reimbusable_Expense')).toEqual('Reimbusable Expense');
+  });
+
+  it('getExpenseType function check', () => {
+    expect(component.getExpenseType('CCC')).toEqual('Credit Card'.toUpperCase());
+    expect(component.getExpenseType('Reimbusable')).toEqual('REIMBURSABLE'.toUpperCase());
   });
 
   it('triggerExports function check', () => {

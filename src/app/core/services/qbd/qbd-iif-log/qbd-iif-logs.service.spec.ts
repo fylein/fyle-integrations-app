@@ -41,6 +41,7 @@ describe('QbdIifLogsService', () => {
               id: 2,
               type: "EXPORT_BILLS",
               file_id: "fieZ6GMSmgkb",
+              fund_source: 'Reimbursable',
               task_id: null,
               status: "COMPLETE",
               errors: null,
@@ -51,6 +52,7 @@ describe('QbdIifLogsService', () => {
           {
               id: 1,
               type: "FETCHING_REIMBURSABLE_EXPENSES",
+              fund_source: 'CCC',
               file_id: null,
               task_id: null,
               status: "COMPLETE",
@@ -86,6 +88,7 @@ describe('QbdIifLogsService', () => {
           {
               id: 2,
               type: "EXPORT_BILLS",
+              fund_source: 'Reimbursable',
               file_id: "fieZ6GMSmgkb",
               task_id: null,
               status: "COMPLETE",
@@ -97,6 +100,7 @@ describe('QbdIifLogsService', () => {
           {
               id: 1,
               type: "FETCHING_REIMBURSABLE_EXPENSES",
+              fund_source: 'CCC',
               file_id: null,
               task_id: null,
               status: "COMPLETE",

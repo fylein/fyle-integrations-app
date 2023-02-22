@@ -75,7 +75,15 @@ describe('AdvancedSettingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
     component.advancedSettingsForm.controls.expenseMemoStructure.patchValue(['brande']);
+    component.advancedSettingsForm.controls.frequency.patchValue('WEEKLY');
+    component.advancedSettingsForm.controls.exportSchedule.patchValue(false);
     expect((component as any).createMemoStructureWatcher()).toBeUndefined();
+    expect((component as any).frequencyWatcher()).toBeUndefined();
+    expect((component as any).scheduledWatcher()).toBeUndefined();
+    component.advancedSettingsForm.controls.frequency.patchValue('MONTHLY');
+    component.advancedSettingsForm.controls.exportSchedule.patchValue(true);
+    expect((component as any).frequencyWatcher()).toBeUndefined();
+    expect((component as any).scheduledWatcher()).toBeUndefined();
   });
 
   it('Save function check', () => {

@@ -56,7 +56,12 @@ export class DashboardComponent implements OnInit {
     private formBuilder: FormBuilder
   ) { }
 
-  getTypeString(type:string): string {
+  getExpenseType(type: string) {
+    const expenseType = type === 'CCC' ? QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES : QBDAccountingExportsType.EXPORT_REIMBURSABLE_EXPENSES;
+    return expenseType.split("_").slice(1, -1).join(' ').split(",").join('');
+  }
+
+  getTypeString(type: string): string {
     return type.split("_").slice(1).join(' ').split(",").join('');
   }
 

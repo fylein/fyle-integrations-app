@@ -94,7 +94,7 @@
                                 <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{getExportTime(exports)}}</span>
                             </td>
                             <td>{{getTypeString(exports.type)| titlecase }}</td>
-                            <td>{{exports.type.split("_")[1]| titlecase }}</td>
+                            <td>{{getExpenseType(exports.fund_source)| titlecase }}</td>
                             <td>
                                 <div *ngIf="downloadingExportId[i] === 0">
                                     <button (click)="getDownloadLink(exports,i)"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite></button>
