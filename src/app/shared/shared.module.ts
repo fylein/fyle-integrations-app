@@ -10,6 +10,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -40,6 +41,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
+import { CalendarModule } from 'primeng/calendar';
+import { CascadeSelectModule } from "primeng/cascadeselect";
 
 @NgModule({
   declarations: [
@@ -83,6 +86,9 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
     DialogModule,
     MultiSelectModule,
     DragDropModule,
+    ProgressBarModule,
+    CalendarModule,
+    CascadeSelectModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -107,7 +113,12 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
-    ConfigurationMultiSelectComponent
+    ConfigurationMultiSelectComponent,
+    DropdownModule,
+    CalendarModule,
+    FormsModule, ReactiveFormsModule, ProgressBarModule,
+    ToastModule,
+    CascadeSelectModule
   ],
   providers: [MessageService]
 })

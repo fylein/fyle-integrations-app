@@ -9,3 +9,15 @@
 :host ::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
     @apply tw-mb-0 #{!important};
 }
+
+:host ::ng-deep .error-box .p-multiselect {
+    @apply tw-border-alert-toast #{!important};
+}
+
+:host ::ng-deep .normal-box .p-multiselect {
+    @apply tw-border-box-color #{!important};
+}
+
+:host ::ng-deep .normal-box .p-multiselect.p-focus {
+    @apply tw-border-slightly-normal-text-color #{!important};
+}

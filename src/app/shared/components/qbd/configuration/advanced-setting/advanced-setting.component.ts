@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
+import { QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -73,6 +73,18 @@ export class AdvancedSettingComponent implements OnInit {
     private orgService: OrgService
   ) { }
 
+  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000): void {
+    this.messageService.add({
+      severity,
+      summary,
+      life
+    });
+  }
+
+  closeToast(): void {
+    this.messageService.clear('');
+  }
+
   private formatMemoPreview(): void {
     const time = Date.now();
     const today = new Date(time);
@@ -141,6 +153,32 @@ export class AdvancedSettingComponent implements OnInit {
     });
   }
 
+  private frequencyWatcher() {
+    this.advancedSettingsForm.controls.frequency.valueChanges.subscribe((frequency) => {
+      if (frequency=== this.frequencyOption[1].value) {
+        this.advancedSettingsForm.controls.dayOfWeek.setValidators(Validators.required);
+        this.advancedSettingsForm.controls.dayOfMonth.clearValidators();
+      } else if (frequency === this.frequencyOption[2].value) {
+        this.advancedSettingsForm.controls.dayOfWeek.clearValidators();
+        this.advancedSettingsForm.controls.dayOfMonth.setValidators(Validators.required);
+      }
+    });
+  }
+
+  private scheduledWatcher() {
+    if (this.advancedSettingsForm.controls.exportSchedule.value) {
+      this.advancedSettingsForm.controls.email.setValidators(Validators.required);
+    }
+    this.advancedSettingsForm.controls.exportSchedule.valueChanges.subscribe((isScheduledSelected) => {
+      if (isScheduledSelected) {
+        this.advancedSettingsForm.controls.email.setValidators(Validators.required);
+      } else {
+        this.advancedSettingsForm.controls.email.clearValidators();
+        this.advancedSettingsForm.controls.email.setValue([]);
+      }
+    });
+  }
+
   getAdminEmails() {
     this.isLoading= true;
     this.orgService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOption[]) => {
@@ -154,8 +192,8 @@ export class AdvancedSettingComponent implements OnInit {
     this.advancedSettingService.getQbdAdvancedSettings().subscribe((advancedSettingResponse : QBDAdvancedSettingsGet) => {
       this.advancedSettings = advancedSettingResponse;
       this.advancedSettingsForm = this.formBuilder.group({
-        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure && this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : this.defaultMemoFields],
-          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure[0] : this.defaultTopMemoOptions[0]],
+        expenseMemoStructure: [this.advancedSettings?.expense_memo_structure && this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : this.defaultMemoFields, Validators.required],
+          topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure[0] : this.defaultTopMemoOptions[0], Validators.required],
           exportSchedule: [this.advancedSettings?.schedule_is_enabled ? this.advancedSettings?.schedule_is_enabled : false],
           email: [this.advancedSettings?.emails_selected.length > 0 ? this.advancedSettings?.emails_selected : []],
           frequency: [this.advancedSettings?.frequency ? this.advancedSettings?.frequency : null],
@@ -166,11 +204,11 @@ export class AdvancedSettingComponent implements OnInit {
           search: []
       });
       this.isLoading = false;
-      this.createMemoStructureWatcher();
+      this.setCustomValidator();
     }, error => {
         this.advancedSettingsForm = this.formBuilder.group({
-          expenseMemoStructure: [this.defaultMemoFields],
-          topMemoStructure: [this.defaultTopMemoOptions[0]],
+          expenseMemoStructure: [this.defaultMemoFields, Validators.required],
+          topMemoStructure: [this.defaultTopMemoOptions[0], Validators.required],
           exportSchedule: [false],
           email: [[]],
           frequency: [null],
@@ -181,9 +219,15 @@ export class AdvancedSettingComponent implements OnInit {
           search: []
         });
         this.isLoading = false;
-        this.createMemoStructureWatcher();
+        this.setCustomValidator();
       }
     );
+  }
+
+  setCustomValidator() {
+    this.createMemoStructureWatcher();
+    this.frequencyWatcher();
+    this.scheduledWatcher();
   }
 
   private constructPayloadAndSave(): void {

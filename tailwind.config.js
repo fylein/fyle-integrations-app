@@ -151,12 +151,14 @@ module.exports = {
         '56-px': '56px',
         '70-px': '70px',
         '80-px': '80px',
+        '120-px': '120px',
         '126-px': '126px',
         '282-px': '282px'
       },
       height: {
         '1-px': '1px',
         '2-px': '2px',
+        '6-px': '6px',
         '8-px': '8px',
         '10-px': '10px',
         '12-px': '12px',
@@ -289,7 +291,8 @@ module.exports = {
         'disabled-bg-color': customColors['disabled-bg-color'],
         'success-toast': customColors['success-toast'],
         'separator': customColors['separator'],
-        'line-inactive': customColors['line-inactive']
+        'line-inactive': customColors['line-inactive'],
+        'alert-toast': customColors['alert-toast']
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',

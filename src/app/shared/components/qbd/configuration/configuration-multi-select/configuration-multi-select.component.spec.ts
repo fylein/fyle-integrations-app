@@ -6,6 +6,7 @@ import { ConfigurationMultiSelectComponent } from './configuration-multi-select.
 describe('ConfigurationMultiSelectComponent', () => {
   let component: ConfigurationMultiSelectComponent;
   let fixture: ComponentFixture<ConfigurationMultiSelectComponent>;
+  let formbuilder: FormBuilder;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -16,6 +17,12 @@ describe('ConfigurationMultiSelectComponent', () => {
 
     fixture = TestBed.createComponent(ConfigurationMultiSelectComponent);
     component = fixture.componentInstance;
+    formbuilder = TestBed.inject(FormBuilder);
+    component.formControllerName = 'expenseMemoStructure';
+    component.form = formbuilder.group({
+      classType: ['CLASS'],
+      expenseMemoStructure: ['PROJECT']
+    });
     fixture.detectChanges();
   });
 
