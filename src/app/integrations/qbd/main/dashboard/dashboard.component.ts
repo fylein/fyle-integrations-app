@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { from, interval, switchMap, takeWhile } from 'rxjs';
 import { QBDAccountingExportsState, QBDAccountingExportsType } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, triggerQBDExport } from 'src/app/core/models/qbd/db/iif-logs.model';
+import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 
@@ -54,11 +54,11 @@ export class DashboardComponent implements OnInit {
 
   isCalendarVisible: boolean = false;
 
-  downloadingExportId: number[];
+  downloadingExportId: boolean[];
 
   exportInProgress: boolean = false;
 
-  value: number;
+  exportProgressPercentage: number;
 
   exportPresent: boolean = true;
 
@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
     const event = {
       value: this.dateOptions[3].dateRange
     };
-    this.dateFilterFn(event);
+    this.dateFilter(event);
   }
 
   dropDownWatcher() {
@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
     return type.split("_").slice(1).join(' ').split(",").join('');
   }
 
-  dateFilterFn(event: any): void {
+  dateFilter(event: any): void {
     this.selectedDateFilter = event.value;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit {
   }
 
   pageChanges(pageNo: number): void {
-    this.pageNo = (pageNo-1) * this.limit;
+    this.pageNo = pageNo;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, null).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
@@ -127,14 +127,9 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  getExportTime(dateTime: AccountingExportsResult): string {
-    const date = new Date(dateTime.created_at);
-    return date.toTimeString().slice(0, 5);
-  }
-
   triggerExports(): void {
     this.exportInProgress = true;
-    this.iifLogsService.postQbdTriggerExport().subscribe((triggerResponse: triggerQBDExport) => {
+    this.iifLogsService.triggerQBDExport().subscribe((triggerResponse: QbdExportTriggerGet) => {
       this.exportPresent = triggerResponse.new_expenses_imported;
       if (triggerResponse.new_expenses_imported) {
         interval(3000).pipe(
@@ -142,7 +137,7 @@ export class DashboardComponent implements OnInit {
           takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
         ).subscribe((res) => {
           const processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
-          this.value = Math.round((processedCount / res.count) * 100);
+          this.exportProgressPercentage = Math.round((processedCount / res.count) * 100);
           this.exportInProgress = false;
         });
       }
@@ -150,17 +145,17 @@ export class DashboardComponent implements OnInit {
   }
 
   getDownloadLink(exportData: AccountingExportsResult, index: number): void {
-    this.downloadingExportId[index] = 1;
+    this.downloadingExportId[index] = true;
     this.iifLogsService.postQbdAccountingExports(exportData.id).subscribe((postQbdAccountingExports: QbdAccountingExportDownload) => {
       const link = document.createElement('a');
       link.setAttribute('href', postQbdAccountingExports.download_url);
-      link.setAttribute('download', `qcd.iif`);
+      link.setAttribute('download', `${postQbdAccountingExports.file_id}.iif`);
       document.body.appendChild(link);
       link.click();
       link.remove();
-      this.downloadingExportId[index] = 0;
+      this.downloadingExportId[index] = false;
     }, () => {
-      this.downloadingExportId[index] = 0;
+      this.downloadingExportId[index] = false;
     });
   }
 
@@ -175,7 +170,7 @@ export class DashboardComponent implements OnInit {
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null).subscribe((accountingExportResponse: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportResponse;
       this.downloadingExportId =  [...Array(this.accountingExports.count).keys()].map(() => {
-        return 0;
+        return false;
       });
       this.totalCount = this.accountingExports.count;
       this.isLoading = false;

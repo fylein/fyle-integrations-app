@@ -145,12 +145,12 @@ describe('QbdIifLogsService', () => {
 
   });
 
-  it('postQbdTriggerExport service check', () => {
+  it('triggerQBDExport service check', () => {
     const response = {
       "message": "Export triggered successfully",
       "new_expenses_imported": false
   };
-    service.postQbdTriggerExport().subscribe((value) => {
+    service.triggerQBDExport().subscribe((value) => {
       expect(value).toEqual(response);
     });
     const req = httpMock.expectOne({

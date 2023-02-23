@@ -204,9 +204,7 @@ export class AdvancedSettingComponent implements OnInit {
           search: []
       });
       this.isLoading = false;
-      this.createMemoStructureWatcher();
-      this.frequencyWatcher();
-      this.scheduledWatcher();
+      this.setCustomValidator();
     }, error => {
         this.advancedSettingsForm = this.formBuilder.group({
           expenseMemoStructure: [this.defaultMemoFields, Validators.required],
@@ -221,11 +219,15 @@ export class AdvancedSettingComponent implements OnInit {
           search: []
         });
         this.isLoading = false;
-        this.createMemoStructureWatcher();
-        this.frequencyWatcher();
-        this.scheduledWatcher();
+        this.setCustomValidator();
       }
     );
+  }
+
+  setCustomValidator() {
+    this.createMemoStructureWatcher();
+    this.frequencyWatcher();
+    this.scheduledWatcher();
   }
 
   private constructPayloadAndSave(): void {

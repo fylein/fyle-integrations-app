@@ -26,7 +26,7 @@ export type QbdAccountingExportDownload = {
     workspace_id: number;
 }
 
-export type triggerQBDExport = {
+export type QbdExportTriggerGet = {
     message: string;
     new_expenses_imported: boolean;
 }

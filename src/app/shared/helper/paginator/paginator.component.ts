@@ -7,9 +7,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class PaginatorComponent implements OnInit {
 
-  listItems:number[] = [10, 50, 100, 200];
+  pageNumbers: number[] = [10, 50, 100, 200];
 
-  page:  number = 1;
+  page: number = 1;
 
   @Output() offsetChangeEvent = new EventEmitter<number>();
 
@@ -30,12 +30,14 @@ export class PaginatorComponent implements OnInit {
 
   previousPageChange(currentPage: number) {
     this.page = this.page - 1;
-    this.pageChangeEvent.emit(currentPage - 1);
+    const offsetValue = (currentPage - 2) * this.dropDownValue;
+    this.pageChangeEvent.emit(offsetValue);
   }
 
   nextPageChange(currentPage: number) {
     this.page = this.page + 1;
-    this.pageChangeEvent.emit(currentPage + 1);
+    const offsetValue = currentPage * this.dropDownValue;
+    this.pageChangeEvent.emit(offsetValue);
   }
 
   ngOnInit(): void {

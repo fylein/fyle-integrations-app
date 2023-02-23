@@ -1,4 +1,4 @@
-import { QbdExportTriggerResponse, QbdAccountingExportDownload, triggerQBDExport } from "src/app/core/models/qbd/db/iif-logs.model";
+import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from "src/app/core/models/qbd/db/iif-logs.model";
 
 export const getQbdAccountingExports: QbdExportTriggerResponse = {
     count: 4,
@@ -40,7 +40,7 @@ export const postQbdAccountingExports: QbdAccountingExportDownload = {
     workspace_id: 1
 };
 
-export const postQbdTriggerExportResponse: triggerQBDExport = {
+export const postQbdTriggerExportResponse: QbdExportTriggerGet = {
     message: "Trigger successful",
     new_expenses_imported: true
 };
