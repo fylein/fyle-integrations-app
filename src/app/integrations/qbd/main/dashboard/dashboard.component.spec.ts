@@ -13,6 +13,7 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   let service1: any;
   let iifLogsService: QbdIifLogsService;
+  let formbuilder: FormBuilder;
 
   beforeEach(async () => {
 
@@ -33,6 +34,7 @@ describe('DashboardComponent', () => {
 
     fixture = TestBed.createComponent(DashboardComponent);
     iifLogsService = TestBed.inject(QbdIifLogsService);
+    formbuilder = TestBed.inject(FormBuilder);
     component = fixture.componentInstance;
     component.limit = 10;
     component.selectedDateFilter = {
@@ -40,6 +42,11 @@ describe('DashboardComponent', () => {
       endDate: new Date(),
       startDate: new Date('Wed Feb 01 2023')
     };
+    component.exportLogForm = formbuilder.group({
+      dateRange: [null],
+      start: [[new Date(), new Date()]],
+      end: new Date()
+    });
     fixture.detectChanges();
   });
 
@@ -106,4 +113,27 @@ describe('DashboardComponent', () => {
     discardPeriodicTasks();
     expect(component.exportInProgress).toBeFalse();
   }));
+
+  it('getDates function check', () => {
+    component.exportLogForm.controls.start.patchValue([new Date(), new Date()]);
+    fixture.detectChanges();
+    expect(component.getDates()).toBeUndefined();
+  });
+
+  it('dropDownWatcher function check', () => {
+    component.exportLogForm.controls.dateRange.patchValue(new Date().toLocaleDateString());
+    fixture.detectChanges();
+    expect(component.dropDownWatcher()).toBeUndefined();
+    expect(component.isCalendarVisible).toBeTrue();
+    component.exportLogForm.controls.dateRange.patchValue('This Week');
+    fixture.detectChanges();
+    expect(component.dropDownWatcher()).toBeUndefined();
+    expect(component.isCalendarVisible).toBeTrue();
+  });
+
+  it('showCalendar function check', () => {
+    const event = new Event("click", undefined);
+    expect(component.showCalendar(event)).toBeUndefined();
+    expect(component.isCalendarVisible).toBeTrue();
+  });
 });

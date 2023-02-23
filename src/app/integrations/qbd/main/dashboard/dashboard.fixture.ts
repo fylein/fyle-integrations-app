@@ -41,7 +41,8 @@ export const postQbdAccountingExports: QbdAccountingExportDownload = {
 };
 
 export const postQbdTriggerExportResponse: triggerQBDExport = {
-    message: "Trigger successful"
+    message: "Trigger successful",
+    new_expenses_imported: true
 };
 
 export const errorResponse = {

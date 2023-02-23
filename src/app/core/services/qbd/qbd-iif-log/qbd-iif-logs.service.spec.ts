@@ -147,7 +147,8 @@ describe('QbdIifLogsService', () => {
 
   it('postQbdTriggerExport service check', () => {
     const response = {
-      "message": "Export triggered successfully"
+      "message": "Export triggered successfully",
+      "new_expenses_imported": false
   };
     service.postQbdTriggerExport().subscribe((value) => {
       expect(value).toEqual(response);

@@ -28,4 +28,5 @@ export type QbdAccountingExportDownload = {
 
 export type triggerQBDExport = {
     message: string;
+    new_expenses_imported: boolean;
 }

@@ -41,6 +41,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
+import { CalendarModule } from 'primeng/calendar';
+import { CascadeSelectModule } from "primeng/cascadeselect";
 
 @NgModule({
   declarations: [
@@ -85,6 +87,8 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
     MultiSelectModule,
     DragDropModule,
     ProgressBarModule,
+    CalendarModule,
+    CascadeSelectModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -111,8 +115,10 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
     DropdownModule,
+    CalendarModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
-    ToastModule
+    ToastModule,
+    CascadeSelectModule
   ],
   providers: [MessageService]
 })

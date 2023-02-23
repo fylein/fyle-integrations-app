@@ -17,3 +17,7 @@
 :host ::ng-deep .normal-box .p-multiselect {
     @apply tw-border-box-color #{!important};
 }
+
+:host ::ng-deep .normal-box .p-multiselect.p-focus {
+    @apply tw-border-slightly-normal-text-color #{!important};
+}

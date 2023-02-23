@@ -29,3 +29,15 @@
 .export-btn:disabled {
     @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
 }
+
+:host ::ng-deep .p-calendar .p-inputtext {
+    @apply tw-p-0 tw-bg-white tw-border-0 ;
+}
+
+:host ::ng-deep .p-calendar .p-inputtext:hover {
+    @apply tw-bg-disabled-bg-color #{!important};
+}
+
+:host ::ng-deep .p-calendar .p-inputtext ::placeholder {
+    @apply tw-text-sub-text-color #{!important};
+}
