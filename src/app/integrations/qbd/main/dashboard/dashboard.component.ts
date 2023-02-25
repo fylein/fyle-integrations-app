@@ -141,6 +141,7 @@ export class DashboardComponent implements OnInit {
           this.exportInProgress = false;
         });
       }
+      this.exportInProgress = false;
     });
   }
 

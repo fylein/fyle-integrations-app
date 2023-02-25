@@ -1,6 +1,6 @@
 <div [formGroup]="form" class="tw-p-24-px tw-flex tw-flex-row tw-space-between tw-items-center">
-    <div class="tw-w-3/5 tw-flex">
-        <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-20-px' : 'tw-pr-40-px']">
+    <div class="xl:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
+        <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-20-px tw-mt-4-px' : 'tw-pr-40-px']">
             <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
         </div>
         
@@ -11,11 +11,11 @@
     </div>
     <div>
         <div *ngIf="options && !simpleOptions">
-            <div class="p-field-checkbox tw-mr-20-px tw-pl-40-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay'">
+            <div class="p-field-checkbox tw-pl-40-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay'">
                 <p-dropdown [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                 </p-dropdown>
             </div>
-            <div class="tw-mr-20-px tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
+            <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
                 <div *ngIf="formControllerName === 'dayOfWeek'" class="tw-mr-18-px dropdown-monthy">
                     <p class="tw-font-400 tw-text-faded-text-color tw-text-14-px">Day</p>
                     <p-dropdown [options]="options" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="simpleOptions && !options" class="p-field-checkbox tw-mr-20-px tw-pl-40-px">
+        <div *ngIf="simpleOptions && !options" class="p-field-checkbox tw-pl-40-px">
             <p-dropdown [options]="simpleOptions" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                 <ng-template let-value pTemplate="selectedItem" >
                     <div *ngIf="form.value[formControllerName]" class="tw-flex">

@@ -7,7 +7,7 @@
 }
 
 :host ::ng-deep .dropdown-monthy .p-dropdown {
-    @apply tw-w-176-px #{!important};
+    @apply xl:tw-w-176-px md:tw-w-120-px #{!important};
 }
 
 :host ::ng-deep .error-box .p-dropdown {

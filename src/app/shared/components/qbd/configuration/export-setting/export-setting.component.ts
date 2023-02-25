@@ -94,6 +94,8 @@ export class ExportSettingComponent implements OnInit {
 
   exportSettings: QBDExportSettingGet;
 
+  customMessage: string;
+
   constructor(
     private router: Router,
     private exportSettingService: QbdExportSettingService,
@@ -110,11 +112,13 @@ export class ExportSettingComponent implements OnInit {
   }
 
   namePreference(): string {
-    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.value.cccExportType, this.creditCardExportTypes) } are posted in QBD.`;
+    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.value.cccExportType, this.creditCardExportTypes) } are posted in QuickBooks Desktop.`;
   }
 
   accountName(): string {
-    return this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank';
+    const name = this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable account' : 'Bank';
+    this.customMessage = 'Please enter' + name + 'name';
+    return name;
   }
 
   exportType(exportTypeValue:string, exportTypeOptions: QBDExportSettingFormOption[]) {
