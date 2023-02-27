@@ -145,8 +145,5 @@ describe('DashboardComponent', () => {
     expect(component.getNextExportDate(QBDAdvancedSettingResponse)).toBeUndefined();
     expect(component.getNextExportDate(QBDAdvancedSettingResponse2)).toBeUndefined();
     expect(component.getNextExportDate(QBDAdvancedSettingResponse3)).toBeUndefined();
-    component.presentDate = new Date(2023, 11, 12).toLocaleDateString();
-    fixture.detectChanges();
-    expect(component.getNextExportDate(QBDAdvancedSettingResponse2)).toBeUndefined();
   });
 });

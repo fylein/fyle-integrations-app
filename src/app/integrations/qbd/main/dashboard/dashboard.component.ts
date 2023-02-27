@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
-import { QBDAccountingExportsState, QBDAccountingExportsType } from 'src/app/core/models/enum/enum.model';
+import { QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
@@ -167,16 +167,16 @@ export class DashboardComponent implements OnInit {
 
   getNextExportDate(advancedSettings: QBDAdvancedSettingsGet): void {
     if (advancedSettings.schedule_is_enabled) {
-      const date = new Date(+this.presentDate.slice(6, 10), (+this.presentDate.slice(3, 5))-1, +this.presentDate.slice(0, 2));
-      if (advancedSettings.day_of_month !== null) {
+      const date = new Date();
+      if (advancedSettings.frequency === QBDScheduleFrequency.MONTHLY) {
         let current;
-        if (date.getMonth() === 11) {
-            current = new Date(date.getFullYear() + 1, 0, +advancedSettings.day_of_month);
-        } else {
-            current = new Date(date.getFullYear(), date.getMonth() + 1, +advancedSettings.day_of_month);
+        if (date.getMonth() === 11 && advancedSettings?.day_of_month) {
+            current = new Date(date.getFullYear() + 1, 0, +advancedSettings?.day_of_month);
+        } else if (advancedSettings?.day_of_month) {
+            current = new Date(date.getFullYear(), date.getMonth() + 1, +advancedSettings?.day_of_month);
         }
         this.nextExportDate = current;
-      } else if (advancedSettings.day_of_week !== null) {
+      } else if (advancedSettings.day_of_week === QBDScheduleFrequency.WEEKLY) {
         const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
         const week = weekday.indexOf(advancedSettings.day_of_week.toLowerCase());
         const resultDate = new Date(new Date().getTime());
