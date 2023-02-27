@@ -6,7 +6,7 @@ import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportD
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
-import { QBDAdvancedSettingsGet } from '/Users/fyle/integrations/fyle-integrations-settings-app/src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -197,7 +197,7 @@ export class DashboardComponent implements OnInit {
       end: ['']
     });
     forkJoin([
-      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null),
+      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNAL_ENTRIES, QBDAccountingExportsType.EXPORT_REIMBURSABLE_EXPENSES]),
       this.advancedSettingService.getQbdAdvancedSettings()
     ]).subscribe((response) => {
       this.accountingExports = response[0];
