@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
 import { QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
@@ -68,22 +68,9 @@ export class AdvancedSettingComponent implements OnInit {
     private advancedSettingService: QbdAdvancedSettingService,
     private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
-    private messageService: MessageService,
-    private primengConfig: PrimeNGConfig,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private toastService: QbdToastService
   ) { }
-
-  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000): void {
-    this.messageService.add({
-      severity,
-      summary,
-      life
-    });
-  }
-
-  closeToast(): void {
-    this.messageService.clear('');
-  }
 
   private formatMemoPreview(): void {
     const time = Date.now();
@@ -168,11 +155,15 @@ export class AdvancedSettingComponent implements OnInit {
   private scheduledWatcher() {
     if (this.advancedSettingsForm.controls.exportSchedule.value) {
       this.advancedSettingsForm.controls.email.setValidators(Validators.required);
+      this.advancedSettingsForm.controls.frequency.setValidators(Validators.required);
     }
     this.advancedSettingsForm.controls.exportSchedule.valueChanges.subscribe((isScheduledSelected) => {
       if (isScheduledSelected) {
         this.advancedSettingsForm.controls.email.setValidators(Validators.required);
+        this.advancedSettingsForm.controls.frequency.setValidators(Validators.required);
       } else {
+        this.advancedSettingsForm.controls.frequency.clearValidators();
+        this.advancedSettingsForm.controls.frequency.setValue(null);
         this.advancedSettingsForm.controls.email.clearValidators();
         this.advancedSettingsForm.controls.email.setValue([]);
       }
@@ -235,14 +226,14 @@ export class AdvancedSettingComponent implements OnInit {
     const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
-      this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Advanced settings saved successfully'});
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
         this.router.navigate([`/integrations/qbd/onboarding/done`]);
       }
     }, () => {
       this.saveInProgress = false;
-      this.messageService.add({key: 'tl', severity: 'error', summary: 'Error', detail: 'Error saving advanced settings, please try again later'});
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
       });
   }
 

@@ -9,6 +9,7 @@ import { of, throwError } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 import { AdvancedSettingComponent } from './advanced-setting.component';
@@ -20,6 +21,7 @@ describe('AdvancedSettingComponent', () => {
   let service1: any;
   let service2: any;
   let service3: any;
+  let service4: any;
   let formbuilder: FormBuilder;
   let qbdAdvancedSettingService: QbdAdvancedSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
@@ -38,15 +40,21 @@ describe('AdvancedSettingComponent', () => {
     service3 = {
       getAdditionalEmails: () => of(QBDEmailOptioResponse)
     };
+
+    service4 = {
+      displayToastMessage: () => undefined
+    };
+
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
       declarations: [ AdvancedSettingComponent ],
       providers: [
-        MessageService, FormBuilder,
+        FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdAdvancedSettingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
-        { provide: OrgService, useValue: service3 }
+        { provide: OrgService, useValue: service3 },
+        { provide: QbdToastService, useValue: service4 }
       ]
     })
     .compileComponents();

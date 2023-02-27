@@ -18,13 +18,9 @@
                     {{ placeholder }}
                 </div>
             </ng-template>
-            <ng-template let-memo pTemplate="item">
-                <!-- <div pDraggable="memo" 
-                (onDragStart)="dragStart(memo);"
-                (onDragEnd)="dragEnd()"
-                pDroppable="memo" 
-                (onDrop)="drop()" >
-                    <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | titlecase | snakeCaseToSpaceCase }}</p>
+            <ng-template let-memo let-index="index" pTemplate="item">
+                <!-- <div pDraggable="gens" pDroppable="gens" dragHandle=".barsHandle" (onDragStart)="onDragStart(index)" (onDrop)="onDrop(index)" >
+                    <p class="tw-text-sub-text-color tw-text-14-px">{{ gens | titlecase | snakeCaseToSpaceCase }}</p>
                 </div> -->
                 <div>
                     <p class="tw-text-sub-text-color tw-text-14-px">{{ memo | titlecase | snakeCaseToSpaceCase }}</p>

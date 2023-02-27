@@ -1,0 +1,11 @@
+:host ::ng-deep .error-box .p-dropdown {
+    @apply tw-border-alert-toast #{!important};
+}
+
+:host ::ng-deep .normal-box .pInputText {
+    @apply tw-border-box-color #{!important};
+}
+
+:host ::ng-deep .normal-box .pInputText.p-focus {
+    @apply tw-border-slightly-normal-text-color #{!important};
+}

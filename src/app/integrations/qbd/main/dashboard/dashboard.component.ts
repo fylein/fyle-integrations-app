@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { from, interval, switchMap, takeWhile } from 'rxjs';
+import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
 import { QBDAccountingExportsState, QBDAccountingExportsType } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
+import { QBDAdvancedSettingsGet } from '/Users/fyle/integrations/fyle-integrations-settings-app/src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,7 +48,7 @@ export class DashboardComponent implements OnInit {
     }
   ];
 
-  selectedDateFilter: DateFilter | null = this.dateOptions[0];
+  selectedDateFilter: DateFilter | null = null;
 
   presentDate = new Date().toLocaleDateString();
 
@@ -62,9 +64,12 @@ export class DashboardComponent implements OnInit {
 
   exportPresent: boolean = true;
 
+  nextExportDate: any;
+
   constructor(
     private iifLogsService: QbdIifLogsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private advancedSettingService: QbdAdvancedSettingService
   ) { }
 
   getDates() {
@@ -72,7 +77,7 @@ export class DashboardComponent implements OnInit {
     this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
     this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
     this.presentDate = this.dateOptions[3].dateRange;
-    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3].dateRange);
+    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
     const event = {
       value: this.dateOptions[3].dateRange
     };
@@ -160,6 +165,29 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  getNextExportDate(advancedSettings: QBDAdvancedSettingsGet): void {
+    if (advancedSettings.schedule_is_enabled) {
+      const date = new Date(+this.presentDate.slice(6, 10), (+this.presentDate.slice(3, 5))-1, +this.presentDate.slice(0, 2));
+      if (advancedSettings.day_of_month !== null) {
+        let current;
+        if (date.getMonth() === 11) {
+            current = new Date(date.getFullYear() + 1, 0, +advancedSettings.day_of_month);
+        } else {
+            current = new Date(date.getFullYear(), date.getMonth() + 1, +advancedSettings.day_of_month);
+        }
+        this.nextExportDate = current;
+      } else if (advancedSettings.day_of_week !== null) {
+        const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+        const week = weekday.indexOf(advancedSettings.day_of_week.toLowerCase());
+        const resultDate = new Date(new Date().getTime());
+        resultDate.setDate(date.getDate() + ((7 + week - date.getDay()) % 7));
+        this.nextExportDate = resultDate;
+      } else {
+        this.nextExportDate = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate()+1);
+      }
+    }
+  }
+
   setUpDashboard(): void {
     this.isLoading = true;
     this.exportLogForm = this.formBuilder.group({
@@ -168,11 +196,16 @@ export class DashboardComponent implements OnInit {
       start: [''],
       end: ['']
     });
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null).subscribe((accountingExportResponse: QbdExportTriggerResponse) => {
-      this.accountingExports = accountingExportResponse;
+    forkJoin([
+      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null),
+      this.advancedSettingService.getQbdAdvancedSettings()
+    ]).subscribe((response) => {
+      this.accountingExports = response[0];
+      const advancedSettings = response[1];
       this.downloadingExportId =  [...Array(this.accountingExports.count).keys()].map(() => {
         return false;
       });
+      this.getNextExportDate(advancedSettings);
       this.totalCount = this.accountingExports.count;
       this.isLoading = false;
     });

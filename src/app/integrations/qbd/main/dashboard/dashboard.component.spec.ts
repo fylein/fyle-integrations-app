@@ -3,15 +3,18 @@ import { ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick } from
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
+import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
+import { QBDAdvancedSettingResponse2 } from 'src/app/shared/components/qbd/configuration/advanced-setting/advanced-setting.fixture';
 
 import { DashboardComponent } from './dashboard.component';
-import { errorResponse, getQbdAccountingExports, postQbdAccountingExports, postQbdTriggerExportResponse } from './dashboard.fixture';
+import { errorResponse, getQbdAccountingExports, postQbdAccountingExports, postQbdTriggerExportResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse3 } from './dashboard.fixture';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
   let service1: any;
+  let service2: any;
   let iifLogsService: QbdIifLogsService;
   let formbuilder: FormBuilder;
 
@@ -23,11 +26,16 @@ describe('DashboardComponent', () => {
       triggerQBDExport: () => of(postQbdTriggerExportResponse)
     };
 
+    service2 = {
+      getQbdAdvancedSettings: () => of(QBDAdvancedSettingResponse)
+    };
+
     await TestBed.configureTestingModule({
       imports: [HttpClientModule, RouterTestingModule],
       declarations: [ DashboardComponent ],
       providers: [ FormBuilder,
-        { provide: QbdIifLogsService, useValue: service1 }
+        { provide: QbdIifLogsService, useValue: service1 },
+        { provide: QbdAdvancedSettingService, useValue: service2 }
       ]
     })
     .compileComponents();
@@ -38,7 +46,7 @@ describe('DashboardComponent', () => {
     component = fixture.componentInstance;
     component.limit = 10;
     component.selectedDateFilter = {
-      dateRange: "This Month",
+      dateRange: "component Month",
       endDate: new Date(),
       startDate: new Date('Wed Feb 01 2023')
     };
@@ -121,7 +129,7 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
     expect(component.dropDownWatcher()).toBeUndefined();
     expect(component.isCalendarVisible).toBeTrue();
-    component.exportLogForm.controls.dateRange.patchValue('This Week');
+    component.exportLogForm.controls.dateRange.patchValue('component Week');
     fixture.detectChanges();
     expect(component.dropDownWatcher()).toBeUndefined();
     expect(component.isCalendarVisible).toBeTrue();
@@ -131,5 +139,14 @@ describe('DashboardComponent', () => {
     const event = new Event("click", undefined);
     expect(component.showCalendar(event)).toBeUndefined();
     expect(component.isCalendarVisible).toBeTrue();
+  });
+
+  it('getNextExportDate function check', () => {
+    expect(component.getNextExportDate(QBDAdvancedSettingResponse)).toBeUndefined();
+    expect(component.getNextExportDate(QBDAdvancedSettingResponse2)).toBeUndefined();
+    expect(component.getNextExportDate(QBDAdvancedSettingResponse3)).toBeUndefined();
+    component.presentDate = new Date(2023, 11, 12).toLocaleDateString();
+    fixture.detectChanges();
+    expect(component.getNextExportDate(QBDAdvancedSettingResponse2)).toBeUndefined();
   });
 });

@@ -4,12 +4,13 @@ import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule } from '
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MessageService, SharedModule } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { QBDCorporateCreditCardExpensesObject, QBDExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 import { ExportSettingComponent } from './export-setting.component';
 import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } from './export-setting.fixture';
@@ -19,6 +20,7 @@ describe('ExportSettingComponent', () => {
   let fixture: ComponentFixture<ExportSettingComponent>;
   let service1: any;
   let service2: any;
+  let service3: any;
   let formbuilder: FormBuilder;
   let qbdExportSettingService: QbdExportSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
@@ -36,14 +38,19 @@ describe('ExportSettingComponent', () => {
       setOnboardingState: () => undefined
     };
 
+    service3 = {
+      displayToastMessage: () => undefined
+    };
+
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
       declarations: [ ExportSettingComponent ],
       providers: [
-        MessageService, FormBuilder,
+        FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdExportSettingService, useValue: service1 },
-        { provide: QbdWorkspaceService, useValue: service2 }
+        { provide: QbdWorkspaceService, useValue: service2 },
+        { provide: QbdToastService, useValue: service3 }
       ]
     })
     .compileComponents();
@@ -84,6 +91,7 @@ describe('ExportSettingComponent', () => {
     component.isOnboarding = true;
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
+    fixture.detectChanges();
   });
 
   it('Save function check with failed api response', () => {
@@ -95,6 +103,7 @@ describe('ExportSettingComponent', () => {
 
   it('createReimbursableExpenseWatcher function check', () => {
     component.ngOnInit();
+    fixture.detectChanges();
     component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
     expect((component as any).createReimbursableExpenseWatcher()).toBeUndefined();
     fixture.detectChanges();

@@ -9,9 +9,9 @@
     <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-p-24-px">
             <div *ngIf="exportPresent" class="tw-flex tw-justify-between tw-items-center ">
-                <div>
+                <div class="tw-w-3/5">
                     <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">Instantly download expenses from Fyle as an IIF file.</h3>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-2-px">The IIF files are automatically generated based on your configuration.</h5>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-2-px">The IIF files are automatically generated based on your configuration. You can export the files from here if you'd like to have an instant export.</h5>
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
@@ -22,7 +22,7 @@
                             <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="exportInProgress">Exporting ...
                             </p>
                         </button><br>
-                        <p class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-faded-text-color">IIF file scheduled to be sent via email on 4th Feb, 2022</p>
+                        <p *ngIf="nextExportDate" class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-faded-text-color">Next automated export schedule: {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                     </ng-template>
                     <ng-template let-date pTemplate="item">
                         <div>
-                            <p-calendar (click)="showCalendar($event)" [placeholder]="date.dateRange" formControlName="start" (onSelect)="getDates()" [touchUI]="isCalendarVisible" *ngIf="date.dateRange === presentDate" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
+                            <p-calendar (click)="showCalendar($event)" [placeholder]="date.dateRange" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" *ngIf="date.dateRange === presentDate" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
                             <p class="tw-text-sub-text-color tw-text-14-px" *ngIf="date.dateRange !== presentDate">{{ date.dateRange | titlecase | snakeCaseToSpaceCase }}</p>
                         </div>
                     </ng-template> 
