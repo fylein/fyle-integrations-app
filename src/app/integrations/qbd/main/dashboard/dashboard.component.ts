@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
-import { QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency } from 'src/app/core/models/enum/enum.model';
+import { QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -69,7 +70,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private iifLogsService: QbdIifLogsService,
     private formBuilder: FormBuilder,
-    private advancedSettingService: QbdAdvancedSettingService
+    private advancedSettingService: QbdAdvancedSettingService,
+    private toastService: QbdToastService
   ) { }
 
   getDates() {
@@ -147,6 +149,9 @@ export class DashboardComponent implements OnInit {
         });
       }
       this.exportInProgress = false;
+    }, () => {
+      this.exportInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Export Failed, try again later');
     });
   }
 
@@ -176,7 +181,7 @@ export class DashboardComponent implements OnInit {
             current = new Date(date.getFullYear(), date.getMonth() + 1, +advancedSettings?.day_of_month);
         }
         this.nextExportDate = current;
-      } else if (advancedSettings.day_of_week === QBDScheduleFrequency.WEEKLY) {
+      } else if (advancedSettings.frequency === QBDScheduleFrequency.WEEKLY && advancedSettings.day_of_week) {
         const weekday = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
         const week = weekday.indexOf(advancedSettings.day_of_week.toLowerCase());
         const resultDate = new Date(new Date().getTime());

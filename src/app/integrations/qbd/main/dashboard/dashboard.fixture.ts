@@ -56,6 +56,7 @@ export const errorResponse = {
       company_name: 'QBO'
     }
 };
+
 export const QBDAdvancedSettingResponse:QBDAdvancedSettingsGet = {
     id: 1,
     created_at: new Date('2023-02-01T08:42:45.803382Z'),
@@ -80,6 +81,30 @@ export const QBDAdvancedSettingResponse:QBDAdvancedSettingsGet = {
     schedule_id: null
 };
 
+export const QBDAdvancedSettingResponse2:QBDAdvancedSettingsGet = {
+    id: 1,
+    created_at: new Date('2023-02-01T08:42:45.803382Z'),
+    updated_at: new Date('2023-02-01T08:42:45.803382Z'),
+    expense_memo_structure: [
+        "employee_email",
+        "merchant",
+        "purpose",
+        "report_number",
+        "expense_link"
+    ],
+    top_memo_structure: [
+        "purpose"
+    ],
+    schedule_is_enabled: true,
+    day_of_month: "11",
+    day_of_week: "MONDAY",
+    frequency: QBDScheduleFrequency.MONTHLY,
+    time_of_day: "12:00:00",
+    emails_selected: [{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}],
+    workspace: 1,
+    schedule_id: null
+};
+
 export const QBDAdvancedSettingResponse3:QBDAdvancedSettingsGet = {
     id: 1,
     created_at: new Date('2023-02-01T08:42:45.803382Z'),
@@ -89,7 +114,7 @@ export const QBDAdvancedSettingResponse3:QBDAdvancedSettingsGet = {
     schedule_is_enabled: true,
     day_of_month: null,
     day_of_week: null,
-    frequency: null,
+    frequency: QBDScheduleFrequency.DAILY,
     time_of_day: '00:00:00',
     emails_selected: [],
     workspace: 1,

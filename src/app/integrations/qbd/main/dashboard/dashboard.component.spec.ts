@@ -4,17 +4,17 @@ import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
-import { QBDAdvancedSettingResponse2 } from 'src/app/shared/components/qbd/configuration/advanced-setting/advanced-setting.fixture';
-
 import { DashboardComponent } from './dashboard.component';
-import { errorResponse, getQbdAccountingExports, postQbdAccountingExports, postQbdTriggerExportResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse3 } from './dashboard.fixture';
+import { errorResponse, getQbdAccountingExports, postQbdAccountingExports, postQbdTriggerExportResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDAdvancedSettingResponse3 } from './dashboard.fixture';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
   let fixture: ComponentFixture<DashboardComponent>;
   let service1: any;
   let service2: any;
+  let service3: any;
   let iifLogsService: QbdIifLogsService;
   let formbuilder: FormBuilder;
 
@@ -30,12 +30,18 @@ describe('DashboardComponent', () => {
       getQbdAdvancedSettings: () => of(QBDAdvancedSettingResponse)
     };
 
+    service3 = {
+      displayToastMessage: () => undefined
+    };
+
+
     await TestBed.configureTestingModule({
       imports: [HttpClientModule, RouterTestingModule],
       declarations: [ DashboardComponent ],
       providers: [ FormBuilder,
         { provide: QbdIifLogsService, useValue: service1 },
-        { provide: QbdAdvancedSettingService, useValue: service2 }
+        { provide: QbdAdvancedSettingService, useValue: service2 },
+        { provide: QbdToastService, useValue: service3 }
       ]
     })
     .compileComponents();
@@ -103,6 +109,9 @@ describe('DashboardComponent', () => {
   });
 
   it('triggerExports function check', () => {
+    expect(component.triggerExports()).toBeUndefined();
+    spyOn(iifLogsService, 'triggerQBDExport').and.returnValue(throwError(errorResponse));
+    fixture.detectChanges();
     expect(component.triggerExports()).toBeUndefined();
   });
 
