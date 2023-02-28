@@ -1,9 +1,9 @@
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    @apply tw-px-24-px tw-py-12-px tw-mx-10-px tw-mt-0 tw-border-x-box-color tw-border-t-box-color tw-border-t tw-border-x tw-rounded-t-lg #{!important};
+    @apply tw-px-24-px tw-py-12-px tw-mx-10-px tw-mt-0 tw-border-x-box-color tw-border-t-box-color tw-border-t tw-border-x tw-rounded-t-lg tw-bg-disabled-bg-color #{!important};
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
-    @apply tw-text-slightly-normal-text-color tw-border-b-transparent #{!important};
+    @apply tw-text-slightly-normal-text-color tw-border-b-transparent tw-bg-white #{!important};
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav {

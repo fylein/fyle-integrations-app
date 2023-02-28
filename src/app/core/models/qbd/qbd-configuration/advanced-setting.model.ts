@@ -32,26 +32,35 @@ export type QBDAdvancedSettingsGet = {
     workspace: number
 }
 
+function getFrequencyTime(advancedSettingForm: FormGroup) {
+    if (advancedSettingForm.get('frequency')?.value){
+        const currentTime = +advancedSettingForm.controls.timeOfDay.value.slice(0, 2);
+        const currentMins = advancedSettingForm.controls.timeOfDay.value.slice(3, 5);
+        const currentDate = new Date(); // Create a new Date object with the current date and time in IST
+        currentDate.setHours(20, 0, 0);
+        if (advancedSettingForm.value.meridiem === 'PM' && currentTime !== 12) {
+            currentDate.setHours(currentTime+12, currentMins, 0);
+        } else if (advancedSettingForm.value.meridiem === 'PM' && currentTime === 12) {
+            currentDate.setHours(currentTime, currentMins, 0);
+        } else {
+            if (currentTime === 12) {
+                currentDate.setHours(0, currentMins, 0);
+            } else if (currentTime > 9) {
+                currentDate.setHours(currentTime, currentMins, 0);
+            } else {
+                currentDate.setHours(currentTime, currentMins, 0);
+            }
+        }
+        return new Date(currentDate).toLocaleString('en-US', { timeZone: 'GMT', hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' });
+    }
+    return null;
+}
+
 export class AdvancedSettingModel {
     static constructPayload(advancedSettingForm: FormGroup): QBDAdvancedSettingsPost {
         const topMemo: string[] = [];
         topMemo.push(advancedSettingForm.value.topMemoStructure);
-        const currentTime = +advancedSettingForm.controls.timeOfDay.value.slice(0, 2);
-        const currentMins = advancedSettingForm.controls.timeOfDay.value.slice(3, 5);
-        let time = '';
-        if (advancedSettingForm.value.meridiem === 'PM' && currentTime !== 12) {
-            time = currentTime+12 + ":" + currentMins + ":00";
-          } else if (advancedSettingForm.value.meridiem === 'PM' && currentTime === 12) {
-            time = currentTime + ":" + currentMins + ":00";
-          } else {
-            if (currentTime === 12) {
-                time = "00:" + currentMins + ":00";
-            } else if (currentTime > 9) {
-                time = currentTime + ":" + currentMins + ":00";
-            } else {
-                time = "0" + currentTime + ":" + currentMins + ":00";
-            }
-          }
+        const time = getFrequencyTime(advancedSettingForm);
         const advancedSettingPayload: QBDAdvancedSettingsPost = {
             expense_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : null,
             top_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? topMemo : null,
@@ -60,7 +69,7 @@ export class AdvancedSettingModel {
             day_of_month: advancedSettingForm.get('dayOfMonth')?.value ? advancedSettingForm.get('dayOfMonth')?.value : null,
             day_of_week: advancedSettingForm.get('dayOfWeek')?.value ? advancedSettingForm.get('dayOfWeek')?.value : null,
             frequency: advancedSettingForm.get('frequency')?.value ? advancedSettingForm.get('frequency')?.value : null,
-            time_of_day: advancedSettingForm.get('timeOfDay')?.value ? time : null
+            time_of_day: advancedSettingForm.get('frequency')?.value ? time : null
         };
         return advancedSettingPayload;
     }

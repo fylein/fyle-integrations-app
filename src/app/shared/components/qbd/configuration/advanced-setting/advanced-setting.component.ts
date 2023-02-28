@@ -86,12 +86,17 @@ export class AdvancedSettingComponent implements OnInit {
       expense_link: 'https://app.fylehq.com/app/main/#/enterprise/view_expense/'
     };
     this.memoPreviewText = '';
+    const memo: string[] = [];
     this.memoStructure.forEach((field, index) => {
       if (field in previewValues) {
-        this.memoPreviewText += previewValues[field];
-        if (index + 1 !== this.memoStructure.length) {
-          this.memoPreviewText = this.memoPreviewText + ' - ';
-        }
+        const defaultIndex = this.defaultMemoFields.indexOf(this.memoStructure[index]);
+        memo[defaultIndex] = previewValues[field];
+      }
+    });
+    memo.forEach((field, index) => {
+      this.memoPreviewText += field;
+      if (index + 1 !== memo.length) {
+        this.memoPreviewText = this.memoPreviewText + ' - ';
       }
     });
   }
@@ -107,28 +112,19 @@ export class AdvancedSettingComponent implements OnInit {
     return day + ' th';
   }
 
-  private merdiemType(): string {
-    const time = this.advancedSettings?.time_of_day ? +this.advancedSettings.time_of_day.slice(0, 2) : 0;
-    return time < 12 ? 'AM' : 'PM';
-  }
-
-  private initialTime(): string {
-    const time = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day.split(":") : "12:00".split(":");
-    let hour = time[0];
-    const minutes = time[1];
-    let hours = parseInt(hour);
-    if (hours > 12) {
-        hours -= 12;
-        hour = hours.toString();
-    }
-    if (hours === 0) {
-      hours = 12;
-      hour = hours.toString();
-    }
-    if (hours < 10) {
-        hour = "0" + hours;
-    }
-    return `${hour}:${minutes}`;
+  private initialTime(): string[] {
+    const inputTime = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day: "12:00:00";
+    const outputTime = new Date(`01/01/2000 ${inputTime} GMT`).toLocaleString('en-US', {
+      timeZone: 'Asia/Kolkata',
+      hour12: true,
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric'
+    });
+    const time = outputTime.split(" ");
+    const Time = time[0][0] > '1' && time[0][1] === ':' ? '0'+time[0] : time[0];
+    time[0] = Time.slice(0, -3);
+    return time;
   }
 
   private createMemoStructureWatcher(): void {
@@ -182,6 +178,7 @@ export class AdvancedSettingComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     this.advancedSettingService.getQbdAdvancedSettings().subscribe((advancedSettingResponse : QBDAdvancedSettingsGet) => {
       this.advancedSettings = advancedSettingResponse;
+      const resultTime = this.initialTime();
       this.advancedSettingsForm = this.formBuilder.group({
         expenseMemoStructure: [this.advancedSettings?.expense_memo_structure && this.advancedSettings?.expense_memo_structure.length > 0 ? this.advancedSettings?.expense_memo_structure : this.defaultMemoFields, Validators.required],
           topMemoStructure: [this.advancedSettings?.top_memo_structure.length > 0 ? this.advancedSettings?.top_memo_structure[0] : this.defaultTopMemoOptions[0], Validators.required],
@@ -190,13 +187,14 @@ export class AdvancedSettingComponent implements OnInit {
           frequency: [this.advancedSettings?.frequency ? this.advancedSettings?.frequency : null],
           dayOfMonth: [this.advancedSettings?.day_of_month ? this.advancedSettings?.day_of_month : null],
           dayOfWeek: [this.advancedSettings?.day_of_week ? this.advancedSettings?.day_of_week : null],
-          timeOfDay: [this.initialTime()],
-          meridiem: [this.merdiemType()],
+          timeOfDay: [resultTime[0]],
+          meridiem: [resultTime[1]],
           search: []
       });
       this.isLoading = false;
       this.setCustomValidator();
     }, error => {
+      const resultTime = this.initialTime();
         this.advancedSettingsForm = this.formBuilder.group({
           expenseMemoStructure: [this.defaultMemoFields, Validators.required],
           topMemoStructure: [this.defaultTopMemoOptions[0], Validators.required],
@@ -205,8 +203,8 @@ export class AdvancedSettingComponent implements OnInit {
           frequency: [null],
           dayOfMonth: [null],
           dayOfWeek: [null],
-          timeOfDay: [this.initialTime()],
-          meridiem: [this.merdiemType()],
+          timeOfDay: [resultTime[0]],
+          meridiem: [resultTime[1]],
           search: []
         });
         this.isLoading = false;
