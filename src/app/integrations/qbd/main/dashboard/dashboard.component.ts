@@ -202,7 +202,7 @@ export class DashboardComponent implements OnInit {
       end: ['']
     });
     forkJoin([
-      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null),
+      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]),
       this.advancedSettingService.getQbdAdvancedSettings()
     ]).subscribe((response) => {
       this.accountingExports = response[0];
