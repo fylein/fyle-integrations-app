@@ -32,13 +32,13 @@
 
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                    <div class="xl:tw-w-3/5 md:tw-w-1/2">
+                                    <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} be posted to?<app-mandatory-field></app-mandatory-field></h4>
                                         <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the {{ accountName() }} account as per your QuickBooks Desktop setup. This is the account to which all the expenses from Fyle will be posted. </h5>
                                     </div>
 
-                                    <div class="tw-pl-20-px">
-                                        <input type="text" class="xl:tw-w-80 md:tw-w-64 !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name"> 
+                                    <div class="tw-pl-18-px">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name" [required]="exportSettingsForm.value.reimbursableExpense"> 
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [customErrorMessage]="customMessage"></app-mandatory-error-message>
                                     </div>
                                 </div>
@@ -117,13 +117,13 @@
 
                             <div *ngIf="exportSettingsForm.value.cccExportType">
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                    <div class="xl:tw-w-3/5 md:tw-w-1/2">
+                                    <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">Enter the Credit card account name<app-mandatory-field></app-mandatory-field></h4>
                                         <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Credit Card Account as per your QuickBooks Desktop setup. This is the account to which all the expenses from Fyle will be posted. </h5>
                                     </div>
 
-                                    <div class="tw-pl-20-px">
-                                        <input type="text" class="xl:tw-w-80 md:tw-w-64 !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter Credit Card Account Name"> 
+                                    <div class="tw-pl-18-px">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter Credit Card Account Name" [required]="exportSettingsForm.value.creditCardExpense"> 
                                         <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'Please enter a Credit Card Account name'"></app-mandatory-error-message>
                                     </div>
                                 </div>

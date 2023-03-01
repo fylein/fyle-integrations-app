@@ -99,8 +99,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getExpenseType(type: string) {
-    const expenseType = type === 'CCC' ? QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES : QBDAccountingExportsType.EXPORT_REIMBURSABLE_EXPENSES;
-    return expenseType.split("_").slice(1, -1).join(' ').split(",").join('');
+    const expenseType = type === 'CCC' ? QBDAccountingExportsType.CREDIT_CARD : QBDAccountingExportsType.REIMBURSABLE;
+    return expenseType.split("_").join(' ');
   }
 
   getTypeString(type: string): string {
@@ -109,7 +109,7 @@ export class DashboardComponent implements OnInit {
 
   dateFilter(event: any): void {
     this.selectedDateFilter = event.value;
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNAL_ENTRIES, QBDAccountingExportsType.EXPORT_REIMBURSABLE_EXPENSES]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
     });
@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit {
     this.limit = limit;
     this.pageNo = 0;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNAL_ENTRIES, QBDAccountingExportsType.EXPORT_REIMBURSABLE_EXPENSES]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
     });
@@ -128,7 +128,7 @@ export class DashboardComponent implements OnInit {
   pageChanges(pageNo: number): void {
     this.pageNo = pageNo;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
-    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNAL_ENTRIES, QBDAccountingExportsType.EXPORT_REIMBURSABLE_EXPENSES]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+    this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
     });
@@ -202,7 +202,7 @@ export class DashboardComponent implements OnInit {
       end: ['']
     });
     forkJoin([
-      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNAL_ENTRIES, QBDAccountingExportsType.EXPORT_REIMBURSABLE_EXPENSES]),
+      this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, null),
       this.advancedSettingService.getQbdAdvancedSettings()
     ]).subscribe((response) => {
       this.accountingExports = response[0];

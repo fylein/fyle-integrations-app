@@ -115,7 +115,7 @@ p {
 
 // Dropdown
 .p-dropdown {
-    @apply xl:tw-w-80 md:tw-w-64 ;
+    @apply lg:tw-w-300-px md:tw-w-260-px ;
 }
 .p-dropdown .p-dropdown-label {
     &.p-inputtext {
@@ -148,7 +148,7 @@ p {
 }
 
 .p-multiselect {
-    @apply xl:tw-w-80 md:tw-w-64 ;
+    @apply lg:tw-w-300-px md:tw-w-260-px ;
 }
 
 .p-multiselect .p-multiselect-label {
@@ -282,7 +282,7 @@ p {
     }
   
     &--contents {
-        @apply tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px md:tw-mx-100-px xl:tw-mx-120-px tw-shadow-app-card #{!important};
+        @apply tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
     }
 }
 

@@ -99,7 +99,7 @@
                             <td>{{getExpenseType(exports.fund_source)| titlecase }}</td>
                             <td>
                                 <div *ngIf="!downloadingExportId[i]">
-                                    <button (click)="getDownloadLink(exports,i)"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite></button>
+                                    <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" hight="20px"></svg-icon-sprite></button>
                                 </div>
                                 <div *ngIf="downloadingExportId[i]" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>

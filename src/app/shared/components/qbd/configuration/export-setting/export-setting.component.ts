@@ -257,7 +257,6 @@ export class ExportSettingComponent implements OnInit {
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const exportSettingPayload = ExportSettingModel.constructPayload(this.exportSettingsForm);
-
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');

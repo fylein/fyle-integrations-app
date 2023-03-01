@@ -34,24 +34,18 @@ export type QBDAdvancedSettingsGet = {
 
 function getFrequencyTime(advancedSettingForm: FormGroup) {
     if (advancedSettingForm.get('frequency')?.value){
-        const currentTime = +advancedSettingForm.controls.timeOfDay.value.slice(0, 2);
-        const currentMins = advancedSettingForm.controls.timeOfDay.value.slice(3, 5);
-        const currentDate = new Date(); // Create a new Date object with the current date and time in IST
-        currentDate.setHours(20, 0, 0);
-        if (advancedSettingForm.value.meridiem === 'PM' && currentTime !== 12) {
-            currentDate.setHours(currentTime+12, currentMins, 0);
-        } else if (advancedSettingForm.value.meridiem === 'PM' && currentTime === 12) {
-            currentDate.setHours(currentTime, currentMins, 0);
-        } else {
-            if (currentTime === 12) {
-                currentDate.setHours(0, currentMins, 0);
-            } else if (currentTime > 9) {
-                currentDate.setHours(currentTime, currentMins, 0);
-            } else {
-                currentDate.setHours(currentTime, currentMins, 0);
-            }
-        }
-        return new Date(currentDate).toLocaleString('en-US', { timeZone: 'GMT', hour12: false, hour: 'numeric', minute: 'numeric', second: 'numeric' });
+        const currentDate = `${advancedSettingForm.controls.timeOfDay.value} ${advancedSettingForm.controls.meridiem.value}`; // Create a new Date object with the current date and time in IST
+        const date = new Date(`01/01/2000 ${currentDate} GMT+5:30`);
+
+        const hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+
+        // Convert the hours to a 2-digit string
+        const hour = hours.toString().padStart(2, '0');
+        const minute = minutes.toString().padStart(2, '0');
+        // Create the 24-hour GMT time string
+        const gmtTime24 = `${hour}:${minute}:00`;
+        return gmtTime24;
     }
     return null;
 }

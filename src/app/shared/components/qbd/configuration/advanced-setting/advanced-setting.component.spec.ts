@@ -118,6 +118,10 @@ describe('AdvancedSettingComponent', () => {
     component.advancedSettingsForm.controls.timeOfDay.patchValue('10:00');
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
+    component.advancedSettingsForm.controls.meridiem.patchValue('AM');
+    component.advancedSettingsForm.controls.timeOfDay.patchValue('12:00');
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
   });
 
   it('Save function check with failed api response', () => {
