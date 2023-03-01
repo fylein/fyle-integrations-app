@@ -3,7 +3,7 @@
         <app-app-header [iconPath]="'assets/logos/quickbooks-desktop.svg'" [appName]="'QuickBooks Desktop'" [appDescription]="'Generate IIF file to export the expenses from Fyle to QBD.'" [isLoading]="isLoading" [isIntegrationSetupInProgress]="isQBDSetupInProgress" [isIntegrationConnected]="isQBDConnected"></app-app-header>
     </div>
     <div>
-        <div class="tw-pt-40-px tw-flex tw-justify-center tw-text-center tw-flex-col">
+        <!-- <div class="tw-pt-40-px tw-flex tw-justify-center tw-text-center tw-flex-col">
             <p class="tw-text-normal-text-color tw-text-20-px tw-font-500">How does the integration work?</p>
             <p class="tw-text-faded-text-color tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
                 Auto sync employee details between Fyle and QBD.
@@ -16,6 +16,8 @@
             <div class="tw-flex tw-justify-center tw-pt-48-px">
                 <img src="assets/flow-charts/qbd-flow-chart.svg" />
             </div>
-        </div>
+        </div> -->
+        <app-app-landing [appName]="'QBD'" [svgPath]="'assets/flow-charts/qbd-flow-chart.svg'" (openReadMore)="openReadMore()"></app-app-landing>
+
     </div>
 </div>

@@ -40,6 +40,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
+import { AppLandingComponent } from './components/apps/app-landing/app-landing.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
-    ConfigurationLabelComponent
+    ConfigurationLabelComponent,
+    AppLandingComponent
   ],
   imports: [
     CommonModule,
@@ -88,6 +90,7 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
   exports: [
     LoaderComponent,
     AppHeaderComponent,
+    AppLandingComponent,
     ErrorComponent,
     TrimCharacterPipe,
     DateFilterPipe,

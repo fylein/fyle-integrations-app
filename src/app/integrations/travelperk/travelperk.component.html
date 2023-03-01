@@ -1,1 +1,9 @@
-<p>travelperk works!</p>
+<app-app-header 
+    [iconPath]="'assets/logos/travelperk-logo.svg'" [appName]="'TravelPerk'" 
+    [appDescription]="'Autosync employee details between Fyle and TravelPerk.'"
+></app-app-header>
+
+<app-app-landing [appName]="'TravelPerk'" [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" (openReadMore)="openReadMore()"></app-app-landing>
+<!-- <app-landing *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"></app-landing> -->
+
+<app-error *ngIf="showErrorScreen"></app-error>

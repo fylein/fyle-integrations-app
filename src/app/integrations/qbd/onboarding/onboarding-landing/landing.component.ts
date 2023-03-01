@@ -21,6 +21,10 @@ export class LandingComponent implements OnInit {
     public windowService: WindowService
   ) { }
 
+  openReadMore(): void {
+    this.windowService.openInNewTab(RedirectLink.QBD);
+  }
+
   ngOnInit(): void {
   }
 
