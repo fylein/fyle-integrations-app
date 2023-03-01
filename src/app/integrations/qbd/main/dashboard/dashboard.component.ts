@@ -148,7 +148,10 @@ export class DashboardComponent implements OnInit {
           this.processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
           this.exportProgressPercentage = Math.round((this.processedCount / res.count) * 100);
           this.exportPresent = triggerResponse.new_expenses_imported;
-          this.exportInProgress = false;
+          this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+            this.accountingExports = accountingExportsResult;
+            this.exportInProgress = false;
+          });
         });
       }
     }, () => {
