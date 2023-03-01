@@ -25,3 +25,7 @@
 :host ::ng-deep .p-checkbox {
     @apply tw-pt-2-px #{!important};
 }
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
+    @apply tw-h-32-px tw-px-16-px tw-py-0 #{!important};
+}

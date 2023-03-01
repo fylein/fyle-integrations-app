@@ -2,6 +2,10 @@
     @apply tw-px-3 tw-py-1 tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-xl #{!important};
 }
 
+:host ::ng-deep .p-multiselect-panel .p-multiselect-items {
+    @apply tw-py-0 #{!important};
+}
+
 :host ::ng-deep .p-multiselect-label {
     @apply tw-z-1 tw-w-270-px #{!important};      
 }
@@ -16,8 +20,4 @@
 
 :host ::ng-deep .normal-box .p-multiselect.p-focus {
     @apply tw-border-slightly-normal-text-color #{!important};
-}
-
-:host ::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-h-54-px tw-px-16-px tw-py-0 #{!important};
 }

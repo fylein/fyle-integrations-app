@@ -21,7 +21,8 @@ const customColors = {
   'success-toast': '#24A148',
   'alert-toast': '#DA1E28',
   'cta-disabled': '#FFC2D6',
-  'line-inactive': '#CCCDD7'
+  'line-inactive': '#CCCDD7',
+  'progress-bar-bg': '#FFF0F5'
 };
 
 module.exports = {
@@ -277,7 +278,8 @@ module.exports = {
         '12-px': '12px',
         '16-px': '16px',
         '20-px': '20px',
-        '48-px': '48px'
+        '48-px': '48px',
+        '50': '50%'
       },
       borderWidth: {
         '0.5-px': '0.5px',

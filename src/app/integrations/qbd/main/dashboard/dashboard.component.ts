@@ -65,7 +65,9 @@ export class DashboardComponent implements OnInit {
 
   exportPresent: boolean = true;
 
-  nextExportDate: any;
+  nextExportDate: Date | undefined;
+
+  processedCount: number;
 
   constructor(
     private iifLogsService: QbdIifLogsService,
@@ -135,20 +137,20 @@ export class DashboardComponent implements OnInit {
   }
 
   triggerExports(): void {
-    this.exportInProgress = true;
     this.iifLogsService.triggerQBDExport().subscribe((triggerResponse: QbdExportTriggerGet) => {
       this.exportPresent = triggerResponse.new_expenses_imported;
       if (triggerResponse.new_expenses_imported) {
+        this.exportInProgress = true;
         interval(3000).pipe(
           switchMap(() => from(this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null))),
           takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
         ).subscribe((res) => {
-          const processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
-          this.exportProgressPercentage = Math.round((processedCount / res.count) * 100);
+          this.processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
+          this.exportProgressPercentage = Math.round((this.processedCount / res.count) * 100);
+          this.exportPresent = triggerResponse.new_expenses_imported;
           this.exportInProgress = false;
         });
       }
-      this.exportInProgress = false;
     }, () => {
       this.exportInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Export Failed, try again later');
