@@ -81,7 +81,7 @@ export class DashboardComponent implements OnInit {
     this.presentDate = this.dateOptions[3].dateRange;
     this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
     const event = {
-      value: this.dateOptions[3].dateRange
+      value: this.dateOptions[3]
     };
     this.dateFilter(event);
   }
