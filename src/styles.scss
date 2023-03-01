@@ -192,7 +192,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-h-54-px tw-my-4-px #{!important};
+    @apply tw-h-32-px tw-px-16-px tw-py-0 #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
@@ -200,11 +200,11 @@ p {
 }
 
 .p-checkbox .p-checkbox-box {
-    @apply tw-h-16-px tw-w-16-px tw-rounded-4-px tw-transition-none #{!important};
+    @apply tw-h-16-px tw-w-16-px tw-rounded-4-px tw-transition-none tw-border tw-border-sub-text-color #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
-    @apply tw-bg-dropdown-hover #{!important};
+    @apply tw-bg-dropdown-hover tw-rounded-4-px #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {

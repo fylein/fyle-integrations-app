@@ -21,3 +21,7 @@
 :host ::ng-deep .normal-box .p-multiselect.p-focus {
     @apply tw-border-slightly-normal-text-color #{!important};
 }
+
+:host ::ng-deep .p-checkbox {
+    @apply tw-pt-2-px #{!important};
+}
