@@ -2,6 +2,10 @@
     @apply tw-px-3 tw-py-1 tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-xl #{!important};
 }
 
+:host ::ng-deep .p-multiselect-panel .p-multiselect-items {
+    @apply tw-py-0 #{!important};
+}
+
 :host ::ng-deep .p-multiselect-label {
     @apply tw-z-1 tw-w-270-px #{!important};      
 }

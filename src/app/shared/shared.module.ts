@@ -20,7 +20,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ErrorComponent } from './components/core/error/error.component';
 import { TrimCharacterPipe } from './pipes/trim-character.pipe';
-import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { SnakeCaseToSpaceCasePipe } from './pipes/snake-case-to-space-case.pipe';
 import { PaginatorComponent } from './helper/paginator/paginator.component';
 import { MandatoryFieldComponent } from './helper/mandatory-field/mandatory-field.component';
@@ -38,7 +37,6 @@ import { ConfigurationStepFooterComponent } from './components/qbd/configuration
 import { ConfigurationStepHeaderComponent } from './components/qbd/configuration/configuration-step-header/configuration-step-header.component';
 import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
 import { CalendarModule } from 'primeng/calendar';
@@ -50,7 +48,6 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
     AppHeaderComponent,
     ErrorComponent,
     TrimCharacterPipe,
-    DateFilterPipe,
     SnakeCaseToSpaceCasePipe,
     PaginatorComponent,
     MandatoryFieldComponent,
@@ -96,7 +93,6 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
     AppHeaderComponent,
     ErrorComponent,
     TrimCharacterPipe,
-    DateFilterPipe,
     SnakeCaseToSpaceCasePipe,
     PaginatorComponent,
     MandatoryFieldComponent,
@@ -119,7 +115,6 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     CascadeSelectModule
-  ],
-  providers: [MessageService]
+  ]
 })
 export class SharedModule { }

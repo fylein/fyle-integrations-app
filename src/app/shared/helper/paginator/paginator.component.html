@@ -6,7 +6,21 @@
         <div class="tw-flex tw-items-center tw-pr-30-px">
             <span class="tw-pr-10-px">Show</span>
             <div>
-                <p-dropdown [options]="pageNumbers" (onChange)="offsetChanges($event)" [(ngModel)]="dropDownValue"></p-dropdown>
+                <p-dropdown [options]="pageNumbers" (onChange)="offsetChanges($event)" [(ngModel)]="dropDownValue">
+                    <ng-template let-value pTemplate="selectedItem" >
+                        <div *ngIf="dropDownValue" class="tw-flex">
+                            <p class="tw-text-normal-text-color tw-text-12-px !tw-font-500">{{ value }} Items</p>
+                        </div>
+                        <div *ngIf="!dropDownValue" class="tw-text-placeholder">
+                            Select size of page
+                        </div>
+                    </ng-template>
+                    <ng-template let-day pTemplate="item">
+                        <div>
+                            <p class="tw-text-sub-text-color tw-text-14-px">{{ day }} Items</p>
+                        </div>
+                    </ng-template> 
+                </p-dropdown>
             </div>
         </div>
         <div class="tw-flex tw-items-center">

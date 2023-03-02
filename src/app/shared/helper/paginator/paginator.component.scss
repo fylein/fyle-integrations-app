@@ -3,9 +3,13 @@
 }
 
 :host ::ng-deep span {
-    @apply tw-text-faded-text-color tw-text-12-px tw-font-400 #{!important};
+    @apply tw-text-faded-text-color tw-text-12-px tw-font-500 #{!important};
 }
 
 .prevBtn:disabled, .nextBtn:disabled {
     @apply tw-cursor-not-allowed tw-bg-disabled-bg-color #{!important};
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-trigger {
+    @apply tw-w-4 tw-pr-14-px #{!important}; 
 }

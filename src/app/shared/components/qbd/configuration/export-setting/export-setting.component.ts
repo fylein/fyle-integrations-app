@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { QBDCorporateCreditCardExpensesObject, QBDConfigurationCtaText, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity } from 'src/app/core/models/enum/enum.model';
+import { QBDCorporateCreditCardExpensesObject, QBDConfigurationCtaText, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
@@ -94,13 +94,14 @@ export class ExportSettingComponent implements OnInit {
 
   exportSettings: QBDExportSettingGet;
 
+  customMessage: string;
+
   constructor(
     private router: Router,
     private exportSettingService: QbdExportSettingService,
     private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
-    private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
+    private toastService: QbdToastService
   ) { }
 
   reimbursableExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
@@ -110,11 +111,13 @@ export class ExportSettingComponent implements OnInit {
   }
 
   namePreference(): string {
-    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.value.cccExportType, this.creditCardExportTypes) } are posted in QBD.`;
+    return `Grouping reflects how the expense entries of a ${this.exportType(this.exportSettingsForm.value.cccExportType, this.creditCardExportTypes) } are posted in QuickBooks Desktop.`;
   }
 
   accountName(): string {
-    return this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank';
+    const name = this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable account' : 'Bank';
+    this.customMessage = 'Please enter ' + name + ' name';
+    return name;
   }
 
   exportType(exportTypeValue:string, exportTypeOptions: QBDExportSettingFormOption[]) {
@@ -254,17 +257,16 @@ export class ExportSettingComponent implements OnInit {
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const exportSettingPayload = ExportSettingModel.constructPayload(this.exportSettingsForm);
-
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
-      this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Export settings saved successfully'});
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
         this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);
       }
     }, () => {
       this.saveInProgress = false;
-      this.messageService.add({key: 'tl', severity: 'error', summary: 'Error', detail: 'Error saving export settings, please try again later'});
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
       });
   }
 

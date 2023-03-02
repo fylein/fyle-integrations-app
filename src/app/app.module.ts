@@ -12,6 +12,10 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { GlobalErrorHandler } from './app.error-handling';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+import { SharedModule } from './shared/shared.module';
+import { RippleModule } from 'primeng/ripple';
 
 @NgModule({
   declarations: [
@@ -22,9 +26,13 @@ import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ToastModule,
+    SharedModule,
+    RippleModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   providers: [
+    MessageService,
     {
       provide: JWT_OPTIONS,
       useValue: JWT_OPTIONS

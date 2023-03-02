@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { QBDConfigurationCtaText, QBDOnboardingState, QBDFyleField } from 'src/app/core/models/enum/enum.model';
+import { QBDConfigurationCtaText, QBDOnboardingState, QBDFyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
@@ -41,8 +41,7 @@ export class FieldMappingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private fieldMappingService: QbdFieldMappingService,
     private workspaceService: QbdWorkspaceService,
-    private messageService: MessageService,
-    private primengConfig: PrimeNGConfig
+    private toastService: QbdToastService
   ) { }
 
   mappingFieldFormOptionsFunction(formControllerName: string): QBDExportSettingFormOption[] {
@@ -57,14 +56,14 @@ export class FieldMappingComponent implements OnInit {
 
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;
-      this.messageService.add({key: 'tl', severity: 'success', summary: 'Success', detail: 'Field mapping saved successfully'});
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.ADVANCED_SETTINGS);
         this.router.navigate([`/integrations/qbd/onboarding/advanced_settings`]);
       }
     }, () => {
       this.saveInProgress = false;
-      this.messageService.add({key: 'tl', severity: 'error', summary: 'Error', detail: 'Error saving field mapping, please try again later'});
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving field mapping, please try again later');
       });
   }
 
