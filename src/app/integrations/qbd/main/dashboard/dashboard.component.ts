@@ -136,22 +136,30 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  exportPolling(length: number, isImportPresent: boolean): void {
+    interval(3000).pipe(
+      switchMap(() => from(this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null))),
+      takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
+    ).subscribe((res) => {
+      this.processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
+      this.exportProgressPercentage = Math.round((this.processedCount / length) * 100);
+      if (this.processedCount === 0) {
+        this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
+          this.accountingExports = accountingExportsResult;
+          this.exportPresent = isImportPresent;
+          this.exportInProgress = false;
+        });
+      }
+    });
+  }
+
   triggerExports(): void {
     this.iifLogsService.triggerQBDExport().subscribe((triggerResponse: QbdExportTriggerGet) => {
-      this.exportPresent = triggerResponse.new_expenses_imported;
       if (triggerResponse.new_expenses_imported) {
         this.exportInProgress = true;
-        interval(3000).pipe(
-          switchMap(() => from(this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null))),
-          takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
-        ).subscribe((res) => {
-          this.processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
-          this.exportProgressPercentage = Math.round((this.processedCount / res.count) * 100);
-          this.exportPresent = triggerResponse.new_expenses_imported;
-          this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
-            this.accountingExports = accountingExportsResult;
-            this.exportInProgress = false;
-          });
+        this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null).subscribe((accountingExportsResponse: QbdExportTriggerResponse) => {
+          const accountingResponseLength = accountingExportsResponse.count;
+          this.exportPolling(accountingResponseLength, triggerResponse.new_expenses_imported);
         });
       }
     }, () => {

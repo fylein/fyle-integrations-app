@@ -3,7 +3,7 @@ import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTrigger
 import { QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/advanced-setting.model";
 
 export const getQbdAccountingExports: QbdExportTriggerResponse = {
-    count: 4,
+    count: 2,
     next: null,
     previous: null,
     results: [
@@ -34,6 +34,14 @@ export const getQbdAccountingExports: QbdExportTriggerResponse = {
 
     ]
 };
+
+export const getQbdAccountingExports2: QbdExportTriggerResponse = {
+    count: 0,
+    next: null,
+    previous: null,
+    results: []
+};
+
 
 export const postQbdAccountingExports: QbdAccountingExportDownload = {
     accounting_export_id: 2,

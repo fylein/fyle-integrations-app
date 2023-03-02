@@ -7,7 +7,7 @@ import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configu
 import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { DashboardComponent } from './dashboard.component';
-import { errorResponse, getQbdAccountingExports, postQbdAccountingExports, postQbdTriggerExportResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDAdvancedSettingResponse3 } from './dashboard.fixture';
+import { errorResponse, getQbdAccountingExports, getQbdAccountingExports2, postQbdAccountingExports, postQbdTriggerExportResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDAdvancedSettingResponse3 } from './dashboard.fixture';
 
 describe('DashboardComponent', () => {
   let component: DashboardComponent;
@@ -116,6 +116,7 @@ describe('DashboardComponent', () => {
   });
 
   it("pollExportStatus function check", fakeAsync(() => {
+    spyOn(iifLogsService, 'getQbdAccountingExports').and.returnValue(of(getQbdAccountingExports2));
     const result = component.triggerExports();
     tick(3002);
     fixture.detectChanges();
@@ -125,6 +126,18 @@ describe('DashboardComponent', () => {
     });
     discardPeriodicTasks();
     expect(component.exportInProgress).toBeFalse();
+  }));
+
+  it("pollExportStatus function check", fakeAsync(() => {
+    spyOn(iifLogsService, 'getQbdAccountingExports').and.returnValue(of(getQbdAccountingExports));
+    const result = component.triggerExports();
+    tick(3002);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(result).toBeUndefined();
+      expect(component.exportProgressPercentage).toEqual(50);
+    });
+    discardPeriodicTasks();
   }));
 
   it('getDates function check', () => {
