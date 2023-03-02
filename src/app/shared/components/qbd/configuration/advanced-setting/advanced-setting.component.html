@@ -22,6 +22,8 @@
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="advancedSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'Frequency'"
                         [label]="'How frequently do you want the IIF file to be generated?'"
                         [subLabel]="'You can select the frequency you want your IIF file to be sent via email.'"
                         [options]="frequencyOption"

@@ -162,7 +162,7 @@ export class DashboardComponent implements OnInit {
           this.exportPolling(accountingResponseLength, triggerResponse.new_expenses_imported);
         });
       }
-      this.exportPresent = triggerResponse.new_expenses_imported
+      this.exportPresent = triggerResponse.new_expenses_imported;
     }, () => {
       this.exportInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Export Failed, try again later');
