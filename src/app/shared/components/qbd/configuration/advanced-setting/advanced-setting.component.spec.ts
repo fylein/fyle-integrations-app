@@ -4,12 +4,14 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MessageService, SharedModule } from 'primeng/api';
+
 import { of, throwError } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 import { AdvancedSettingComponent } from './advanced-setting.component';
 import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDEmailOptioResponse } from './advanced-setting.fixture';
@@ -20,6 +22,7 @@ describe('AdvancedSettingComponent', () => {
   let service1: any;
   let service2: any;
   let service3: any;
+  let service4: any;
   let formbuilder: FormBuilder;
   let qbdAdvancedSettingService: QbdAdvancedSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
@@ -38,15 +41,21 @@ describe('AdvancedSettingComponent', () => {
     service3 = {
       getAdditionalEmails: () => of(QBDEmailOptioResponse)
     };
+
+    service4 = {
+      displayToastMessage: () => undefined
+    };
+
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
       declarations: [ AdvancedSettingComponent ],
       providers: [
-        MessageService, FormBuilder,
+        FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdAdvancedSettingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
-        { provide: OrgService, useValue: service3 }
+        { provide: OrgService, useValue: service3 },
+        { provide: QbdToastService, useValue: service4 }
       ]
     })
     .compileComponents();
@@ -75,7 +84,15 @@ describe('AdvancedSettingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
     component.advancedSettingsForm.controls.expenseMemoStructure.patchValue(['brande']);
+    component.advancedSettingsForm.controls.frequency.patchValue('WEEKLY');
+    component.advancedSettingsForm.controls.exportSchedule.patchValue(false);
     expect((component as any).createMemoStructureWatcher()).toBeUndefined();
+    expect((component as any).frequencyWatcher()).toBeUndefined();
+    expect((component as any).scheduledWatcher()).toBeUndefined();
+    component.advancedSettingsForm.controls.frequency.patchValue('MONTHLY');
+    component.advancedSettingsForm.controls.exportSchedule.patchValue(true);
+    expect((component as any).frequencyWatcher()).toBeUndefined();
+    expect((component as any).scheduledWatcher()).toBeUndefined();
   });
 
   it('Save function check', () => {
@@ -99,6 +116,10 @@ describe('AdvancedSettingComponent', () => {
     expect(component.save()).toBeUndefined();
     component.advancedSettingsForm.controls.meridiem.patchValue('AM');
     component.advancedSettingsForm.controls.timeOfDay.patchValue('10:00');
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+    component.advancedSettingsForm.controls.meridiem.patchValue('AM');
+    component.advancedSettingsForm.controls.timeOfDay.patchValue('12:00');
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
   });

@@ -31,12 +31,20 @@
             </p>
 
             <div class="tw-flex">
-                <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                    <img src="assets/logos/netsuite-logo.png" width="110px" height="60px" />
-                    <span class="landing--accounting-app-name">
-                        NetSuite
-                        <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="landing--accounting-app-open"></svg-icon-sprite>
-                    </span>
+                <div>
+                    <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
+                        <img src="assets/logos/netsuite-logo.png" width="110px" height="60px" />
+                        <span class="landing--accounting-app-name">
+                            NetSuite
+                            <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="landing--accounting-app-open"></svg-icon-sprite>
+                        </span>
+                    </div>
+                    <div class="landing--accounting-app tw-mr-20-px tw-mt-20-px" (click)="openInAppIntegration(InAppIntegration.QBD)">
+                        <img src="assets/logos/quickbooks-desktop.svg" class="tw-mt-[-20px]" width="100px" height="60px" />
+                        <span class="landing--accounting-app-name">
+                            QuickBooks Desktop
+                        </span>
+                    </div>
                 </div>
                 <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
                     <img src="assets/logos/intacct-logo.png" width="110px" height="60px" />
@@ -61,10 +69,10 @@
                 </div>
             </div>
             <!-- <div class="tw-flex tw-mt-20-px">
-                <div class="landing--accounting-app !tw-w-282-px tw-mr-20-px" (click)="openInAppIntegration(InAppIntegration.QBD)">
+                <div class="landing--accounting-app tw-mr-20-px" (click)="openInAppIntegration(InAppIntegration.QBD)">
                     <img src="assets/logos/quickbooks-desktop.svg" class="tw-mt-[-20px]" width="100px" height="60px" />
                     <span class="landing--accounting-app-name">
-                        Quickbooks Desktop
+                        QuickBooks Desktop
                     </span>
                 </div>
             </div> -->

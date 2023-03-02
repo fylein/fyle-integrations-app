@@ -64,7 +64,6 @@ export class OnboardingStepperComponent implements OnInit {
       }
     });
     const onboardingState: QBDOnboardingState = this.workspaceService.getOnboardingState();
-
     const onboardingStateStepMap = {
       [QBDOnboardingState.CONNECTION]: 1,
       [QBDOnboardingState.EXPORT_SETTINGS]: 2,
@@ -72,7 +71,7 @@ export class OnboardingStepperComponent implements OnInit {
       [QBDOnboardingState.ADVANCED_SETTINGS]: 4,
       [QBDOnboardingState.COMPLETE]: 5
     };
-    for (let index = onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {
+    for (let index = onboardingStateStepMap[onboardingState] - 2; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
     }
   }

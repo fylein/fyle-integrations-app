@@ -32,6 +32,8 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 
   selected: any[];
 
+  startIndex: number;
+
   constructor(
     private formBuilder: FormBuilder
   ) { }
@@ -55,6 +57,15 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 //                 CurrentlyDraggingIndex);
 //         This.currentlyDragging = null;
 //     }
+// }
+// OnDragStart(index: number) {
+//   This.startIndex = index;
+// }
+
+// OnDrop(dropIndex: number) {
+//   Const general = this.options[this.startIndex]; // get element
+//   This.options.splice(this.startIndex, 1);       // delete from old position
+//   This.options.splice(dropIndex, 0, general);    // add to new position
 // }
   ngOnInit(): void {
   }

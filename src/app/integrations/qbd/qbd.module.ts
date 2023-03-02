@@ -13,6 +13,9 @@ import { OnboardingFieldSettingComponent } from './onboarding/onboarding-field-s
 import { OnboardingAdvancedSettingComponent } from './onboarding/onboarding-advanced-setting/onboarding-advanced-setting.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
+import { TabMenuModule } from 'primeng/tabmenu';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
@@ -31,6 +34,9 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
     CommonModule,
     QbdRoutingModule,
     SharedModule,
+    TabMenuModule,
+    DropdownModule,
+    TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
