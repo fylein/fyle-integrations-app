@@ -2,10 +2,6 @@
     @apply tw-w-200-px tw-border-0 #{!important};
 }
 
-:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    @apply tw-text-mandatory-field-color tw-bg-disabled-bg-color #{!important};
-}
-
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
     @apply tw-text-sub-text-color tw-text-14-px tw-font-400 tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-box-color  #{!important};
 }
@@ -35,10 +31,10 @@
 }
 
 :host ::ng-deep .p-calendar .p-inputtext {
-    @apply tw-p-0 tw-bg-white tw-border-0 ;
+    @apply tw-p-0 tw-bg-white tw-border-0 tw-cursor-pointer tw-transition-none	;
 }
 
-:host ::ng-deep .p-calendar .p-inputtext:hover {
+:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
     @apply tw-bg-disabled-bg-color #{!important};
 }
 

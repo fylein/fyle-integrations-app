@@ -115,7 +115,6 @@ export class AdvancedSettingComponent implements OnInit {
   private initialTime(): string[] {
     const inputTime = this.advancedSettings?.time_of_day ? this.advancedSettings.time_of_day: "12:00:00";
     const outputTime = new Date(`01/01/2000 ${inputTime} GMT`).toLocaleString('en-US', {
-      timeZone: 'Asia/Kolkata',
       hour12: true,
       hour: 'numeric',
       minute: 'numeric',

@@ -69,6 +69,8 @@ export class DashboardComponent implements OnInit {
 
   processedCount: number;
 
+  isRecordPresent: boolean;
+
   constructor(
     private iifLogsService: QbdIifLogsService,
     private formBuilder: FormBuilder,
@@ -110,29 +112,35 @@ export class DashboardComponent implements OnInit {
   }
 
   dateFilter(event: any): void {
+    this.isLoading = true;
     this.selectedDateFilter = event.value;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
+      this.isLoading = false;
     });
   }
 
   offsetChanges(limit: number): void {
+    this.isLoading = true;
     this.limit = limit;
     this.pageNo = 0;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
+      this.isLoading = false;
     });
   }
 
   pageChanges(pageNo: number): void {
+    this.isLoading = true;
     this.pageNo = pageNo;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
+      this.isLoading = false;
     });
   }
 
@@ -225,6 +233,7 @@ export class DashboardComponent implements OnInit {
         return false;
       });
       this.getNextExportDate(advancedSettings);
+      this.isRecordPresent = this.accountingExports.count > 0 ? true : false;
       this.totalCount = this.accountingExports.count;
       this.isLoading = false;
     });
