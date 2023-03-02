@@ -151,15 +151,12 @@ export class DashboardComponent implements OnInit {
       takeWhile((response) => response.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length > 0, true)
     ).subscribe((res) => {
       this.processedCount = res.results.filter(task => (task.status !== QBDAccountingExportsState.IN_PROGRESS && task.status !== QBDAccountingExportsState.ENQUEUED)).length;
-      console.log("proce",this.processedCount)
       this.exportProgressPercentage = Math.round((this.processedCount / length) * 100);
-      console.log("www", this.exportProgressPercentage)
       if (res.results.filter(task => (task.status === QBDAccountingExportsState.IN_PROGRESS || task.status === QBDAccountingExportsState.ENQUEUED)).length === 0) {
         this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
           this.accountingExports = accountingExportsResult;
           this.exportPresent = isImportPresent;
           this.exportInProgress = false;
-          console.log("wewew",accountingExportsResult, this.exportInProgress)
         });
       }
     });
@@ -167,21 +164,20 @@ export class DashboardComponent implements OnInit {
 
   triggerExports(): void {
     this.exportInProgress = true;
-    setTimeout(()=>{
+    setTimeout(() => {
       this.exportProgressPercentage = 15;
-    },500)
+    }, 500);
     this.iifLogsService.triggerQBDExport().subscribe((triggerResponse: QbdExportTriggerGet) => {
       if (triggerResponse.new_expenses_imported) {
         this.iifLogsService.getQbdAccountingExports([QBDAccountingExportsState.ENQUEUED, QBDAccountingExportsState.IN_PROGRESS], this.limit, this.pageNo, null, null).subscribe((accountingExportsResponse: QbdExportTriggerResponse) => {
           const accountingResponseLength = accountingExportsResponse.count;
           this.exportPolling(accountingResponseLength, triggerResponse.new_expenses_imported);
         });
-      }
-      else {
+      } else {
         this.exportInProgress = false;
         this.exportPresent = triggerResponse.new_expenses_imported;
       }
-      
+
     }, () => {
       this.exportInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Export Failed, try again later');
