@@ -10,7 +10,8 @@
     "unit_test:ci": "npm run setup:env && ng test --watch=false --browsers=ChromeHeadlessCustom",
     "setup:env": "node scripts/setup_env.js",
     "lint": "ng lint",
-    "generate:svg-sprite": "svg2sprite ./src/assets/icons ./src/assets/sprites/sprite.svg --stripAttrs fill --stripAttrs stroke --stripAttrs id"
+    "generate:svg-sprite": "svg2sprite ./src/assets/icons ./src/assets/sprites/sprite.svg --stripAttrs fill --stripAttrs stroke --stripAttrs id",
+    "stop": "kill $(lsof -t -i:4200) || true"
   },
   "private": true,
   "dependencies": {

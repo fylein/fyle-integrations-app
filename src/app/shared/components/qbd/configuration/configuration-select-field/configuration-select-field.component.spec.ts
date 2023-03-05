@@ -31,7 +31,9 @@ describe('ConfigurationSelectFieldComponent', () => {
     component.formControllerName = 'dayOfMonth';
     component.form = formbuilder.group({
         timeOfDay: [null],
-        meridiem: [null]
+        meridiem: [null],
+        dayOfMonth: ['1'],
+        dayOfWeek: ['SUNDAY']
     });
     fixture.detectChanges();
   });

@@ -1,24 +1,19 @@
 <div [formGroup]="form" class="tw-p-24-px">
     <div class="tw-flex tw-flex-row tw-space-between">
-        <div class="tw-w-3/5 tw-flex">
-            <div class="tw-pr-20-px">
+        <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
+            <div class="tw-pr-20-px tw-mt-8-px">
                 <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
             </div>
-            <div class="tw-font-500 tw-leading-normal">
-                <h5 class="tw-text-14-px">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
-                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px" [innerHTML]="subLabel"></h5>
+            <div>
+                <h5 class="!tw-text-14-px !tw-font-500 ">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
+                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel"></h5>
             </div>
         </div>
-        <div *ngIf="options" class="tw-flex tw-pl-40-px">
-            <div *ngFor="let option of options" class="p-field-checkbox tw-mr-20-px">
-                <p-radioButton class="tw-mr-10-px" [value]="option.value" [formControlName]="formControllerName"></p-radioButton>
-                <label class="!tw-text-14-px">{{option.label}}</label>
+        <div *ngIf="options" class="tw-flex tw-items-center tw-pl-34-px">
+            <div *ngFor="let option of options" class="p-field-checkbox lg:tw-mr-20-px md:tw-mr-16-px">
+                <p-radioButton class="tw-mr-10-px" [value]="option.value" [formControlName]="formControllerName"[inputId]="option.value" ></p-radioButton>
+                <label class="!tw-text-14-px !tw-text-sub-text-color" [for]="option.value">{{option.label}}</label>
             </div>
-        </div>
-        <div *ngIf="!options">
-            <h4 class="tw-pl-40-px tw-mr-20-px">
-                {{ expensesGroup.label }}
-            </h4>
         </div>
     </div>
     <div class="tw-pr-120-px tw-flex tw-justify-end">

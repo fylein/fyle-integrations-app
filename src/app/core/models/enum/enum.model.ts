@@ -113,3 +113,17 @@ export enum QBDOnboardingState {
     PROJECT = 'PROJECT',
     COST_CENTER = 'COST_CENTER'
   }
+
+  export enum QBDAccountingExportsState {
+    COMPLETE = 'COMPLETE',
+    ENQUEUED = 'ENQUEUED',
+    IN_PROGRESS = 'IN_PROGRESS',
+  }
+
+  export enum QBDAccountingExportsType {
+    EXPORT_BILLS = 'EXPORT_BILLS',
+    REIMBURSABLE = 'REIMBURSABLE',
+    CREDIT_CARD = 'CREDIT_CARD',
+    EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
+    EXPORT_JOURNALS = 'EXPORT_JOURNALS'
+  }

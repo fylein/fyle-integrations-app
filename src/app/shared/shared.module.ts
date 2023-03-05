@@ -10,6 +10,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DragDropModule } from 'primeng/dragdrop';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 // External Libraries
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -19,7 +20,6 @@ import { TooltipModule } from 'primeng/tooltip';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ErrorComponent } from './components/core/error/error.component';
 import { TrimCharacterPipe } from './pipes/trim-character.pipe';
-import { DateFilterPipe } from './pipes/date-filter.pipe';
 import { SnakeCaseToSpaceCasePipe } from './pipes/snake-case-to-space-case.pipe';
 import { PaginatorComponent } from './helper/paginator/paginator.component';
 import { MandatoryFieldComponent } from './helper/mandatory-field/mandatory-field.component';
@@ -37,10 +37,11 @@ import { ConfigurationStepFooterComponent } from './components/qbd/configuration
 import { ConfigurationStepHeaderComponent } from './components/qbd/configuration/configuration-step-header/configuration-step-header.component';
 import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
 import { AppLandingComponent } from './components/apps/app-landing/app-landing.component';
+import { CalendarModule } from 'primeng/calendar';
+import { CascadeSelectModule } from "primeng/cascadeselect";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,6 @@ import { AppLandingComponent } from './components/apps/app-landing/app-landing.c
     AppHeaderComponent,
     ErrorComponent,
     TrimCharacterPipe,
-    DateFilterPipe,
     SnakeCaseToSpaceCasePipe,
     PaginatorComponent,
     MandatoryFieldComponent,
@@ -85,6 +85,9 @@ import { AppLandingComponent } from './components/apps/app-landing/app-landing.c
     DialogModule,
     MultiSelectModule,
     DragDropModule,
+    ProgressBarModule,
+    CalendarModule,
+    CascadeSelectModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -93,7 +96,6 @@ import { AppLandingComponent } from './components/apps/app-landing/app-landing.c
     AppLandingComponent,
     ErrorComponent,
     TrimCharacterPipe,
-    DateFilterPipe,
     SnakeCaseToSpaceCasePipe,
     PaginatorComponent,
     MandatoryFieldComponent,
@@ -110,8 +112,12 @@ import { AppLandingComponent } from './components/apps/app-landing/app-landing.c
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
-    ConfigurationMultiSelectComponent
-  ],
-  providers: [MessageService]
+    ConfigurationMultiSelectComponent,
+    DropdownModule,
+    CalendarModule,
+    FormsModule, ReactiveFormsModule, ProgressBarModule,
+    ToastModule,
+    CascadeSelectModule
+  ]
 })
 export class SharedModule { }

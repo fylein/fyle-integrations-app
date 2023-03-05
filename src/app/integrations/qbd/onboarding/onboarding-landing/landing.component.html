@@ -1,13 +1,13 @@
 <div>
     <div>
-        <app-app-header [iconPath]="'assets/logos/quickbooks-desktop.svg'" [appName]="'QuickBooks Desktop'" [appDescription]="'Generate IIF file to export the expenses from Fyle to QBD.'" [isLoading]="isLoading" [isIntegrationSetupInProgress]="isQBDSetupInProgress" [isIntegrationConnected]="isQBDConnected"></app-app-header>
+        <app-app-header [iconPath]="'assets/logos/quickbooks-desktop.svg'" [appName]="'QuickBooks Desktop'" [appDescription]="'Generate IIF file to export expenses from Fyle to QuickBooks Desktop'" [isLoading]="isLoading" [isIntegrationSetupInProgress]="isQBDSetupInProgress" [isIntegrationConnected]="isQBDConnected"></app-app-header>
     </div>
     <div>
-        <!-- <div class="tw-pt-40-px tw-flex tw-justify-center tw-text-center tw-flex-col">
-            <p class="tw-text-normal-text-color tw-text-20-px tw-font-500">How does the integration work?</p>
-            <p class="tw-text-faded-text-color tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
-                Auto sync employee details between Fyle and QBD.
-                <span class="tw-text-hyperlink-color tw-flex tw-pl-8-px tw-cursor-pointer" (click)="windowService.openInNewTab(RedirectLink.QBD)">
+        <div class="tw-pt-70-px tw-flex tw-justify-center tw-text-center tw-flex-col">
+            <p class="tw-text-normal-text-color tw-text-18-px tw-font-500">How does the integration work?</p>
+            <p class="tw-text-faded-text-color tw-text-14-px tw-pt-4-px tw-flex tw-justify-center tw-font-400">
+                Configure the integration to generate custom IIF file to export expenses from Fyle to QuickBooks Desktop.
+                <span class="tw-text-hyperlink-color tw-flex tw-pl-4-px tw-cursor-pointer read-more" (click)="windowService.openInNewTab(RedirectLink.QBD)">
                     Read More
                     <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px"></svg-icon-sprite>
                 </span>
@@ -16,7 +16,7 @@
             <div class="tw-flex tw-justify-center tw-pt-48-px">
                 <img src="assets/flow-charts/qbd-flow-chart.svg" />
             </div>
-        </div> -->
+        </div>
         <app-app-landing [appName]="'QBD'" [svgPath]="'assets/flow-charts/qbd-flow-chart.svg'" (openReadMore)="openReadMore()"></app-app-landing>
 
     </div>

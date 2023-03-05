@@ -4,12 +4,13 @@ import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule } from '
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MessageService, SharedModule } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { QBDCorporateCreditCardExpensesObject, QBDExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 import { ExportSettingComponent } from './export-setting.component';
 import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } from './export-setting.fixture';
@@ -19,6 +20,7 @@ describe('ExportSettingComponent', () => {
   let fixture: ComponentFixture<ExportSettingComponent>;
   let service1: any;
   let service2: any;
+  let service3: any;
   let formbuilder: FormBuilder;
   let qbdExportSettingService: QbdExportSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
@@ -36,14 +38,19 @@ describe('ExportSettingComponent', () => {
       setOnboardingState: () => undefined
     };
 
+    service3 = {
+      displayToastMessage: () => undefined
+    };
+
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
       declarations: [ ExportSettingComponent ],
       providers: [
-        MessageService, FormBuilder,
+        FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdExportSettingService, useValue: service1 },
-        { provide: QbdWorkspaceService, useValue: service2 }
+        { provide: QbdWorkspaceService, useValue: service2 },
+        { provide: QbdToastService, useValue: service3 }
       ]
     })
     .compileComponents();
@@ -58,7 +65,7 @@ describe('ExportSettingComponent', () => {
       reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
       reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],
       reimbursableExportGroup: [component.exportSettings?.reimbursable_expense_grouped_by ? component.exportSettings?.reimbursable_expense_grouped_by : null],
-      reimbursableExportDate: [component.exportSettings?.reimbursable_expense_date ? component.exportSettings?.reimbursable_expense_date : null],
+      reimbursableExportDate: [component.exportSettings?.reimbursable_expense_date],
       creditCardExpense: [component.exportSettings?.credit_card_expense_export_type ? true : false, (component as any).exportSelectionValidator()],
       cccExportType: [component.exportSettings?.credit_card_expense_export_type ? component.exportSettings?.credit_card_expense_export_type : null],
       cccExportGroup: [component.exportSettings?.credit_card_expense_grouped_by ? component.exportSettings?.credit_card_expense_grouped_by : null],
@@ -77,6 +84,21 @@ describe('ExportSettingComponent', () => {
   });
 
   it('Save function check', () => {
+    component.exportSettingsForm = formbuilder.group({
+      reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
+      reimbursableExpense: [component.exportSettings?.reimbursable_expenses_export_type ? true : false, (component as any).exportSelectionValidator()],
+      reimbursableExportGroup: [component.exportSettings?.reimbursable_expense_grouped_by ? component.exportSettings?.reimbursable_expense_grouped_by : null],
+      reimbursableExportDate: ['spent_at'],
+      creditCardExpense: [component.exportSettings?.credit_card_expense_export_type ? true : false, (component as any).exportSelectionValidator()],
+      cccExportType: [component.exportSettings?.credit_card_expense_export_type ? component.exportSettings?.credit_card_expense_export_type : null],
+      cccExportGroup: [component.exportSettings?.credit_card_expense_grouped_by ? component.exportSettings?.credit_card_expense_grouped_by : null],
+      cccExportDate: [component.exportSettings?.credit_card_expense_date ? component.exportSettings?.credit_card_expense_date : null],
+      bankAccount: [component.exportSettings?.bank_account_name ? component.exportSettings?.bank_account_name : null],
+      cccEntityName: [component.exportSettings?.credit_card_entity_name_preference ? component.exportSettings?.credit_card_entity_name_preference : null],
+      cccAccountName: [component.exportSettings?.credit_card_account_name ? component.exportSettings?.credit_card_account_name : null],
+      reimbursableExpenseState: [component.exportSettings?.reimbursable_expense_state ? component.exportSettings?.reimbursable_expense_state : null],
+      cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
+    });
     expect(component.save()).toBeUndefined();
   });
 
@@ -84,6 +106,7 @@ describe('ExportSettingComponent', () => {
     component.isOnboarding = true;
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
+    fixture.detectChanges();
   });
 
   it('Save function check with failed api response', () => {
@@ -95,6 +118,7 @@ describe('ExportSettingComponent', () => {
 
   it('createReimbursableExpenseWatcher function check', () => {
     component.ngOnInit();
+    fixture.detectChanges();
     component.exportSettingsForm.controls.reimbursableExpense.patchValue(true);
     expect((component as any).createReimbursableExpenseWatcher()).toBeUndefined();
     fixture.detectChanges();

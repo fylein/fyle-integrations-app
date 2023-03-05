@@ -22,6 +22,7 @@ describe('EmailMultiSelectFieldComponent', () => {
     el = fixture.debugElement;
     formbuilder = TestBed.inject(FormBuilder);
     component.options = [{name: 'dhaarani', email: "dhaarani@fylehq.com"}];
+    component.formControllerName = 'email';
     component.form = formbuilder.group({
       email: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
       search: []

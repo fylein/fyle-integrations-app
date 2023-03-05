@@ -9,12 +9,12 @@
     <div>
         <button *ngIf="ctaText !== 'Saving'" pButton type="button" class="p-button-raised" (click)="saveChanges()" [disabled]="isButtonDisabled">
             {{ ctaText }}
-            <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+            <i *ngIf="ctaText !== 'Save'" class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
         </button>
         <button *ngIf="ctaText === 'Saving'" pButton type="button" class="p-button-raised" disabled>
             Saving
             <div style="border-top-color:transparent"
-                class="tw-w-5 tw-h-5 tw-ml-2 tw-border-4 tw-border-b-white tw-border-r-white tw-border-l-white tw-border-t-transparent tw-border-solid tw-rounded-full tw-animate-spin"></div>
+                class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-white tw-border-r-white tw-border-l-white tw-border-t-transparent tw-border-solid tw-rounded-full tw-animate-spin"></div>
         </button>
     </div>
 </div>

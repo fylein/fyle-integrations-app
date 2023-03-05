@@ -52,7 +52,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     if (options.reset) {
       options.reset();
     }
-    this.form.controls.search.reset();
+    this.form.controls.search.patchValue(null);
   }
 
   removeEmail(): void {
