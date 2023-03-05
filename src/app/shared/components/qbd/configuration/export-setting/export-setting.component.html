@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header 
         [headerText]="'Export Settings'"
-        [contentText]="'In this section, you will configure how and when expenses from Fyle can be exported to Quickbooks Desktop.'"></app-configuration-step-header>
+        [contentText]="'In this section, you can configure how and when expenses from Fyle can be exported to QuickBooks Desktop.'"></app-configuration-step-header>
     </div>
     <div>
         <form [formGroup]="exportSettingsForm">
@@ -15,7 +15,7 @@
                         <app-configuration-toggle-field 
                         [form]="exportSettingsForm"
                         [label]="'Export Reimbursable Expenses'" 
-                        [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QBD.'" 
+                        [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.'" 
                         [formControllerName]="'reimbursableExpense'"></app-configuration-toggle-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.reimbursableExpense">
@@ -25,21 +25,21 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be exported'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in Quickbooks Desktop to export your Fyle expenses.'"
+                            [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your Fyle expenses.'"
                             [options]="reimbursableExportTypes"
                             [iconPath]="'expense'"
                             [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
 
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType">
-                                <div class="tw-pl-16 tw-pt-30-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                    <div class="tw-w-3/5">
-                                        <h4 class="tw-text-14-px">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} be posted to?<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} are posted in QBD. </h5>
+                                <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                    <div class="lg:tw-w-3/5 md:tw-w-1/2">
+                                        <h4 class="!tw-text-14-px !tw-font-500">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} be posted to?<app-mandatory-field></app-mandatory-field></h4>
+                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the {{ accountName() }} account as per your QuickBooks Desktop setup. This is the account to which all the expenses from Fyle will be posted. </h5>
                                     </div>
 
-                                    <div class="tw-pl-24-px">
-                                        <input type="text" class="tw-w-80 tw-px-10-px tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name"> 
-                                        <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [listName]="'reimbursable export type name'"></app-mandatory-error-message>
+                                    <div class="tw-pl-18-px">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[exportSettingsForm.controls.bankAccount.invalid && exportSettingsForm.controls.bankAccount.touched ? 'error-box' : 'normal-box']"  pInputText formControlName="bankAccount" placeholder="Enter {{ exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank'}} Name" [required]="exportSettingsForm.value.reimbursableExpense"> 
+                                        <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.bankAccount.touched && !exportSettingsForm.controls.bankAccount.valid && !exportSettingsForm.controls.bankAccount.disabled" [customErrorMessage]="customMessage"></app-mandatory-error-message>
                                     </div>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be grouped'"
                             [label]="'How would you like to group your expenses?'"
-                            [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
+                            [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
                             [options]="expenseGroupingFieldOptions"
                             [iconPath]="'copy-v2'"
                             [formControllerName]="'reimbursableExportGroup'"></app-configuration-radio-field>
@@ -60,7 +60,7 @@
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [label]="'Set the transaction date'"
-                                [subLabel]="'The selected date will reflect in expenses exported to QBD'"
+                                [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'transaction date'"
                                 [options]="reimbursableExpenseGroupingDateOptionsFn()"
@@ -72,7 +72,7 @@
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [label]="'Set the transaction date'"
-                                [subLabel]="'The selected date will reflect in expenses exported to QBD'"
+                                [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'transaction date'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
@@ -100,7 +100,7 @@
                         <app-configuration-toggle-field 
                         [form]="exportSettingsForm"
                         [label]="'Export Corporate Card Expenses'" 
-                        [subLabel]="'Enable the export of credit card expenses from Fyle to QBD.'" 
+                        [subLabel]="'Enable the export of <b>credit card</b> expenses from Fyle to QuickBooks Desktop.'" 
                         [formControllerName]="'creditCardExpense'"></app-configuration-toggle-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.creditCardExpense">
@@ -110,21 +110,21 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expenses to be exported'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in Quickbooks Desktop to export your Fyle expenses.'"
+                            [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your Fyle expenses.'"
                             [options]="creditCardExportTypes"
                             [iconPath]="'expense'"
                             [formControllerName]="'cccExportType'"></app-configuration-radio-field>
 
                             <div *ngIf="exportSettingsForm.value.cccExportType">
-                                <div class="tw-pl-16 tw-pt-30-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                    <div class="tw-w-3/5">
-                                        <h4 class="tw-text-14-px">Enter the Credit card account name<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px">Grouping reflects how the expense entries of a {{ exportType(exportSettingsForm.value.cccExportType, creditCardExportTypes) }} are posted in QBD. </h5>
+                                <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                    <div class="lg:tw-w-3/5 md:tw-w-1/2">
+                                        <h4 class="!tw-text-14-px !tw-font-500">Enter the Credit card account name<app-mandatory-field></app-mandatory-field></h4>
+                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Credit Card Account as per your QuickBooks Desktop setup. This is the account to which all the expenses from Fyle will be posted. </h5>
                                     </div>
 
-                                    <div class="tw-pl-24-px">
-                                        <input type="text" class="tw-w-80 tw-px-10-px tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" pInputText formControlName="cccAccountName" placeholder="Enter Credit Card Account Name"> 
-                                        <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [listName]="'credit card account name'"></app-mandatory-error-message>
+                                    <div class="tw-pl-18-px">
+                                        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" [ngClass]="[exportSettingsForm.controls.cccAccountName.invalid && exportSettingsForm.controls.cccAccountName.touched ? 'error-box' : 'normal-box']" pInputText formControlName="cccAccountName" placeholder="Enter Credit Card Account Name" [required]="exportSettingsForm.value.creditCardExpense"> 
+                                        <app-mandatory-error-message *ngIf="true && exportSettingsForm.controls.cccAccountName.touched && !exportSettingsForm.controls.cccAccountName.valid && !exportSettingsForm.controls.cccAccountName.disabled" [customErrorMessage]="'Please enter a Credit Card Account name'"></app-mandatory-error-message>
                                     </div>
                                 </div>
 
@@ -133,8 +133,8 @@
                                         [form]="exportSettingsForm"
                                         [isFieldMandatory]="true"
                                         [mandatoryErrorListName]="'entity name'"
-                                        [label]="'Enter the Credit card entity name preference'"
-                                        [subLabel]="namePreference()"
+                                        [label]="'Set the PURCHASED FROM field to'"
+                                        [subLabel]="'Select how the Vendor or Employee should be represented as Payee for the credit card purchase.'"
                                         [options]="cccEntityNameOptions"
                                         [placeholder]="'Select Credit Card Entity Name Preference'"
                                         [formControllerName]="'cccEntityName'"></app-configuration-select-field>
@@ -145,7 +145,7 @@
                             <div *ngIf="exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value">
                                 <app-configuration-label
                                 [label]="'How would you like to group your expenses?'"
-                                [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
+                                [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
                                 [labelValue]="expenseGroupingFieldOptions[1]"
                                 [iconPath]="'copy-v2'"></app-configuration-label>
                             </div>
@@ -155,7 +155,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'expense to be grouped'"
                                 [label]="'How would you like to group your expenses?'"
-                                [subLabel]="'Grouping reflects how the expense entries are posted in QBD.'"
+                                [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
                                 [options]="expenseGroupingFieldOptions"
                                 [iconPath]="'copy-v2'"
                                 [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
@@ -165,7 +165,7 @@
                             <div *ngIf="exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value">
                                 <app-configuration-label
                                     [label]="'Set the transaction date'"
-                                    [subLabel]="'The selected date will reflect in expenses exported to QBD'"
+                                    [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
                                     [labelValue]="reimbursableExpenseGroupingDateOptions[0]"
                                     [iconPath]="'calender'"
                                     [placeholder]="'Select date type'">
@@ -177,7 +177,7 @@
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'transaction date'"
                                     [label]="'Set the transaction date'"
-                                    [subLabel]="'The selected date will reflect in expenses exported to QBD'"
+                                    [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
                                     [options]="reimbursableExpenseGroupingDateOptionsFn()"
                                     [iconPath]="'calender'"
                                     [placeholder]="'Select date type'"
@@ -190,7 +190,7 @@
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'transaction date'"
                                     [label]="'Set the transaction date'"
-                                    [subLabel]="'The selected date will reflect in expenses exported to QBD'"
+                                    [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
                                     [options]="reimbursableExpenseGroupingDateOptions"
                                     [iconPath]="'calender'"
                                     [placeholder]="'Select date type'"

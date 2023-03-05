@@ -18,7 +18,7 @@ describe('OnboardingStepperComponent', () => {
 
   beforeEach(async () => {
     service2 = {
-      getOnboardingState: () => QBDOnboardingState.EXPORT_SETTINGS
+      getOnboardingState: () => QBDOnboardingState.FIELD_MAPPING
     };
     localStorage.setItem('QBDOnboardingState', JSON.stringify('EXPORT_SETTINGS'));
     await TestBed.configureTestingModule({

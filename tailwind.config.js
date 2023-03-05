@@ -6,6 +6,7 @@ const customColors = {
   separator: '#ECECEE',
   'normal-text-color': '#161528',
   'slightly-normal-text-color': '#2C304E',
+  'menu-inactive-text-color': '#A9ACBC',
   'sub-text-color': '#414562',
   'faded-text-color': '#5A5D72',
   'box-color': '#DFDFE2',
@@ -20,7 +21,8 @@ const customColors = {
   'success-toast': '#24A148',
   'alert-toast': '#DA1E28',
   'cta-disabled': '#FFC2D6',
-  'line-inactive': '#CCCDD7'
+  'line-inactive': '#CCCDD7',
+  'progress-bar-bg': '#FFF0F5'
 };
 
 module.exports = {
@@ -119,7 +121,9 @@ module.exports = {
         '74-px': '74px',
         '80-px': '80px',
         '100-px': '100px',
+        '110-px': '110px',
         '120-px': '120px',
+        '130-px': '130px',
         '168-px': '168px',
       },
       margin: {
@@ -149,19 +153,25 @@ module.exports = {
         '50-px': '50px',
         '56-px': '56px',
         '70-px': '70px',
+        '75-px': '75px',
         '80-px': '80px',
+        '100-px': '100px',
+        '120-px': '120px',
         '126-px': '126px',
+        '260-px': '260px',
         '282-px': '282px'
       },
       height: {
         '1-px': '1px',
         '2-px': '2px',
+        '6-px': '6px',
         '8-px': '8px',
         '10-px': '10px',
         '12-px': '12px',
         '14-px': '14px',
         '16-px': '16px',
         '18-px': '18px',
+        '19-px': '19px',
         '20-px': '20px',
         '22-px': '22px',
         '24-px': '24px',
@@ -245,6 +255,7 @@ module.exports = {
         '420-px': '420px',
         '452-px': '452px',
         '466-px': '466px',
+        '4-vw': '4vw',
         '14-vw': '14vw',
         '20-vw': '20vw',
         '27-vw': '27vw',
@@ -268,7 +279,8 @@ module.exports = {
         '12-px': '12px',
         '16-px': '16px',
         '20-px': '20px',
-        '48-px': '48px'
+        '48-px': '48px',
+        '50': '50%'
       },
       borderWidth: {
         '0.5-px': '0.5px',
@@ -287,7 +299,9 @@ module.exports = {
         'disabled-bg-color': customColors['disabled-bg-color'],
         'success-toast': customColors['success-toast'],
         'separator': customColors['separator'],
-        'line-inactive': customColors['line-inactive']
+        'line-inactive': customColors['line-inactive'],
+        'alert-toast': customColors['alert-toast'],
+        'sub-text-color': customColors['sub-text-color']
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
@@ -313,6 +327,9 @@ module.exports = {
         '12-px': '12px',
         '14-px': '14px',
         '30-px': '30px'
+      },
+      top: {
+        '70': '70%'
       }
     },
   },

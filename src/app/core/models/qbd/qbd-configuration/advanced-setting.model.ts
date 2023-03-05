@@ -32,26 +32,29 @@ export type QBDAdvancedSettingsGet = {
     workspace: number
 }
 
+function getFrequencyTime(advancedSettingForm: FormGroup) {
+    if (advancedSettingForm.get('frequency')?.value){
+        const currentDate = `${advancedSettingForm.controls.timeOfDay.value} ${advancedSettingForm.controls.meridiem.value}`; // Create a new Date object with the current date and time in IST
+        const date = new Date(`01/01/2000 ${currentDate}`);
+
+        const hours = date.getUTCHours();
+        const minutes = date.getUTCMinutes();
+
+        // Convert the hours to a 2-digit string
+        const hour = hours.toString().padStart(2, '0');
+        const minute = minutes.toString().padStart(2, '0');
+        // Create the 24-hour GMT time string
+        const gmtTime24 = `${hour}:${minute}:00`;
+        return gmtTime24;
+    }
+    return null;
+}
+
 export class AdvancedSettingModel {
     static constructPayload(advancedSettingForm: FormGroup): QBDAdvancedSettingsPost {
         const topMemo: string[] = [];
         topMemo.push(advancedSettingForm.value.topMemoStructure);
-        const currentTime = +advancedSettingForm.controls.timeOfDay.value.slice(0, 2);
-        const currentMins = advancedSettingForm.controls.timeOfDay.value.slice(3, 5);
-        let time = '';
-        if (advancedSettingForm.value.meridiem === 'PM' && currentTime !== 12) {
-            time = currentTime+12 + ":" + currentMins + ":00";
-          } else if (advancedSettingForm.value.meridiem === 'PM' && currentTime === 12) {
-            time = currentTime + ":" + currentMins + ":00";
-          } else {
-            if (currentTime === 12) {
-                time = "00:" + currentMins + ":00";
-            } else if (currentTime > 9) {
-                time = currentTime + ":" + currentMins + ":00";
-            } else {
-                time = "0" + currentTime + ":" + currentMins + ":00";
-            }
-          }
+        const time = getFrequencyTime(advancedSettingForm);
         const advancedSettingPayload: QBDAdvancedSettingsPost = {
             expense_memo_structure: advancedSettingForm.get('expenseMemoStructure')?.value ? advancedSettingForm.get('expenseMemoStructure')?.value : null,
             top_memo_structure: advancedSettingForm.get('topMemoStructure')?.value ? topMemo : null,
@@ -60,7 +63,7 @@ export class AdvancedSettingModel {
             day_of_month: advancedSettingForm.get('dayOfMonth')?.value ? advancedSettingForm.get('dayOfMonth')?.value : null,
             day_of_week: advancedSettingForm.get('dayOfWeek')?.value ? advancedSettingForm.get('dayOfWeek')?.value : null,
             frequency: advancedSettingForm.get('frequency')?.value ? advancedSettingForm.get('frequency')?.value : null,
-            time_of_day: advancedSettingForm.get('timeOfDay')?.value ? time : null
+            time_of_day: advancedSettingForm.get('frequency')?.value ? time : null
         };
         return advancedSettingPayload;
     }
