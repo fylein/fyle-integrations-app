@@ -3,7 +3,6 @@
     [appDescription]="'Autosync employee details between Fyle and TravelPerk.'"
 ></app-app-header>
 
-<app-app-landing [appName]="'TravelPerk'" [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" (openReadMore)="openReadMore()"></app-app-landing>
-<!-- <app-landing *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"></app-landing> -->
+<app-app-landing [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" (openReadMore)="openReadMore()"></app-app-landing>
 
 <app-error *ngIf="showErrorScreen"></app-error>

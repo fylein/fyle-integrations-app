@@ -10,7 +10,7 @@ import { WindowService } from 'src/app/core/services/core/window.service';
 export class AppLandingComponent implements OnInit {
   @Output() openReadMore = new EventEmitter<void>();
 
-  @Input() appName: string;
+  @Input() headerText: string;
 
   @Input() svgPath: string;
 
