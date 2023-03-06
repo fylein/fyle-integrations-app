@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { Router } from '@angular/router';
 import { QBDCorporateCreditCardExpensesObject, QBDConfigurationCtaText, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
@@ -101,7 +102,8 @@ export class ExportSettingComponent implements OnInit {
     private exportSettingService: QbdExportSettingService,
     private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
-    private toastService: QbdToastService
+    private toastService: QbdToastService,
+    private trackingService: TrackingService
   ) { }
 
   reimbursableExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
@@ -260,6 +262,9 @@ export class ExportSettingComponent implements OnInit {
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      if (this.workspaceService.getOnboardingState() === QBDOnboardingState.EXPORT_SETTINGS) {
+        this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
+      }
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
         this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);

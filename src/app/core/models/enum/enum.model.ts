@@ -34,6 +34,7 @@ export enum Page {
     QBD_LANDING = 'QuickBooks Desktop Landing',
     CONNECT_QBD = 'Connect QuickBooks Desktop',
     CONFIGURE_QBD = 'QuickBooks Desktop Configuration',
+    DASHBOARD_QBD = 'QuickBooks Desktop Dashboard'
 }
 
 export enum ClickEvent {
@@ -49,10 +50,12 @@ export enum ClickEvent {
     DISCONNECT_BAMBOO_HR = 'Disconnect Bamboo HR',
     CONNECT_QBD = 'Connect QBD',
     CONFIGURE_QBD = 'Configure QBD',
-    DISCONNECT_QBD = 'Disconnect QBD',
+    DASHBOARD_QBD = 'Dashboard of QBD',
     COPY_SUPPORT_EMAIL = 'Copy Support Email',
     SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
-    ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually'
+    ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',
+    ADD_EMAIL_MANUALLY = 'Add Email Manually',
+    EXPORT = 'Export IIF files'
 }
 
 export enum QBDOnboardingState {
