@@ -13,12 +13,8 @@ export class TravelperkComponent implements OnInit {
   showErrorScreen: boolean;
 
   constructor(
-    private windowService: WindowService
+    public windowService: WindowService
   ) { }
-
-  openReadMore(): void {
-    this.windowService.openInNewTab(RedirectLink.TRAVELPERK);
-  }
 
   ngOnInit(): void {
   }

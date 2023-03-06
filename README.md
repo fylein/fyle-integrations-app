@@ -34,6 +34,17 @@ Follow instructions mentioned in [Integrations Central](https://github.com/fylei
     npm start
     ```
 
+* Run test 
+
+    ```bash
+    npm test
+    ```
+
+* Checkout code coverage
+
+    1. Naviage to coverage/index.html
+    2. Right click and select `Reveal in Finder`
+
 * Login to app
 
     ```bash

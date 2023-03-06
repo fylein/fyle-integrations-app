@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { RedirectLink } from 'src/app/core/models/enum/enum.model';
-import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
   selector: 'app-app-landing',
@@ -16,9 +15,7 @@ export class AppLandingComponent implements OnInit {
 
   RedirectLink = RedirectLink;
 
-  constructor(
-    public windowService: WindowService
-  ) { }
+  constructor() { }
 
   openHelp(){
     this.openReadMore.emit();

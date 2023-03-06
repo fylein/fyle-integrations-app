@@ -56,12 +56,8 @@ export class BambooHrComponent implements OnInit {
     private messageService: MessageService,
     private orgService: OrgService,
     private trackingService: TrackingService,
-    private windowService: WindowService
+    public windowService: WindowService
   ) { }
-
-  openReadMore(): void {
-    this.windowService.openInNewTab(RedirectLink.BAMBOO_HR);
-  }
 
   openDialog(): void {
     this.trackingService.onClickEvent(ClickEvent.CONNECT_BAMBOO_HR);

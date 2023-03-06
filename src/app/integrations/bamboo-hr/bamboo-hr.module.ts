@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { BambooHrRoutingModule } from './bamboo-hr-routing.module';
 import { BambooHrComponent } from './bamboo-hr.component';
-import { LandingComponent } from './landing/landing.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -26,7 +25,6 @@ import { MessageService } from 'primeng/api';
 @NgModule({
   declarations: [
     BambooHrComponent,
-    LandingComponent,
     ConfigurationComponent
   ],
   imports: [
