@@ -20,11 +20,11 @@ describe('AppLandingComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
- 
+
   it('should open help article in new tab', () => {
     spyOn(component.openReadMore, 'emit');
 
     component.openHelp();
     expect(component.openReadMore.emit).toHaveBeenCalled();
-  })
+  });
 });
