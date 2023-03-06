@@ -142,7 +142,7 @@ describe('DashboardComponent', () => {
 
   it("pollExportStatus function check", fakeAsync(() => {
     spyOn(iifLogsService, 'getQbdAccountingExports').and.returnValue(of(getQbdAccountingExports));
-    spyOn(iifLogsService, 'triggerQBDExport').and.returnValue(of(postQbdTriggerExportResponse2))
+    spyOn(iifLogsService, 'triggerQBDExport').and.returnValue(of(postQbdTriggerExportResponse2));
     const result = component.triggerExports();
     tick(3002);
     fixture.detectChanges();
