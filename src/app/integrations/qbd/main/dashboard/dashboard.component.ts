@@ -168,7 +168,7 @@ export class DashboardComponent implements OnInit {
 
   triggerExports(): void {
     this.exportInProgress = true;
-    this.trackingService.onClickEvent(ClickEvent.EXPORT);
+    this.trackingService.onClickEvent(ClickEvent.QBD_EXPORT);
     setTimeout(() => {
       this.exportProgressPercentage = 15;
     }, 500);
@@ -228,8 +228,6 @@ export class DashboardComponent implements OnInit {
   }
 
   setUpDashboard(): void {
-    this.trackingService.onClickEvent(ClickEvent.DASHBOARD_QBD);
-    this.trackingService.trackTimeSpent(Page.DASHBOARD_QBD, this.sessionStartTime);
     this.isLoading = true;
     this.exportLogForm = this.formBuilder.group({
       searchOption: [''],

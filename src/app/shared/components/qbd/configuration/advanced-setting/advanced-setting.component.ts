@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -63,6 +63,8 @@ export class AdvancedSettingComponent implements OnInit {
   memoPreviewText: string;
 
   memoStructure: string[] = [];
+
+  private sessionStartTime = new Date();
 
   constructor(
     private router: Router,
@@ -227,6 +229,7 @@ export class AdvancedSettingComponent implements OnInit {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
+        this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
         this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);
       }
       if (this.isOnboarding) {
@@ -246,6 +249,7 @@ export class AdvancedSettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.trackingService.onClickEvent(ClickEvent.ADVANCED_SETTINGS_QBD);
     this.getAdminEmails();
   }
 

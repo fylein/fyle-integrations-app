@@ -19,18 +19,13 @@ export class ConfigurationComponent implements OnInit {
 
   activeModule: MenuItem;
 
-  private sessionStartTime = new Date();
-
   constructor(
-    private router: Router,
-    private trackingService: TrackingService
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.trackingService.onClickEvent(ClickEvent.CONFIGURE_QBD);
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
-    this.trackingService.trackTimeSpent(Page.CONFIGURE_QBD, this.sessionStartTime);
   }
 
 

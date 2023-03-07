@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { ClickEvent, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdUserService } from 'src/app/core/services/qbd/qbd-core/qbd-user.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
@@ -29,8 +27,7 @@ export class QbdComponent implements OnInit {
     private router: Router,
     private userService: QbdUserService,
     private workspaceService: QbdWorkspaceService,
-    private windowService: WindowService,
-    private trackingService: TrackingService
+    private windowService: WindowService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -63,7 +60,6 @@ export class QbdComponent implements OnInit {
   }
 
   workspaceSetting(workspace:Workspace) {
-    this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('QBDOnboardingState', this.workspace.onboarding_state);

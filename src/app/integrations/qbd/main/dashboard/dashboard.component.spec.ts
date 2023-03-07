@@ -124,6 +124,7 @@ describe('DashboardComponent', () => {
       expect(result).toBeUndefined();
       expect(component.exportInProgress).toBeFalse();
     });
+    // This will stop the tick event
     discardPeriodicTasks();
     expect(component.exportInProgress).toBeFalse();
   }));
