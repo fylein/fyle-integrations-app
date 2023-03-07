@@ -1,0 +1,8 @@
+<app-app-header 
+    [iconPath]="'assets/logos/travelperk-logo.svg'" [appName]="'TravelPerk'" 
+    [appDescription]="'Autosync employee details between Fyle and TravelPerk.'"
+></app-app-header>
+
+<app-app-integration-landing [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" [redirectLink]="RedirectLink.TRAVELPERK"></app-app-integration-landing>
+
+<app-error *ngIf="showErrorScreen"></app-error>

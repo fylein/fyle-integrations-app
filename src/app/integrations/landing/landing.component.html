@@ -13,10 +13,10 @@
             <p *ngIf="integrationTabs.HRMS" class="landing--active-tag"></p>
         </div>
         <!-- Commenting this tab for v3 release -->
-        <!-- <div class="landing--tab">
+        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
             Travel
-            <p *ngIf="false" class="landing--active-tag"></p>
-        </div> -->
+            <p *ngIf="integrationTabs.TRAVEL" class="landing--active-tag"></p>
+        </div>
     </div>
 
     <p class="tw-mt-1-px landing--divider"></p>
@@ -68,14 +68,6 @@
                     </span>
                 </div>
             </div>
-            <!-- <div class="tw-flex tw-mt-20-px">
-                <div class="landing--accounting-app tw-mr-20-px" (click)="openInAppIntegration(InAppIntegration.QBD)">
-                    <img src="assets/logos/quickbooks-desktop.svg" class="tw-mt-[-20px]" width="100px" height="60px" />
-                    <span class="landing--accounting-app-name">
-                        QuickBooks Desktop
-                    </span>
-                </div>
-            </div> -->
         </div>
 
         <div *ngIf="integrationTabs.ALL || integrationTabs.HRMS">
@@ -96,6 +88,25 @@
                 </div>
             </div>
         </div>
+
+        <!-- <div *ngIf="integrationTabs.ALL || integrationTabs.TRAVEL">
+            <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing--section-divider"></p>
+            <p class="landing--section-heading">
+                Travel
+            </p>
+            <p class="landing--section-caption">
+                If your company uses any of the Travel Management Systems below, you can easily integrate your Fyle account with it.
+            </p>
+
+            <div class="tw-flex">
+                <div class="landing--accounting-app tw-mr-20-px" (click)="openInAppIntegration(InAppIntegration.TRAVELPERK)">
+                    <img src="assets/logos/travelperk-logo.svg" width="160px" height="60px" />
+                    <span class="landing--accounting-app-name">
+                        TravelPerk
+                    </span>
+                </div>
+            </div>
+        </div> -->
 
         <div *ngIf="integrationTabs.ALL" class="tw-pb-100-px">
             <p class="tw-my-40-px landing--divider"></p>

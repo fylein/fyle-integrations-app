@@ -3,7 +3,8 @@ import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView
 export type IntegrationsView = {
     [IntegrationView.ACCOUNTING]: boolean,
     [IntegrationView.ALL]: boolean,
-    [IntegrationView.HRMS]: boolean
+    [IntegrationView.HRMS]: boolean,
+    [IntegrationView.TRAVEL]: boolean
 }
 
 export type IntegrationCallbackUrl = {
@@ -23,4 +24,5 @@ export type AccountingIntegrationEvent = {
 export type InAppIntegrationUrlMap = {
     [InAppIntegration.BAMBOO_HR]: string,
     [InAppIntegration.QBD]: string,
+    [InAppIntegration.TRAVELPERK]: string
 }
