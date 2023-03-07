@@ -39,9 +39,9 @@ import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/e
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
-import { AppLandingComponent } from './components/apps/app-landing/app-landing.component';
 import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
+import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +67,7 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
     ConfigurationLabelComponent,
-    AppLandingComponent
+    AppIntegrationLandingComponent
   ],
   imports: [
     CommonModule,
@@ -92,8 +92,8 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
   ],
   exports: [
     LoaderComponent,
+    AppIntegrationLandingComponent,
     AppHeaderComponent,
-    AppLandingComponent,
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,

@@ -3,6 +3,6 @@
     [appDescription]="'Autosync employee details between Fyle and TravelPerk.'"
 ></app-app-header>
 
-<app-app-landing [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" (openReadMore)="this.windowService.openInNewTab(RedirectLink.TRAVELPERK)"></app-app-landing>
+<app-app-integration-landing [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" [redirectLink]="RedirectLink.TRAVELPERK"></app-app-integration-landing>
 
 <app-error *ngIf="showErrorScreen"></app-error>

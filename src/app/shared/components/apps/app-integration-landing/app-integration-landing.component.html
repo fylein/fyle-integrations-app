@@ -2,7 +2,7 @@
     <p class="tw-text-normal-text-color tw-text-20-px tw-font-500">How does the integration work?</p>
     <p class="tw-text-faded-text-color tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
         {{headerText}}
-        <span class="tw-text-hyperlink-color tw-flex tw-pl-8-px tw-cursor-pointer" (click)="openHelp()">
+        <span class="tw-text-hyperlink-color tw-flex tw-pl-8-px tw-cursor-pointer" (click)="windowService.openInNewTab(redirectLink)">
             Read More
             <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px"></svg-icon-sprite>
         </span>

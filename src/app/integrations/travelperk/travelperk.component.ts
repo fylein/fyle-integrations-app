@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RedirectLink } from 'src/app/core/models/enum/enum.model';
-import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
   selector: 'app-travelperk',
@@ -12,9 +11,7 @@ export class TravelperkComponent implements OnInit {
 
   showErrorScreen: boolean;
 
-  constructor(
-    public windowService: WindowService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }

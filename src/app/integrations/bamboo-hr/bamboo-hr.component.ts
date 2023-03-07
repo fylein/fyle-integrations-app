@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { catchError, concat, forkJoin, merge, of, toArray } from 'rxjs';
+import { catchError, concat, merge, of, toArray } from 'rxjs';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { ClickEvent, Page, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
-import { WindowService } from 'src/app/core/services/core/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
@@ -55,8 +54,7 @@ export class BambooHrComponent implements OnInit {
     private formBuilder: FormBuilder,
     private messageService: MessageService,
     private orgService: OrgService,
-    private trackingService: TrackingService,
-    public windowService: WindowService
+    private trackingService: TrackingService
   ) { }
 
   openDialog(): void {
