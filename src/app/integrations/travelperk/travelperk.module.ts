@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { TravelperkRoutingModule } from './travelperk-routing.module';
 import { TravelperkComponent } from './travelperk.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { TravelperkComponent } from './travelperk.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     TravelperkRoutingModule
   ]
 })

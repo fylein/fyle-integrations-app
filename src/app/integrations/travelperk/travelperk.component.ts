@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RedirectLink } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-travelperk',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./travelperk.component.scss']
 })
 export class TravelperkComponent implements OnInit {
+  RedirectLink = RedirectLink;
+
+  showErrorScreen: boolean;
 
   constructor() { }
 

@@ -41,6 +41,7 @@ import { ConfigurationMultiSelectComponent } from './components/qbd/configuratio
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
 import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
+import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
     ConfigurationStepHeaderComponent,
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
-    ConfigurationLabelComponent
+    ConfigurationLabelComponent,
+    AppIntegrationLandingComponent
   ],
   imports: [
     CommonModule,
@@ -90,6 +92,7 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
   ],
   exports: [
     LoaderComponent,
+    AppIntegrationLandingComponent,
     AppHeaderComponent,
     ErrorComponent,
     TrimCharacterPipe,
