@@ -43,7 +43,8 @@ export class LandingComponent implements OnInit {
   private readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
     [InAppIntegration.BAMBOO_HR]: '/integrations/bamboo_hr/',
     [InAppIntegration.QBD]: '/integrations/qbd/',
-    [InAppIntegration.TRAVELPERK]: '/integrations/travelperk/'
+    [InAppIntegration.TRAVELPERK]: '/integrations/travelperk/',
+    [InAppIntegration.GUSTO]: '/integrations/gusto/'
   };
 
   private readonly accountingIntegrationEventMap: AccountingIntegrationEvent = {

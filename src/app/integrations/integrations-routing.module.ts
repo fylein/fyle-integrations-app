@@ -23,7 +23,11 @@ const routes: Routes = [
       {
         path: 'travelperk',
         loadChildren: () => import('./travelperk/travelperk.module').then(m => m.TravelperkModule)
-      }
+      },
+      {
+        path: 'gusto',
+        loadChildren: () => import('./gusto/gusto-routing.module').then(m => m.GustoRoutingModule)
+      },
     ]
   }
 ];

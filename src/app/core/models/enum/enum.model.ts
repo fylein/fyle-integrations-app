@@ -12,17 +12,20 @@ export enum AccountingIntegrationApp {
     XERO = 'Xero'
 }
 
+
 export enum InAppIntegration {
     BAMBOO_HR = 'Bamboo HR',
     QBD = 'QuickBooks Desktop',
-    TRAVELPERK = 'TravelPerk'
+    TRAVELPERK = 'TravelPerk',
+    GUSTO = 'GUSTO'
 }
 
 export enum RedirectLink {
     BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
     QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     // TODO: Change the link to the actual help article
-    TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+    TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+    GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
 
 export enum ToastSeverity {
@@ -35,6 +38,8 @@ export enum Page {
     BAMBOO_HR_LANDING = 'Bamboo HR Landing',
     CONNECT_BAMBOO_HR = 'Connect Bamboo HR',
     CONFIGURE_BAMBOO_HR = 'Bamboo HR Configuration',
+    GUSTO_LANDING = 'Gusto Landing',
+    CONFIGURE_GUSTO = 'Gusto Configuration',
     QBD_LANDING = 'QuickBooks Desktop Landing',
     CONNECT_QBD = 'Connect QuickBooks Desktop',
     CONFIGURE_QBD = 'QuickBooks Desktop Configuration',
@@ -47,10 +52,14 @@ export enum ClickEvent {
     OPEN_XERO_INTEGRATION = 'Open Xero Integration',
     OPEN_BAMBOO_HR_INTEGRATION = 'Open Bamboo HR Integration',
     OPEN_QBD_INTEGRATION = 'Open QBD Integration',
+    OPEN_GUSTO_INTEGRATION = 'Open Gusto Integration',
     INTEGRATION_TABS = 'Integration Tabs',
     CONNECT_BAMBOO_HR = 'Connect Bamboo HR',
     CONFIGURE_BAMBOO_HR = 'Configure Bamboo HR',
     DISCONNECT_BAMBOO_HR = 'Disconnect Bamboo HR',
+    CONNECT_GUSTO = 'Connect Gusto',
+    CONFIGURE_GUSTO = 'Configure Gusto',
+    DISCONNECT_GUSTO = 'Disconnect Gusto',
     CONNECT_QBD = 'Connect QBD',
     CONFIGURE_QBD = 'Configure QBD',
     DISCONNECT_QBD = 'Disconnect QBD',
