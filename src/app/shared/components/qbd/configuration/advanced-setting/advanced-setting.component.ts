@@ -249,7 +249,6 @@ export class AdvancedSettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.trackingService.onClickEvent(ClickEvent.ADVANCED_SETTINGS_QBD);
     this.getAdminEmails();
   }
 

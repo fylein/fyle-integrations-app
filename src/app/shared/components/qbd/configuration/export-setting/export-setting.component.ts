@@ -286,7 +286,6 @@ export class ExportSettingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.trackingService.onClickEvent(ClickEvent.EXPORT_SETTING_QBD);
     this.getSettingsAndSetupForm();
   }
 

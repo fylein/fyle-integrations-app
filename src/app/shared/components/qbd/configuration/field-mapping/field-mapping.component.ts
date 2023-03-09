@@ -102,7 +102,6 @@ export class FieldMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.trackingService.onClickEvent(ClickEvent.FIELD_MAPPING_QBD);
     this.getSettingsAndSetupForm();
   }
 }
