@@ -27,7 +27,7 @@ const routes: Routes = [
       {
         path: 'gusto',
         loadChildren: () => import('./gusto/gusto-routing.module').then(m => m.GustoRoutingModule)
-      },
+      }
     ]
   }
 ];
