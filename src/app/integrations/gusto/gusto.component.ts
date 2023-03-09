@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RedirectLink } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-gusto',
@@ -7,7 +8,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GustoComponent implements OnInit {
 
+  showDialog: boolean;
+
+  isBambooConnected: boolean = false;
+
+  isBambooConnectionInProgress: boolean = false;
+
+  isBambooSetupInProgress: boolean;
+
+  isLoading: boolean = false;
+
+  hideRefreshIcon: boolean;
+
+  isConfigurationSaveInProgress: boolean;
+
+  RedirectLink = RedirectLink;
+
+  showErrorScreen: boolean;
+
+  bambooHrConfiguration: any;
+
   constructor() { }
+
+  syncEmployees(): void {
+
+  }
+
+  disconnectBambooHr(): void {
+
+  }
 
   ngOnInit(): void {
   }

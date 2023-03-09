@@ -1,1 +1,6 @@
-<p>gusto works!</p>
+<div>
+    <app-app-header [iconPath]="'assets/logos/gusto-logo.svg'" [appName]="'Gusto'" [appDescription]="'Auto sync employee details between Fyle and Gusto.'" [isLoading]="isLoading" [hideRefreshIcon]="hideRefreshIcon" [showErrorScreen]="showErrorScreen" [bambooHrConfiguration]="bambooHrConfiguration" [isIntegrationSetupInProgress]="isBambooSetupInProgress" [isIntegrationConnected]="isBambooConnected" (disconnectBambooHr)="disconnectBambooHr()" (syncEmployees)="syncEmployees()"></app-app-header>
+
+    <app-app-integration-landing  *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></app-app-integration-landing>
+
+</div>
