@@ -55,6 +55,8 @@ export class LandingComponent implements OnInit {
 
   private readonly sessionStartTime = new Date();
 
+  embedQboApp: boolean;
+
   constructor(
     private eventsService: EventsService,
     private router: Router,
@@ -73,7 +75,19 @@ export class LandingComponent implements OnInit {
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
     this.trackingService.trackTimeSpent(Page.LANDING, this.sessionStartTime);
     this.trackingService.onClickEvent(this.accountingIntegrationEventMap[accountingIntegrationApp]);
+
+    if (accountingIntegrationApp === AccountingIntegrationApp.QBO) {
+      this.embedQboApp = true;
+      return;
+    }
     this.eventsService.postEvent(this.integrationCallbackUrlMap[accountingIntegrationApp][0], this.integrationCallbackUrlMap[accountingIntegrationApp][1]);
+  }
+
+  navigateToHome(): void {
+    console.log('calling')
+    this.embedQboApp = false;
+    this.router.navigate(['/integrations/landing']);
+    console.log('done')
   }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {

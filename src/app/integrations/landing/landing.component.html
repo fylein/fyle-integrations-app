@@ -1,4 +1,5 @@
-<div class="tw-text-slightly-normal-text-color">
+<p (click)="navigateToHome()">Click me to go to embedded app home</p>
+<div *ngIf="!embedQboApp" class="tw-text-slightly-normal-text-color">
     <div class="tw-flex tw-text-14-px tw-h-56-px">
         <div class="tw-pl-24-px tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ALL)">
             All
@@ -146,3 +147,7 @@
         </div>
     </div>
 </div>
+
+<qbo-dashboard *ngIf="embedQboApp"></qbo-dashboard>
+
+<qbo-export-log *ngIf="embedQboApp"></qbo-export-log>

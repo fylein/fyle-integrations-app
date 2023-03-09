@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { IntegrationsRoutingModule } from './integrations-routing.module';
@@ -20,6 +20,9 @@ import { SharedModule } from '../shared/shared.module';
     IntegrationsRoutingModule,
     SharedModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class IntegrationsModule { }
