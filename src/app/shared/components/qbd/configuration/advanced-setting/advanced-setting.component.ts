@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
@@ -63,13 +64,16 @@ export class AdvancedSettingComponent implements OnInit {
 
   memoStructure: string[] = [];
 
+  private sessionStartTime = new Date();
+
   constructor(
     private router: Router,
     private advancedSettingService: QbdAdvancedSettingService,
     private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
     private orgService: OrgService,
-    private toastService: QbdToastService
+    private toastService: QbdToastService,
+    private trackingService: TrackingService
   ) { }
 
   private formatMemoPreview(): void {
@@ -224,6 +228,10 @@ export class AdvancedSettingComponent implements OnInit {
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
+        this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
+        this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);
+      }
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
         this.router.navigate([`/integrations/qbd/onboarding/done`]);
