@@ -20,7 +20,7 @@ export enum InAppIntegration {
 
 export enum RedirectLink {
     BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
-    QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+    QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
     // TODO: Change the link to the actual help article
     TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
