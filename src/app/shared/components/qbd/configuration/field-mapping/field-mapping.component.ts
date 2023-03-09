@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QBDConfigurationCtaText, QBDOnboardingState, QBDFyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { QBDConfigurationCtaText, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
@@ -36,12 +37,15 @@ export class FieldMappingComponent implements OnInit {
     }
   ];
 
+  private sessionStartTime = new Date();
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private fieldMappingService: QbdFieldMappingService,
     private workspaceService: QbdWorkspaceService,
-    private toastService: QbdToastService
+    private toastService: QbdToastService,
+    private trackingService: TrackingService
   ) { }
 
   mappingFieldFormOptionsFunction(formControllerName: string): QBDExportSettingFormOption[] {
@@ -57,6 +61,10 @@ export class FieldMappingComponent implements OnInit {
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');
+      if (this.workspaceService.getOnboardingState() === QBDOnboardingState.FIELD_MAPPING) {
+        this.trackingService.trackTimeSpent(Page.FIELD_MAPPING_QBD, this.sessionStartTime);
+        this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.FIELD_MAPPING, 3, fieldMappingPayload);
+      }
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.ADVANCED_SETTINGS);
         this.router.navigate([`/integrations/qbd/onboarding/advanced_settings`]);

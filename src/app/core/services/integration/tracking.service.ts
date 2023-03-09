@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ClickEvent, Page } from '../../models/enum/enum.model';
+import { ClickEvent, Page, QBDOnboardingState } from '../../models/enum/enum.model';
+import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
+import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
+import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/field-mapping.model';
 
 @Injectable({
   providedIn: 'root'
@@ -72,5 +75,9 @@ export class TrackingService {
   trackTimeSpent(page: Page, sessionStartTime: Date): void {
     const differenceInMs = new Date().getTime() - sessionStartTime.getTime();
     this.eventTrack(`Time Spent on ${page} page`, {durationInSeconds: differenceInMs / 1000});
+  }
+
+  onOnboardingStepCompletion(eventName: QBDOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void): void {
+    this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 }

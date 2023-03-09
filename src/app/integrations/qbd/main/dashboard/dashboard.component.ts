@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
-import { QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -71,11 +72,14 @@ export class DashboardComponent implements OnInit {
 
   isRecordPresent: boolean;
 
+  sessionStartTime: Date = new Date();
+
   constructor(
     private iifLogsService: QbdIifLogsService,
     private formBuilder: FormBuilder,
     private advancedSettingService: QbdAdvancedSettingService,
-    private toastService: QbdToastService
+    private toastService: QbdToastService,
+    private trackingService: TrackingService
   ) { }
 
   getDates() {
@@ -164,6 +168,7 @@ export class DashboardComponent implements OnInit {
 
   triggerExports(): void {
     this.exportInProgress = true;
+    this.trackingService.onClickEvent(ClickEvent.QBD_EXPORT);
     setTimeout(() => {
       this.exportProgressPercentage = 15;
     }, 500);

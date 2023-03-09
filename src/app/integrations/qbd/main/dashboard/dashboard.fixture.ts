@@ -55,6 +55,11 @@ export const postQbdTriggerExportResponse: QbdExportTriggerGet = {
     new_expenses_imported: true
 };
 
+export const postQbdTriggerExportResponse2: QbdExportTriggerGet = {
+    message: "Trigger successful",
+    new_expenses_imported: false
+};
+
 export const errorResponse = {
     status: 404,
     statusText: "Not Found",
