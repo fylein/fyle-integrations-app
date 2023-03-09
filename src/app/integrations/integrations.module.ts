@@ -7,13 +7,15 @@ import { LandingComponent } from './landing/landing.component';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { QbdComponent } from './qbd/qbd.component';
 import { SharedModule } from '../shared/shared.module';
+import { GustoComponent } from './gusto/gusto.component';
 
 
 @NgModule({
   declarations: [
     IntegrationsComponent,
     LandingComponent,
-    QbdComponent
+    QbdComponent,
+    GustoComponent
   ],
   imports: [
     CommonModule,
