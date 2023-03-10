@@ -44,46 +44,43 @@ export class TravelperkComponent implements OnInit {
   }
 
   private addConnectionWidget() {
-    console.log("This is called")
     this.connectionId = this.travelperkData.travelperk_connection_id;
     this.managedUserId = this.org.managed_user_id;
     this.isLoading = true;
 
-    this.travelperkService.generateToken(this.managedUserId).subscribe(res=>{
+    this.travelperkService.generateToken(this.managedUserId).subscribe(res => {
       this.token = res.token;
       this.iframeSource = this.iframeSource + this.connectionId + '?workato_dl_token=' + this.token;
       this.url = this.getIframeSource();
       this.isLoading = false;
-    })
+    });
 
   }
 
   private setupTravelperk() {
-    console.log("Thsi is hte block for setupTravelPerk")
-    console.log(this.travelperkData)
     const syncData = [];
 
-    if (!this.org.managed_user_id) {
+    if (!this.org?.managed_user_id) {
       syncData.push(this.orgService.createWorkatoWorkspace());
     }
 
-    if (!this.travelperkData || !this.travelperkData.folder_id) {
+    if (!this.travelperkData || !this.travelperkData?.folder_id) {
       syncData.push(this.travelperkService.createFolder());
     }
 
-    if (!this.travelperkData || !this.travelperkData.package_id) {
+    if (!this.travelperkData || !this.travelperkData?.package_id) {
       syncData.push(this.travelperkService.uploadPackage());
     }
 
-    if (!this.org.is_fyle_connected) {
+    if (!this.org?.is_fyle_connected) {
       syncData.push(this.orgService.connectFyle());
     }
 
-    if (!this.travelperkData.travelperk_connection_id) {
+    if (!this.travelperkData?.travelperk_connection_id) {
       syncData.push(this.travelperkService.connectTravelperk());
     }
 
-    if (!this.travelperkData.is_s3_connected) {
+    if (!this.travelperkData?.is_s3_connected) {
       syncData.push(this.travelperkService.connectAwsS3());
     }
 
@@ -94,12 +91,12 @@ export class TravelperkComponent implements OnInit {
       ).subscribe(() => {
         this.isLoading = false;
         this.isTravelperkSetupInProgress = false;
-        if (this.travelperkData == null) {
+        if (this.travelperkData === null) {
           this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
             this.travelperkData = travelperkData;
-          })
+          });
         }
-        this.addConnectionWidget()
+        this.addConnectionWidget();
       }, () => {
         this.isLoading = false;
         this.isTravelperkSetupInProgress = false;
@@ -107,12 +104,12 @@ export class TravelperkComponent implements OnInit {
       });
     } else {
       this.isLoading = false;
-      if (this.travelperkData == null) {
+      if (this.travelperkData === null) {
         this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
           this.travelperkData = travelperkData;
-        })
+        });
       }
-      this.addConnectionWidget()
+      this.addConnectionWidget();
     }
   }
 
@@ -120,10 +117,10 @@ export class TravelperkComponent implements OnInit {
   private setupPage(): void {
     this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
       this.travelperkData = travelperkData;
-      this.setupTravelperk()
+      this.setupTravelperk();
     }, () => {
-      this.setupTravelperk()
-    })
+      this.setupTravelperk();
+    });
   }
 
   ngOnInit(): void {

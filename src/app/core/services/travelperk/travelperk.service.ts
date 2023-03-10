@@ -23,7 +23,6 @@ export class TravelperkService {
   }
 
   createFolder(): Observable<{}> {
-    console.log("cretea folder serve")
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/folder/`, {});
   }
 
@@ -36,11 +35,11 @@ export class TravelperkService {
   }
 
   connectTravelperk(): Observable<{}>{
-    return this.apiService.post(`/orgs/${this.orgId}/travelperk/travelperk_connection/`, {})
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/travelperk_connection/`, {});
   }
 
   connectAwsS3(): Observable<{}>{
-    return this.apiService.post(`/orgs/${this.orgId}/travelperk/s3_connection/`, {})
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/s3_connection/`, {});
   }
 
   generateToken(managedUserId: string): Observable<any> {
