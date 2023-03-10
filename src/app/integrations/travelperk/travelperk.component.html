@@ -1,8 +1,29 @@
 <app-app-header 
-    [iconPath]="'assets/logos/travelperk-logo.svg'" [appName]="'TravelPerk'" 
+    [iconPath]="'assets/logos/travelperk-logo.svg'"
+    [appName]="'TravelPerk'" 
     [appDescription]="'Autosync employee details between Fyle and TravelPerk.'"
+    [isLoading]="isLoading"
+    [isIntegrationSetupInProgress]="isTravelperkSetupInProgress"
 ></app-app-header>
 
-<app-app-integration-landing [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" [redirectLink]="RedirectLink.TRAVELPERK"></app-app-integration-landing>
+<app-app-integration-landing
+    *ngIf="!isLoading"
+    [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" 
+    [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
+    [redirectLink]="RedirectLink.TRAVELPERK"
+></app-app-integration-landing>
+
+<iframe *ngIf="url" [src]="url" style="border-style: none;width: 100%; height: 450px;"></iframe>
 
 <app-error *ngIf="showErrorScreen"></app-error>
+
+<div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-pt-70-px">
+    <div *ngFor="let _ of [0,1,2,3,4,5,6]" class="tw-w-75-vw tw-h-78-px tw-border-separator tw-border-1-px tw-rounded-8-px tw-mb-18-px">
+        <div class="tw-w-14-vw tw-h-18-px tw-pl-24-px tw-pt-16-px tw-pb-10-px">
+            <p-skeleton shape="rectangle"></p-skeleton>
+        </div>
+        <div class="tw-w-50-vw tw-h-18-px tw-pl-24-px tw-pt-16-px tw-pb-10-px">
+            <p-skeleton shape="rectangle"></p-skeleton>
+        </div>
+    </div>
+</div>
