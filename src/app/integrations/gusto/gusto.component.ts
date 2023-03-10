@@ -24,7 +24,7 @@ export class GustoComponent implements OnInit {
 
   isGustoSetupInProgress: boolean;
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   hideRefreshIcon: boolean;
 
@@ -84,23 +84,23 @@ export class GustoComponent implements OnInit {
 
   setupGusto(): void {
     const syncData = [];
-    if (!this.org.managed_user_id) {
+    if (!this.org?.managed_user_id) {
       syncData.push(this.orgService.createWorkatoWorkspace());
     }
 
-    if (!this.gustoData || !this.gustoData.folder_id) {
+    if (!this.gustoData || !this.gustoData?.folder_id) {
       syncData.push(this.gustoService.createFolder());
     }
 
-    if (!this.gustoData || !this.gustoData.package_id) {
+    if (!this.gustoData || !this.gustoData?.package_id) {
       syncData.push(this.gustoService.uploadPackage());
     }
 
-    if (!this.org.is_fyle_connected) {
+    if (!this.org?.is_fyle_connected) {
       syncData.push(this.orgService.connectFyle());
     }
 
-    if (!this.org.is_sendgrid_connected) {
+    if (!this.org?.is_sendgrid_connected) {
       syncData.push(this.orgService.connectSendgrid());
     }
 
