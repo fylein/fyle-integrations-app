@@ -47,10 +47,10 @@ describe('AppHeaderComponent', () => {
   });
 
   it('should disconnect Bamboo HR connection', () => {
-    spyOn(component.disconnectBambooHr, 'emit');
+    spyOn(component.disconnectIntegration, 'emit');
 
     component.disconnect();
-    expect(component.disconnectBambooHr.emit).toHaveBeenCalled();
+    expect(component.disconnectIntegration.emit).toHaveBeenCalled();
   });
 
   it('should navigate to onboarding page', () => {

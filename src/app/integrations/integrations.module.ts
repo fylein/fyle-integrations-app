@@ -8,6 +8,7 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { QbdComponent } from './qbd/qbd.component';
 import { SharedModule } from '../shared/shared.module';
 import { GustoComponent } from './gusto/gusto.component';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import { GustoComponent } from './gusto/gusto.component';
     CommonModule,
     IntegrationsRoutingModule,
     SharedModule,
+    SkeletonModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })

@@ -62,6 +62,7 @@ export enum ClickEvent {
     CONNECT_GUSTO = 'Connect Gusto',
     CONFIGURE_GUSTO = 'Configure Gusto',
     DISCONNECT_GUSTO = 'Disconnect Gusto',
+    SYNC_GUSTO_EMPLOYEES = 'Sync Gusto Employees',
     CONNECT_QBD = 'Connect QBD',
     COPY_SUPPORT_EMAIL = 'Copy Support Email',
     SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
