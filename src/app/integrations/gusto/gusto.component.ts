@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
-import { ClickEvent, Page, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, InAppIntegration, Page, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
@@ -41,6 +41,8 @@ export class GustoComponent implements OnInit {
   additionalEmails: any[];
 
   org: Org = this.orgService.getCachedOrg();
+
+  appName: string = InAppIntegration.GUSTO;
 
   private sessionStartTime = new Date();
 

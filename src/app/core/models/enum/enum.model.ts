@@ -17,7 +17,7 @@ export enum InAppIntegration {
     BAMBOO_HR = 'Bamboo HR',
     QBD = 'QuickBooks Desktop',
     TRAVELPERK = 'TravelPerk',
-    GUSTO = 'GUSTO'
+    GUSTO = 'Gusto'
 }
 
 export enum RedirectLink {

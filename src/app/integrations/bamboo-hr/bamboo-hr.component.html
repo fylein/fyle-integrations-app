@@ -13,8 +13,20 @@
     </ng-template>
 </p-toast>
 
-<app-app-header [iconPath]="'assets/logos/bamboo-hr-logo.svg'" [appName]="'BambooHR'" [appDescription]="'Auto
-sync employee details between Bamboo HR and Fyle.'" [isLoading]="isLoading" [hideRefreshIcon]="hideRefreshIcon" [showErrorScreen]="showErrorScreen" [integrationConfiguration]="bambooHrConfiguration" [isIntegrationSetupInProgress]="isBambooSetupInProgress" [isIntegrationConnected]="isBambooConnected" (openDialog)="openDialog()" (disconnectIntegration)="disconnectBambooHr()" (syncEmployees)="syncEmployees()"></app-app-header>
+<app-app-header 
+    [iconPath]="'assets/logos/bamboo-hr-logo.svg'" 
+    [appName]="'BambooHR'" 
+    [appDescription]="'Auto sync employee details between Bamboo HR and Fyle.'" 
+    [isLoading]="isLoading" 
+    [hideRefreshIcon]="hideRefreshIcon" 
+    [showErrorScreen]="showErrorScreen" 
+    [integrationConfiguration]="bambooHrConfiguration" 
+    [isIntegrationSetupInProgress]="isBambooSetupInProgress" 
+    [isIntegrationConnected]="isBambooConnected" 
+    (openDialog)="openDialog()" 
+    (disconnectIntegration)="disconnectBambooHr()" 
+    (syncEmployees)="syncEmployees()"
+></app-app-header>
 
 <app-app-integration-landing  *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'Auto sync employee details between Bamboo HR and Fyle.'" [svgPath]="'assets/flow-charts/bamboo-hr-flow-chart.svg'" [redirectLink]="RedirectLink.BAMBOO_HR"></app-app-integration-landing>
 

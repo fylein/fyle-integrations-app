@@ -1,11 +1,23 @@
 <div>
-    <app-app-header [iconPath]="'assets/logos/gusto-logo.svg'" [appName]="'Gusto'" [appDescription]="'Auto sync employee details between Fyle and Gusto.'" [isLoading]="isLoading" [hideRefreshIcon]="hideRefreshIcon" [showErrorScreen]="showErrorScreen" [integrationConfiguration]="gustoConfiguration" [isIntegrationSetupInProgress]="isGustoSetupInProgress" [isIntegrationConnected]="isGustoConnected" (disconnectIntegration)="disconnectGusto()" (syncEmployees)="syncEmployees()"></app-app-header>
+    <app-app-header 
+        [iconPath]="'assets/logos/gusto-logo.svg'" 
+        [appName]="appName" 
+        [appDescription]="'Auto sync employee details between Fyle and Gusto.'" 
+        [isLoading]="isLoading" 
+        [hideRefreshIcon]="hideRefreshIcon" 
+        [showErrorScreen]="showErrorScreen" 
+        [integrationConfiguration]="gustoConfiguration" 
+        [isIntegrationSetupInProgress]="isGustoSetupInProgress" 
+        [isIntegrationConnected]="isGustoConnected" 
+        (disconnectIntegration)="disconnectGusto()" 
+        (syncEmployees)="syncEmployees()"
+    ></app-app-header>
 
     <app-app-integration-landing  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></app-app-integration-landing>
 
     <app-error *ngIf="showErrorScreen"></app-error>
 
-    <!-- <app-configuration *ngIf="!isLoading && isGustoConnected"></app-configuration> -->
+    <app-gusto-configuration ></app-gusto-configuration>
     <!-- [isConfigurationSaveInProgress]="isConfigurationSaveInProgress" [gustoConfiguration]="gustoConfiguration" [additionalEmails]="additionalEmails" (updateConfiguration)="configurationUpdatesHandler($event)" -->
 
     <div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-pt-70-px">
