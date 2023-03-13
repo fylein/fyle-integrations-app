@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center">
-                <button *ngIf="!isIntegrationConnected && appName !== 'QuickBooks Desktop'" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
+                <button *ngIf="!isIntegrationConnected && appName === 'BambooHR'" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
                     Connect
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
@@ -31,6 +31,7 @@
                     Start
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
+                <iframe *ngIf="tokenUrl && appName === 'Travelperk'" [src]="tokenUrl" style="border-style: none;height: auto;width: auto;margin-top: 100px;padding-left: 100px; overflow-y: hidden;overflow-x: hidden;"></iframe>
             </div>
         </div>
 </div>

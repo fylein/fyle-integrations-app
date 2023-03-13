@@ -42,9 +42,4 @@ export class TravelperkService {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/s3_connection/`, {});
   }
 
-  generateToken(managedUserId: string): Observable<any> {
-    return this.apiService.get(`/orgs/${this.orgId}/travelperk/generate_token/`, {
-      'managed_user_id': managedUserId
-    });
-  }
 }

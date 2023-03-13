@@ -20,11 +20,11 @@ export class TravelperkComponent implements OnInit {
 
   managedUserId: string;
 
-  url: any;
+  tokenUrl: any;
 
   isLoading: boolean = true;
 
-  connectionId: number;
+  connectionId: string;
 
   showErrorScreen: boolean;
 
@@ -44,14 +44,14 @@ export class TravelperkComponent implements OnInit {
   }
 
   private addConnectionWidget() {
-    this.connectionId = this.travelperkData.travelperk_connection_id;
+    this.connectionId = this.travelperkData.travelperk_connection_id.toString();
     this.managedUserId = this.org.managed_user_id;
     this.isLoading = true;
 
-    this.travelperkService.generateToken(this.managedUserId).subscribe(res => {
+    this.orgService.generateToken(this.managedUserId).subscribe(res => {
       this.token = res.token;
       this.iframeSource = this.iframeSource + this.connectionId + '?workato_dl_token=' + this.token;
-      this.url = this.getIframeSource();
+      this.tokenUrl = this.getIframeSource();
       this.isLoading = false;
     });
 

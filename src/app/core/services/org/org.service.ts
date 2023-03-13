@@ -50,4 +50,10 @@ export class OrgService {
   connectSendgrid(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.getOrgId()}/sendgrid_connection/`, {});
   }
+
+  generateToken(managedUserId: string): Observable<any> {
+    return this.apiService.get(`/orgs/${this.getOrgId()}/generate_token/`, {
+      'managed_user_id': managedUserId
+    });
+  }
 }

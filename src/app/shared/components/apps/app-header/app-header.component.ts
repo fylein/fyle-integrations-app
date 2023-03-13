@@ -33,6 +33,8 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() hideRefreshIcon: boolean;
 
+  @Input() tokenUrl: boolean;
+
   constructor(
     private router: Router
   ) { }
