@@ -9,20 +9,22 @@ import { QbdComponent } from './qbd/qbd.component';
 import { SharedModule } from '../shared/shared.module';
 import { GustoComponent } from './gusto/gusto.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { TableModule } from 'primeng/table';
 
 
 @NgModule({
   declarations: [
     IntegrationsComponent,
     LandingComponent,
-    QbdComponent,
-    GustoComponent
+    QbdComponent
+    // GustoComponent
   ],
   imports: [
     CommonModule,
     IntegrationsRoutingModule,
     SharedModule,
     SkeletonModule,
+    TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })

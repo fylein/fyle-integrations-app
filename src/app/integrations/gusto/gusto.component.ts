@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
-import { ClickEvent, InAppIntegration, Page, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
+import { ClickEvent, InAppIntegration, Page, QBDConfigurationCtaText, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -34,15 +34,21 @@ export class GustoComponent implements OnInit {
 
   showErrorScreen: boolean;
 
-  gustoConfiguration: any;
+  gustoConfiguration: GustoConfiguration;
 
   gustoData: Gusto;
 
-  additionalEmails: any[];
+  additionalEmails: EmailOption[] = [];
 
   org: Org = this.orgService.getCachedOrg();
 
   appName: string = InAppIntegration.GUSTO;
+
+  configurationForm: FormGroup;
+
+  saveInProgress: boolean;
+
+  ConfigurationCtaText = QBDConfigurationCtaText;
 
   private sessionStartTime = new Date();
 
@@ -53,6 +59,10 @@ export class GustoComponent implements OnInit {
     private trackingService: TrackingService,
     private toastService: QbdToastService
   ) { }
+
+  save(): void {
+
+  }
 
   syncEmployees(): void {
     this.trackingService.onClickEvent(ClickEvent.SYNC_GUSTO_EMPLOYEES);
@@ -126,15 +136,19 @@ export class GustoComponent implements OnInit {
   getGustoConfiguration(): void {
     const data = merge(
       this.orgService.getAdditionalEmails(),
+      this.orgService.getAdditionalEmails(),
       this.gustoService.getConfigurations().pipe(catchError(() => of(null)))
     );
     data.pipe(toArray()).subscribe((responses) => {
       responses.forEach((response: any) => {
         if (Array.isArray(response) && response.length) {
-          this.additionalEmails = response;
+          this.additionalEmails.length > 0 ? this.additionalEmails.concat(response) : this.additionalEmails = response;
         } else if (response?.hasOwnProperty('additional_email_options')) {
           this.gustoConfiguration = response;
         }
+      });
+      this.configurationForm = this.formBuilder.group({
+        email: [this.gustoConfiguration?.emails_selected.length > 0 ? this.gustoConfiguration?.emails_selected : [], Validators.required]
       });
       this.setupGusto();
     });

@@ -1,0 +1,19 @@
+table > tbody > tr:nth-child(1) > td {
+    @apply tw-pt-20-px tw-font-400 tw-text-14-px tw-text-slightly-normal-text-color #{!important};
+}
+
+table > tbody > tr > td {
+    @apply tw-pt-28-px tw-font-400 tw-text-14-px tw-px-0 tw-text-slightly-normal-text-color #{!important};
+}
+
+table > thead > tr > th{
+    @apply tw-font-500 tw-text-14-px tw-text-slightly-normal-text-color tw-text-left tw-pl-14-px #{!important};
+}
+
+:host :ng-deep .pi .pi-arrow-right {
+    @apply tw-w-60-px #{!important};
+}
+
+:host ::ng-deep .right-arrow > svg-icon-sprite > svg {
+    @apply tw-h-10-px tw-px-0 #{!important};
+}
