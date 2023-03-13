@@ -11,3 +11,24 @@ export const travelperkMockData: Travelperk = {
     created_at: new Date(),
     updated_at: new Date()
 };
+
+export const connectTravelperkMockData = {
+    'message': {
+        'connection_id': '123'
+    }
+};
+
+export const connectAwsS3MockData = {
+    "application": "rest",
+    "id": 22,
+    "name": "S3 Connection",
+    "description": null,
+    "authorized_at": new Date(),
+    "authorization_status": "success",
+    "authorization_error": null,
+    "created_at": new Date(),
+    "updated_at": new Date(),
+    "external_id": null,
+    "folder_id": 12,
+    "parent_id": null
+};

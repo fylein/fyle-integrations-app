@@ -1,18 +1,34 @@
-import { HttpTestingController } from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
+import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
+import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
-import { travelperkMockData } from './travelperk.fixture';
+import { OrgService } from '../org/org.service';
+import { travelperkMockData, connectTravelperkMockData, connectAwsS3MockData } from './travelperk.fixture';
 
 import { TravelperkService } from './travelperk.service';
 
 describe('TravelperkService', () => {
   let service: TravelperkService;
+  let injector: TestBed;
   let httpMock: HttpTestingController;
+  let orgService: OrgService;
   const API_BASE_URL = environment.api_url;
+  const service1 = {
+    getOrgId: () => 1
+  };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ],
+      providers: [
+        { provide: OrgService, useValue: service1 }
+      ]
+    });
+    injector = getTestBed();
     service = TestBed.inject(TravelperkService);
+    orgService = injector.inject(OrgService);
+    httpMock = injector.inject(HttpTestingController);
   });
 
   it('should be created', () => {
@@ -34,7 +50,6 @@ describe('TravelperkService', () => {
 
   it('should create folder', () => {
     service.createFolder().subscribe((res) => {
-      console.log(res)
       expect(res).toEqual({});
     });
 
@@ -57,5 +72,31 @@ describe('TravelperkService', () => {
     });
 
     req.flush({});
+  });
+
+  it('should connect travelperk', () => {
+    service.connectTravelperk().subscribe((res) => {
+      expect(res).toEqual(connectTravelperkMockData);
+    });
+
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/orgs/1/travelperk/travelperk_connection/`
+    });
+
+    req.flush(connectTravelperkMockData);
+  });
+
+  it('should connect aws', () => {
+    service.connectAwsS3().subscribe((res) => {
+      expect(res).toEqual(connectAwsS3MockData);
+    });
+
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/orgs/1/travelperk/s3_connection/`
+    });
+
+    req.flush(connectAwsS3MockData);
   });
 });

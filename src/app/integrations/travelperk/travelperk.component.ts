@@ -53,8 +53,11 @@ export class TravelperkComponent implements OnInit {
       this.iframeSource = this.iframeSource + this.connectionId + '?workato_dl_token=' + this.token;
       this.tokenUrl = this.getIframeSource();
       this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.isTravelperkSetupInProgress = false;
+      this.showErrorScreen = true;
     });
-
   }
 
   private setupTravelperk() {

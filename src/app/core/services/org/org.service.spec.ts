@@ -3,7 +3,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
 import { bambooHRMockConfigurationPayload } from '../bamboo-hr/bamboo-hr.fixture';
 import { StorageService } from '../core/storage.service';
-import { orgMockData } from './org.fixture';
+import { orgMockData, generateTokenData } from './org.fixture';
 
 import { OrgService } from './org.service';
 
@@ -133,5 +133,18 @@ describe('OrgService', () => {
     } else {
       expect(org).toBeGreaterThan(0);
     }
+  });
+
+  it("get token for ifram", () => {
+    service.generateToken('25').subscribe((res) => {
+      expect(res).toEqual(generateTokenData);
+    });
+
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/orgs/1/generate_token/`
+    });
+
+    req.flush(generateTokenData);
   });
 });
