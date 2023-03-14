@@ -13,7 +13,7 @@ export class AppHeaderComponent implements OnInit {
 
   @Output() openDialog = new EventEmitter<void>();
 
-  @Output() disconnectBambooHr = new EventEmitter<void>();
+  @Output() disconnectIntegration = new EventEmitter<void>();
 
   @Output() syncEmployees = new EventEmitter<void>();
 
@@ -29,7 +29,7 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() isLoading: boolean;
 
-  @Input() bambooHrConfiguration: BambooHRConfiguration;
+  @Input() integrationConfiguration: BambooHRConfiguration;
 
   @Input() showErrorScreen: boolean;
 
@@ -49,7 +49,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   disconnect(): void {
-    this.disconnectBambooHr.emit();
+    this.disconnectIntegration.emit();
   }
 
   connectQBD(): void {

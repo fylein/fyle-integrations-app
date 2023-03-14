@@ -1,2 +1,36 @@
-<p>gusto works!</p>
-<app-gusto-configuration></app-gusto-configuration>
+<div>
+    <app-app-header 
+        [iconPath]="'assets/logos/gusto-logo.svg'" 
+        [appName]="appName" 
+        [appDescription]="'Auto sync employee details between Fyle and Gusto.'" 
+        [isLoading]="isLoading" 
+        [hideRefreshIcon]="hideRefreshIcon" 
+        [showErrorScreen]="showErrorScreen" 
+        [integrationConfiguration]="gustoConfiguration" 
+        [isIntegrationSetupInProgress]="isGustoSetupInProgress" 
+        [isIntegrationConnected]="isGustoConnected" 
+        (disconnectIntegration)="disconnectGusto()" 
+        (syncEmployees)="syncEmployees()"
+    ></app-app-header>
+
+    <app-app-integration-landing  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></app-app-integration-landing>
+
+    <div *ngIf="showErrorScreen" class="tw-pt-100-px">
+        <app-error></app-error>
+    </div>
+
+    <app-gusto-configuration *ngIf="!isLoading && isGustoConnected" ></app-gusto-configuration>
+    <!-- [isConfigurationSaveInProgress]="isConfigurationSaveInProgress" [gustoConfiguration]="gustoConfiguration" [additionalEmails]="additionalEmails" (updateConfiguration)="configurationUpdatesHandler($event)" -->
+
+    <div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-pt-70-px">
+        <div *ngFor="let _ of [0,1,2,3,4,5,6]" class="tw-w-75-vw tw-h-78-px tw-border-separator tw-border-1-px tw-rounded-8-px tw-mb-18-px">
+            <div class="tw-w-14-vw tw-h-18-px tw-pl-24-px tw-pt-16-px tw-pb-10-px">
+                <p-skeleton shape="rectangle"></p-skeleton>
+            </div>
+    
+            <div class="tw-w-50-vw tw-h-18-px tw-pl-24-px tw-pt-16-px tw-pb-10-px">
+                <p-skeleton shape="rectangle"></p-skeleton>
+            </div>
+        </div>
+    </div>
+</div>
