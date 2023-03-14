@@ -20,7 +20,7 @@ export enum InAppIntegration {
 
 export enum RedirectLink {
     BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
-    QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+    QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
     // TODO: Change the link to the actual help article
     TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
@@ -43,7 +43,9 @@ export enum Page {
     CONFIGURE_BAMBOO_HR = 'Bamboo HR Configuration',
     QBD_LANDING = 'QuickBooks Desktop Landing',
     CONNECT_QBD = 'Connect QuickBooks Desktop',
-    CONFIGURE_QBD = 'QuickBooks Desktop Configuration',
+    EXPORT_SETTING_QBD = 'Export Settings QBD',
+    FIELD_MAPPING_QBD = 'Field Mappings QBD',
+    ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD',
 }
 
 export enum ClickEvent {
@@ -58,11 +60,11 @@ export enum ClickEvent {
     CONFIGURE_BAMBOO_HR = 'Configure Bamboo HR',
     DISCONNECT_BAMBOO_HR = 'Disconnect Bamboo HR',
     CONNECT_QBD = 'Connect QBD',
-    CONFIGURE_QBD = 'Configure QBD',
-    DISCONNECT_QBD = 'Disconnect QBD',
     COPY_SUPPORT_EMAIL = 'Copy Support Email',
     SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
-    ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually'
+    ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',
+    ADD_EMAIL_MANUALLY = 'Add Email Manually',
+    QBD_EXPORT = 'Export IIF files'
 }
 
 export enum QBDOnboardingState {

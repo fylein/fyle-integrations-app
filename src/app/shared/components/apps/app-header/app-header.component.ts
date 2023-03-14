@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent } from 'src/app/core/models/enum/enum.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-app-header',
@@ -39,7 +41,8 @@ export class AppHeaderComponent implements OnInit {
   @Input() iframeSourceUrl: any;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private trackingService: TrackingService
   ) { }
 
   syncData(): void {
@@ -55,6 +58,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   connectQBD(): void {
+    this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
     this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
   }
 

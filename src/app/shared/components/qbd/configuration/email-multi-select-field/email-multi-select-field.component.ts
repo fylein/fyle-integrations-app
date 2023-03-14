@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -45,7 +47,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   emails: QBDEmailOption[];
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private trackingService: TrackingService
   ) { }
 
   clearSearch(options: DropdownFilterOptions): void {
@@ -64,6 +67,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   addEmail(): void {
+    this.trackingService.onClickEvent(ClickEvent.ADD_EMAIL_MANUALLY);
     const selectedEmails = this.form.value.email;
     selectedEmails.push(this.addEmailForm.value);
     this.emails.push(this.addEmailForm.value);
