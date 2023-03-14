@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { concat, toArray } from 'rxjs';
 import { RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -16,15 +17,9 @@ export class TravelperkComponent implements OnInit {
 
   RedirectLink = RedirectLink;
 
-  token: any;
-
-  managedUserId: string;
-
-  tokenUrl: any;
+  iframeSourceUrl: SafeResourceUrl;
 
   isLoading: boolean = true;
-
-  connectionId: string;
 
   showErrorScreen: boolean;
 
@@ -39,19 +34,16 @@ export class TravelperkComponent implements OnInit {
     private orgService: OrgService
   ) { }
 
-  getIframeSource() {
-    return this.travelperkService.sanitizeUrl(this.iframeSource);
-  }
-
   private addConnectionWidget() {
-    this.connectionId = this.travelperkData.travelperk_connection_id.toString();
-    this.managedUserId = this.org.managed_user_id;
+    const connectionId = this.travelperkData.travelperk_connection_id.toString();
+    const managedUserId = this.org.managed_user_id;
     this.isLoading = true;
 
-    this.orgService.generateToken(this.managedUserId).subscribe(res => {
-      this.token = res.token;
-      this.iframeSource = this.iframeSource + this.connectionId + '?workato_dl_token=' + this.token;
-      this.tokenUrl = this.getIframeSource();
+    this.orgService.generateToken(managedUserId).subscribe(res => {
+      const token = res.token;
+      const workatoBaseUrl = 'https://app.workato.com/direct_link/embedded/connections/';
+      const iframeSource = workatoBaseUrl + connectionId + '?workato_dl_token=' + token;
+      this.iframeSourceUrl = this.orgService.sanitizeUrl(iframeSource);
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
@@ -60,7 +52,7 @@ export class TravelperkComponent implements OnInit {
     });
   }
 
-  private setupTravelperk() {
+  private syncData() {
     const syncData = [];
 
     if (!this.org?.managed_user_id) {
@@ -87,6 +79,21 @@ export class TravelperkComponent implements OnInit {
       syncData.push(this.travelperkService.connectAwsS3());
     }
 
+    return syncData;
+  }
+
+  private checkTravelperkDataAndTriggerConnectionWidget() {
+    if (!this.travelperkData) {
+      this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
+        this.travelperkData = travelperkData;
+      });
+    }
+    this.addConnectionWidget();
+  }
+
+  private setupTravelperk() {
+    const syncData = this.syncData();
+
     if (syncData.length) {
       this.isTravelperkSetupInProgress = true;
       concat(...syncData).pipe(
@@ -94,12 +101,7 @@ export class TravelperkComponent implements OnInit {
       ).subscribe(() => {
         this.isLoading = false;
         this.isTravelperkSetupInProgress = false;
-        if (this.travelperkData === null) {
-          this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
-            this.travelperkData = travelperkData;
-          });
-        }
-        this.addConnectionWidget();
+        this.checkTravelperkDataAndTriggerConnectionWidget();
       }, () => {
         this.isLoading = false;
         this.isTravelperkSetupInProgress = false;
@@ -107,12 +109,7 @@ export class TravelperkComponent implements OnInit {
       });
     } else {
       this.isLoading = false;
-      if (this.travelperkData === null) {
-        this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
-          this.travelperkData = travelperkData;
-        });
-      }
-      this.addConnectionWidget();
+      this.checkTravelperkDataAndTriggerConnectionWidget();
     }
   }
 

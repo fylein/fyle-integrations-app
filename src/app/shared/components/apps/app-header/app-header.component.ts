@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-app-header',
@@ -8,6 +9,8 @@ import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.m
   styleUrls: ['./app-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
+
+  AppName = AppName;
 
   @Output() openDialog = new EventEmitter<void>();
 
@@ -33,7 +36,7 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() hideRefreshIcon: boolean;
 
-  @Input() tokenUrl: boolean;
+  @Input() iframeSourceUrl: any;
 
   constructor(
     private router: Router

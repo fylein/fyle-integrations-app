@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { EmailOption } from '../../models/bamboo-hr/bamboo-hr.model';
-import { Org } from '../../models/org/org.model';
+import { GeneratedToken, Org } from '../../models/org/org.model';
 import { ApiService } from '../core/api.service';
 import { StorageService } from '../core/storage.service';
 
@@ -12,6 +13,7 @@ import { StorageService } from '../core/storage.service';
 export class OrgService {
 
   constructor(
+    private sanitizer: DomSanitizer,
     private apiService: ApiService,
     private storageService: StorageService
   ) { }
@@ -51,9 +53,13 @@ export class OrgService {
     return this.apiService.post(`/orgs/${this.getOrgId()}/sendgrid_connection/`, {});
   }
 
-  generateToken(managedUserId: string): Observable<any> {
+  sanitizeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  generateToken(managedUserId: string): Observable<GeneratedToken> {
     return this.apiService.get(`/orgs/${this.getOrgId()}/generate_token/`, {
-      'managed_user_id': managedUserId
+      managed_user_id: managedUserId
     });
   }
 }
