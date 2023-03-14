@@ -19,7 +19,7 @@
         <app-error></app-error>
     </div>
 
-    <app-gusto-configuration *ngIf="!isLoading && isGustoConnected" ></app-gusto-configuration>
+    <app-gusto-configuration *ngIf="!isLoading && isGustoConnected" [additionalEmails]="additionalEmails" [gustoConfiguration]="gustoConfiguration" (updateConfiguration)="configurationUpdatesHandler($event)"></app-gusto-configuration>
     <!-- [isConfigurationSaveInProgress]="isConfigurationSaveInProgress" [gustoConfiguration]="gustoConfiguration" [additionalEmails]="additionalEmails" (updateConfiguration)="configurationUpdatesHandler($event)" -->
 
     <div *ngIf="isLoading" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-pt-70-px">
