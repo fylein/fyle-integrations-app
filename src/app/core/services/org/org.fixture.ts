@@ -15,5 +15,5 @@ export const orgMockData: Org = {
 };
 
 export const generateTokenData = {
-    token: 'eyJ0eXAiOiJKV1Q;iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI0N…ij-Z'
+    token: 'widget_token_comes_here'
 };
