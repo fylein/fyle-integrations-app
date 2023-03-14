@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { EmailOption } from '../../models/bamboo-hr/bamboo-hr.model';
@@ -53,7 +53,7 @@ export class OrgService {
     return this.apiService.post(`/orgs/${this.getOrgId()}/sendgrid_connection/`, {});
   }
 
-  sanitizeUrl(url: string) {
+  sanitizeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
