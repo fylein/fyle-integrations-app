@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="tw-pt-20-px tw-pb-44-px tw-flex tw-items-center tw-justify-center">
-                    <table class="table-fixed">
+                    <table class="tw-table-fixed">
                         <thead>
                           <tr>
                             <th>Gusto Field</th>
@@ -27,12 +27,12 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr> 
-                            <td><input type="text" value="Employee Name" class="tw-w-300-px !tw-px-10-px !tw-bg-disabled-bg-color !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" disabled></td>
+                          <tr *ngFor="let field of configurationFields"> 
+                            <td><input type="text" [value]="field" class="gusto-configuration-fields" disabled></td>
                             <td class="right-arrow tw-content-center "><svg-icon-sprite src="arrow" width="60px" hight="10px" class="tw-text-box-color"></svg-icon-sprite></td>
-                            <td><input type="text" value="Employee Name" class="tw-w-300-px !tw-px-10-px !tw-bg-disabled-bg-color !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" disabled></td>
+                            <td><input type="text" [value]="field" class="gusto-configuration-fields" disabled></td>
                           </tr>
-                          <tr> 
+                          <!-- <tr> 
                             <td><input type="text" value="Employee ID" class="tw-w-300-px !tw-px-10-px !tw-bg-disabled-bg-color !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" disabled></td>
                             <td class="right-arrow tw-content-center "><svg-icon-sprite src="arrow" width="60px" hight="10px" class="tw-text-box-color"></svg-icon-sprite></td>
                             <td><input type="text" value="Employee ID" class="tw-w-300-px !tw-px-10-px !tw-bg-disabled-bg-color !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" disabled></td>
@@ -51,7 +51,7 @@
                             <td><input type="text" value="Manager" class="tw-w-300-px !tw-px-10-px !tw-bg-disabled-bg-color !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" disabled></td>
                             <td class="right-arrow tw-content-center "><svg-icon-sprite src="arrow" width="60px" hight="10px" class="tw-text-box-color"></svg-icon-sprite></td>
                             <td><input type="text" value="Manager" class="tw-w-300-px !tw-px-10-px !tw-bg-disabled-bg-color !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" disabled></td>
-                          </tr>
+                          </tr> -->
                         </tbody>
                     </table>
                 </div>

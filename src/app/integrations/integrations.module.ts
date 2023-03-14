@@ -7,7 +7,6 @@ import { LandingComponent } from './landing/landing.component';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { QbdComponent } from './qbd/qbd.component';
 import { SharedModule } from '../shared/shared.module';
-import { GustoComponent } from './gusto/gusto.component';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 
@@ -17,7 +16,6 @@ import { TableModule } from 'primeng/table';
     IntegrationsComponent,
     LandingComponent,
     QbdComponent
-    // GustoComponent
   ],
   imports: [
     CommonModule,

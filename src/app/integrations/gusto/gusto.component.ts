@@ -44,25 +44,14 @@ export class GustoComponent implements OnInit {
 
   appName: string = InAppIntegration.GUSTO;
 
-  configurationForm: FormGroup;
-
-  saveInProgress: boolean;
-
-  ConfigurationCtaText = QBDConfigurationCtaText;
-
   private sessionStartTime = new Date();
 
   constructor(
     private gustoService: GustoService,
-    private formBuilder: FormBuilder,
     private orgService: OrgService,
     private trackingService: TrackingService,
     private toastService: QbdToastService
   ) { }
-
-  save(): void {
-
-  }
 
   syncEmployees(): void {
     this.trackingService.onClickEvent(ClickEvent.SYNC_GUSTO_EMPLOYEES);
@@ -136,19 +125,15 @@ export class GustoComponent implements OnInit {
   getGustoConfiguration(): void {
     const data = merge(
       this.orgService.getAdditionalEmails(),
-      this.orgService.getAdditionalEmails(),
       this.gustoService.getConfigurations().pipe(catchError(() => of(null)))
     );
     data.pipe(toArray()).subscribe((responses) => {
       responses.forEach((response: any) => {
         if (Array.isArray(response) && response.length) {
-          this.additionalEmails.length > 0 ? this.additionalEmails.concat(response) : this.additionalEmails = response;
+          this.additionalEmails = response;
         } else if (response?.hasOwnProperty('additional_email_options')) {
           this.gustoConfiguration = response;
         }
-      });
-      this.configurationForm = this.formBuilder.group({
-        email: [this.gustoConfiguration?.emails_selected.length > 0 ? this.gustoConfiguration?.emails_selected : [], Validators.required]
       });
       this.setupGusto();
     });
