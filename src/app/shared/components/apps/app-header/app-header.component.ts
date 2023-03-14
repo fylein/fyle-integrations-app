@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
@@ -38,7 +39,7 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() hideRefreshIcon: boolean;
 
-  @Input() iframeSourceUrl: any;
+  @Input() iframeSourceUrl: SafeResourceUrl;
 
   constructor(
     private router: Router,

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { concat, toArray } from 'rxjs';
-import { RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { AppName, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -16,6 +16,8 @@ export class TravelperkComponent implements OnInit {
   iframeSource: string = 'https://app.workato.com/direct_link/embedded/connections/';
 
   RedirectLink = RedirectLink;
+
+  AppName = AppName;
 
   iframeSourceUrl: SafeResourceUrl;
 
