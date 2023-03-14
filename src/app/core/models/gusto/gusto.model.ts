@@ -36,7 +36,7 @@ export class GustoModel {
       return {
         org: orgId,
         additional_email_options: GustoHrConfigurationForm.value.additionalEmails ? GustoHrConfigurationForm.value.additionalEmails : [],
-        emails_selected: GustoHrConfigurationForm.value.emails
+        emails_selected: GustoHrConfigurationForm.value.email ? GustoHrConfigurationForm.value.email : []
       };
     }
   }
