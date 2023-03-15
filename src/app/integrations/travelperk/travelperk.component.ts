@@ -70,7 +70,7 @@ export class TravelperkComponent implements OnInit {
     }
 
     if (!this.org?.is_fyle_connected) {
-      syncData.push(this.orgService.connectFyle());
+      syncData.push(this.orgService.connectFyle(AppName.TRAVELPERK));
     }
 
     if (!this.travelperkData?.travelperk_connection_id) {
