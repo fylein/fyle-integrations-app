@@ -129,4 +129,9 @@ describe('GustoComponent', () => {
     expect((component as any).setupGusto()).toBeUndefined();
   });
 
+  it('getGustoConfiguration function check', () => {
+    spyOn(orgService, 'getAdditionalEmails').and.returnValue(of([{email: 'dhaarani', name: 'dhaarani'}]));
+    expect(component.getGustoConfiguration()).toBeUndefined();
+  });
+
 });

@@ -63,7 +63,8 @@ export class GustoConfigurationComponent implements OnInit {
   setupGustoConfiguration() {
     this.configurationForm = this.formBuilder.group({
       email: [this.gustoConfiguration?.emails_selected.length > 0 ? this.gustoConfiguration?.emails_selected : []],
-      additionalEmails: [this.gustoConfiguration?.additional_email_options.length > 0 ? this.gustoConfiguration?.additional_email_options : []]
+      additionalEmails: [this.gustoConfiguration?.additional_email_options.length > 0 ? this.gustoConfiguration?.additional_email_options : []],
+      search: []
     });
   }
 
