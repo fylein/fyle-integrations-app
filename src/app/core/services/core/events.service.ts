@@ -15,6 +15,8 @@ export class EventsService {
     this.windowService.nativeWindow.addEventListener('message', (message) => {
       if (message.data && message.data.redirectUri && message.origin === environment.fyle_app_url) {
         this.windowService.openInNewTab(message.data.redirectUri);
+      } else {
+        console.log(message.data)
       }
     }, false);
   }
