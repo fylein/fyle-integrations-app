@@ -104,7 +104,9 @@ export class TravelperkComponent implements OnInit {
       const isRecipeEnabled: boolean = workatoConnectionStatus.payload.connected ? true : false;
       this.travelperkService.patchConfigurations(isRecipeEnabled).subscribe();
     }, () => {
-      this.travelperkService.postConfigurations().subscribe();
+      if (workatoConnectionStatus.payload.connected) {
+        this.travelperkService.postConfigurations().subscribe();
+      }
     });
   }
 
