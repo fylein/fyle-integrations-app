@@ -99,9 +99,10 @@ export class TravelperkComponent implements OnInit {
     }
   }
 
-  private updateOrCreateTravelperkConfiguration(): void {
-    this.travelperkService.getConfigurations().subscribe((travelperkConfiguration) => {
-      this.travelperkService.patchConfigurations(travelperkConfiguration.is_recipe_enabled).subscribe();
+  private updateOrCreateTravelperkConfiguration(workatoConnectionStatus: WorkatoConnectionStatus): void {
+    this.travelperkService.getConfigurations().subscribe(() => {
+      const isRecipeEnabled: boolean = workatoConnectionStatus.payload.connected ? true : false;
+      this.travelperkService.patchConfigurations(isRecipeEnabled).subscribe();
     }, () => {
       this.travelperkService.postConfigurations().subscribe();
     });
@@ -109,7 +110,7 @@ export class TravelperkComponent implements OnInit {
 
   private setupWorkatoConnectionWatcher(): void {
     this.eventsService.getWorkatoConnectionStatus.subscribe((workatoConnectionStatus: WorkatoConnectionStatus) => {
-      this.updateOrCreateTravelperkConfiguration();
+      this.updateOrCreateTravelperkConfiguration(workatoConnectionStatus);
     });
   }
 
