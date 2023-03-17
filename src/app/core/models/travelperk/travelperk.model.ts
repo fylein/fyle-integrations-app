@@ -1,3 +1,5 @@
+import { Org} from 'src/app/core/models/org/org.model'
+
 export type Travelperk = {
     id: number;
     folder_id: string;
@@ -8,4 +10,27 @@ export type Travelperk = {
     travelperk_connection_id: number;
     created_at: Date;
     updated_at: Date;
+}
+
+export type TravelperkConfigurationPost = {
+    org: number;
+}
+
+export type TravelperkConfiguration = {
+    id: number,
+    org: Org,
+    recipe_id: string,
+    recipe_data: string
+    is_recipe_enabled: boolean
+}
+
+
+export type WorkatoConnectionStatus = {
+    wk:boolean,
+    type:string,
+    payload: {
+        id: number,
+        provider:string
+        connected:true
+    }
 }

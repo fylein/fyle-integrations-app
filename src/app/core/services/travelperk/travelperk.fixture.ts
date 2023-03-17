@@ -32,3 +32,7 @@ export const connectAwsS3MockData = {
     "folder_id": 12,
     "parent_id": null
 };
+
+export const travelperkErrorMockData = {
+    message: "Travelperk Not Found"
+};

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Travelperk } from '../../models/travelperk/travelperk.model';
+import { Cacheable, CacheBuster } from 'ts-cacheable';
+import { Travelperk, TravelperkConfiguration, TravelperkConfigurationPost } from '../../models/travelperk/travelperk.model';
 import { ApiService } from '../core/api.service';
 import { OrgService } from '../org/org.service';
 
@@ -36,4 +37,20 @@ export class TravelperkService {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/s3_connection/`, {});
   }
 
+
+  postConfigurations(payload: TravelperkConfigurationPost): Observable<TravelperkConfiguration> {
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/configurations/`, payload);
+  }
+
+  getConfigurations(): Observable<TravelperkConfiguration> {
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/configurations/`,{
+      org_id: this.orgId
+    });
+  }
+
+  patchConfigurations(): Observable<TravelperkConfiguration>{
+    return this.apiService.patch(`/orgs/${this.orgId}/travelperk/configurations/`,{
+      org_id: this.orgId
+    });
+  }
 }

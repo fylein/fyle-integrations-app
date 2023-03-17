@@ -27,7 +27,6 @@ export class OrgService {
     return this.apiService.patch('/orgs/', {});
   }
 
-  @Cacheable()
   getOrgs(orgId: string | undefined): Observable<Org> {
     return this.apiService.get(`/orgs/`, {
       org_id: orgId
