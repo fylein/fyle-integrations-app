@@ -90,7 +90,7 @@ export class TravelperkComponent implements OnInit {
 
   private checkTravelperkDataAndTriggerConnectionWidget() {
     if (!this.travelperkData) {
-      this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
+      this.travelperkService.getTravelperkData().subscribe((travelperkData: Travelperk) => {
         this.travelperkData = travelperkData;
         this.addConnectionWidget();
       });
@@ -120,28 +120,23 @@ export class TravelperkComponent implements OnInit {
     this.setupWorkatoConnectionWatcher();
     const syncData = this.syncData();
 
-    if (syncData.length) {
-      this.isTravelperkSetupInProgress = true;
-      concat(...syncData).pipe(
-        toArray()
-      ).subscribe((responses) => {
-        responses.forEach((response: any) => {
-          if (response?.hasOwnProperty('managed_user_id') ) {
-            this.org.managed_user_id = response.managed_user_id;
-          }
-        });
-        this.isLoading = false;
-        this.isTravelperkSetupInProgress = false;
-        this.checkTravelperkDataAndTriggerConnectionWidget();
-      }, () => {
-        this.isLoading = false;
-        this.isTravelperkSetupInProgress = false;
-        this.showErrorScreen = true;
+    this.isTravelperkSetupInProgress = true;
+    concat(...syncData).pipe(
+      toArray()
+    ).subscribe((responses) => {
+      responses.forEach((response: any) => {
+        if (response?.hasOwnProperty('managed_user_id') ) {
+          this.org.managed_user_id = response.managed_user_id;
+        }
       });
-    } else {
       this.isLoading = false;
+      this.isTravelperkSetupInProgress = false;
       this.checkTravelperkDataAndTriggerConnectionWidget();
-    }
+    }, () => {
+      this.isLoading = false;
+      this.isTravelperkSetupInProgress = false;
+      this.showErrorScreen = true;
+    });
   }
 
 

@@ -1,4 +1,4 @@
-import { Travelperk, TravelperkConfiguration } from "../../models/travelperk/travelperk.model";
+import { Travelperk, TravelperkConfiguration, WorkatoConnectionStatus } from "../../models/travelperk/travelperk.model";
 import { orgMockData } from "../org/org.fixture";
 
 export const travelperkMockData: Travelperk = {
@@ -16,7 +16,8 @@ export const travelperkMockData: Travelperk = {
 export const connectTravelperkMockData = {
     'message': {
         'connection_id': '123'
-    }
+    },
+    'managed_user_id': 234
 };
 
 export const connectAwsS3MockData = {
@@ -44,4 +45,15 @@ export const travelperkConfigurationMockData: TravelperkConfiguration = {
     recipe_id: '123',
     recipe_data: '123',
     is_recipe_enabled: true
+};
+
+
+export const workatoConnectionStatusMockData: WorkatoConnectionStatus = {
+    wk: true,
+    type: 'travelperk',
+    payload: {
+        id: 1,
+        provider: 'travelperk',
+        connected: false
+    }
 };

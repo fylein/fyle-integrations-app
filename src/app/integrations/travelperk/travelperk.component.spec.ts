@@ -7,20 +7,25 @@ import { of, throwError } from 'rxjs';
 import { TravelperkComponent } from './travelperk.component';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { generateTokenData, orgMockData } from 'src/app/core/services/org/org.fixture';
-import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockData, travelperkMockData } from 'src/app/core/services/travelperk/travelperk.fixture';
+import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockData, travelperkMockData, workatoConnectionStatusMockData } from 'src/app/core/services/travelperk/travelperk.fixture';
+import { EventsService } from 'src/app/core/services/core/events.service';
 
 describe('TravelperkComponent', () => {
   let component: TravelperkComponent;
   let fixture: ComponentFixture<TravelperkComponent>;
   let orgService: OrgService;
   let travelperkService: TravelperkService;
+  let eventsService: EventsService;
 
   const service1 = {
     createFolder: () => of({}),
     uploadPackage: () => of({}),
-    getTravelperkData: () => of(travelperkMockData),
+    getTravelperkData: () => of(throwError({})),
     connectTravelperk: () => of(connectTravelperkMockData),
-    connectAwsS3: () => of(connectAwsS3MockData)
+    connectAwsS3: () => of(connectAwsS3MockData),
+    getConfigurations: () => of(throwError({})),
+    patchConfigurations: () => of({}),
+    postConfigurations: () => of({})
   };
 
   const service2 = {
@@ -32,6 +37,9 @@ describe('TravelperkComponent', () => {
     getOrgs: () => of([orgMockData])
   };
 
+  const service3 = {
+    getWorkatoConnectionStatus: of(workatoConnectionStatusMockData)
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -41,7 +49,8 @@ describe('TravelperkComponent', () => {
       ],
       providers: [
         {provide: TravelperkService, useValue: service1},
-        {provide: OrgService, useValue: service2 }
+        {provide: OrgService, useValue: service2 },
+        {provide: EventsService, useValue: service3}
       ]
     })
     .compileComponents();
@@ -50,6 +59,7 @@ describe('TravelperkComponent', () => {
     component = fixture.componentInstance;
     orgService = TestBed.inject(OrgService);
     travelperkService = TestBed.inject(TravelperkService);
+    eventsService = TestBed.inject(EventsService);
     fixture.detectChanges();
   });
 
@@ -58,16 +68,64 @@ describe('TravelperkComponent', () => {
   });
 
   it('should get Travelperk Data', () => {
+    spyOn(travelperkService, 'getTravelperkData').and.returnValue(of(travelperkMockData));
     (component as any).setupPage();
-    expect(component.travelperkData).toBe(travelperkMockData);
+    expect(component.travelperkData).toEqual(travelperkMockData);
   });
 
   it('should sync travelperk based on data', () => {
-    component.travelperkData = travelperkMockData;
-    spyOn(travelperkService, 'createFolder').and.returnValue(throwError({}));
+    const travelperkMockDataWithoutSyncData = Object.create(travelperkMockData);
+    travelperkMockDataWithoutSyncData.folder_id = null;
+    travelperkMockDataWithoutSyncData.is_fyle_connected = false;
+    travelperkMockDataWithoutSyncData.travelperk_connection_id = 876;
+    travelperkMockDataWithoutSyncData.is_s3_connected = false;
+    spyOn(travelperkService, 'getTravelperkData').and.returnValue(of(travelperkMockDataWithoutSyncData));
+    fixture.detectChanges();
+
+    (component as any).setupPage();
+    expect(component.showErrorScreen).toBeUndefined();
+  });
+
+  it('should show error screen if connection widget fails', () => {
+    spyOn(travelperkService, 'getTravelperkData').and.returnValue(of(travelperkMockData));
+    spyOn(orgService, 'generateToken').and.returnValue(throwError({}));
+
+    (component as any).setupPage();
+    (component as any).addConnectionWidget();
+    expect(component.showErrorScreen).toBe(true);
+  });
+
+  it('should return syncData based on mock data', () => {
     spyOn(travelperkService, 'getTravelperkData').and.returnValue(throwError({}));
 
-    (component as any).setupTravelperk();
-    expect(component.showErrorScreen).toBeUndefined();
+    const syncData = (component as any).syncData();
+    expect(syncData.length).toBeGreaterThanOrEqual(6);
+  });
+
+  it('should update travelperk configuration if connected', () => {
+    (component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockData);
+  });
+
+  it('should update travelperk configuration if disconnected', () => {
+    const workatoConnectionStatusMockDataDisconnect = JSON.parse(JSON.stringify(workatoConnectionStatusMockData));
+    workatoConnectionStatusMockDataDisconnect.payload.connected = true;
+
+    (component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockDataDisconnect);
+  });
+
+  it('should create travelperk configuration if disconnected', () => {
+    spyOn(travelperkService, 'getConfigurations').and.returnValue(throwError({}));
+    const workatoConnectionStatusMockDataDisconnect = JSON.parse(JSON.stringify(workatoConnectionStatusMockData));
+    workatoConnectionStatusMockDataDisconnect.payload.connected = true;
+
+    (component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockDataDisconnect);
+  });
+
+  it('should show failed page if syncing of data api failed', () => {
+    spyOn(travelperkService, 'getTravelperkData').and.returnValue(throwError({}));
+    spyOn(travelperkService, 'createFolder').and.returnValue(throwError({}));
+
+    (component as any).setupPage();
+    expect(component.showErrorScreen).toBeTrue();
   });
 });
