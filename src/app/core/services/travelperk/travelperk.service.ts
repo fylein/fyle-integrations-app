@@ -48,9 +48,11 @@ export class TravelperkService {
     });
   }
 
-  patchConfigurations(): Observable<TravelperkConfiguration>{
-    return this.apiService.patch(`/orgs/${this.orgId}/travelperk/configurations/`,{
-      org_id: this.orgId
+  patchConfigurations(recipe_status: boolean): Observable<TravelperkConfiguration>{
+    console.log("Patch serviec is called");
+    return this.apiService.patch(`/orgs/${this.orgId}/travelperk/recipe_status/`,{
+      org_id: this.orgId,
+      recipe_status: recipe_status
     });
   }
 }

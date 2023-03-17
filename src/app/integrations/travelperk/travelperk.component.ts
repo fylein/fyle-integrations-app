@@ -41,9 +41,14 @@ export class TravelperkComponent implements OnInit {
   ) {
     this.eventsService.getWorkatoConnectionStatus.subscribe((workatoConnectionStatus: WorkatoConnectionStatus)=>{
       if (workatoConnectionStatus.payload.connected){
+        console.log("IF")
         this.travelperkService.getConfigurations().subscribe((travelperkConfiguration)=>{
           console.log(travelperkConfiguration)
           this.travelperkConfiguration= travelperkConfiguration;
+          if (!travelperkConfiguration.is_recipe_enabled){
+            console.log("setup org if case")
+            this.travelperkService.patchConfigurations(true)
+          }
         }, ()=>{
           const payload: TravelperkConfigurationPost = {
             org : this.org.id
@@ -54,9 +59,19 @@ export class TravelperkComponent implements OnInit {
           })
         });
       } 
-      // else if (!workatoConnectionStatus.payload.connected) {
-        
-      // }
+
+      else if (!workatoConnectionStatus.payload.connected) {
+        console.log("else")
+        this.travelperkService.getConfigurations().subscribe((travelperkConfiguration)=>{
+          this.travelperkConfiguration = travelperkConfiguration;
+          if (travelperkConfiguration?.is_recipe_enabled){
+            console.log("setup org else case")
+            this.travelperkService.patchConfigurations(false)
+          }
+        }, ()=>{
+
+        })
+      }
     })
   }
 
