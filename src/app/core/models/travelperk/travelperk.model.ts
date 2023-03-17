@@ -1,4 +1,4 @@
-import { Org} from 'src/app/core/models/org/org.model'
+import { Org} from 'src/app/core/models/org/org.model';
 
 export type Travelperk = {
     id: number;
@@ -12,10 +12,6 @@ export type Travelperk = {
     updated_at: Date;
 }
 
-export type TravelperkConfigurationPost = {
-    org: number;
-}
-
 export type TravelperkConfiguration = {
     id: number,
     org: Org,
@@ -26,11 +22,12 @@ export type TravelperkConfiguration = {
 
 
 export type WorkatoConnectionStatus = {
-    wk:boolean,
-    type:string,
+    wk: boolean,
+    type: string,
     payload: {
         id: number,
-        provider:string
-        connected:true
+        provider: string
+        connected?: boolean,
+        error?: string,
     }
 }

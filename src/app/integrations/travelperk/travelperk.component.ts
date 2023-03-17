@@ -3,7 +3,7 @@ import { SafeResourceUrl } from '@angular/platform-browser';
 import { concat, toArray } from 'rxjs';
 import { AppName, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { Travelperk, TravelperkConfiguration, TravelperkConfigurationPost, WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
+import { Travelperk, WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
 import { EventsService } from 'src/app/core/services/core/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
@@ -26,8 +26,6 @@ export class TravelperkComponent implements OnInit {
 
   showErrorScreen: boolean;
 
-  travelperkConfiguration: TravelperkConfiguration;
-
   travelperkData: Travelperk;
 
   isTravelperkSetupInProgress: boolean;
@@ -38,42 +36,7 @@ export class TravelperkComponent implements OnInit {
     private travelperkService: TravelperkService,
     private orgService: OrgService,
     private eventsService: EventsService
-  ) {
-    this.eventsService.getWorkatoConnectionStatus.subscribe((workatoConnectionStatus: WorkatoConnectionStatus)=>{
-      if (workatoConnectionStatus.payload.connected){
-        console.log("IF")
-        this.travelperkService.getConfigurations().subscribe((travelperkConfiguration)=>{
-          console.log(travelperkConfiguration)
-          this.travelperkConfiguration= travelperkConfiguration;
-          if (!travelperkConfiguration.is_recipe_enabled){
-            console.log("setup org if case")
-            this.travelperkService.patchConfigurations(true)
-          }
-        }, ()=>{
-          const payload: TravelperkConfigurationPost = {
-            org : this.org.id
-          }
-          this.travelperkService.postConfigurations(payload).subscribe((travelperkConfiguration)=>{
-            console.log(travelperkConfiguration)
-            this.travelperkConfiguration = travelperkConfiguration;
-          })
-        });
-      } 
-
-      else if (!workatoConnectionStatus.payload.connected) {
-        console.log("else")
-        this.travelperkService.getConfigurations().subscribe((travelperkConfiguration)=>{
-          this.travelperkConfiguration = travelperkConfiguration;
-          if (travelperkConfiguration?.is_recipe_enabled){
-            console.log("setup org else case")
-            this.travelperkService.patchConfigurations(false)
-          }
-        }, ()=>{
-
-        })
-      }
-    })
-  }
+  ) { }
 
   private addConnectionWidget() {
     const connectionId = this.travelperkData.travelperk_connection_id.toString();
@@ -120,7 +83,7 @@ export class TravelperkComponent implements OnInit {
       syncData.push(this.travelperkService.connectAwsS3());
     }
 
-    syncData.push(this.orgService.getOrgs(this.org.fyle_org_id))
+    syncData.push(this.orgService.getOrgs(this.org.fyle_org_id));
     return syncData;
 
   }
@@ -129,7 +92,6 @@ export class TravelperkComponent implements OnInit {
     if (!this.travelperkData) {
       this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
         this.travelperkData = travelperkData;
-        console.log(this.travelperkData)
         this.addConnectionWidget();
       });
     } else {
@@ -137,26 +99,36 @@ export class TravelperkComponent implements OnInit {
     }
   }
 
+  private updateOrCreateTravelperkConfiguration(): void {
+    this.travelperkService.getConfigurations().subscribe((travelperkConfiguration) => {
+      this.travelperkService.patchConfigurations(travelperkConfiguration.is_recipe_enabled).subscribe();
+    }, () => {
+      this.travelperkService.postConfigurations().subscribe();
+    });
+  }
 
+  private setupWorkatoConnectionWatcher(): void {
+    this.eventsService.getWorkatoConnectionStatus.subscribe((workatoConnectionStatus: WorkatoConnectionStatus) => {
+      this.updateOrCreateTravelperkConfiguration();
+    });
+  }
 
   private setupTravelperk() {
+    this.setupWorkatoConnectionWatcher();
     const syncData = this.syncData();
 
-    console.log(syncData)
     if (syncData.length) {
-      console.log("Entered the if block now")
       this.isTravelperkSetupInProgress = true;
       concat(...syncData).pipe(
         toArray()
       ).subscribe((responses) => {
-        responses.forEach((response: any )=> {
+        responses.forEach((response: any) => {
           if (response?.hasOwnProperty('managed_user_id') ) {
-            this.org.managed_user_id = response['managed_user_id'];
+            this.org.managed_user_id = response.managed_user_id;
           }
-        })
+        });
         this.isLoading = false;
         this.isTravelperkSetupInProgress = false;
-        console.log("Concatenation is done")
         this.checkTravelperkDataAndTriggerConnectionWidget();
       }, () => {
         this.isLoading = false;
@@ -164,7 +136,6 @@ export class TravelperkComponent implements OnInit {
         this.showErrorScreen = true;
       });
     } else {
-      console.log("Etred the else block")
       this.isLoading = false;
       this.checkTravelperkDataAndTriggerConnectionWidget();
     }

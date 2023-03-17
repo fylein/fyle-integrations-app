@@ -18,13 +18,8 @@ export class EventsService {
     this.windowService.nativeWindow.addEventListener('message', (message) => {
       if (message.data && message.data.redirectUri && message.origin === environment.fyle_app_url) {
         this.windowService.openInNewTab(message.data.redirectUri);
-      } 
-      if(message.data && JSON.parse(message.data).type === 'connectionStatusChange') {
-        console.log("Conenction status from workato")
-        console.log(message.data);
-        const workatoConnectionStatus = JSON.parse(message.data)
-        console.log(workatoConnectionStatus.wk)
-        this.getWorkatoConnectionStatus.emit(workatoConnectionStatus);
+      } else if (message.data && JSON.parse(message.data).type === 'connectionStatusChange' && message.origin.includes('workato')) {
+        this.getWorkatoConnectionStatus.emit(JSON.parse(message.data));
       }
     }, false);
   }

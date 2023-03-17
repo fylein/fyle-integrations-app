@@ -135,14 +135,14 @@ describe('OrgService', () => {
     }
   });
 
-  it("get token for ifram", () => {
+  it("get token for iframe", () => {
     service.generateToken('25').subscribe((res) => {
       expect(res).toEqual(generateTokenData);
     });
 
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/orgs/1/generate_token/`
+      url: `${API_BASE_URL}/orgs/1/generate_token/?managed_user_id=25`
     });
 
     req.flush(generateTokenData);

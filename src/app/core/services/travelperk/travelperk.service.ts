@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
-import { Travelperk, TravelperkConfiguration, TravelperkConfigurationPost } from '../../models/travelperk/travelperk.model';
+import { Travelperk, TravelperkConfiguration } from '../../models/travelperk/travelperk.model';
 import { ApiService } from '../core/api.service';
 import { OrgService } from '../org/org.service';
+
+const travelPerkConfigurationCache$ = new Subject<void>();
 
 @Injectable({
   providedIn: 'root'
@@ -37,20 +39,29 @@ export class TravelperkService {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/s3_connection/`, {});
   }
 
-
-  postConfigurations(payload: TravelperkConfigurationPost): Observable<TravelperkConfiguration> {
-    return this.apiService.post(`/orgs/${this.orgId}/travelperk/configurations/`, payload);
-  }
-
+  @Cacheable({
+    cacheBusterObserver: travelPerkConfigurationCache$
+  })
   getConfigurations(): Observable<TravelperkConfiguration> {
-    return this.apiService.get(`/orgs/${this.orgId}/travelperk/configurations/`,{
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/configurations/`, {
       org_id: this.orgId
     });
   }
 
-  patchConfigurations(recipe_status: boolean): Observable<TravelperkConfiguration>{
-    console.log("Patch serviec is called");
-    return this.apiService.patch(`/orgs/${this.orgId}/travelperk/recipe_status/`,{
+  @CacheBuster({
+    cacheBusterNotifier: travelPerkConfigurationCache$
+  })
+  postConfigurations(): Observable<TravelperkConfiguration> {
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/configurations/`, {
+      org: this.orgId
+    });
+  }
+
+  @CacheBuster({
+    cacheBusterNotifier: travelPerkConfigurationCache$
+  })
+  patchConfigurations(recipe_status: boolean): Observable<TravelperkConfiguration> {
+    return this.apiService.patch(`/orgs/${this.orgId}/travelperk/recipe_status/`, {
       org_id: this.orgId,
       recipe_status: recipe_status
     });

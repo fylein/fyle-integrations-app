@@ -7,7 +7,7 @@ import { of, throwError } from 'rxjs';
 import { TravelperkComponent } from './travelperk.component';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { generateTokenData } from 'src/app/core/services/org/org.fixture';
-import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockData, travelperkMockData,  } from 'src/app/core/services/travelperk/travelperk.fixture';
+import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockData, travelperkMockData } from 'src/app/core/services/travelperk/travelperk.fixture';
 
 describe('TravelperkComponent', () => {
   let component: TravelperkComponent;
@@ -59,14 +59,14 @@ describe('TravelperkComponent', () => {
     (component as any).setupPage();
     expect(component.travelperkData).toBe(travelperkMockData);
 
-    const travelperkMockData2 = travelperkErrorMockData
+    const travelperkMockData2 = travelperkErrorMockData;
     spyOn(travelperkService, 'getTravelperkData').and.returnValue(throwError(travelperkMockData2));
     (component as any).setupPage();
     expect(component.travelperkData).toBeUndefined();
   });
 
   it('should start syncing data for new logins', () => {
-    const travelperkMockData2 = travelperkErrorMockData
+    const travelperkMockData2 = travelperkErrorMockData;
     spyOn(travelperkService, 'getTravelperkData').and.returnValue(throwError(travelperkMockData2));
     (component as any).setupPage();
     expect(component.travelperkData).toBeUndefined();
@@ -81,6 +81,4 @@ describe('TravelperkComponent', () => {
     (component as any).setupTravelperk();
     expect(component.showErrorScreen).toBeTrue();
   });
-
-
 });
