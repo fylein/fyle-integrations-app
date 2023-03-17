@@ -1,4 +1,5 @@
-import { Travelperk } from "../../models/travelperk/travelperk.model";
+import { Travelperk, TravelperkConfiguration } from "../../models/travelperk/travelperk.model";
+import { orgMockData } from "../org/org.fixture";
 
 export const travelperkMockData: Travelperk = {
     id: 1,
@@ -35,4 +36,12 @@ export const connectAwsS3MockData = {
 
 export const travelperkErrorMockData = {
     message: "Travelperk Not Found"
+};
+
+export const travelperkConfigurationMockData: TravelperkConfiguration = {
+    id: 1,
+    org: orgMockData,
+    recipe_id: '123',
+    recipe_data: '123',
+    is_recipe_enabled: true
 };

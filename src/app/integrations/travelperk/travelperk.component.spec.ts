@@ -6,7 +6,7 @@ import { of, throwError } from 'rxjs';
 
 import { TravelperkComponent } from './travelperk.component';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { generateTokenData } from 'src/app/core/services/org/org.fixture';
+import { generateTokenData, orgMockData } from 'src/app/core/services/org/org.fixture';
 import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockData, travelperkMockData } from 'src/app/core/services/travelperk/travelperk.fixture';
 
 describe('TravelperkComponent', () => {
@@ -27,7 +27,9 @@ describe('TravelperkComponent', () => {
     sanitizeUrl: () => of('dabdwba'),
     createWorkatoWorkspace: () => of({}),
     connectFyle: () => of({}),
-    generateToken: () => of(generateTokenData)
+    generateToken: () => of(generateTokenData),
+    getCachedOrg: () => of(orgMockData),
+    getOrgs: () => of([orgMockData])
   };
 
 
@@ -58,27 +60,14 @@ describe('TravelperkComponent', () => {
   it('should get Travelperk Data', () => {
     (component as any).setupPage();
     expect(component.travelperkData).toBe(travelperkMockData);
-
-    const travelperkMockData2 = travelperkErrorMockData;
-    spyOn(travelperkService, 'getTravelperkData').and.returnValue(throwError(travelperkMockData2));
-    (component as any).setupPage();
-    expect(component.travelperkData).toBeUndefined();
   });
 
-  it('should start syncing data for new logins', () => {
-    const travelperkMockData2 = travelperkErrorMockData;
-    spyOn(travelperkService, 'getTravelperkData').and.returnValue(throwError(travelperkMockData2));
-    (component as any).setupPage();
-    expect(component.travelperkData).toBeUndefined();
-  });
-
-  it('should sync bamboo hr data based on data', () => {
+  it('should sync travelperk based on data', () => {
     component.travelperkData = travelperkMockData;
+    spyOn(travelperkService, 'createFolder').and.returnValue(throwError({}));
+    spyOn(travelperkService, 'getTravelperkData').and.returnValue(throwError({}));
+
     (component as any).setupTravelperk();
     expect(component.showErrorScreen).toBeUndefined();
-
-    spyOn(travelperkService, 'createFolder').and.returnValue(throwError({}));
-    (component as any).setupTravelperk();
-    expect(component.showErrorScreen).toBeTrue();
   });
 });

@@ -2,7 +2,7 @@ import { HttpTestingController, HttpClientTestingModule } from '@angular/common/
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
 import { OrgService } from '../org/org.service';
-import { travelperkMockData, connectTravelperkMockData, connectAwsS3MockData } from './travelperk.fixture';
+import { travelperkMockData, connectTravelperkMockData, connectAwsS3MockData, travelperkConfigurationMockData } from './travelperk.fixture';
 
 import { TravelperkService } from './travelperk.service';
 
@@ -98,5 +98,44 @@ describe('TravelperkService', () => {
     });
 
     req.flush(connectAwsS3MockData);
+  });
+
+  it('should get travelperk configurations', () => {
+    service.getConfigurations().subscribe((res) => {
+      expect(res).toEqual(travelperkConfigurationMockData);
+    });
+
+    const req = httpMock.expectOne({
+      method: 'GET',
+      url: `${API_BASE_URL}/orgs/1/travelperk/configurations/?org_id=1`
+    });
+
+    req.flush(travelperkConfigurationMockData);
+  });
+
+  it('should post travelperk configurations', () => {
+    service.postConfigurations().subscribe((res) => {
+      expect(res).toEqual(travelperkConfigurationMockData);
+    });
+
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/orgs/1/travelperk/configurations/`
+    });
+
+    req.flush(travelperkConfigurationMockData);
+  });
+
+  it('should patch travelperk configurations', () => {
+    service.patchConfigurations(true).subscribe((res) => {
+      expect(res).toEqual(travelperkConfigurationMockData);
+    });
+
+    const req = httpMock.expectOne({
+      method: 'PATCH',
+      url: `${API_BASE_URL}/orgs/1/travelperk/recipe_status/`
+    });
+
+    req.flush(travelperkConfigurationMockData);
   });
 });
