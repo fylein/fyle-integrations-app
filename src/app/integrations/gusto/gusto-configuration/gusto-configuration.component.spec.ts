@@ -63,7 +63,7 @@ describe('GustoConfigurationComponent', () => {
   it('should create', () => {
     component.gustoConfiguration.additional_email_options = [];
     component.gustoConfiguration.emails_selected = [];
-    expect(component).toBeTruthy();
+    expect(component.setupGustoConfiguration()).toBeUndefined();
   });
 
   it('Save function', () => {

@@ -32,6 +32,13 @@ export enum ToastSeverity {
     ERROR = 'error'
 }
 
+export enum AppName {
+  BAMBOO_HR = 'BambooHR',
+  QBD = 'QuickBooks Desktop',
+  TRAVELPERK = 'Travelperk',
+  GUSTO = 'Gusto'
+}
+
 export enum Page {
   LANDING = 'Landing',
   BAMBOO_HR_LANDING = 'Bamboo HR Landing',

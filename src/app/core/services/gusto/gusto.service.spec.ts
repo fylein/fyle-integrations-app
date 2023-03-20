@@ -36,14 +36,14 @@ describe('GustoService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get bamboo hr data', () => {
+  it('should get gusto data', () => {
     service.getGustoData().subscribe((res) => {
       expect(res).toEqual(GustoMockData);
     });
 
     const req = httpMock.expectOne({
       method: 'GET',
-      url: `${API_BASE_URL}/orgs/1/gusto/home/`
+      url: `${API_BASE_URL}/orgs/1/gusto/`
     });
 
     req.flush(GustoMockData);

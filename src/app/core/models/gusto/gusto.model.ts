@@ -31,6 +31,16 @@ export type GustoConfiguration = {
     emails_selected: EmailOption[];
 }
 
+export type WorkatoConnectionStatus = {
+  wk:boolean,
+  type:string,
+  payload: {
+      id: number,
+      provider:string
+      connected:true
+  }
+}
+
 export class GustoModel {
     static constructGustoConfigurationPayload(GustoHrConfigurationForm: FormGroup, orgId: number): GustoConfigurationPost {
       return {

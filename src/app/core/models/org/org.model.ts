@@ -11,3 +11,7 @@ export type Org = {
     created_at: Date;
     updated_at: Date;
 }
+
+export type GeneratedToken = {
+    token: string
+}

@@ -6,7 +6,7 @@ import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { GustoMockConfiguration, GustoMockData, GustoMockConfigurationPayload, GustoMockWithoutToken } from 'src/app/core/services/gusto/gusto.service.fixture';
-import { orgMockData } from 'src/app/core/services/org/org.fixture';
+import { generateTokenData, orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
 import { GustoComponent } from './gusto.component';
@@ -23,7 +23,9 @@ describe('GustoComponent', () => {
     getAdditionalEmails: () => of(GustoMockConfiguration.additional_email_options),
     createWorkatoWorkspace: () => of({}),
     connectSendgrid: () => of({}),
-    connectFyle: () => of({})
+    connectFyle: () => of({}),
+    generateToken: () => of(generateTokenData),
+    sanitizeUrl: () => of('fyle')
   };
 
   const service2 = {
@@ -65,7 +67,7 @@ describe('GustoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get Bamboo HR Data', () => {
+  it('should get Gusto Data', () => {
     (component as any).setupPage();
     expect(component.gustoData).toBe(GustoMockData);
     expect(component.isGustoConnected).toBe(true);
@@ -84,7 +86,7 @@ describe('GustoComponent', () => {
     expect(component.isGustoConnected).toBe(false);
   });
 
-  it('should sync bamboo hr data based on data', () => {
+  it('should sync gusto data based on data', () => {
     component.gustoData = GustoMockWithoutToken;
     (component as any).setupGusto();
     expect(component.showErrorScreen).toBeUndefined();
@@ -132,6 +134,18 @@ describe('GustoComponent', () => {
   it('getGustoConfiguration function check', () => {
     spyOn(orgService, 'getAdditionalEmails').and.returnValue(of([{email: 'dhaarani', name: 'dhaarani'}]));
     expect(component.getGustoConfiguration()).toBeUndefined();
+  });
+
+  it('addconnectionwidget function check', () => {
+    spyOn(orgService, 'generateToken').and.returnValues(throwError({error: 404}));
+    expect((component as any).addConnectionWidget()).toBeUndefined();
+    expect(component.showErrorScreen).toBeTrue();
+  });
+
+  it('checkTravelperkDataAndTriggerConnectionWidget function check', () => {
+    // @ts-ignore
+    component.gustoData = undefined;
+    expect((component as any).checkTravelperkDataAndTriggerConnectionWidget()).toBeUndefined();
   });
 
 });

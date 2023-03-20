@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { ClickEvent } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
@@ -34,6 +35,10 @@ export class AppHeaderComponent implements OnInit {
   @Input() showErrorScreen: boolean;
 
   @Input() hideRefreshIcon: boolean;
+
+  @Input() iframeSourceUrl: SafeResourceUrl;
+
+  AppName = AppName;
 
   constructor(
     private router: Router,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { SafeResourceUrl } from '@angular/platform-browser';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
-import { ClickEvent, InAppIntegration, Page, QBDConfigurationCtaText, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, InAppIntegration, Page, QBDConfigurationCtaText, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
@@ -14,6 +15,10 @@ import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.se
   styleUrls: ['./gusto.component.scss']
 })
 export class GustoComponent implements OnInit {
+
+  iframeSource: string = 'https://app.workato.com/direct_link/embedded/connections/';
+
+  iframeSourceUrl: SafeResourceUrl;
 
   showDialog: boolean;
 
@@ -52,6 +57,23 @@ export class GustoComponent implements OnInit {
     private toastService: QbdToastService
   ) { }
 
+  private addConnectionWidget() {
+    const connectionId = '2410442';
+    const managedUserId = this.org.managed_user_id;
+    this.isLoading = true;
+    this.orgService.generateToken(managedUserId).subscribe(res => {
+      const token = res.token;
+      const workatoBaseUrl = 'https://app.workato.com/direct_link/embedded/connections/';
+      const iframeSource = workatoBaseUrl + connectionId + '?workato_dl_token=' + token;
+      this.iframeSourceUrl = this.orgService.sanitizeUrl(iframeSource);
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.isGustoSetupInProgress = false;
+      this.showErrorScreen = true;
+    });
+  }
+
   syncEmployees(): void {
     this.trackingService.onClickEvent(ClickEvent.SYNC_GUSTO_EMPLOYEES);
     this.hideRefreshIcon = true;
@@ -82,6 +104,15 @@ export class GustoComponent implements OnInit {
     });
   }
 
+  private checkTravelperkDataAndTriggerConnectionWidget() {
+    if (!this.gustoData) {
+      this.gustoService.getGustoData().subscribe((gustoData : Gusto) => {
+        this.gustoData = gustoData;
+      });
+    }
+    this.addConnectionWidget();
+  }
+
   setupGusto(): void {
     const syncData = [];
     if (!this.org?.managed_user_id) {
@@ -97,7 +128,7 @@ export class GustoComponent implements OnInit {
     }
 
     if (!this.org?.is_fyle_connected) {
-      syncData.push(this.orgService.connectFyle());
+      syncData.push(this.orgService.connectFyle(AppName.GUSTO));
     }
 
     if (!this.org?.is_sendgrid_connected) {
@@ -111,6 +142,7 @@ export class GustoComponent implements OnInit {
       ).subscribe(() => {
         this.isLoading = false;
         this.isGustoSetupInProgress = false;
+        this.checkTravelperkDataAndTriggerConnectionWidget();
       }, () => {
         this.isLoading = false;
         this.isGustoSetupInProgress = false;
@@ -118,6 +150,7 @@ export class GustoComponent implements OnInit {
       });
     } else {
       this.isLoading = false;
+      this.checkTravelperkDataAndTriggerConnectionWidget();
     }
   }
 

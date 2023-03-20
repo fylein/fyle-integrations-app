@@ -17,7 +17,7 @@ export class GustoService {
   ) { }
 
   getGustoData(): Observable<Gusto> {
-    return this.apiService.get(`/orgs/${this.orgId}/gusto/home/`, {});
+    return this.apiService.get(`/orgs/${this.orgId}/gusto/`, {});
   }
 
   createFolder(): Observable<{}> {
