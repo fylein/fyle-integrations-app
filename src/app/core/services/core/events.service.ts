@@ -21,10 +21,6 @@ export class EventsService {
       } else if (message.data && JSON.parse(message.data).type === 'connectionStatusChange' && message.origin.includes('workato')) {
         this.getWorkatoConnectionStatus.emit(JSON.parse(message.data));
       }
-      if (message.data && JSON.parse(message.data).type === 'connectionStatusChange') {
-        const workatoConnectionStatus = JSON.parse(message.data);
-        this.getWorkatoConnectionStatus.emit(workatoConnectionStatus);
-      }
     }, false);
   }
 
