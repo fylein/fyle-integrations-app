@@ -20,17 +20,18 @@
                 </div>
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center">
-                <button *ngIf="!isIntegrationConnected && appName !== 'QuickBooks Desktop'" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
+                <button *ngIf="!isIntegrationConnected && appName === AppName.BAMBOO_HR" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
                     Connect
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
                 <button *ngIf="isIntegrationConnected && integrationConfiguration?.recipe_status" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                     Disconnect
                 </button>
-                <button *ngIf="appName === 'QuickBooks Desktop'" pButton type="button" class="p-button-raised" (click)="connectQBD()">
+                <button *ngIf="appName === AppName.QBD" pButton type="button" class="p-button-raised" (click)="connectQBD()">
                     Start
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
+                <iframe *ngIf="iframeSourceUrl && appName === AppName.TRAVELPERK"  [src]="iframeSourceUrl" class="tw-mt-130-px tw-w-360-px"></iframe>
             </div>
         </div>
 </div>

@@ -35,11 +35,10 @@ module.exports = function (config) {
       ],
       check: {
         global: {
-          statements: 90,
-          // Todo change the coverage to 85
-          branches: 80,
-          functions: 90,
-          lines: 90
+          statements: 93,
+          branches: 89,
+          functions: 93,
+          lines: 93
         }
       }
     },
