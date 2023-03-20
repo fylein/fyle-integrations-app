@@ -38,10 +38,6 @@ export class GustoService {
     return this.apiService.post(`/orgs/${this.orgId}/gusto/configuration/`, payload);
   }
 
-  disconnectGusto(): Observable<{}> {
-    return this.apiService.post(`/orgs/${this.orgId}/gusto/disconnect/`, {});
-  }
-
   syncEmployees(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.orgId}/gusto/refresh_employees/`, {});
   }

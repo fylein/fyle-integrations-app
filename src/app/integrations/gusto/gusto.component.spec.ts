@@ -23,7 +23,8 @@ describe('GustoComponent', () => {
     getAdditionalEmails: () => of(GustoMockConfiguration.additional_email_options),
     createWorkatoWorkspace: () => of({}),
     connectSendgrid: () => of({}),
-    connectFyle: () => of({})
+    connectFyle: () => of({}),
+    getOrgs: () => of(orgMockData)
   };
 
   const service2 = {
@@ -32,7 +33,6 @@ describe('GustoComponent', () => {
     getConfigurations: () => of(GustoMockConfiguration),
     createFolder: () => of({}),
     uploadPackage: () => of({}),
-    disconnectGusto: () => of({}),
     syncEmployees: () => of({}),
     postConfigurations: () => of(GustoMockConfigurationPayload)
   };
@@ -99,14 +99,6 @@ describe('GustoComponent', () => {
     (component as any).getGustoConfiguration();
 
     expect(component.additionalEmails).toEqual(GustoMockConfiguration.additional_email_options);
-  });
-
-  it('should disconnect Gusto', () => {
-    component.isLoading = true;
-    component.disconnectGusto();
-
-    expect(component.isGustoConnected).toBeTrue();
-    expect(component.isLoading).toBeTrue();
   });
 
   it('should sync employees', () => {

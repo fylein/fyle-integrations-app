@@ -61,16 +61,6 @@ export class GustoComponent implements OnInit {
     });
   }
 
-  disconnectGusto(): void {
-    this.trackingService.onClickEvent(ClickEvent.DISCONNECT_GUSTO);
-    this.isLoading = true;
-    // This.gustoService.disconnectBambooHr().subscribe(() => {
-    //   This.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Bamboo HR Successfully');
-    //   This.isBambooConnected = false;
-    //   This.isLoading = false;
-    // });
-  }
-
   configurationUpdatesHandler(payload: GustoConfigurationPost): void {
     this.trackingService.onClickEvent(ClickEvent.CONFIGURE_GUSTO);
     this.isConfigurationSaveInProgress = true;
@@ -104,11 +94,18 @@ export class GustoComponent implements OnInit {
       syncData.push(this.orgService.connectSendgrid());
     }
 
+    syncData.push(this.orgService.getOrgs(this.org.fyle_org_id));
+
     if (syncData.length) {
       this.isGustoSetupInProgress = true;
       concat(...syncData).pipe(
         toArray()
-      ).subscribe(() => {
+      ).subscribe((responses) => {
+        responses.forEach((response: any) => {
+          if (response?.hasOwnProperty('managed_user_id') ) {
+            this.org.managed_user_id = response.managed_user_id;
+          }
+        });
         this.isLoading = false;
         this.isGustoSetupInProgress = false;
       }, () => {

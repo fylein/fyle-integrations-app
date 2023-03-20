@@ -103,19 +103,6 @@ describe('GustoService', () => {
     req.flush(GustoMockConfiguration);
   });
 
-  it('should disconnect bamboo hr', () => {
-    service.disconnectGusto().subscribe((res) => {
-      expect(res).toEqual({});
-    });
-
-    const req = httpMock.expectOne({
-      method: 'POST',
-      url: `${API_BASE_URL}/orgs/1/gusto/disconnect/`
-    });
-
-    req.flush({});
-  });
-
   it('should refresh employees', () => {
     service.syncEmployees().subscribe((res) => {
       expect(res).toEqual({});
