@@ -27,12 +27,6 @@ export enum RedirectLink {
     GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
 
-export enum AppName {
-  BAMBOO_HR = 'BambooHR',
-  QBD = 'QuickBooks Desktop',
-  TRAVELPERK = 'Travelperk'
-}
-
 export enum ToastSeverity {
     SUCCESS = 'success',
     ERROR = 'error'

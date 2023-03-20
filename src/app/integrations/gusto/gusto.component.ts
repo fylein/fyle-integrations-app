@@ -94,7 +94,7 @@ export class GustoComponent implements OnInit {
     });
   }
 
-  private checkTravelperkDataAndTriggerConnectionWidget() {
+  private checkGustoDataAndTriggerConnectionWidget() {
     if (!this.gustoData) {
       this.gustoService.getGustoData().subscribe((gustoData : Gusto) => {
         this.gustoData = gustoData;
@@ -125,9 +125,8 @@ export class GustoComponent implements OnInit {
       syncData.push(this.orgService.connectSendgrid());
     }
 
-    syncData.push(this.orgService.getOrgs(this.org.fyle_org_id));
-
     if (syncData.length) {
+      syncData.push(this.orgService.getOrgs(this.org.fyle_org_id));
       this.isGustoSetupInProgress = true;
       concat(...syncData).pipe(
         toArray()
@@ -139,7 +138,7 @@ export class GustoComponent implements OnInit {
         });
         this.isLoading = false;
         this.isGustoSetupInProgress = false;
-        this.checkTravelperkDataAndTriggerConnectionWidget();
+        this.checkGustoDataAndTriggerConnectionWidget();
       }, () => {
         this.isLoading = false;
         this.isGustoSetupInProgress = false;
@@ -147,7 +146,7 @@ export class GustoComponent implements OnInit {
       });
     } else {
       this.isLoading = false;
-      this.checkTravelperkDataAndTriggerConnectionWidget();
+      this.checkGustoDataAndTriggerConnectionWidget();
     }
   }
 

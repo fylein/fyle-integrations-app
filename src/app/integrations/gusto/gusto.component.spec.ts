@@ -134,10 +134,10 @@ describe('GustoComponent', () => {
     expect(component.showErrorScreen).toBeTrue();
   });
 
-  it('checkTravelperkDataAndTriggerConnectionWidget function check', () => {
+  it('checkGustoDataAndTriggerConnectionWidget function check', () => {
     // @ts-ignore
     component.gustoData = undefined;
-    expect((component as any).checkTravelperkDataAndTriggerConnectionWidget()).toBeUndefined();
+    expect((component as any).checkGustoDataAndTriggerConnectionWidget()).toBeUndefined();
   });
 
 });

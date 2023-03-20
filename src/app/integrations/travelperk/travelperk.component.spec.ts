@@ -128,4 +128,11 @@ describe('TravelperkComponent', () => {
     (component as any).setupPage();
     expect(component.showErrorScreen).toBeTrue();
   });
+
+  it('checkTravelperkDataAndTriggerConnectionWidget function check', () => {
+    // @ts-ignore
+    component.travelperkData = undefined;
+    spyOn(travelperkService, 'getTravelperkData').and.returnValue(of(travelperkMockData));
+    expect((component as any).checkTravelperkDataAndTriggerConnectionWidget()).toBeUndefined();
+  });
 });
