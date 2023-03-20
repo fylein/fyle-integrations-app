@@ -12,6 +12,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 })
 export class AppHeaderComponent implements OnInit {
 
+  AppName = AppName;
+
   @Output() openDialog = new EventEmitter<void>();
 
   @Output() disconnectIntegration = new EventEmitter<void>();
@@ -37,8 +39,6 @@ export class AppHeaderComponent implements OnInit {
   @Input() hideRefreshIcon: boolean;
 
   @Input() iframeSourceUrl: SafeResourceUrl;
-
-  AppName = AppName;
 
   constructor(
     private router: Router,

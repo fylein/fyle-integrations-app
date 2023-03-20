@@ -12,11 +12,10 @@
             HRMS
             <p *ngIf="integrationTabs.HRMS" class="landing--active-tag"></p>
         </div>
-        <!-- Commenting this tab for v3 release -->
-        <!-- <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
+        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
             Travel
             <p *ngIf="integrationTabs.TRAVEL" class="landing--active-tag"></p>
-        </div> -->
+        </div>
     </div>
 
     <p class="tw-mt-1-px landing--divider"></p>
@@ -95,7 +94,7 @@
             </div>
         </div>
 
-        <!-- <div *ngIf="integrationTabs.ALL || integrationTabs.TRAVEL">
+        <div *ngIf="integrationTabs.ALL || integrationTabs.TRAVEL">
             <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing--section-divider"></p>
             <p class="landing--section-heading">
                 Travel
@@ -112,7 +111,7 @@
                     </span>
                 </div>
             </div>
-        </div> -->
+        </div>
 
         <div *ngIf="integrationTabs.ALL" class="tw-pb-100-px">
             <p class="tw-my-40-px landing--divider"></p>

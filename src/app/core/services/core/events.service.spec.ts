@@ -16,7 +16,7 @@ describe('EventsService', () => {
 
   it('should listen for events', () => {
     expect(service.receiveEvent()).toBeUndefined();
-    // Window.postMessage({redirectUri: 'https://lolo.fyle.tech'});
+    window.postMessage(JSON.stringify({redirectUri: 'https://lolo.fyle.tech'}));
   });
 
   it('should post event', () => {

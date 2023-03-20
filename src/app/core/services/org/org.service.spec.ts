@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { AppName } from '../../models/enum/enum.model';
 import { bambooHRMockConfigurationPayload } from '../bamboo-hr/bamboo-hr.fixture';
 import { StorageService } from '../core/storage.service';
-import { generateTokenData, orgMockData } from './org.fixture';
+import { orgMockData, generateTokenData } from './org.fixture';
 
 import { OrgService } from './org.service';
 
@@ -150,7 +150,7 @@ describe('OrgService', () => {
     }
   });
 
-  it("get token for ifram", () => {
+  it("get token for iframe", () => {
     service.generateToken('25').subscribe((res) => {
       expect(res).toEqual(generateTokenData);
     });
