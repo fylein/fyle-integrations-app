@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { TravelperkRoutingModule } from './travelperk-routing.module';
 import { TravelperkComponent } from './travelperk.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SkeletonModule } from 'primeng/skeleton';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     SharedModule,
-    TravelperkRoutingModule
+    TravelperkRoutingModule,
+    SkeletonModule
   ]
 })
 export class TravelperkModule { }

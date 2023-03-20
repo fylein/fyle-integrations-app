@@ -13,3 +13,7 @@ export const orgMockData: Org = {
     created_at: new Date(),
     updated_at: new Date()
 };
+
+export const generateTokenData = {
+    token: 'widget_token_comes_here'
+};
