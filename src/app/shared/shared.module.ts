@@ -35,7 +35,7 @@ import { ConfigurationSelectFieldComponent } from './components/qbd/configuratio
 import { ConfigurationRadioFieldComponent } from './components/qbd/configuration/configuration-radio-field/configuration-radio-field.component';
 import { ConfigurationStepFooterComponent } from './components/qbd/configuration/configuration-step-footer/configuration-step-footer.component';
 import { ConfigurationStepHeaderComponent } from './components/qbd/configuration/configuration-step-header/configuration-step-header.component';
-import { EmailMultiSelectFieldComponent } from './components/qbd/configuration/email-multi-select-field/email-multi-select-field.component';
+import { EmailMultiSelectFieldComponent } from './components/apps/email-multi-select-field/email-multi-select-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';

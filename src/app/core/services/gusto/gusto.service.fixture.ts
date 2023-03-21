@@ -17,7 +17,7 @@ export const GustoMockWithoutToken: Gusto = {
     package_id: '',
     created_at: new Date(),
     updated_at: new Date(),
-    connection_id: 'cys'
+    connection_id: ''
 };
 
 export const GustoMockConfiguration: GustoConfiguration = {
@@ -54,4 +54,10 @@ export const GustoMockConfigurationPayload: GustoConfigurationPost = {
             name: 'Ashwin'
         }
     ]
+};
+
+export const connectGustoMockData = {
+    'message': {
+        'connection_id': '123'
+    }
 };

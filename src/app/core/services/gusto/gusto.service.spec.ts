@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { OrgService } from '../org/org.service';
 
 import { GustoService } from './gusto.service';
-import { GustoMockConfiguration, GustoMockConfigurationPayload, GustoMockData } from './gusto.service.fixture';
+import { connectGustoMockData, GustoMockConfiguration, GustoMockConfigurationPayload, GustoMockData } from './gusto.service.fixture';
 
 describe('GustoService', () => {
   let service: GustoService;
@@ -114,6 +114,32 @@ describe('GustoService', () => {
     });
 
     req.flush({});
+  });
+
+  it('should patch gusto configurations', () => {
+    service.patchConfigurations(true).subscribe((res) => {
+      expect(res).toEqual(GustoMockConfiguration);
+    });
+
+    const req = httpMock.expectOne({
+      method: 'PATCH',
+      url: `${API_BASE_URL}/orgs/1/gusto/recipe_status/`
+    });
+
+    req.flush(GustoMockConfiguration);
+  });
+
+  it('should connect gusto', () => {
+    service.connect().subscribe((res) => {
+      expect(res).toEqual(connectGustoMockData);
+    });
+
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/orgs/1/gusto/connection/`
+    });
+
+    req.flush(connectGustoMockData);
   });
 
 });

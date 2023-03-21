@@ -4,6 +4,7 @@ import { catchError, concat, merge, Observable, of, toArray } from 'rxjs';
 import { AppName, ClickEvent, InAppIntegration, Page, QBDConfigurationCtaText, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
+import { WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
 import { EventsService } from 'src/app/core/services/core/events.service';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -51,6 +52,8 @@ export class GustoComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
+  isRecipeEnabled: boolean = false;
+
   constructor(
     private gustoService: GustoService,
     private orgService: OrgService,
@@ -60,14 +63,16 @@ export class GustoComponent implements OnInit {
   ) { }
 
   private addConnectionWidget() {
-    const connectionId = this.gustoData.connection_id.toString();
-    const managedUserId = this.org.managed_user_id;
+    const connectionId = this.gustoData?.connection_id.toString();
+    const managedUserId = this.org?.managed_user_id;
     this.isLoading = true;
     this.orgService.generateToken(managedUserId).subscribe(res => {
       const token = res.token;
       const workatoBaseUrl = 'https://app.workato.com/direct_link/embedded/connections/';
       const iframeSource = workatoBaseUrl + connectionId + '?workato_dl_token=' + token;
       this.iframeSourceUrl = this.orgService.sanitizeUrl(iframeSource);
+      this.setupWorkatoConnectionWatcher();
+      this.isGustoSetupInProgress = false;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
@@ -107,8 +112,16 @@ export class GustoComponent implements OnInit {
     }
   }
 
+  private updateOrCreateGustoConfiguration(workatoConnectionStatus:WorkatoConnectionStatus) {
+      this.isGustoConnected = this.gustoData.folder_id && this.gustoData.package_id ? true : false;
+      this.isRecipeEnabled = workatoConnectionStatus.payload.connected ? true : false;
+      this.gustoService.patchConfigurations(this.isRecipeEnabled).subscribe();
+  }
+
   private setupWorkatoConnectionWatcher(): void {
-    this.eventsService.getWorkatoConnectionStatus.subscribe();
+    this.eventsService.getWorkatoConnectionStatus.subscribe((workatoConnectionStatus: WorkatoConnectionStatus) => {
+      this.updateOrCreateGustoConfiguration(workatoConnectionStatus);
+    });
   }
 
   private getSyncData(): Observable<{}>[] {
@@ -129,6 +142,10 @@ export class GustoComponent implements OnInit {
       syncData.push(this.orgService.connectFyle(AppName.GUSTO));
     }
 
+    if (!this.gustoData?.connection_id) {
+      syncData.push(this.gustoService.connect());
+    }
+
     if (!this.org?.is_sendgrid_connected) {
       syncData.push(this.orgService.connectSendgrid());
     }
@@ -147,10 +164,10 @@ export class GustoComponent implements OnInit {
       responses.forEach((response: any) => {
         if (response?.hasOwnProperty('managed_user_id') ) {
           this.org.managed_user_id = response.managed_user_id;
+        } else if (response?.hasOwnProperty('message')) {
+          this.gustoData.connection_id = response.message.connection_id;
         }
       });
-      this.isLoading = false;
-      this.isGustoSetupInProgress = false;
       this.checkGustoDataAndTriggerConnectionWidget();
     }, () => {
       this.isLoading = false;
@@ -178,7 +195,6 @@ export class GustoComponent implements OnInit {
 
   private setupPage(): void {
     this.gustoService.getGustoData().subscribe((gustoData: Gusto) => {
-      this.isGustoConnected = gustoData.folder_id && gustoData.package_id ? true : false;
       this.gustoData = gustoData;
       this.getGustoConfiguration();
     }, () => {

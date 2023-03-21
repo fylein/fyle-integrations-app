@@ -135,4 +135,9 @@ describe('TravelperkComponent', () => {
     spyOn(travelperkService, 'getTravelperkData').and.returnValue(of(travelperkMockData));
     expect((component as any).checkTravelperkDataAndTriggerConnectionWidget()).toBeUndefined();
   });
+
+  it('updateOrCreateTravelperkConfiguration function check', () => {
+    workatoConnectionStatusMockData.payload.connected = false;
+    expect((component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockData)).toBeUndefined();
+  });
 });
