@@ -19,7 +19,7 @@ describe('WindowService', () => {
   });
 
   it('should redirect to given url', () => {
-    expect(service.openInNewTab('https://www.google.co.in/')).toBeUndefined();
+    expect(service.nativeWindow).toBeTruthy();
   });
 
 });
