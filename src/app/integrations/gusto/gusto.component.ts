@@ -52,8 +52,6 @@ export class GustoComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  isRecipeEnabled: boolean = false;
-
   constructor(
     private gustoService: GustoService,
     private orgService: OrgService,
@@ -63,15 +61,14 @@ export class GustoComponent implements OnInit {
   ) { }
 
   private addConnectionWidget() {
-    const connectionId = this.gustoData?.connection_id.toString();
-    const managedUserId = this.org?.managed_user_id;
+    const connectionId = this.gustoData.connection_id.toString();
+    const managedUserId = this.org.managed_user_id;
     this.isLoading = true;
     this.orgService.generateToken(managedUserId).subscribe(res => {
       const token = res.token;
       const workatoBaseUrl = 'https://app.workato.com/direct_link/embedded/connections/';
       const iframeSource = workatoBaseUrl + connectionId + '?workato_dl_token=' + token;
       this.iframeSourceUrl = this.orgService.sanitizeUrl(iframeSource);
-      this.setupWorkatoConnectionWatcher();
       this.isGustoSetupInProgress = false;
       this.isLoading = false;
     }, () => {
@@ -113,9 +110,8 @@ export class GustoComponent implements OnInit {
   }
 
   private updateOrCreateGustoConfiguration(workatoConnectionStatus:WorkatoConnectionStatus) {
-      this.isGustoConnected = this.gustoData.folder_id && this.gustoData.package_id ? true : false;
-      this.isRecipeEnabled = workatoConnectionStatus.payload.connected ? true : false;
-      this.gustoService.patchConfigurations(this.isRecipeEnabled).subscribe();
+      this.isGustoConnected = workatoConnectionStatus.payload.connected ? true : false;
+      this.gustoService.patchConfigurations(this.isGustoConnected).subscribe();
   }
 
   private setupWorkatoConnectionWatcher(): void {

@@ -6,10 +6,9 @@ import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { EventsService } from 'src/app/core/services/core/events.service';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
-import { GustoMockConfiguration, GustoMockData, GustoMockConfigurationPayload, GustoMockWithoutToken, connectGustoMockData } from 'src/app/core/services/gusto/gusto.service.fixture';
+import { GustoMockConfiguration, GustoMockData, GustoMockConfigurationPayload, GustoMockWithoutToken, connectGustoMockData, workatoConnectionStatusMockDatawithTrue, workatoConnectionStatusMockData } from 'src/app/core/services/gusto/gusto.service.fixture';
 import { generateTokenData, orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { workatoConnectionStatusMockData } from 'src/app/core/services/travelperk/travelperk.fixture';
 
 import { GustoComponent } from './gusto.component';
 
@@ -44,7 +43,7 @@ describe('GustoComponent', () => {
   };
 
   const service3 = {
-    getWorkatoConnectionStatus: of(workatoConnectionStatusMockData)
+    getWorkatoConnectionStatus: of(workatoConnectionStatusMockDatawithTrue)
   };
 
   beforeEach(async () => {
@@ -79,20 +78,13 @@ describe('GustoComponent', () => {
   it('should get Gusto Data', () => {
     (component as any).setupPage();
     expect(component.gustoData).toBe(GustoMockData);
-    expect(component.isGustoConnected).toBe(true);
-
-    const gustoMockData2 = { ...GustoMockData };
-    gustoMockData2.folder_id = '';
-    spyOn(gustoService, 'getGustoData').and.returnValue(of(gustoMockData2));
-    (component as any).setupPage();
-    expect(component.gustoData).toBe(gustoMockData2);
-    expect(component.isGustoConnected).toBe(false);
+    expect(component.isGustoConnected).toBeTrue();
   });
 
   it('should start syncing data for new logins', () => {
     spyOn(gustoService, 'getGustoData').and.returnValue(throwError({error: 'error'}));
     (component as any).setupPage();
-    expect(component.isGustoConnected).toBe(true);
+    expect(component.isGustoConnected).toBeTrue();
   });
 
   it('should sync gusto data based on data', () => {
@@ -148,13 +140,12 @@ describe('GustoComponent', () => {
     // @ts-ignore
     component.gustoData = undefined;
     expect((component as any).checkGustoDataAndTriggerConnectionWidget()).toBeUndefined();
+    expect(component.isGustoConnected).toBeTrue();
   });
 
   it('updateOrCreateGustoConfiguration function check', () => {
-    workatoConnectionStatusMockData.payload.connected = true;
-    // SpyOn(gustoService, 'getConfigurations').and.returnValue(throwError({error:'error'}))
     expect((component as any).updateOrCreateGustoConfiguration(workatoConnectionStatusMockData)).toBeUndefined();
-    expect(component.isRecipeEnabled).toBeTrue();
+    expect(component.isGustoConnected).toBeFalse();
   });
 
 });

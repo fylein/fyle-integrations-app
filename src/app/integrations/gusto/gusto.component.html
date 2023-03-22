@@ -12,7 +12,7 @@
         [iframeSourceUrl]="iframeSourceUrl"
         (syncEmployees)="syncEmployees()"
     ></app-app-header>
-{{isLoading}} g{{isGustoConnected}} e{{showErrorScreen}} r{{isRecipeEnabled}}
+    
     <app-app-integration-landing  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></app-app-integration-landing>
 
     <div *ngIf="showErrorScreen" class="tw-pt-100-px">
