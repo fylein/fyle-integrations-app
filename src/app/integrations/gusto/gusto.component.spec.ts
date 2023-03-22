@@ -4,9 +4,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
+import { EventsService } from 'src/app/core/services/core/events.service';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
-import { GustoMockConfiguration, GustoMockData, GustoMockConfigurationPayload, GustoMockWithoutToken } from 'src/app/core/services/gusto/gusto.service.fixture';
-import { orgMockData } from 'src/app/core/services/org/org.fixture';
+import { GustoMockConfiguration, GustoMockData, GustoMockConfigurationPayload, GustoMockWithoutToken, connectGustoMockData, workatoConnectionStatusMockDatawithTrue, workatoConnectionStatusMockData } from 'src/app/core/services/gusto/gusto.service.fixture';
+import { generateTokenData, orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
 import { GustoComponent } from './gusto.component';
@@ -24,6 +25,8 @@ describe('GustoComponent', () => {
     createWorkatoWorkspace: () => of({}),
     connectSendgrid: () => of({}),
     connectFyle: () => of({}),
+    generateToken: () => of(generateTokenData),
+    sanitizeUrl: () => of('fyle'),
     getOrgs: () => of(orgMockData)
   };
 
@@ -34,7 +37,13 @@ describe('GustoComponent', () => {
     createFolder: () => of({}),
     uploadPackage: () => of({}),
     syncEmployees: () => of({}),
-    postConfigurations: () => of(GustoMockConfigurationPayload)
+    postConfigurations: () => of(GustoMockConfigurationPayload),
+    patchConfigurations: () => of(GustoMockConfigurationPayload),
+    connect: () => of(connectGustoMockData)
+  };
+
+  const service3 = {
+    getWorkatoConnectionStatus: of(workatoConnectionStatusMockDatawithTrue)
   };
 
   beforeEach(async () => {
@@ -47,7 +56,8 @@ describe('GustoComponent', () => {
         FormBuilder,
         MessageService,
         { provide: OrgService, useValue: service1 },
-        { provide: GustoService, useValue: service2 }
+        { provide: GustoService, useValue: service2 },
+        { provide: EventsService, useValue: service3 }
       ]
     })
     .compileComponents();
@@ -65,26 +75,19 @@ describe('GustoComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should get Bamboo HR Data', () => {
+  it('should get Gusto Data', () => {
     (component as any).setupPage();
     expect(component.gustoData).toBe(GustoMockData);
-    expect(component.isGustoConnected).toBe(true);
-
-    const gustoMockData2 = { ...GustoMockData };
-    gustoMockData2.folder_id = '';
-    spyOn(gustoService, 'getGustoData').and.returnValue(of(gustoMockData2));
-    (component as any).setupPage();
-    expect(component.gustoData).toBe(gustoMockData2);
-    expect(component.isGustoConnected).toBe(false);
+    expect(component.isGustoConnected).toBeTrue();
   });
 
   it('should start syncing data for new logins', () => {
-    spyOn(gustoService, 'getGustoData').and.returnValue(throwError({}));
+    spyOn(gustoService, 'getGustoData').and.returnValue(throwError({error: 'error'}));
     (component as any).setupPage();
-    expect(component.isGustoConnected).toBe(false);
+    expect(component.isGustoConnected).toBeTrue();
   });
 
-  it('should sync bamboo hr data based on data', () => {
+  it('should sync gusto data based on data', () => {
     component.gustoData = GustoMockWithoutToken;
     (component as any).setupGusto();
     expect(component.showErrorScreen).toBeUndefined();
@@ -116,9 +119,33 @@ describe('GustoComponent', () => {
 
   it('setupgusto function else case', () => {
     component.org = orgMockData;
-    component.org.is_fyle_connected;
+    component.org.is_fyle_connected = false;
+    component.gustoData.connection_id = '';
     fixture.detectChanges();
     expect((component as any).setupGusto()).toBeUndefined();
+  });
+
+  it('getGustoConfiguration function check', () => {
+    spyOn(orgService, 'getAdditionalEmails').and.returnValue(of([{email: 'dhaarani', name: 'dhaarani'}]));
+    expect(component.getGustoConfiguration()).toBeUndefined();
+  });
+
+  it('addconnectionwidget function check', () => {
+    spyOn(orgService, 'generateToken').and.returnValues(throwError({error: 404}));
+    expect((component as any).addConnectionWidget()).toBeUndefined();
+    expect(component.showErrorScreen).toBeTrue();
+  });
+
+  it('checkGustoDataAndTriggerConnectionWidget function check', () => {
+    // @ts-ignore
+    component.gustoData = undefined;
+    expect((component as any).checkGustoDataAndTriggerConnectionWidget()).toBeUndefined();
+    expect(component.isGustoConnected).toBeTrue();
+  });
+
+  it('updateOrCreateGustoConfiguration function check', () => {
+    expect((component as any).updateOrCreateGustoConfiguration(workatoConnectionStatusMockData)).toBeUndefined();
+    expect(component.isGustoConnected).toBeFalse();
   });
 
 });

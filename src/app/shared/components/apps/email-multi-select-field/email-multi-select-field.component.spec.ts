@@ -25,6 +25,7 @@ describe('EmailMultiSelectFieldComponent', () => {
     component.formControllerName = 'email';
     component.form = formbuilder.group({
       email: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
+      additionalEmails: [[{name: 'shwetabh', email: "shwetabh.kumar@fylehq.com"}]],
       search: []
     });
     fixture.detectChanges();

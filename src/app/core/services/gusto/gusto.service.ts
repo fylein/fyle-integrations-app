@@ -17,7 +17,7 @@ export class GustoService {
   ) { }
 
   getGustoData(): Observable<Gusto> {
-    return this.apiService.get(`/orgs/${this.orgId}/gusto/home/`, {});
+    return this.apiService.get(`/orgs/${this.orgId}/gusto/`, {});
   }
 
   createFolder(): Observable<{}> {
@@ -38,7 +38,18 @@ export class GustoService {
     return this.apiService.post(`/orgs/${this.orgId}/gusto/configuration/`, payload);
   }
 
+  connect(): Observable<{message: {connection_id: string}}>{
+    return this.apiService.post(`/orgs/${this.orgId}/gusto/connection/`, {});
+  }
+
   syncEmployees(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.orgId}/gusto/refresh_employees/`, {});
+  }
+
+  patchConfigurations(recipe_status: boolean): Observable<GustoConfiguration> {
+    return this.apiService.patch(`/orgs/${this.orgId}/gusto/recipe_status/`, {
+      org_id: this.orgId,
+      recipe_status: recipe_status
+    });
   }
 }

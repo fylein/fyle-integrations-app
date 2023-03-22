@@ -1,4 +1,5 @@
 import { Gusto, GustoConfiguration, GustoConfigurationPost } from "../../models/gusto/gusto.model";
+import { WorkatoConnectionStatus } from "../../models/travelperk/travelperk.model";
 
 export const GustoMockData: Gusto = {
     id: 1,
@@ -17,7 +18,7 @@ export const GustoMockWithoutToken: Gusto = {
     package_id: '',
     created_at: new Date(),
     updated_at: new Date(),
-    connection_id: 'cys'
+    connection_id: ''
 };
 
 export const GustoMockConfiguration: GustoConfiguration = {
@@ -54,4 +55,30 @@ export const GustoMockConfigurationPayload: GustoConfigurationPost = {
             name: 'Ashwin'
         }
     ]
+};
+
+export const connectGustoMockData = {
+    'message': {
+        'connection_id': '123'
+    }
+};
+
+export const workatoConnectionStatusMockData: WorkatoConnectionStatus = {
+    wk: true,
+    type: 'travelperk',
+    payload: {
+        id: 1,
+        provider: 'travelperk',
+        connected: false
+    }
+};
+
+export const workatoConnectionStatusMockDatawithTrue: WorkatoConnectionStatus = {
+    wk: true,
+    type: 'travelperk',
+    payload: {
+        id: 1,
+        provider: 'travelperk',
+        connected: true
+    }
 };

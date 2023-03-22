@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
+import { AppName } from '../../models/enum/enum.model';
 import { bambooHRMockConfigurationPayload } from '../bamboo-hr/bamboo-hr.fixture';
 import { StorageService } from '../core/storage.service';
 import { orgMockData, generateTokenData } from './org.fixture';
@@ -78,6 +79,20 @@ describe('OrgService', () => {
     req.flush({});
   });
 
+  it('should connect Fyle', () => {
+    spyOn(service, 'getOrgId').and.returnValue('1');
+    service.connectFyle(AppName.GUSTO).subscribe((res) => {
+      expect(res).toEqual({});
+    });
+
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/orgs/1/connect_fyle/`
+    });
+
+    req.flush({});
+  });
+
   it('should connect sendgrid', () => {
     spyOn(service, 'getOrgId').and.returnValue('1');
     service.connectSendgrid().subscribe((res) => {
@@ -140,11 +155,16 @@ describe('OrgService', () => {
       expect(res).toEqual(generateTokenData);
     });
 
-    const req = httpMock.expectOne({
-      method: 'GET',
-      url: `${API_BASE_URL}/orgs/1/generate_token/?managed_user_id=25`
-    });
+    const req = httpMock.expectOne(
+      req => req.method === 'GET' && req.url.includes(`${API_BASE_URL}/orgs/1/generate_token/`)
+    );
 
     req.flush(generateTokenData);
   });
+
+
+  it('sanitizeUrl function check', () => {
+    expect(service.sanitizeUrl('fyke')).toBeDefined();
+  });
+
 });

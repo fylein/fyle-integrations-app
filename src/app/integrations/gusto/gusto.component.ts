@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { catchError, concat, merge, of, toArray } from 'rxjs';
-import { ClickEvent, InAppIntegration, Page, QBDConfigurationCtaText, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { SafeResourceUrl } from '@angular/platform-browser';
+import { catchError, concat, merge, Observable, of, toArray } from 'rxjs';
+import { AppName, ClickEvent, InAppIntegration, Page, QBDConfigurationCtaText, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
+import { WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
+import { EventsService } from 'src/app/core/services/core/events.service';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -14,6 +17,10 @@ import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.se
   styleUrls: ['./gusto.component.scss']
 })
 export class GustoComponent implements OnInit {
+
+  iframeSource: string;
+
+  iframeSourceUrl: SafeResourceUrl;
 
   showDialog: boolean;
 
@@ -49,8 +56,27 @@ export class GustoComponent implements OnInit {
     private gustoService: GustoService,
     private orgService: OrgService,
     private trackingService: TrackingService,
-    private toastService: QbdToastService
+    private toastService: QbdToastService,
+    private eventsService: EventsService
   ) { }
+
+  private addConnectionWidget() {
+    const connectionId = this.gustoData.connection_id.toString();
+    const managedUserId = this.org.managed_user_id;
+    this.isLoading = true;
+    this.orgService.generateToken(managedUserId).subscribe(res => {
+      const token = res.token;
+      const workatoBaseUrl = 'https://app.workato.com/direct_link/embedded/connections/';
+      const iframeSource = workatoBaseUrl + connectionId + '?workato_dl_token=' + token;
+      this.iframeSourceUrl = this.orgService.sanitizeUrl(iframeSource);
+      this.isGustoSetupInProgress = false;
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.isGustoSetupInProgress = false;
+      this.showErrorScreen = true;
+    });
+  }
 
   syncEmployees(): void {
     this.trackingService.onClickEvent(ClickEvent.SYNC_GUSTO_EMPLOYEES);
@@ -72,7 +98,29 @@ export class GustoComponent implements OnInit {
     });
   }
 
-  setupGusto(): void {
+  private checkGustoDataAndTriggerConnectionWidget() {
+    if (!this.gustoData) {
+      this.gustoService.getGustoData().subscribe((gustoData : Gusto) => {
+        this.gustoData = gustoData;
+        this.addConnectionWidget();
+      });
+    } else {
+      this.addConnectionWidget();
+    }
+  }
+
+  private updateOrCreateGustoConfiguration(workatoConnectionStatus:WorkatoConnectionStatus) {
+      this.isGustoConnected = workatoConnectionStatus.payload.connected ? true : false;
+      this.gustoService.patchConfigurations(this.isGustoConnected).subscribe();
+  }
+
+  private setupWorkatoConnectionWatcher(): void {
+    this.eventsService.getWorkatoConnectionStatus.subscribe((workatoConnectionStatus: WorkatoConnectionStatus) => {
+      this.updateOrCreateGustoConfiguration(workatoConnectionStatus);
+    });
+  }
+
+  private getSyncData(): Observable<{}>[] {
     const syncData = [];
     if (!this.org?.managed_user_id) {
       syncData.push(this.orgService.createWorkatoWorkspace());
@@ -87,7 +135,11 @@ export class GustoComponent implements OnInit {
     }
 
     if (!this.org?.is_fyle_connected) {
-      syncData.push(this.orgService.connectFyle());
+      syncData.push(this.orgService.connectFyle(AppName.GUSTO));
+    }
+
+    if (!this.gustoData?.connection_id) {
+      syncData.push(this.gustoService.connect());
     }
 
     if (!this.org?.is_sendgrid_connected) {
@@ -95,27 +147,29 @@ export class GustoComponent implements OnInit {
     }
 
     syncData.push(this.orgService.getOrgs(this.org.fyle_org_id));
+    return syncData;
+  }
 
-    if (syncData.length) {
-      this.isGustoSetupInProgress = true;
-      concat(...syncData).pipe(
-        toArray()
-      ).subscribe((responses) => {
-        responses.forEach((response: any) => {
-          if (response?.hasOwnProperty('managed_user_id') ) {
-            this.org.managed_user_id = response.managed_user_id;
-          }
-        });
-        this.isLoading = false;
-        this.isGustoSetupInProgress = false;
-      }, () => {
-        this.isLoading = false;
-        this.isGustoSetupInProgress = false;
-        this.showErrorScreen = true;
+  setupGusto(): void {
+    this.setupWorkatoConnectionWatcher();
+    const syncData = this.getSyncData();
+    this.isGustoSetupInProgress = true;
+    concat(...syncData).pipe(
+      toArray()
+    ).subscribe((responses) => {
+      responses.forEach((response: any) => {
+        if (response?.hasOwnProperty('managed_user_id') ) {
+          this.org.managed_user_id = response.managed_user_id;
+        } else if (response?.hasOwnProperty('message')) {
+          this.gustoData.connection_id = response.message.connection_id;
+        }
       });
-    } else {
+      this.checkGustoDataAndTriggerConnectionWidget();
+    }, () => {
       this.isLoading = false;
-    }
+      this.isGustoSetupInProgress = false;
+      this.showErrorScreen = true;
+    });
   }
 
   getGustoConfiguration(): void {
@@ -137,7 +191,6 @@ export class GustoComponent implements OnInit {
 
   private setupPage(): void {
     this.gustoService.getGustoData().subscribe((gustoData: Gusto) => {
-      this.isGustoConnected = gustoData.folder_id && gustoData.package_id ? true : false;
       this.gustoData = gustoData;
       this.getGustoConfiguration();
     }, () => {
