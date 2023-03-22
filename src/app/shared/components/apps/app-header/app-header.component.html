@@ -10,7 +10,7 @@
                 <div class="tw-pl-16-px tw-flex tw-flex-col">
                     <div class="tw-flex tw-pt-6-px">
                         <p class="tw-text-20-px tw-font-500 tw-text-normal-text-color">{{ appName }}</p>
-                        <svg-icon-sprite *ngIf="isIntegrationConnected && !isLoading && bambooHrConfiguration?.recipe_status && !hideRefreshIcon" pTooltip="Sync Data" tooltipPosition="right" src="sync" width="18px" height="14px" class="tw-cursor-pointer tw-ml-10-px tw-pt-6-px tw-text-faded-text-color" (click)="syncData()"></svg-icon-sprite>
+                        <svg-icon-sprite *ngIf="isIntegrationConnected && !isLoading && integrationConfiguration?.recipe_status && !hideRefreshIcon" pTooltip="Sync Data" tooltipPosition="right" src="sync" width="18px" height="14px" class="tw-cursor-pointer tw-ml-10-px tw-pt-6-px tw-text-faded-text-color" (click)="syncData()"></svg-icon-sprite>
                     </div>
                     <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-sub-text-color tw-pt-2-px tw-text-14-px tw-font-400">{{ appDescription }}</p>
                     <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
@@ -24,14 +24,14 @@
                     Connect
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
-                <button *ngIf="isIntegrationConnected && bambooHrConfiguration?.recipe_status" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
+                <button *ngIf="isIntegrationConnected && integrationConfiguration?.recipe_status" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                     Disconnect
                 </button>
                 <button *ngIf="appName === AppName.QBD" pButton type="button" class="p-button-raised" (click)="connectQBD()">
                     Start
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
-                <iframe *ngIf="iframeSourceUrl && appName === AppName.TRAVELPERK"  [src]="iframeSourceUrl" class="tw-mt-130-px tw-w-360-px"></iframe>
+                <iframe *ngIf="iframeSourceUrl && (appName === AppName.TRAVELPERK || appName === AppName.GUSTO)"  [src]="iframeSourceUrl" class="tw-mt-130-px tw-w-360-px"></iframe>
             </div>
         </div>
 </div>

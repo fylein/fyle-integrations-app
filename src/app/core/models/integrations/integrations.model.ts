@@ -24,5 +24,6 @@ export type AccountingIntegrationEvent = {
 export type InAppIntegrationUrlMap = {
     [InAppIntegration.BAMBOO_HR]: string,
     [InAppIntegration.QBD]: string,
-    [InAppIntegration.TRAVELPERK]: string
+    [InAppIntegration.TRAVELPERK]: string,
+    [InAppIntegration.GUSTO]: string
 }

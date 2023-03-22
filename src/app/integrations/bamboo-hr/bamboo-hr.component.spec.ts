@@ -150,7 +150,7 @@ describe('BambooHrComponent', () => {
 
   it('setupbambooHr function else case', () => {
     component.org = orgMockData;
-    component.org.is_fyle_connected;
+    component.org.is_fyle_connected = true;
     fixture.detectChanges();
     expect((component as any).setupBambooHr()).toBeUndefined();
   });
