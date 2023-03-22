@@ -73,6 +73,11 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     this.emails.push(this.addEmailForm.value);
     this.assignSelectedEmail(selectedEmails);
     this.form.controls.email.patchValue(selectedEmails);
+    if (this.form.controls.additionalEmails) {
+      const additionalEmails = this.form.controls.additionalEmails.value;
+      additionalEmails.push(this.addEmailForm.value);
+      this.form.controls.additionalEmails.patchValue(additionalEmails);
+    }
     this.addEmailForm.reset();
     this.showDialog = false;
   }

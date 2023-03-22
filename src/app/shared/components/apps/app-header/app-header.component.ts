@@ -2,8 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { AppName } from 'src/app/core/models/enum/enum.model';
-import { ClickEvent } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
@@ -17,7 +16,7 @@ export class AppHeaderComponent implements OnInit {
 
   @Output() openDialog = new EventEmitter<void>();
 
-  @Output() disconnectBambooHr = new EventEmitter<void>();
+  @Output() disconnectIntegration = new EventEmitter<void>();
 
   @Output() syncEmployees = new EventEmitter<void>();
 
@@ -33,7 +32,7 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() isLoading: boolean;
 
-  @Input() bambooHrConfiguration: BambooHRConfiguration;
+  @Input() integrationConfiguration: BambooHRConfiguration;
 
   @Input() showErrorScreen: boolean;
 
@@ -55,7 +54,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   disconnect(): void {
-    this.disconnectBambooHr.emit();
+    this.disconnectIntegration.emit();
   }
 
   connectQBD(): void {

@@ -47,6 +47,12 @@ describe('IntegrationsComponent', () => {
     expect((component as any).getOrCreateOrg()).toBeDefined();
   });
 
+  it(`should create org is undefined`, () => {
+    // @ts-ignore
+    spyOn(orgService, 'getOrgs').and.returnValue(of(null));
+    expect((component as any).getOrCreateOrg()).toBeDefined();
+  });
+
   it('should navigate to integrations landing page', () => {
     // @ts-ignore
     component.windowReference = { location: {pathname: '/integrations'}};
