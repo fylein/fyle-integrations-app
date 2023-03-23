@@ -61,8 +61,8 @@ export class FieldMappingComponent implements OnInit {
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');
-      this.trackingService.trackTimeSpent(Page.FIELD_MAPPING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.FIELD_MAPPING) {
+        this.trackingService.trackTimeSpent(Page.FIELD_MAPPING_QBD, this.sessionStartTime);
         this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.FIELD_MAPPING, 3, fieldMappingPayload);
       }
       if (this.isOnboarding) {
