@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QBDCorporateCreditCardExpensesObject, QBDConfigurationCtaText, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page } from 'src/app/core/models/enum/enum.model';
+import { QBDCorporateCreditCardExpensesObject, QBDConfigurationCtaText, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page, QBDProgressPhase, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
@@ -258,16 +258,30 @@ export class ExportSettingComponent implements OnInit {
     );
   }
 
+  private getPhase(): QBDProgressPhase {
+    return this.isOnboarding ? QBDProgressPhase.ONBOARDING : QBDProgressPhase.POST_ONBOARDING;
+  }
+
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const exportSettingPayload = ExportSettingModel.constructPayload(this.exportSettingsForm);
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.EXPORT_SETTINGS) {
-        this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_QBD, this.sessionStartTime);
         this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          UpdateEvent.ADVANCED_SETTINGS_QBD,
+          {
+            phase: this.getPhase(),
+            oldState: this.exportSettings,
+            newState: response
+          }
+        );
       }
+
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
         this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);

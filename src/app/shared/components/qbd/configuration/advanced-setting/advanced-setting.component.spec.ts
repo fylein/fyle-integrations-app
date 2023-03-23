@@ -25,6 +25,7 @@ describe('AdvancedSettingComponent', () => {
   let service4: any;
   let formbuilder: FormBuilder;
   let qbdAdvancedSettingService: QbdAdvancedSettingService;
+  let qbdWorkspaceService: QbdWorkspaceService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
   beforeEach(async () => {
@@ -64,6 +65,7 @@ describe('AdvancedSettingComponent', () => {
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
+    qbdWorkspaceService = TestBed.inject(QbdWorkspaceService);
     qbdAdvancedSettingService = TestBed.inject(QbdAdvancedSettingService);
     component.advancedSettings = QBDAdvancedSettingResponse;
     component.memoStructure = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
@@ -121,6 +123,11 @@ describe('AdvancedSettingComponent', () => {
     component.advancedSettingsForm.controls.meridiem.patchValue('AM');
     component.advancedSettingsForm.controls.timeOfDay.patchValue('12:00');
     fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+    spyOn(qbdWorkspaceService, 'getOnboardingState').and.returnValue(QBDOnboardingState.COMPLETE);
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+    component.isOnboarding = false;
     expect(component.save()).toBeUndefined();
   });
 

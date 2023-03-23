@@ -21,6 +21,7 @@ describe('FieldMappingComponent', () => {
   let service3: any;
   let formbuilder: FormBuilder;
   let qbdFieldMappingService: QbdFieldMappingService;
+  let qbdWorkspaceService: QbdWorkspaceService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
   beforeEach(async () => {
@@ -55,6 +56,7 @@ describe('FieldMappingComponent', () => {
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
+    qbdWorkspaceService = TestBed.inject(QbdWorkspaceService);
     qbdFieldMappingService = TestBed.inject(QbdFieldMappingService);
     component.fieldMappingForm = formbuilder.group({
       classType: ['CLASS'],
@@ -68,6 +70,10 @@ describe('FieldMappingComponent', () => {
   });
 
   it('Save function check', () => {
+    expect(component.save()).toBeUndefined();
+    spyOn(qbdWorkspaceService, 'getOnboardingState').and.returnValue(QBDOnboardingState.COMPLETE);
+    expect(component.save()).toBeUndefined();
+    component.isOnboarding = true;
     expect(component.save()).toBeUndefined();
   });
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QBDConfigurationCtaText, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page } from 'src/app/core/models/enum/enum.model';
+import { QBDConfigurationCtaText, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page, QBDProgressPhase, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -39,6 +39,8 @@ export class FieldMappingComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
+  fieldMapping: QBDFieldMappingGet;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -54,6 +56,10 @@ export class FieldMappingComponent implements OnInit {
     });
   }
 
+  private getPhase(): QBDProgressPhase {
+    return this.isOnboarding ? QBDProgressPhase.ONBOARDING : QBDProgressPhase.POST_ONBOARDING;
+  }
+
   constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const fieldMappingPayload = FieldMappingModel.constructPayload(this.fieldMappingForm);
@@ -61,10 +67,20 @@ export class FieldMappingComponent implements OnInit {
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');
+      this.trackingService.trackTimeSpent(Page.FIELD_MAPPING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.FIELD_MAPPING) {
-        this.trackingService.trackTimeSpent(Page.FIELD_MAPPING_QBD, this.sessionStartTime);
         this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.FIELD_MAPPING, 3, fieldMappingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          UpdateEvent.ADVANCED_SETTINGS_QBD,
+          {
+            phase: this.getPhase(),
+            oldState: this.fieldMapping,
+            newState: response
+          }
+        );
       }
+
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBDOnboardingState.ADVANCED_SETTINGS);
         this.router.navigate([`/integrations/qbd/onboarding/advanced_settings`]);
@@ -85,10 +101,10 @@ export class FieldMappingComponent implements OnInit {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
     this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
-      const fieldMapping = fieldMappingResponse;
+      this.fieldMapping = fieldMappingResponse;
       this.fieldMappingForm = this.formBuilder.group({
-        classType: [fieldMapping?.class_type ? fieldMapping?.class_type : null],
-        customerType: [fieldMapping?.project_type ? fieldMapping?.project_type : null]
+        classType: [this.fieldMapping?.class_type ? this.fieldMapping?.class_type : null],
+        customerType: [this.fieldMapping?.project_type ? this.fieldMapping?.project_type : null]
       });
       this.isLoading = false;
     }, () => {

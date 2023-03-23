@@ -22,6 +22,7 @@ describe('ExportSettingComponent', () => {
   let service2: any;
   let service3: any;
   let formbuilder: FormBuilder;
+  let qbdWorkspaceService: QbdWorkspaceService;
   let qbdExportSettingService: QbdExportSettingService;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
   let router: Router;
@@ -60,6 +61,7 @@ describe('ExportSettingComponent', () => {
     component.exportSettings = QBDExportSettingResponse;
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
+    qbdWorkspaceService = TestBed.inject(QbdWorkspaceService);
     qbdExportSettingService = TestBed.inject(QbdExportSettingService);
     component.exportSettingsForm = formbuilder.group({
       reimbursableExportType: [component.exportSettings?.reimbursable_expenses_export_type],
@@ -107,6 +109,11 @@ describe('ExportSettingComponent', () => {
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
     fixture.detectChanges();
+    spyOn(qbdWorkspaceService, 'getOnboardingState').and.returnValue(QBDOnboardingState.COMPLETE);
+    fixture.detectChanges();
+    expect(component.save()).toBeUndefined();
+    component.isOnboarding = false;
+    expect(component.save()).toBeUndefined();
   });
 
   it('Save function check with failed api response', () => {
