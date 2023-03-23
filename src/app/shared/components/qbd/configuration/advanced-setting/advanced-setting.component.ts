@@ -228,12 +228,12 @@ export class AdvancedSettingComponent implements OnInit {
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
         this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);
       }
       if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
+        this.workspaceService.setOnboardingState(QBDOnboardingState.COMPLETE);
         this.router.navigate([`/integrations/qbd/onboarding/done`]);
       }
     }, () => {

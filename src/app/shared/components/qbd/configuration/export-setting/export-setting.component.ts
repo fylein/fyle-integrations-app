@@ -264,8 +264,8 @@ export class ExportSettingComponent implements OnInit {
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.EXPORT_SETTINGS) {
-        this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_QBD, this.sessionStartTime);
         this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
       }
       if (this.isOnboarding) {
