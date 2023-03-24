@@ -50,7 +50,7 @@ export class FieldMappingComponent implements OnInit {
 
   mappingFieldFormOptionsFunction(formControllerName: string): QBDExportSettingFormOption[] {
     return this.representationOption.filter(option => {
-      return option.value !== this.fieldMappingForm.value[formControllerName];
+      return option.value === this.fieldMappingForm.value[formControllerName];
     });
   }
 
