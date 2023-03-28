@@ -111,7 +111,9 @@ export class GustoComponent implements OnInit {
 
   private updateOrCreateGustoConfiguration(workatoConnectionStatus:WorkatoConnectionStatus) {
       this.isGustoConnected = workatoConnectionStatus.payload.connected ? true : false;
-      this.gustoService.patchConfigurations(this.isGustoConnected).subscribe();
+      this.gustoService.getConfigurations().subscribe(() => {
+        this.gustoService.patchConfigurations(this.isGustoConnected).subscribe();
+      }, () => {});
   }
 
   private setupWorkatoConnectionWatcher(): void {
