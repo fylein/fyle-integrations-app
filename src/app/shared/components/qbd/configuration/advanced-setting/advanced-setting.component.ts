@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ClickEvent, Page, QBDConfigurationCtaText, QBDOnboardingState, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, QBDConfigurationCtaText, QBDOnboardingState, QBDProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -222,18 +222,32 @@ export class AdvancedSettingComponent implements OnInit {
     this.scheduledWatcher();
   }
 
+  private getPhase(): QBDProgressPhase {
+    return this.isOnboarding ? QBDProgressPhase.ONBOARDING : QBDProgressPhase.POST_ONBOARDING;
+  }
+
   private constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const advancedSettingPayload = AdvancedSettingModel.constructPayload(this.advancedSettingsForm);
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
         this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          UpdateEvent.ADVANCED_SETTINGS_QBD,
+          {
+            phase: this.getPhase(),
+            oldState: this.advancedSettings,
+            newState: response
+          }
+        );
       }
+
       if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
+        this.workspaceService.setOnboardingState(QBDOnboardingState.COMPLETE);
         this.router.navigate([`/integrations/qbd/onboarding/done`]);
       }
     }, () => {

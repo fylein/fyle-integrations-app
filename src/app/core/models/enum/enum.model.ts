@@ -32,6 +32,13 @@ export enum ToastSeverity {
     ERROR = 'error'
 }
 
+export enum UpdateEvent {
+  CONNECT_QBD = 'Connect QuickBooks Desktop',
+  EXPORT_SETTING_QBD = 'Export Settings QBD',
+  FIELD_MAPPING_QBD = 'Field Mappings QBD',
+  ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD'
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
@@ -74,6 +81,11 @@ export enum ClickEvent {
   ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',
   ADD_EMAIL_MANUALLY = 'Add Email Manually',
   QBD_EXPORT = 'Export IIF files'
+}
+
+export enum QBDProgressPhase {
+  ONBOARDING = 'Onboarding',
+  POST_ONBOARDING = 'Post Onboarding'
 }
 
 export enum QBDOnboardingState {

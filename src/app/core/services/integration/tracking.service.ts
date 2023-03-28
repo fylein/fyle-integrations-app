@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ClickEvent, Page, QBDOnboardingState } from '../../models/enum/enum.model';
+import { ClickEvent, Page, QBDOnboardingState, UpdateEvent } from '../../models/enum/enum.model';
+import { UpdateEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
 import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/field-mapping.model';
@@ -79,5 +80,9 @@ export class TrackingService {
 
   onOnboardingStepCompletion(eventName: QBDOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
+  }
+
+  onUpdateEvent(eventName: UpdateEvent, additionalProperties: Partial<UpdateEventAdditionalProperty> | void): void {
+    this.eventTrack(`Update event: ${eventName}`, additionalProperties);
   }
 }
