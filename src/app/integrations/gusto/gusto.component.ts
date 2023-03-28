@@ -28,7 +28,7 @@ export class GustoComponent implements OnInit {
 
   isGustoConnectionInProgress: boolean;
 
-  isGustoSetupInProgress: boolean;
+  isGustoSetupInProgress: boolean = true;
 
   isLoading: boolean = true;
 
@@ -162,8 +162,6 @@ export class GustoComponent implements OnInit {
       responses.forEach((response: any) => {
         if (response?.hasOwnProperty('managed_user_id') ) {
           this.org.managed_user_id = response.managed_user_id;
-        } else if (response?.hasOwnProperty('message')) {
-          this.gustoData.connection_id = response.message.connection_id;
         }
       });
       this.checkGustoDataAndTriggerConnectionWidget();

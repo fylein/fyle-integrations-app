@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable, Subject } from 'rxjs';
+import { Cacheable } from 'ts-cacheable';
 import { Gusto, GustoConfiguration, GustoConfigurationPost } from '../../models/gusto/gusto.model';
 import { ApiService } from '../core/api.service';
 import { OrgService } from '../org/org.service';
+
+const gustoConfigurationCache$ = new Subject<void>();
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +31,9 @@ export class GustoService {
     return this.apiService.post(`/orgs/${this.orgId}/gusto/packages/`, {});
   }
 
+  @Cacheable({
+    cacheBusterObserver: gustoConfigurationCache$
+  })
   getConfigurations(): Observable<GustoConfiguration> {
     return this.apiService.get(`/orgs/${this.orgId}/gusto/configuration/`, {
       org_id: this.orgId
