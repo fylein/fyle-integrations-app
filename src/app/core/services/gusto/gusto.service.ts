@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { Cacheable } from 'ts-cacheable';
+import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { Gusto, GustoConfiguration, GustoConfigurationPost } from '../../models/gusto/gusto.model';
 import { ApiService } from '../core/api.service';
 import { OrgService } from '../org/org.service';
@@ -40,6 +40,9 @@ export class GustoService {
     });
   }
 
+  @CacheBuster({
+    cacheBusterNotifier: gustoConfigurationCache$
+  })
   postConfigurations(payload: GustoConfigurationPost): Observable<GustoConfiguration> {
     return this.apiService.post(`/orgs/${this.orgId}/gusto/configuration/`, payload);
   }
@@ -52,6 +55,9 @@ export class GustoService {
     return this.apiService.post(`/orgs/${this.orgId}/gusto/refresh_employees/`, {});
   }
 
+  @CacheBuster({
+    cacheBusterNotifier: gustoConfigurationCache$
+  })
   patchConfigurations(recipe_status: boolean): Observable<GustoConfiguration> {
     return this.apiService.patch(`/orgs/${this.orgId}/gusto/recipe_status/`, {
       org_id: this.orgId,
