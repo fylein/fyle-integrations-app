@@ -24,7 +24,7 @@
                     Connect
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
-                <button *ngIf="isIntegrationConnected && integrationConfiguration?.recipe_status" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
+                <button *ngIf="isIntegrationConnected && integrationConfiguration?.recipe_status && appName !== AppName.GUSTO" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                     Disconnect
                 </button>
                 <button *ngIf="appName === AppName.QBD" pButton type="button" class="p-button-raised" (click)="connectQBD()">
