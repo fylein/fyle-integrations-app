@@ -46,11 +46,11 @@ export class GustoConfigurationComponent implements OnInit {
     const configurationPayload = GustoModel.constructGustoConfigurationPayload(this.configurationForm, this.org.id);
     this.gustoService.postConfigurations(configurationPayload).subscribe((response: GustoConfiguration) => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Email address saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Your configurations have been saved successfully');
       this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
     }, () => {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving Email address, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while saving your configuration, please try again later');
       });
   }
 
