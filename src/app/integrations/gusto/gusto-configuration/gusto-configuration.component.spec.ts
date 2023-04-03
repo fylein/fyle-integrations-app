@@ -58,6 +58,7 @@ describe('GustoConfigurationComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(component.save()).toBeUndefined();
   });
 
   it('should create', () => {
@@ -68,7 +69,7 @@ describe('GustoConfigurationComponent', () => {
 
   it('Save function', () => {
     expect(component.save()).toBeUndefined();
-    component.configurationForm.controls.email.patchValue(null);
+    component.configurationForm.controls.email.patchValue([]);
     component.configurationForm.controls.additionalEmails.patchValue(null);
     fixture.detectChanges();
     expect(component.save()).toBeUndefined();
