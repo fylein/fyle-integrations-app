@@ -10,7 +10,7 @@
             <div class="tw-rounded-12-px tw-border-1-px tw-border-disabled-bg-color tw-mb-24-px ">
                 <div class="tw-p-24-px tw-border-b-1-px tw-border-b-separator tw-flex tw-items-start">
                     <div class="tw-pr-20-px tw-mt-4-px">
-                        <svg-icon-sprite src="threepeople" width="24px" hight="24px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                        <svg-icon-sprite src="multiple-people" width="24px" hight="24px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
                     </div>
                     <div>
                         <h5 class="tw-text-14-px !tw-font-500">Import Employee</h5>
@@ -40,7 +40,7 @@
                 <app-email-multi-select-field
                     [form]="configurationForm"
                     [label]="'Send error notification to'"
-                    [isFieldMandatory]="false"
+                    [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'email for export'"
                     [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
                     [options]="additionalEmails"
@@ -51,7 +51,7 @@
             </div>
         </div>
         <div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? ConfigurationCtaText.SAVE : ConfigurationCtaText.SAVING" [isButtonDisabled]="!configurationForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
+            <app-configuration-step-footer [ctaText] = "!saveInProgress ? ConfigurationCtaText.SAVE : ConfigurationCtaText.SAVING" [isButtonDisabled]="!configurationForm.valid || saveInProgress || configurationForm.controls.email.value.length === 0" (save)="save()"></app-configuration-step-footer>
         </div>
     </div>
 </div>
