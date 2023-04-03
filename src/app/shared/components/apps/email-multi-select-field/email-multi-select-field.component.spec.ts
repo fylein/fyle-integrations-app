@@ -49,9 +49,12 @@ describe('EmailMultiSelectFieldComponent', () => {
       email: ["shwetabhkumar.kumar@fylehq.com"]
     });
     fixture.detectChanges();
-    const button = fixture.debugElement.query(By.css('.p-button-raised'));
+    const button = fixture.debugElement.query(By.css('.save-btn'));
     button.nativeElement.click();
     fixture.detectChanges();
+    expect(component.showDialog).toBeFalse();
+    component.showDialog = true;
+    expect(component.closeModel()).toBeUndefined();
     expect(component.showDialog).toBeFalse();
   });
 

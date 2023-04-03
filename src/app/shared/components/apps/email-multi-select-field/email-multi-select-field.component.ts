@@ -115,6 +115,11 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     this.showDialog = true;
   }
 
+  closeModel() {
+    this.addEmailForm.reset();
+    this.showDialog = false;
+  }
+
   ngOnInit(): void {
     this.setupPage();
   }
