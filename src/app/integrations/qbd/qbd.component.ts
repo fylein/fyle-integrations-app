@@ -38,7 +38,7 @@ export class QbdComponent implements OnInit {
       const onboardingStateComponentMap = {
         [QBDOnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
         [QBDOnboardingState.EXPORT_SETTINGS]: '/integrations/qbd/onboarding/landing',
-        [QBDOnboardingState.FIELD_MAPPING]: '/integrations/qbd/onboarding/field_mappings',
+        [QBDOnboardingState.FIELD_MAPPINGS]: '/integrations/qbd/onboarding/field_mappings',
         [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };

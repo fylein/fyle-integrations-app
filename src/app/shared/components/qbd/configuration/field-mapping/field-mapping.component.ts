@@ -52,7 +52,7 @@ export class FieldMappingComponent implements OnInit {
 
   mappingFieldFormOptionsFunction(formControllerName: string): QBDExportSettingFormOption[] {
     return this.representationOption.filter(option => {
-      return option.value === this.fieldMappingForm.value[formControllerName];
+      return option.value !== this.fieldMappingForm.value[formControllerName];
     });
   }
 
@@ -68,8 +68,8 @@ export class FieldMappingComponent implements OnInit {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');
       this.trackingService.trackTimeSpent(Page.FIELD_MAPPING_QBD, this.sessionStartTime);
-      if (this.workspaceService.getOnboardingState() === QBDOnboardingState.FIELD_MAPPING) {
-        this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.FIELD_MAPPING, 3, fieldMappingPayload);
+      if (this.workspaceService.getOnboardingState() === QBDOnboardingState.FIELD_MAPPINGS) {
+        this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.FIELD_MAPPINGS, 3, fieldMappingPayload);
       } else {
         this.trackingService.onUpdateEvent(
           UpdateEvent.ADVANCED_SETTINGS_QBD,

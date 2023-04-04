@@ -283,7 +283,7 @@ export class ExportSettingComponent implements OnInit {
       }
 
       if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPING);
+        this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPINGS);
         this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);
       }
     }, () => {
