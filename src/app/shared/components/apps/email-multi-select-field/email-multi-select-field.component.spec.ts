@@ -4,6 +4,8 @@ import { FormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 
 import { EmailMultiSelectFieldComponent } from './email-multi-select-field.component';
+import { MessageService } from 'primeng/api';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 describe('EmailMultiSelectFieldComponent', () => {
   let component: EmailMultiSelectFieldComponent;
@@ -13,7 +15,7 @@ describe('EmailMultiSelectFieldComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ EmailMultiSelectFieldComponent ],
-      providers: [FormBuilder]
+      providers: [FormBuilder,  MessageService]
     })
     .compileComponents();
 
@@ -48,6 +50,7 @@ describe('EmailMultiSelectFieldComponent', () => {
       name: ['shwetabhkjj'],
       email: ["shwetabhkumar.kumar@fylehq.com"]
     });
+    component.appName = AppName.GUSTO;
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css('.save-btn'));
     button.nativeElement.click();

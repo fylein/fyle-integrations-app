@@ -1,4 +1,4 @@
-<div class="tw-mt-56-px tw-mx-80-px tw-mb-50-px">
+<div class="tw-mt-56-px tw-mx-80-px tw-pb-56-px">
     <div class="tw-shadow-app-card tw-rounded-12-px">
         <div>
             <app-configuration-step-header 
@@ -39,6 +39,7 @@
             <div class="tw-rounded-12-px tw-border-1-px tw-border-separator tw-flex tw-items-start">
                 <app-email-multi-select-field
                     [form]="configurationForm"
+                    [appName]="AppName"
                     [label]="'Send error notification to'"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'email for export'"

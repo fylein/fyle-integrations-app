@@ -30,21 +30,18 @@
             </ng-template>
             <ng-template pTemplate="filter" let-options="options">
                 <div *ngIf="emails.length" class="p-inputgroup">
-                    <div class="p-input-icon-left">
+                    <div class="p-input-icon-left p-input-icon-right">
                         <i class="pi pi-search"></i>
-                        <input type="text" class="!tw-h-32-px !tw-w-270-px" (keyup)="options.filter($event)"
+                        <input type="text" class="!tw-h-32-px !tw-w-260-px" (keyup)="options.filter($event)"
                             pInputText placeholder="Search by Name / Email" formControlName="search" />
-                        <svg-icon-sprite *ngIf="10 > 0" src="clear" width="16px" height="16px"
-                            class="tw-text-faded-text-color tw-absolute tw-top-10-px tw-right-12-px tw-cursor-pointer"
-                            (click)="clearSearch(options)">
-                        </svg-icon-sprite>
+                        <i class="pi pi-times tw-cursor-pointer tw-pt-2-px" style="font-size: 14px" (click)="clearSearch(options)"></i>
                     </div>
                 </div>
             </ng-template>
             <ng-template let-user pTemplate="item">
                 <div>
                     <p class="tw-text-sub-text-color tw-text-14-px">{{ user.name }}</p>
-                    <p class="tw-pt-4-px tw-text-placeholder tw-text-12-px">{{ user.email }}</p>
+                    <p class="tw-pt-4-px tw-text-faded-text-color tw-text-12-px">{{ user.email }}</p>
                 </div>
             </ng-template>
         </p-multiSelect>
@@ -75,7 +72,7 @@
         </div>
 
         <div class="tw-p-24-px">
-            <p class="tw-pb-10-px tw-text-faded-text-color tw-text-12-px">
+            <p *ngIf="appName !== AppName.GUSTO" class="tw-pb-10-px tw-text-faded-text-color tw-text-12-px">
                 Add an email address on which you would like to recieve your integration notifcation mails.
             </p>
 
