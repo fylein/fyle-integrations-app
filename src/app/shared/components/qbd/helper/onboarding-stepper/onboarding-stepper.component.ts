@@ -67,7 +67,7 @@ export class OnboardingStepperComponent implements OnInit {
     const onboardingStateStepMap = {
       [QBDOnboardingState.CONNECTION]: 1,
       [QBDOnboardingState.EXPORT_SETTINGS]: 2,
-      [QBDOnboardingState.FIELD_MAPPING]: 3,
+      [QBDOnboardingState.FIELD_MAPPINGS]: 3,
       [QBDOnboardingState.ADVANCED_SETTINGS]: 4,
       [QBDOnboardingState.COMPLETE]: 5
     };

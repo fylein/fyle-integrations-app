@@ -32,7 +32,7 @@ describe('FieldMappingComponent', () => {
     };
 
     service2 = {
-      getOnboardingState: () => QBDOnboardingState.FIELD_MAPPING,
+      getOnboardingState: () => QBDOnboardingState.FIELD_MAPPINGS,
       setOnboardingState: () => undefined
     };
 
