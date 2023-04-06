@@ -50,7 +50,6 @@ describe('EmailMultiSelectFieldComponent', () => {
       name: ['shwetabhkjj'],
       email: ["shwetabhkumar.kumar@fylehq.com"]
     });
-    component.appName = AppName.GUSTO;
     fixture.detectChanges();
     const button = fixture.debugElement.query(By.css('.save-btn'));
     button.nativeElement.click();

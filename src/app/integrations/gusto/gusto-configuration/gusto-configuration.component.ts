@@ -29,8 +29,6 @@ export class GustoConfigurationComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-  AppName = AppName.GUSTO;
-
   configurationFields: string[] = ['Employee Name', 'Employee ID', 'Email ID', 'Department', 'Manager'];
 
   private sessionStartTime = new Date();
