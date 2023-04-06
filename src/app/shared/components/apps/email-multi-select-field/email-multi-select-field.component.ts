@@ -86,9 +86,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     }
     this.addEmailForm.reset();
     this.showDialog = false;
-    if (this.appName === AppName.GUSTO) {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Email address saved successfully');
-    }
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Email address saved successfully');
   }
 
   private assignSelectedEmail(emails: QBDEmailOption[]): void {

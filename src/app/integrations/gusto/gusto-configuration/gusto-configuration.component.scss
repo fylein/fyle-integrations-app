@@ -7,7 +7,7 @@ table > tbody > tr > td {
 }
 
 table > thead > tr > th{
-    @apply tw-font-500 tw-text-14-px tw-text-slightly-normal-text-color tw-text-left tw-pl-14-px #{!important};
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-text-left tw-pl-14-px #{!important};
 }
 
 :host :ng-deep .pi .pi-arrow-right {
