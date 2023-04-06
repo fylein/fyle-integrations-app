@@ -30,21 +30,18 @@
             </ng-template>
             <ng-template pTemplate="filter" let-options="options">
                 <div *ngIf="emails.length" class="p-inputgroup">
-                    <div class="p-input-icon-left">
+                    <div class="p-input-icon-left p-input-icon-right">
                         <i class="pi pi-search"></i>
                         <input type="text" class="!tw-h-32-px !tw-w-270-px" (keyup)="options.filter($event)"
                             pInputText placeholder="Search by Name / Email" formControlName="search" />
-                        <svg-icon-sprite *ngIf="10 > 0" src="clear" width="16px" height="16px"
-                            class="tw-text-faded-text-color tw-absolute tw-top-10-px tw-right-12-px tw-cursor-pointer"
-                            (click)="clearSearch(options)">
-                        </svg-icon-sprite>
+                        <i class="pi pi-times tw-cursor-pointer tw-pt-2-px" style="font-size: 14px" (click)="clearSearch(options)"></i>
                     </div>
                 </div>
             </ng-template>
             <ng-template let-user pTemplate="item">
                 <div>
                     <p class="tw-text-sub-text-color tw-text-14-px">{{ user.name }}</p>
-                    <p class="tw-pt-4-px tw-text-placeholder tw-text-12-px">{{ user.email }}</p>
+                    <p class="tw-pt-4-px tw-text-faded-text-color tw-text-12-px">{{ user.email }}</p>
                 </div>
             </ng-template>
         </p-multiSelect>
@@ -66,29 +63,34 @@
 </div>
 
 <p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
-    <div class="tw-pt-34-px tw-px-40-px" [formGroup]="addEmailForm">
-        <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">Add new Email Address</p>
-        <p class="tw-pt-10-px tw-text-faded-text-color tw-text-12-px">
-            Add an email address on which you would like to recieve your integration notifcation mails.
-        </p>
-
-        <div class="tw-pt-24-px">
+    <div [formGroup]="addEmailForm">
+        <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
+            <div class="tw-flex tw-justify-between tw-items-center">
+                <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">Add new Email Address</p>
+                <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()"></i>
+            </div>
+        </div>
+        <div class="tw-p-24-px">
             <p class="tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
                 Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="name" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter name" />
-
+            <input formControlName="name" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter name" [ngClass]="[addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled ? 'error-box' : 'normal-box']" required/>
+            <app-mandatory-error-message *ngIf="addEmailForm.controls['name'].touched && !addEmailForm.controls['name'].valid && !addEmailForm.controls['name'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
             <p class="tw-pt-16-px tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
                 Email Address <span class="tw-text-mandatory-field-color">*</span>
             </p>
 
-            <div class="tw-flex">
-                <input formControlName="email" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter name" />
+            <div>
+                <input formControlName="email" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter Email" [ngClass]="[addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled ? 'error-box' : 'normal-box']" required />
+                <app-mandatory-error-message *ngIf="addEmailForm.controls['email'].touched && !addEmailForm.controls['email'].valid && !addEmailForm.controls['email'].disabled" [customErrorMessage]="'Enter a valid E-mail'"></app-mandatory-error-message>
             </div>
 
-            <div class="tw-flex tw-items-center tw-pt-24-px tw-pb-40-px">
-                <button pButton type="button" class="p-button-raised" [disabled]="!addEmailForm.valid" (click)="addEmail()">
-                    Save
+            <div class="tw-flex tw-justify-end tw-pt-24-px ">
+                <button type="button" class="cancel-btn" (click)="closeModel()">
+                    Cancel
+                </button>
+                <button type="button" class="save-btn" pButton [disabled]="!addEmailForm.valid" (click)="addEmail()">
+                    Add and Save
                 </button>
             </div>
         </div>

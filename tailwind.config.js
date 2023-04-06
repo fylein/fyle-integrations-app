@@ -38,6 +38,7 @@ module.exports = {
       ...customColors
     },
     fontSize: {
+      '9-px':'9px',
       '12-px': '12px',
       '14-px': '14px',
       '16-px': '16px',

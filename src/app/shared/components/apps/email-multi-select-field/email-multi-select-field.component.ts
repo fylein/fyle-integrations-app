@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { ClickEvent } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -48,7 +49,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private toastService: QbdToastService
   ) { }
 
   clearSearch(options: DropdownFilterOptions): void {
@@ -80,6 +82,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     }
     this.addEmailForm.reset();
     this.showDialog = false;
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Email address saved successfully');
   }
 
   private assignSelectedEmail(emails: QBDEmailOption[]): void {
@@ -113,6 +116,11 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   openDialog(): void {
     this.showDialog = true;
+  }
+
+  closeModel() {
+    this.addEmailForm.reset();
+    this.showDialog = false;
   }
 
   ngOnInit(): void {

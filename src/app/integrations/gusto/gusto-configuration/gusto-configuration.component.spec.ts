@@ -8,8 +8,6 @@ import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { GustoMockConfiguration, GustoMockConfigurationPayload } from 'src/app/core/services/gusto/gusto.service.fixture';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { GustoComponent } from '../gusto.component';
-
 import { GustoConfigurationComponent } from './gusto-configuration.component';
 
 describe('GustoConfigurationComponent', () => {

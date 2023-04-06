@@ -7,7 +7,7 @@ table > tbody > tr > td {
 }
 
 table > thead > tr > th{
-    @apply tw-font-500 tw-text-14-px tw-text-slightly-normal-text-color tw-text-left tw-pl-14-px #{!important};
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-text-left tw-pl-14-px #{!important};
 }
 
 :host :ng-deep .pi .pi-arrow-right {
@@ -20,4 +20,8 @@ table > thead > tr > th{
 
 .gusto-configuration-fields {
     @apply tw-w-300-px tw-px-10-px tw-bg-disabled-bg-color tw-py-8-px tw-border tw-border-solid tw-border-separator tw-rounded-4-px #{!important};
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-header {
+    @apply tw-px-16-px #{!important}
 }

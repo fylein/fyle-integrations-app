@@ -192,11 +192,11 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-h-54-px tw-px-16-px tw-py-0 #{!important};
+    @apply tw-h-54-px tw-px-16-px tw-py-8-px #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
-    @apply tw-mr-10-px #{!important};
+    @apply tw-mb-14-px #{!important};
 }
 
 .p-checkbox .p-checkbox-box {
@@ -204,23 +204,31 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
-    @apply tw-bg-dropdown-hover tw-rounded-4-px #{!important};
+    @apply tw-bg-disabled-bg-color tw-rounded-4-px #{!important};
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
+    @apply tw-shadow-none tw-bg-disabled-bg-color #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
-    @apply tw-shadow-none #{!important};
+    @apply tw-shadow-none tw-bg-disabled-bg-color #{!important};
 }
 
 .p-checkbox .p-checkbox-box.p-highlight {
-    @apply tw-bg-sub-text-color tw-border-none #{!important};
+    @apply tw-bg-sub-text-color tw-border-none tw-pb-5-px #{!important};
+}
+
+.pi-check:before {
+    @apply tw-font-700 tw-text-9-px #{!important};
 }
 
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
-    @apply tw-border-check-box #{!important};
+    @apply tw-border-sub-text-color #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-empty-message {
-    @apply tw-p-0 tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
+    @apply tw-py-24-px tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
 }
 
 @mixin spinner($height, $width, $animation) {

@@ -2,6 +2,9 @@
     @apply tw-px-3 tw-py-1 tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-xl #{!important};
 }
 
+:host ::ng-deep .p-multiselect-panel {
+    @apply tw-w-300-px #{!important};
+}
 :host ::ng-deep .p-multiselect-panel .p-multiselect-items {
     @apply tw-py-0 #{!important};
 }
@@ -10,14 +13,30 @@
     @apply tw-z-1 tw-w-270-px #{!important};      
 }
 
-:host ::ng-deep .error-box .p-multiselect {
+:host ::ng-deep .error-box .p-multiselect, :host ::ng-deep .error-box {
     @apply tw-border-alert-toast #{!important};
 }
 
-:host ::ng-deep .normal-box .p-multiselect {
+:host ::ng-deep .normal-box .p-multiselect, :host ::ng-deep .normal-box {
     @apply tw-border-box-color #{!important};
 }
 
 :host ::ng-deep .normal-box .p-multiselect.p-focus {
     @apply tw-border-slightly-normal-text-color #{!important};
+}
+
+.cancel-btn {
+    @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
+}
+
+.save-btn {
+    @apply tw-text-white tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
+}
+
+:host ::ng-deep .p-button {
+    @apply tw-w-fit #{!important};
+}
+
+:host ::ng-deep .normal-box, :host ::ng-deep .error-box{
+    @apply tw-w-full #{!important};
 }
