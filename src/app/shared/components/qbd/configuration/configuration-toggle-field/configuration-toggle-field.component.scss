@@ -1,13 +1,25 @@
-:host ::ng-deep
-    .p-inputswitch.p-inputswitch-checked
-    .p-inputswitch-slider::after {
-        content: 'Yes';
-    @apply tw-flex tw-justify-center tw-items-center tw-absolute tw-left-2 tw-bottom-px tw-text-12-px tw-text-white tw-font-500 #{!important};
+:host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
+    content: 'Yes';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 8px;
+    bottom: 1px;
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
 }
 
-:host ::ng-deep
-    .p-inputswitch:not(.p-inputswitch-checked)
-    .p-inputswitch-slider::after {
-        content: 'No';
-    @apply tw-flex tw-justify-center tw-items-center tw-absolute tw-left-6 tw-bottom-px tw-text-12-px tw-text-white tw-font-500 #{!important};
+:host ::ng-deep .p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
+    content: 'No';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 24px;
+    bottom: 1px;
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
 }
