@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { AccountingIntegrationApp, InAppIntegration, IntegrationView } from 'src/app/core/models/enum/enum.model';
 import { EventsService } from 'src/app/core/services/core/events.service';
 import { LandingComponent } from './landing.component';
+import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LandingComponent', () => {
   let component: LandingComponent;
@@ -17,6 +19,9 @@ describe('LandingComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LandingComponent ],
+      imports: [
+        HttpClientModule, HttpClientTestingModule
+      ],
       providers: [
         { provide: EventsService, useValue: service1 },
         { provide: Router, useValue: routerSpy }
