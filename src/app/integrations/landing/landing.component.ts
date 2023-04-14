@@ -96,8 +96,7 @@ export class LandingComponent implements OnInit {
     const org = this.orgService.getCachedOrg();
     if (org.allow_travelperk) {
       this.isTravelperkAllowed = true;
-    }
-    else if (org.allow_gusto) {
+    } else if (org.allow_gusto) {
       this.isGustoAllowed = true;
     }
   }
