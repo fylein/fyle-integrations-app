@@ -20,8 +20,9 @@ export class LandingComponent implements OnInit {
   AccountingIntegrationApp = AccountingIntegrationApp;
 
   InAppIntegration = InAppIntegration;
-  
+
   isTravelperkAllowed: boolean = false;
+
   isGustoAllowed: boolean = false;
 
 
@@ -69,7 +70,7 @@ export class LandingComponent implements OnInit {
     private orgService: OrgService
 
   ) { }
-  
+
 
   switchView(clickedView: IntegrationView): void {
     const initialState = Object.create(this.integrationTabsInitialState);
