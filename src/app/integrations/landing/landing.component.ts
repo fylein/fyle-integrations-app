@@ -4,7 +4,9 @@ import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView
 import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/core/events.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
+import { Org } from 'src/app/core/models/org/org.model';
 
 @Component({
   selector: 'app-landing',
@@ -18,19 +20,23 @@ export class LandingComponent implements OnInit {
   AccountingIntegrationApp = AccountingIntegrationApp;
 
   InAppIntegration = InAppIntegration;
+  
+  isTravelperkAllowed: boolean = false;
+  isGustoAllowed: boolean = false;
+
 
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: false,
-    [IntegrationView.TRAVEL]: false
+    [IntegrationView.TRAVEL]: true
   };
 
   integrationTabs: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: true,
-    [IntegrationView.TRAVEL]: false
+    [IntegrationView.TRAVEL]: true
   };
 
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
@@ -59,8 +65,11 @@ export class LandingComponent implements OnInit {
   constructor(
     private eventsService: EventsService,
     private router: Router,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private orgService: OrgService
+
   ) { }
+  
 
   switchView(clickedView: IntegrationView): void {
     const initialState = Object.create(this.integrationTabsInitialState);
@@ -83,6 +92,12 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const org = this.orgService.getCachedOrg();
+    if (org.allow_travelperk) {
+      this.isTravelperkAllowed = true;
+    }
+    else if (org.allow_gusto) {
+      this.isGustoAllowed = true;
+    }
   }
-
 }
