@@ -25,19 +25,21 @@ export class LandingComponent implements OnInit {
 
   isGustoAllowed: boolean = false;
 
+  org: Org = this.orgService.getCachedOrg();
+
 
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: false,
-    [IntegrationView.TRAVEL]: true
+    [IntegrationView.TRAVEL]: false
   };
 
   integrationTabs: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
     [IntegrationView.ALL]: true,
-    [IntegrationView.TRAVEL]: true
+    [IntegrationView.TRAVEL]: false
   };
 
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
@@ -93,11 +95,7 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const org = this.orgService.getCachedOrg();
-    if (org.allow_travelperk) {
-      this.isTravelperkAllowed = true;
-    } else if (org.allow_gusto) {
-      this.isGustoAllowed = true;
-    }
+    this.isGustoAllowed = this.org.allow_gusto;
+    this.isTravelperkAllowed = this.org.allow_travelperk;
   }
 }
