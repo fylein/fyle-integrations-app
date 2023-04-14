@@ -5,6 +5,8 @@ import { EventsService } from 'src/app/core/services/core/events.service';
 import { LandingComponent } from './landing.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { OrgService } from 'src/app/core/services/org/org.service';
+import { orgMockData } from 'src/app/core/services/org/org.fixture';
 
 describe('LandingComponent', () => {
   let component: LandingComponent;
@@ -16,6 +18,10 @@ describe('LandingComponent', () => {
     postEvent: () => null
   };
 
+  const service2 = {
+    getCachedOrg: () => orgMockData
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ LandingComponent ],
@@ -24,6 +30,7 @@ describe('LandingComponent', () => {
       ],
       providers: [
         { provide: EventsService, useValue: service1 },
+        { provide: OrgService, useValue: service2 },
         { provide: Router, useValue: routerSpy }
       ]
     })
