@@ -10,6 +10,8 @@ export const orgMockData: Org = {
     is_bamboo_connector: true,
     is_fyle_connected: true,
     is_sendgrid_connected: true,
+    allow_gusto: true,
+    allow_travelperk: true,
     created_at: new Date(),
     updated_at: new Date()
 };
