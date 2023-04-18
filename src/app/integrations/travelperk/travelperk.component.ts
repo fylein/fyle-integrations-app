@@ -131,7 +131,7 @@ export class TravelperkComponent implements OnInit {
       if (workatoConnectionStatus.payload.connected) {
         this.travelperkService.postConfigurations().subscribe(() => {
           this.iframeSourceUrl = null;
-          this.travelperkConfiguration.is_recipe_enabled = true;
+          this.isIntegrationConnected = true;
         });
       }
     });
