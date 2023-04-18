@@ -3,9 +3,12 @@
     [appName]="AppName.TRAVELPERK"
     [appDescription]="'Autosync employee details between Fyle and TravelPerk.'"
     [isLoading]="isLoading"
-    [isIntegrationSetupInProgress]="isTravelperkSetupInProgress"
     [iframeSourceUrl]="iframeSourceUrl"
     [appName]="AppName.TRAVELPERK"
+    [isWorkatoConnector]="true"
+    [isIntegrationConnected]="travelperkConfiguration?.is_recipe_enabled"
+    [isRecipeRunning]="true"
+    (disconnectIntegration)="disconnect()"
 ></app-app-header>
 
 <app-app-integration-landing

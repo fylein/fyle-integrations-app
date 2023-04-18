@@ -3,12 +3,12 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { of, throwError } from 'rxjs';
-
 import { TravelperkComponent } from './travelperk.component';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { generateTokenData, orgMockData } from 'src/app/core/services/org/org.fixture';
 import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockData, travelperkMockData, workatoConnectionStatusMockData } from 'src/app/core/services/travelperk/travelperk.fixture';
 import { EventsService } from 'src/app/core/services/core/events.service';
+import { MessageService } from 'primeng/api';
 
 describe('TravelperkComponent', () => {
   let component: TravelperkComponent;
@@ -50,7 +50,8 @@ describe('TravelperkComponent', () => {
       providers: [
         {provide: TravelperkService, useValue: service1},
         {provide: OrgService, useValue: service2 },
-        {provide: EventsService, useValue: service3}
+        {provide: EventsService, useValue: service3},
+        MessageService
       ]
     })
     .compileComponents();
@@ -139,5 +140,20 @@ describe('TravelperkComponent', () => {
   it('updateOrCreateTravelperkConfiguration function check', () => {
     workatoConnectionStatusMockData.payload.connected = false;
     expect((component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockData)).toBeUndefined();
+  });
+
+  it('should disconnect travelperk', () => {
+    spyOn((component as any), 'addConnectionWidget').and.returnValue(of(travelperkMockData));
+    spyOn(orgService, 'generateToken').and.returnValue(throwError({}));
+    component.disconnect();
+    expect(component.iframeSource).toEqual('https://app.workato.com/direct_link/embedded/connections/');
+  });
+
+  it('should display iframe when configuraion doesnt exist', () => {
+    spyOn(travelperkService, 'getConfigurations').and.returnValue(throwError({}));
+    spyOn((component as any), 'addConnectionWidget').and.returnValue(of(travelperkMockData));
+    spyOn(orgService, 'generateToken').and.returnValue(throwError({}));
+
+    (component as any).validateAndInitiateConnectionWidget();
   });
 });

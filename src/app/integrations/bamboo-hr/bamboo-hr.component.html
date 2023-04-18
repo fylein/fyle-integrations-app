@@ -20,7 +20,7 @@
     [isLoading]="isLoading" 
     [hideRefreshIcon]="hideRefreshIcon" 
     [showErrorScreen]="showErrorScreen" 
-    [integrationConfiguration]="bambooHrConfiguration" 
+    [isRecipeRunning]="bambooHrConfiguration?.recipe_status ? true : false"
     [isIntegrationSetupInProgress]="isBambooSetupInProgress" 
     [isIntegrationConnected]="isBambooConnected" 
     (openDialog)="openDialog()" 

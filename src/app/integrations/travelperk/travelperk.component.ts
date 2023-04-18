@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { concat, toArray } from 'rxjs';
+import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AppName, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { Travelperk, WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
+import { Travelperk, TravelperkConfiguration, WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
 import { EventsService } from 'src/app/core/services/core/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
+import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 
 @Component({
@@ -20,7 +22,7 @@ export class TravelperkComponent implements OnInit {
 
   AppName = AppName;
 
-  iframeSourceUrl: SafeResourceUrl;
+  iframeSourceUrl: SafeResourceUrl | null;
 
   isLoading: boolean = true;
 
@@ -30,12 +32,17 @@ export class TravelperkComponent implements OnInit {
 
   isTravelperkSetupInProgress: boolean;
 
+  isIntegrationConnected: boolean;
+
   org: Org = this.orgService.getCachedOrg();
+
+  travelperkConfiguration: TravelperkConfiguration;
 
   constructor(
     private travelperkService: TravelperkService,
     private orgService: OrgService,
-    private eventsService: EventsService
+    private eventsService: EventsService,
+    private toastService: QbdToastService
   ) { }
 
   private addConnectionWidget() {
@@ -85,27 +92,47 @@ export class TravelperkComponent implements OnInit {
 
     syncData.push(this.orgService.getOrgs(this.org.fyle_org_id));
     return syncData;
+  }
 
+  private validateAndInitiateConnectionWidget(): void {
+    this.travelperkService.getConfigurations().subscribe((configuration) => {
+      this.travelperkConfiguration = configuration;
+      if (!this.travelperkConfiguration.is_recipe_enabled) {
+        this.addConnectionWidget();
+      }
+    }, () => {
+      this.addConnectionWidget();
+    });
   }
 
   private checkTravelperkDataAndTriggerConnectionWidget() {
     if (!this.travelperkData) {
       this.travelperkService.getTravelperkData().subscribe((travelperkData: Travelperk) => {
         this.travelperkData = travelperkData;
-        this.addConnectionWidget();
+        this.validateAndInitiateConnectionWidget();
       });
     } else {
-      this.addConnectionWidget();
+      this.validateAndInitiateConnectionWidget();
     }
   }
 
   private updateOrCreateTravelperkConfiguration(workatoConnectionStatus: WorkatoConnectionStatus): void {
-    this.travelperkService.getConfigurations().subscribe(() => {
+    this.travelperkService.getConfigurations().subscribe(configuration => {
+      this.travelperkConfiguration = configuration;
       const isRecipeEnabled: boolean = workatoConnectionStatus.payload.connected ? true : false;
-      this.travelperkService.patchConfigurations(isRecipeEnabled).subscribe();
+      this.travelperkService.patchConfigurations(isRecipeEnabled).subscribe(() => {
+        this.travelperkConfiguration.is_recipe_enabled = isRecipeEnabled;
+        if (isRecipeEnabled) {
+          this.iframeSourceUrl = null;
+          this.isIntegrationConnected = true;
+        }
+      });
     }, () => {
       if (workatoConnectionStatus.payload.connected) {
-        this.travelperkService.postConfigurations().subscribe();
+        this.travelperkService.postConfigurations().subscribe(() => {
+          this.iframeSourceUrl = null;
+          this.isIntegrationConnected = true;
+        });
       }
     });
   }
@@ -146,6 +173,13 @@ export class TravelperkComponent implements OnInit {
       this.setupTravelperk();
     }, () => {
       this.setupTravelperk();
+    });
+  }
+
+  disconnect(): void {
+    this.travelperkService.patchConfigurations(false).subscribe(() => {
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Travelperk successfully');
+      this.addConnectionWidget();
     });
   }
 
