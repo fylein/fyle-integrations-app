@@ -4,7 +4,7 @@ import { concat, toArray } from 'rxjs';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AppName, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { Travelperk, TravelperkConfiguration, WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
+import { Travelperk, WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
 import { EventsService } from 'src/app/core/services/core/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
@@ -35,8 +35,6 @@ export class TravelperkComponent implements OnInit {
   isIntegrationConnected: boolean;
 
   org: Org = this.orgService.getCachedOrg();
-
-  travelperkConfiguration: TravelperkConfiguration;
 
   constructor(
     private travelperkService: TravelperkService,
@@ -96,8 +94,8 @@ export class TravelperkComponent implements OnInit {
 
   private validateAndInitiateConnectionWidget(): void {
     this.travelperkService.getConfigurations().subscribe((configuration) => {
-      this.travelperkConfiguration = configuration;
-      if (!this.travelperkConfiguration.is_recipe_enabled) {
+      this.isIntegrationConnected = configuration.is_recipe_enabled;
+      if (!configuration.is_recipe_enabled) {
         this.addConnectionWidget();
       }
     }, () => {
@@ -117,11 +115,9 @@ export class TravelperkComponent implements OnInit {
   }
 
   private updateOrCreateTravelperkConfiguration(workatoConnectionStatus: WorkatoConnectionStatus): void {
-    this.travelperkService.getConfigurations().subscribe(configuration => {
-      this.travelperkConfiguration = configuration;
+    this.travelperkService.getConfigurations().subscribe(() => {
       const isRecipeEnabled: boolean = workatoConnectionStatus.payload.connected ? true : false;
       this.travelperkService.patchConfigurations(isRecipeEnabled).subscribe(() => {
-        this.travelperkConfiguration.is_recipe_enabled = isRecipeEnabled;
         if (isRecipeEnabled) {
           this.iframeSourceUrl = null;
           this.isIntegrationConnected = true;
@@ -178,6 +174,7 @@ export class TravelperkComponent implements OnInit {
 
   disconnect(): void {
     this.travelperkService.patchConfigurations(false).subscribe(() => {
+      this.isIntegrationConnected = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Travelperk successfully');
       this.addConnectionWidget();
     });

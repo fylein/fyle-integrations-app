@@ -12,7 +12,7 @@
             HRMS
             <p *ngIf="integrationTabs.HRMS" class="landing--active-tag"></p>
         </div>
-        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
+        <div *ngIf="isTravelperkAllowed" class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
             Travel
             <p *ngIf="integrationTabs.TRAVEL" class="landing--active-tag"></p>
         </div>
