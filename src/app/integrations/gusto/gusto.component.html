@@ -6,7 +6,7 @@
         [isLoading]="isLoading" 
         [hideRefreshIcon]="hideRefreshIcon" 
         [showErrorScreen]="showErrorScreen" 
-        [integrationConfiguration]="gustoConfiguration" 
+        [isRecipeRunning]="gustoConfiguration?.recipe_status ? true : false"
         [isIntegrationSetupInProgress]="isGustoSetupInProgress" 
         [isIntegrationConnected]="isGustoConnected" 
         [redirectLink]="RedirectLink.GUSTO"

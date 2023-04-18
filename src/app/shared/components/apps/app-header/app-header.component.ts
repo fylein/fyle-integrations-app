@@ -23,7 +23,7 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() iconPath: string;
 
-  @Input() isIntegrationConnected: boolean = false;
+  @Input() isIntegrationConnected: boolean | undefined;
 
   @Input() isIntegrationSetupInProgress: boolean;
 
@@ -33,15 +33,17 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() isLoading: boolean;
 
-  @Input() integrationConfiguration: BambooHRConfiguration;
+  @Input() isRecipeRunning: boolean;
 
   @Input() showErrorScreen: boolean;
 
   @Input() hideRefreshIcon: boolean;
 
-  @Input() iframeSourceUrl: SafeResourceUrl;
+  @Input() iframeSourceUrl: SafeResourceUrl | null;
 
   @Input() redirectLink: string;
+
+  @Input() isWorkatoConnector: boolean;
 
   constructor(
     private router: Router,
