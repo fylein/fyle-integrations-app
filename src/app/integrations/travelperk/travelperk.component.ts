@@ -102,7 +102,7 @@ export class TravelperkComponent implements OnInit {
       }
     }, () => {
       this.addConnectionWidget();
-    })
+    });
   }
 
   private checkTravelperkDataAndTriggerConnectionWidget() {
