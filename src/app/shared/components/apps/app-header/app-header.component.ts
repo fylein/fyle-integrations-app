@@ -43,8 +43,6 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() redirectLink: string;
 
-  @Input() isWorkatoConnector: boolean;
-
   constructor(
     private router: Router,
     private trackingService: TrackingService,
@@ -55,7 +53,7 @@ export class AppHeaderComponent implements OnInit {
     this.syncEmployees.emit();
   }
 
-  connectBambooHR(): void {
+  connect(): void {
     this.openDialog.emit();
   }
 

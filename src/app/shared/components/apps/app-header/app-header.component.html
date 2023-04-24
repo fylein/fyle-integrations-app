@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center">
-                <button *ngIf="!isIntegrationConnected && appName === AppName.BAMBOO_HR" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
+                <button *ngIf="!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button-raised" (click)="connect()">
                     Connect
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
