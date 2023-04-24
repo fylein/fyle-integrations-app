@@ -9,6 +9,7 @@ import { EventsService } from 'src/app/core/services/core/events.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-travelperk',
@@ -16,13 +17,9 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
   styleUrls: ['./travelperk.component.scss']
 })
 export class TravelperkComponent implements OnInit {
-  // iframeSource: string = 'https://app.workato.com/direct_link/embedded/connections/';
-
   RedirectLink = RedirectLink;
 
   AppName = AppName;
-
-  // iframeSourceUrl: SafeResourceUrl | null;
 
   isLoading: boolean = true;
 
@@ -42,24 +39,6 @@ export class TravelperkComponent implements OnInit {
     private eventsService: EventsService,
     private toastService: QbdToastService
   ) { }
-
-  private addConnectionWidget() {
-    const connectionId = this.travelperkData.travelperk_connection_id.toString();
-    const managedUserId = this.org.managed_user_id;
-    this.isLoading = true;
-
-    this.orgService.generateToken(managedUserId).subscribe(res => {
-      const token = res.token;
-      const workatoBaseUrl = 'https://app.workato.com/direct_link/embedded/connections/';
-      const iframeSource = workatoBaseUrl + connectionId + '?workato_dl_token=' + token;
-      // this.iframeSourceUrl = this.orgService.sanitizeUrl(iframeSource);
-      this.isLoading = false;
-    }, () => {
-      this.isLoading = false;
-      this.isTravelperkSetupInProgress = false;
-      this.showErrorScreen = true;
-    });
-  }
 
   private syncData() {
     const syncData = [];
@@ -92,14 +71,10 @@ export class TravelperkComponent implements OnInit {
     return syncData;
   }
 
+  // TODO: change function names
   private validateAndInitiateConnectionWidget(): void {
     this.travelperkService.getConfigurations().subscribe((configuration) => {
       this.isIntegrationConnected = configuration.is_recipe_enabled;
-      if (!configuration.is_recipe_enabled) {
-        // this.addConnectionWidget();
-      }
-    }, () => {
-      // this.addConnectionWidget();
     });
   }
 
@@ -114,33 +89,7 @@ export class TravelperkComponent implements OnInit {
     }
   }
 
-  private updateOrCreateTravelperkConfiguration(workatoConnectionStatus: WorkatoConnectionStatus): void {
-    this.travelperkService.getConfigurations().subscribe(() => {
-      const isRecipeEnabled: boolean = workatoConnectionStatus.payload.connected ? true : false;
-      this.travelperkService.patchConfigurations(isRecipeEnabled).subscribe(() => {
-        if (isRecipeEnabled) {
-          // this.iframeSourceUrl = null;
-          this.isIntegrationConnected = true;
-        }
-      });
-    }, () => {
-      if (workatoConnectionStatus.payload.connected) {
-        this.travelperkService.postConfigurations().subscribe(() => {
-          // this.iframeSourceUrl = null;
-          this.isIntegrationConnected = true;
-        });
-      }
-    });
-  }
-
-  private setupWorkatoConnectionWatcher(): void {
-    this.eventsService.getWorkatoConnectionStatus.subscribe((workatoConnectionStatus: WorkatoConnectionStatus) => {
-      this.updateOrCreateTravelperkConfiguration(workatoConnectionStatus);
-    });
-  }
-
   private setupTravelperk() {
-    this.setupWorkatoConnectionWatcher();
     const syncData = this.syncData();
 
     this.isTravelperkSetupInProgress = true;
@@ -176,36 +125,30 @@ export class TravelperkComponent implements OnInit {
     this.travelperkService.patchConfigurations(false).subscribe(() => {
       this.isIntegrationConnected = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Travelperk successfully');
-      // this.addConnectionWidget();
     });
   }
 
   connectTravelperk(): void {
-    let redirectUrl = 'https://integrations.fyleapps.tech/integrations/travelperk';
-    if (true) {
-      redirectUrl = 'https://integrations.fyleapps.tech/auth/redirect';
-    }
-    let url = `https://app.sandbox-travelperk.com/oauth2/authorize?client_id=n7wz4RsmYdSQAWbBnymxIsgCzw8goKNEYEcHw4w6&redirect_uri=${redirectUrl}&scope=expenses:read&response_type=code`;
+    const url = `${environment.travelperk_base_url}/oauth2/authorize?client_id=${environment.travelperk_client_id}&redirect_uri=${environment.travelperk_redirect_uri}&scope=expenses:read&response_type=code&state=${environment.production ? 'none' : 'travelperk_local_redirect'}`;
+    const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
 
-    if (true) {
-      url += '&state=travelperk_local_redirect';
-    }
-    const popup = window.open(url, 'popup', 'popup=true,width=500,height=800,left=500');
-    const checkPopup = setInterval(() => {
+    const activePopup = setInterval(() => {
       if (popup?.location?.href?.includes('code')) {
-          const callbackURL = popup?.location.href;
-          console.log('callbackURL',callbackURL)
+        const callbackURL = popup?.location.href;
+        const code = callbackURL.split('code=')[1];
 
-          const code = callbackURL.split('code=')[1];
+        this.travelperkService.connect(code).subscribe(() => {
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+          this.isIntegrationConnected = true;
+        });
 
-          console.log('code' , code)
-          popup.close();
+        popup.close();
       } else if (!popup || !popup.closed) {
         return;
       }
 
-      clearInterval(checkPopup);
-    }, 1000);
+      clearInterval(activePopup);
+    }, 500);
   }
 
   ngOnInit(): void {

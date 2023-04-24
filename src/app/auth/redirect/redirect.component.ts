@@ -26,7 +26,7 @@ export class RedirectComponent implements OnInit {
       const url = `http://localhost:4200/integrations/travelperk?code=${this.route.snapshot.queryParams.code}`;
       this.windowService.redirect(url);
     } else {
-      // this.redirectToFyleOAuth();
+      this.redirectToFyleOAuth();
     }
   }
 
