@@ -135,7 +135,7 @@ export class TravelperkComponent implements OnInit {
     const activePopup = setInterval(() => {
       if (popup?.location?.href?.includes('code')) {
         const callbackURL = popup?.location.href;
-        const code = callbackURL.split('code=')[1];
+        const code = callbackURL.split('code=')[1].split('&')[0];
 
         this.travelperkService.connect(code).subscribe(() => {
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
