@@ -195,6 +195,10 @@ export class TravelperkComponent implements OnInit {
       if (popup?.location?.href?.includes('code')) {
           const callbackURL = popup?.location.href;
           console.log('callbackURL',callbackURL)
+
+          const code = callbackURL.split('code=')[1];
+
+          console.log('code' , code)
           popup.close();
       } else if (!popup || !popup.closed) {
         return;

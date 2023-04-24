@@ -21,11 +21,12 @@ export class RedirectComponent implements OnInit {
   }
 
   private setupNavigation(): void {
+    console.log('this.route.snapshot.queryParams',this.route.snapshot.queryParams, this.route.snapshot.queryParams?.state, this.route.snapshot.queryParams?.state === 'travelperk_local_redirect', this.route.snapshot.queryParams?.state == 'travelperk_local_redirect')
     if (this.route.snapshot.queryParams?.state === 'travelperk_local_redirect') {
       const url = `http://localhost:4200/integrations/travelperk?code=${this.route.snapshot.queryParams.code}`;
       this.windowService.redirect(url);
     } else {
-      this.redirectToFyleOAuth();
+      // this.redirectToFyleOAuth();
     }
   }
 
