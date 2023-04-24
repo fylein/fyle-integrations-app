@@ -181,7 +181,10 @@ export class TravelperkComponent implements OnInit {
   }
 
   connectTravelperk(): void {
-    const url = 'https://app.sandbox-travelperk.com/oauth2/authorize?client_id=n7wz4RsmYdSQAWbBnymxIsgCzw8goKNEYEcHw4w6&redirect_uri=https://integrations-dummy.fyleapps.tech/&scope=expenses:read&response_type=code';
+    let url = 'https://app.sandbox-travelperk.com/oauth2/authorize?client_id=n7wz4RsmYdSQAWbBnymxIsgCzw8goKNEYEcHw4w6&redirect_uri=https://integrations.fyleapps.tech/integrations/travelperk&scope=expenses:read&response_type=code';
+    if (true) {
+      url += '&state=local_redirect';
+    }
     const popup = window.open(url, 'popup', 'popup=true,width=500,height=800,left=500');
     const checkPopup = setInterval(() => {
       if (popup?.location?.href?.includes('code')) {

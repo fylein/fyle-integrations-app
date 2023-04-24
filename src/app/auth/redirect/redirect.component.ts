@@ -21,8 +21,9 @@ export class RedirectComponent implements OnInit {
   }
 
   private setupNavigation(): void {
-    if (this.route.snapshot.queryParams?.env === 'local') {
-      this.windowService.redirect(this.route.snapshot.queryParams.url);
+    if (this.route.snapshot.queryParams?.state === 'local_redirect') {
+      const url = `http://localhost:4200/integrations/travelperk?code=${this.route.snapshot.queryParams.code}`;
+      this.windowService.redirect(url);
     } else {
       this.redirectToFyleOAuth();
     }
