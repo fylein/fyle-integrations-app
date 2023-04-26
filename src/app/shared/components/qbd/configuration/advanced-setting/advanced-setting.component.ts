@@ -47,7 +47,7 @@ export class AdvancedSettingComponent implements OnInit {
 
   defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
 
-  defaultTopMemoOptions: string[] = ["employee_email", "employee_name", "purpose","merchant"];
+  defaultTopMemoOptions: string[] = ["employee_email", "employee_name", "purpose", "merchant"];
 
   adminEmails: QBDEmailOption[];
 
