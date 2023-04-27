@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SafeResourceUrl } from '@angular/platform-browser';
 import { concat, toArray } from 'rxjs';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AppName, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { Travelperk, WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
-import { EventsService } from 'src/app/core/services/core/events.service';
+import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
@@ -31,12 +29,13 @@ export class TravelperkComponent implements OnInit {
 
   isIntegrationConnected: boolean;
 
+  isConnectionInProgress: boolean;
+
   org: Org = this.orgService.getCachedOrg();
 
   constructor(
     private travelperkService: TravelperkService,
     private orgService: OrgService,
-    private eventsService: EventsService,
     private toastService: QbdToastService
   ) { }
 
@@ -129,6 +128,7 @@ export class TravelperkComponent implements OnInit {
   }
 
   connectTravelperk(): void {
+    this.isConnectionInProgress = true;
     const url = `${environment.travelperk_base_url}/oauth2/authorize?client_id=${environment.travelperk_client_id}&redirect_uri=${environment.travelperk_redirect_uri}&scope=expenses:read&response_type=code&state=${environment.production ? 'none' : 'travelperk_local_redirect'}`;
     const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
 
@@ -138,8 +138,11 @@ export class TravelperkComponent implements OnInit {
         const code = callbackURL.split('code=')[1].split('&')[0];
 
         this.travelperkService.connect(code).subscribe(() => {
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
-          this.isIntegrationConnected = true;
+          this.travelperkService.patchConfigurations(true).subscribe(() => {
+            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+            this.isIntegrationConnected = true;
+            this.isConnectionInProgress = false;
+          });
         });
 
         popup.close();

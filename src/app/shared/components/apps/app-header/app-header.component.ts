@@ -43,6 +43,8 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() redirectLink: string;
 
+  @Input() isConnectionInProgress: boolean;
+
   constructor(
     private router: Router,
     private trackingService: TrackingService,
