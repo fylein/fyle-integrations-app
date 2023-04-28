@@ -22,7 +22,7 @@ jobs:
     - name: Test
       run: npm run unit_test:ci
       env:
-        FYLE_CLIENT_ID: "lolo" 
+        FYLE_CLIENT_ID: "lolo"
         CALLBACK_URI: "http://lolo.fyle.tech/callback"
         API_URL: "http://lolo.fyle.tech"
         FYLE_APP_URL: "http://lolo.fyle.tech"
