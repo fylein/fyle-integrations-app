@@ -21,7 +21,7 @@ describe('RedirectComponent', () => {
         code: 'hehe'
       }
     }
-  }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -48,7 +48,7 @@ describe('RedirectComponent', () => {
 
   it('should redirect to Fyle oauth', () => {
     expect((component as any).redirectToFyleOAuth()).toBeUndefined();
-  })
+  });
 
   it('should redirect to Fyle oauth by default if there are no query paramns', () => {
     routerMock = {
@@ -58,7 +58,7 @@ describe('RedirectComponent', () => {
           code: 'heheasd'
         }
       }
-    }
+    };
     expect(component).toBeTruthy();
-  })
+  });
 });

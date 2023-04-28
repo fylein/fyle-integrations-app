@@ -22,7 +22,7 @@ describe('WindowService', () => {
     const popupMock: any = {
       closed: false,
       location: { href: 'https://yourredirecturi.com?code=123456789' },
-      close: jasmine.createSpy('close'),
+      close: jasmine.createSpy('close')
     };
     spyOn(window, 'open').and.returnValue(popupMock);
     expect(service.openInNewTab('hehe')).toBeUndefined();
