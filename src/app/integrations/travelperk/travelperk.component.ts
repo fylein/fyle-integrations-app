@@ -70,22 +70,10 @@ export class TravelperkComponent implements OnInit {
     return syncData;
   }
 
-  // TODO: change function names
-  private validateAndInitiateConnectionWidget(): void {
+  private setConnectionStatus(): void {
     this.travelperkService.getConfigurations().subscribe((configuration) => {
       this.isIntegrationConnected = configuration.is_recipe_enabled;
     });
-  }
-
-  private checkTravelperkDataAndTriggerConnectionWidget() {
-    if (!this.travelperkData) {
-      this.travelperkService.getTravelperkData().subscribe((travelperkData: Travelperk) => {
-        this.travelperkData = travelperkData;
-        this.validateAndInitiateConnectionWidget();
-      });
-    } else {
-      this.validateAndInitiateConnectionWidget();
-    }
   }
 
   private setupTravelperk() {
@@ -102,14 +90,13 @@ export class TravelperkComponent implements OnInit {
       });
       this.isLoading = false;
       this.isTravelperkSetupInProgress = false;
-      this.checkTravelperkDataAndTriggerConnectionWidget();
+      this.setConnectionStatus();
     }, () => {
       this.isLoading = false;
       this.isTravelperkSetupInProgress = false;
       this.showErrorScreen = true;
     });
   }
-
 
   private setupPage(): void {
     this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
@@ -138,11 +125,9 @@ export class TravelperkComponent implements OnInit {
         const code = callbackURL.split('code=')[1].split('&')[0];
 
         this.travelperkService.connect(code).subscribe(() => {
-          this.travelperkService.patchConfigurations(true).subscribe(() => {
-            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
-            this.isIntegrationConnected = true;
-            this.isConnectionInProgress = false;
-          });
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+          this.isIntegrationConnected = true;
+          this.isConnectionInProgress = false;
         });
 
         popup.close();

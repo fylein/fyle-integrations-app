@@ -42,7 +42,7 @@ describe('AppHeaderComponent', () => {
   it('should open Bamboo HR connection', () => {
     spyOn(component.openDialog, 'emit');
 
-    component.connectBambooHR();
+    component.connect();
     expect(component.openDialog.emit).toHaveBeenCalled();
   });
 

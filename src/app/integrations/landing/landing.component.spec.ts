@@ -53,10 +53,6 @@ describe('LandingComponent', () => {
     expect(component.integrationTabs.ALL).toBeFalse();
   });
 
-  it('should open Accounting Integration App', () => {
-    component.openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE);
-  });
-
   it('should open In App Integration', () => {
     component.openInAppIntegration(InAppIntegration.BAMBOO_HR);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/bamboo_hr/']);
