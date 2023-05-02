@@ -1,8 +1,11 @@
-name: Unit Test
+name: Codecov Report Upload
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
-    types: [assigned,  opened,  synchronize,  reopened]
+    types: [labeled]
 
 jobs:
   unit-test:
@@ -19,7 +22,7 @@ jobs:
     - name: Test
       run: npm run unit_test:ci
       env:
-        FYLE_CLIENT_ID: "lolo" 
+        FYLE_CLIENT_ID: "lolo"
         CALLBACK_URI: "http://lolo.fyle.tech/callback"
         API_URL: "http://lolo.fyle.tech"
         FYLE_APP_URL: "http://lolo.fyle.tech"
@@ -29,5 +32,3 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         path: coverage/coverage-summary.json
         title: Unit Test Coverage
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
