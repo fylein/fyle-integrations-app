@@ -8,7 +8,7 @@ body {
 }
 
 body {
-    @apply tw-m-0-px tw-text-normal-text-color tw-font-aktiv-grotesk tw-text-16-px;
+    @apply tw-m-0-px tw-text-normal-text-color tw-font-aktiv-grotesk tw-text-16-px ;
 }
 
 p {
@@ -292,6 +292,10 @@ p {
     &--contents {
         @apply tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
     }
+}
+
+.p-tabmenu {
+    @apply tw-font-aktiv-grotesk tw-font-500 #{!important};
 }
 
 .p-tabmenu .p-tabmenu-nav {
