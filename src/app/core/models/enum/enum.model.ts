@@ -115,6 +115,11 @@ export enum QBDOnboardingState {
 
   export enum QBDExpenseState {
     PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
+    PAID = 'PAID'
+  }
+
+  export enum QBDCCCExpenseState {
+    PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
     PAID = 'PAID',
     APPROVED = 'APPROVED'
   }
