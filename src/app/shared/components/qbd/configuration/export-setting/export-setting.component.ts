@@ -209,7 +209,7 @@ export class ExportSettingComponent implements OnInit {
     };
   }
 
-  private setUpExpenseStates(){
+  private setUpExpenseStates(): void {
     this.cccExpenseStateOptions = [
       {
         label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
