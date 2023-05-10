@@ -28,6 +28,7 @@ export class ExportSettingComponent implements OnInit {
   QBDReimbursableExpensesObject= QBDReimbursableExpensesObject;
 
   expenseStateOptions: QBDExportSettingFormOption[];
+
   cccExpenseStateOptions: QBDExportSettingFormOption[];
 
   is_simplify_report_closure_enabled: boolean = false;
@@ -208,34 +209,37 @@ export class ExportSettingComponent implements OnInit {
     };
   }
 
+  private setUpExpenseStates(){
+    this.cccExpenseStateOptions = [
+      {
+        label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
+        value: this.is_simplify_report_closure_enabled ? QBDCCCExpenseState.APPROVED: QBDCCCExpenseState.PAYMENT_PROCESSING
+      },
+      {
+        label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+        value: QBDCCCExpenseState.PAID
+      }
+    ];
+
+    this.expenseStateOptions = [
+      {
+        label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
+        value: QBDExpenseState.PAYMENT_PROCESSING
+      },
+      {
+        label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
+        value: QBDExpenseState.PAID
+      }
+    ];
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
     this.exportSettingService.getQbdExportSettings().subscribe((exportSettingResponse : QBDExportSettingGet) => {
       this.exportSettings = exportSettingResponse;
-      this.is_simplify_report_closure_enabled = this.exportSettings.is_simplify_report_closure_enabled
-
-      this.cccExpenseStateOptions = [
-        {
-          label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
-          value: this.is_simplify_report_closure_enabled ? QBDCCCExpenseState.APPROVED: QBDCCCExpenseState.PAYMENT_PROCESSING
-        },
-        {
-          label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-          value: QBDCCCExpenseState.PAID
-        }
-      ];
-
-      this.expenseStateOptions = [
-        {
-          label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
-          value: QBDExpenseState.PAYMENT_PROCESSING
-        },
-        {
-          label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-          value: QBDExpenseState.PAID
-        }
-      ];
+      this.is_simplify_report_closure_enabled = this.exportSettings?.is_simplify_report_closure_enabled;
+      this.setUpExpenseStates();
 
       this.exportSettingsForm = this.formBuilder.group({
         reimbursableExportType: [this.exportSettings?.reimbursable_expenses_export_type],
@@ -255,6 +259,7 @@ export class ExportSettingComponent implements OnInit {
       this.setCustomValidatorsAndWatchers();
       this.isLoading = false;
     }, () => {
+        this.setUpExpenseStates();
         this.exportSettingsForm = this.formBuilder.group({
           reimbursableExportType: [null],
           reimbursableExpense: [false, this.exportSelectionValidator()],

@@ -1,5 +1,5 @@
 import { FormGroup } from "@angular/forms";
-import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDFyleField, QBDReimbursableExpensesObject, QBDScheduleFrequency } from "../../enum/enum.model";
+import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, QBDExpenseState, QBDCCCExpenseState ,QBDExportDateType, QBDFyleField, QBDReimbursableExpensesObject, QBDScheduleFrequency } from "../../enum/enum.model";
 
 export type QBDExportSettingFormOption = {
     label: string,
@@ -17,7 +17,7 @@ export type QBDExportSettingGet = {
     reimbursable_expense_date: QBDExportDateType | null,
     reimbursable_expense_grouped_by: QBDExpenseGroupedBy | null,
     credit_card_expense_export_type: QBDCorporateCreditCardExpensesObject | null,
-    credit_card_expense_state: QBDExpenseState | null,
+    credit_card_expense_state: QBDCCCExpenseState | null,
     credit_card_entity_name_preference: QBDEntity | null,
     credit_card_account_name: string | null,
     credit_card_expense_grouped_by: QBDExpenseGroupedBy | null,
@@ -32,7 +32,7 @@ export type QBDExportSettingPost = {
     reimbursable_expense_date: QBDExportDateType | null,
     reimbursable_expense_grouped_by: QBDExpenseGroupedBy | null,
     credit_card_expense_export_type: QBDCorporateCreditCardExpensesObject | null,
-    credit_card_expense_state: QBDExpenseState | null,
+    credit_card_expense_state: QBDCCCExpenseState | null,
     credit_card_entity_name_preference: QBDEntity | null,
     credit_card_account_name: string | null,
     credit_card_expense_grouped_by: QBDExpenseGroupedBy | null,
