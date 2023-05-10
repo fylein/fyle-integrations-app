@@ -66,4 +66,8 @@ export class TravelperkService {
       recipe_status: recipe_status
     });
   }
+
+  connect(code: string): Observable<{}> {
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/connect/`, { code });
+  }
 }

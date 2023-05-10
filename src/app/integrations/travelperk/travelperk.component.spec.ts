@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { of, throwError } from 'rxjs';
 import { TravelperkComponent } from './travelperk.component';
@@ -25,7 +25,8 @@ describe('TravelperkComponent', () => {
     connectAwsS3: () => of(connectAwsS3MockData),
     getConfigurations: () => of(throwError({})),
     patchConfigurations: () => of({}),
-    postConfigurations: () => of({})
+    postConfigurations: () => of({}),
+    connect: () => of({})
   };
 
   const service2 = {
@@ -92,8 +93,7 @@ describe('TravelperkComponent', () => {
     spyOn(orgService, 'generateToken').and.returnValue(throwError({}));
 
     (component as any).setupPage();
-    (component as any).addConnectionWidget();
-    expect(component.showErrorScreen).toBe(true);
+    expect(component.showErrorScreen).toBeUndefined();
   });
 
   it('should return syncData based on mock data', () => {
@@ -101,25 +101,6 @@ describe('TravelperkComponent', () => {
 
     const syncData = (component as any).syncData();
     expect(syncData.length).toBeGreaterThanOrEqual(6);
-  });
-
-  it('should update travelperk configuration if connected', () => {
-    (component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockData);
-  });
-
-  it('should update travelperk configuration if disconnected', () => {
-    const workatoConnectionStatusMockDataDisconnect = JSON.parse(JSON.stringify(workatoConnectionStatusMockData));
-    workatoConnectionStatusMockDataDisconnect.payload.connected = true;
-
-    (component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockDataDisconnect);
-  });
-
-  it('should create travelperk configuration if disconnected', () => {
-    spyOn(travelperkService, 'getConfigurations').and.returnValue(throwError({}));
-    const workatoConnectionStatusMockDataDisconnect = JSON.parse(JSON.stringify(workatoConnectionStatusMockData));
-    workatoConnectionStatusMockDataDisconnect.payload.connected = true;
-
-    (component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockDataDisconnect);
   });
 
   it('should show failed page if syncing of data api failed', () => {
@@ -130,30 +111,26 @@ describe('TravelperkComponent', () => {
     expect(component.showErrorScreen).toBeTrue();
   });
 
-  it('checkTravelperkDataAndTriggerConnectionWidget function check', () => {
-    // @ts-ignore
-    component.travelperkData = undefined;
-    spyOn(travelperkService, 'getTravelperkData').and.returnValue(of(travelperkMockData));
-    expect((component as any).checkTravelperkDataAndTriggerConnectionWidget()).toBeUndefined();
-  });
-
-  it('updateOrCreateTravelperkConfiguration function check', () => {
-    workatoConnectionStatusMockData.payload.connected = false;
-    expect((component as any).updateOrCreateTravelperkConfiguration(workatoConnectionStatusMockData)).toBeUndefined();
-  });
-
   it('should disconnect travelperk', () => {
-    spyOn((component as any), 'addConnectionWidget').and.returnValue(of(travelperkMockData));
     spyOn(orgService, 'generateToken').and.returnValue(throwError({}));
     component.disconnect();
-    expect(component.iframeSource).toEqual('https://app.workato.com/direct_link/embedded/connections/');
+    expect(component.isIntegrationConnected).toBeFalse();
   });
 
-  it('should display iframe when configuraion doesnt exist', () => {
-    spyOn(travelperkService, 'getConfigurations').and.returnValue(throwError({}));
-    spyOn((component as any), 'addConnectionWidget').and.returnValue(of(travelperkMockData));
-    spyOn(orgService, 'generateToken').and.returnValue(throwError({}));
+  it('should connect to travelperk with new tab', fakeAsync(() => {
+    const popupMock: any = {
+      closed: false,
+      location: { href: 'https://yourredirecturi.com?code=123456789' },
+      close: jasmine.createSpy('close')
+    };
+    spyOn(window, 'open').and.returnValue(popupMock);
 
-    (component as any).validateAndInitiateConnectionWidget();
-  });
+    component.connectTravelperk();
+    tick(500);
+
+    expect(window.open).toHaveBeenCalled();
+    expect(component.isIntegrationConnected).toBe(true);
+    expect(component.isConnectionInProgress).toBe(false);
+    expect(popupMock.close).toHaveBeenCalled();
+  }));
 });

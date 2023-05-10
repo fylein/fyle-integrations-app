@@ -1,7 +1,7 @@
 const { writeFile } = require("fs");
 
 const environment = {
-  production: false,
+  production: true,
   fyle_client_id: `${process.env.FYLE_CLIENT_ID ? process.env.FYLE_CLIENT_ID : '{{FYLE_CLIENT_ID}}'}`,
   callback_uri: `${process.env.CALLBACK_URI ? process.env.CALLBACK_URI : '{{CALLBACK_URI}}'}`,
   qbd_api_url: `${process.env.QBD_API_URL ? process.env.QBD_API_URL : '{{QBD_API_URL}}'}`,
@@ -16,7 +16,10 @@ const environment = {
   qbo_client_id: `${process.env.QBO_CLIENT_ID ? process.env.QBO_CLIENT_ID : '{{QBO_CLIENT_ID}}'}`,
   ns_client_id: `${process.env.NS_CLIENT_ID ? process.env.NS_CLIENT_ID : '{{NS_CLIENT_ID}}'}`,
   si_client_id: `${process.env.SI_CLIENT_ID ? process.env.SI_CLIENT_ID : '{{SI_CLIENT_ID}}'}`,
-  xero_client_id: `${process.env.XERO_CLIENT_ID ? process.env.XERO_CLIENT_ID : '{{XERO_CLIENT_ID}}'}`
+  xero_client_id: `${process.env.XERO_CLIENT_ID ? process.env.XERO_CLIENT_ID : '{{XERO_CLIENT_ID}}'}`,
+  travelperk_redirect_uri: `${process.env.TRAVELPERK_REDIRECT_URI ? process.env.TRAVELPERK_REDIRECT_URI : '{{TRAVELPERK_REDIRECT_URI}}'}`,
+  travelperk_base_url: `${process.env.TRAVELPERK_BASE_URL ? process.env.TRAVELPERK_BASE_URL : '{{TRAVELPERK_BASE_URL}}'}`,
+  travelperk_client_id: `${process.env.TRAVELPERK_CLIENT_ID ? process.env.TRAVELPERK_CLIENT_ID : '{{TRAVELPERK_CLIENT_ID}}'}`,
 };
 
 const targetPath = './src/environments/environment.json';

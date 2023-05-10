@@ -25,9 +25,10 @@
                 </div>
             </div>
             <div *ngIf="!isIntegrationSetupInProgress && !isLoading && !showErrorScreen " class="tw-flex tw-items-center">
-                <button *ngIf="!isIntegrationConnected && appName === AppName.BAMBOO_HR" pButton type="button" class="p-button-raised" (click)="connectBambooHR()">
-                    Connect
-                    <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                <button *ngIf="!isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button-raised" (click)="connect()" [disabled]="isConnectionInProgress">
+                    {{ isConnectionInProgress ? 'Connecting' : 'Connect' }}
+                    <i *ngIf="!isConnectionInProgress" class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                    <app-loader class="tw-ml-10-px" *ngIf="isConnectionInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
                 </button>
                 <button *ngIf="isIntegrationConnected && isRecipeRunning && appName !== AppName.GUSTO" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                     Disconnect
