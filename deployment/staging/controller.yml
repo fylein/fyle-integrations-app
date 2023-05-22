@@ -33,7 +33,7 @@ spec:
     spec:
       containers:
         - name: integration-settings-app
-          image: docker.io/{{DOCKERHUB_USERNAME}}/fyle_integration_settings-app:{{RELEASE_VERSION}}
+          image: image-name:v3bc2adc
           resources:
             limits:
               memory: 200Mi
