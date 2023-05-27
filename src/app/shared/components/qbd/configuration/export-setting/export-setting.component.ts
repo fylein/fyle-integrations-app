@@ -114,7 +114,7 @@ export class ExportSettingComponent implements OnInit {
   }
 
   accountName(): string {
-    const name = this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable account' : 'Bank';
+    const name = this.exportSettingsForm.value.reimbursableExportType === QBDReimbursableExpensesObject.BILL ? 'Accounts Payable' : 'Bank';
     this.customMessage = 'Please enter ' + name + ' name';
     return name;
   }
