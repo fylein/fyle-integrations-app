@@ -52,10 +52,3 @@ jobs:
           git commit -m "Update image tag"
           git remote set-url origin https://x-access-token:${{ secrets.DEPLOY_GIT_ACCESS_TOKEN }}@github.com/${{ secrets.STAGING_DEPLOY_REPO }}
           git push origin master
-
-      - name: Create new Sentry release
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: fyle-technologies-private-limi
-          SENTRY_PROJECT: integrations-settings-app
-          SENTRY_DEPLOY_ENVIRONMENT: staging
