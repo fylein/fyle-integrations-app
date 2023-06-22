@@ -166,7 +166,7 @@
                                 <app-configuration-label
                                     [label]="'Set the transaction date'"
                                     [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
-                                    [labelValue]="reimbursableExpenseGroupingDateOptions[0]"
+                                    [labelValue]="cccExpenseGroupingDateOptions[0]"
                                     [iconPath]="'calender'"
                                     [placeholder]="'Select date type'">
                                 </app-configuration-label>
@@ -178,7 +178,7 @@
                                     [mandatoryErrorListName]="'transaction date'"
                                     [label]="'Set the transaction date'"
                                     [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
-                                    [options]="reimbursableExpenseGroupingDateOptionsFn()"
+                                    [options]="cccExpenseGroupingDateOptionsFn()"
                                     [iconPath]="'calender'"
                                     [placeholder]="'Select date type'"
                                     [formControllerName]="'cccExportDate'">
@@ -191,7 +191,7 @@
                                     [mandatoryErrorListName]="'transaction date'"
                                     [label]="'Set the transaction date'"
                                     [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
-                                    [options]="reimbursableExpenseGroupingDateOptions"
+                                    [options]="cccExpenseGroupingDateOptions"
                                     [iconPath]="'calender'"
                                     [placeholder]="'Select date type'"
                                     [formControllerName]="'cccExportDate'">

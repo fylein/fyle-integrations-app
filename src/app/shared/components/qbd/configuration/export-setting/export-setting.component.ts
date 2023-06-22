@@ -55,6 +55,11 @@ export class ExportSettingComponent implements OnInit {
     }
   ];
 
+  cccExpenseGroupingDateOptions: QBDExportSettingFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat([{
+    label: 'Posted Date',
+    value: QBDExportDateType.POSTED_AT
+  }])
+
   creditCardExportTypes: QBDExportSettingFormOption[] = [
     {
       label: 'Credit Card Purchase',
@@ -107,6 +112,12 @@ export class ExportSettingComponent implements OnInit {
     const reimbursableExpenseGroup: QBDExportSettingFormOption[] = [];
     reimbursableExpenseGroup.push(this.reimbursableExpenseGroupingDateOptions[1]);
     return reimbursableExpenseGroup;
+  }
+
+  cccExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
+    const cccExpenseGroup: QBDExportSettingFormOption[] = [];
+    cccExpenseGroup.concat(this.cccExpenseGroupingDateOptions.slice(1,2));
+    return cccExpenseGroup;
   }
 
   namePreference(): string {
