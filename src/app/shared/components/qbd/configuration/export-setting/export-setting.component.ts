@@ -58,7 +58,7 @@ export class ExportSettingComponent implements OnInit {
   cccExpenseGroupingDateOptions: QBDExportSettingFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat([{
     label: 'Posted Date',
     value: QBDExportDateType.POSTED_AT
-  }])
+  }]);
 
   creditCardExportTypes: QBDExportSettingFormOption[] = [
     {
@@ -116,7 +116,7 @@ export class ExportSettingComponent implements OnInit {
 
   cccExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
     const cccExpenseGroup: QBDExportSettingFormOption[] = [];
-    cccExpenseGroup.concat(this.cccExpenseGroupingDateOptions.slice(1,2));
+    cccExpenseGroup.concat(this.cccExpenseGroupingDateOptions.slice(1, 2));
     return cccExpenseGroup;
   }
 
