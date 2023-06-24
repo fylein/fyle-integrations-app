@@ -55,10 +55,7 @@ export class ExportSettingComponent implements OnInit {
     }
   ];
 
-  cccExpenseGroupingDateOptions: QBDExportSettingFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat([{
-    label: 'Posted Date',
-    value: QBDExportDateType.POSTED_AT
-  }]);
+  cccExpenseGroupingDateOptions: QBDExportSettingFormOption[];
 
   creditCardExportTypes: QBDExportSettingFormOption[] = [
     {
@@ -114,10 +111,25 @@ export class ExportSettingComponent implements OnInit {
     return reimbursableExpenseGroup;
   }
 
-  cccExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
-    const cccExpenseGroup: QBDExportSettingFormOption[] = [];
-    cccExpenseGroup.concat(this.cccExpenseGroupingDateOptions.slice(1, 2));
-    return cccExpenseGroup;
+  getCreditCardExpenseGroupingDateOptions(cccExportType: QBDCorporateCreditCardExpensesObject, cccExportGroup: QBDExpenseGroupedBy) : QBDExportSettingFormOption[] {
+    if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE){
+      return this.cccExpenseGroupingDateOptions = [
+        {
+          label: 'Posted Date',
+          value: QBDExportDateType.POSTED_AT
+        },
+        {
+          label: 'Spend Date',
+          value: QBDExportDateType.SPENT_AT
+        }
+      ];
+    } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && cccExportGroup === QBDExpenseGroupedBy.EXPENSE) {
+      return this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat([{
+        label: 'Posted Date',
+        value: QBDExportDateType.POSTED_AT
+      }]);
+    }
+    return this.cccExpenseGroupingDateOptions = [this.reimbursableExpenseGroupingDateOptions[1]];
   }
 
   namePreference(): string {
