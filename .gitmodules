@@ -1,0 +1,3 @@
+[submodule "src/app/integrations/qbd"]
+	path = src/app/integrations/qbd
+	url = https://github.com/fylein/fyle-qbd-app
