@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { QbdWorkspaceService } from 'fyle-child';
+import { QbdWorkspaceService } from 'fyle-integrations-ui-lib';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
@@ -35,7 +35,7 @@ export class QbdComponent implements OnInit {
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
-    console.log('pathName',pathName,this.workspace.onboarding_state)
+
     if (pathName === '/integrations/qbd') {
       const onboardingStateComponentMap = {
         [QBDOnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
@@ -44,7 +44,7 @@ export class QbdComponent implements OnInit {
         [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
-      console.log('onboardingStateComponentMap[this.workspace.onboarding_state]',onboardingStateComponentMap[this.workspace.onboarding_state])
+
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }

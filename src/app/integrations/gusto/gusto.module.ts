@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FyleIntegrationsSharedModule } from 'fyle-child';
+import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 
 import { GustoRoutingModule } from './gusto-routing.module';
 import { GustoComponent } from './gusto.component';

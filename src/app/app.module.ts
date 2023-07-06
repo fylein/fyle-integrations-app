@@ -18,7 +18,7 @@ import { MessageService } from 'primeng/api';
 import { IntegrationsSettingsSharedModule } from './shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
 
-import { FyleIntegrationsSharedModule } from 'fyle-child';
+import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 
 
 @NgModule({
@@ -34,7 +34,7 @@ import { FyleIntegrationsSharedModule } from 'fyle-child';
     IntegrationsSettingsSharedModule,
     RippleModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    FyleIntegrationsSharedModule,
+    FyleIntegrationsSharedModule
   ],
   providers: [
     MessageService,

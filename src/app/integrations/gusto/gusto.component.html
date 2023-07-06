@@ -1,5 +1,5 @@
 <div>
-    <fyle-child-app-app-header 
+    <fyle-integrations-ui-lib-app-app-header 
         [iconPath]="'assets/logos/gusto-logo.svg'" 
         [appName]="appName" 
         [appDescription]="'Auto sync employee details between Fyle and Gusto.'" 
@@ -12,12 +12,12 @@
         [redirectLink]="RedirectLink.GUSTO"
         [iframeSourceUrl]="iframeSourceUrl"
         (syncEmployees)="syncEmployees()"
-    ></fyle-child-app-app-header>
+    ></fyle-integrations-ui-lib-app-app-header>
     
-    <fyle-child-app-app-integration-landing  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></fyle-child-app-app-integration-landing>
+    <fyle-integrations-ui-lib-app-app-integration-landing  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></fyle-integrations-ui-lib-app-app-integration-landing>
 
     <div *ngIf="showErrorScreen" class="tw-pt-100-px">
-        <fyle-child-app-error></fyle-child-app-error>
+        <fyle-integrations-ui-lib-app-error></fyle-integrations-ui-lib-app-error>
     </div>
 
     <app-gusto-configuration *ngIf="!isLoading && isGustoConnected && !showErrorScreen" [additionalEmails]="additionalEmails" [gustoConfiguration]="gustoConfiguration" (updateConfiguration)="configurationUpdatesHandler($event)"></app-gusto-configuration>

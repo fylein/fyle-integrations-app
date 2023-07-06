@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FyleIntegrationsSharedModule } from 'fyle-child';
+import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 
 import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { MainRoutingModule } from './main-routing.module';

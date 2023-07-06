@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { FyleIntegrationsSharedModule } from 'fyle-child';
+import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 
 import { QbdRoutingModule } from './qbd-routing.module';
 import { LandingComponent } from './onboarding/onboarding-landing/landing.component';
