@@ -5,11 +5,11 @@ import { AppName, ClickEvent, InAppIntegration, Page, QBDConfigurationCtaText, R
 import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
-import { EventsService } from 'src/app/core/services/core/events.service';
-import { GustoService } from 'src/app/core/services/gusto/gusto.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { EventsService } from 'fyle-integrations-ui-lib';
+import { GustoService } from 'fyle-integrations-ui-lib';
+import { TrackingService } from 'fyle-integrations-ui-lib';
+import { OrgService } from 'fyle-integrations-ui-lib';
+import { QbdToastService } from 'fyle-integrations-ui-lib';
 
 @Component({
   selector: 'app-gusto',

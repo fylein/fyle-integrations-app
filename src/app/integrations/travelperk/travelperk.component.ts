@@ -4,9 +4,9 @@ import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AppName, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
-import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
-import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { OrgService } from 'fyle-integrations-ui-lib';
+import { QbdToastService } from 'fyle-integrations-ui-lib';
+import { TravelperkService } from 'fyle-integrations-ui-lib';
 import { environment } from 'src/environments/environment';
 
 @Component({

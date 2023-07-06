@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from '../core/models/db/user.model';
 import { Org } from '../core/models/org/org.model';
-import { StorageService } from '../core/services/core/storage.service';
-import { WindowService } from '../core/services/core/window.service';
-import { TrackingService } from '../core/services/integration/tracking.service';
-import { UserService } from '../core/services/misc/user.service';
-import { OrgService } from '../core/services/org/org.service';
+import { StorageService } from 'fyle-integrations-ui-lib';
+import { WindowService } from 'fyle-integrations-ui-lib';
+import { TrackingService } from 'fyle-integrations-ui-lib';
+import { UserService } from 'fyle-integrations-ui-lib';
+import { OrgService } from 'fyle-integrations-ui-lib';
 
 @Component({
   selector: 'app-integrations',

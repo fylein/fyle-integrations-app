@@ -5,9 +5,9 @@ import { catchError, concat, merge, of, toArray } from 'rxjs';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { ClickEvent, Page, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
+import { BambooHrService } from 'fyle-integrations-ui-lib';
+import { TrackingService } from 'fyle-integrations-ui-lib';
+import { OrgService } from 'fyle-integrations-ui-lib';
 
 @Component({
   selector: 'app-bamboo-hr',

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { WindowService } from 'fyle-integrations-ui-lib';
 
 import { RedirectComponent } from './redirect.component';
 import { ActivatedRoute, Router } from '@angular/router';

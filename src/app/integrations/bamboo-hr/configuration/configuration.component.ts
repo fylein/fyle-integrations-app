@@ -4,8 +4,8 @@ import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
+import { TrackingService } from 'fyle-integrations-ui-lib';
+import { OrgService } from 'fyle-integrations-ui-lib';
 
 @Component({
   selector: 'app-configuration',

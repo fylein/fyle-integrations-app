@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { EventsService } from './core/services/core/events.service';
+import { EventsService } from 'fyle-integrations-ui-lib';
 
 @Component({
   selector: 'app-root',

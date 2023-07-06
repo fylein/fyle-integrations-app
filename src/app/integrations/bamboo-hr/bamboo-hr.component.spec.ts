@@ -6,7 +6,7 @@ import { By } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { bambooHRMockConfiguration, bambooHRMockConfigurationPayload, bambooHrMockData, bambooHrMockWithoutToken } from 'src/app/core/services/bamboo-hr/bamboo-hr.fixture';
-import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
+import { BambooHrService } from 'fyle-integrations-ui-lib';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
 import { OrgService } from 'src/app/core/services/org/org.service';
 

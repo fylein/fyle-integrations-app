@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthService } from '../services/core/auth.service';
+import { AuthService } from 'fyle-integrations-ui-lib';
 
 @Injectable({
   providedIn: 'root'

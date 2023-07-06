@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page } from 'src/app/core/models/enum/enum.model';
 import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
-import { EventsService } from 'src/app/core/services/core/events.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
+import { EventsService } from 'fyle-integrations-ui-lib';
+import { TrackingService } from 'fyle-integrations-ui-lib';
+import { OrgService } from 'fyle-integrations-ui-lib';
 import { environment } from 'src/environments/environment';
 import { Org } from 'src/app/core/models/org/org.model';
 

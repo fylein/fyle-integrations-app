@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { WindowService } from 'fyle-integrations-ui-lib';
 import { environment } from 'src/environments/environment';
 
 @Component({

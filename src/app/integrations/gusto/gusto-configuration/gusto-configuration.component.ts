@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AppName, Page, QBDConfigurationCtaText, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOption, GustoConfiguration, GustoConfigurationPost, GustoModel } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
-import { GustoService } from 'src/app/core/services/gusto/gusto.service';
-import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { GustoService } from 'fyle-integrations-ui-lib';
+import { TrackingService } from 'fyle-integrations-ui-lib';
+import { OrgService } from 'fyle-integrations-ui-lib';
+import { QbdToastService } from 'fyle-integrations-ui-lib';
 
 @Component({
   selector: 'app-gusto-configuration',

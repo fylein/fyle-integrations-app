@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { AuthService } from 'src/app/core/services/core/auth.service';
-import { UserService } from 'src/app/core/services/misc/user.service';
-import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.service';
+import { AuthService } from 'fyle-integrations-ui-lib';
+import { UserService } from 'fyle-integrations-ui-lib';
+import { QbdAuthService } from 'fyle-integrations-ui-lib';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
