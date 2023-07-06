@@ -5,7 +5,6 @@ import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 
 import { TravelperkRoutingModule } from './travelperk-routing.module';
 import { TravelperkComponent } from './travelperk.component';
-import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { SkeletonModule } from 'primeng/skeleton';
 
 
@@ -15,7 +14,6 @@ import { SkeletonModule } from 'primeng/skeleton';
   ],
   imports: [
     CommonModule,
-    IntegrationsSettingsSharedModule,
     FyleIntegrationsSharedModule,
     TravelperkRoutingModule,
     SkeletonModule

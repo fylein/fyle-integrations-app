@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 
-import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { MainRoutingModule } from './main-routing.module';
 
 @NgModule({
@@ -11,7 +10,6 @@ import { MainRoutingModule } from './main-routing.module';
   imports: [
     CommonModule,
     MainRoutingModule,
-    IntegrationsSettingsSharedModule,
     FyleIntegrationsSharedModule
   ]
 })

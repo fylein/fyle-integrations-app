@@ -13,7 +13,6 @@ import { OnboardingDoneComponent } from './onboarding/onboarding-done/onboarding
 import { OnboardingExportSettingComponent } from './onboarding/onboarding-export-setting/onboarding-export-setting.component';
 import { OnboardingFieldSettingComponent } from './onboarding/onboarding-field-setting/onboarding-field-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding/onboarding-advanced-setting/onboarding-advanced-setting.component';
-import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
@@ -35,7 +34,6 @@ import { TableModule } from 'primeng/table';
   imports: [
     CommonModule,
     QbdRoutingModule,
-    IntegrationsSettingsSharedModule,
     TabMenuModule,
     DropdownModule,
     TableModule,

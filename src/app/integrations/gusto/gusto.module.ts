@@ -6,7 +6,6 @@ import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 import { GustoRoutingModule } from './gusto-routing.module';
 import { GustoComponent } from './gusto.component';
 import { GustoConfigurationComponent } from './gusto-configuration/gusto-configuration.component';
-import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -27,7 +26,6 @@ import { ToastModule } from 'primeng/toast';
   imports: [
     CommonModule,
     GustoRoutingModule,
-    IntegrationsSettingsSharedModule,
     FyleIntegrationsSharedModule,
     InputTextModule,
     ButtonModule,

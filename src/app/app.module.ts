@@ -15,7 +15,6 @@ import { GlobalErrorHandler } from './app.error-handling';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { IntegrationsSettingsSharedModule } from './shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
 
 import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
@@ -31,7 +30,6 @@ import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
     BrowserAnimationsModule,
     HttpClientModule,
     ToastModule,
-    IntegrationsSettingsSharedModule,
     RippleModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
     FyleIntegrationsSharedModule

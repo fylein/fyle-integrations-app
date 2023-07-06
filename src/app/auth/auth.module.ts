@@ -7,7 +7,6 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { RedirectComponent } from './redirect/redirect.component';
-import { IntegrationsSettingsSharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -19,7 +18,6 @@ import { IntegrationsSettingsSharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    IntegrationsSettingsSharedModule,
     FyleIntegrationsSharedModule
   ]
 })

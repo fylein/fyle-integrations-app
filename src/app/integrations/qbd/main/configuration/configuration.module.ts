@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 
-import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { ConfigurationRoutingModule } from './configuration-routing.module';
 import { ConfigurationAdvancedSettingComponent } from './configuration-advanced-setting/configuration-advanced-setting.component';
 import { ConfigurationFieldSettingComponent } from './configuration-field-setting/configuration-field-setting.component';
@@ -19,7 +18,6 @@ import { ConfigurationExportSettingComponent } from './configuration-export-sett
   imports: [
     CommonModule,
     ConfigurationRoutingModule,
-    IntegrationsSettingsSharedModule,
     FyleIntegrationsSharedModule
   ]
 })

@@ -6,7 +6,6 @@ import { FyleIntegrationsSharedModule } from 'fyle-integrations-ui-lib';
 import { BambooHrRoutingModule } from './bamboo-hr-routing.module';
 import { BambooHrComponent } from './bamboo-hr.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
-import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,7 +31,6 @@ import { MessageService } from 'primeng/api';
   imports: [
     CommonModule,
     BambooHrRoutingModule,
-    IntegrationsSettingsSharedModule,
     FyleIntegrationsSharedModule,
     DialogModule,
     PasswordModule,
