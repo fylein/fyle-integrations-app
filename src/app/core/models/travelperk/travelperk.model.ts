@@ -1,4 +1,4 @@
-import { Org} from 'src/app/core/models/org/org.model';
+import { Org} from 'fyle-integrations-ui-lib';
 
 export type Travelperk = {
     id: number;

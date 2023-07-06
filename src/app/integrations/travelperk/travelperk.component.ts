@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { concat, toArray } from 'rxjs';
-import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { AppName, RedirectLink } from 'src/app/core/models/enum/enum.model';
-import { Org } from 'src/app/core/models/org/org.model';
-import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
+import { ToastSeverity } from 'fyle-integrations-ui-lib';
+import { AppName, RedirectLink } from 'fyle-integrations-ui-lib';
+import { Org } from 'fyle-integrations-ui-lib';
+import { Travelperk } from 'fyle-integrations-ui-lib';
 import { OrgService } from 'fyle-integrations-ui-lib';
 import { QbdToastService } from 'fyle-integrations-ui-lib';
 import { TravelperkService } from 'fyle-integrations-ui-lib';

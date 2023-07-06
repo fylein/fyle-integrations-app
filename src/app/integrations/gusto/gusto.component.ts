@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { catchError, concat, merge, Observable, of, toArray } from 'rxjs';
-import { AppName, ClickEvent, InAppIntegration, Page, QBDConfigurationCtaText, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
-import { Org } from 'src/app/core/models/org/org.model';
-import { WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
+import { AppName, ClickEvent, InAppIntegration, Page, RedirectLink, ToastSeverity } from 'fyle-integrations-ui-lib';
+import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'fyle-integrations-ui-lib';
+import { Org } from 'fyle-integrations-ui-lib';
+import { WorkatoConnectionStatus } from 'fyle-integrations-ui-lib';
 import { EventsService } from 'fyle-integrations-ui-lib';
 import { GustoService } from 'fyle-integrations-ui-lib';
 import { TrackingService } from 'fyle-integrations-ui-lib';

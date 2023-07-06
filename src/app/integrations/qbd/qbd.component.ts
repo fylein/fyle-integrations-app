@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { QbdWorkspaceService } from 'fyle-integrations-ui-lib';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
+import { MinimalUser } from 'fyle-integrations-ui-lib';
+import { QBDOnboardingState } from 'fyle-integrations-ui-lib';
+import { Workspace } from 'fyle-integrations-ui-lib';
 import { StorageService } from 'fyle-integrations-ui-lib';
 import { WindowService } from 'fyle-integrations-ui-lib';
 import { QbdUserService } from 'fyle-integrations-ui-lib';

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { RedirectLink } from 'fyle-integrations-ui-lib';
 
 @Component({
   selector: 'app-landing',

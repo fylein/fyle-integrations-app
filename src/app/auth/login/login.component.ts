@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MinimalUser } from 'src/app/core/models/db/user.model';
+import { MinimalUser } from 'fyle-integrations-ui-lib';
 import { AuthService } from 'fyle-integrations-ui-lib';
 import { UserService } from 'fyle-integrations-ui-lib';
 import { QbdAuthService } from 'fyle-integrations-ui-lib';

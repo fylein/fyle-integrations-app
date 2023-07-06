@@ -1,6 +1,6 @@
-import { QBDScheduleFrequency } from "src/app/core/models/enum/enum.model";
-import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from "src/app/core/models/qbd/db/iif-logs.model";
-import { QBDAdvancedSettingsGet } from "src/app/core/models/qbd/qbd-configuration/advanced-setting.model";
+import { QBDScheduleFrequency } from "fyle-integrations-ui-lib";
+import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'fyle-integrations-ui-lib';
+import { QBDAdvancedSettingsGet } from "fyle-integrations-ui-lib";
 
 export const getQbdAccountingExports: QbdExportTriggerResponse = {
     count: 2,

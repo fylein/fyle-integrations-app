@@ -1,5 +1,5 @@
-import { MinimalUser } from "../models/db/user.model";
-import { Token } from "../models/misc/token.model";
+import { MinimalUser } from "fyle-integrations-ui-lib";
+import { Token } from "fyle-integrations-ui-lib";
 
 export const tokenResponse = {
   access_token: 'fylee',

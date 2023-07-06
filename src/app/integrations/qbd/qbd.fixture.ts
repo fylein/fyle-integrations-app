@@ -1,4 +1,4 @@
-import { QBDOnboardingState } from "src/app/core/models/enum/enum.model";
+import { QBDOnboardingState } from "fyle-integrations-ui-lib";
 
 export const workspaceResponse = {
     "id": 1,

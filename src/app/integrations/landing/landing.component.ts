@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page } from 'src/app/core/models/enum/enum.model';
-import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
+import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page } from 'fyle-integrations-ui-lib';
+import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'fyle-integrations-ui-lib';
 import { EventsService } from 'fyle-integrations-ui-lib';
 import { TrackingService } from 'fyle-integrations-ui-lib';
 import { OrgService } from 'fyle-integrations-ui-lib';
 import { environment } from 'src/environments/environment';
-import { Org } from 'src/app/core/models/org/org.model';
+import { Org } from 'fyle-integrations-ui-lib';
 
 @Component({
   selector: 'app-landing',

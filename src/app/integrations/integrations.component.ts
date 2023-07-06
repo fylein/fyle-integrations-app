@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MinimalUser } from '../core/models/db/user.model';
-import { Org } from '../core/models/org/org.model';
+import { MinimalUser } from 'fyle-integrations-ui-lib';
+import { Org } from 'fyle-integrations-ui-lib';
 import { StorageService } from 'fyle-integrations-ui-lib';
 import { WindowService } from 'fyle-integrations-ui-lib';
 import { TrackingService } from 'fyle-integrations-ui-lib';

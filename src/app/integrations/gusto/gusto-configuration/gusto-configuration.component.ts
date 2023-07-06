@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AppName, Page, QBDConfigurationCtaText, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { EmailOption, GustoConfiguration, GustoConfigurationPost, GustoModel } from 'src/app/core/models/gusto/gusto.model';
-import { Org } from 'src/app/core/models/org/org.model';
+import { AppName, Page, QBDConfigurationCtaText, ToastSeverity } from 'fyle-integrations-ui-lib';
+import { EmailOption, GustoConfiguration, GustoConfigurationPost, GustoModel } from 'fyle-integrations-ui-lib';
+import { Org } from 'fyle-integrations-ui-lib';
 import { GustoService } from 'fyle-integrations-ui-lib';
 import { TrackingService } from 'fyle-integrations-ui-lib';
 import { OrgService } from 'fyle-integrations-ui-lib';
