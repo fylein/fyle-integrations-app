@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
 import { TravelperkRoutingModule } from './travelperk-routing.module';
 import { TravelperkComponent } from './travelperk.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { SkeletonModule } from 'primeng/skeleton';
 
 
@@ -13,7 +15,8 @@ import { SkeletonModule } from 'primeng/skeleton';
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    IntegrationsSettingsSharedModule,
+    FyleIntegrationsSharedModule,
     TravelperkRoutingModule,
     SkeletonModule
   ]

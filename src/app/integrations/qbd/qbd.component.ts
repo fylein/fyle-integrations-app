@@ -34,6 +34,7 @@ export class QbdComponent implements OnInit {
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
+    console.log('pathName',pathName,this.workspace.onboarding_state)
     if (pathName === '/integrations/qbd') {
       const onboardingStateComponentMap = {
         [QBDOnboardingState.CONNECTION]: '/integrations/qbd/onboarding/landing',
@@ -42,6 +43,7 @@ export class QbdComponent implements OnInit {
         [QBDOnboardingState.ADVANCED_SETTINGS]: '/integrations/qbd/onboarding/advanced_settings',
         [QBDOnboardingState.COMPLETE]: '/integrations/qbd/main'
       };
+      console.log('onboardingStateComponentMap[this.workspace.onboarding_state]',onboardingStateComponentMap[this.workspace.onboarding_state])
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }

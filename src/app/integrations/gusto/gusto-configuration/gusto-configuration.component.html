@@ -1,10 +1,10 @@
 <div class="tw-mt-56-px tw-mx-80-px tw-pb-56-px">
     <div class="tw-shadow-app-card tw-rounded-12-px">
         <div>
-            <app-configuration-step-header 
+            <fyle-child-app-configuration-step-header 
                 [headerText]="'Configuration'"
                 [contentText]="'The Fyle-Gusto Integration will import and auto-sync employee information between Gusto and Fyle. Admins will be notified when the imports fail.'"
-            ></app-configuration-step-header>
+            ></fyle-child-app-configuration-step-header>
         </div>
         <div class="tw-p-24-px">
             <div class="tw-rounded-12-px tw-border-1-px tw-border-separator tw-mb-24-px ">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <div class="tw-rounded-12-px tw-border-1-px tw-border-separator tw-flex tw-items-start">
-                <app-email-multi-select-field
+                <fyle-child-app-email-multi-select-field
                     [form]="configurationForm"
                     [label]="'Send error notification to'"
                     [isFieldMandatory]="true"
@@ -47,11 +47,11 @@
                     [iconPath]="'email'"
                     [placeholder]="'Select email address'"
                     [formControllerName]="'email'">
-                </app-email-multi-select-field>
+                </fyle-child-app-email-multi-select-field>
             </div>
         </div>
         <div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? ConfigurationCtaText.SAVE : ConfigurationCtaText.SAVING" [isButtonDisabled]="!configurationForm.valid || saveInProgress || configurationForm.controls.email.value.length === 0" (save)="save()"></app-configuration-step-footer>
+            <fyle-child-app-configuration-step-footer [ctaText] = "!saveInProgress ? ConfigurationCtaText.SAVE : ConfigurationCtaText.SAVING" [isButtonDisabled]="!configurationForm.valid || saveInProgress || configurationForm.controls.email.value.length === 0" (save)="save()"></fyle-child-app-configuration-step-footer>
         </div>
     </div>
 </div>

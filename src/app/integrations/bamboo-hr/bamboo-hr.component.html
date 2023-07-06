@@ -13,7 +13,7 @@
     </ng-template>
 </p-toast>
 
-<app-app-header 
+<fyle-child-app-app-header 
     [iconPath]="'assets/logos/bamboo-hr-logo.svg'" 
     [appName]="'BambooHR'" 
     [appDescription]="'Auto sync employee details between Bamboo HR and Fyle.'" 
@@ -26,15 +26,15 @@
     (openDialog)="openDialog()" 
     (disconnectIntegration)="disconnectBambooHr()" 
     (syncEmployees)="syncEmployees()"
-></app-app-header>
+></fyle-child-app-app-header>
 
-<app-app-integration-landing  *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'Auto sync employee details between Bamboo HR and Fyle.'" [svgPath]="'assets/flow-charts/bamboo-hr-flow-chart.svg'" [redirectLink]="RedirectLink.BAMBOO_HR"></app-app-integration-landing>
+<fyle-child-app-app-integration-landing  *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'Auto sync employee details between Bamboo HR and Fyle.'" [svgPath]="'assets/flow-charts/bamboo-hr-flow-chart.svg'" [redirectLink]="RedirectLink.BAMBOO_HR"></fyle-child-app-app-integration-landing>
 
-<app-error *ngIf="showErrorScreen"></app-error>
+<fyle-child-app-error *ngIf="showErrorScreen"></fyle-child-app-error>
 
 <p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
     <div *ngIf="isBambooConnectionInProgress" class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-465-px">
-        <app-loader></app-loader>
+        <fyle-child-app-loader></fyle-child-app-loader>
     </div>
     <div *ngIf="!isBambooConnectionInProgress">
         <div class="tw-pt-22-px tw-flex tw-justify-center">

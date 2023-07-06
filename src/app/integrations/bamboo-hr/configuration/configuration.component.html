@@ -87,7 +87,7 @@
             <div>
                 <button [disabled]="!cofigurationForm.valid" pButton type="button" class="remove-bg p-button-raised" [ngClass]="isConfigurationSaveInProgress ? '!tw-bg-cta-disabled !tw-cursor-no-drop' : '!tw-bg-mandatory-field-color'" (click)="saveSettings()">
                     {{ isConfigurationSaveInProgress ? 'Saving': 'Save' }}
-                    <app-loader class="tw-ml-10-px" *ngIf="isConfigurationSaveInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
+                    <fyle-child-app-loader class="tw-ml-10-px" *ngIf="isConfigurationSaveInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></fyle-child-app-loader>
                 </button>
             </div>
         </div>

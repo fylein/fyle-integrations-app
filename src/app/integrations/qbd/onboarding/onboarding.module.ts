@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/shared/shared.module';
+
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
+import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { OnboardingRoutingModule } from './onboarding-routing.module';
 
 
@@ -9,7 +12,8 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
   imports: [
     CommonModule,
     OnboardingRoutingModule,
-    SharedModule
+    IntegrationsSettingsSharedModule,
+    FyleIntegrationsSharedModule
   ]
 })
 export class OnboardingModule { }

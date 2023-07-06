@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
 import { RedirectComponent } from './redirect/redirect.component';
-import { SharedModule } from '../shared/shared.module';
+import { IntegrationsSettingsSharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     AuthRoutingModule,
-    SharedModule
+    IntegrationsSettingsSharedModule,
+    FyleIntegrationsSharedModule
   ]
 })
 export class AuthModule { }

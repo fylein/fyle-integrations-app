@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
 import { IntegrationsRoutingModule } from './integrations-routing.module';
 import { IntegrationsComponent } from './integrations.component';
 import { LandingComponent } from './landing/landing.component';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { QbdComponent } from './qbd/qbd.component';
-import { SharedModule } from '../shared/shared.module';
+import { IntegrationsSettingsSharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     IntegrationsRoutingModule,
-    SharedModule,
+    IntegrationsSettingsSharedModule,
+    FyleIntegrationsSharedModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })

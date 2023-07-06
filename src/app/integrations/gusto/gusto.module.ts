@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
 import { GustoRoutingModule } from './gusto-routing.module';
 import { GustoComponent } from './gusto.component';
 import { GustoConfigurationComponent } from './gusto-configuration/gusto-configuration.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
@@ -25,7 +27,8 @@ import { ToastModule } from 'primeng/toast';
   imports: [
     CommonModule,
     GustoRoutingModule,
-    SharedModule,
+    IntegrationsSettingsSharedModule,
+    FyleIntegrationsSharedModule,
     InputTextModule,
     ButtonModule,
     FormsModule,

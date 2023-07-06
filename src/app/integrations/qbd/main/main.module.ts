@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from 'src/app/shared/shared.module';
+
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
+import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { MainRoutingModule } from './main-routing.module';
 
 @NgModule({
@@ -8,7 +11,8 @@ import { MainRoutingModule } from './main-routing.module';
   imports: [
     CommonModule,
     MainRoutingModule,
-    SharedModule
+    IntegrationsSettingsSharedModule,
+    FyleIntegrationsSharedModule
   ]
 })
 export class MainModule { }

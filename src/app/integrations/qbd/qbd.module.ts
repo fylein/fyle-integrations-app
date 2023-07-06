@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
 import { QbdRoutingModule } from './qbd-routing.module';
 import { LandingComponent } from './onboarding/onboarding-landing/landing.component';
 import { ConfigurationComponent } from './main/configuration/configuration.component';
@@ -11,7 +13,7 @@ import { OnboardingDoneComponent } from './onboarding/onboarding-done/onboarding
 import { OnboardingExportSettingComponent } from './onboarding/onboarding-export-setting/onboarding-export-setting.component';
 import { OnboardingFieldSettingComponent } from './onboarding/onboarding-field-setting/onboarding-field-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding/onboarding-advanced-setting/onboarding-advanced-setting.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
@@ -33,11 +35,12 @@ import { TableModule } from 'primeng/table';
   imports: [
     CommonModule,
     QbdRoutingModule,
-    SharedModule,
+    IntegrationsSettingsSharedModule,
     TabMenuModule,
     DropdownModule,
     TableModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
+    FyleIntegrationsSharedModule
   ]
 })
 export class QbdModule { }

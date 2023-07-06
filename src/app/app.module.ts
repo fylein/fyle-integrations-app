@@ -2,6 +2,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -14,8 +15,11 @@ import { GlobalErrorHandler } from './app.error-handling';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
-import { SharedModule } from './shared/shared.module';
+import { IntegrationsSettingsSharedModule } from './shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
+
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
 
 @NgModule({
   declarations: [
@@ -27,9 +31,10 @@ import { RippleModule } from 'primeng/ripple';
     BrowserAnimationsModule,
     HttpClientModule,
     ToastModule,
-    SharedModule,
+    IntegrationsSettingsSharedModule,
     RippleModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
+    FyleIntegrationsSharedModule,
   ],
   providers: [
     MessageService,

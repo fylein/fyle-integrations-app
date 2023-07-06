@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { FyleIntegrationsSharedModule } from 'fyle-child';
+
 import { BambooHrRoutingModule } from './bamboo-hr-routing.module';
 import { BambooHrComponent } from './bamboo-hr.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { IntegrationsSettingsSharedModule } from 'src/app/shared/shared.module';
 
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -30,7 +32,8 @@ import { MessageService } from 'primeng/api';
   imports: [
     CommonModule,
     BambooHrRoutingModule,
-    SharedModule,
+    IntegrationsSettingsSharedModule,
+    FyleIntegrationsSharedModule,
     DialogModule,
     PasswordModule,
     InputTextModule,
