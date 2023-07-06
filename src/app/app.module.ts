@@ -12,7 +12,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { GlobalErrorHandler } from './app.error-handling';
-import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
+import { JwtInterceptor } from 'fyle-integrations-ui-lib';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { RippleModule } from 'primeng/ripple';
