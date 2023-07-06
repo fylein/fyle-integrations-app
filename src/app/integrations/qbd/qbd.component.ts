@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { QbdWorkspaceService } from 'fyle-child';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { QbdUserService } from 'src/app/core/services/qbd/qbd-core/qbd-user.service';
-import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+
 
 @Component({
   selector: 'app-qbd',
