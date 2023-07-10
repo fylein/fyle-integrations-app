@@ -8,8 +8,8 @@ const API_BASE_URL = environment.si_api_url;
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
+    'Content-Type': 'application/json'
+  })
 };
 
 @Injectable({
@@ -36,6 +36,7 @@ export class SiApiService {
     }
     return throwError(error);
   }
+
   // Having any here is ok
   post(endpoint: string, body: {}): Observable<any> {
     return this.http
@@ -48,6 +49,7 @@ export class SiApiService {
         return this.handleError(error, 'POST');
       }));
   }
+
   patch(endpoint: string, body: {}): Observable<any> {
     return this.http
       .patch(
@@ -59,6 +61,7 @@ export class SiApiService {
         return this.handleError(error, 'PATCH');
       }));
   }
+
   // Having any here is ok
   get(endpoint: string, apiParams: any): Observable<any> {
     let params = new HttpParams();
