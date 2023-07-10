@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AppName, Page, QBDConfigurationCtaText, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, Page, ConfigurationCta, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOption, GustoConfiguration, GustoConfigurationPost, GustoModel } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
@@ -25,7 +25,7 @@ export class GustoConfigurationComponent implements OnInit {
 
   saveInProgress: boolean;
 
-  ConfigurationCtaText = QBDConfigurationCtaText;
+  ConfigurationCtaText = ConfigurationCta;
 
   org: Org = this.orgService.getCachedOrg();
 
