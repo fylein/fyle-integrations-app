@@ -24,6 +24,7 @@ export enum RedirectLink {
     BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
     QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
     // TODO: Change the link to the actual help article
+    SAGE_INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
