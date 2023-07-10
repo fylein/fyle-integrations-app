@@ -26,5 +26,5 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.QBD]: string,
     [InAppIntegration.TRAVELPERK]: string,
     [InAppIntegration.GUSTO]: string,
-    [InAppIntegration.SAGE_INTACCT]: string
+    [InAppIntegration.SI]: string
 }
