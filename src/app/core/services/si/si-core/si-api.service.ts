@@ -1,27 +1,24 @@
-import {
-  HttpClient,
-  HttpErrorResponse,  HttpHeaders,
-  HttpParams
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, Observable } from 'rxjs';
+import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
+const API_BASE_URL = environment.si_api_url;
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  })
+    'Content-Type': 'application/json',
+  }),
 };
-
-const API_BASE_URL = environment.si_api_url;
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class SiApiService {
 
   constructor(private http: HttpClient) { }
+
 
   private handleError(error: HttpErrorResponse, httpMethod: string) {
     if (error.error instanceof ErrorEvent) {
@@ -39,7 +36,6 @@ export class ApiService {
     }
     return throwError(error);
   }
-
   // Having any here is ok
   post(endpoint: string, body: {}): Observable<any> {
     return this.http
@@ -52,7 +48,6 @@ export class ApiService {
         return this.handleError(error, 'POST');
       }));
   }
-
   patch(endpoint: string, body: {}): Observable<any> {
     return this.http
       .patch(
@@ -64,20 +59,16 @@ export class ApiService {
         return this.handleError(error, 'PATCH');
       }));
   }
-
   // Having any here is ok
-  get(endpoint: string, apiParams: {}): Observable<any> {
+  get(endpoint: string, apiParams: any): Observable<any> {
     let params = new HttpParams();
     Object.keys(apiParams).forEach(key => {
       params = params.set(key, apiParams[key]);
     });
 
-    return this.http.get(
-        API_BASE_URL + endpoint,
-        {params}
-      )
-      .pipe(catchError(error => {
-        return this.handleError(error, 'GET');
-      }));
+    return this.http.get(API_BASE_URL + endpoint, { params }).pipe(catchError(error => {
+      return this.handleError(error, 'GET');
+    }));
   }
+
 }
