@@ -10,11 +10,11 @@ import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json',
-  }),
+    'Content-Type': 'application/json'
+  })
 };
 
-const API_BASE_URL = environment.api_url;
+const API_BASE_URL = environment.si_api_url;
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +39,7 @@ export class ApiService {
     }
     return throwError(error);
   }
+
   // Having any here is ok
   post(endpoint: string, body: {}): Observable<any> {
     return this.http
@@ -51,6 +52,7 @@ export class ApiService {
         return this.handleError(error, 'POST');
       }));
   }
+
   patch(endpoint: string, body: {}): Observable<any> {
     return this.http
       .patch(
@@ -62,6 +64,7 @@ export class ApiService {
         return this.handleError(error, 'PATCH');
       }));
   }
+
   // Having any here is ok
   get(endpoint: string, apiParams: {}): Observable<any> {
     let params = new HttpParams();
