@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ClickEvent, Page, QBDConfigurationCtaText, QBDOnboardingState, QBDProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, ConfigurationCta, QBDOnboardingState, ProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -24,7 +24,7 @@ export class AdvancedSettingComponent implements OnInit {
 
   saveInProgress: boolean;
 
-  ConfigurationCtaText = QBDConfigurationCtaText;
+  ConfigurationCtaText = ConfigurationCta;
 
   advancedSettings: QBDAdvancedSettingsGet;
 
@@ -222,8 +222,8 @@ export class AdvancedSettingComponent implements OnInit {
     this.scheduledWatcher();
   }
 
-  private getPhase(): QBDProgressPhase {
-    return this.isOnboarding ? QBDProgressPhase.ONBOARDING : QBDProgressPhase.POST_ONBOARDING;
+  private getPhase(): ProgressPhase {
+    return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
   }
 
   private constructPayloadAndSave(): void {

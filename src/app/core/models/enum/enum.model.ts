@@ -85,7 +85,7 @@ export enum ClickEvent {
   QBD_EXPORT = 'Export IIF files'
 }
 
-export enum QBDProgressPhase {
+export enum ProgressPhase {
   ONBOARDING = 'Onboarding',
   POST_ONBOARDING = 'Post Onboarding'
 }
@@ -98,7 +98,7 @@ export enum QBDOnboardingState {
     COMPLETE = 'COMPLETE'
   }
 
-  export enum QBDConfigurationCtaText {
+  export enum ConfigurationCta {
     SAVE = 'Save',
     SAVE_AND_CONTINUE = 'Save and Continue',
     CONTINUE = 'Continue',
