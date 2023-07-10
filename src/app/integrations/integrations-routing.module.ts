@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'qbd',
-        loadChildren: () => import('./qbd/qbd.module').then(m => m.QbdModule)
+        loadChildren: () => import('fyle-qbd-app').then(m => m.QbdModule)
       },
       {
         path: 'travelperk',

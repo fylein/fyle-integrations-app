@@ -7,14 +7,12 @@ import { IntegrationsRoutingModule } from './integrations-routing.module';
 import { IntegrationsComponent } from './integrations.component';
 import { LandingComponent } from './landing/landing.component';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
-import { QbdComponent } from './qbd/qbd.component';
 
 
 @NgModule({
   declarations: [
     IntegrationsComponent,
-    LandingComponent,
-    QbdComponent
+    LandingComponent
   ],
   imports: [
     CommonModule,
