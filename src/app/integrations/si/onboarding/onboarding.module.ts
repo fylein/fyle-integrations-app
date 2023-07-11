@@ -6,6 +6,7 @@ import { OnboardingExportSettingComponent } from './onboarding-export-setting/on
 import { OnboardingLandingComponent } from './onboarding-landing/onboarding-landing.component';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { OnboardingImportSettingComponent } from './onboarding-import-setting/onboarding-import-setting.component';
+import { OnboardingSageConnectorComponent } from './onboarding-sage-connector/onboarding-sage-connector.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { OnboardingImportSettingComponent } from './onboarding-import-setting/on
     OnboardingExportSettingComponent,
     OnboardingLandingComponent,
     OnboardingDoneComponent,
-    OnboardingImportSettingComponent
+    OnboardingImportSettingComponent,
+    OnboardingSageConnectorComponent
   ],
   imports: [
     CommonModule
