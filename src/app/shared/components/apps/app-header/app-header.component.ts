@@ -68,6 +68,11 @@ export class AppHeaderComponent implements OnInit {
     this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
   }
 
+  connectSI(): void {
+    this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
+    this.router.navigate(['/integrations/si/onboarding/export_settings']);
+  }
+
   ngOnInit(): void {
   }
 

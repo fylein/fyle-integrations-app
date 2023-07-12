@@ -45,7 +45,8 @@ export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'Travelperk',
-  GUSTO = 'Gusto'
+  GUSTO = 'Gusto',
+  SI = 'Sage Intacct'
 }
 
 export enum Page {
@@ -78,6 +79,7 @@ export enum ClickEvent {
   DISCONNECT_GUSTO = 'Disconnect Gusto',
   SYNC_GUSTO_EMPLOYEES = 'Sync Gusto Employees',
   CONNECT_QBD = 'Connect QBD',
+  CONNECT_SI  = 'Connect Sage Intacct',
   COPY_SUPPORT_EMAIL = 'Copy Support Email',
   SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
   ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',

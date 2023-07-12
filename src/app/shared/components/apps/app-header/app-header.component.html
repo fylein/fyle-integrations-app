@@ -37,6 +37,10 @@
                     Start
                     <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>
+                <button *ngIf="appName === AppName.SI" pButton type="button" class="p-button-raised" (click)="connectSI()">
+                    Start
+                    <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                </button>
                 <iframe *ngIf="iframeSourceUrl && (appName === AppName.TRAVELPERK || appName === AppName.GUSTO)" scrolling="no" [src]="iframeSourceUrl" class="tw-mt-40-px tw-w-270-px tw-h-84-px"></iframe>
             </div>
         </div>
