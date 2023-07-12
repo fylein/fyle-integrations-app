@@ -98,6 +98,14 @@ export enum QBDOnboardingState {
     COMPLETE = 'COMPLETE'
   }
 
+  export enum OnboardingState {
+    CONNECTION = 'CONNECTION',
+    EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+    IMPORT_SETTINGS = 'IMPORT_MAPPINGS',
+    ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+    COMPLETE = 'COMPLETE'
+  }
+
   export enum ConfigurationCta {
     SAVE = 'Save',
     SAVE_AND_CONTINUE = 'Save and Continue',
