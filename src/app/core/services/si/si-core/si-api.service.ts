@@ -1,9 +1,77 @@
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, Observable } from 'rxjs';
+import { throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
+
+const API_BASE_URL = environment.si_api_url;
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class SiApiService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+
+  private handleError(error: HttpErrorResponse, httpMethod: string) {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else {
+      if (error.status >= 500 && httpMethod === 'GET') {
+        console.error(
+          `Backend returned code ${error.status}, ` + `body was: ${JSON.stringify(error.error)}`
+        );
+      } else if (error.status >= 400 && httpMethod === 'POST') {
+        console.error(
+          `Backend returned code ${error.status}, ` + `body was: ${JSON.stringify(error.error)}`
+        );
+      }
+    }
+    return throwError(error);
+  }
+
+  // Having any here is ok
+  post(endpoint: string, body: {}): Observable<any> {
+    return this.http
+      .post(
+        API_BASE_URL + endpoint,
+        body,
+        httpOptions
+      )
+      .pipe(catchError(error => {
+        return this.handleError(error, 'POST');
+      }));
+  }
+
+  patch(endpoint: string, body: {}): Observable<any> {
+    return this.http
+      .patch(
+        API_BASE_URL + endpoint,
+        body,
+        httpOptions
+      )
+      .pipe(catchError(error => {
+        return this.handleError(error, 'PATCH');
+      }));
+  }
+
+  // Having any here is ok
+  get(endpoint: string, apiParams: any): Observable<any> {
+    let params = new HttpParams();
+    Object.keys(apiParams).forEach(key => {
+      params = params.set(key, apiParams[key]);
+    });
+
+    return this.http.get(API_BASE_URL + endpoint, { params }).pipe(catchError(error => {
+      return this.handleError(error, 'GET');
+    }));
+  }
+
 }
