@@ -13,6 +13,7 @@ export class AppIntegrationLandingComponent implements OnInit {
 
   @Input() redirectLink: string;
 
+  @Input() showVideo: boolean;
 
   constructor(
     public windowService: WindowService
