@@ -8,9 +8,9 @@ export type Workspace = {
   updated_at: Date;
 }
 
-export type IntacctWorkspace = {
-  last_synced_at?: Date;
-  ccc_last_synced_at?: Date;
+export interface Intacct extends Workspace {
+  last_synced_at: Date;
+  ccc_last_synced_at: Date;
   source_synced_at: Date;
   cluster_domain: string;
   destination_synced_at: Date;
