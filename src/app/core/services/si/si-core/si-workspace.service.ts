@@ -26,7 +26,7 @@ export class SiWorkspaceService {
   }
 
   getWorkspaceId(): string {
-    return this.storageService.get('workspaceId');
+    return this.storageService.get('si.workspaceId');
   }
 
   setIntacctOnboardingState(IntacctOnboardingState: IntacctOnboardingState): void {
@@ -34,8 +34,8 @@ export class SiWorkspaceService {
   }
 
   getIntacctOnboardingState(): IntacctOnboardingState {
-    const IntacctOnboardingState = this.storageService.get('IntacctOnboardingState');
-    return IntacctOnboardingState ? IntacctOnboardingState : IntacctOnboardingState.EXPORT_SETTINGS;
+    const onboardingState = this.storageService.get('IntacctOnboardingState');
+    return onboardingState ? onboardingState : IntacctOnboardingState.LANDING;
   }
 
 }
