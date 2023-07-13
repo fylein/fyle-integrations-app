@@ -16,15 +16,13 @@ export enum InAppIntegration {
     BAMBOO_HR = 'Bamboo HR',
     QBD = 'QuickBooks Desktop',
     TRAVELPERK = 'TravelPerk',
-    GUSTO = 'Gusto',
-    SI = 'Sage Intacct'
+    GUSTO = 'Gusto'
 }
 
 export enum RedirectLink {
     BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
     QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
     // TODO: Change the link to the actual help article
-    SI = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
@@ -96,14 +94,6 @@ export enum QBDOnboardingState {
     CONNECTION = 'CONNECTION',
     EXPORT_SETTINGS = 'EXPORT_SETTINGS',
     FIELD_MAPPINGS = 'FIELD_MAPPINGS',
-    ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
-    COMPLETE = 'COMPLETE'
-  }
-
-  export enum OnboardingState {
-    CONNECTION = 'CONNECTION',
-    EXPORT_SETTINGS = 'EXPORT_SETTINGS',
-    IMPORT_SETTINGS = 'IMPORT_MAPPINGS',
     ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
     COMPLETE = 'COMPLETE'
   }
