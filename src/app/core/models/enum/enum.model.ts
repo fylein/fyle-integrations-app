@@ -92,7 +92,7 @@ export enum ProgressPhase {
   POST_ONBOARDING = 'Post Onboarding'
 }
 
-export enum OnboardingState {
+export enum IntacctOnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_MAPPINGS',
