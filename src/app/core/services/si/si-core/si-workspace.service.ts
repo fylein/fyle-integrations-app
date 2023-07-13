@@ -30,7 +30,7 @@ export class SiWorkspaceService {
   }
 
   setOnboardingState(onboardingState: OnboardingState): void {
-    return this.storageService.set('QBDOnboardingState', onboardingState);
+    return this.storageService.set('OnboardingState', onboardingState);
   }
 
   getOnboardingState(): OnboardingState {
