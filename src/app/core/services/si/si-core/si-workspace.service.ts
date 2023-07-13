@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OnboardingState } from 'src/app/core/models/enum/enum.model';
-import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
 import { Cacheable } from 'ts-cacheable';
 import { StorageService } from '../../core/storage.service';
 import { SiApiService } from './si-api.service';
@@ -17,11 +16,11 @@ export class SiWorkspaceService {
   ) { }
 
   @Cacheable()
-  getQBDWorkspace(orgId: string): Observable<Workspace> {
+  getWorkspace(orgId: string): Observable<Workspace> {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
 
-  postQBDWorkspace(): Observable<Workspace> {
+  postWorkspace(): Observable<Workspace> {
     return this.apiService.post('/workspaces/', {});
   }
 
