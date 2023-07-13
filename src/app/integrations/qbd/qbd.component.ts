@@ -5,7 +5,7 @@ import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
-import { QbdUserService } from 'src/app/core/services/qbd/qbd-core/qbd-user.service';
+import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
@@ -25,7 +25,7 @@ export class QbdComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private router: Router,
-    private userService: QbdUserService,
+    private userService: IntegrationsUserService,
     private workspaceService: QbdWorkspaceService,
     private windowService: WindowService
   ) {
@@ -68,7 +68,7 @@ export class QbdComponent implements OnInit {
   }
 
   setupWorkspace() {
-    this.user = this.userService.qbdGetUserProfile();
+    this.user = this.userService.getUserProfile();
       this.getOrCreateWorkspace();
   }
 
