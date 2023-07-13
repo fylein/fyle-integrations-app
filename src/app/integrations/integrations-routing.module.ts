@@ -29,7 +29,7 @@ const routes: Routes = [
         loadChildren: () => import('./gusto/gusto.module').then(m => m.GustoModule)
       },
       {
-        path: 'si',
+        path: 'intacct',
         loadChildren: () => import('./si/si.module').then(m => m.SiModule)
       }
     ]

@@ -1,8 +1,8 @@
 <div>
     <div>
-        <app-app-header [iconPath]="'assets/logos/sage-intacct-logo.svg'" [appName]="'Sage Intacct'" [appDescription]="'Import data from Sage Intacct to Fyle and Export expenses from Fyle to Sage Intacct. '" [isLoading]="isLoading" [isIntegrationSetupInProgress]="isSISetupInProgress" [isIntegrationConnected]="isSIConnected"></app-app-header>
+        <app-app-header [iconPath]="'assets/logos/sage-intacct-logo.svg'" [appName]="'Sage Intacct'" [appDescription]="'Import data from Sage Intacct to Fyle and Export expenses from Fyle to Sage Intacct. '" [isLoading]="false" [isIntegrationSetupInProgress]="false" [isIntegrationConnected]="false"></app-app-header>
     </div>
     <div>
-        <app-app-integration-landing [headerText]="'A quick guide to help you set up the integration quick and easy.'" [showVideo] = "true"[svgPath]="'assets/flow-charts/sage-flow-chart.svg'" [redirectLink]="RedirectLink.SI"></app-app-integration-landing>
+        <app-app-integration-landing [headerText]="'A quick guide to help you set up the integration quick and easy.'" [showVideo] = "true"[svgPath]="'assets/flow-charts/sage-flow-chart.svg'"></app-app-integration-landing>
     </div>
 </div>
