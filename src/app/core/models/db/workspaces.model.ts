@@ -1,3 +1,5 @@
+import { IntacctOnboardingState } from "../enum/enum.model";
+
 export type Workspace = {
   id: number;
   name: string;
@@ -14,4 +16,5 @@ export interface IntacctWorkspace extends Workspace {
   source_synced_at: Date;
   cluster_domain: string;
   destination_synced_at: Date;
+  onboarding_state: IntacctOnboardingState;
 }

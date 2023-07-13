@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { Workspace } from 'src/app/core/models/db/workspaces.model';
+import { IntacctWorkspace, Workspace } from 'src/app/core/models/db/workspaces.model';
+import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
@@ -16,7 +17,7 @@ export class SiComponent implements OnInit {
 
   user: MinimalUser;
 
-  workspace: Workspace;
+  workspace: IntacctWorkspace;
 
   isLoading: boolean = true;
 
@@ -32,7 +33,50 @@ export class SiComponent implements OnInit {
     this.windowReference = this.windowService.nativeWindow;
   }
 
+  private navigate(): void {
+    const pathName = this.windowReference.location.pathname;
+    if (pathName === '/integrations/intacct') {
+      const onboardingStateComponentMap = {
+        [IntacctOnboardingState.LANDING]: '/integrations/intacct/onboarding/landing',
+        [IntacctOnboardingState.CONNECTION]: '/integrations/intacct/onboarding/connection',
+        [IntacctOnboardingState.LOCATION_ENTITY]: '/integrations/intacct/onboarding/location_entity',
+        [IntacctOnboardingState.EXPORT_SETTINGS]: '/integrations/intacct/onboarding/export_settings',
+        [IntacctOnboardingState.IMPORT_SETTINGS]: '/integrations/intacct/onboarding/import_settings',
+        [IntacctOnboardingState.ADVANCED_SETTINGS]: '/integrations/intacct/onboarding/advanced_settings',
+        [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main'
+      };
+      this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
+    }
+  }
+
+  workspaceSetting(workspace:IntacctWorkspace) {
+    this.workspace = workspace;
+    this.storageService.set('si.workspaceId', this.workspace.id);
+    this.storageService.set('IntacctOnboardingState', this.workspace.onboarding_state);
+    this.isLoading = false;
+    this.navigate();
+  }
+
+  private getOrCreateWorkspace(): void {
+    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
+      if (workspaces?.id) {
+        this.workspaceSetting(workspaces);
+      }
+    }, (error) => {
+      this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
+        this.workspaceSetting(workspaces);
+      });
+    }
+    );
+  }
+
+  setupWorkspace() {
+    this.user = this.userService.getUserProfile();
+      this.getOrCreateWorkspace();
+  }
+
   ngOnInit(): void {
+    this.setupWorkspace();
   }
 
 }
