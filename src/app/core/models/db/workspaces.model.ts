@@ -1,4 +1,5 @@
-import { OnboardingState } from "../../enum/enum.model";
+import { OnboardingState } from "../enum/enum.model";
+
 
 export type Workspace = {
   id: number;
