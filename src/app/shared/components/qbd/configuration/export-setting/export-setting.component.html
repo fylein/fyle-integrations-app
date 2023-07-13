@@ -162,41 +162,17 @@
                             </div>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                            <div *ngIf="exportSettingsForm.value.cccExportType === creditCardExportTypes[0].value">
-                                <app-configuration-label
-                                    [label]="'Set the transaction date'"
-                                    [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
-                                    [labelValue]="reimbursableExpenseGroupingDateOptions[0]"
-                                    [iconPath]="'calender'"
-                                    [placeholder]="'Select date type'">
-                                </app-configuration-label>
-                            </div>
-                            <div *ngIf="exportSettingsForm.value.cccExportType !== creditCardExportTypes[0].value && exportSettingsForm.value.cccExportGroup === expenseGroupingFieldOptions[0].value">
-                                <app-configuration-select-field
-                                    [form]="exportSettingsForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'transaction date'"
-                                    [label]="'Set the transaction date'"
-                                    [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
-                                    [options]="reimbursableExpenseGroupingDateOptionsFn()"
-                                    [iconPath]="'calender'"
-                                    [placeholder]="'Select date type'"
-                                    [formControllerName]="'cccExportDate'">
-                                </app-configuration-select-field>
-                            </div>
-                            <div *ngIf="exportSettingsForm.value.cccExportType !== creditCardExportTypes[0].value && exportSettingsForm.value.cccExportGroup === expenseGroupingFieldOptions[1].value">
-                                <app-configuration-select-field
-                                    [form]="exportSettingsForm"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'transaction date'"
-                                    [label]="'Set the transaction date'"
-                                    [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
-                                    [options]="reimbursableExpenseGroupingDateOptions"
-                                    [iconPath]="'calender'"
-                                    [placeholder]="'Select date type'"
-                                    [formControllerName]="'cccExportDate'">
-                                </app-configuration-select-field>
-                            </div>
+                            <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'transaction date'"
+                                [label]="'Set the transaction date'"
+                                [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
+                                [options]="cccExpenseGroupingDateOptions"
+                                [iconPath]="'calender'"
+                                [placeholder]="'Select date type'"
+                                [formControllerName]="'cccExportDate'">
+                            </app-configuration-select-field>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <app-configuration-select-field

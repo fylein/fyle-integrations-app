@@ -131,7 +131,8 @@ export enum QBDOnboardingState {
 
   export enum QBDExportDateType {
     LAST_SPENT_AT = 'last_spent_at',
-    SPENT_AT = 'spent_at'
+    SPENT_AT = 'spent_at',
+    POSTED_AT = 'posted_at'
   }
 
   export enum QBDEntity {
