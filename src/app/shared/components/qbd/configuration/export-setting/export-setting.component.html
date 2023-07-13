@@ -168,7 +168,7 @@
                                 [mandatoryErrorListName]="'transaction date'"
                                 [label]="'Set the transaction date'"
                                 [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
-                                [options]="getCreditCardExpenseGroupingDateOptions(exportSettingsForm.value.cccExportType, exportSettingsForm.value.cccExportGroup)"
+                                [options]="cccExpenseGroupingDateOptions"
                                 [iconPath]="'calender'"
                                 [placeholder]="'Select date type'"
                                 [formControllerName]="'cccExportDate'">

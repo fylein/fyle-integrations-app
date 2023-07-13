@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { orgMockData } from 'src/app/core/services/org/org.fixture';
+import { environment } from 'src/environments/environment';
 
 describe('LandingComponent', () => {
   let component: LandingComponent;
@@ -56,5 +57,9 @@ describe('LandingComponent', () => {
   it('should open In App Integration', () => {
     component.openInAppIntegration(InAppIntegration.BAMBOO_HR);
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/bamboo_hr/']);
+  });
+
+  it('openAccountingIntegrationApp function should open the correct app', () => {
+    expect(component.openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)).toBeUndefined();
   });
 });
