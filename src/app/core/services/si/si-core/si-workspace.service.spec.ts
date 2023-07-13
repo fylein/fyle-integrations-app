@@ -11,7 +11,7 @@ describe('SiWorkspaceService', () => {
   let httpMock: HttpTestingController;
   const API_BASE_URL = environment.si_api_url;
   beforeEach(() => {
-    localStorage.setItem('workspaceId', '1');
+    localStorage.setItem('si.workspaceId', '1');
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [SiWorkspaceService]
@@ -89,8 +89,8 @@ describe('SiWorkspaceService', () => {
   });
 
   it('setOnboardingState and getOnboardingState service', () => {
-    localStorage.removeItem('QBDOnboardingState');
-    const state = 'EXPORT_SETTINGS';
+    localStorage.removeItem('IntacctOnboardingState');
+    const state = 'LANDING';
     const response = service.getIntacctOnboardingState();
     expect(state).toEqual(response);
   });
