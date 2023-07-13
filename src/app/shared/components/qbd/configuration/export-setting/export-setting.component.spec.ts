@@ -203,9 +203,4 @@ describe('ExportSettingComponent', () => {
     ];
     expect(component.reimbursableExpenseGroupingDateOptionsFn()).toEqual(reimbursableExpenseGroupingDateOptions);
   });
-
-  it('CCCExportTypeWatcher function check', () => {
-    component.exportSettingsForm.controls.cccExportType.patchValue(QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE);
-    expect((component as any).CCCExportTypeWatcher()).toBeUndefined();
-  });
 });
