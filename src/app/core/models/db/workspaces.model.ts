@@ -7,3 +7,11 @@ export type Workspace = {
   created_at: Date;
   updated_at: Date;
 }
+
+export type IntacctWorkspace = {
+  last_synced_at?: Date;
+  ccc_last_synced_at?: Date;
+  source_synced_at: Date;
+  cluster_domain: string;
+  destination_synced_at: Date;
+}
