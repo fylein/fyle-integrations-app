@@ -8,7 +8,7 @@ export type Workspace = {
   updated_at: Date;
 }
 
-export interface Intacct extends Workspace {
+export interface IntacctWorkspace extends Workspace {
   last_synced_at: Date;
   ccc_last_synced_at: Date;
   source_synced_at: Date;
