@@ -11,7 +11,7 @@ export class IntegrationsUserService {
     private storageService: StorageService
   ) { }
 
-  qbdGetUserProfile(): MinimalUser {
+  getUserProfile(): MinimalUser {
     return this.storageService.get('user');
   }
 }

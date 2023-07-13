@@ -68,7 +68,7 @@ export class QbdComponent implements OnInit {
   }
 
   setupWorkspace() {
-    this.user = this.userService.qbdGetUserProfile();
+    this.user = this.userService.getUserProfile();
       this.getOrCreateWorkspace();
   }
 
