@@ -33,7 +33,7 @@
                 <button *ngIf="isIntegrationConnected && isRecipeRunning && appName !== AppName.GUSTO" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                     Disconnect
                 </button>
-                <button *ngIf="appName === AppName.QBD" pButton type="button" class="p-button-raised" (click)="connectIntegration()">
+                <button *ngIf="appName === AppName.QBD || appName === AppName.INTACCT" pButton type="button" class="p-button-raised" (click)="connectIntegration()">
                     {{buttonText}}
                     <i *ngIf="appName === AppName.QBD" class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>

@@ -8,7 +8,9 @@
         </span>
     </p>
 
-
+    <div *ngIf="embedVideo" class="tw-flex tw-justify-center tw-pt-48-px">
+        <iframe width="797" height="448" [src]="embedVideoUrl" title="Fyle Sage Intacct Integration" frameborder="0"></iframe>
+    </div>    
 
     <div class="tw-flex tw-justify-center tw-pt-48-px">
         <img src="{{svgPath}}" />
