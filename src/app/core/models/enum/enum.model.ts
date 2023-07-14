@@ -49,7 +49,8 @@ export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'Travelperk',
-  GUSTO = 'Gusto'
+  GUSTO = 'Gusto',
+  INTACCT = 'Sage Intacct'
 }
 
 export enum Page {
