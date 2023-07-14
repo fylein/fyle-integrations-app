@@ -74,7 +74,7 @@ describe('SiWorkspaceService', () => {
   });
 
   it('getWorkspaceid service', () => {
-    const workspaceId = localStorage.getItem('workspaceId');
+    const workspaceId = localStorage.getItem('si.workspaceId');
     const workspace_id = workspaceId  ? JSON.parse(workspaceId) : null;
     const id = service.getWorkspaceId();
     const org = workspace_id;
