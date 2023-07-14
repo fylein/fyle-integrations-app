@@ -14,7 +14,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
   styleUrls: ['./qbd.component.scss']
 })
 export class QbdComponent implements OnInit {
-  user: MinimalUser;
+  user: MinimalUser = this.userService.getUserProfile();;
 
   workspace: QBDWorkspace;
 
@@ -46,7 +46,7 @@ export class QbdComponent implements OnInit {
     }
   }
 
-  private getOrCreateWorkspace(): void {
+  private setupWorkspace(): void {
     this.workspaceService.getQBDWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
         this.workspaceSetting(workspaces);
@@ -65,11 +65,6 @@ export class QbdComponent implements OnInit {
     this.storageService.set('QBDOnboardingState', this.workspace.onboarding_state);
     this.isLoading = false;
     this.navigate();
-  }
-
-  setupWorkspace() {
-    this.user = this.userService.getUserProfile();
-    this.getOrCreateWorkspace();
   }
 
   ngOnInit(): void {

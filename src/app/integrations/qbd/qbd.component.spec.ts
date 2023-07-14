@@ -43,12 +43,12 @@ describe('QbdComponent', () => {
   });
 
   it('ngOnIng function check', async () => {
-    expect((component as any).getOrCreateWorkspace()).toBeUndefined();
+    expect((component as any).setupWorkspace()).toBeUndefined();
   });
 
   it('workspace error handling', () => {
     spyOn(workspace, 'getQBDWorkspace').and.returnValue(throwError(errorResponse));
     fixture.detectChanges();
-    expect((component as any).getOrCreateWorkspace()).toBeUndefined();
+    expect((component as any).setupWorkspace()).toBeUndefined();
   });
 });

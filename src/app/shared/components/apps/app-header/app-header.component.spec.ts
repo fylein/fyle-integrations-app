@@ -1,7 +1,8 @@
 import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { AppHeaderComponent } from './app-header.component';
 
@@ -13,19 +14,23 @@ describe('AppHeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AppHeaderComponent ],
+      declarations: [AppHeaderComponent],
       imports: [
-        HttpClientModule, HttpClientTestingModule
+        HttpClientModule,
+        HttpClientTestingModule,
+        RouterTestingModule // Added RouterTestingModule for navigation testing
       ],
       providers: [
         { provide: Router, useValue: routerSpy }
       ]
-    })
-    .compileComponents();
-    router = TestBed.inject(Router);
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(AppHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
@@ -53,8 +58,11 @@ describe('AppHeaderComponent', () => {
     expect(component.disconnectIntegration.emit).toHaveBeenCalled();
   });
 
-  it('should navigate to onboarding page', () => {
-    expect(component.connectQBD()).toBeUndefined();
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbd/onboarding/export_settings']);
-  });
+  it('should navigate to onboarding page', fakeAsync(() => {
+    component.postConnectionRoute = 'qbd/onboarding/export_settings';
+    component.connectIntegration();
+    tick();
+  
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/', 'qbd/onboarding/export_settings']);
+  }));  
 });
