@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { QBDOnboardingStepper } from 'src/app/core/models/qbd/misc/qbd-onboarding-stepper.model';
+import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class OnboardingStepperComponent implements OnInit {
 
   @Input() currentStep: string;
 
-  onboardingSteps: QBDOnboardingStepper[] = [
+  onboardingSteps: OnboardingStepper[] = [
     {
       active: false,
       completed: false,
