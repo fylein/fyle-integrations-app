@@ -7,7 +7,7 @@ export const workspaceResponse = {
     "currency": "EUR",
     "reimbursable_last_synced_at": null,
     "ccc_last_synced_at": null,
-    "onboarding_state": IntacctOnboardingState.LANDING,
+    "onboarding_state": IntacctOnboardingState.CONNECTION,
     "created_at": "2023-06-23T05:37:56.907997Z",
     "updated_at": "2023-06-23T05:37:56.908051Z",
     "user": [1]

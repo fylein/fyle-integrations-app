@@ -35,7 +35,7 @@ export class SiWorkspaceService {
 
   getIntacctOnboardingState(): IntacctOnboardingState {
     const onboardingState = this.storageService.get('IntacctOnboardingState');
-    return onboardingState ? onboardingState : IntacctOnboardingState.LANDING;
+    return onboardingState ? onboardingState : IntacctOnboardingState.CONNECTION;
   }
 
 }

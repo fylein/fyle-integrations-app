@@ -97,7 +97,6 @@ export enum ProgressPhase {
 }
 
 export enum IntacctOnboardingState {
-  LANDING = 'LANDING',
   CONNECTION = 'CONNECTION',
   LOCATION_ENTITY = 'LOCATION_ENTITY',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',

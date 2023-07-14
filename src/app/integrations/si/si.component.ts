@@ -37,7 +37,6 @@ export class SiComponent implements OnInit {
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/intacct') {
       const onboardingStateComponentMap = {
-        [IntacctOnboardingState.LANDING]: '/integrations/intacct/onboarding/landing',
         [IntacctOnboardingState.CONNECTION]: '/integrations/intacct/onboarding/connection',
         [IntacctOnboardingState.LOCATION_ENTITY]: '/integrations/intacct/onboarding/location_entity',
         [IntacctOnboardingState.EXPORT_SETTINGS]: '/integrations/intacct/onboarding/export_settings',
