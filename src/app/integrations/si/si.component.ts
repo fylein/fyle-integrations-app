@@ -15,7 +15,7 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class SiComponent implements OnInit {
 
-  user: MinimalUser;
+  user: MinimalUser = this.userService.getUserProfile();;
 
   workspace: IntacctWorkspace;
 
@@ -56,7 +56,7 @@ export class SiComponent implements OnInit {
     this.navigate();
   }
 
-  private getOrCreateWorkspace(): void {
+  private setupWorkspace(): void {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
         this.workspaceSetting(workspaces);
@@ -67,11 +67,6 @@ export class SiComponent implements OnInit {
       });
     }
     );
-  }
-
-  setupWorkspace() {
-    this.user = this.userService.getUserProfile();
-    this.getOrCreateWorkspace();
   }
 
   ngOnInit(): void {
