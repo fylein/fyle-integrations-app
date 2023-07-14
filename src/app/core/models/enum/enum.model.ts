@@ -17,7 +17,7 @@ export enum InAppIntegration {
     QBD = 'QuickBooks Desktop',
     TRAVELPERK = 'TravelPerk',
     GUSTO = 'Gusto',
-    SI = 'Sage Intacct'
+    INTACCT = 'Sage Intacct'
 }
 
 export enum RedirectLink {
@@ -27,6 +27,10 @@ export enum RedirectLink {
     SI = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+}
+
+export enum EmbedVideoLink {
+  INTACCT = 'https://www.youtube.com/embed/b63lS2DG5j4'
 }
 
 export enum ToastSeverity {
@@ -45,8 +49,7 @@ export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'Travelperk',
-  GUSTO = 'Gusto',
-  SI = 'Sage Intacct'
+  GUSTO = 'Gusto'
 }
 
 export enum Page {

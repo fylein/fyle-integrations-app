@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { EmbedVideoLink } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class AppIntegrationLandingComponent implements OnInit {
 
   @Input() redirectLink: string;
 
-  @Input() showVideo: boolean;
+  @Input() EmbedVideo: string;
 
   constructor(
     public windowService: WindowService

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { EmbedVideoLink, RedirectLink } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-onboarding-landing',
@@ -10,11 +10,7 @@ export class OnboardingLandingComponent implements OnInit {
 
   RedirectLink = RedirectLink;
 
-  isSISetupInProgress: boolean = false;
-
-  isSIConnected: boolean = false;
-
-  isLoading: boolean = false;
+  EmbedVideo = EmbedVideoLink;
 
   constructor() { }
 

@@ -29,6 +29,8 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() appName: string;
 
+  @Input() buttonText: string;
+
   @Input() appDescription: string;
 
   @Input() isLoading: boolean;
@@ -70,7 +72,15 @@ export class AppHeaderComponent implements OnInit {
 
   connectSI(): void {
     this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
-    this.router.navigate(['/integrations/si/onboarding/export_settings']);
+    this.router.navigate(['/integrations/si/onboarding/landing']);
+  }
+
+  connectIntegration(): void {
+    if (this.appName === AppName.QBD) {
+      this.connectQBD();
+    } else if (this.appName === AppName.INTACCT) {
+      this.connectSI;
+    }
   }
 
   ngOnInit(): void {
