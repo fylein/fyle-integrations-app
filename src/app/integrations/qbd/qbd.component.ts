@@ -69,7 +69,7 @@ export class QbdComponent implements OnInit {
 
   setupWorkspace() {
     this.user = this.userService.getUserProfile();
-      this.getOrCreateWorkspace();
+    this.getOrCreateWorkspace();
   }
 
   ngOnInit(): void {

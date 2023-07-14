@@ -71,7 +71,7 @@ export class SiComponent implements OnInit {
 
   setupWorkspace() {
     this.user = this.userService.getUserProfile();
-      this.getOrCreateWorkspace();
+    this.getOrCreateWorkspace();
   }
 
   ngOnInit(): void {
