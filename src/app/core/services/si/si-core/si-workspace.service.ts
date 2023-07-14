@@ -30,11 +30,11 @@ export class SiWorkspaceService {
   }
 
   setIntacctOnboardingState(onboardingState: IntacctOnboardingState): void {
-    return this.storageService.set('IntacctOnboardingState', onboardingState);
+    return this.storageService.set('si.onboardingState', onboardingState);
   }
 
   getIntacctOnboardingState(): IntacctOnboardingState {
-    const onboardingState = this.storageService.get('IntacctOnboardingState');
+    const onboardingState = this.storageService.get('si.onboardingState');
     return onboardingState ? onboardingState : IntacctOnboardingState.CONNECTION;
   }
 

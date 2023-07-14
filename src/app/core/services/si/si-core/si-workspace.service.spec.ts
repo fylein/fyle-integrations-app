@@ -89,7 +89,7 @@ describe('SiWorkspaceService', () => {
   });
 
   it('setOnboardingState and getOnboardingState service', () => {
-    localStorage.removeItem('IntacctOnboardingState');
+    localStorage.removeItem('si.onboardingState');
     const state = 'CONNECTION';
     const response = service.getIntacctOnboardingState();
     expect(state).toEqual(response);

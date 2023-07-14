@@ -51,7 +51,7 @@ export class SiComponent implements OnInit {
   workspaceSetting(workspace:IntacctWorkspace) {
     this.workspace = workspace;
     this.storageService.set('si.workspaceId', this.workspace.id);
-    this.storageService.set('IntacctOnboardingState', this.workspace.onboarding_state);
+    this.storageService.set('si.onboardingState', this.workspace.onboarding_state);
     this.isLoading = false;
     this.navigate();
   }
