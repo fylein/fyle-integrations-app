@@ -1,14 +1,8 @@
+import { Workspace } from "../../db/workspaces.model";
 import { QBDOnboardingState } from "../../enum/enum.model";
 
-export type Workspace = {
-  id: number;
-  name: string;
-  user: number[];
-  org_id: string;
-  currency: string;
+export interface QBDWorkspace extends Workspace {
   reimbursable_last_synced_at: Date | null;
   ccc_last_synced_at: Date | null;
   onboarding_state: QBDOnboardingState;
-  created_at: Date;
-  updated_at: Date;
 }
