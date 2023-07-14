@@ -14,7 +14,7 @@ export class AppIntegrationLandingComponent implements OnInit {
 
   @Input() redirectLink: string;
 
-  @Input() EmbedVideo: string;
+  @Input() embedVideo: string;
 
   constructor(
     public windowService: WindowService
