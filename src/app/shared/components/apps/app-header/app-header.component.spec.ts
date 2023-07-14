@@ -62,7 +62,7 @@ describe('AppHeaderComponent', () => {
     component.postConnectionRoute = 'qbd/onboarding/export_settings';
     component.connectIntegration();
     tick();
-  
+
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/', 'qbd/onboarding/export_settings']);
-  }));  
+  }));
 });

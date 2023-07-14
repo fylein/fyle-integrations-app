@@ -10,8 +10,11 @@ import { WindowService } from 'src/app/core/services/core/window.service';
 })
 export class AppIntegrationLandingComponent implements OnInit {
   @Input() headerText: string;
+
   @Input() svgPath: string;
+
   @Input() redirectLink: string;
+
   @Input() embedVideo: EmbedVideoLink;
 
   embedVideoUrl: SafeResourceUrl;

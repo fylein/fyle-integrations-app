@@ -14,7 +14,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
   styleUrls: ['./qbd.component.scss']
 })
 export class QbdComponent implements OnInit {
-  user: MinimalUser = this.userService.getUserProfile();;
+  user: MinimalUser = this.userService.getUserProfile();
 
   workspace: QBDWorkspace;
 

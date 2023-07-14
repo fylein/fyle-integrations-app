@@ -15,7 +15,7 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class SiComponent implements OnInit {
 
-  user: MinimalUser = this.userService.getUserProfile();;
+  user: MinimalUser = this.userService.getUserProfile();
 
   workspace: IntacctWorkspace;
 

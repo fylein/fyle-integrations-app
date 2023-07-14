@@ -68,7 +68,11 @@ export class AppHeaderComponent implements OnInit {
   }
 
   connectIntegration(): void {
-    this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
+    if (this.postConnectionRoute === 'qbd/onboarding/landing') {
+      this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
+    } else if (this.postConnectionRoute==='intacct/onboarding/landing') {
+      this.trackingService.onClickEvent(ClickEvent.CONNECT_INTACCT);
+    }
     this.router.navigate(['/integrations/', this.postConnectionRoute]);
   }
 
