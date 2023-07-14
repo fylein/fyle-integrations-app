@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { IntacctWorkspace, Workspace } from 'src/app/core/models/db/workspaces.model';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { IntacctWorkspace } from 'src/app/core/models/si/db/workspaces.model';
 import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
