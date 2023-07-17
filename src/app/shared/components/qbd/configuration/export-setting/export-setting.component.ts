@@ -127,7 +127,7 @@ export class ExportSettingComponent implements OnInit {
     if (cccExportType === QBDCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE){
       this.cccExpenseGroupingDateOptions = [
         {
-          label: 'Posted Date',
+          label: 'Card Transaction Post date',
           value: QBDExportDateType.POSTED_AT
         },
         {
@@ -137,7 +137,7 @@ export class ExportSettingComponent implements OnInit {
       ];
     } else if (cccExportType === QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY && cccExportGroup === QBDExpenseGroupedBy.EXPENSE) {
       this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat([{
-        label: 'Posted Date',
+        label: 'Card Transaction Post date',
         value: QBDExportDateType.POSTED_AT
       }]);
     } else {
