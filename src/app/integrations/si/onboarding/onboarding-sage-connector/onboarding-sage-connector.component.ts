@@ -12,9 +12,13 @@ import { SiComponent } from '../../si.component';
 export class OnboardingSageConnectorComponent implements OnInit {
 
   isLoading: boolean;
+
   isSaveDisabled: boolean;
+
   connectSageIntacctForm: FormGroup;
+
   workspaceId: number;
+
   settingsService: SiSettingsService;
 
   constructor(
@@ -29,7 +33,7 @@ export class OnboardingSageConnectorComponent implements OnInit {
       const companyID = this.connectSageIntacctForm.value.companyID;
       const companyName = this.connectSageIntacctForm.value.companyName;
       const userPassword = this.connectSageIntacctForm.value.userPassword;
-  
+
       that.isLoading = true;
       that.settingsService.connectSageIntacct(that.workspaceId, {
         si_user_id: userID,

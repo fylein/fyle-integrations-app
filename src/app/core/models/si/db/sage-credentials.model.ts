@@ -8,4 +8,3 @@ export type SageIntacctCredentials = {
     updated_at?: Date;
     workspace?: number;
   };
-  

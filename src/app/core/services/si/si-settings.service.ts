@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ApiService } from '../core/api.service';
-import { SageIntacctCredentials } from '../../models/si/db/sage-credentials.model'; 
+import { SageIntacctCredentials } from '../../models/si/db/sage-credentials.model';
 import { SiWorkspaceService } from './si-core/si-workspace.service';
 import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
 
@@ -13,7 +13,7 @@ const sageIntacctCredentialsCache = new Subject<void>();
 export class SiSettingsService {
 
   constructor(
-    private apiService: ApiService, 
+    private apiService: ApiService,
     private workspace: SiWorkspaceService
   ) { }
 
