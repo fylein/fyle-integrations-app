@@ -7,6 +7,7 @@ import { IntegrationsUserService } from 'src/app/core/services/core/integrations
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { SiSettingsService } from 'src/app/core/services/si/si-settings.service';
 
 @Component({
   selector: 'app-si',
@@ -22,6 +23,12 @@ export class SiComponent implements OnInit {
   isLoading: boolean = true;
 
   windowReference: Window;
+
+  settingsService : SiSettingsService;
+
+  connectSageIntacct = true;
+
+  companyName: string;
 
   constructor(
     private storageService: StorageService,
@@ -54,6 +61,14 @@ export class SiComponent implements OnInit {
     this.storageService.set('si.onboardingState', this.workspace.onboarding_state);
     this.isLoading = false;
     this.navigate();
+  }
+
+  getSageIntacctCompanyName() {
+    const that = this;
+    that.settingsService.getSageIntacctCredentials(that.workspace.id).subscribe(res => {
+      that.connectSageIntacct = false;
+      that.companyName = res && res.si_company_name;
+    });
   }
 
   private setupWorkspace(): void {

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SiSettingsService } from 'src/app/core/services/si/si-settings.service';
+import { SiComponent } from '../../si.component';
 
 @Component({
   selector: 'app-onboarding-sage-connector',
@@ -13,15 +15,63 @@ export class OnboardingSageConnectorComponent implements OnInit {
   isSaveDisabled: boolean;
   connectSageIntacctForm: FormGroup;
   workspaceId: number;
+  settingsService: SiSettingsService;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router) { }
+    private router: Router,
+    private si: SiComponent) { }
 
-    
+    save() {
+      const that = this;
+      const userID = this.connectSageIntacctForm.value.userID;
+      const companyID = this.connectSageIntacctForm.value.companyID;
+      const companyName = this.connectSageIntacctForm.value.companyName;
+      const userPassword = this.connectSageIntacctForm.value.userPassword;
+  
+      that.isLoading = true;
+      that.settingsService.connectSageIntacct(that.workspaceId, {
+        si_user_id: userID,
+        si_company_id: companyID,
+        si_company_name: companyName,
+        si_user_password: userPassword
+      }).subscribe((response) => {
+        that.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
+          that.isLoading = false;
+          that.router.navigateByUrl(`workspaces/${that.workspaceId}/dashboard`);
+          that.si.getSageIntacctCompanyName();
+        });
+      }, () => {
+        that.isLoading = false;
+      });
+    }
+
+    connect() {
+      const that = this;
+      that.isSaveDisabled = false;
+      that.workspaceId = that.route.snapshot.parent.params.workspace_id;
+      that.isLoading = true;
+      that.settingsService.getSageIntacctCredentials(that.workspaceId).subscribe((res) => {
+        that.connectSageIntacctForm = that.formBuilder.group({
+          userID: res.si_user_id ? res.si_user_id : '',
+          companyID: res.si_company_id ? res.si_company_id : '',
+          companyName: res.si_company_name ? res.si_company_name : '',
+          userPassword: ''
+        });
+        that.isLoading = false;
+      }, () => {
+        that.isLoading = false;
+        that.connectSageIntacctForm = that.formBuilder.group({
+          userID: ['', Validators.required],
+          companyID: ['', Validators.required],
+          companyName: ['', Validators.required],
+          userPassword: ['', Validators.required]
+        });
+      });
+    }
 
   ngOnInit(): void {
+    this.connect();
   }
-
 }
