@@ -1,4 +1,4 @@
-export type QBDOnboardingStepper = {
+export type OnboardingStepper = {
     active: boolean,
     number: number,
     completed: boolean,

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { Workspace } from 'src/app/core/models/qbd/db/workspaces.model';
+import { QBDWorkspace } from 'src/app/core/models/qbd/db/workspaces.model';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
@@ -14,9 +14,9 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
   styleUrls: ['./qbd.component.scss']
 })
 export class QbdComponent implements OnInit {
-  user: MinimalUser;
+  user: MinimalUser = this.userService.getUserProfile();
 
-  workspace: Workspace;
+  workspace: QBDWorkspace;
 
   isLoading: boolean = true;
 
@@ -46,7 +46,7 @@ export class QbdComponent implements OnInit {
     }
   }
 
-  private getOrCreateWorkspace(): void {
+  private setupWorkspace(): void {
     this.workspaceService.getQBDWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
         this.workspaceSetting(workspaces);
@@ -59,17 +59,12 @@ export class QbdComponent implements OnInit {
     );
   }
 
-  workspaceSetting(workspace:Workspace) {
+  workspaceSetting(workspace:QBDWorkspace) {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('QBDOnboardingState', this.workspace.onboarding_state);
     this.isLoading = false;
     this.navigate();
-  }
-
-  setupWorkspace() {
-    this.user = this.userService.getUserProfile();
-      this.getOrCreateWorkspace();
   }
 
   ngOnInit(): void {

@@ -1,4 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { EmbedVideoLink } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
@@ -13,11 +15,20 @@ export class AppIntegrationLandingComponent implements OnInit {
 
   @Input() redirectLink: string;
 
+  @Input() embedVideo: EmbedVideoLink;
+
+  embedVideoUrl: SafeResourceUrl;
 
   constructor(
-    public windowService: WindowService
+    public windowService: WindowService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
+    this.updateEmbedVideoUrl();
+  }
+
+  private updateEmbedVideoUrl(): void {
+    this.embedVideoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.embedVideo);
   }
 }

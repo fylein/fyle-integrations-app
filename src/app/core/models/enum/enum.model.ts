@@ -16,15 +16,21 @@ export enum InAppIntegration {
     BAMBOO_HR = 'Bamboo HR',
     QBD = 'QuickBooks Desktop',
     TRAVELPERK = 'TravelPerk',
-    GUSTO = 'Gusto'
+    GUSTO = 'Gusto',
+    INTACCT = 'Sage Intacct'
 }
 
 export enum RedirectLink {
     BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
     QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
     // TODO: Change the link to the actual help article
+    INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
     GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+}
+
+export enum EmbedVideoLink {
+  INTACCT = 'https://www.youtube.com/embed/b63lS2DG5j4'
 }
 
 export enum ToastSeverity {
@@ -43,7 +49,8 @@ export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'Travelperk',
-  GUSTO = 'Gusto'
+  GUSTO = 'Gusto',
+  INTACCT = 'Sage Intacct'
 }
 
 export enum Page {
@@ -80,12 +87,22 @@ export enum ClickEvent {
   SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
   ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',
   ADD_EMAIL_MANUALLY = 'Add Email Manually',
-  QBD_EXPORT = 'Export IIF files'
+  QBD_EXPORT = 'Export IIF files',
+  CONNECT_INTACCT  = 'Connect Sage Intacct'
 }
 
 export enum ProgressPhase {
   ONBOARDING = 'Onboarding',
   POST_ONBOARDING = 'Post Onboarding'
+}
+
+export enum IntacctOnboardingState {
+  CONNECTION = 'CONNECTION',
+  LOCATION_ENTITY = 'LOCATION_ENTITY',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
 }
 
 export enum QBDOnboardingState {

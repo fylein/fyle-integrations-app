@@ -29,6 +29,8 @@ export class AppHeaderComponent implements OnInit {
 
   @Input() appName: string;
 
+  @Input() buttonText: string;
+
   @Input() appDescription: string;
 
   @Input() isLoading: boolean;
@@ -44,6 +46,8 @@ export class AppHeaderComponent implements OnInit {
   @Input() redirectLink: string;
 
   @Input() isConnectionInProgress: boolean;
+
+  @Input() postConnectionRoute: string;
 
   constructor(
     private router: Router,
@@ -63,9 +67,13 @@ export class AppHeaderComponent implements OnInit {
     this.disconnectIntegration.emit();
   }
 
-  connectQBD(): void {
-    this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
-    this.router.navigate(['/integrations/qbd/onboarding/export_settings']);
+  connectIntegration(): void {
+    if (this.postConnectionRoute === 'qbd/onboarding/landing') {
+      this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
+    } else if (this.postConnectionRoute==='intacct/onboarding/landing') {
+      this.trackingService.onClickEvent(ClickEvent.CONNECT_INTACCT);
+    }
+    this.router.navigate(['/integrations/', this.postConnectionRoute]);
   }
 
   ngOnInit(): void {

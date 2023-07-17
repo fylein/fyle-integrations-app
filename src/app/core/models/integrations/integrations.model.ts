@@ -25,5 +25,6 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.BAMBOO_HR]: string,
     [InAppIntegration.QBD]: string,
     [InAppIntegration.TRAVELPERK]: string,
-    [InAppIntegration.GUSTO]: string
+    [InAppIntegration.GUSTO]: string,
+    [InAppIntegration.INTACCT]: string
 }

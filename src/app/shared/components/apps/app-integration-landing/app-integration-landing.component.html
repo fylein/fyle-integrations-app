@@ -2,13 +2,17 @@
     <p class="tw-text-normal-text-color tw-text-20-px tw-font-500">How does the integration work?</p>
     <p class="tw-text-faded-text-color tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
         {{headerText}}
-        <span class="tw-text-hyperlink-color tw-flex tw-pl-4-px tw-cursor-pointer" (click)="windowService.openInNewTab(redirectLink)">
+        <span *ngIf="redirectLink" class="tw-text-hyperlink-color tw-flex tw-pl-4-px tw-cursor-pointer" (click)="windowService.openInNewTab(redirectLink)">
             Read More
             <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px" class="tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px"></svg-icon-sprite>
         </span>
     </p>
 
-    <div class="tw-flex tw-justify-center tw-pt-48-px">
+    <div *ngIf="embedVideo" class="tw-flex tw-justify-center tw-pt-48-px">
+        <iframe class= "tw-rounded-8-px" width="720" height="420" [src]="embedVideoUrl" title="Fyle Sage Intacct Integration" frameborder="0"></iframe>
+    </div>    
+
+    <div class="tw-flex tw-justify-center tw-pt-48-px tw-pb-16-px">
         <img src="{{svgPath}}" />
-    </div>
+    </div>    
 </div>
