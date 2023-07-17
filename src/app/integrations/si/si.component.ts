@@ -48,7 +48,7 @@ export class SiComponent implements OnInit {
     }
   }
 
-  workspaceSetting(workspace:IntacctWorkspace) {
+  setupWorkspace(workspace:IntacctWorkspace) {
     this.workspace = workspace;
     this.storageService.set('si.workspaceId', this.workspace.id);
     this.storageService.set('si.onboardingState', this.workspace.onboarding_state);
@@ -56,21 +56,21 @@ export class SiComponent implements OnInit {
     this.navigate();
   }
 
-  private setupWorkspace(): void {
+  private getOrCreateWorkspace(): void {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
-        this.workspaceSetting(workspaces);
+        this.setupWorkspace(workspaces);
       }
     }, (error) => {
       this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
-        this.workspaceSetting(workspaces);
+        this.setupWorkspace(workspaces);
       });
     }
     );
   }
 
   ngOnInit(): void {
-    this.setupWorkspace();
+    this.getOrCreateWorkspace();
   }
 
 }
