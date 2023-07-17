@@ -24,12 +24,6 @@ export class SiComponent implements OnInit {
 
   windowReference: Window;
 
-  settingsService : SiSettingsService;
-
-  connectSageIntacct = true;
-
-  companyName: string;
-
   constructor(
     private storageService: StorageService,
     private router: Router,
@@ -44,7 +38,7 @@ export class SiComponent implements OnInit {
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/intacct') {
       const onboardingStateComponentMap = {
-        [IntacctOnboardingState.CONNECTION]: '/integrations/intacct/onboarding/connector',
+        [IntacctOnboardingState.CONNECTION]: '/integrations/intacct/onboarding/landing',
         [IntacctOnboardingState.LOCATION_ENTITY]: '/integrations/intacct/onboarding/connector',
         [IntacctOnboardingState.EXPORT_SETTINGS]: '/integrations/intacct/onboarding/export_settings',
         [IntacctOnboardingState.IMPORT_SETTINGS]: '/integrations/intacct/onboarding/import_settings',
@@ -55,7 +49,7 @@ export class SiComponent implements OnInit {
     }
   }
 
-  workspaceSetting(workspace:IntacctWorkspace) {
+  setupWorkspace(workspace:IntacctWorkspace) {
     this.workspace = workspace;
     this.storageService.set('si.workspaceId', this.workspace.id);
     this.storageService.set('si.onboardingState', this.workspace.onboarding_state);
@@ -63,29 +57,21 @@ export class SiComponent implements OnInit {
     this.navigate();
   }
 
-  getSageIntacctCompanyName() {
-    const that = this;
-    that.settingsService.getSageIntacctCredentials(that.workspace.id).subscribe(res => {
-      that.connectSageIntacct = false;
-      that.companyName = res && res.si_company_name;
-    });
-  }
-
-  private setupWorkspace(): void {
+  private getOrCreateWorkspace(): void {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
-        this.workspaceSetting(workspaces);
+        this.setupWorkspace(workspaces);
       }
     }, (error) => {
       this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
-        this.workspaceSetting(workspaces);
+        this.setupWorkspace(workspaces);
       });
     }
     );
   }
 
   ngOnInit(): void {
-    this.setupWorkspace();
+    this.getOrCreateWorkspace();
   }
 
 }
