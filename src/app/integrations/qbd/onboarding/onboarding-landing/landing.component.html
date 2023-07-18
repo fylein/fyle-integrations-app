@@ -1,6 +1,6 @@
 <div>
     <div>
-        <app-app-header [iconPath]="'assets/logos/quickbooks-desktop.svg'" [appName]="'QuickBooks Desktop'" [appDescription]="'Generate IIF file to export expenses from Fyle to QuickBooks Desktop'" [isLoading]="isLoading" [isIntegrationSetupInProgress]="isQBDSetupInProgress" [isIntegrationConnected]="isQBDConnected" [postConnectionRoute]="'qbd/onboarding/landing'" [buttonText]="'Start'"></app-app-header>
+        <app-app-header [iconPath]="'assets/logos/quickbooks-desktop.svg'" [appName]="'QuickBooks Desktop'" [appDescription]="'Generate IIF file to export expenses from Fyle to QuickBooks Desktop'" [isLoading]="isLoading" [isIntegrationSetupInProgress]="isQBDSetupInProgress" [isIntegrationConnected]="isQBDConnected" [postConnectionRoute]="'qbd/onboarding/export_settings'" [buttonText]="'Start'"></app-app-header>
     </div>
     <div>
         <app-app-integration-landing [headerText]="'Configure the integration to generate custom IIF file to export expenses from Fyle to QuickBooks Desktop.'" [svgPath]="'assets/flow-charts/qbd-flow-chart.svg'" [redirectLink]="RedirectLink.QBD"></app-app-integration-landing>
