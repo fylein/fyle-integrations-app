@@ -24,6 +24,12 @@ export class SiComponent implements OnInit {
 
   windowReference: Window;
 
+  settingsService : SiSettingsService;
+
+  connectSageIntacct: boolean = true;
+
+  companyName: string;
+
   constructor(
     private storageService: StorageService,
     private router: Router,
@@ -47,6 +53,14 @@ export class SiComponent implements OnInit {
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
+  }
+
+  getSageIntacctCompanyName() {
+    const that = this;
+    that.settingsService.getSageIntacctCredentials(that.workspace.id).subscribe(res => {
+      that.connectSageIntacct = false;
+      that.companyName = res && res.si_company_name;
+    });
   }
 
   setupWorkspace(workspace:IntacctWorkspace) {

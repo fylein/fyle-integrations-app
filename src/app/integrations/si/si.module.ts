@@ -15,6 +15,8 @@ import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { MainComponent } from './main/main.component';
 import { OnboardingComponent } from './onboarding/onboarding.component';
 import { SiRoutingModule } from './si-routing.module';
+import { OnboardingSageStepperComponent } from './onboarding/onboarding-sage-stepper/onboarding-sage-stepper.component';
+import { OnboardingSageConnectorComponent } from './onboarding/onboarding-sage-connector/onboarding-sage-connector.component';
 
 
 @NgModule({
@@ -27,7 +29,9 @@ import { SiRoutingModule } from './si-routing.module';
     OnboardingComponent,
     OnboardingDoneComponent,
     OnboardingExportSettingComponent,
-    OnboardingAdvancedSettingComponent
+    OnboardingAdvancedSettingComponent,
+    OnboardingSageConnectorComponent,
+    OnboardingSageStepperComponent
   ],
   imports: [
     CommonModule,
