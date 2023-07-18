@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiSettingsService } from 'src/app/core/services/si/si-settings.service';
 import { SiComponent } from '../../si.component';
@@ -23,6 +24,12 @@ export class OnboardingSageConnectorComponent implements OnInit {
   settingsService: SiSettingsService;
 
   mappingsService: SiMappingsService;
+
+  ConfigurationCtaText = ConfigurationCta;
+
+  isOnboarding: boolean = true;
+
+  saveInProgress: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,

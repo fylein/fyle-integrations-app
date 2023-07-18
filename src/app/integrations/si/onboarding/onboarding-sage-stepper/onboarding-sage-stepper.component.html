@@ -9,11 +9,9 @@
         <div class="tw-flex tw-justify-center">
             <div *ngFor="let onboardingStep of onboardingSteps">
                 <div class="tw-grip tw-grid-cols-1">
-                    <div class="tw-flex tw-items-center">
+                    <div class="tw-flex tw-items-center tw-left-4">
                         <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
-                            <img *ngIf="onboardingStep.active" src='{{ "assets/icons/stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
-                            <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="assets/icons/tick.svg" class="icon">
-                            <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "assets/icons/stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
+                            <img *ngIf="onboardingStep" src='{{ "assets/icons/integrations-stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
                         </div>
                         <div *ngIf="onboardingStep.number !== 5" >
                             <div *ngIf="!onboardingStep.completed">
@@ -24,7 +22,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[onboardingStep.step === 'Export Settings' ? 'step-name-export' : '', onboardingStep.step === 'Field Mapping' ? 'step-name-field' : '', onboardingStep.step === 'Advanced' ? 'step-name-advanced' : '', !onboardingStep.active ? 'tw-text-faded-text-color' : 'tw-text-normal-text-color' ]">
+                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[ !onboardingStep.active ? 'tw-text-faded-text-color' : 'tw-text-normal-text-color' ]">
                         {{ onboardingStep.step }}
                     </div>
                 </div>

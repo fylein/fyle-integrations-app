@@ -36,7 +36,7 @@ export class OnboardingSageStepperComponent implements OnInit {
       completed: false,
       number: 2,
       step: 'Export Settings',
-      icon: 'export-setting',
+      icon: 'export-settings',
       route: 'export_settings',
       size: {
         height: '18px',
@@ -59,8 +59,8 @@ export class OnboardingSageStepperComponent implements OnInit {
       active: false,
       completed: false,
       number: 4,
-      step: 'Advanced',
-      icon: 'advanced-setting',
+      step: 'Advanced Settings',
+      icon: 'advanced-settings',
       route: 'advanced_settings',
       size: {
         height: '20px',
