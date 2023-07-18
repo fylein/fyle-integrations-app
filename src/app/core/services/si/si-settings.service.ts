@@ -25,7 +25,7 @@ export class SiSettingsService {
   getFyleCredentials(workspaceId: number): Observable<FyleCredentials> {
     return this.apiService.get('/workspaces/' + workspaceId + '/credentials/fyle/', {});
   }
- 
+
   @Cacheable({
     cacheBusterObserver: sageIntacctCredentialsCache
   })
