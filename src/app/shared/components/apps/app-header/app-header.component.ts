@@ -73,7 +73,7 @@ export class AppHeaderComponent implements OnInit {
     } else if (this.postConnectionRoute==='intacct/onboarding/landing') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_INTACCT);
     }
-    this.router.navigate(['/integrations/', this.postConnectionRoute]);
+    this.router.navigate([`/integrations/${this.postConnectionRoute}`]);
   }
 
   ngOnInit(): void {
