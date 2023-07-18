@@ -63,6 +63,6 @@ describe('AppHeaderComponent', () => {
     component.connectIntegration();
     tick();
 
-    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/', 'qbd/onboarding/export_settings']);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbd/onboarding/export_settings']);
   }));
 });
