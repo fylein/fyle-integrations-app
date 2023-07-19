@@ -36,7 +36,7 @@ export class OnboardingSageStepperComponent implements OnInit {
       completed: false,
       number: 2,
       step: 'Export Settings',
-      icon: 'export-settings',
+      icon: 'export-setting',
       route: 'export_settings',
       size: {
         height: '18px',
@@ -48,7 +48,7 @@ export class OnboardingSageStepperComponent implements OnInit {
       completed: false,
       number: 3,
       step: 'Import Settings',
-      icon: 'import-settings',
+      icon: 'import-setting',
       route: 'import_settings',
       size: {
         height: '18px',
@@ -60,7 +60,7 @@ export class OnboardingSageStepperComponent implements OnInit {
       completed: false,
       number: 4,
       step: 'Advanced Settings',
-      icon: 'advanced-settings',
+      icon: 'advanced-setting',
       route: 'advanced_settings',
       size: {
         height: '20px',
@@ -85,7 +85,7 @@ export class OnboardingSageStepperComponent implements OnInit {
       [IntacctOnboardingState.COMPLETE]: 6
     };
 
-    for (let index = onboardingStateStepMap[onboardingState] - 2; index > 0; index--) {
+    for (let index = onboardingStateStepMap[onboardingState] - 3; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
     }
   }

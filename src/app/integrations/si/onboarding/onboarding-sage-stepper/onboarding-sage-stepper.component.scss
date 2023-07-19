@@ -17,19 +17,24 @@
   .line-inactive {
     @apply tw-border-t-2-px tw-border-solid tw-border-success-toast tw-w-40 tw-h-2-px ;
   }
+
+  .step-name-connector {
+    position: relative;
+    left: -50px;
+  }
   
   .step-name-export {
     position: relative;
     left: -20px;
   }
   
-  .step-name-field {
+  .step-name-import {
     position: relative;
     left: -18px;
   }
   
   .step-name-advanced {
     position: relative;
-    left: -5px;
+    left: -30px;
   }
   
