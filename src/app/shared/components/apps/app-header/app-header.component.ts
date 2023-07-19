@@ -68,7 +68,6 @@ export class AppHeaderComponent implements OnInit {
   }
 
   connectIntegration(): void {
-    console.log(this.postConnectionRoute);
     if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
     } else if (this.postConnectionRoute==='intacct/onboarding/connector') {
