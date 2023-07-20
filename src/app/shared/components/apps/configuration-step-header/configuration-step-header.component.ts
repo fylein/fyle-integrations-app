@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
@@ -13,7 +12,7 @@ export class ConfigurationStepHeaderComponent implements OnInit {
 
   @Input() contentText: string;
 
-  RedirectLink = RedirectLink;
+  @Input() redirectLink: string;
 
   constructor(
     public windowService: WindowService
