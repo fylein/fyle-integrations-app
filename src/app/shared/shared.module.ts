@@ -42,6 +42,7 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
 import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
+import { IntacctStepperComponent } from './components/apps/intacct-stepper/intacct-stepper.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { AppIntegrationLandingComponent } from './components/apps/app-integratio
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
     ConfigurationLabelComponent,
-    AppIntegrationLandingComponent
+    AppIntegrationLandingComponent,
+    IntacctStepperComponent
   ],
   imports: [
     CommonModule,
@@ -117,7 +119,10 @@ import { AppIntegrationLandingComponent } from './components/apps/app-integratio
     CalendarModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
-    CascadeSelectModule
+    CascadeSelectModule,
+    IntacctStepperComponent,
+    ConfigurationStepFooterComponent,
+    ConfigurationStepHeaderComponent
   ]
 })
 export class SharedModule { }

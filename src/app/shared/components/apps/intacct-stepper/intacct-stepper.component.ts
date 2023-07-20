@@ -5,12 +5,11 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
-  selector: 'app-onboarding-sage-stepper',
-  templateUrl: './onboarding-sage-stepper.component.html',
-  styleUrls: ['./onboarding-sage-stepper.component.scss']
+  selector: 'app-intacct-stepper',
+  templateUrl: './intacct-stepper.component.html',
+  styleUrls: ['./intacct-stepper.component.scss']
 })
-export class OnboardingSageStepperComponent implements OnInit {
-
+export class IntacctStepperComponent implements OnInit {
   constructor(
     private router: Router,
     private workspaceService: SiWorkspaceService
@@ -99,5 +98,4 @@ export class OnboardingSageStepperComponent implements OnInit {
   ngOnInit(): void {
     this.updateActiveAndCompletedSteps();
   }
-
 }
