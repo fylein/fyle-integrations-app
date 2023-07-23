@@ -7,11 +7,11 @@ import { SiSettingsService } from 'src/app/core/services/si/si-settings.service'
 import { SiComponent } from '../../si.component';
 
 @Component({
-  selector: 'app-onboarding-sage-connector',
-  templateUrl: './onboarding-sage-connector.component.html',
-  styleUrls: ['./onboarding-sage-connector.component.scss']
+  selector: 'app-onboarding-intacct-connector',
+  templateUrl: './onboarding-intacct-connector.component.html',
+  styleUrls: ['./onboarding-intacct-connector.component.scss']
 })
-export class OnboardingSageConnectorComponent implements OnInit {
+export class OnboardingIntacctConnectorComponent implements OnInit {
 
   isLoading: boolean;
 
@@ -88,4 +88,5 @@ export class OnboardingSageConnectorComponent implements OnInit {
   ngOnInit(): void {
     this.connect();
   }
+
 }

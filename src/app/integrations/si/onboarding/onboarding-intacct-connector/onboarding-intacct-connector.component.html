@@ -1,4 +1,4 @@
-<app-intacct-stepper [currentStep]="'connector'"></app-intacct-stepper>
+<app-intacct-stepper [currentStep]="'Connect to Sage Intacct'"></app-intacct-stepper>
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
    <app-loader></app-loader>
 </div>
@@ -16,6 +16,7 @@
                 <label for="userId" class="tw-block tw-font-medium required">User ID</label>
                 <input type="text" id="userId" name="userId" formControlName="userId" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full">
               </div>
+              <div class = "tw-bg-origin-padding"></div>
               <div class="tw-mb-4 half-width">
                 <label for="companyId" class="tw-block tw-font-medium required">Company ID</label>
                 <input type="text" id="companyId" name="companyId" formControlName="companyId" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full">

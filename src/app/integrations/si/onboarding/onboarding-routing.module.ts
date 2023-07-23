@@ -7,7 +7,7 @@ import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-settin
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { OnboardingComponent } from './onboarding.component';
 import { RouterModule, Routes } from '@angular/router';
-import { OnboardingSageConnectorComponent } from './onboarding-sage-connector/onboarding-sage-connector.component';
+import { OnboardingIntacctConnectorComponent } from './onboarding-intacct-connector/onboarding-intacct-connector.component';
 
 
 
@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'connector',
-        component: OnboardingSageConnectorComponent
+        component: OnboardingIntacctConnectorComponent
       },
       {
         path: 'export_settings',
