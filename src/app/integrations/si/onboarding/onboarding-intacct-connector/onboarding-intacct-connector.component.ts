@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationCta } from 'src/app/core/models/enum/enum.model';
+import { StorageService } from 'src/app/core/services/core/storage.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiSettingsService } from 'src/app/core/services/si/si-settings.service';
 import { SiComponent } from '../../si.component';
@@ -31,6 +32,8 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
 
   saveInProgress: boolean = false;
 
+  storageService: StorageService;
+
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -53,7 +56,7 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
       }).subscribe((response) => {
         that.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           that.isLoading = false;
-          that.router.navigateByUrl(`workspaces/${that.workspaceId}/dashboard`);
+          // that.router.navigateByUrl(`workspaces/${that.workspaceId}/dashboard`);
           that.si.getSageIntacctCompanyName();
         });
       }, () => {
@@ -64,7 +67,7 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
     connect() {
       const that = this;
       that.isSaveDisabled = false;
-      that.workspaceId = that.route.snapshot.parent?.params.workspace_id;
+      that.workspaceId = this.storageService.get('si.workspaceId');
       that.isLoading = false;
       that.settingsService.getSageIntacctCredentials(that.workspaceId).subscribe((res) => {
         that.connectSageIntacctForm = that.formBuilder.group({
@@ -88,5 +91,4 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
   ngOnInit(): void {
     this.connect();
   }
-
 }

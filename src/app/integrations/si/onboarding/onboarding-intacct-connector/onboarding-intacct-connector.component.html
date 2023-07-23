@@ -10,26 +10,29 @@
    </div>
    <div>
       <form [formGroup]="connectSageIntacctForm">
-        <div class="tw-p-24-px">
+         <div class="tw-p-24-px">
             <div class="container">
               <div class="tw-mb-4 half-width">
                 <label for="userId" class="tw-block tw-font-medium required">User ID</label>
                 <input type="text" id="userId" name="userId" formControlName="userId" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full">
               </div>
-              <div class = "tw-bg-origin-padding"></div>
               <div class="tw-mb-4 half-width">
                 <label for="companyId" class="tw-block tw-font-medium required">Company ID</label>
                 <input type="text" id="companyId" name="companyId" formControlName="companyId" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full">
               </div>
               <div class="tw-mb-4 half-width">
+               <label for="companyName" class="tw-block tw-font-medium required">Company Name</label>
+               <input type="text" id="companyName" name="companyName" formControlName="companyName" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full">
+             </div>
+              <div class="tw-mb-4 half-width">
                 <label for="userPassword" class="tw-block tw-font-medium required">User Password</label>
                 <input type="password" id="userPassword" name="userPassword" formControlName="userPassword" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full">
               </div>
             </div>
-          </div>
-         <div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"></app-configuration-step-footer>
-         </div>
+          </div>          
       </form>
+      <div>
+         <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
+      </div>
    </div>
 </div>
