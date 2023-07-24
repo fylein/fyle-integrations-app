@@ -56,7 +56,6 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
       }).subscribe((response) => {
         that.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           that.isLoading = false;
-          // that.router.navigateByUrl(`workspaces/${that.workspaceId}/dashboard`);
           that.si.getSageIntacctCompanyName();
         });
       }, () => {
