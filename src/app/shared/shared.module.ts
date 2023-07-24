@@ -69,7 +69,7 @@ import { IntacctStepperComponent } from './components/apps/intacct-stepper/intac
     ConfigurationMultiSelectComponent,
     ConfigurationLabelComponent,
     AppIntegrationLandingComponent,
-    IntacctStepperComponent,
+    IntacctStepperComponent
   ],
   imports: [
     CommonModule,

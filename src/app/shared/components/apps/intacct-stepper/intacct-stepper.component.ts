@@ -88,7 +88,6 @@ export class IntacctStepperComponent implements OnInit {
     for (let index = onboardingStateStepMap[onboardingState] - 3; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
     }
-    console.log(this.onboardingSteps);
   }
 
   navigate(canNavigate: boolean, route: string): void {
@@ -98,7 +97,6 @@ export class IntacctStepperComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('please owrk');
-    // this.updateActiveAndCompletedSteps();
+    this.updateActiveAndCompletedSteps();
   }
 }

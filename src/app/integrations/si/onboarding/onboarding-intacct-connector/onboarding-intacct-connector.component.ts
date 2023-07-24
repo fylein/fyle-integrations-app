@@ -35,7 +35,7 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
     private storageService: StorageService,
     private si: SiComponent,
     private settingsService: SiSettingsService,
-    private mappingsService: SiMappingsService,
+    private mappingsService: SiMappingsService
   ) { }
 
     save() {
@@ -54,7 +54,6 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
       }).subscribe((response) => {
         that.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           that.isLoading = false;
-          // that.router.navigateByUrl(`workspaces/${that.workspaceId}/dashboard`);
           that.si.getSageIntacctCompanyName();
         });
       }, () => {
@@ -68,7 +67,6 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
       that.workspaceId = this.storageService.get('si.workspaceId');
       that.isLoading = false;
       that.settingsService.getSageIntacctCredentials(that.workspaceId).subscribe((res) => {
-        console.log('res',res)
         that.connectSageIntacctForm = that.formBuilder.group({
           userID: [res.si_user_id ? res.si_user_id : ''],
           companyID: [res.si_company_id ? res.si_company_id : ''],
@@ -76,17 +74,14 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
           userPassword: ['']
         });
         that.isLoading = false;
-        console.log(this.connectSageIntacctForm.valid)
       }, () => {
         that.isLoading = false;
-        // console.
         that.connectSageIntacctForm = that.formBuilder.group({
           userID: ['', Validators.required],
           companyID: ['', Validators.required],
           companyName: ['', Validators.required],
           userPassword: ['', Validators.required]
         });
-        console.log(this.connectSageIntacctForm.valid)
       });
     }
 

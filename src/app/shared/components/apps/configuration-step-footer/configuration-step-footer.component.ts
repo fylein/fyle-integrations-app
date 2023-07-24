@@ -19,9 +19,7 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-    console.log('connectSageIntacctFormconnectSageIntacctForm', this.isButtonDisabled, this.ctaText)
-  }
+  ngOnInit(): void {}
 
   navigate(): void {
     this.navigateToPreviousStep.emit();
