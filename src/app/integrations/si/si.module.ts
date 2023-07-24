@@ -15,7 +15,7 @@ import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { MainComponent } from './main/main.component';
 import { OnboardingComponent } from './onboarding/onboarding.component';
 import { SiRoutingModule } from './si-routing.module';
-import { OnboardingIntacctConnectorComponent } from './onboarding/onboarding-intacct-connector/onboarding-intacct-connector.component';
+// import { OnboardingIntacctConnectorComponent } from './onboarding/onboarding-intacct-connector/onboarding-intacct-connector.component';
 
 
 @NgModule({
@@ -29,7 +29,7 @@ import { OnboardingIntacctConnectorComponent } from './onboarding/onboarding-int
     OnboardingDoneComponent,
     OnboardingExportSettingComponent,
     OnboardingAdvancedSettingComponent,
-    OnboardingIntacctConnectorComponent
+    // OnboardingIntacctConnectorComponent
   ],
   imports: [
     CommonModule,

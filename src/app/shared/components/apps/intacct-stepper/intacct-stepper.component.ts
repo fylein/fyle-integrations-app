@@ -10,6 +10,9 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
   styleUrls: ['./intacct-stepper.component.scss']
 })
 export class IntacctStepperComponent implements OnInit {
+
+  anish: string = 'print 123';
+
   constructor(
     private router: Router,
     private workspaceService: SiWorkspaceService
@@ -87,6 +90,7 @@ export class IntacctStepperComponent implements OnInit {
     for (let index = onboardingStateStepMap[onboardingState] - 3; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
     }
+    console.log(this.onboardingSteps);
   }
 
   navigate(canNavigate: boolean, route: string): void {
@@ -96,6 +100,7 @@ export class IntacctStepperComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.updateActiveAndCompletedSteps();
+    console.log('please owrk');
+    // this.updateActiveAndCompletedSteps();
   }
 }

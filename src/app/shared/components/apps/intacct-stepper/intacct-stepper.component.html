@@ -7,7 +7,11 @@
             <p class="!tw-font-400">Configure the following settings to set up your integration.</p>
         </div>
         <div class="tw-flex tw-justify-center">
+            <p>xyzzz</p>
+            <p>{{onboardingSteps|json}}</p>
+            <p>{{anish}}</p>
             <div *ngFor="let onboardingStep of onboardingSteps">
+                <p>abcdd</p>
                 <div class="tw-grip tw-grid-cols-1">
                     <div class="tw-flex tw-items-center">
                         <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
