@@ -14,6 +14,8 @@ export class ConfigurationStepHeaderComponent implements OnInit {
 
   @Input() redirectLink: string;
 
+  @Input() showSyncButton: boolean;
+
   constructor(
     public windowService: WindowService
   ) { }
