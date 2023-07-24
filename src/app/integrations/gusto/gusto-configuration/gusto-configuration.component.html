@@ -51,7 +51,7 @@
             </div>
         </div>
         <div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? ConfigurationCtaText.SAVE : ConfigurationCtaText.SAVING" [isButtonDisabled]="!configurationForm.valid || saveInProgress || configurationForm.controls.email.value.length === 0" (save)="save()"></app-configuration-step-footer>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE : ConfigurationCtaText.SAVING" [isButtonDisabled]="!configurationForm.valid || saveInProgress || configurationForm.controls.email.value.length === 0" (save)="save()"></app-configuration-step-footer>
         </div>
     </div>
 </div>

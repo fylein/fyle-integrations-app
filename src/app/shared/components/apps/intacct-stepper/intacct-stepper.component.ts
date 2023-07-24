@@ -11,8 +11,6 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class IntacctStepperComponent implements OnInit {
 
-  anish: string = 'print 123';
-
   constructor(
     private router: Router,
     private workspaceService: SiWorkspaceService

@@ -1,4 +1,3 @@
-<app-test-comp></app-test-comp>
 <app-intacct-stepper [currentStep]="'Connect to Sage Intacct'"></app-intacct-stepper>
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
    <app-loader></app-loader>
@@ -9,7 +8,7 @@
       [headerText]="'Connect to Sage Intacct'"
       [contentText]="'Connect to your Sage Intacct account to establish a connection between Fyle and Sage Intacct.'"></app-configuration-step-header>
    </div>
-   <div>
+   <div *ngIf="!isLoading">
       <form [formGroup]="connectSageIntacctForm">
          <div class="tw-p-24-px">
             <div class="container">
@@ -29,7 +28,7 @@
           </div>          
       </form>
       <div>
-         <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
+         <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
       </div>
    </div>
 </div>

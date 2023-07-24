@@ -41,6 +41,7 @@ export class SiComponent implements OnInit {
   }
 
   private navigate(): void {
+    console.log('sads')
     const pathName = this.windowReference.location.pathname;
     if (pathName === '/integrations/intacct') {
       const onboardingStateComponentMap = {
@@ -51,6 +52,7 @@ export class SiComponent implements OnInit {
         [IntacctOnboardingState.ADVANCED_SETTINGS]: '/integrations/intacct/onboarding/advanced_settings',
         [IntacctOnboardingState.COMPLETE]: '/integrations/intacct/main'
       };
+      console.log(this.workspace.onboarding_state)
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
   }
@@ -73,8 +75,8 @@ export class SiComponent implements OnInit {
 
   private getOrCreateWorkspace(): void {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
-      if (workspaces?.id) {
-        this.setupWorkspace(workspaces);
+      if (workspaces.length) {
+        this.setupWorkspace(workspaces[0]);
       }
     }, (error) => {
       this.workspaceService.postWorkspace().subscribe((workspaces: any) => {

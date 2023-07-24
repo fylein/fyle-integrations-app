@@ -43,7 +43,6 @@ import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
 import { IntacctStepperComponent } from './components/apps/intacct-stepper/intacct-stepper.component';
-import { TestCompComponent } from './components/apps/test-comp/test-comp.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +70,6 @@ import { TestCompComponent } from './components/apps/test-comp/test-comp.compone
     ConfigurationLabelComponent,
     AppIntegrationLandingComponent,
     IntacctStepperComponent,
-    TestCompComponent
   ],
   imports: [
     CommonModule,
@@ -124,8 +122,7 @@ import { TestCompComponent } from './components/apps/test-comp/test-comp.compone
     CascadeSelectModule,
     IntacctStepperComponent,
     ConfigurationStepFooterComponent,
-    ConfigurationStepHeaderComponent,
-    TestCompComponent
+    ConfigurationStepHeaderComponent
   ]
 })
 export class SharedModule { }

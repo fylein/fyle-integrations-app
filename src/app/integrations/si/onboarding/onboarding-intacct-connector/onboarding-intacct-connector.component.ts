@@ -22,23 +22,21 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
 
   workspaceId: number;
 
-  settingsService: SiSettingsService;
-
-  mappingsService: SiMappingsService;
-
   ConfigurationCtaText = ConfigurationCta;
 
   isOnboarding: boolean = true;
 
   saveInProgress: boolean = false;
 
-  storageService: StorageService;
-
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private si: SiComponent) { }
+    private storageService: StorageService,
+    private si: SiComponent,
+    private settingsService: SiSettingsService,
+    private mappingsService: SiMappingsService,
+  ) { }
 
     save() {
       const that = this;
@@ -70,21 +68,25 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
       that.workspaceId = this.storageService.get('si.workspaceId');
       that.isLoading = false;
       that.settingsService.getSageIntacctCredentials(that.workspaceId).subscribe((res) => {
+        console.log('res',res)
         that.connectSageIntacctForm = that.formBuilder.group({
-          userID: res.si_user_id ? res.si_user_id : '',
-          companyID: res.si_company_id ? res.si_company_id : '',
-          companyName: res.si_company_name ? res.si_company_name : '',
-          userPassword: ''
+          userID: [res.si_user_id ? res.si_user_id : ''],
+          companyID: [res.si_company_id ? res.si_company_id : ''],
+          companyName: [res.si_company_name ? res.si_company_name : ''],
+          userPassword: ['']
         });
         that.isLoading = false;
+        console.log(this.connectSageIntacctForm.valid)
       }, () => {
         that.isLoading = false;
+        // console.
         that.connectSageIntacctForm = that.formBuilder.group({
           userID: ['', Validators.required],
           companyID: ['', Validators.required],
           companyName: ['', Validators.required],
           userPassword: ['', Validators.required]
         });
+        console.log(this.connectSageIntacctForm.valid)
       });
     }
 
