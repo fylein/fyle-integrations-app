@@ -77,7 +77,7 @@ export class SiComponent implements OnInit {
         this.setupWorkspace(workspaces[0]);
       }
     }, (error) => {
-      this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
+      this.workspaceService.postWorkspace().subscribe((workspaces: IntacctWorkspace) => {
         this.setupWorkspace(workspaces);
       });
     }

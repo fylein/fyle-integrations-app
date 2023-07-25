@@ -6,26 +6,12 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
-// Import { OnboardingAdvancedSettingComponent } from './onboarding/onboarding-advanced-setting/onboarding-advanced-setting.component';
-// Import { OnboardingDoneComponent } from './onboarding/onboarding-done/onboarding-done.component';
-// Import { OnboardingExportSettingComponent } from './onboarding/onboarding-export-setting/onboarding-export-setting.component';
-// Import { ConfigurationComponent } from './main/configuration/configuration.component';
-// Import { DashboardComponent } from './main/dashboard/dashboard.component';
-// Import { MainComponent } from './main/main.component';
-// Import { OnboardingComponent } from './onboarding/onboarding.component';
 import { SiRoutingModule } from './si-routing.module';
 
 
 @NgModule({
   declarations: [
     SiComponent
-    // ConfigurationComponent,
-    // DashboardComponent,
-    // MainComponent,
-    // OnboardingComponent,
-    // OnboardingDoneComponent,
-    // OnboardingExportSettingComponent,
-    // OnboardingAdvancedSettingComponent
   ],
   imports: [
     CommonModule,
