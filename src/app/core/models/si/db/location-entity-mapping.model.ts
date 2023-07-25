@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* Tslint:disable */
 // TODO: Use something for serialization / deserialization
 export type LocationEntityMapping = {
     id?: number;

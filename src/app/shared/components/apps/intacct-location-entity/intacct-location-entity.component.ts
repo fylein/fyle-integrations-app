@@ -18,7 +18,7 @@ export class IntacctLocationEntityComponent implements OnInit {
   siLocationEntities: MappingDestination[];
 
   locationEntityMappings: LocationEntityMapping;
-  
+
   locationEntityMappingDone = false;
 
   isLoading: boolean;
@@ -42,14 +42,14 @@ export class IntacctLocationEntityComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router) { }
 
-  
+
     submit() {
       const that = this;
-  
+
       const locationEntityId = that.locationEntityForm.value.siLocationEntities;
-  
+
       let locationEntityMappingPayload;
-  
+
       if (that.locationEntityForm.value.siLocationEntities !== 'top_level') {
         const siEntityMapping = that.siLocationEntities.filter(filteredLocationEntity => filteredLocationEntity.destination_id === locationEntityId)[0];
         locationEntityMappingPayload = {
@@ -67,12 +67,12 @@ export class IntacctLocationEntityComponent implements OnInit {
         };
       }
       that.isLoading = true;
-  
+
       that.mappingsService.postLocationEntityMapping(locationEntityMappingPayload).subscribe(() => {
         that.router.navigateByUrl(`workspaces/${that.workspaceId}/dashboard`);
       });
     }
-  
+
     getlocationEntityMappings() {
       const that = this;
       that.mappingsService.getLocationEntityMapping().subscribe(locationEntityMappings => {
@@ -93,11 +93,11 @@ export class IntacctLocationEntityComponent implements OnInit {
 
     setupLocationEntity() {
       const that = this;
-      // that.workspaceId = that.route.snapshot.parent.parent.params.workspace_id;
+      // That.workspaceId = that.route.snapshot.parent.parent.params.workspace_id;
       that.isLoading = true;
       that.mappingsService.getSageIntacctDestinationAttributes('LOCATION_ENTITY').subscribe((locationEntities) => {
         that.siLocationEntities = locationEntities;
-  
+
         that.getlocationEntityMappings();
       });
     }
