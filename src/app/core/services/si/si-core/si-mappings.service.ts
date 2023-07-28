@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.mode';
 import { ApiService } from '../../core/api.service';
+import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 
 @Injectable({
@@ -11,7 +12,7 @@ import { SiWorkspaceService } from './si-workspace.service';
 export class SiMappingsService {
 
   constructor(
-    private apiService: ApiService,
+    private apiService: SiApiService,
     private workspaceService: SiWorkspaceService
   ) { }
 

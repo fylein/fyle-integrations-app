@@ -9,5 +9,7 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
 
   isLoading: boolean;
 
+  selectLocationEntity: boolean = true;
+
   ngOnInit(): void {}
 }

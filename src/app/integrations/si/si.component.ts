@@ -28,8 +28,6 @@ export class SiComponent implements OnInit {
 
   connectSageIntacct: boolean = true;
 
-  companyName: string;
-
   constructor(
     private storageService: StorageService,
     private router: Router,
@@ -59,7 +57,6 @@ export class SiComponent implements OnInit {
     const that = this;
     that.settingsService.getSageIntacctCredentials(that.workspace.id).subscribe(res => {
       that.connectSageIntacct = false;
-      that.companyName = res && res.si_company_name;
     });
   }
 
@@ -73,13 +70,16 @@ export class SiComponent implements OnInit {
 
   private getOrCreateWorkspace(): void {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
+      console.log(workspaces);
       if (workspaces.length) {
         this.setupWorkspace(workspaces[0]);
+        
+      } else {
+        this.workspaceService.postWorkspace().subscribe((workspaces: IntacctWorkspace) => {
+          console.log(workspaces);
+          this.setupWorkspace(workspaces);
+        });
       }
-    }, (error) => {
-      this.workspaceService.postWorkspace().subscribe((workspaces: IntacctWorkspace) => {
-        this.setupWorkspace(workspaces);
-      });
     }
     );
   }

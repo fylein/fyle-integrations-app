@@ -14,9 +14,7 @@ import { SiComponent } from 'src/app/integrations/si/si.component';
 })
 export class IntacctConnectorComponent implements OnInit {
 
-  isLoading: boolean;
-
-  isSaveDisabled: boolean;
+  isLoading: boolean = true;
 
   locationEntity: boolean = false;
 
@@ -41,17 +39,16 @@ export class IntacctConnectorComponent implements OnInit {
   ) { }
 
     save() {
+      console.log(this.connectSageIntacctForm);
       const that = this;
       const userID = this.connectSageIntacctForm.value.userID;
       const companyID = this.connectSageIntacctForm.value.companyID;
-      const companyName = this.connectSageIntacctForm.value.companyName;
       const userPassword = this.connectSageIntacctForm.value.userPassword;
 
       that.isLoading = true;
       that.settingsService.connectSageIntacct(that.workspaceId, {
         si_user_id: userID,
         si_company_id: companyID,
-        si_company_name: companyName,
         si_user_password: userPassword
       }).subscribe((response) => {
         that.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
@@ -66,25 +63,25 @@ export class IntacctConnectorComponent implements OnInit {
 
     connect() {
       const that = this;
-      that.isSaveDisabled = false;
       that.workspaceId = this.storageService.get('si.workspaceId');
       that.isLoading = false;
       that.settingsService.getSageIntacctCredentials(that.workspaceId).subscribe((res) => {
         that.connectSageIntacctForm = that.formBuilder.group({
           userID: [res.si_user_id ? res.si_user_id : ''],
           companyID: [res.si_company_id ? res.si_company_id : ''],
-          companyName: [res.si_company_name ? res.si_company_name : ''],
           userPassword: ['']
         });
         that.isLoading = false;
       }, () => {
-        that.isLoading = false;
         that.connectSageIntacctForm = that.formBuilder.group({
           userID: ['', Validators.required],
           companyID: ['', Validators.required],
-          companyName: ['', Validators.required],
           userPassword: ['', Validators.required]
         });
+        that.isLoading = false;
+        this.connectSageIntacctForm.controls.companyID.valueChanges.subscribe((abcd) => {
+          console.log(abcd, this.connectSageIntacctForm);
+        })
       });
     }
 
