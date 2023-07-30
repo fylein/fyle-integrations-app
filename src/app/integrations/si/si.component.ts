@@ -70,13 +70,11 @@ export class SiComponent implements OnInit {
 
   private getOrCreateWorkspace(): void {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
-      console.log(workspaces);
       if (workspaces.length) {
         this.setupWorkspace(workspaces[0]);
         
       } else {
         this.workspaceService.postWorkspace().subscribe((workspaces: IntacctWorkspace) => {
-          console.log(workspaces);
           this.setupWorkspace(workspaces);
         });
       }

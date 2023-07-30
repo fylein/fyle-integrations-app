@@ -27,7 +27,6 @@
           </div>          
       </form>
       <div>
-         {{connectSageIntacctForm.valid}}
          <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
       </div>
    </div>

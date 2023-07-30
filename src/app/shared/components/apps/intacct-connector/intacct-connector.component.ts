@@ -16,8 +16,6 @@ export class IntacctConnectorComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  locationEntity: boolean = false;
-
   connectSageIntacctForm: FormGroup;
 
   workspaceId: number;
@@ -39,7 +37,6 @@ export class IntacctConnectorComponent implements OnInit {
   ) { }
 
     save() {
-      console.log(this.connectSageIntacctForm);
       const that = this;
       const userID = this.connectSageIntacctForm.value.userID;
       const companyID = this.connectSageIntacctForm.value.companyID;
@@ -57,14 +54,13 @@ export class IntacctConnectorComponent implements OnInit {
         });
       }, () => {
         that.isLoading = false;
-        that.locationEntity = true;
       });
     }
 
     connect() {
       const that = this;
       that.workspaceId = this.storageService.get('si.workspaceId');
-      that.isLoading = false;
+      that.isLoading = true;
       that.settingsService.getSageIntacctCredentials(that.workspaceId).subscribe((res) => {
         that.connectSageIntacctForm = that.formBuilder.group({
           userID: [res.si_user_id ? res.si_user_id : ''],
@@ -79,14 +75,10 @@ export class IntacctConnectorComponent implements OnInit {
           userPassword: ['', Validators.required]
         });
         that.isLoading = false;
-        this.connectSageIntacctForm.controls.companyID.valueChanges.subscribe((abcd) => {
-          console.log(abcd, this.connectSageIntacctForm);
-        })
       });
     }
 
   ngOnInit(): void {
     this.connect();
   }
-
 }
