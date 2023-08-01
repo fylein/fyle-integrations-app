@@ -4,7 +4,7 @@
     </h3>
     <h5 class="tw-text-faded-text-color !tw-text-14-px tw-pt-4-px tw-flex !tw-font-400 !tw-leading-4">
         {{ contentText }}
-        <span *ngIf="headerText === 'Advanced Settings'"
+        <span *ngIf="redirectLink"
             class="tw-text-hyperlink-color tw-pl-4-px tw-flex tw-cursor-pointer"
             (click)="windowService.openInNewTab(redirectLink)">
             Learn More

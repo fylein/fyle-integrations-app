@@ -24,3 +24,24 @@
     content: "*";
     color: red;
   }
+
+  /* Add these styles to highlight the input fields with red border */
+.tw-border-red-600 {
+  border-color: #EF4444; /* Red color */
+}
+
+.label {
+  color: #5A5D72;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.incorrectCredential {
+  color: #DA1E28;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  }

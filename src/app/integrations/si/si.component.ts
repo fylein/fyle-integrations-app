@@ -24,8 +24,6 @@ export class SiComponent implements OnInit {
 
   windowReference: Window;
 
-  settingsService : SiSettingsService;
-
   connectSageIntacct: boolean = true;
 
   constructor(
@@ -33,6 +31,7 @@ export class SiComponent implements OnInit {
     private router: Router,
     private userService: IntegrationsUserService,
     private workspaceService: SiWorkspaceService,
+    private settingsService : SiSettingsService,
     private windowService: WindowService
   ) {
     this.windowReference = this.windowService.nativeWindow;
@@ -54,9 +53,8 @@ export class SiComponent implements OnInit {
   }
 
   getSageIntacctCompanyName() {
-    const that = this;
-    that.settingsService.getSageIntacctCredentials(that.workspace.id).subscribe(res => {
-      that.connectSageIntacct = false;
+    this.settingsService.getSageIntacctCredentials(this.workspace.id).subscribe(res => {
+      this.connectSageIntacct = false;
     });
   }
 

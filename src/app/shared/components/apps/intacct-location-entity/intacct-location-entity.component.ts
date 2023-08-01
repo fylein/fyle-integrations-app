@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigurationCta, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, IntacctOnboardingState, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.mode';
 import { AuthService } from 'src/app/core/services/core/auth.service';
@@ -10,6 +10,8 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { DropdownModule } from 'primeng/dropdown';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorageService } from 'src/app/core/services/core/storage.service';
+import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-intacct-location-entity',
@@ -20,7 +22,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntityForm: FormGroup;
 
-  siLocationEntities: MappingDestination[];
+  siLocationEntity: MappingDestination[];
 
   locationEntityMappings: LocationEntityMapping;
 
@@ -40,31 +42,27 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   saveInProgress: boolean = false;
 
-  redirectLink: RedirectLink.INTACCT;
+  redirectLink: string = RedirectLink.INTACCT;
 
   fyleOrgName: string = this.userService.getUserProfile().org_name;
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private mappingsService: SiMappingsService,
     private authService: AuthService,
     private userService: UserService,
     private storageService: StorageService,
     private route: ActivatedRoute,
-    private router: Router) { }
-
-
-    switchFyleOrg(): void {
-      this.authService.logout();
-    }
+    private router: Router,
+    private workspaceService: SiWorkspaceService,
+    private trackingService: TrackingService) { }
 
     submit() {
-
       const locationEntityId = this.locationEntityForm.value.siLocationEntities;
-      console.log('submitted');
       let locationEntityMappingPayload;
-
-      if (this.locationEntityForm.value.siLocationEntities !== 'top_level') {
-        const siEntityMapping = this.siLocationEntities.filter(filteredLocationEntity => filteredLocationEntity.destination_id === locationEntityId)[0];
+      this.isLoading = true;
+      if (this.locationEntityForm.value.siLocationEntities.destination_id !== 'top_level') {
+        const siEntityMapping = this.siLocationEntity.filter(filteredLocationEntity => filteredLocationEntity.destination_id === locationEntityId.destination_id)[0];
         locationEntityMappingPayload = {
           location_entity_name: siEntityMapping.value,
           destination_id: siEntityMapping.destination_id,
@@ -79,27 +77,37 @@ export class IntacctLocationEntityComponent implements OnInit {
           workspace: this.workspaceId
         };
       }
-      this.isLoading = true;
 
-      this.mappingsService.postLocationEntityMapping(locationEntityMappingPayload).subscribe(() => {
-
+        this.mappingsService.postLocationEntityMapping(locationEntityMappingPayload).subscribe(() => {
+          if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
+            this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2);
+          }
+    
+          if (this.isOnboarding) {
+            this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
+            this.router.navigate([`/integrations/intacct/onboarding/export_settings`]);
+          }
+        
+          this.isLoading = false;
       });
     }
 
     getlocationEntityMappings() {
       this.mappingsService.getLocationEntityMapping().subscribe(locationEntityMappings => {
-        this.isLoading = false;
         this.locationEntityMappings = locationEntityMappings;
         this.locationEntityMappingDone = true;
         this.locationEntityForm = this.formBuilder.group({
-          siLocationEntities: [this.locationEntityMappings ? this.locationEntityMappings.destination_id : '']
+          siLocationEntities: [this.locationEntityMappings ? this.locationEntityMappings : '']
         });
         this.locationEntityForm.controls.siLocationEntities.disable();
-      }, () => {
         this.isLoading = false;
+      }, () => {
         this.locationEntityForm = this.formBuilder.group({
           siLocationEntities: ['', Validators.required]
         });
+        this.locationEntityForm.controls.siLocationEntities.valueChanges.subscribe((abcd) => {
+        })
+        this.isLoading = false;
       });
     }
 
@@ -107,14 +115,12 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.workspaceId = this.storageService.get('si.workspaceId');
       this.isLoading = false;
       this.mappingsService.getSageIntacctDestinationAttributes('LOCATION_ENTITY').subscribe((locationEntities) => {
-        this.siLocationEntities = locationEntities;
-        this.getlocationEntityMappings();
+        this.siLocationEntity = locationEntities;
       });
-      
     }
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.setupLocationEntity();
+    this.getlocationEntityMappings(); 
   }
-
 }

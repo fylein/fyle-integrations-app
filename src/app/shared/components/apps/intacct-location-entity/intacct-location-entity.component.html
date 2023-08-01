@@ -3,24 +3,22 @@
 </div>
 
 <div class="configuration--contents tw-border-separator tw-mt-6">
-  <div>
-    <app-configuration-step-header 
+  <div class="configuration--step-header configuration--step-header-styles">
+    <app-configuration-step-header
       [headerText]="'Connect to Sage Intacct'"
       [contentText]="'Expenses will be posted to the Sage Intacct Location entity selected here.'"
       [redirectLink]="redirectLink">
     </app-configuration-step-header>
   </div>
-
-  <div class="p-grid p-dir-row p-ai-center">
-    <!-- Fyle Organization Section -->
+  <div class="p-grid configuration--grid-styles p-dir-row p-ai-center">
     <div class="p-col">
-      <div class="connector--connection-blocks">
+      <div class="connector--connection-blocks overflow-hidden bg-white flex flex-col gap-2 w-full h-[240px] items-center p-16">
         <div class="connector--fyle-org-section">
           <h5 class="connector--fyle-section-text align-center sub-text-color bold">
             FYLE
           </h5>
-          <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 32 === false" tooltipPosition="left" tooltipStyleClass="left" class="align-center default-cursor single-line-text bold">
-            {{ fyleOrgName | trimCharacter: 32 }}
+          <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="align-center default-cursor single-line-text bold">
+            {{ fyleOrgName | trimCharacter: 26 }}
           </h3>
         </div>
         <div class="connector--switch-org-section">
@@ -29,46 +27,46 @@
             <h5 class="connector--switch-org-info-text sub-text-color single-line-text">
               Not the organization that you wish to connect?
             </h5>
-            <h5 (click)="switchFyleOrg()" class="connector--switch-org-text actionable-text align-center">
-              Switch Organization
-            </h5>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Connection Block with GIF and Vertical Line -->
     <div class="p-col tw-flex tw-justify-center tw-items-center">
       <div class="connector--connection-blocks tw-relative">
-        <div class="connector--connection-block-separator tw-absolute"></div>
+        <div class="connector--connection-block-separator-1 tw-absolute"></div>
         <div>
-          <img src="assets/gifs/disconnect.gif" height="100px" width="100px" />
+          <img src="assets/gifs/disconnect.gif" height="100px" width="100px" alt="Disconnect GIF" />
         </div>
-        <div class="connector--connection-block-separator tw-absolute"></div>
+        <div class="connector--connection-block-separator-2 tw-absolute"></div>
       </div>
     </div>
-
-
-<div>
-  <div>
-    <div class="connector--fyle-section-text align-center sub-text-color bold">
-      Please Select SageIntacct Location Entity.
+    <div>
+      <form class="configuration--form configuration--form-styles" [formGroup]="locationEntityForm">
+        <div class="align-center default-cursor single-line-text bold">
+          <div class="intacct-location-section">
+            <h5 class="connector--fyle-section-text align-center sub-text-color bold">
+            SAGE INTACCT
+          </h5>
+          </div>
+        </div>
+          <div class="select-location-entity">
+          <app-configuration-select-field *ngIf="!locationEntityMappingDone"
+          [form]="locationEntityForm"
+          [options]="siLocationEntity"
+          [placeholder]="'Select Location Entity'"
+          [formControllerName]="'siLocationEntities'"></app-configuration-select-field>
+        </div>
+          <h3 *ngIf="locationEntityMappingDone" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity">
+            {{ this.locationEntityMappings.location_entity_name | trimCharacter: 26 }}
+          </h3>          
+      </form>
+      <div class="connector--org-switch-separator"></div>
+      <div class="connector--fyle-section-text align-center sub-text-color bold intacct-location-prompt">
+        Please select a Location (Entity) from Sage Intacct to proceed further.
+      </div>
     </div>
   </div>
-</div>
-<div>
-<form class="general-mappings--form" [formGroup]="locationEntityForm">
-  <div  class="align-center default-cursor single-line-text bold">
-    <div class="font-bold">
-      Sage Intacct Location Entity
-    </div>
-    <p-dropdown class="general-mappings--input" placeholder="Select a Sage Intacct Entity"
-      [options]="siLocationEntities" formControlName="siLocationEntities"></p-dropdown>
-  </div>
-</form>
-</div>
-</div>
-  <div>
-    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="submit()"></app-configuration-step-footer>
+  <div *ngIf="!locationEntityMappingDone">
+    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="submit()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
   </div>
 </div>

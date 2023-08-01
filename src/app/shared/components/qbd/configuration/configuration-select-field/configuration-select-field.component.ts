@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { MappingDestination } from 'src/app/core/models/si/db/destination-attribute.model';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -9,7 +10,7 @@ import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configur
 })
 export class ConfigurationSelectFieldComponent implements OnInit {
 
-  @Input() options: QBDExportSettingFormOption[] | string[];
+  @Input() options: QBDExportSettingFormOption[] | string[] | MappingDestination[];
 
   @Input() form: FormGroup;
 
