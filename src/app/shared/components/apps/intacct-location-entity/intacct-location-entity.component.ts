@@ -82,12 +82,12 @@ export class IntacctLocationEntityComponent implements OnInit {
           if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
             this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2);
           }
-    
+
           if (this.isOnboarding) {
             this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
             this.router.navigate([`/integrations/intacct/onboarding/export_settings`]);
           }
-        
+
           this.isLoading = false;
       });
     }
@@ -106,7 +106,7 @@ export class IntacctLocationEntityComponent implements OnInit {
           siLocationEntities: ['', Validators.required]
         });
         this.locationEntityForm.controls.siLocationEntities.valueChanges.subscribe((abcd) => {
-        })
+        });
         this.isLoading = false;
       });
     }
@@ -121,6 +121,6 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   ngOnInit() {
     this.setupLocationEntity();
-    this.getlocationEntityMappings(); 
+    this.getlocationEntityMappings();
   }
 }

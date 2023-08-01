@@ -25,7 +25,7 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
   isLocationEntity() {
     this.workspaceId = this.storageService.get('si.workspaceId');
     this.settingsService.getSageIntacctCredentials(this.workspaceId).subscribe((res) => {
-      if(res) {
+      if (res) {
         this.selectLocationEntity = true;
       }
       this.isLoading = false;

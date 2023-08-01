@@ -70,7 +70,7 @@ export class SiComponent implements OnInit {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces.length) {
         this.setupWorkspace(workspaces[0]);
-        
+
       } else {
         this.workspaceService.postWorkspace().subscribe((workspaces: IntacctWorkspace) => {
           this.setupWorkspace(workspaces);
