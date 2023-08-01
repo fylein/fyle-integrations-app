@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigurationCta, IntacctOnboardingState, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, IntacctOnboardingState, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.mode';
 import { AuthService } from 'src/app/core/services/core/auth.service';
@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 
 @Component({
   selector: 'app-intacct-location-entity',
@@ -55,6 +56,7 @@ export class IntacctLocationEntityComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private workspaceService: SiWorkspaceService,
+    private toastService: IntegrationsToastService,
     private trackingService: TrackingService) { }
 
     submit() {
@@ -87,7 +89,7 @@ export class IntacctLocationEntityComponent implements OnInit {
             this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
             this.router.navigate([`/integrations/intacct/onboarding/export_settings`]);
           }
-
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Loction Entity Selected Successfully.');
           this.isLoading = false;
       });
     }

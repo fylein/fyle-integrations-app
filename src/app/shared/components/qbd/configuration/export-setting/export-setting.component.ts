@@ -5,7 +5,7 @@ import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroup
 import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
@@ -103,7 +103,7 @@ export class ExportSettingComponent implements OnInit {
     private exportSettingService: QbdExportSettingService,
     private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
-    private toastService: QbdToastService,
+    private toastService: IntegrationsToastService,
     private trackingService: TrackingService
   ) { }
 

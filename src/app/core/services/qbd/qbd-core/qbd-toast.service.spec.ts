@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { MessageService } from 'primeng/api';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { QbdToastService } from './qbd-toast.service';
+import { IntegrationsToastService } from './qbd-toast.service';
 
-describe('QbdToastService', () => {
-  let service: QbdToastService;
+describe('IntegrationsToastService', () => {
+  let service: IntegrationsToastService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [ MessageService ]
     });
-    service = TestBed.inject(QbdToastService);
+    service = TestBed.inject(IntegrationsToastService);
   });
 
   it('should be created', () => {

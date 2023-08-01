@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigurationCta, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { StorageService } from 'src/app/core/services/core/storage.service';
+import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiSettingsService } from 'src/app/core/services/si/si-settings.service';
 import { OnboardingIntacctConnectorComponent } from 'src/app/integrations/si/onboarding/onboarding-intacct-connector/onboarding-intacct-connector.component';
@@ -39,7 +40,8 @@ export class IntacctConnectorComponent implements OnInit {
     private si: SiComponent,
     private intacctConnector: OnboardingIntacctConnectorComponent,
     private settingsService: SiSettingsService,
-    private mappingsService: SiMappingsService
+    private mappingsService: SiMappingsService,
+    private toastService: IntegrationsToastService,
   ) { }
 
     save() {
@@ -59,9 +61,11 @@ export class IntacctConnectorComponent implements OnInit {
           that.si.getSageIntacctCompanyName();
           that.isLoading = false;
         });
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successfull.');
       }, () => {
         that.isLoading = false;
         that.wrongCredentials = true;
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
       });
     }
 

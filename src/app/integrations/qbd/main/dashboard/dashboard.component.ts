@@ -7,7 +7,7 @@ import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit {
     private iifLogsService: QbdIifLogsService,
     private formBuilder: FormBuilder,
     private advancedSettingService: QbdAdvancedSettingService,
-    private toastService: QbdToastService,
+    private toastService: IntegrationsToastService,
     private trackingService: TrackingService
   ) { }
 

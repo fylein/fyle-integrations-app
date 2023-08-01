@@ -6,7 +6,7 @@ import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configur
 import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
@@ -48,7 +48,7 @@ export class FieldMappingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private fieldMappingService: QbdFieldMappingService,
     private workspaceService: QbdWorkspaceService,
-    private toastService: QbdToastService,
+    private toastService: IntegrationsToastService,
     private trackingService: TrackingService
   ) { }
 

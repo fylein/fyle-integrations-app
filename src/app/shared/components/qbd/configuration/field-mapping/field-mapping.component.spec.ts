@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FieldMappingComponent } from './field-mapping.component';
@@ -47,7 +47,7 @@ describe('FieldMappingComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: QbdFieldMappingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
-        { provide: QbdToastService, useValue: service3 }
+        { provide: IntegrationsToastService, useValue: service3 }
       ]
     })
     .compileComponents();
