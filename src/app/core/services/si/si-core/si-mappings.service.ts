@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
-import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.mode';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.mode';
 import { ApiService } from '../../core/api.service';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
@@ -37,7 +37,7 @@ export class SiMappingsService {
     );
   }
 
-  getSageIntacctDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<MappingDestination[]> {
+  getSageIntacctDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: {attribute_types: string | string[], account_type?: string, active?: boolean} = {
       attribute_types: attributeTypes

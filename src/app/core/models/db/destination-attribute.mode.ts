@@ -1,6 +1,6 @@
-import { DestinationAttributeDetail } from "./destination-attribute.model";
+import { IntacctDestinationAttributeDetail } from "../si/db/destination-attribute.model";
 
-export type MappingDestination = {
+export type DestinationAttribute = {
   id: number;
   attribute_type: string;
   display_name: string;
@@ -10,5 +10,5 @@ export type MappingDestination = {
   created_at: Date;
   updated_at: Date;
   workspace: number;
-  detail: DestinationAttributeDetail;
+  detail: IntacctDestinationAttributeDetail;
 };

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationCta, IntacctOnboardingState, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
-import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.mode';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.mode';
 import { AuthService } from 'src/app/core/services/core/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -23,7 +23,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntityForm: FormGroup;
 
-  siLocationEntity: MappingDestination[];
+  siLocationEntity: DestinationAttribute[];
 
   locationEntityMappings: LocationEntityMapping;
 
