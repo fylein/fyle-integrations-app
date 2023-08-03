@@ -78,7 +78,6 @@ describe('AuthService', () => {
   });
 
   it('should not return access token if user info is not found', () => {
-    spyOn(userService, 'getUserProfile').and.returnValue(null);
 
     const accessToken = service.getAccessToken();
     expect(accessToken).toEqual(null);
@@ -105,7 +104,7 @@ describe('AuthService', () => {
   });
 
   it('should not return refresh token if user detail is not found', () => {
-    spyOn(userService, 'getUserProfile').and.returnValue(null);
+
 
     const accessToken = service.getRefreshToken();
     expect(accessToken).toEqual(null);

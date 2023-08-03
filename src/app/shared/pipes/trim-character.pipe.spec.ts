@@ -4,6 +4,6 @@ describe('TrimCharacterPipe', () => {
   it('create an instance', () => {
     const pipe = new TrimCharacterPipe();
     expect(pipe).toBeTruthy();
-    expect(pipe.transform('lll')).toBeNull();
+    expect(pipe.transform('lll', 0)).toBeNull();
   });
 });
