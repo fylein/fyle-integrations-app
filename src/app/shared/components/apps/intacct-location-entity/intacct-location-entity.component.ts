@@ -22,14 +22,23 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntityForm: FormGroup;
+
   locationEntityOptions: DestinationAttribute[];
+
   locationEntity: LocationEntityMapping;
+
   isLoading: boolean;
+
   isOnboarding: boolean = true;
+
   saveInProgress: boolean = false;
+
   workspaceId: number;
+
   ConfigurationCtaText = ConfigurationCta;
+
   redirectLink: string = RedirectLink.INTACCT;
+
   fyleOrgName: string = this.userService.getUserProfile().org_name;
 
   constructor(
@@ -74,14 +83,14 @@ export class IntacctLocationEntityComponent implements OnInit {
         country_name: locationEntity[0].detail.country,
         workspace: this.workspaceId
       };
-    } else {
+    }
       return {
         location_entity_name: 'Top Level',
         destination_id: 'top_level',
         country_name: null,
         workspace: this.workspaceId
       };
-    }
+
   }
 
   private handleSuccess(locationEntityMappingPayload: ConnectionPOST): void {

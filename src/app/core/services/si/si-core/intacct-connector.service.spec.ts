@@ -14,4 +14,3 @@ describe('IntacctConnectorService', () => {
     expect(service).toBeTruthy();
   });
 });
-  
