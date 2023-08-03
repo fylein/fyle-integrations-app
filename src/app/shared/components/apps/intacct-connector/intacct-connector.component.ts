@@ -54,6 +54,7 @@ export class IntacctConnectorComponent implements OnInit {
         si_company_id: companyID,
         si_user_password: userPassword
       }).subscribe((response) => {
+        this.isIntacctConnected.emit(true);
         this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
           this.isLoading = false;
@@ -68,11 +69,6 @@ export class IntacctConnectorComponent implements OnInit {
     setupPage() {
       this.isLoading = true;
       this.connectorService.getSageIntacctCredential().subscribe((intacctCredential) => {
-        this.connectSageIntacctForm = this.formBuilder.group({
-          userID: [''],
-          companyID: [''],
-          userPassword: ['']
-        });
         this.isIntacctConnected.emit(true);
         this.isLoading = false;
       }, () => {

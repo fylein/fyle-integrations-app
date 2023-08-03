@@ -27,7 +27,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntity: LocationEntityMapping;
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   isOnboarding: boolean = true;
 
