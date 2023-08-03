@@ -35,7 +35,7 @@ describe('IntacctConnectorComponent', () => {
         // Provide the real SiComponent or a mock/stub if needed
         SiComponent, // You can provide a real instance if necessary
         // Or provide a mock/stub if the real SiComponent is not needed for your tests
-        OnboardingIntacctConnectorComponent,
+        OnboardingIntacctConnectorComponent
       ]
     }).compileComponents();
 
@@ -50,7 +50,7 @@ describe('IntacctConnectorComponent', () => {
 
   it('should call setupPage on component initialization', fakeAsync(() => {
     mockConnectorService.getSageIntacctCredential.and.returnValue(throwError({}));
-    
+
     fixture.detectChanges();
     tick();
 
