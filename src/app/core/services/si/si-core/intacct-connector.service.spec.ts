@@ -14,13 +14,13 @@ describe('IntacctConnectorService', () => {
   beforeEach(() => {
     mockApiService = {
       get: () => of({}),
-      post: () => of({}),
+      post: () => of({})
     };
     mockWorkspaceService = {
-      getWorkspaceId: () => '1',
+      getWorkspaceId: () => '1'
     };
     mockStorageService = {
-      get: () => 1,
+      get: () => 1
     };
 
     TestBed.configureTestingModule({
@@ -28,8 +28,8 @@ describe('IntacctConnectorService', () => {
         IntacctConnectorService,
         { provide: SiApiService, useValue: mockApiService },
         { provide: SiWorkspaceService, useValue: mockWorkspaceService },
-        { provide: StorageService, useValue: mockStorageService },
-      ],
+        { provide: StorageService, useValue: mockStorageService }
+      ]
     });
 
     service = TestBed.inject(IntacctConnectorService);
@@ -48,7 +48,7 @@ describe('IntacctConnectorService', () => {
       si_user_password: 'password123',
       created_at: new Date(),
       updated_at: new Date(),
-      workspace: 1,
+      workspace: 1
     };
     mockApiService.get = () => of(credentialData);
 

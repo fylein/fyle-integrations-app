@@ -21,7 +21,7 @@ describe('SiMappingsService', () => {
         { provide: SiWorkspaceService, useValue: workspaceSpy }
       ]
     });
-    
+
     service = TestBed.inject(SiMappingsService);
     mockApiService = TestBed.inject(SiApiService) as jasmine.SpyObj<SiApiService>;
     mockWorkspaceService = TestBed.inject(SiWorkspaceService) as jasmine.SpyObj<SiWorkspaceService>;
