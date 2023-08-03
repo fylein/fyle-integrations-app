@@ -10,7 +10,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { OnboardingIntacctConnectorComponent } from './onboarding-intacct-connector/onboarding-intacct-connector.component';
 
 
-
 const routes: Routes = [
   {
     path: '',

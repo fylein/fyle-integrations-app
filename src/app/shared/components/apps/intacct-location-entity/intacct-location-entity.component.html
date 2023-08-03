@@ -1,0 +1,72 @@
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+  <app-loader></app-loader>
+</div>
+
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+  <div class="configuration--step-header configuration--step-header-styles">
+    <app-configuration-step-header
+      [headerText]="'Connect to Sage Intacct'"
+      [contentText]="'Expenses will be posted to the Sage Intacct Location entity selected here.'"
+      [redirectLink]="redirectLink">
+    </app-configuration-step-header>
+  </div>
+  <div class="p-grid configuration--grid-styles p-dir-row p-ai-center">
+    <div class="p-col">
+      <div class="connector--connection-blocks overflow-hidden bg-white flex flex-col gap-2 w-full h-[240px] items-center p-16">
+        <div class="connector--fyle-org-section">
+          <h5 class="connector--fyle-section-text align-center sub-text-color bold">
+            FYLE
+          </h5>
+          <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="align-center default-cursor single-line-text bold">
+            {{ fyleOrgName | trimCharacter: 26 }}
+          </h3>
+        </div>
+        <div class="connector--switch-org-section">
+          <div class="connector--org-switch-separator"></div>
+          <div class="connector--switch-org-inner-section">
+            <h5 class="connector--switch-org-info-text sub-text-color single-line-text">
+              Not the organization that you wish to connect?
+            </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-col tw-flex tw-justify-center tw-items-center">
+      <div class="connector--connection-blocks tw-relative">
+        <div class="connector--connection-block-separator-1 tw-absolute"></div>
+        <div>
+          <img src="assets/gifs/disconnect.gif" height="100px" width="100px" alt="Disconnect GIF" />
+        </div>
+        <div class="connector--connection-block-separator-2 tw-absolute"></div>
+      </div>
+    </div>
+    <div>
+      <form class="configuration--form configuration--form-styles" [formGroup]="locationEntityForm">
+        <div class="align-center default-cursor single-line-text bold">
+          <div class="intacct-location-section">
+            <h5 class="connector--fyle-section-text align-center sub-text-color bold">
+            SAGE INTACCT
+          </h5>
+          </div>
+        </div>
+          <div class="select-location-entity">
+          <app-configuration-select-field *ngIf="!locationEntity"
+          [form]="locationEntityForm"
+          [options]="locationEntityOptions"
+          [placeholder]="'Select Location Entity'"
+          [formControllerName]="'locationEntity'"></app-configuration-select-field>
+        </div>
+          <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity">
+            {{ locationEntity.location_entity_name | trimCharacter: 26 }}
+          </h3>          
+      </form>
+      <div class="connector--org-switch-separator"></div>
+      <div class="connector--fyle-section-text align-center sub-text-color bold intacct-location-prompt">
+        Please select a Location (Entity) from Sage Intacct to proceed further.
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!locationEntity">
+    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
+  </div>
+</div>

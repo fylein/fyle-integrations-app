@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ClickEvent, Page, QBDOnboardingState, UpdateEvent } from '../../models/enum/enum.model';
+import { ClickEvent, IntacctOnboardingState, Page, QBDOnboardingState, UpdateEvent } from '../../models/enum/enum.model';
 import { UpdateEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
 import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/field-mapping.model';
+import { ConnectionPOST } from '../../models/si/si-configuration/connector.model';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +80,10 @@ export class TrackingService {
   }
 
   onOnboardingStepCompletion(eventName: QBDOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void): void {
+    this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
+  }
+
+  integrationsOnboardingCompletion(eventName: IntacctOnboardingState, stepNumber: number, additionalProperties: ConnectionPOST | void): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 

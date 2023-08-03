@@ -5,7 +5,7 @@ import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-
 import { ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -50,7 +50,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
-    private toastService: QbdToastService
+    private toastService: IntegrationsToastService
   ) { }
 
   clearSearch(options: DropdownFilterOptions): void {

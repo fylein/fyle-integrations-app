@@ -1,0 +1,44 @@
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+   <app-loader></app-loader>
+</div>
+<div  class="configuration--contents tw-border-separator tw-mt-6">
+   <div>
+      <app-configuration-step-header 
+      [headerText]="'Connect to Sage Intacct'"
+      [contentText]="'Connect to your Sage Intacct account to establish a connection between Fyle and Sage Intacct.'"
+      [redirectLink]="redirectLink"></app-configuration-step-header>
+   </div>
+   <div *ngIf="!isLoading">
+      <form [formGroup]="connectSageIntacctForm">
+         <div class="tw-p-24-px">
+           <div class="container">
+             <div class="tw-mb-4 half-width">
+               <label for="userId" class="label required">User ID</label>
+               <input type="text" id="userId" name="userId" formControlName="userID" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full" [ngClass]="[connectSageIntacctForm.controls.userID.invalid && connectSageIntacctForm.controls.userID.touched ? 'error-box' : 'normal-box']">
+               <div *ngIf="wrongCredentials" class="incorrect-credential">
+                  Invalid User ID. Please enter valid User ID.
+               </div>
+             </div>
+             <div class="tw-mb-4 half-width">
+               <label for="companyId" class="label required">Company ID</label>
+               <input type="text" id="companyId" name="companyId" formControlName="companyID" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full" [ngClass]="[connectSageIntacctForm.controls.companyID.invalid && connectSageIntacctForm.controls.companyID.touched ? 'error-box' : 'normal-box']">
+               <div *ngIf="wrongCredentials" class="incorrect-credential">
+                 Invalid Company ID. Please enter valid Company ID.
+               </div>
+             </div>
+             <div class="tw-mb-4 half-width">
+               <label for="userPassword" class="label required">User Password</label>
+               <input type="password" formControlName="userPassword" class="tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-full" [ngClass]="[connectSageIntacctForm.controls.userPassword.invalid && connectSageIntacctForm.controls.userPassword.touched ? 'error-box' : 'normal-box']">
+               <div *ngIf="wrongCredentials" class="incorrect-credential">
+                  Incorrect Password. Please enter correct Password.
+                </div>
+             </div>
+           </div>
+         </div>
+       </form>
+       
+      <div>
+         <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
+      </div>
+   </div>
+</div>

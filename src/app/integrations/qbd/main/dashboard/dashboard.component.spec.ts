@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { DashboardComponent } from './dashboard.component';
 import { errorResponse, getQbdAccountingExports, getQbdAccountingExports2, postQbdAccountingExports, postQbdTriggerExportResponse, postQbdTriggerExportResponse2, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDAdvancedSettingResponse3 } from './dashboard.fixture';
@@ -41,7 +41,7 @@ describe('DashboardComponent', () => {
       providers: [ FormBuilder,
         { provide: QbdIifLogsService, useValue: service1 },
         { provide: QbdAdvancedSettingService, useValue: service2 },
-        { provide: QbdToastService, useValue: service3 }
+        { provide: IntegrationsToastService, useValue: service3 }
       ]
     })
     .compileComponents();

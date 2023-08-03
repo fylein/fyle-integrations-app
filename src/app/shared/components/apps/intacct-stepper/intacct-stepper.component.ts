@@ -10,6 +10,7 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
   styleUrls: ['./intacct-stepper.component.scss']
 })
 export class IntacctStepperComponent implements OnInit {
+
   constructor(
     private router: Router,
     private workspaceService: SiWorkspaceService

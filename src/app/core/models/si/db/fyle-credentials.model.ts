@@ -1,4 +1,4 @@
-export type FyleCredentials = {
+export type FyleCredential = {
     id: number;
     refresh_token: string;
     created_at: Date;

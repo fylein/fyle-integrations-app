@@ -17,7 +17,7 @@ export class SiWorkspaceService {
   ) { }
 
   @Cacheable()
-  getWorkspace(orgId: string): Observable<IntacctWorkspace> {
+  getWorkspace(orgId: string): Observable<IntacctWorkspace[]> {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
 

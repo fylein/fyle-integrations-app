@@ -5,7 +5,7 @@ import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 @Injectable({
   providedIn: 'root'
 })
-export class QbdToastService {
+export class IntegrationsToastService {
 
   constructor(
     private messageService: MessageService
