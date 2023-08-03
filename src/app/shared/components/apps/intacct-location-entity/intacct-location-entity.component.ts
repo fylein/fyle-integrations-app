@@ -3,16 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationCta, IntacctOnboardingState, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.mode';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AuthService } from 'src/app/core/services/core/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { ConnectionPOST } from 'src/app/core/models/si/si-configuration/connector.model';
+import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
   selector: 'app-intacct-location-entity',
@@ -22,34 +22,20 @@ import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd
 export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntityForm: FormGroup;
-
-  siLocationEntity: DestinationAttribute[];
-
-  locationEntityMappings: LocationEntityMapping;
-
-  locationEntityMappingDone = false;
-
+  locationEntityOptions: DestinationAttribute[];
+  locationEntity: LocationEntityMapping;
   isLoading: boolean;
-
-  isSaveDisabled: boolean;
-
-  locationEntity: boolean = false;
-
-  workspaceId: number;
-
-  ConfigurationCtaText = ConfigurationCta;
-
   isOnboarding: boolean = true;
-
   saveInProgress: boolean = false;
-
+  workspaceId: number;
+  ConfigurationCtaText = ConfigurationCta;
   redirectLink: string = RedirectLink.INTACCT;
-
   fyleOrgName: string = this.userService.getUserProfile().org_name;
 
   constructor(
     private formBuilder: FormBuilder,
     private mappingsService: SiMappingsService,
+    private connectorService: IntacctConnectorService,
     private authService: AuthService,
     private userService: UserService,
     private storageService: StorageService,
@@ -57,72 +43,89 @@ export class IntacctLocationEntityComponent implements OnInit {
     private router: Router,
     private workspaceService: SiWorkspaceService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService) { }
+    private trackingService: TrackingService
+  ) { }
 
-    submit() {
-      const locationEntityId = this.locationEntityForm.value.siLocationEntities;
-      let locationEntityMappingPayload;
-      this.isLoading = true;
-      if (this.locationEntityForm.value.siLocationEntities.destination_id !== 'top_level') {
-        const siEntityMapping = this.siLocationEntity.filter(filteredLocationEntity => filteredLocationEntity.destination_id === locationEntityId.destination_id)[0];
-        locationEntityMappingPayload = {
-          location_entity_name: siEntityMapping.value,
-          destination_id: siEntityMapping.destination_id,
-          country_name: siEntityMapping.detail.country,
-          workspace: this.workspaceId
-        };
-      } else {
-        locationEntityMappingPayload = {
-          location_entity_name: 'Top Level',
-          destination_id: 'top_level',
-          country_name: null,
-          workspace: this.workspaceId
-        };
+  save() {
+    this.isLoading = true;
+    this.saveInProgress = true;
+
+    const locationEntityId = this.locationEntityForm.value.locationEntity;
+    const locationEntityMappingPayload: ConnectionPOST = this.getLocationEntityMappingPayload(locationEntityId);
+
+    this.connectorService.postLocationEntityMapping(locationEntityMappingPayload).subscribe(
+      () => {
+        this.handleSuccess(locationEntityMappingPayload);
+        this.saveInProgress = false;
+      },
+      () => {
+        this.isLoading = false;
+        this.saveInProgress = false;
       }
+    );
+  }
 
-        this.mappingsService.postLocationEntityMapping(locationEntityMappingPayload).subscribe(() => {
-          if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
-            this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2);
-          }
+  private getLocationEntityMappingPayload(locationEntityId: any): ConnectionPOST {
+    if (locationEntityId.destination_id !== 'top_level') {
+      const locationEntity = this.locationEntityOptions.filter(entity => entity.destination_id === locationEntityId.destination_id);
+      return {
+        location_entity_name: locationEntity[0].value,
+        destination_id: locationEntity[0].destination_id,
+        country_name: locationEntity[0].detail.country,
+        workspace: this.workspaceId
+      };
+    } else {
+      return {
+        location_entity_name: 'Top Level',
+        destination_id: 'top_level',
+        country_name: null,
+        workspace: this.workspaceId
+      };
+    }
+  }
 
-          if (this.isOnboarding) {
-            this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
-            this.router.navigate([`/integrations/intacct/onboarding/export_settings`]);
-          }
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Loction Entity Selected Successfully.');
-          this.isLoading = false;
-      });
+  private handleSuccess(locationEntityMappingPayload: ConnectionPOST): void {
+    if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
+      this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
     }
 
-    getlocationEntityMappings() {
-      this.mappingsService.getLocationEntityMapping().subscribe(locationEntityMappings => {
-        this.locationEntityMappings = locationEntityMappings;
-        this.locationEntityMappingDone = true;
-        this.locationEntityForm = this.formBuilder.group({
-          siLocationEntities: [this.locationEntityMappings ? this.locationEntityMappings : '']
-        });
-        this.locationEntityForm.controls.siLocationEntities.disable();
-        this.isLoading = false;
-      }, () => {
-        this.locationEntityForm = this.formBuilder.group({
-          siLocationEntities: ['', Validators.required]
-        });
-        this.locationEntityForm.controls.siLocationEntities.valueChanges.subscribe((abcd) => {
-        });
-        this.isLoading = false;
-      });
+    if (this.isOnboarding) {
+      this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
+      this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
     }
 
-    setupLocationEntity() {
-      this.workspaceId = this.storageService.get('si.workspaceId');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location Entity Selected Successfully.');
+
+    this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
       this.isLoading = false;
-      this.mappingsService.getSageIntacctDestinationAttributes('LOCATION_ENTITY').subscribe((locationEntities) => {
-        this.siLocationEntity = locationEntities;
+    });
+  }
+
+  private setupLocationEntity() {
+    this.workspaceId = this.storageService.get('si.workspaceId');
+    this.mappingsService.getSageIntacctDestinationAttributes(IntacctOnboardingState.LOCATION_ENTITY).subscribe((locationEntities) => {
+      this.locationEntityOptions = locationEntities;
+      this.getlocationEntityMappings();
+    });
+  }
+
+  private getlocationEntityMappings() {
+    this.connectorService.getLocationEntityMapping().subscribe(locationEntityMappings => {
+      this.locationEntity = locationEntityMappings;
+      this.locationEntityForm = this.formBuilder.group({
+        locationEntity: [this.locationEntity ? this.locationEntity : '']
       });
-    }
+      this.locationEntityForm.controls.locationEntity.disable();
+      this.isLoading = false;
+    }, () => {
+      this.locationEntityForm = this.formBuilder.group({
+        locationEntity: ['', Validators.required]
+      });
+      this.isLoading = false;
+    });
+  }
 
   ngOnInit() {
     this.setupLocationEntity();
-    this.getlocationEntityMappings();
   }
 }

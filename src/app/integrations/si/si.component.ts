@@ -6,8 +6,8 @@ import { IntacctWorkspace } from 'src/app/core/models/si/db/workspaces.model';
 import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { SiSettingsService } from 'src/app/core/services/si/si-settings.service';
 
 @Component({
   selector: 'app-si',
@@ -24,14 +24,14 @@ export class SiComponent implements OnInit {
 
   windowReference: Window;
 
-  connectSageIntacct: boolean = true;
+  isIntacctConnected: boolean = true;
 
   constructor(
     private storageService: StorageService,
     private router: Router,
     private userService: IntegrationsUserService,
     private workspaceService: SiWorkspaceService,
-    private settingsService : SiSettingsService,
+    private connectorService : IntacctConnectorService,
     private windowService: WindowService
   ) {
     this.windowReference = this.windowService.nativeWindow;
@@ -53,8 +53,8 @@ export class SiComponent implements OnInit {
   }
 
   getSageIntacctCompanyName() {
-    this.settingsService.getSageIntacctCredentials(this.workspace.id).subscribe(res => {
-      this.connectSageIntacct = false;
+    this.connectorService.getSageIntacctCredential().subscribe(res => {
+      this.isIntacctConnected = false;
     });
   }
 
@@ -70,7 +70,6 @@ export class SiComponent implements OnInit {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces.length) {
         this.setupWorkspace(workspaces[0]);
-
       } else {
         this.workspaceService.postWorkspace().subscribe((workspaces: IntacctWorkspace) => {
           this.setupWorkspace(workspaces);

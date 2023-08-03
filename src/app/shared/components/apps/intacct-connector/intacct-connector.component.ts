@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfigurationCta, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { StorageService } from 'src/app/core/services/core/storage.service';
-import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { SiSettingsService } from 'src/app/core/services/si/si-settings.service';
 import { OnboardingIntacctConnectorComponent } from 'src/app/integrations/si/onboarding/onboarding-intacct-connector/onboarding-intacct-connector.component';
 import { SiComponent } from 'src/app/integrations/si/si.component';
 
@@ -20,11 +20,9 @@ export class IntacctConnectorComponent implements OnInit {
 
   connectSageIntacctForm: FormGroup;
 
-  workspaceId: number;
-
   ConfigurationCtaText = ConfigurationCta;
 
-  isOnboarding: boolean = true;
+  isOnboarding: boolean = false;
 
   saveInProgress: boolean = false;
 
@@ -32,65 +30,62 @@ export class IntacctConnectorComponent implements OnInit {
 
   wrongCredentials: boolean = false;
 
+  windowReference: Window;
+
+  @Output() isIntacctConnected = new EventEmitter<boolean>();
+
   constructor(
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
-    private storageService: StorageService,
     private si: SiComponent,
     private intacctConnector: OnboardingIntacctConnectorComponent,
-    private settingsService: SiSettingsService,
+    private connectorService: IntacctConnectorService,
     private mappingsService: SiMappingsService,
-    private toastService: IntegrationsToastService,
+    private toastService: IntegrationsToastService
   ) { }
 
     save() {
-      const that = this;
       const userID = this.connectSageIntacctForm.value.userID;
       const companyID = this.connectSageIntacctForm.value.companyID;
       const userPassword = this.connectSageIntacctForm.value.userPassword;
 
-      that.isLoading = true;
-      that.settingsService.connectSageIntacct(that.workspaceId, {
+      this.isLoading = true;
+      this.connectorService.connectSageIntacct({
         si_user_id: userID,
         si_company_id: companyID,
         si_user_password: userPassword
       }).subscribe((response) => {
-        that.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
-          this.intacctConnector.isLocationEntity();
-          that.si.getSageIntacctCompanyName();
-          that.isLoading = false;
+        this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
+          this.isLoading = false;
         });
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successfull.');
       }, () => {
-        that.isLoading = false;
-        that.wrongCredentials = true;
+        this.isLoading = false;
+        this.wrongCredentials = true;
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
       });
     }
 
-    connect() {
-      const that = this;
-      that.workspaceId = this.storageService.get('si.workspaceId');
-      that.isLoading = true;
-      that.settingsService.getSageIntacctCredentials(that.workspaceId).subscribe((res) => {
-        that.connectSageIntacctForm = that.formBuilder.group({
-          userID: [res.si_user_id ? res.si_user_id : ''],
-          companyID: [res.si_company_id ? res.si_company_id : ''],
+    setupPage() {
+      this.isLoading = true;
+      this.connectorService.getSageIntacctCredential().subscribe((intacctCredential) => {
+        this.connectSageIntacctForm = this.formBuilder.group({
+          userID: [''],
+          companyID: [''],
           userPassword: ['']
         });
-        that.isLoading = false;
+        this.isIntacctConnected.emit(true);
+        this.isLoading = false;
       }, () => {
-        that.connectSageIntacctForm = that.formBuilder.group({
+        this.connectSageIntacctForm = this.formBuilder.group({
           userID: ['', Validators.required],
           companyID: ['', Validators.required],
           userPassword: ['', Validators.required]
         });
-        that.isLoading = false;
+        this.isLoading = false;
       });
     }
 
   ngOnInit(): void {
-    this.connect();
+    this.setupPage();
   }
 }

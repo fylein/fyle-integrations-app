@@ -7,7 +7,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
-import { IntegrationsToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FieldMappingComponent } from './field-mapping.component';

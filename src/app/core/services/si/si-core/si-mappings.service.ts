@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.mode';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ApiService } from '../../core/api.service';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
@@ -22,19 +22,6 @@ export class SiMappingsService {
     return this.apiService.post(`/workspaces/${workspaceId}/sage_intacct/refresh_dimensions/`, {
       dimensions_to_sync: dimensionsToSync
     });
-  }
-
-  postLocationEntityMapping(locationEntityMappingPayload: LocationEntityMapping): Observable<any> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-
-    return this.apiService.post(`/workspaces/${workspaceId}/mappings/location_entity/`, locationEntityMappingPayload);
-  }
-
-  getLocationEntityMapping(): Observable<LocationEntityMapping> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.get(
-      `/workspaces/${workspaceId}/mappings/location_entity/`, {}
-    );
   }
 
   getSageIntacctDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {

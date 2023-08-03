@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { MessageService } from 'primeng/api';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { IntegrationsToastService } from './qbd-toast.service';
+import { IntegrationsToastService } from './integrations-toast.service';
 
 describe('IntegrationsToastService', () => {
   let service: IntegrationsToastService;

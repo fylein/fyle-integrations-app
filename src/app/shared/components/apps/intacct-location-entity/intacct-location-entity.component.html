@@ -50,14 +50,14 @@
           </div>
         </div>
           <div class="select-location-entity">
-          <app-configuration-select-field *ngIf="!locationEntityMappingDone"
+          <app-configuration-select-field *ngIf="!locationEntity"
           [form]="locationEntityForm"
-          [options]="siLocationEntity"
+          [options]="locationEntityOptions"
           [placeholder]="'Select Location Entity'"
-          [formControllerName]="'siLocationEntities'"></app-configuration-select-field>
+          [formControllerName]="'locationEntity'"></app-configuration-select-field>
         </div>
-          <h3 *ngIf="locationEntityMappingDone" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity">
-            {{ this.locationEntityMappings.location_entity_name | trimCharacter: 26 }}
+          <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity">
+            {{ locationEntity.location_entity_name | trimCharacter: 26 }}
           </h3>          
       </form>
       <div class="connector--org-switch-separator"></div>
@@ -66,7 +66,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="!locationEntityMappingDone">
-    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="submit()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
+  <div *ngIf="!locationEntity">
+    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
   </div>
 </div>

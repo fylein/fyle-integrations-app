@@ -1,4 +1,4 @@
-export type SageIntacctCredentials = {
+export type SageIntacctCredential = {
     id?: number;
     si_user_id: string;
     si_company_id: string;

@@ -1,0 +1,57 @@
+import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { SiApiService } from './si-api.service';
+import { SiWorkspaceService } from './si-workspace.service';
+import { StorageService } from '../../core/storage.service';
+import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
+import { SageIntacctCredential } from 'src/app/core/models/si/db/sage-credentials.model';
+
+
+const sageIntacctCredentialCache = new Subject<void>();
+
+@Injectable({
+  providedIn: 'root'
+})
+export class IntacctConnectorService {
+
+  workspaceId: number;
+
+  constructor(
+    private apiService: SiApiService,
+    private workspaceService: SiWorkspaceService,
+    private workspace: SiWorkspaceService,
+    private storageService: StorageService
+  ) { }
+
+  @Cacheable({
+    cacheBusterObserver: sageIntacctCredentialCache
+  })
+  getSageIntacctCredential(): Observable<SageIntacctCredential> {
+    this.workspaceId = this.storageService.get('si.workspaceId');
+    return this.apiService.get('/workspaces/' + this.workspaceId + '/credentials/sage_intacct/', {});
+  }
+
+  @CacheBuster({
+    cacheBusterNotifier: sageIntacctCredentialCache
+  })
+  connectSageIntacct(data: SageIntacctCredential): Observable<SageIntacctCredential> {
+    this.workspaceId = this.storageService.get('si.workspaceId');
+    globalCacheBusterNotifier.next();
+    return this.apiService.post('/workspaces/' + this.workspaceId + '/credentials/sage_intacct/', data);
+  }
+
+  postLocationEntityMapping(locationEntityMappingPayload: LocationEntityMapping): Observable<LocationEntityMapping> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.apiService.post(`/workspaces/${workspaceId}/mappings/location_entity/`, locationEntityMappingPayload);
+  }
+
+  getLocationEntityMapping(): Observable<LocationEntityMapping> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(
+      `/workspaces/${workspaceId}/mappings/location_entity/`, {}
+    );
+  }
+}
