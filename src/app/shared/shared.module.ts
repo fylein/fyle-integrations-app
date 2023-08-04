@@ -45,6 +45,7 @@ import { AppIntegrationLandingComponent } from './components/apps/app-integratio
 import { IntacctStepperComponent } from './components/apps/intacct-stepper/intacct-stepper.component';
 import { IntacctLocationEntityComponent } from './components/apps/intacct-location-entity/intacct-location-entity.component';
 import { IntacctConnectorComponent } from './components/apps/intacct-connector/intacct-connector.component';
+import { ConfigurationExportSettingsComponent } from './components/apps/configuration-export-settings/configuration-export-settings.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { IntacctConnectorComponent } from './components/apps/intacct-connector/i
     AppIntegrationLandingComponent,
     IntacctStepperComponent,
     IntacctConnectorComponent,
-    IntacctLocationEntityComponent
+    IntacctLocationEntityComponent,
+    ConfigurationExportSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -128,7 +130,8 @@ import { IntacctConnectorComponent } from './components/apps/intacct-connector/i
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
     IntacctConnectorComponent,
-    IntacctLocationEntityComponent
+    IntacctLocationEntityComponent,
+    ConfigurationExportSettingsComponent
   ]
 })
 export class SharedModule { }

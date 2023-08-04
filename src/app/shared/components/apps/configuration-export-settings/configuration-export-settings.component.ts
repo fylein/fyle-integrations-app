@@ -9,15 +9,17 @@ import { ConfigurationCta, RedirectLink } from 'src/app/core/models/enum/enum.mo
 })
 export class ConfigurationExportSettingsComponent implements OnInit {
 
+  isLoading: boolean = true;
+
   exportSettingsForm: FormGroup;
 
   RedirectLink = RedirectLink;
 
-  ConfigurationCtaText = ConfigurationCta;
-
   isOnboarding: boolean = true;
 
   saveInProgress: boolean = false;
+
+  ConfigurationCtaText = ConfigurationCta;
 
   constructor() { }
 
