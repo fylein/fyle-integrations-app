@@ -14,7 +14,7 @@ export class OnboardingIntacctConnectorComponent implements OnInit {
 
   constructor() { }
 
-  isConnected(eventData: boolean) {
+  setupConnectionStatus(eventData: boolean) {
     this.isIntacctConnected = eventData;
   }
 

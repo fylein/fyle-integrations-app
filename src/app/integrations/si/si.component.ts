@@ -24,8 +24,6 @@ export class SiComponent implements OnInit {
 
   windowReference: Window;
 
-  isIntacctConnected: boolean = true;
-
   constructor(
     private storageService: StorageService,
     private router: Router,
@@ -50,12 +48,6 @@ export class SiComponent implements OnInit {
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
-  }
-
-  getSageIntacctCompanyName() {
-    this.connectorService.getSageIntacctCredential().subscribe(res => {
-      this.isIntacctConnected = false;
-    });
   }
 
   setupWorkspace(workspace:IntacctWorkspace) {

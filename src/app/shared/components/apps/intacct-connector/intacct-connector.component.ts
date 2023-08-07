@@ -22,26 +22,29 @@ export class IntacctConnectorComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  isOnboarding: boolean = false;
+  isOnboarding: boolean;
 
   saveInProgress: boolean = false;
 
   redirectLink: string = RedirectLink.INTACCT;
 
-  wrongCredentials: boolean = false;
-
   windowReference: Window;
 
-  @Output() isIntacctConnected = new EventEmitter<boolean>();
+  @Output() setupConnectionStatus = new EventEmitter<boolean>();
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
-    private si: SiComponent,
-    private intacctConnector: OnboardingIntacctConnectorComponent,
     private connectorService: IntacctConnectorService,
     private mappingsService: SiMappingsService,
     private toastService: IntegrationsToastService
   ) { }
+
+  clearField() {
+    this.connectSageIntacctForm.get("userID")?.setValue('');
+    this.connectSageIntacctForm.get("companyID")?.setValue('');
+    this.connectSageIntacctForm.get("userPassword")?.setValue('');
+  }
 
     save() {
       const userID = this.connectSageIntacctForm.value.userID;
@@ -54,22 +57,24 @@ export class IntacctConnectorComponent implements OnInit {
         si_company_id: companyID,
         si_user_password: userPassword
       }).subscribe((response) => {
-        this.isIntacctConnected.emit(true);
+        this.setupConnectionStatus.emit(true);
         this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
           this.isLoading = false;
         });
       }, () => {
+        this.setupConnectionStatus.emit(false);
+        this.clearField();
         this.isLoading = false;
-        this.wrongCredentials = true;
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
       });
     }
 
-    setupPage() {
+    private setupPage(): void {
       this.isLoading = true;
+      this.isOnboarding = this.router.url.includes('onboarding');
       this.connectorService.getSageIntacctCredential().subscribe((intacctCredential) => {
-        this.isIntacctConnected.emit(true);
+        this.setupConnectionStatus.emit(true);
         this.isLoading = false;
       }, () => {
         this.connectSageIntacctForm = this.formBuilder.group({
@@ -77,6 +82,7 @@ export class IntacctConnectorComponent implements OnInit {
           companyID: ['', Validators.required],
           userPassword: ['', Validators.required]
         });
+        this.setupConnectionStatus.emit(false);
         this.isLoading = false;
       });
     }

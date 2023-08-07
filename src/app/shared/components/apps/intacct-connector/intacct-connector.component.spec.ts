@@ -25,16 +25,14 @@ describe('IntacctConnectorComponent', () => {
     mockMessageService = jasmine.createSpyObj('MessageService', ['add']);
 
     TestBed.configureTestingModule({
-      declarations: [IntacctConnectorComponent, SiComponent], // Include SiComponent
-      imports: [ReactiveFormsModule, HttpClientModule], // Add HttpClientModule
+      declarations: [IntacctConnectorComponent, SiComponent],
+      imports: [ReactiveFormsModule, HttpClientModule],
       providers: [
         FormBuilder,
         { provide: IntacctConnectorService, useValue: mockConnectorService },
         { provide: SiMappingsService, useValue: mockMappingsService },
         { provide: MessageService, useValue: mockMessageService },
-        // Provide the real SiComponent or a mock/stub if needed
-        SiComponent, // You can provide a real instance if necessary
-        // Or provide a mock/stub if the real SiComponent is not needed for your tests
+        SiComponent,
         OnboardingIntacctConnectorComponent
       ]
     }).compileComponents();

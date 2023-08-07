@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigurationCta, IntacctOnboardingState, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, IntacctField, IntacctOnboardingState, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AuthService } from 'src/app/core/services/core/auth.service';
@@ -11,7 +11,7 @@ import { StorageService } from 'src/app/core/services/core/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
-import { ConnectionPOST } from 'src/app/core/models/si/si-configuration/connector.model';
+import { LocationEntityPost } from 'src/app/core/models/si/si-configuration/connector.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
@@ -29,7 +29,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  isOnboarding: boolean = true;
+  isOnboarding: boolean;
 
   saveInProgress: boolean = false;
 
@@ -60,7 +60,7 @@ export class IntacctLocationEntityComponent implements OnInit {
     this.saveInProgress = true;
 
     const locationEntityId = this.locationEntityForm.value.locationEntity;
-    const locationEntityMappingPayload: ConnectionPOST = this.getLocationEntityMappingPayload(locationEntityId);
+    const locationEntityMappingPayload: LocationEntityPost = this.getLocationEntityMappingPayload(locationEntityId);
 
     this.connectorService.postLocationEntityMapping(locationEntityMappingPayload).subscribe(
       () => {
@@ -74,7 +74,7 @@ export class IntacctLocationEntityComponent implements OnInit {
     );
   }
 
-  private getLocationEntityMappingPayload(locationEntityId: any): ConnectionPOST {
+  private getLocationEntityMappingPayload(locationEntityId: any): LocationEntityPost {
     if (locationEntityId.destination_id !== 'top_level') {
       const locationEntity = this.locationEntityOptions.filter(entity => entity.destination_id === locationEntityId.destination_id);
       return {
@@ -84,41 +84,39 @@ export class IntacctLocationEntityComponent implements OnInit {
         workspace: this.workspaceId
       };
     }
-      return {
-        location_entity_name: 'Top Level',
-        destination_id: 'top_level',
-        country_name: null,
-        workspace: this.workspaceId
-      };
-
+    return {
+      location_entity_name: 'Top Level',
+      destination_id: 'top_level',
+      country_name: null,
+      workspace: this.workspaceId
+    };
   }
 
-  private handleSuccess(locationEntityMappingPayload: ConnectionPOST): void {
-    if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
-      this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
-    }
-
-    if (this.isOnboarding) {
-      this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
-      this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
-    }
-
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location Entity Selected Successfully.');
-
-    this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
+  private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {
+    this.mappingsService.refreshSageIntacctDimensions().subscribe(() => {
+      if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
+        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
+      }
+  
+      if (this.isOnboarding) {
+        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
+        this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
+      }
       this.isLoading = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location Entity Selected Successfully.');
     });
   }
 
-  private setupLocationEntity() {
+  private setupPage() {
     this.workspaceId = this.storageService.get('si.workspaceId');
-    this.mappingsService.getSageIntacctDestinationAttributes(IntacctOnboardingState.LOCATION_ENTITY).subscribe((locationEntities) => {
+    this.isOnboarding = this.router.url.includes('onboarding');
+    this.mappingsService.getSageIntacctDestinationAttributes(IntacctField.LOCATION_ENTITY).subscribe((locationEntities) => {
       this.locationEntityOptions = locationEntities;
-      this.getlocationEntityMappings();
+      this.setupLocationEntityMapping();
     });
   }
 
-  private getlocationEntityMappings() {
+  private setupLocationEntityMapping() {
     this.connectorService.getLocationEntityMapping().subscribe(locationEntityMappings => {
       this.locationEntity = locationEntityMappings;
       this.locationEntityForm = this.formBuilder.group({
@@ -135,6 +133,6 @@ export class IntacctLocationEntityComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setupLocationEntity();
+    this.setupPage();
   }
 }
