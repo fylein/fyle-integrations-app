@@ -19,6 +19,84 @@
                     [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage Intacct .'" 
                     [formControllerName]="'reimbursableExpense'"></app-configuration-toggle-field>
                 </div>
+                <div *ngIf="exportSettingsForm.value.reimbursableExpense">
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'How should the expenses be exported?'"
+                        [subLabel]="'Choose the type of transaction record that you would like to create in Sage Intacct while exporting expenses from Fyle. Click here for more details.'"
+                        [options]="reimbursableExportTypes"
+                        [iconPath]="'expense'"
+                        [placeholder]="'Select expense export module'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    
+                        <div *ngIf="exportSettingsForm.value.reimbursableExportType">
+                            <div>
+                                <app-configuration-select-field
+                                [form]="exportSettingsForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'export state'"
+                                [label]="'Set the Default Expense Payment Type as?'"
+                                [subLabel]="'The selected Expense Payment Type will be added to the reimbursable expenses exported from Fyle to Sage Intacct.'"
+                                [options]="EntityNameOptions"
+                                [iconPath]="'copy-v2'"
+                                [placeholder]="'Select representation'"
+                                [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'How are your Employees represented in Sage Intacct?'"
+                        [subLabel]="'Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.'"
+                        [options]="EntityNameOptions"
+                        [iconPath]="'copy-v2'"
+                        [placeholder]="'Select representation'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'At which state should the expenses be ready to export from Fyle?'"
+                        [subLabel]="'You can export expenses either when they are awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
+                        [options]="expenseStateOptions"
+                        [iconPath]="'questionmark'"
+                        [placeholder]="'Select export state'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'Set the expense/bill date as? * '"
+                        [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage Intacct. Click here for more details.'"
+                        [options]="reimbursableExpenseGroupingDateOptions"
+                        [iconPath]="'calender'"
+                        [placeholder]="'Select date'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'How should the expenses be grouped? *'"
+                        [subLabel]="'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                        [options]="expenseGroupingFieldOptions"
+                        [iconPath]="'questionmark'"
+                        [placeholder]="'Select expense grouping'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
+                </div>
             </div>
             <div>
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
@@ -27,6 +105,68 @@
                     [label]="'Export Corporate Card Expenses'" 
                     [subLabel]="'Enable the export of <b>credit card</b> expenses from Fyle to Sage Intacct .'" 
                     [formControllerName]="'creditCardExpense'"></app-configuration-toggle-field>
+                </div>
+                <div *ngIf="exportSettingsForm.value.creditCardExpense">
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'How should the expenses be exported?'"
+                        [subLabel]="'Choose the type of transaction record that you would like to create in Sage Intacct while exporting expenses from Fyle. Click here for more details.'"
+                        [options]="reimbursableExportTypes"
+                        [iconPath]="'expense'"
+                        [placeholder]="'Select expense export module'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'How are your Employees represented in Sage Intacct?'"
+                        [subLabel]="'Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.'"
+                        [options]="reimbursableExportTypes"
+                        [iconPath]="'copy-v2'"
+                        [placeholder]="'Select representation'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'At which state should the expenses be ready to export from Fyle?'"
+                        [subLabel]="'You can export expenses either when they are awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
+                        [options]="reimbursableExportTypes"
+                        [iconPath]="'questionmark'"
+                        [placeholder]="'Select export state'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'Set the expense/bill date as? * '"
+                        [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage Intacct. Click here for more details.'"
+                        [options]="reimbursableExportTypes"
+                        [iconPath]="'calender'"
+                        [placeholder]="'Select date'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export state'"
+                        [label]="'How should the expenses be grouped? *'"
+                        [subLabel]="'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                        [options]="reimbursableExportTypes"
+                        [iconPath]="'questionmark'"
+                        [placeholder]="'Select expense grouping'"
+                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                    </div>
                 </div>
             </div>
         </div>

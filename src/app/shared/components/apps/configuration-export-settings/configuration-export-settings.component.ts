@@ -95,7 +95,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     }
   ];
 
-  cccEntityNameOptions: ExportSettingFormOption[] = [
+  EntityNameOptions: ExportSettingFormOption[] = [
     {
       label: 'Employee',
       value: Entity.EMPLOYEE
@@ -218,8 +218,13 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     );
   }
 
+  private watcher(): void {
+    console.log(this.exportSettingsForm.value.reimbursableExpense);
+  }
+
   ngOnInit(): void {
     this.getSettingsAndSetupForm();
+    this.watcher();
   }
 
 }
