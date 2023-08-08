@@ -132,6 +132,12 @@ export enum ExpenseState {
   PAID = 'PAID'
 }
 
+export enum CCCExpenseState {
+  PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
+  PAID = 'PAID',
+  APPROVED = 'APPROVED'
+}
+
 export enum ExpenseGroupedBy {
   EXPENSE = 'EXPENSE',
   REPORT = 'REPORT',

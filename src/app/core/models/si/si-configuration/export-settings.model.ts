@@ -1,4 +1,9 @@
-import { CorporateCreditCardExpensesObject, Entity, ExpenseGroupedBy, ExpenseState, ExportDateType, ReimbursableExpensesObject } from "../../enum/enum.model"
+import { CorporateCreditCardExpensesObject, Entity, ExpenseGroupedBy, ExpenseState, ExportDateType, ReimbursableExpensesObject } from "../../enum/enum.model";
+
+export type ExportSettingFormOption = {
+    label: string,
+    value: ExpenseState | ReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExportDateType | ExpenseGroupedBy | string | Entity;
+}
 
 export type ExportSettingGet = {
     id: number,
