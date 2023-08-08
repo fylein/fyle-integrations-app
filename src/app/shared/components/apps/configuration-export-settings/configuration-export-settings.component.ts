@@ -34,7 +34,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   cccExpenseStateOptions: ExportSettingFormOption[];
 
   is_simplify_report_closure_enabled: boolean = false;
-  
+
   exportSettings: ExportSettingGet;
 
   customMessage: string;
@@ -126,7 +126,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           value: CCCExpenseState.PAID
         }
       ];
-  
+
       this.expenseStateOptions = [
         {
           label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
