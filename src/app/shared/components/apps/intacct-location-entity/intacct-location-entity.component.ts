@@ -97,7 +97,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
         this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
       }
-  
+
       if (this.isOnboarding) {
         this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
         this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
