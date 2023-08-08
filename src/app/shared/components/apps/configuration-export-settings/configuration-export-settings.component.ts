@@ -219,7 +219,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   }
 
   private watcher(): void {
-    console.log(this.exportSettingsForm.value.reimbursableExpense);
   }
 
   ngOnInit(): void {
