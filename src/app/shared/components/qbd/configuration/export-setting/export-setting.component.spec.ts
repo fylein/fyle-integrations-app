@@ -8,7 +8,7 @@ import { of, throwError } from 'rxjs';
 import { QBDCorporateCreditCardExpensesObject, QBDExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -51,7 +51,7 @@ describe('ExportSettingComponent', () => {
         { provide: Router, useValue: routerSpy },
         { provide: QbdExportSettingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
-        { provide: QbdToastService, useValue: service3 }
+        { provide: IntegrationsToastService, useValue: service3 }
       ]
     })
     .compileComponents();

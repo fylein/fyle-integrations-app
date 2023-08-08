@@ -5,8 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TrimCharacterPipe implements PipeTransform {
 
-  transform(value: unknown, ...args: unknown[]): unknown {
-    return null;
+  transform(value: string, trimSize: number): string {
+    if (value.length > trimSize) {
+      return `${value.substring(0, trimSize)}...`;
+    }
+
+    return value;
   }
 
 }

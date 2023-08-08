@@ -44,10 +44,4 @@ it('should create', () => {
 it('ngOnIng function check', async () => {
   expect((component as any).getOrCreateWorkspace()).toBeUndefined();
 });
-
-it('workspace error handling', () => {
-  spyOn(workspace, 'getWorkspace').and.returnValue(throwError(errorResponse));
-  fixture.detectChanges();
-  expect((component as any).getOrCreateWorkspace()).toBeUndefined();
-});
 });

@@ -33,8 +33,8 @@ import { FieldMappingComponent } from './components/qbd/configuration/field-mapp
 import { ConfigurationToggleFieldComponent } from './components/qbd/configuration/configuration-toggle-field/configuration-toggle-field.component';
 import { ConfigurationSelectFieldComponent } from './components/qbd/configuration/configuration-select-field/configuration-select-field.component';
 import { ConfigurationRadioFieldComponent } from './components/qbd/configuration/configuration-radio-field/configuration-radio-field.component';
-import { ConfigurationStepFooterComponent } from './components/qbd/configuration/configuration-step-footer/configuration-step-footer.component';
-import { ConfigurationStepHeaderComponent } from './components/qbd/configuration/configuration-step-header/configuration-step-header.component';
+import { ConfigurationStepFooterComponent } from './components/apps/configuration-step-footer/configuration-step-footer.component';
+import { ConfigurationStepHeaderComponent } from './components/apps/configuration-step-header/configuration-step-header.component';
 import { EmailMultiSelectFieldComponent } from './components/apps/email-multi-select-field/email-multi-select-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
@@ -42,6 +42,9 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
 import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
+import { IntacctStepperComponent } from './components/apps/intacct-stepper/intacct-stepper.component';
+import { IntacctLocationEntityComponent } from './components/apps/intacct-location-entity/intacct-location-entity.component';
+import { IntacctConnectorComponent } from './components/apps/intacct-connector/intacct-connector.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +70,10 @@ import { AppIntegrationLandingComponent } from './components/apps/app-integratio
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
     ConfigurationLabelComponent,
-    AppIntegrationLandingComponent
+    AppIntegrationLandingComponent,
+    IntacctStepperComponent,
+    IntacctConnectorComponent,
+    IntacctLocationEntityComponent
   ],
   imports: [
     CommonModule,
@@ -117,7 +123,12 @@ import { AppIntegrationLandingComponent } from './components/apps/app-integratio
     CalendarModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
-    CascadeSelectModule
+    CascadeSelectModule,
+    IntacctStepperComponent,
+    ConfigurationStepFooterComponent,
+    ConfigurationStepHeaderComponent,
+    IntacctConnectorComponent,
+    IntacctLocationEntityComponent
   ]
 })
 export class SharedModule { }

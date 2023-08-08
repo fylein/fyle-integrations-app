@@ -6,7 +6,7 @@ import { Org } from 'src/app/core/models/org/org.model';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 
 @Component({
   selector: 'app-gusto-configuration',
@@ -38,7 +38,7 @@ export class GustoConfigurationComponent implements OnInit {
     private formBuilder: FormBuilder,
     private orgService: OrgService,
     private trackingService: TrackingService,
-    private toastService: QbdToastService
+    private toastService: IntegrationsToastService
   ) { }
 
   private constructPayloadAndSave(): void {

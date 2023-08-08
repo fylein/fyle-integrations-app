@@ -19,8 +19,7 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   navigate(): void {
     this.navigateToPreviousStep.emit();

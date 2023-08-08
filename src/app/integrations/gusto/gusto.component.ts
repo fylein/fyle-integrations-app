@@ -9,7 +9,7 @@ import { EventsService } from 'src/app/core/services/core/events.service';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 
 @Component({
   selector: 'app-gusto',
@@ -56,7 +56,7 @@ export class GustoComponent implements OnInit {
     private gustoService: GustoService,
     private orgService: OrgService,
     private trackingService: TrackingService,
-    private toastService: QbdToastService,
+    private toastService: IntegrationsToastService,
     private eventsService: EventsService
   ) { }
 

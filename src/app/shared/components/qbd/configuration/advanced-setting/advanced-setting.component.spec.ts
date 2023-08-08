@@ -9,7 +9,7 @@ import { of, throwError } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
-import { QbdToastService } from 'src/app/core/services/qbd/qbd-core/qbd-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
@@ -56,7 +56,7 @@ describe('AdvancedSettingComponent', () => {
         { provide: QbdAdvancedSettingService, useValue: service1 },
         { provide: QbdWorkspaceService, useValue: service2 },
         { provide: OrgService, useValue: service3 },
-        { provide: QbdToastService, useValue: service4 }
+        { provide: IntegrationsToastService, useValue: service4 }
       ]
     })
     .compileComponents();

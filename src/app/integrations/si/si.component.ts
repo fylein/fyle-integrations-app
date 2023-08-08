@@ -6,6 +6,7 @@ import { IntacctWorkspace } from 'src/app/core/models/si/db/workspaces.model';
 import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
@@ -28,6 +29,7 @@ export class SiComponent implements OnInit {
     private router: Router,
     private userService: IntegrationsUserService,
     private workspaceService: SiWorkspaceService,
+    private connectorService : IntacctConnectorService,
     private windowService: WindowService
   ) {
     this.windowReference = this.windowService.nativeWindow;
@@ -58,13 +60,13 @@ export class SiComponent implements OnInit {
 
   private getOrCreateWorkspace(): void {
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
-      if (workspaces?.id) {
-        this.setupWorkspace(workspaces);
+      if (workspaces.length) {
+        this.setupWorkspace(workspaces[0]);
+      } else {
+        this.workspaceService.postWorkspace().subscribe((workspaces: IntacctWorkspace) => {
+          this.setupWorkspace(workspaces);
+        });
       }
-    }, (error) => {
-      this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
-        this.setupWorkspace(workspaces);
-      });
     }
     );
   }

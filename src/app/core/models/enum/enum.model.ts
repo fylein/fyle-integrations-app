@@ -61,7 +61,9 @@ export enum Page {
   GUSTO_LANDING = 'Gusto Landing',
   CONFIGURE_GUSTO = 'Gusto Configuration',
   QBD_LANDING = 'QuickBooks Desktop Landing',
+  INTACCT_LANDING = 'Sage Intacct Landing',
   CONNECT_QBD = 'Connect QuickBooks Desktop',
+  CONNECT_INTACCT = 'Connect Sage Intacct',
   EXPORT_SETTING_QBD = 'Export Settings QBD',
   FIELD_MAPPING_QBD = 'Field Mappings QBD',
   ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD',
@@ -103,6 +105,13 @@ export enum IntacctOnboardingState {
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
+}
+
+export enum IntacctField {
+  LOCATION_ENTITY = 'LOCATION_ENTITY',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS'
 }
 
 export enum QBDOnboardingState {
