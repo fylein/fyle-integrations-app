@@ -1,4 +1,4 @@
-import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, QBDExpenseState, QBDCCCExpenseState, QBDExportDateType, QBDReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
+import { QBDCorporateCreditCardExpensesObject, Entity, QBDExpenseGroupedBy, QBDExpenseState, QBDCCCExpenseState, QBDExportDateType, QBDReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
 import { QBDExportSettingGet } from "src/app/core/models/qbd/qbd-configuration/export-setting.model";
 
 export const QBDExportSettingResponse:QBDExportSettingGet = {
@@ -12,7 +12,7 @@ export const QBDExportSettingResponse:QBDExportSettingGet = {
     reimbursable_expense_grouped_by: QBDExpenseGroupedBy.REPORT,
     credit_card_expense_export_type: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY,
     credit_card_expense_state: QBDCCCExpenseState.PAID,
-    credit_card_entity_name_preference: QBDEntity.VENDOR,
+    credit_card_entity_name_preference: Entity.VENDOR,
     credit_card_account_name: "string",
     credit_card_expense_grouped_by: QBDExpenseGroupedBy.EXPENSE,
     credit_card_expense_date: QBDExportDateType.LAST_SPENT_AT,

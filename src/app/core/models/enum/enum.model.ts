@@ -114,6 +114,36 @@ export enum IntacctField {
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS'
 }
 
+export enum ReimbursableExpensesObject {
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  EXPENSE_REPORT = 'EXPENSE_REPORT'
+}
+
+export enum CorporateCreditCardExpensesObject {
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  EXPENSE_REPORT = 'EXPENSE_REPORT',
+  CHARGE_CARD_TRANSACTION = 'CHARGE_CARD_TRANSACTION'
+}
+
+export enum ExpenseState {
+  PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
+  PAID = 'PAID'
+}
+
+export enum ExpenseGroupedBy {
+  EXPENSE = 'EXPENSE',
+  REPORT = 'REPORT',
+  PAYMENT = 'PAYMENT'
+}
+
+export enum ExportDateType {
+  LAST_SPENT_AT = 'last_spent_at',
+  SPENT_AT = 'spent_at',
+  POSTED_AT = 'posted_at'
+}
+
 export enum QBDOnboardingState {
     CONNECTION = 'CONNECTION',
     EXPORT_SETTINGS = 'EXPORT_SETTINGS',
@@ -161,7 +191,7 @@ export enum QBDOnboardingState {
     POSTED_AT = 'posted_at'
   }
 
-  export enum QBDEntity {
+  export enum Entity {
     EMPLOYEE = 'EMPLOYEE',
     VENDOR = 'VENDOR'
   }
