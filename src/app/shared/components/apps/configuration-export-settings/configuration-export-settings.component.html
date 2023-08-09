@@ -31,7 +31,7 @@
                         [iconPath]="'expense'"
                         [placeholder]="'Select expense export module'"
                         [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.controls.reimbursableExportType.value?.value==='JOURNAL_ENTRY'">
+                        <div *ngIf="exportSettingsForm.value.reimbursableExportType==='JOURNAL_ENTRY'">
                             <div>
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
