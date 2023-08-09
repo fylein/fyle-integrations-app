@@ -6,7 +6,6 @@ import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } f
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
@@ -33,8 +32,6 @@ export class ExportSettingComponent implements OnInit {
   cccExpenseStateOptions: QBDExportSettingFormOption[];
 
   is_simplify_report_closure_enabled: boolean = false;
-
-  redirectLink: RedirectLink.QBD;
 
   redirectLink: RedirectLink.QBD;
 
@@ -106,7 +103,6 @@ export class ExportSettingComponent implements OnInit {
     private exportSettingService: QbdExportSettingService,
     private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
-    private toastService: IntegrationsToastService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService
   ) { }

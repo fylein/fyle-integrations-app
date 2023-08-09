@@ -31,10 +31,8 @@ import { ExportSettingComponent } from './components/qbd/configuration/export-se
 import { AdvancedSettingComponent } from './components/qbd/configuration/advanced-setting/advanced-setting.component';
 import { FieldMappingComponent } from './components/qbd/configuration/field-mapping/field-mapping.component';
 import { ConfigurationToggleFieldComponent } from './components/qbd/configuration/configuration-toggle-field/configuration-toggle-field.component';
-import { ConfigurationSelectFieldComponent } from './components/qbd/configuration/configuration-select-field/configuration-select-field.component';
+import { ConfigurationSelectFieldComponent } from './components/apps/configuration-select-field/configuration-select-field.component';
 import { ConfigurationRadioFieldComponent } from './components/qbd/configuration/configuration-radio-field/configuration-radio-field.component';
-import { ConfigurationStepFooterComponent } from './components/apps/configuration-step-footer/configuration-step-footer.component';
-import { ConfigurationStepHeaderComponent } from './components/apps/configuration-step-header/configuration-step-header.component';
 import { ConfigurationStepFooterComponent } from './components/apps/configuration-step-footer/configuration-step-footer.component';
 import { ConfigurationStepHeaderComponent } from './components/apps/configuration-step-header/configuration-step-header.component';
 import { EmailMultiSelectFieldComponent } from './components/apps/email-multi-select-field/email-multi-select-field.component';
