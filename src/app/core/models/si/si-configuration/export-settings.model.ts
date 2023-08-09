@@ -15,6 +15,7 @@ export type ExportSettingGet = {
     reimbursable_expense_state: ExpenseState | null,
     reimbursable_expense_date: ExportDateType | null,
     reimbursable_expense_grouped_by: ExpenseGroupedBy | null,
+    employeeFieldMapping: string | null,
     credit_card_expense_export_type: CorporateCreditCardExpensesObject | null,
     credit_card_expense_state: ExpenseState | null,
     credit_card_entity_name_preference: Entity | null,

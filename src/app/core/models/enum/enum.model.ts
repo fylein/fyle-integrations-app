@@ -147,7 +147,10 @@ export enum ExpenseGroupedBy {
 export enum ExportDateType {
   LAST_SPENT_AT = 'last_spent_at',
   SPENT_AT = 'spent_at',
-  POSTED_AT = 'posted_at'
+  POSTED_AT = 'posted_at',
+  CURRENT_DATE = 'current_date',
+  VERIFIED_DATE = 'verified_at',
+  APPROVAL_DATE = 'approved_at',
 }
 
 export enum QBDOnboardingState {
