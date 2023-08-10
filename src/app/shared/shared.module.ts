@@ -42,10 +42,10 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
 import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
-import { IntacctStepperComponent } from './components/apps/intacct-stepper/intacct-stepper.component';
-import { IntacctLocationEntityComponent } from './components/apps/intacct-location-entity/intacct-location-entity.component';
-import { IntacctConnectorComponent } from './components/apps/intacct-connector/intacct-connector.component';
-import { ConfigurationExportSettingsComponent } from './components/apps/configuration-export-settings/configuration-export-settings.component';
+import { ConfigurationExportSettingsComponent } from './components/si/configuration/configuration-export-settings/configuration-export-settings.component';
+import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
+import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
+import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 
 @NgModule({
   declarations: [
