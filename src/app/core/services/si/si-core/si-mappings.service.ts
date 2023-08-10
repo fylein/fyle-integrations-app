@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ApiService } from '../../core/api.service';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 
@@ -38,5 +37,17 @@ export class SiMappingsService {
     }
 
     return this.apiService.get(`/workspaces/${workspaceId}/sage_intacct/destination_attributes/`, params);
+  }
+
+  getSageIntacctAccounts(accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
+    return from(this.getSageIntacctDestinationAttributes(['ACCOUNT'], accountType, active).toPromise())
+      .pipe(
+        map((response: DestinationAttribute[] | undefined) => {
+          if (!response) {
+            return []; // Handle the case when response is undefined
+          }
+          return response.filter(attribute => attribute.attribute_type === 'ACCOUNT');
+        })
+      );
   }
 }

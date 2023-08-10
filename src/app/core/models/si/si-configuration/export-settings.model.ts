@@ -22,6 +22,7 @@ export type ExportSettingGet = {
     credit_card_account_name: string | null,
     credit_card_expense_grouped_by: ExpenseGroupedBy | null,
     credit_card_expense_date: ExportDateType | null,
+    gl_accounts: string | null,
     workspace: number
 }
 

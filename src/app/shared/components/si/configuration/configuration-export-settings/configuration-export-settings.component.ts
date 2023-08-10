@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, Entity, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, ReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingFormOption, ExportSettingGet } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
+import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
@@ -21,7 +23,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   RedirectLink = RedirectLink;
 
-  isOnboarding: boolean = true;
+  isOnboarding: boolean;
 
   saveInProgress: boolean = false;
 
@@ -38,6 +40,18 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   exportSettings: ExportSettingGet;
 
   customMessage: string;
+
+  sageIntacctDefaultGLAccounts: DestinationAttribute[];
+
+  sageIntacctDefaultVendor: DestinationAttribute[];
+
+  sageIntacctDefaultChargeCard: DestinationAttribute[];
+
+  sageIntacctDefaultCreditCard: DestinationAttribute[];
+
+  sageIntacctDefaultItem: DestinationAttribute[];
+
+  sageIntacctPaymentAccounts: DestinationAttribute[];
 
   private sessionStartTime = new Date();
 
@@ -134,7 +148,8 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
-    private workspaceService: SiWorkspaceService
+    private workspaceService: SiWorkspaceService,
+    private mappingService: SiMappingsService
     ) { }
 
     private setUpExpenseStates(): void {
@@ -248,6 +263,13 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       this.createCreditCardExpenseWatcher();
     }
 
+    private setupDynamicOptions(): void {
+      this.mappingService.getSageIntacctAccounts().subscribe(glAccounts => {
+        this.sageIntacctDefaultGLAccounts = glAccounts;
+        console.log(glAccounts);
+      });
+    }
+
     private getSettingsAndSetupForm(): void {
       this.isLoading = true;
       this.isOnboarding = this.router.url.includes('onboarding');
@@ -256,7 +278,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         this.is_simplify_report_closure_enabled = this.exportSettings?.is_simplify_report_closure_enabled;
         this.setUpExpenseStates();
         this.setupCCCExpenseGroupingDateOptions();
-
+        this.setupDynamicOptions();
         this.exportSettingsForm = this.formBuilder.group({
           reimbursableExportType: [this.exportSettings?.reimbursable_expenses_export_type],
           reimbursableExpense: [this.exportSettings?.reimbursable_expenses_export_type ? true : false],
@@ -271,13 +293,15 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           cccEntityName: [this.exportSettings?.credit_card_entity_name_preference ? this.exportSettings?.credit_card_entity_name_preference : null],
           cccAccountName: [this.exportSettings?.credit_card_account_name ? this.exportSettings?.credit_card_account_name : null],
           reimbursableExpenseState: [this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null],
-          cccExpenseState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null]
+          cccExpenseState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null],
+          glAccount: [this.exportSettings?.gl_accounts ? this.exportSettings?.gl_accounts : null]
         });
         this.exportFieldsWatcher();
         this.isLoading = false;
       }, () => {
           this.setUpExpenseStates();
           this.setupCCCExpenseGroupingDateOptions();
+          this.setupDynamicOptions();
           this.exportSettingsForm = this.formBuilder.group({
             reimbursableExportType: [null],
             reimbursableExpense: [false],
@@ -292,7 +316,8 @@ export class ConfigurationExportSettingsComponent implements OnInit {
             cccEntityName: [null],
             cccAccountName: [null],
             reimbursableExpenseState: [null],
-            cccExpenseState: [null]
+            cccExpenseState: [null],
+            glAccount: [null]
           });
           this.exportFieldsWatcher();
           this.isLoading = false;

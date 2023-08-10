@@ -39,10 +39,10 @@
                                 [mandatoryErrorListName]="'export state'"
                                 [label]="'To which GL Account should the expenses be credited to?'"
                                 [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
-                                [options]="['']"
+                                [options]="sageIntacctDefaultGLAccounts"
                                 [iconPath]="'copy-v2'"
-                                [placeholder]="'Select representation'"
-                                [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                                [placeholder]="'Select GL account'"
+                                [formControllerName]="'glAccount'"></app-configuration-select-field>
                             </div>
                         </div>
                     
