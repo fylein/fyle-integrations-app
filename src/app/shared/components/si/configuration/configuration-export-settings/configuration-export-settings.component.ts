@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormBuilder, FormGroup } from '@angular/forms';
+import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, Entity, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, ReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingFormOption, ExportSettingGet } from 'src/app/core/models/si/si-configuration/export-settings.model';
@@ -192,7 +192,61 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       }
     }
 
-    private exportFieldsWatcher(): void { }
+    private createReimbursableExpenseWatcher(): void {
+      this.exportSettingsForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
+        if (isReimbursableExpenseSelected) {
+          this.exportSettingsForm.controls.reimbursableExportType.setValidators(Validators.required);
+          this.exportSettingsForm.controls.reimbursableExportGroup.setValidators(Validators.required);
+          this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
+          this.exportSettingsForm.controls.reimbursableExpenseState.setValidators(Validators.required);
+          this.exportSettingsForm.controls.bankAccount.setValidators(Validators.required);
+        } else {
+          this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
+          this.exportSettingsForm.controls.reimbursableExportGroup.clearValidators();
+          this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
+          this.exportSettingsForm.controls.reimbursableExpenseState.clearValidators();
+          this.exportSettingsForm.controls.bankAccount.clearValidators();
+          this.exportSettingsForm.controls.bankAccount.setValue(null);
+          this.exportSettingsForm.controls.reimbursableExpenseState.setValue(null);
+          this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
+          this.exportSettingsForm.controls.reimbursableExportGroup.setValue(null);
+          this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
+        }
+      });
+    }
+  
+    private createCreditCardExpenseWatcher(): void {
+      this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
+        if (isCreditCardExpenseSelected) {
+          this.exportSettingsForm.controls.cccExportType.setValidators(Validators.required);
+          this.exportSettingsForm.controls.cccExportGroup.setValidators(Validators.required);
+          this.exportSettingsForm.controls.cccExportGroup.patchValue(this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions[1].value);
+          this.exportSettingsForm.controls.cccExportDate.setValidators(Validators.required);
+          this.exportSettingsForm.controls.cccExportDate.patchValue(this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.cccExpenseGroupingDateOptions[0].value);
+          this.exportSettingsForm.controls.cccEntityName.setValidators(Validators.required);
+          this.exportSettingsForm.controls.cccExpenseState.setValidators(Validators.required);
+          this.exportSettingsForm.controls.cccAccountName.setValidators(Validators.required);
+        } else {
+          this.exportSettingsForm.controls.cccExportType.clearValidators();
+          this.exportSettingsForm.controls.cccExportGroup.clearValidators();
+          this.exportSettingsForm.controls.cccExportDate.clearValidators();
+          this.exportSettingsForm.controls.cccEntityName.clearValidators();
+          this.exportSettingsForm.controls.cccExpenseState.clearValidators();
+          this.exportSettingsForm.controls.cccAccountName.clearValidators();
+          this.exportSettingsForm.controls.cccExportType.setValue(null);
+          this.exportSettingsForm.controls.cccExpenseState.setValue(null);
+          this.exportSettingsForm.controls.cccAccountName.setValue(null);
+          this.exportSettingsForm.controls.cccExportGroup.setValue(null);
+          this.exportSettingsForm.controls.cccExportDate.setValue(null);
+          this.exportSettingsForm.controls.cccEntityName.setValue(null);
+        }
+      });
+    }
+
+    private exportFieldsWatcher(): void {
+      this.createReimbursableExpenseWatcher();
+      this.createCreditCardExpenseWatcher();
+    }
 
     private getSettingsAndSetupForm(): void {
       this.isLoading = true;
