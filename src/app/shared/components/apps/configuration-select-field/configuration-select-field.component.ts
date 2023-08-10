@@ -46,7 +46,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   isArrayOfTypeDestinationAttribute(array: any[]): boolean {
-    if(array[0].id) {
+    if (array[0].id) {
       return true;
     }
     return false;

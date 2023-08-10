@@ -229,7 +229,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         }
       });
     }
-  
+
     private createCreditCardExpenseWatcher(): void {
       this.exportSettingsForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
         if (isCreditCardExpenseSelected) {
@@ -266,7 +266,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private setupDynamicOptions(): void {
       this.mappingService.getSageIntacctAccounts().subscribe(glAccounts => {
         this.sageIntacctDefaultGLAccounts = glAccounts;
-        console.log(glAccounts);
       });
     }
 
