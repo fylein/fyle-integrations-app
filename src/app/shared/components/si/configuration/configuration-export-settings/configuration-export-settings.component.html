@@ -55,7 +55,7 @@
                         [label]="'How are your Employees represented in Sage Intacct?'"
                         [subLabel]="'Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.'"
                         [options]="EntityNameOptions"
-                        [iconPath]="'copy-v2'"
+                        [iconPath]="'threepeople'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
                     </div>
@@ -66,7 +66,7 @@
                         [mandatoryErrorListName]="'export state'"
                         [label]="'How should Employees in Fyle be mapped to Employees in Sage Intacct?'"
                         [subLabel]="'Automatically map the employees in Fyle to their corresponding records in Sage Intacct based on a unique parameter.'"
-                        [options]="[]"
+                        [options]="['Sample']"
                         [iconPath]="'copy-v2'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
