@@ -91,7 +91,8 @@ export enum ClickEvent {
   ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',
   ADD_EMAIL_MANUALLY = 'Add Email Manually',
   QBD_EXPORT = 'Export IIF files',
-  CONNECT_INTACCT  = 'Connect Sage Intacct'
+  CONNECT_INTACCT  = 'Connect Sage Intacct',
+  PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
 }
 
 export enum ProgressPhase {
