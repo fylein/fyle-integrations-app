@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, Entity, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, QBDCCCExpenseState, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroupedBy, ExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, CCCExpenseState, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
@@ -84,11 +84,11 @@ export class ExportSettingComponent implements OnInit {
   cccEntityNameOptions: QBDExportSettingFormOption[] = [
     {
       label: 'Employee',
-      value: Entity.EMPLOYEE
+      value: QBDEntity.EMPLOYEE
     },
     {
       label: 'Vendor',
-      value: Entity.VENDOR
+      value: QBDEntity.VENDOR
     }
   ];
 
@@ -235,7 +235,7 @@ export class ExportSettingComponent implements OnInit {
               forbidden = false;
             }
           }
-        } else if ((control.value === QBDExpenseState.PAID || control.value === QBDExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
+        } else if ((control.value === ExpenseState.PAID || control.value === ExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
           forbidden = false;
         }
         if (!forbidden) {
@@ -256,22 +256,22 @@ export class ExportSettingComponent implements OnInit {
     this.cccExpenseStateOptions = [
       {
         label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
-        value: this.is_simplify_report_closure_enabled ? QBDCCCExpenseState.APPROVED: QBDCCCExpenseState.PAYMENT_PROCESSING
+        value: this.is_simplify_report_closure_enabled ? CCCExpenseState.APPROVED: CCCExpenseState.PAYMENT_PROCESSING
       },
       {
         label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-        value: QBDCCCExpenseState.PAID
+        value: CCCExpenseState.PAID
       }
     ];
 
     this.expenseStateOptions = [
       {
         label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
-        value: QBDExpenseState.PAYMENT_PROCESSING
+        value: ExpenseState.PAYMENT_PROCESSING
       },
       {
         label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-        value: QBDExpenseState.PAID
+        value: ExpenseState.PAID
       }
     ];
   }

@@ -32,7 +32,6 @@
                         [placeholder]="'Select expense export module'"
                         [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
                         <div *ngIf="exportSettingsForm.value.reimbursableExportType==='JOURNAL_ENTRY'">
-                            <div>
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
@@ -44,8 +43,6 @@
                                 [placeholder]="'Select GL account'"
                                 [formControllerName]="'glAccount'"></app-configuration-select-field>
                             </div>
-                        </div>
-                    
                     </div>
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType==='JOURNAL_ENTRY'" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
@@ -54,7 +51,7 @@
                         [mandatoryErrorListName]="'export state'"
                         [label]="'How are your Employees represented in Sage Intacct?'"
                         [subLabel]="'Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.'"
-                        [options]="EntityNameOptions"
+                        [options]="employeeFieldOptions"
                         [iconPath]="'threepeople'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
@@ -67,21 +64,9 @@
                         [label]="'How should Employees in Fyle be mapped to Employees in Sage Intacct?'"
                         [subLabel]="'Automatically map the employees in Fyle to their corresponding records in Sage Intacct based on a unique parameter.'"
                         [options]="['Sample']"
-                        [iconPath]="'copy-v2'"
+                        [iconPath]="'threepeople'"
                         [placeholder]="'Select representation'"
-                        [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingsForm.value.employeeFieldMapping==='VENDOR'" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export state'"
-                        [label]="'How should Employees in Fyle mapped to Vendors in Sage Intacct?'"
-                        [subLabel]="'Automatically map the vendors in Fyle to their corresponding records in Sage Intacct based on unique parameter.'"
-                        [options]="[]"
-                        [iconPath]="'copy-v2'"
-                        [placeholder]="'Select representation'"
-                        [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
+                        [formControllerName]="'auto_map_employees'"></app-configuration-select-field>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
@@ -89,7 +74,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export state'"
                         [label]="'At which state should the expenses be ready to export from Fyle?'"
-                        [subLabel]="'You can export expenses either when they are awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
+                        [subLabel]="'You can export expenses either when they are awaiting payment after approval (Processing) or when the payment has been settled (Closed).'"
                         [options]="expenseStateOptions"
                         [iconPath]="'questionmark'"
                         [placeholder]="'Select export state'"
@@ -100,7 +85,7 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export state'"
-                        [label]="'Set the expense/bill date as?'"
+                        [label]="'Set the ' + getExportType(exportSettingsForm.value.reimbursableExportType) + ' date as'"
                         [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage Intacct. Click here for more details.'"
                         [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calender'"

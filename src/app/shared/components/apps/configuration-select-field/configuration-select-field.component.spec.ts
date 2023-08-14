@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { QBDExpenseState } from 'src/app/core/models/enum/enum.model';
+import { ExpenseState } from 'src/app/core/models/enum/enum.model';
 
 import { ConfigurationSelectFieldComponent } from './configuration-select-field.component';
 
@@ -20,11 +20,11 @@ describe('ConfigurationSelectFieldComponent', () => {
     formbuilder = TestBed.inject(FormBuilder);
     component.options = [
       {
-        value: QBDExpenseState.PAYMENT_PROCESSING,
+        value: ExpenseState.PAYMENT_PROCESSING,
         label: 'Payment Processing'
       },
       {
-        value: QBDExpenseState.PAID,
+        value: ExpenseState.PAID,
         label: 'Paid'
       }
     ];
