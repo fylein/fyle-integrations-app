@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, Entity, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, ReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingFormOption, ExportSettingGet } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -27,7 +27,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  ReimbursableExpensesObject= ReimbursableExpensesObject;
+  IntacctReimbursableExpensesObject= IntacctReimbursableExpensesObject;
 
   expenseStateOptions: ExportSettingFormOption[];
 
@@ -84,11 +84,11 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   creditCardExportTypes: ExportSettingFormOption[] = [
     {
       label: 'Bill',
-      value: ReimbursableExpensesObject.BILL
+      value: IntacctReimbursableExpensesObject.BILL
     },
     {
       label: 'Expense Report',
-      value: ReimbursableExpensesObject.EXPENSE_REPORT
+      value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
     },
     {
       label: 'Journal Entry',
@@ -103,26 +103,26 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   reimbursableExportTypes: ExportSettingFormOption[] = [
     {
       label: 'Expense Report',
-      value: ReimbursableExpensesObject.EXPENSE_REPORT
+      value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
     },
     {
       label: 'Bill',
-      value: ReimbursableExpensesObject.BILL
+      value: IntacctReimbursableExpensesObject.BILL
     },
     {
       label: 'Journal Entry',
-      value: ReimbursableExpensesObject.JOURNAL_ENTRY
+      value: IntacctReimbursableExpensesObject.JOURNAL_ENTRY
     }
   ];
 
-  EntityNameOptions: ExportSettingFormOption[] = [
+  employeeFieldOptions: ExportSettingFormOption[] = [
     {
       label: 'Employee',
-      value: Entity.EMPLOYEE
+      value: FyleField.EMPLOYEE
     },
     {
       label: 'Vendor',
-      value: Entity.VENDOR
+      value: FyleField.VENDOR
     }
   ];
 
@@ -136,6 +136,23 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService
     ) { }
+
+    private getExportGroup(exportGroups: string[] | null): string {
+      if (exportGroups) {
+        const exportGroup = exportGroups.find((exportGroup) => {
+          return exportGroup === ExpenseGroupingFieldOption.EXPENSE_ID || exportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroup === ExpenseGroupingFieldOption.SETTLEMENT_ID;
+        });
+        return exportGroup ? exportGroup : ExpenseGroupingFieldOption.CLAIM_NUMBER;
+      }
+  
+      return '';
+    }
+
+    getExportType(exportType: IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject): string {
+      const lowerCaseWord = exportType.toLowerCase();
+  
+      return lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
+    }
 
     private setUpExpenseStates(): void {
       this.cccExpenseStateOptions = [
@@ -161,7 +178,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       ];
     }
 
-    private setCreditCardExpenseGroupingDateOptions(cccExportType: CorporateCreditCardExpensesObject, cccExportGroup: ExpenseGroupedBy) : void {
+    private setCCExpenseDateOptions(cccExportType: CorporateCreditCardExpensesObject, cccExportGroup: string) : void {
       if (cccExportType === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION){
         this.cccExpenseGroupingDateOptions = [
           {
@@ -183,15 +200,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       }
     }
 
-    private setupCCCExpenseGroupingDateOptions(): void {
-      if (this.exportSettings?.credit_card_expense_export_type) {
-        const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : ExpenseGroupedBy.EXPENSE;
-        this.setCreditCardExpenseGroupingDateOptions(this.exportSettings?.credit_card_expense_export_type, creditCardExpenseExportGroup);
-      } else {
-        this.setCreditCardExpenseGroupingDateOptions(CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION, ExpenseGroupedBy.EXPENSE);
-      }
-    }
-
     private exportFieldsWatcher(): void { }
 
     private getSettingsAndSetupForm(): void {
@@ -201,39 +209,39 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         this.exportSettings = exportSettingResponse;
         this.is_simplify_report_closure_enabled = this.exportSettings?.is_simplify_report_closure_enabled;
         this.setUpExpenseStates();
-        this.setupCCCExpenseGroupingDateOptions();
 
         this.exportSettingsForm = this.formBuilder.group({
           reimbursableExportType: [this.exportSettings?.reimbursable_expenses_export_type],
           reimbursableExpense: [this.exportSettings?.reimbursable_expenses_export_type ? true : false],
-          reimbursableExportGroup: [this.exportSettings?.reimbursable_expense_grouped_by ? this.exportSettings?.reimbursable_expense_grouped_by : null],
+          reimbursableExportGroup: [this.getExportGroup(this.exportSettings?.reimbursable_expense_grouped_by)],
           reimbursableExportDate: [this.exportSettings?.reimbursable_expense_date ? this.exportSettings?.reimbursable_expense_date : null],
           employeeFieldMapping: [this.exportSettings?.employeeFieldMapping ? this.exportSettings?.employeeFieldMapping : null],
+          autoMapEmployees: [this.exportSettings?.auto_map_employees ? this.exportSettings?.auto_map_employees : null],
           creditCardExpense: [this.exportSettings?.credit_card_expense_export_type ? true : false],
           cccExportType: [this.exportSettings?.credit_card_expense_export_type ? this.exportSettings?.credit_card_expense_export_type : null],
-          cccExportGroup: [this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions[1].value],
+          cccExportGroup: [this.getExportGroup(this.exportSettings?.credit_card_expense_grouped_by)],
           cccExportDate: [this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.cccExpenseGroupingDateOptions[0].value],
           bankAccount: [this.exportSettings?.bank_account_name ? this.exportSettings?.bank_account_name : null],
           cccEntityName: [this.exportSettings?.credit_card_entity_name_preference ? this.exportSettings?.credit_card_entity_name_preference : null],
           cccAccountName: [this.exportSettings?.credit_card_account_name ? this.exportSettings?.credit_card_account_name : null],
-          reimbursableExpenseState: [this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null],
-          cccExpenseState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null]
+          reimbursableExpenseState: [this.exportSettings?.expense_state ? this.exportSettings?.expense_state : null],
+          cccExpenseState: [this.exportSettings?.ccc_expense_state ? this.exportSettings?.ccc_expense_state : null],
         });
         this.exportFieldsWatcher();
         this.isLoading = false;
       }, () => {
           this.setUpExpenseStates();
-          this.setupCCCExpenseGroupingDateOptions();
           this.exportSettingsForm = this.formBuilder.group({
             reimbursableExportType: [null],
             reimbursableExpense: [false],
-            reimbursableExportGroup: [this.expenseGroupingFieldOptions[1].value],
+            reimbursableExportGroup: [null],
             reimbursableExportDate: [null],
             employeeFieldMapping: [null],
+            autoMapEmployees: [null],
             creditCardExpense: [false],
             cccExportType: [null],
-            cccExportGroup: [this.expenseGroupingFieldOptions[1].value],
-            cccExportDate: [this.cccExpenseGroupingDateOptions[0].value],
+            cccExportGroup: [null],
+            cccExportDate: [null],
             bankAccount: [null],
             cccEntityName: [null],
             cccAccountName: [null],

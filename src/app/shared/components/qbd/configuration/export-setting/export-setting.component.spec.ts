@@ -5,7 +5,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
-import { QBDCorporateCreditCardExpensesObject, QBDExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { QBDCorporateCreditCardExpensesObject, ExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
@@ -164,11 +164,11 @@ describe('ExportSettingComponent', () => {
       cccExpenseState: [component.exportSettings?.credit_card_expense_state ? component.exportSettings?.credit_card_expense_state : null]
     });
     fixture.detectChanges();
-    const control = { value: QBDExpenseState.PAID, parent: formbuilder.group({
+    const control = { value: ExpenseState.PAID, parent: formbuilder.group({
       reimbursableExpense: QBDReimbursableExpensesObject.JOURNAL_ENTRY
     }) };
     expect((component as any).exportSelectionValidator()(control as AbstractControl)).toBeDefined();
-    const control1 = { value: QBDExpenseState.PAYMENT_PROCESSING, parent: formbuilder.group({
+    const control1 = { value: ExpenseState.PAYMENT_PROCESSING, parent: formbuilder.group({
       creditCardExpense: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY
     }) };
     expect((component as any).exportSelectionValidator()(control1 as AbstractControl)).toBeNull();
