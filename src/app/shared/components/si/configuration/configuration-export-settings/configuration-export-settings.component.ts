@@ -271,7 +271,31 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       this.createCreditCardExpenseWatcher();
     }
 
-    private exportFieldsWatcher(): void { }
+    private setupDynamicOptions(): void {
+      this.mappingService.getSageIntacctAccounts().subscribe(glAccounts => {
+        this.sageIntacctDefaultGLAccounts = glAccounts;
+      });
+    }
+
+    setCreditCardExpenseGroupingDateOptions(creditCardExportGroup: string): void {
+      if (creditCardExportGroup === ExpenseGroupingFieldOption.EXPENSE_ID) {
+        this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat([{
+          label: 'Card Transaction Post date',
+          value: ExportDateType.POSTED_AT
+        }]);
+      } else {
+        this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+      }
+    }
+
+    private setupCCCExpenseGroupingDateOptions(): void {
+      if (this.exportSettings?.credit_card_expense_export_type) {
+        const creditCardExpenseExportGroup = this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : ExpenseGroupedBy.EXPENSE;
+        this.setCreditCardExpenseGroupingDateOptions(this.exportSettings?.credit_card_expense_export_type);
+      } else {
+        this.setCreditCardExpenseGroupingDateOptions(CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
+      }
+    }
 
     private getSettingsAndSetupForm(): void {
       this.isLoading = true;
