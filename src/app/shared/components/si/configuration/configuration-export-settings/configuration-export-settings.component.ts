@@ -43,6 +43,10 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   sageIntacctDefaultGLAccounts: DestinationAttribute[];
 
+  sageIntacctExpensePaymentType: DestinationAttribute[];
+
+  sageIntacctCCCExpensePaymentType: DestinationAttribute[];
+
   sageIntacctDefaultVendor: DestinationAttribute[];
 
   sageIntacctDefaultChargeCard: DestinationAttribute[];
@@ -114,6 +118,13 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     }
   ];
 
+  autoMapEmployeeOptions: ExportSettingFormOption[] = [
+    { label: 'Match emails on Fyle and Sage Intacct', value: 'EMAIL' },
+    { label: 'Match names on Fyle and Sage Intacct', value: 'NAME' },
+    { label: 'Match Fyle Employee Code to Sage Intacct Name', value: 'EMPLOYEE_CODE' }
+  ];
+  
+
   reimbursableExportTypes: ExportSettingFormOption[] = [
     {
       label: 'Expense Report',
@@ -165,6 +176,12 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
     getExportType(exportType: IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject): string {
       const lowerCaseWord = exportType.toLowerCase();
+
+      return lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
+    }
+
+    getEmployeeType(employeeType: string): string {
+      const lowerCaseWord = employeeType.toLowerCase();
 
       return lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
     }
@@ -266,14 +283,47 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       });
     }
 
+    private employeeFieldWatcher(): void {
+      const employeeFieldMappingControl = this.exportSettingsForm.get('employeeFieldMapping');
+      const reimbursableExportControl = this.exportSettingsForm.controls.reimbursableExportType;
+    
+      reimbursableExportControl.valueChanges.subscribe((reimbursableExport) => {
+        if (reimbursableExport === 'EXPENSE_REPORT' || reimbursableExport === 'BILL') {
+          employeeFieldMappingControl?.disable();
+        }
+    
+        if (reimbursableExport === 'EXPENSE_REPORT') {
+          employeeFieldMappingControl?.setValue('Employee');
+        } else if (reimbursableExport === 'BILL') {
+          employeeFieldMappingControl?.setValue('Vendor');
+        }
+    
+        if (reimbursableExport === 'JOURNAL_ENTRY') {
+          employeeFieldMappingControl?.enable();
+        }
+      });
+    }
+    
+
     private exportFieldsWatcher(): void {
       this.createReimbursableExpenseWatcher();
       this.createCreditCardExpenseWatcher();
+      this.employeeFieldWatcher();
     }
 
     private setupDynamicOptions(): void {
       this.mappingService.getSageIntacctAccounts().subscribe(glAccounts => {
         this.sageIntacctDefaultGLAccounts = glAccounts;
+      });
+      this.mappingService.getSageIntacctExpensePaymentType().subscribe(expensePaymentType => {
+        this.sageIntacctExpensePaymentType = expensePaymentType.filter(expensePaymentType => expensePaymentType.detail.is_reimbursable);
+        this.sageIntacctCCCExpensePaymentType = expensePaymentType.filter(expensePaymentType => expensePaymentType.detail.is_reimbursable === false);
+
+        console.log(expensePaymentType.filter(expensePaymentType => expensePaymentType.detail.is_reimbursable === false));
+      });
+      // VENDOR
+      this.mappingService.getSageIntacctVendors().subscribe(vendors => {
+        this.sageIntacctDefaultVendor = vendors;
       });
     }
 
@@ -301,6 +351,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       this.isLoading = true;
       this.isOnboarding = this.router.url.includes('onboarding');
       this.exportSettingService.getExportSettings().subscribe((exportSettingResponse : ExportSettingGet) => {
+        console.log(exportSettingResponse);
         this.exportSettings = exportSettingResponse;
         this.is_simplify_report_closure_enabled = this.exportSettings?.is_simplify_report_closure_enabled;
         this.setUpExpenseStates();
@@ -322,7 +373,9 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           cccAccountName: [this.exportSettings?.credit_card_account_name ? this.exportSettings?.credit_card_account_name : null],
           reimbursableExpenseState: [this.exportSettings?.expense_state ? this.exportSettings?.expense_state : null],
           cccExpenseState: [this.exportSettings?.ccc_expense_state ? this.exportSettings?.ccc_expense_state : null],
-          glAccount: [this.exportSettings?.gl_accounts ? this.exportSettings?.gl_accounts : null]
+          glAccount: [this.exportSettings?.gl_accounts ? this.exportSettings?.gl_accounts : null],
+          defaultReimbursableExpensePaymentType: [null],
+          defaultCCCExpensePaymentType: [null],
         });
         this.exportFieldsWatcher();
         this.isLoading = false;
@@ -346,7 +399,9 @@ export class ConfigurationExportSettingsComponent implements OnInit {
             cccAccountName: [null],
             reimbursableExpenseState: [null],
             cccExpenseState: [null],
-            glAccount: [null]
+            glAccount: [null],
+            reimbursableExpensePaymentType: [null],
+            cccExpensePaymentType: [null],
           });
           this.exportFieldsWatcher();
           this.isLoading = false;

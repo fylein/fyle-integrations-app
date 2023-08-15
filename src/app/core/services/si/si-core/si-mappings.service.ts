@@ -50,4 +50,28 @@ export class SiMappingsService {
         })
       );
   }
+
+  getSageIntacctExpensePaymentType(accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
+    return from(this.getSageIntacctDestinationAttributes(['EXPENSE_PAYMENT_TYPE'], accountType, active).toPromise())
+      .pipe(
+        map((response: DestinationAttribute[] | undefined) => {
+          if (!response) {
+            return []; // Handle the case when response is undefined
+          }
+          return response.filter(attribute => attribute.attribute_type === 'EXPENSE_PAYMENT_TYPE');
+        })
+      );
+  }
+
+  getSageIntacctVendors(accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
+    return from(this.getSageIntacctDestinationAttributes(['VENDOR'], accountType, active).toPromise())
+      .pipe(
+        map((response: DestinationAttribute[] | undefined) => {
+          if (!response) {
+            return []; // Handle the case when response is undefined
+          }
+          return response.filter(attribute => attribute.attribute_type === 'VENDOR');
+        })
+      );
+  }
 }
