@@ -45,6 +45,12 @@ export enum UpdateEvent {
   ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD'
 }
 
+export enum IntacctUpdateEvent {
+  CONNECT_INTACCT = 'Connect Sage Intacct',
+  EXPORT_SETTING_INTACCT = 'Export Settings Intacct',
+  IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct'
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
@@ -65,6 +71,8 @@ export enum Page {
   CONNECT_QBD = 'Connect QuickBooks Desktop',
   CONNECT_INTACCT = 'Connect Sage Intacct',
   EXPORT_SETTING_QBD = 'Export Settings QBD',
+  EXPORT_SETTING_INTACCT = 'Export Settings Intacct',
+  IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct',
   FIELD_MAPPING_QBD = 'Field Mappings QBD',
   ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD',
 }

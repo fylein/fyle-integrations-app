@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingFormOption, ExportSettingGet } from 'src/app/core/models/si/si-configuration/export-settings.model';
+import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, UpdateEvent, ProgressPhase, IntacctUpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
@@ -160,7 +160,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
-    private mappingService: SiMappingsService
+    private mappingService: SiMappingsService,
     ) { }
 
     private getExportGroup(exportGroups: string[] | null): string {
@@ -441,6 +441,46 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           this.isLoading = false;
         }
       );
+    }
+
+    private getPhase(): ProgressPhase {
+      return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+    }
+
+    private constructPayloadAndSave(): void {
+      this.saveInProgress = true;
+      const exportSettingPayload = ExportSettingModel.constructPayload(this.exportSettingsForm);
+      this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
+        this.saveInProgress = false;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+        this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_INTACCT, this.sessionStartTime);
+        if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.EXPORT_SETTINGS) {
+          this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
+        } else {
+          this.trackingService.intacctUpdateEvent(
+            IntacctUpdateEvent.IMPORT_SETTINGS_INTACCT,
+            {
+              phase: this.getPhase(),
+              oldState: this.exportSettings,
+              newState: response
+            }
+          );
+        }
+  
+        if (this.isOnboarding) {
+          this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.IMPORT_SETTINGS);
+          this.router.navigate([`/integrations/intacct/onboarding/import_settings`]);
+        }
+      }, () => {
+        this.saveInProgress = false;
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+        });
+    }
+
+    save(): void {
+      if (this.exportSettingsForm.valid) {
+        this.constructPayloadAndSave();
+      }
     }
 
   ngOnInit(): void {
