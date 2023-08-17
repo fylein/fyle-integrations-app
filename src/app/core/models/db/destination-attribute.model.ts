@@ -12,3 +12,12 @@ export type DestinationAttribute = {
   workspace: number;
   detail: IntacctDestinationAttributeDetail;
 };
+
+export type DefaultDestinationAttribute = {
+  id: string,
+  name: string,
+};
+
+export type MinimalDestinationAttribute = {
+  id: number | null | string;
+}

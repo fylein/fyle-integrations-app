@@ -50,6 +50,13 @@ export class SiApiService {
       }));
   }
 
+    // Having any here is ok
+    put(endpoint: string, body: {}): Observable<any> {
+      return this.http.put(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
+        return this.handleError(error, 'PUT');
+      }));
+    }
+
   patch(endpoint: string, body: {}): Observable<any> {
     return this.http
       .patch(

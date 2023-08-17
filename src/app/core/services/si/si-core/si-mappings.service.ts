@@ -74,4 +74,16 @@ export class SiMappingsService {
         })
       );
   }
+
+  getSageIntacctChargeCard(accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
+    return from(this.getSageIntacctDestinationAttributes(['CHARGE_CARD_NUMBER'], accountType, active).toPromise())
+      .pipe(
+        map((response: DestinationAttribute[] | undefined) => {
+          if (!response) {
+            return []; // Handle the case when response is undefined
+          }
+          return response.filter(attribute => attribute.attribute_type === 'CHARGE_CARD_NUMBER');
+        })
+      );
+  }
 }

@@ -67,14 +67,13 @@
                         [iconPath]="'twopeople'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
-
                         <div *ngIf="exportSettingsForm.value.reimbursableExportType === 'EXPENSE_REPORT' || exportSettingsForm.value.reimbursableExportType === 'BILL'">
-                            <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                <div class="lg:tw-w-3/5 md:tw-w-1/2">
+                            <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                                <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
                                     <h4 class="!tw-text-14-px !tw-font-500">'How are your Employees represented in Sage Intacct?'<app-mandatory-field></app-mandatory-field></h4>
                                     <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4" >'Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.'</h5>
                                 </div>
-
                                 <div class="tw-pl-18-px tw-pt-18-px">
                                     <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="employeeFieldMapping">
                                 </div>
@@ -161,7 +160,6 @@
                             [placeholder]="'Select expense payment type'"
                             [formControllerName]="'cccExpensePaymentType'"></app-configuration-select-field>
                         </div>
-
                         <div *ngIf="exportSettingsForm.value.cccExportType==='BILL'">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
@@ -193,13 +191,35 @@
                             [mandatoryErrorListName]="'charge card'"
                             [label]="'Set the Default Charge Card as?'"
                             [subLabel]="'Expenses made with Corporate Cards in Fyle that are not mapped to their own cards in Sage Intacct will be posted to the Card/Account selected here.'"
-                            [options]="['charge card']"
+                            [options]="sageIntacctDefaultChargeCard"
                             [iconPath]="'expense'"
                             [placeholder]="'Select Charge Corporate Card'"
                             [formControllerName]="'chargeCard'"></app-configuration-select-field>
                         </div>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType==='JOURNAL_ENTRY' && !exportSettingsForm.value.reimbursableExpense"
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'employee field'"
+                        [label]="'How are your Employees represented in Sage Intacct?'"
+                        [subLabel]="'Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.'"
+                        [options]="employeeFieldOptions"
+                        [iconPath]="'twopeople'"
+                        [placeholder]="'Select representation'"
+                        [formControllerName]="'cccEntityName'"></app-configuration-select-field>
+                        <div *ngIf="(exportSettingsForm.value.cccExportType==='EXPENSE_REPORT' || exportSettingsForm.value.cccExportType==='BILL' || exportSettingsForm.value.cccExportType==='CHARGE_CARD_TRANSACTION') && !exportSettingsForm.value.reimbursableExpense">
+                            <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                                <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
+                                    <h4 class="!tw-text-14-px !tw-font-500">'How are your Employees represented in Sage Intacct?'<app-mandatory-field></app-mandatory-field></h4>
+                                    <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4" >'Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.'</h5>
+                                </div>
+                                <div class="tw-pl-18-px tw-pt-18-px">
+                                    <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="cccEntityName">
+                                </div>
+                            </div>
+                        </div>
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -222,10 +242,10 @@
                         [iconPath]="'calender'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
-
                         <div *ngIf="exportSettingsForm.value.cccExportType==='CHARGE_CARD_TRANSACTION'">
-                            <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                <div class="lg:tw-w-3/5 md:tw-w-1/2">
+                            <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                                <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
                                     <h4 class="!tw-text-14-px !tw-font-500">Set the Charge Card transaction date as<app-mandatory-field></app-mandatory-field></h4>
                                     <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4" >The selected type of date will reflect in the expenses exported from Fyle to Sage Intacct. Click here for more details.</h5>
                                 </div>
@@ -247,8 +267,9 @@
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
                         <div *ngIf="exportSettingsForm.value.cccExportType==='CHARGE_CARD_TRANSACTION'">
-                            <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                <div class="lg:tw-w-3/5 md:tw-w-1/2">
+                            <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
+                                <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                                <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
                                     <h4 class="!tw-text-14-px !tw-font-500">How should the expenses be grouped?<app-mandatory-field></app-mandatory-field></h4>
                                     <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)</h5>
                                 </div>
