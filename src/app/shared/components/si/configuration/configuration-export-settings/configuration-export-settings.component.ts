@@ -123,7 +123,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     { label: 'Match names on Fyle and Sage Intacct', value: 'NAME' },
     { label: 'Match Fyle Employee Code to Sage Intacct Name', value: 'EMPLOYEE_CODE' }
   ];
-  
+
 
   reimbursableExportTypes: ExportSettingFormOption[] = [
     {
@@ -160,7 +160,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
-    private mappingService: SiMappingsService,
+    private mappingService: SiMappingsService
     ) { }
 
     private getExportGroup(exportGroups: string[] | null): string {
@@ -233,7 +233,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
     private reimbursableExportWatcher(): void {
       this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((isreimbursableExportTypeSelected) => {
-        if(isreimbursableExportTypeSelected==='JOURNAL_ENTRY') {
+        if (isreimbursableExportTypeSelected==='JOURNAL_ENTRY') {
           this.exportSettingsForm.controls.employeeFieldMapping.setValidators(Validators.required);
           this.exportSettingsForm.controls.glAccount.setValidators(Validators.required);
         } else {
@@ -305,18 +305,18 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private employeeFieldWatcher(): void {
       const employeeFieldMappingControl = this.exportSettingsForm.get('employeeFieldMapping');
       const reimbursableExportControl = this.exportSettingsForm.controls.reimbursableExportType;
-    
+
       reimbursableExportControl.valueChanges.subscribe((reimbursableExport) => {
         if (reimbursableExport === 'EXPENSE_REPORT' || reimbursableExport === 'BILL') {
           employeeFieldMappingControl?.disable();
         }
-    
+
         if (reimbursableExport === 'EXPENSE_REPORT') {
           employeeFieldMappingControl?.setValue('Employee');
         } else if (reimbursableExport === 'BILL') {
           employeeFieldMappingControl?.setValue('Vendor');
         }
-    
+
         if (reimbursableExport === 'JOURNAL_ENTRY') {
           employeeFieldMappingControl?.enable();
         }
@@ -327,7 +327,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       const cccExportDate = this.exportSettingsForm.get('cccExportDate');
       const cccExportGroup = this.exportSettingsForm.get('cccExportGroup');
       const cccExportTypeControl = this.exportSettingsForm.controls.cccExportType;
-    
+
       cccExportTypeControl.valueChanges.subscribe((cccExport) => {
         if (cccExport === 'CHARGE_CARD_TRANSACTION') {
           cccExportDate?.disable();
@@ -340,7 +340,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         }
       });
     }
-    
+
 
     private exportFieldsWatcher(): void {
       this.createReimbursableExpenseWatcher();
@@ -439,7 +439,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
             cccExpensePaymentType: [null],
             chargeCard: [null],
             creditCard: [null],
-            creditCardVendor: [null],
+            creditCardVendor: [null]
           });
           this.exportFieldsWatcher();
           this.isLoading = false;
@@ -470,7 +470,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
             }
           );
         }
-  
+
         if (this.isOnboarding) {
           this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.IMPORT_SETTINGS);
           this.router.navigate([`/integrations/intacct/onboarding/import_settings`]);
