@@ -166,13 +166,13 @@
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'credt card vendor'"
+                            [mandatoryErrorListName]="'credit card vendor'"
                             [label]="'Set the Default Credit Card Vendor as?'"
                             [subLabel]="'The vendor configured here will be added to all the Credit Card expenses exported as Bills.'"
                             [options]="sageIntacctDefaultVendor"
                             [iconPath]="'expense'"
                             [placeholder]="'Select credit card vendor'"
-                            [formControllerName]="'cccExpensePaymentType'"></app-configuration-select-field>
+                            [formControllerName]="'creditCardVendor'"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType==='JOURNAL_ENTRY'">
                             <app-configuration-select-field
@@ -184,7 +184,7 @@
                             [options]="sageIntacctDefaultGLAccounts"
                             [iconPath]="'expense'"
                             [placeholder]="'Select GL account'"
-                            [formControllerName]="'cccExpensePaymentType'"></app-configuration-select-field>
+                            [formControllerName]="'creditCard'"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType==='CHARGE_CARD_TRANSACTION'">
                             <app-configuration-select-field
@@ -196,7 +196,7 @@
                             [options]="['charge card']"
                             [iconPath]="'expense'"
                             [placeholder]="'Select Charge Corporate Card'"
-                            [formControllerName]="'cccExpensePaymentType'"></app-configuration-select-field>
+                            [formControllerName]="'chargeCard'"></app-configuration-select-field>
                         </div>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

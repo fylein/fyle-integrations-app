@@ -35,7 +35,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   cccExpenseStateOptions: ExportSettingFormOption[];
 
-  is_simplify_report_closure_enabled: boolean = false;
+  is_simplify_report_closure_enabled: boolean = true;
 
   exportSettings: ExportSettingGet;
 
@@ -394,6 +394,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         this.exportSettingsForm = this.formBuilder.group({
           reimbursableExportType: [this.exportSettings?.reimbursable_expenses_export_type],
           reimbursableExpense: [this.exportSettings?.reimbursable_expenses_export_type ? true : false],
+          defaultReimbursableExpensePaymentType: [null],
           reimbursableExportGroup: [this.getExportGroup(this.exportSettings?.reimbursable_expense_grouped_by)],
           reimbursableExportDate: [this.exportSettings?.reimbursable_expense_date ? this.exportSettings?.reimbursable_expense_date : null],
           employeeFieldMapping: [this.exportSettings?.employeeFieldMapping ? this.exportSettings?.employeeFieldMapping : null],
@@ -402,14 +403,15 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           cccExportType: [this.exportSettings?.credit_card_expense_export_type ? this.exportSettings?.credit_card_expense_export_type : null],
           cccExportGroup: [this.getExportGroup(this.exportSettings?.credit_card_expense_grouped_by)],
           cccExportDate: [this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.cccExpenseGroupingDateOptions[0].value],
-          bankAccount: [this.exportSettings?.bank_account_name ? this.exportSettings?.bank_account_name : null],
           cccEntityName: [this.exportSettings?.credit_card_entity_name_preference ? this.exportSettings?.credit_card_entity_name_preference : null],
           cccAccountName: [this.exportSettings?.credit_card_account_name ? this.exportSettings?.credit_card_account_name : null],
           reimbursableExpenseState: [this.exportSettings?.expense_state ? this.exportSettings?.expense_state : null],
           cccExpenseState: [this.exportSettings?.ccc_expense_state ? this.exportSettings?.ccc_expense_state : null],
-          glAccount: [this.exportSettings?.gl_accounts ? this.exportSettings?.gl_accounts : null],
-          defaultReimbursableExpensePaymentType: [null],
-          defaultCCCExpensePaymentType: [null],
+          glAccount: [this.exportSettings?.default_gl_account ? this.exportSettings?.default_gl_account : null],
+          cccExpensePaymentType: [null],
+          creditCardVendor: [this.exportSettings?.default_ccc_vendor ? this.exportSettings?.default_ccc_vendor : null],
+          creditCard: [this.exportSettings?.default_credit_card ? this.exportSettings?.default_credit_card : null],
+          chargeCard: [this.exportSettings?.default_charge_card ? this.exportSettings?.default_charge_card : null]
         });
         this.exportFieldsWatcher();
         this.isLoading = false;
@@ -428,7 +430,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
             cccExportType: [null],
             cccExportGroup: [null],
             cccExportDate: [null],
-            bankAccount: [null],
             cccEntityName: [null],
             cccAccountName: [null],
             reimbursableExpenseState: [null],
@@ -436,6 +437,9 @@ export class ConfigurationExportSettingsComponent implements OnInit {
             glAccount: [null],
             reimbursableExpensePaymentType: [null],
             cccExpensePaymentType: [null],
+            chargeCard: [null],
+            creditCard: [null],
+            creditCardVendor: [null],
           });
           this.exportFieldsWatcher();
           this.isLoading = false;
