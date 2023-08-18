@@ -70,15 +70,15 @@ export class ExportSettingModel {
             reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
             corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value ? exportSettingsForm.get('creditCardExportType')?.value : null,
             employee_field_mapping: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value : exportSettingsForm.get('cccEntityName')?.value,
-            auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : null,
+            auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : null
         },
         general_mappings: {
-            default_gl_account: exportSettingsForm.get('glAccount')?.value ? {id : exportSettingsForm.get('glAccount')?.value.id, name: exportSettingsForm.get('glAccount')?.value.value} : emptyDestinationAttribute,
-            default_credit_card: exportSettingsForm.get('creditCard')?.value ? {id : exportSettingsForm.get('creditCard')?.value.id, name: exportSettingsForm.get('creditCard')?.value.value} : emptyDestinationAttribute,
+            default_gl_account: exportSettingsForm.get('glAccount')?.value ? {id: exportSettingsForm.get('glAccount')?.value.id, name: exportSettingsForm.get('glAccount')?.value.value} : emptyDestinationAttribute,
+            default_credit_card: exportSettingsForm.get('creditCard')?.value ? {id: exportSettingsForm.get('creditCard')?.value.id, name: exportSettingsForm.get('creditCard')?.value.value} : emptyDestinationAttribute,
             default_charge_card: exportSettingsForm.get('chargeCard')?.value ? exportSettingsForm.get('chargeCard')?.value : emptyDestinationAttribute,
             default_ccc_expense_payment_type: exportSettingsForm.get('cccExpensePaymentType')?.value ? exportSettingsForm.get('cccExpensePaymentType')?.value : emptyDestinationAttribute,
-            default_reimbursable_expense_payment_type: exportSettingsForm.get('reimbursableExpensePaymentType')?.value ? {id : exportSettingsForm.get('reimbursableExpensePaymentType')?.value.id, name: exportSettingsForm.get('reimbursableExpensePaymentType')?.value.value} : emptyDestinationAttribute,
-            default_ccc_vendor: exportSettingsForm.get('creditCardVendor')?.value ? {id : exportSettingsForm.get('creditCardVendor')?.value.id, name: exportSettingsForm.get('creditCardVendor')?.value.value} : emptyDestinationAttribute
+            default_reimbursable_expense_payment_type: exportSettingsForm.get('reimbursableExpensePaymentType')?.value ? {id: exportSettingsForm.get('reimbursableExpensePaymentType')?.value.id, name: exportSettingsForm.get('reimbursableExpensePaymentType')?.value.value} : emptyDestinationAttribute,
+            default_ccc_vendor: exportSettingsForm.get('creditCardVendor')?.value ? {id: exportSettingsForm.get('creditCardVendor')?.value.id, name: exportSettingsForm.get('creditCardVendor')?.value.value} : emptyDestinationAttribute
         }
     };
     console.log(exportSettingsForm.get('reimbursableExpensePaymentType')?.value);

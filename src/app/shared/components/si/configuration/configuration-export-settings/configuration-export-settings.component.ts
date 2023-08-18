@@ -388,7 +388,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         this.sageIntacctDefaultVendor = attributes.VENDOR;
         this.sageIntacctDefaultChargeCard = attributes.CHARGE_CARD_NUMBER;
       });
-    }    
+    }
 
     setCreditCardExpenseGroupingDateOptions(creditCardExportGroup: string): void {
       if (creditCardExportGroup === ExpenseGroupingFieldOption.EXPENSE_ID) {

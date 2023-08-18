@@ -46,9 +46,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
-  ngOnInit(): void {
-    console.log(this.destinationAttributes);
-  }
+  ngOnInit(): void {}
 
   showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
     const data: PreviewPage = {
