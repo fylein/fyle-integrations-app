@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ClickEvent, IntacctOnboardingState, Page, QBDOnboardingState, UpdateEvent } from '../../models/enum/enum.model';
-import { UpdateEventAdditionalProperty } from '../../models/misc/tracking.model';
+import { ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, UpdateEvent } from '../../models/enum/enum.model';
+import { UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
 import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/field-mapping.model';
 import { LocationEntityPost } from '../../models/si/si-configuration/connector.model';
+import { ExportSettingPost } from '../../models/si/si-configuration/export-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -83,11 +84,15 @@ export class TrackingService {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 
-  integrationsOnboardingCompletion(eventName: IntacctOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | void): void {
+  integrationsOnboardingCompletion(eventName: IntacctOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost |void): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 
   onUpdateEvent(eventName: UpdateEvent, additionalProperties: Partial<UpdateEventAdditionalProperty> | void): void {
+    this.eventTrack(`Update event: ${eventName}`, additionalProperties);
+  }
+
+  intacctUpdateEvent (eventName: IntacctUpdateEvent, additionalProperties: Partial<UpdateIntacctEventAdditionalProperty> | void): void {
     this.eventTrack(`Update event: ${eventName}`, additionalProperties);
   }
 }

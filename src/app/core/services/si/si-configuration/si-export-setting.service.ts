@@ -15,10 +15,10 @@ export class SiExportSettingService {
   ) { }
 
   getExportSettings(): Observable<ExportSettingGet>{
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {});
   }
 
   postExportSettings(exportSettingsPayload: ExportSettingPost): Observable<ExportSettingGet> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 }
