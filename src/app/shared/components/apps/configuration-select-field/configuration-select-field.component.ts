@@ -14,7 +14,9 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 })
 export class ConfigurationSelectFieldComponent implements OnInit {
 
-  @Input() options: QBDExportSettingFormOption[] | string[] | DestinationAttribute[] | ExportSettingFormOption[];
+  @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[];
+
+  @Input() destinationAttributes: DestinationAttribute[];
 
   @Input() form: FormGroup;
 
@@ -36,8 +38,6 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() customErrorMessage: string;
 
-  notObject: boolean;
-
   meridiemOption: string[] = ['AM', 'PM'];
 
   timeOption: string[] = ['01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'];
@@ -47,14 +47,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.notObject = this.isArrayOfTypeDestinationAttribute(this.options);
-  }
-
-  isArrayOfTypeDestinationAttribute(array: any[]): boolean {
-    if (array[0].id) {
-      return true;
-    }
-    return false;
+    console.log(this.destinationAttributes);
   }
 
   showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {

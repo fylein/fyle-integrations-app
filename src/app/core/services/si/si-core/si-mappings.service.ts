@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 
@@ -39,51 +39,20 @@ export class SiMappingsService {
     return this.apiService.get(`/workspaces/${workspaceId}/sage_intacct/destination_attributes/`, params);
   }
 
-  getSageIntacctAccounts(accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
-    return from(this.getSageIntacctDestinationAttributes(['ACCOUNT'], accountType, active).toPromise())
-      .pipe(
-        map((response: DestinationAttribute[] | undefined) => {
-          if (!response) {
-            return []; // Handle the case when response is undefined
-          }
-          return response.filter(attribute => attribute.attribute_type === 'ACCOUNT');
-        })
-      );
-  }
+  getGroupedDestinationAttributes(attributeTypes: string[]): Observable<GroupedDestinationAttribute> {
+    return from(this.getSageIntacctDestinationAttributes(attributeTypes).toPromise().then((response: DestinationAttribute[] | undefined) => {
+      return response?.reduce((groupedAttributes: GroupedDestinationAttribute | any, attribute: DestinationAttribute) => {
+        const group: DestinationAttribute[] = groupedAttributes[attribute.attribute_type] || [];
+        group.push(attribute);
+        groupedAttributes[attribute.attribute_type] = group;
 
-  getSageIntacctExpensePaymentType(accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
-    return from(this.getSageIntacctDestinationAttributes(['EXPENSE_PAYMENT_TYPE'], accountType, active).toPromise())
-      .pipe(
-        map((response: DestinationAttribute[] | undefined) => {
-          if (!response) {
-            return []; // Handle the case when response is undefined
-          }
-          return response.filter(attribute => attribute.attribute_type === 'EXPENSE_PAYMENT_TYPE');
-        })
-      );
-  }
-
-  getSageIntacctVendors(accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
-    return from(this.getSageIntacctDestinationAttributes(['VENDOR'], accountType, active).toPromise())
-      .pipe(
-        map((response: DestinationAttribute[] | undefined) => {
-          if (!response) {
-            return []; // Handle the case when response is undefined
-          }
-          return response.filter(attribute => attribute.attribute_type === 'VENDOR');
-        })
-      );
-  }
-
-  getSageIntacctChargeCard(accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
-    return from(this.getSageIntacctDestinationAttributes(['CHARGE_CARD_NUMBER'], accountType, active).toPromise())
-      .pipe(
-        map((response: DestinationAttribute[] | undefined) => {
-          if (!response) {
-            return []; // Handle the case when response is undefined
-          }
-          return response.filter(attribute => attribute.attribute_type === 'CHARGE_CARD_NUMBER');
-        })
-      );
+        return groupedAttributes;
+      }, {
+        ACCOUNT: [],
+        EXPENSE_PAYMENT_TYPE: [],
+        VENDOR: [],
+        CHARGE_CARD_NUMBER: []
+      });
+    }));
   }
 }

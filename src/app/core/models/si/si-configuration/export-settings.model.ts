@@ -25,10 +25,10 @@ export type ExportSettingGet = {
     credit_card_account_name: string | null,
     credit_card_expense_grouped_by: string[] | null,
     credit_card_expense_date: ExportDateType | null,
-    default_credit_card: string | null,
+    default_credit_card: DefaultDestinationAttribute | null,
     default_gl_account: DefaultDestinationAttribute,
     default_charge_card: DefaultDestinationAttribute,
-    default_ccc_vendor: DefaultDestinationAttribute
+    default_ccc_vendor: DefaultDestinationAttribute,
     workspace: number
 }
 
@@ -36,7 +36,7 @@ export type ExportSettingConfiguration = {
     employee_field_mapping: string,
     auto_map_employees: string,
     reimbursable_expenses_object: IntacctReimbursableExpensesObject | null,
-    corporate_credit_card_expenses_object: string | null
+    corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject | null
   }
 
 export type ExportSettingGeneralMapping = {

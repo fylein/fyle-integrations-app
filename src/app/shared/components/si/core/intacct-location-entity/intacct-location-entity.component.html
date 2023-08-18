@@ -52,7 +52,7 @@
           <div class="select-location-entity">
           <app-configuration-select-field *ngIf="!locationEntity"
           [form]="locationEntityForm"
-          [options]="locationEntityOptions"
+          [destinationAttributes]="locationEntityOptions"
           [placeholder]="'Select Location Entity'"
           [formControllerName]="'locationEntity'"></app-configuration-select-field>
         </div>

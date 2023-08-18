@@ -31,33 +31,33 @@
                         [iconPath]="'expense'"
                         [placeholder]="'Select expense export module'"
                         [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
-                            <div *ngIf="exportSettingsForm.value.reimbursableExportType==='JOURNAL_ENTRY'">
+                            <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.JOURNAL_ENTRY">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'GL Account'"
                                 [label]="'To which GL Account should the expenses be credited to?'"
                                 [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
-                                [options]="sageIntacctDefaultGLAccounts"
+                                [destinationAttributes]="sageIntacctDefaultGLAccounts"
                                 [iconPath]="'expense'"
                                 [placeholder]="'Select GL account'"
                                 [formControllerName]="'glAccount'"></app-configuration-select-field>
                             </div>
-                            <div *ngIf="exportSettingsForm.value.reimbursableExportType==='EXPENSE_REPORT'">
+                            <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'expense payment type'"
                                 [label]="'Set the Default Expense Payment Type as?'"
                                 [subLabel]="'The selected Expense Payment Type will be added to the reimbursable expenses exported from Fyle to Sage Intacct.'"
-                                [options]="sageIntacctExpensePaymentType"
+                                [destinationAttributes]="sageIntacctExpensePaymentType"
                                 [iconPath]="'expense'"
                                 [placeholder]="'Select expense payment type'"
                                 [formControllerName]="'reimbursableExpensePaymentType'"></app-configuration-select-field>
                             </div>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field *ngIf="exportSettingsForm.value.reimbursableExportType==='JOURNAL_ENTRY'"
+                        <app-configuration-select-field *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.JOURNAL_ENTRY"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'employee field'"
@@ -67,7 +67,7 @@
                         [iconPath]="'twopeople'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.reimbursableExportType === 'EXPENSE_REPORT' || exportSettingsForm.value.reimbursableExportType === 'BILL'">
+                        <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.EXPENSE_REPORT || exportSettingsForm.value.reimbursableExportType==='BILL'">
                             <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                 <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
                                 <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
@@ -102,7 +102,7 @@
                         [placeholder]="'Select export state'"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf='exportSettingsForm.value.reimbursableExportType' class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -148,57 +148,57 @@
                         [iconPath]="'expense'"
                         [placeholder]="'Select expense export module'"
                         [formControllerName]="'cccExportType'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.cccExportType==='EXPENSE_REPORT'">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.EXPENSE_REPORT">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense payment type'"
                             [label]="'Set the Default Expense Payment Type as?'"
                             [subLabel]="'The selected Expense Payment Type will be added to the Corporate credit card expenses exported from Fyle to Sage Intacct.'"
-                            [options]="sageIntacctCCCExpensePaymentType"
+                            [destinationAttributes]="sageIntacctCCCExpensePaymentType"
                             [iconPath]="'expense'"
                             [placeholder]="'Select expense payment type'"
                             [formControllerName]="'cccExpensePaymentType'"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType==='BILL'">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.BILL">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'credit card vendor'"
                             [label]="'Set the Default Credit Card Vendor as?'"
                             [subLabel]="'The vendor configured here will be added to all the Credit Card expenses exported as Bills.'"
-                            [options]="sageIntacctDefaultVendor"
+                            [destinationAttributes]="sageIntacctDefaultVendor"
                             [iconPath]="'expense'"
                             [placeholder]="'Select credit card vendor'"
                             [formControllerName]="'creditCardVendor'"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType==='JOURNAL_ENTRY'">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'GL account'"
                             [label]="'To which GL Account should the expenses be credited to?'"
                             [subLabel]="'The vendor configured here will be added to all the Credit Card expenses exported as Bills.'"
-                            [options]="sageIntacctDefaultGLAccounts"
+                            [destinationAttributes]="sageIntacctDefaultGLAccounts"
                             [iconPath]="'expense'"
                             [placeholder]="'Select GL account'"
                             [formControllerName]="'creditCard'"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType==='CHARGE_CARD_TRANSACTION'">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'charge card'"
                             [label]="'Set the Default Charge Card as?'"
                             [subLabel]="'Expenses made with Corporate Cards in Fyle that are not mapped to their own cards in Sage Intacct will be posted to the Card/Account selected here.'"
-                            [options]="sageIntacctDefaultChargeCard"
+                            [destinationAttributes]="sageIntacctDefaultChargeCard"
                             [iconPath]="'expense'"
                             [placeholder]="'Select Charge Corporate Card'"
                             [formControllerName]="'chargeCard'"></app-configuration-select-field>
                         </div>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType==='JOURNAL_ENTRY' && !exportSettingsForm.value.reimbursableExpense"
+                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY && !exportSettingsForm.value.reimbursableExpense"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'employee field'"
@@ -208,7 +208,7 @@
                         [iconPath]="'twopeople'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'cccEntityName'"></app-configuration-select-field>
-                        <div *ngIf="(exportSettingsForm.value.cccExportType==='EXPENSE_REPORT' || exportSettingsForm.value.cccExportType==='BILL' || exportSettingsForm.value.cccExportType==='CHARGE_CARD_TRANSACTION') && !exportSettingsForm.value.reimbursableExpense">
+                        <div *ngIf="(exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.EXPENSE_REPORT || exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.BILL || exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) && !exportSettingsForm.value.reimbursableExpense">
                             <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                 <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
                                 <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
@@ -231,7 +231,7 @@
                         [placeholder]="'Select export state'"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf='exportSettingsForm.value.cccExportType' class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!=='CHARGE_CARD_TRANSACTION'"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -242,7 +242,7 @@
                         [iconPath]="'calender'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.cccExportType==='CHARGE_CARD_TRANSACTION'">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                 <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
                                 <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
@@ -256,7 +256,7 @@
                         </div>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!=='CHARGE_CARD_TRANSACTION'"
+                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!==CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'how expenses to be grouped'"
@@ -266,7 +266,7 @@
                         [iconPath]="'questionmark'"
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.cccExportType==='CHARGE_CARD_TRANSACTION'">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                 <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
                                 <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
