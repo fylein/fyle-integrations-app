@@ -25,7 +25,7 @@ export type ExportSettingGet = {
     credit_card_account_name: string | null,
     credit_card_expense_grouped_by: string[] | null,
     credit_card_expense_date: ExportDateType | null,
-    default_credit_card: DefaultDestinationAttribute | null,
+    default_credit_card: DefaultDestinationAttribute,
     default_gl_account: DefaultDestinationAttribute,
     default_charge_card: DefaultDestinationAttribute,
     default_ccc_vendor: DefaultDestinationAttribute,

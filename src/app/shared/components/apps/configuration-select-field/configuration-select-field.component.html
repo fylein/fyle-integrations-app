@@ -10,13 +10,13 @@
         </div>
     </div>
     <div>
-        <div *ngIf="(options || destinationAttributes) && !simpleOptions">
+        <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
+            <p-dropdown [options]="destinationAttributes" optionLabel="value" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
+            </p-dropdown>
+        </div>
+        <div *ngIf="options && !destinationAttributes && !simpleOptions">
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
                 <p-dropdown [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
-                </p-dropdown>
-            </div>
-            <div class="p-field-checkbox tw-pl-34-px" *ngIf="!options">
-                <p-dropdown [options]="destinationAttributes" optionLabel="value" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                 </p-dropdown>
             </div>
             <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
