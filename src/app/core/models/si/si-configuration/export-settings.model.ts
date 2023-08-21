@@ -8,13 +8,6 @@ export type ExportSettingFormOption = {
     value: ExpenseState | IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExportDateType | string | FyleField;
 }
 
-export type ExportSettingGet = {
-    configurations: ExportSettingConfiguration,
-    expense_group_settings: ExpenseGroupSettingPost,
-    general_mappings: ExportSettingGeneralMapping,
-    workspace_id: number
-}
-
 export type ExportSettingConfiguration = {
     employee_field_mapping: string,
     auto_map_employees: string,
@@ -31,6 +24,13 @@ export type ExportSettingGeneralMapping = {
     default_ccc_vendor: DefaultDestinationAttribute
 }
 
+export type ExportSettingGet = {
+    configurations: ExportSettingConfiguration,
+    expense_group_settings: ExpenseGroupSettingPost,
+    general_mappings: ExportSettingGeneralMapping,
+    workspace_id: number
+}
+
 export type ExportSettingPost = {
     configurations: ExportSettingConfiguration,
     expense_group_settings: ExpenseGroupSettingPost,
@@ -39,22 +39,24 @@ export type ExportSettingPost = {
 
   export class ExportSettingModel {
     static constructPayload(exportSettingsForm: FormGroup): ExportSettingPost {
+        const getValueOrDefault = (control: AbstractControl | null, defaultValue: any = null) => {
+            return control?.value ? control.value : defaultValue;
+        };
         const emptyDestinationAttribute = { id: null, name: null };
-        console.log(exportSettingsForm.value.reimbursableExportGroup);
         const exportSettingPayload: ExportSettingPost = {
             expense_group_settings: {
-                expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
-                ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value ? exportSettingsForm.get('cccExpenseState')?.value : null,
+                expense_state: getValueOrDefault(exportSettingsForm.get('reimbursableExpenseState')),
+                ccc_expense_state: getValueOrDefault(exportSettingsForm.get('cccExpenseState')),
                 reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.value.reimbursableExportGroup] : null,
                 reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
                 corporate_credit_card_expense_group_fields: exportSettingsForm.get('cccExportGroup')?.value ? [exportSettingsForm.value.cccExportGroup] : null,
-                ccc_export_date_type: exportSettingsForm.get('cccExportDate')?.value ? (exportSettingsForm.get('cccExportDate')?.value==='Spend Date' ? 'spent_at' : exportSettingsForm.get('cccExportDate')?.value) : null
+                ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend Date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate'))
             },
             configurations: {
-                reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
-                corporate_credit_card_expenses_object: exportSettingsForm.get('cccExportType')?.value ? exportSettingsForm.get('cccExportType')?.value : null,
+                reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
+                corporate_credit_card_expenses_object: getValueOrDefault(exportSettingsForm.get('cccExportType')),
                 employee_field_mapping: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value : exportSettingsForm.get('cccEntityName')?.value,
-                auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : null
+                auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees'))
             },
             general_mappings: {
                 default_gl_account: exportSettingsForm.get('glAccount')?.value?.value ? {id: exportSettingsForm.get('glAccount')?.value.id, name: exportSettingsForm.get('glAccount')?.value.value} : emptyDestinationAttribute,

@@ -54,12 +54,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   sageIntacctDefaultChargeCard: DestinationAttribute[];
 
-  sageIntacctDefaultCreditCard: DestinationAttribute[];
-
-  sageIntacctDefaultItem: DestinationAttribute[];
-
-  sageIntacctPaymentAccounts: DestinationAttribute[];
-
   private sessionStartTime = new Date();
 
   expenseGroupingFieldOptions: ExportSettingFormOption[] = [
@@ -236,16 +230,19 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           this.exportSettingsForm.controls.reimbursableExportGroup.setValidators(Validators.required);
           this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
           this.exportSettingsForm.controls.reimbursableExpenseState.setValidators(Validators.required);
+          this.exportSettingsForm.controls.autoMapEmployees.setValidators(Validators.required);
           this.reimbursableExportWatcher();
         } else {
           this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
           this.exportSettingsForm.controls.reimbursableExportGroup.clearValidators();
           this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
           this.exportSettingsForm.controls.reimbursableExpenseState.clearValidators();
+          this.exportSettingsForm.controls.autoMapEmployees.clearValidators();
           this.exportSettingsForm.controls.reimbursableExpenseState.setValue(null);
           this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
           this.exportSettingsForm.controls.reimbursableExportGroup.setValue(null);
           this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
+          this.exportSettingsForm.controls.autoMapEmployees.setValue(null);
         }
       });
     }
@@ -356,6 +353,18 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
 
     private exportFieldsWatcher(): void {
+      // Disabling input fields conditonally
+      if (this.exportSettings?.configurations.reimbursable_expenses_object==='BILL' || this.exportSettings?.configurations.reimbursable_expenses_object==='EXPENSE_REPORT') {
+        this.exportSettingsForm.get('employeeFieldMapping')?.disable();
+      }
+      if (!this.exportSettings?.configurations.reimbursable_expenses_object && this.exportSettings?.configurations.corporate_credit_card_expenses_object!=='JOURNAL_ENTRY') {
+        this.exportSettingsForm.get('cccEntityName')?.disable();
+      }
+      if (this.exportSettings?.configurations.corporate_credit_card_expenses_object === 'CHARGE_CARD_TRANSACTION') {
+        this.exportSettingsForm.controls.cccExportDate.disable();
+        this.exportSettingsForm.controls.cccExportGroup.setValue('Expense');
+        this.exportSettingsForm.controls.cccExportGroup.disable();
+      }
       this.createReimbursableExpenseWatcher();
       this.createCreditCardExpenseWatcher();
       this.employeeFieldWatcher();
@@ -415,37 +424,12 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       if (this.exportSettings) {
         if (this.exportSettings?.configurations.corporate_credit_card_expenses_object === 'CHARGE_CARD_TRANSACTION') {
           return 'Spend Date';
-        } else {
-          return this.exportSettings?.expense_group_settings.ccc_export_date_type;
         }
+          return this.exportSettings?.expense_group_settings.ccc_export_date_type;
+
       }
       return null;
     }
-
-    private initializeExportSettingsFormWithDefaults(): void {
-      this.exportSettingsForm = this.formBuilder.group({
-          reimbursableExportType: [null],
-          reimbursableExpense: [null, this.exportSelectionValidator()],
-          reimbursableExportGroup: [null],
-          reimbursableExportDate: [null],
-          employeeFieldMapping: [null],
-          autoMapEmployees: [null],
-          reimbursableExpenseState: [null],
-          glAccount: [null],
-          reimbursableExpensePaymentType: [null],
-          creditCardExpense: [null, this.exportSelectionValidator()],
-          cccExportType: [null],
-          cccExportGroup: [null],
-          cccExportDate: [null],
-          cccEntityName: [null],
-          cccExpenseState: [null],
-          cccExpensePaymentType: [null],
-          chargeCard: [null],
-          creditCard: [null],
-          creditCardVendor: [null]
-      });
-      this.exportFieldsWatcher();
-  }
 
   private initializeExportSettingsFormWithData(): void {
       this.exportSettingsForm = this.formBuilder.group({
@@ -465,27 +449,19 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         cccExpenseState: [this.exportSettings?.expense_group_settings.ccc_expense_state || null],
         cccExpensePaymentType: [(this.sageIntacctCCCExpensePaymentType?.find(cccExpensePaymentType => cccExpensePaymentType.id.toString() === this.exportSettings?.general_mappings.default_ccc_expense_payment_type.id)) || null],
         creditCardVendor: [(this.sageIntacctDefaultVendor?.find(creditCardVendor => creditCardVendor.id.toString() === this.exportSettings?.general_mappings.default_ccc_vendor.id)) || null],
-        creditCard: [(this.sageIntacctDefaultCreditCard?.find(creditCard => creditCard.id.toString() === this.exportSettings?.general_mappings.default_credit_card.id)) || null],
+        creditCard: [(this.sageIntacctDefaultGLAccounts?.find(creditCard => creditCard.id.toString() === this.exportSettings?.general_mappings.default_credit_card.id)) || null],
         chargeCard: [(this.sageIntacctDefaultChargeCard?.find(chargeCard => chargeCard.id.toString() === this.exportSettings?.general_mappings.default_charge_card.id)) || null],
         cccEntityName: [!(!!this.exportSettings?.configurations.reimbursable_expenses_object) ? this.exportSettings?.configurations.employee_field_mapping : null]
       });
-      if(this.exportSettings?.configurations.reimbursable_expenses_object==='BILL' || this.exportSettings?.configurations.reimbursable_expenses_object==='EXPENSE_REPORT') {
-        this.exportSettingsForm.get('employeeFieldMapping')?.disable();
-      }
-      if (this.exportSettings?.configurations.corporate_credit_card_expenses_object === 'CHARGE_CARD_TRANSACTION') {
-        this.exportSettingsForm.controls.cccExportDate.disable();
-        this.exportSettingsForm.controls.cccExportGroup.setValue('Expense');
-        this.exportSettingsForm.controls.cccExportGroup.disable();
-      }
       this.exportFieldsWatcher();
   }
 
   private getSettingsAndSetupForm(): void {
     const destinationAttributes = ['ACCOUNT', 'EXPENSE_PAYMENT_TYPE', 'VENDOR', 'CHARGE_CARD_NUMBER'];
-  
+
     const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
     const exportSettings$ = this.exportSettingService.getExportSettings();
-  
+
     forkJoin({
       groupedAttributes: groupedAttributes$,
       exportSettings: exportSettings$
@@ -496,7 +472,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         this.sageIntacctCCCExpensePaymentType = groupedAttributes.EXPENSE_PAYMENT_TYPE.filter(attr => !attr.detail.is_reimbursable);
         this.sageIntacctDefaultVendor = groupedAttributes.VENDOR;
         this.sageIntacctDefaultChargeCard = groupedAttributes.CHARGE_CARD_NUMBER;
-  
+
         this.exportSettings = exportSettings;
         this.setUpExpenseStates();
         this.setupCCCExpenseGroupingDateOptions();
@@ -504,7 +480,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         this.isLoading = false;
       });
   }
-  
+
 
     private getPhase(): ProgressPhase {
       return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
