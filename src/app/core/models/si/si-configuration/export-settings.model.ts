@@ -9,27 +9,10 @@ export type ExportSettingFormOption = {
 }
 
 export type ExportSettingGet = {
-    id: number,
-    created_at: Date,
-    updated_at: Date,
-    is_simplify_report_closure_enabled: boolean,
-    reimbursable_expenses_export_type: IntacctReimbursableExpensesObject | null,
-    expense_state: ExpenseState | null,
-    reimbursable_expense_date: ExportDateType | null,
-    reimbursable_expense_grouped_by: string[] | null,
-    auto_map_employees: string,
-    employeeFieldMapping: string | null,
-    credit_card_expense_export_type: CorporateCreditCardExpensesObject | null,
-    ccc_expense_state: ExpenseState | null,
-    credit_card_entity_name_preference: FyleField | null,
-    credit_card_account_name: string | null,
-    credit_card_expense_grouped_by: string[] | null,
-    credit_card_expense_date: ExportDateType | null,
-    default_credit_card: DefaultDestinationAttribute,
-    default_gl_account: DefaultDestinationAttribute,
-    default_charge_card: DefaultDestinationAttribute,
-    default_ccc_vendor: DefaultDestinationAttribute,
-    workspace: number
+    configurations: ExportSettingConfiguration,
+    expense_group_settings: ExpenseGroupSettingPost,
+    general_mappings: ExportSettingGeneralMapping,
+    workspace_id: number
 }
 
 export type ExportSettingConfiguration = {
@@ -57,40 +40,31 @@ export type ExportSettingPost = {
   export class ExportSettingModel {
     static constructPayload(exportSettingsForm: FormGroup): ExportSettingPost {
         const emptyDestinationAttribute = { id: null, name: null };
-
-        const getFieldValueOrDefault = (field: AbstractControl | null): any => {
-            return field?.value ? field.value : null;
-        };
-
-        const getValueWithIdAndName = (field: AbstractControl | null): any => {
-            return field?.value ? { id: field.value.id, name: field.value.value } : emptyDestinationAttribute;
-        };
-
+        console.log(exportSettingsForm.value.reimbursableExportGroup);
         const exportSettingPayload: ExportSettingPost = {
             expense_group_settings: {
-                expense_state: getFieldValueOrDefault(exportSettingsForm.get('reimbursableExpenseState')),
-                ccc_expense_state: getFieldValueOrDefault(exportSettingsForm.get('cccExpenseState')),
-                reimbursable_expense_group_fields: getFieldValueOrDefault(exportSettingsForm.get('reimbursableExportGroup')),
-                reimbursable_export_date_type: getFieldValueOrDefault(exportSettingsForm.get('reimbursableExportDate')),
-                corporate_credit_card_expense_group_fields: getFieldValueOrDefault(exportSettingsForm.get('creditCardExportGroup')),
-                ccc_export_date_type: getFieldValueOrDefault(exportSettingsForm.get('creditCardExportDate'))
+                expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
+                ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value ? exportSettingsForm.get('cccExpenseState')?.value : null,
+                reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.value.reimbursableExportGroup] : null,
+                reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
+                corporate_credit_card_expense_group_fields: exportSettingsForm.get('cccExportGroup')?.value ? [exportSettingsForm.value.cccExportGroup] : null,
+                ccc_export_date_type: exportSettingsForm.get('cccExportDate')?.value ? (exportSettingsForm.get('cccExportDate')?.value==='Spend Date' ? 'spent_at' : exportSettingsForm.get('cccExportDate')?.value) : null
             },
             configurations: {
-                reimbursable_expenses_object: getFieldValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
-                corporate_credit_card_expenses_object: getFieldValueOrDefault(exportSettingsForm.get('creditCardExportType')),
-                employee_field_mapping: getFieldValueOrDefault(exportSettingsForm.get('reimbursableExportType')) || getFieldValueOrDefault(exportSettingsForm.get('cccEntityName')),
-                auto_map_employees: getFieldValueOrDefault(exportSettingsForm.get('autoMapEmployees'))
+                reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
+                corporate_credit_card_expenses_object: exportSettingsForm.get('cccExportType')?.value ? exportSettingsForm.get('cccExportType')?.value : null,
+                employee_field_mapping: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value : exportSettingsForm.get('cccEntityName')?.value,
+                auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value ? exportSettingsForm.get('autoMapEmployees')?.value : null
             },
             general_mappings: {
-                default_gl_account: getValueWithIdAndName(exportSettingsForm.get('glAccount')),
-                default_credit_card: getValueWithIdAndName(exportSettingsForm.get('creditCard')),
-                default_charge_card: getFieldValueOrDefault(exportSettingsForm.get('chargeCard')) || emptyDestinationAttribute,
-                default_ccc_expense_payment_type: getFieldValueOrDefault(exportSettingsForm.get('cccExpensePaymentType')) || emptyDestinationAttribute,
-                default_reimbursable_expense_payment_type: getValueWithIdAndName(exportSettingsForm.get('reimbursableExpensePaymentType')),
-                default_ccc_vendor: getValueWithIdAndName(exportSettingsForm.get('creditCardVendor'))
+                default_gl_account: exportSettingsForm.get('glAccount')?.value?.value ? {id: exportSettingsForm.get('glAccount')?.value.id, name: exportSettingsForm.get('glAccount')?.value.value} : emptyDestinationAttribute,
+                default_credit_card: exportSettingsForm.get('creditCard')?.value?.value ? {id: exportSettingsForm.get('creditCard')?.value.id, name: exportSettingsForm.get('creditCard')?.value.value} : emptyDestinationAttribute,
+                default_charge_card: exportSettingsForm.get('chargeCard')?.value?.value ? {id: exportSettingsForm.get('chargeCard')?.value.id, name: exportSettingsForm.get('chargeCard')?.value.value} : emptyDestinationAttribute,
+                default_ccc_expense_payment_type: exportSettingsForm.get('cccExpensePaymentType')?.value?.value ? {id: exportSettingsForm.get('cccExpensePaymentType')?.value.id, name: exportSettingsForm.get('cccExpensePaymentType')?.value.value} : emptyDestinationAttribute,
+                default_reimbursable_expense_payment_type: exportSettingsForm.get('reimbursableExpensePaymentType')?.value?.value ? {id: exportSettingsForm.get('reimbursableExpensePaymentType')?.value.id, name: exportSettingsForm.get('reimbursableExpensePaymentType')?.value.value} : emptyDestinationAttribute,
+                default_ccc_vendor: exportSettingsForm.get('creditCardVendor')?.value?.value ? {id: exportSettingsForm.get('creditCardVendor')?.value.id, name: exportSettingsForm.get('creditCardVendor')?.value.value} : emptyDestinationAttribute
             }
         };
-
         return exportSettingPayload;
     }
 }
