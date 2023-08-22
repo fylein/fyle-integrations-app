@@ -12,6 +12,7 @@ import { MainComponent } from '../main/main.component';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { OnboardingExportSettingComponent } from './onboarding-export-setting/onboarding-export-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-setting/onboarding-advanced-setting.component';
+import { OnboardingImportSettingComponent } from './onboarding-import-setting/onboarding-import-setting.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-settin
     OnboardingComponent,
     OnboardingDoneComponent,
     OnboardingExportSettingComponent,
+    OnboardingImportSettingComponent,
     OnboardingAdvancedSettingComponent
   ],
   imports: [
