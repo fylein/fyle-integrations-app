@@ -7,13 +7,11 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { SiRoutingModule } from './si-routing.module';
-import { OnboardingImportSettingComponent } from './onboarding/onboarding-import-setting/onboarding-import-setting.component';
 
 
 @NgModule({
   declarations: [
-    SiComponent,
-    OnboardingImportSettingComponent
+    SiComponent
   ],
   imports: [
     CommonModule,
