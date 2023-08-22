@@ -16,12 +16,13 @@
 
 .sub-text-note {
     display: flex;
-    padding: 12px;
+    padding: 16px;
     align-items: flex-start;
-    gap: 4px;
     align-self: stretch;
     border-radius: 4px;
     background: var(--shades-info, #EFF5FC);
-    font-size: 14px;
+    font-size: 0.84em;
+    font-weight: 400;
+    color: #5a5d72;
     font-style: normal;
 }
