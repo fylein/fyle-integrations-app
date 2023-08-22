@@ -8,7 +8,7 @@ import { ConfigurationCta, RedirectLink } from 'src/app/core/models/enum/enum.mo
   styleUrls: ['./configuration-import-settings.component.scss']
 })
 export class ConfigurationImportSettingsComponent implements OnInit {
-  
+
   isLoading: boolean = false;
 
   importSettingsForm: FormGroup;
