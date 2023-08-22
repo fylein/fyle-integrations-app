@@ -1,7 +1,6 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { CorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject } from "../../enum/enum.model";
+import { CorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState } from "../../enum/enum.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
-import { ExpenseGroupSettingPost } from "../db/expense-group-setting.model";
 
 export type ExportSettingFormOption = {
     label: string,
@@ -23,6 +22,15 @@ export type ExportSettingGeneralMapping = {
     default_reimbursable_expense_payment_type: DefaultDestinationAttribute,
     default_ccc_vendor: DefaultDestinationAttribute
 }
+
+export type ExpenseGroupSettingPost = {
+    expense_state: ExpenseState;
+    ccc_expense_state: CCCExpenseState;
+    reimbursable_expense_group_fields: string[] | null;
+    reimbursable_export_date_type: ExportDateType | null;
+    corporate_credit_card_expense_group_fields: string[] | null;
+    ccc_export_date_type: ExportDateType | null;
+  };
 
 export type ExportSettingGet = {
     configurations: ExportSettingConfiguration,

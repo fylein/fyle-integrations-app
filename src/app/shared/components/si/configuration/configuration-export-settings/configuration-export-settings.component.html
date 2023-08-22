@@ -232,7 +232,7 @@
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!=='CHARGE_CARD_TRANSACTION'"
+                        <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
@@ -242,18 +242,6 @@
                         [iconPath]="'calender'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
-                            <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
-                                <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
-                                    <h4 class="!tw-text-14-px !tw-font-500">Set the Charge Card transaction date as<app-mandatory-field></app-mandatory-field></h4>
-                                    <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4" >The selected type of date will reflect in the expenses exported from Fyle to Sage Intacct. Click here for more details.</h5>
-                                </div>
-                                <div class="tw-pl-18-px tw-pt-18-px">
-                                    <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="cccExportDate">
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!==CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
