@@ -1,4 +1,4 @@
-import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, QBDExpenseState, QBDCCCExpenseState, QBDExportDateType, QBDReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
+import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDReimbursableExpensesObject } from "src/app/core/models/enum/enum.model";
 import { QBDExportSettingGet } from "src/app/core/models/qbd/qbd-configuration/export-setting.model";
 
 export const QBDExportSettingResponse:QBDExportSettingGet = {
@@ -7,11 +7,11 @@ export const QBDExportSettingResponse:QBDExportSettingGet = {
     updated_at: new Date('2023-02-01T08:42:45.803382Z'),
     reimbursable_expenses_export_type: QBDReimbursableExpensesObject.BILL,
     bank_account_name: "string",
-    reimbursable_expense_state: QBDExpenseState.PAYMENT_PROCESSING,
+    reimbursable_expense_state: ExpenseState.PAYMENT_PROCESSING,
     reimbursable_expense_date: QBDExportDateType.SPENT_AT,
     reimbursable_expense_grouped_by: QBDExpenseGroupedBy.REPORT,
     credit_card_expense_export_type: QBDCorporateCreditCardExpensesObject.JOURNAL_ENTRY,
-    credit_card_expense_state: QBDCCCExpenseState.PAID,
+    credit_card_expense_state: CCCExpenseState.PAID,
     credit_card_entity_name_preference: QBDEntity.VENDOR,
     credit_card_account_name: "string",
     credit_card_expense_grouped_by: QBDExpenseGroupedBy.EXPENSE,

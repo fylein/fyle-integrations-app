@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ApiService } from '../../core/api.service';
+import { Observable, from } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 
@@ -38,5 +37,22 @@ export class SiMappingsService {
     }
 
     return this.apiService.get(`/workspaces/${workspaceId}/sage_intacct/destination_attributes/`, params);
+  }
+
+  getGroupedDestinationAttributes(attributeTypes: string[]): Observable<GroupedDestinationAttribute> {
+    return from(this.getSageIntacctDestinationAttributes(attributeTypes).toPromise().then((response: DestinationAttribute[] | undefined) => {
+      return response?.reduce((groupedAttributes: GroupedDestinationAttribute | any, attribute: DestinationAttribute) => {
+        const group: DestinationAttribute[] = groupedAttributes[attribute.attribute_type] || [];
+        group.push(attribute);
+        groupedAttributes[attribute.attribute_type] = group;
+
+        return groupedAttributes;
+      }, {
+        ACCOUNT: [],
+        EXPENSE_PAYMENT_TYPE: [],
+        VENDOR: [],
+        CHARGE_CARD_NUMBER: []
+      });
+    }));
   }
 }

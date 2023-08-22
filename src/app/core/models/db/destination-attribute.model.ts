@@ -12,3 +12,15 @@ export type DestinationAttribute = {
   workspace: number;
   detail: IntacctDestinationAttributeDetail;
 };
+
+export type DefaultDestinationAttribute = {
+  id: string,
+  name: string,
+};
+
+export type GroupedDestinationAttribute = {
+  ACCOUNT: DestinationAttribute[],
+  EXPENSE_PAYMENT_TYPE: DestinationAttribute[],
+  VENDOR: DestinationAttribute[],
+  CHARGE_CARD_NUMBER: DestinationAttribute[]
+};

@@ -1,32 +1,32 @@
 export enum IntegrationView {
-    ALL = 'ALL',
-    ACCOUNTING = 'ACCOUNTING',
-    HRMS = 'HRMS',
-    TRAVEL = 'TRAVEL'
+  ALL = 'ALL',
+  ACCOUNTING = 'ACCOUNTING',
+  HRMS = 'HRMS',
+  TRAVEL = 'TRAVEL'
 }
 
 export enum AccountingIntegrationApp {
-    QBO = 'QBO',
-    NETSUITE = 'NetSuite',
-    SAGE_INTACCT = 'Sage Intacct',
-    XERO = 'Xero'
+  QBO = 'QBO',
+  NETSUITE = 'NetSuite',
+  SAGE_INTACCT = 'Sage Intacct',
+  XERO = 'Xero'
 }
 
 export enum InAppIntegration {
-    BAMBOO_HR = 'Bamboo HR',
-    QBD = 'QuickBooks Desktop',
-    TRAVELPERK = 'TravelPerk',
-    GUSTO = 'Gusto',
-    INTACCT = 'Sage Intacct'
+  BAMBOO_HR = 'Bamboo HR',
+  QBD = 'QuickBooks Desktop',
+  TRAVELPERK = 'TravelPerk',
+  GUSTO = 'Gusto',
+  INTACCT = 'Sage Intacct'
 }
 
 export enum RedirectLink {
-    BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
-    QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
-    // TODO: Change the link to the actual help article
-    INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-    TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-    GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+  BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
+  QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
+  // TODO: Change the link to the actual help article
+  INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+  TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+  GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
 
 export enum EmbedVideoLink {
@@ -34,8 +34,8 @@ export enum EmbedVideoLink {
 }
 
 export enum ToastSeverity {
-    SUCCESS = 'success',
-    ERROR = 'error'
+  SUCCESS = 'success',
+  ERROR = 'error'
 }
 
 export enum UpdateEvent {
@@ -43,6 +43,12 @@ export enum UpdateEvent {
   EXPORT_SETTING_QBD = 'Export Settings QBD',
   FIELD_MAPPING_QBD = 'Field Mappings QBD',
   ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD'
+}
+
+export enum IntacctUpdateEvent {
+  CONNECT_INTACCT = 'Connect Sage Intacct',
+  EXPORT_SETTING_INTACCT = 'Export Settings Intacct',
+  IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct'
 }
 
 export enum AppName {
@@ -65,9 +71,12 @@ export enum Page {
   CONNECT_QBD = 'Connect QuickBooks Desktop',
   CONNECT_INTACCT = 'Connect Sage Intacct',
   EXPORT_SETTING_QBD = 'Export Settings QBD',
+  EXPORT_SETTING_INTACCT = 'Export Settings Intacct',
+  IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct',
   FIELD_MAPPING_QBD = 'Field Mappings QBD',
   ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD',
 }
+
 export enum ClickEvent {
   OPEN_QBO_INTEGRATION = 'Open QBO Integration',
   OPEN_NETSUITE_INTEGRATION = 'Open NetSuite Integration',
@@ -90,7 +99,8 @@ export enum ClickEvent {
   ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',
   ADD_EMAIL_MANUALLY = 'Add Email Manually',
   QBD_EXPORT = 'Export IIF files',
-  CONNECT_INTACCT  = 'Connect Sage Intacct'
+  CONNECT_INTACCT  = 'Connect Sage Intacct',
+  PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
 }
 
 export enum ProgressPhase {
@@ -114,78 +124,117 @@ export enum IntacctField {
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS'
 }
 
+export enum IntacctReimbursableExpensesObject {
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  EXPENSE_REPORT = 'EXPENSE_REPORT'
+}
+
+export enum CorporateCreditCardExpensesObject {
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  EXPENSE_REPORT = 'EXPENSE_REPORT',
+  CHARGE_CARD_TRANSACTION = 'CHARGE_CARD_TRANSACTION'
+}
+
+export enum ExpenseState {
+  PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
+  PAID = 'PAID'
+}
+
+export enum CCCExpenseState {
+  PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
+  PAID = 'PAID',
+  APPROVED = 'APPROVED'
+}
+
+export enum ExpenseGroupedBy {
+  EXPENSE = 'EXPENSE',
+  REPORT = 'REPORT',
+  PAYMENT = 'PAYMENT'
+}
+
+export enum ExportDateType {
+  LAST_SPENT_AT = 'last_spent_at',
+  SPENT_AT = 'spent_at',
+  POSTED_AT = 'posted_at',
+  CURRENT_DATE = 'current_date',
+  VERIFIED_DATE = 'verified_at',
+  APPROVAL_DATE = 'approved_at',
+}
+
+export enum FyleField {
+  EMPLOYEE = 'EMPLOYEE',
+  VENDOR = 'VENDOR'
+}
+
+export enum ExpenseGroupingFieldOption {
+  CLAIM_NUMBER = 'claim_number',
+  SETTLEMENT_ID = 'settlement_id',
+  EXPENSE_ID = 'expense_id'
+}
+
 export enum QBDOnboardingState {
-    CONNECTION = 'CONNECTION',
-    EXPORT_SETTINGS = 'EXPORT_SETTINGS',
-    FIELD_MAPPINGS = 'FIELD_MAPPINGS',
-    ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
-    COMPLETE = 'COMPLETE'
+  CONNECTION = 'CONNECTION',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  FIELD_MAPPINGS = 'FIELD_MAPPINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
   }
 
   export enum ConfigurationCta {
-    SAVE = 'Save',
-    SAVE_AND_CONTINUE = 'Save and Continue',
-    CONTINUE = 'Continue',
-    SAVING = 'Saving'
+  SAVE = 'Save',
+  SAVE_AND_CONTINUE = 'Save and Continue',
+  CONTINUE = 'Continue',
+  SAVING = 'Saving'
   }
 
   export enum QBDReimbursableExpensesObject {
-    BILL = 'BILL',
-    JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   }
 
   export enum QBDCorporateCreditCardExpensesObject {
-    CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE',
-    JOURNAL_ENTRY = 'JOURNAL_ENTRY',
-  }
-
-  export enum QBDExpenseState {
-    PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
-    PAID = 'PAID'
-  }
-
-  export enum QBDCCCExpenseState {
-    PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
-    PAID = 'PAID',
-    APPROVED = 'APPROVED'
+  CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE',
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   }
 
   export enum QBDExpenseGroupedBy {
-    EXPENSE = 'EXPENSE',
-    REPORT = 'REPORT'
+  EXPENSE = 'EXPENSE',
+  REPORT = 'REPORT'
   }
 
   export enum QBDExportDateType {
-    LAST_SPENT_AT = 'last_spent_at',
-    SPENT_AT = 'spent_at',
-    POSTED_AT = 'posted_at'
+  LAST_SPENT_AT = 'last_spent_at',
+  SPENT_AT = 'spent_at',
+  POSTED_AT = 'posted_at'
   }
 
   export enum QBDEntity {
-    EMPLOYEE = 'EMPLOYEE',
-    VENDOR = 'VENDOR'
+  EMPLOYEE = 'EMPLOYEE',
+  VENDOR = 'VENDOR'
   }
 
   export enum QBDScheduleFrequency {
-    DAILY = 'DAILY',
-    WEEKLY = 'WEEKLY',
-    MONTHLY = 'MONTHLY'
+  DAILY = 'DAILY',
+  WEEKLY = 'WEEKLY',
+  MONTHLY = 'MONTHLY'
   }
   export enum QBDFyleField {
-    PROJECT = 'PROJECT',
-    COST_CENTER = 'COST_CENTER'
+  PROJECT = 'PROJECT',
+  COST_CENTER = 'COST_CENTER'
   }
 
   export enum QBDAccountingExportsState {
-    COMPLETE = 'COMPLETE',
-    ENQUEUED = 'ENQUEUED',
-    IN_PROGRESS = 'IN_PROGRESS',
+  COMPLETE = 'COMPLETE',
+  ENQUEUED = 'ENQUEUED',
+  IN_PROGRESS = 'IN_PROGRESS',
   }
 
   export enum QBDAccountingExportsType {
-    EXPORT_BILLS = 'EXPORT_BILLS',
-    REIMBURSABLE = 'REIMBURSABLE',
-    CREDIT_CARD = 'CREDIT_CARD',
-    EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
-    EXPORT_JOURNALS = 'EXPORT_JOURNALS'
+  EXPORT_BILLS = 'EXPORT_BILLS',
+  REIMBURSABLE = 'REIMBURSABLE',
+  CREDIT_CARD = 'CREDIT_CARD',
+  EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
+  EXPORT_JOURNALS = 'EXPORT_JOURNALS'
   }

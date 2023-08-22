@@ -85,7 +85,7 @@ export class IntacctStepperComponent implements OnInit {
       [IntacctOnboardingState.COMPLETE]: 6
     };
 
-    for (let index = onboardingStateStepMap[onboardingState] - 3; index > 0; index--) {
+    for (let index = onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
     }
   }

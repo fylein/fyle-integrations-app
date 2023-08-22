@@ -1,13 +1,22 @@
 <div class="tw-p-24-px tw-border-b tw-border-b-gray-200">
-    <h3 class="tw-text-normal-text-color !tw-text-18-px !tw-font-500">
-        {{ headerText }}
-    </h3>
+    <div class="tw-flex tw-items-center tw-justify-between">
+        <h3 class="tw-text-normal-text-color tw-text-18-px tw-font-500">
+          {{ headerText }}
+        </h3>
+        <button
+          *ngIf="showSyncButton"
+          class="tw-flex tw-items-center tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-4 tw-py-1 tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform"
+        >
+          <span class="tw-text-sm tw-mr-1">&#8634;</span>
+          Sync
+        </button>
+      </div>                             
     <h5 class="tw-text-faded-text-color !tw-text-14-px tw-pt-4-px tw-flex !tw-font-400 !tw-leading-4">
         {{ contentText }}
         <span *ngIf="redirectLink"
             class="tw-text-hyperlink-color tw-pl-4-px tw-flex tw-cursor-pointer"
             (click)="windowService.openInNewTab(redirectLink)">
-            Learn More
+            Read More
             <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px"
                 class="tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px"></svg-icon-sprite>
         </span>

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { QBDExpenseState } from 'src/app/core/models/enum/enum.model';
+import { ExpenseState } from 'src/app/core/models/enum/enum.model';
 
 import { ConfigurationRadioFieldComponent } from './configuration-radio-field.component';
 
@@ -17,11 +17,11 @@ describe('ConfigurationRadioFieldComponent', () => {
     component = fixture.componentInstance;
     component.options = [
       {
-        value: QBDExpenseState.PAYMENT_PROCESSING,
+        value: ExpenseState.PAYMENT_PROCESSING,
         label: 'Payment Processing'
       },
       {
-        value: QBDExpenseState.PAID,
+        value: ExpenseState.PAID,
         label: 'Paid'
       }
     ];
