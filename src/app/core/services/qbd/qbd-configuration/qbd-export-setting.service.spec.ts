@@ -36,6 +36,7 @@ describe('QbdExportSettingService', () => {
       updated_at: new Date('2023-02-01T08:42:45.803382Z'),
       reimbursable_expenses_export_type: QBDReimbursableExpensesObject.BILL,
       bank_account_name: "string",
+      mileage_account_name: "string",
       reimbursable_expense_state: ExpenseState.PAYMENT_PROCESSING,
       reimbursable_expense_date: QBDExportDateType.SPENT_AT,
       reimbursable_expense_grouped_by: QBDExpenseGroupedBy.REPORT,
@@ -63,6 +64,7 @@ describe('QbdExportSettingService', () => {
     const exportSettingPayload: QBDExportSettingPost = {
       reimbursable_expenses_export_type: QBDReimbursableExpensesObject.BILL,
       bank_account_name: "string",
+      mileage_account_name: "string",
       reimbursable_expense_state: ExpenseState.PAYMENT_PROCESSING,
       reimbursable_expense_date: QBDExportDateType.SPENT_AT,
       reimbursable_expense_grouped_by: QBDExpenseGroupedBy.REPORT,
@@ -79,6 +81,7 @@ describe('QbdExportSettingService', () => {
       updated_at: new Date('2023-02-01T08:42:45.803382Z'),
       reimbursable_expenses_export_type: QBDReimbursableExpensesObject.BILL,
       bank_account_name: "string",
+      mileage_account_name: "string",
       reimbursable_expense_state: ExpenseState.PAYMENT_PROCESSING,
       reimbursable_expense_date: QBDExportDateType.SPENT_AT,
       reimbursable_expense_grouped_by: QBDExpenseGroupedBy.REPORT,
