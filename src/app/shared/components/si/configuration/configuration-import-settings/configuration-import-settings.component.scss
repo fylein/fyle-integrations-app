@@ -26,3 +26,20 @@
     color: #5a5d72;
     font-style: normal;
 }
+
+  .fields-header {
+    display: flex;
+    width: 90%;
+  }
+
+  .fields-header-text {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    &--fyle {
+      margin-right: 11%;
+    }
+  }
+  
+  
+  
