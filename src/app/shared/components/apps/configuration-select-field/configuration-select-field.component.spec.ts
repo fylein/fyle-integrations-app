@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { ExpenseState } from 'src/app/core/models/enum/enum.model';
 
 import { ConfigurationSelectFieldComponent } from './configuration-select-field.component';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 describe('ConfigurationSelectFieldComponent', () => {
   let component: ConfigurationSelectFieldComponent;
@@ -10,7 +11,7 @@ describe('ConfigurationSelectFieldComponent', () => {
   let formbuilder: FormBuilder;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationSelectFieldComponent ],
+      declarations: [ ConfigurationSelectFieldComponent, SnakeCaseToSpaceCasePipe ],
       providers: [FormBuilder]
     })
     .compileComponents();
