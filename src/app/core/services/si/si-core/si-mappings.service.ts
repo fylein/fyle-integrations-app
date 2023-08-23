@@ -51,7 +51,8 @@ export class SiMappingsService {
         ACCOUNT: [],
         EXPENSE_PAYMENT_TYPE: [],
         VENDOR: [],
-        CHARGE_CARD_NUMBER: []
+        CHARGE_CARD_NUMBER: [],
+        TAX_DETAIL: []
       });
     }));
   }
