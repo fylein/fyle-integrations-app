@@ -1,4 +1,4 @@
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model"
+import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 
 export type Configuration = {
     import_vendors_as_merchants: boolean,
