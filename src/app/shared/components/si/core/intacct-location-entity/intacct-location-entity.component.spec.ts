@@ -21,7 +21,7 @@ describe('IntacctLocationEntityComponent', () => {
   const mockRouter = {
     url: '/integrations/intacct/onboarding/export_settings'
   };
-  
+
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -46,17 +46,17 @@ describe('IntacctLocationEntityComponent', () => {
         { provide: TrackingService, useValue: {} }
       ]
     }).compileComponents();
-  
+
     fixture = TestBed.createComponent(IntacctLocationEntityComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  }); 
+  });
 
   it('should initialize the page and setup location entity mapping', () => {
     // Getting the dependencies from TestBed to create spies
     const mappingsService = TestBed.inject(SiMappingsService);
     const connectorService = TestBed.inject(IntacctConnectorService);
-  
+
     // Creating spies to simulate the behavior of the private methods
     spyOn(mappingsService, 'getSageIntacctDestinationAttributes').and.returnValue(of([]));
     spyOn(connectorService, 'getLocationEntityMapping').and.returnValue(of({
@@ -65,25 +65,25 @@ describe('IntacctLocationEntityComponent', () => {
       destination_id: 'test',
       workspace: 123
     }));
-  
+
     // Calling ngOnInit to trigger the setupPage method and the private methods inside it
     component.ngOnInit();
-  
+
     // Expectations to verify that the private methods are triggered correctly
     expect(mappingsService.getSageIntacctDestinationAttributes).toHaveBeenCalledWith(IntacctField.LOCATION_ENTITY);
     expect(connectorService.getLocationEntityMapping).toHaveBeenCalled();
-  });  
+  });
 
   it('should handle error in setup location entity mapping', () => {
     // Getting the dependencies from TestBed to create spies
     const connectorService = TestBed.inject(IntacctConnectorService);
-  
+
     // Creating spies to simulate an error scenario
     spyOn(connectorService, 'getLocationEntityMapping').and.returnValue(throwError('error'));
-  
+
     // Calling ngOnInit to trigger the setupPage method and the private methods inside it
     component.ngOnInit();
-  
+
     // Expectations to verify that the private methods are triggered correctly
     expect(connectorService.getLocationEntityMapping).toHaveBeenCalled();
   });
