@@ -64,7 +64,7 @@
                 </span>
             </div>
             <div class="tw-pt-18-px tw-pl-12" *ngIf="importSettingsForm.value?.importTaxCodes">
-                <p-dropdown [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" placeholder="'Select Tax Group'">
+                <p-dropdown [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" placeholder="Select Tax Group">
                 </p-dropdown>
             </div>
             <div class="tw-p-24-px">
@@ -89,17 +89,79 @@
                     </div>
                     <div class="tw-pt-18-px">
                         <span class="tw-pr-6">
-                            <p-dropdown [options]="['Tax Group']" optionLabel="null" class="tw-w-600-px" formControlName="importVendorAsMerchant" [placeholder]="'Select Expense Field'">
+                            <p-dropdown [options]="sageIntacctFields" optionLabel="display_name" class="tw-w-600-px" formControlName="importVendorAsMerchant" [placeholder]="'Select Sage Intacct Field'">
                             </p-dropdown>
                         </span>
                         <span class="tw-pl-36 tw-pr-3">
-                            <p-dropdown [options]="['Tax Group']" optionLabel="null" class="tw-w-600-px" formControlName="importVendorAsMerchant" [placeholder]="'Select Expense Field'">
+                            <p-dropdown [options]="fyleFields" optionLabel="display_name" class="tw-w-600-px" formControlName="importVendorAsMerchant" [placeholder]="'Select Fyle Expense Field'">
                             </p-dropdown>
                         </span>
                         <span class="tw-pl-16 input-toggle-section">
                             <p-inputSwitch formControlName="importVendorAsMerchant"></p-inputSwitch>
                         </span>
                     </div>
+                    <div class="tw-pt-18-px">
+                        <span class="tw-pr-6">
+                            <p-dropdown [options]="sageIntacctFields" optionLabel="display_name" class="tw-w-600-px" formControlName="importVendorAsMerchant" [placeholder]="'Select Sage Intacct Field'">
+                            </p-dropdown>
+                        </span>
+                        <span class="tw-pl-36 tw-pr-3">
+                            <p-dropdown [options]="fyleFields" optionLabel="display_name" class="tw-w-600-px" formControlName="importVendorAsMerchant" [placeholder]="'Select Fyle Expense Field'">
+                            </p-dropdown>
+                        </span>
+                        <span class="tw-pl-16 input-toggle-section">
+                            <p-inputSwitch formControlName="importVendorAsMerchant"></p-inputSwitch>
+                        </span>
+                    </div>
+                    <div class="tw-pt-18-px">
+                        <span class="tw-pr-6">
+                            <p-dropdown [options]="sageIntacctFields" optionLabel="display_name" class="tw-w-600-px" formControlName="importVendorAsMerchant" [placeholder]="'Select Sage Intacct Field'">
+                            </p-dropdown>
+                        </span>
+                        <span class="tw-pl-36 tw-pr-3">
+                            <p-dropdown [options]="fyleFields" optionLabel="display_name" class="tw-w-600-px" formControlName="importVendorAsMerchant" [placeholder]="'Select Fyle Expense Field'">
+                            </p-dropdown>
+                        </span>
+                        <span class="tw-pl-16 input-toggle-section">
+                            <p-inputSwitch formControlName="importVendorAsMerchant"></p-inputSwitch>
+                        </span>
+                    </div>
+
+
+
+                    <div class="row" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
+                        <div class="p-d-flex p-ai-center">
+
+                            <p-dropdown [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
+                                optionLabel="display_name" optionValue="attribute_type" class="p-mr-2" style="width:38%"></p-dropdown>
+
+
+                            <p-dropdown [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
+                                optionLabel="display_name" optionValue="attribute_type" class="p-mr-2" style="width:38%">
+                                <ng-template pTemplate="item" let-item>
+                                    <div>
+                                        {{ item.display_name | titlecase }}
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+
+                            <!-- <div *ngIf="i !== 0 && expenseField.controls.destination_field.status !== 'DISABLED'" style="flex: 5%;">
+                                <button pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="removeExpenseField(i, expenseField.controls.source_field.value)"></button>
+                            </div>
+                            <div *ngIf="!(i !== 0 && expenseField.controls.destination_field.status !== 'DISABLED')" style="flex: 5%;"></div> -->
+
+                            <p-slideToggle formControlName="import_to_fyle" style="flex: 14%;" class="toggle"></p-slideToggle>
+                        </div>
+
+                        <div class="expense-fields--errors" style="color: warning;" *ngIf="expenseField.status === 'INVALID' && expenseField.value.source_field && expenseField.value.destination_field">
+                            Fyle and Sage Intacct fields should be unique
+                        </div>
+                    </div>
+
+
+
+
+
                   </div>
                 </div>
             <div>
