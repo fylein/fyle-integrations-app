@@ -3,9 +3,9 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/si/misc/expense-field.model';
-import { ImportSettingGet } from 'src/app/core/models/si/si-configuration/import-settings.model';
+import { ImportSettingGet, ImportSettings } from 'src/app/core/models/si/si-configuration/import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
@@ -44,7 +44,13 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   showAddButton: boolean = true;
 
+  toggleSwitchTrue: boolean = true;
+
   showCostCodeCostType: boolean = false;
+
+  showPaymentOrAccount: string;
+
+  private sessionStartTime = new Date();
 
   constructor(
     private router: Router,
@@ -144,19 +150,25 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     const fyleFieldsObservable = this.mappingService.getFyleFields();
     const groupedAttributesObservable = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
     const importSettingsObservable = this.importSettingService.getImportSettings();
+    const configuration = this.mappingService.getConfiguration();
 
     forkJoin([
       sageIntacctFieldsObservable,
       fyleFieldsObservable,
       groupedAttributesObservable,
-      importSettingsObservable
+      importSettingsObservable,
+      configuration
     ]).subscribe(
-      ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings]) => {
+      ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration]) => {
         this.sageIntacctFields = sageIntacctFields;
         this.fyleFields = fyleFields;
         this.sageIntacctTaxGroup = groupedAttributesResponse.TAX_DETAIL;
         this.importSettings = importSettings;
-
+        if (configuration.employee_field_mapping==='EMPLOYEE') {
+          this.showPaymentOrAccount = 'Payment';
+        } else {
+          this.showPaymentOrAccount = 'Account';
+        }
         this.importSettingsForm = this.formBuilder.group({
           importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
           importCategories: [importSettings.configurations.import_categories || null],
@@ -169,6 +181,39 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         this.importSettingWatcher();
       }
     );
+  }
+
+  private getPhase(): ProgressPhase {
+    return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
+
+  save(): void {
+    this.saveInProgress = true;
+    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm);
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingGet) => {
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
+      if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.IMPORT_SETTINGS) {
+        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.IMPORT_SETTINGS, 2, importSettingPayload);
+      } else {
+        this.trackingService.intacctUpdateEvent(
+          IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,
+          {
+            phase: this.getPhase(),
+            oldState: this.importSettings,
+            newState: response
+          }
+        );
+      }
+      this.saveInProgress = false;
+      if (this.isOnboarding) {
+        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_SETTINGS);
+        this.router.navigate([`/integrations/intacct/onboarding/advanced_settings`]);
+      }
+    }, () => {
+      this.saveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      });
   }
 
   ngOnInit(): void {

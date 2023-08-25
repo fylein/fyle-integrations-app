@@ -3,7 +3,7 @@ import { QBDAdvancedSettingsGet } from "../qbd/qbd-configuration/advanced-settin
 import { QBDExportSettingGet } from "../qbd/qbd-configuration/export-setting.model";
 import { QBDFieldMappingGet } from "../qbd/qbd-configuration/field-mapping.model";
 import { ExportSettingGet } from "../si/si-configuration/export-settings.model";
-import { ImportSettings } from "../si/si-configuration/import-settings.model";
+import { ImportSettingGet, ImportSettings } from "../si/si-configuration/import-settings.model";
 
 export type UpdateEventAdditionalProperty = {
     phase: ProgressPhase,
@@ -13,6 +13,6 @@ export type UpdateEventAdditionalProperty = {
 
   export type UpdateIntacctEventAdditionalProperty = {
     phase: ProgressPhase,
-    oldState: ExportSettingGet,
+    oldState: ExportSettingGet | ImportSettingGet,
     newState: ImportSettings
   };

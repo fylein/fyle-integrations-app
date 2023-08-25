@@ -5,6 +5,7 @@ import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 import { ExpenseField } from 'src/app/core/models/si/misc/expense-field.model';
+import { Configuration } from 'src/app/core/models/db/configuration.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,11 @@ export class SiMappingsService {
     return this.apiService.post(`/workspaces/${workspaceId}/sage_intacct/refresh_dimensions/`, {
       dimensions_to_sync: dimensionsToSync
     });
+  }
+
+  getConfiguration(): Observable<Configuration>{
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(`/workspaces/${workspaceId}/configuration/`, {});
   }
 
   getSageIntacctFields(): Observable<ExpenseField[]> {

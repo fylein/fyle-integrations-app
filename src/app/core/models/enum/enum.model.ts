@@ -48,7 +48,8 @@ export enum UpdateEvent {
 export enum IntacctUpdateEvent {
   CONNECT_INTACCT = 'Connect Sage Intacct',
   EXPORT_SETTING_INTACCT = 'Export Settings Intacct',
-  IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct'
+  IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct',
+  ADVANCED_SETTINGS_INTACCT= 'Advanced Settings Intacct',
 }
 
 export enum AppName {

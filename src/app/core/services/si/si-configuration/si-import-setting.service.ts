@@ -39,20 +39,20 @@ export class SiImportSettingService {
 
   createExpenseField(destinationType: string, mappingSettings: MappingSetting[]): void {
     const existingFields = mappingSettings.map(setting => setting.source_field.split('_').join(' '));
-    // const dialogRef = this.dialogService.open(ExpenseFieldCreationDialogComponent, {
-    //   width: '551px',
-    //   data: existingFields
+    // Const dialogRef = this.dialogService.open(ExpenseFieldCreationDialogComponent, {
+    //   Width: '551px',
+    //   Data: existingFields
     // });
 
     const expenseFieldValue = this.getPatchExpenseFieldValues(destinationType);
     this.patchExpenseFieldEmitter.emit(expenseFieldValue);
 
-    // dialogRef.onClose.subscribe((expenseField: MappingSetting) => {
-    //   if (expenseField) {
-    //     const sourceType = expenseField.source_field.split(' ').join('_').toUpperCase();
+    // DialogRef.onClose.subscribe((expenseField: MappingSetting) => {
+    //   If (expenseField) {
+    //     Const sourceType = expenseField.source_field.split(' ').join('_').toUpperCase();
 
-    //     const expenseFieldValue = this.getPatchExpenseFieldValues(destinationType, sourceType, '');
-    //     this.patchExpenseFieldEmitter.emit(expenseFieldValue);
+    //     Const expenseFieldValue = this.getPatchExpenseFieldValues(destinationType, sourceType, '');
+    //     This.patchExpenseFieldEmitter.emit(expenseFieldValue);
     //   }
     // });
   }

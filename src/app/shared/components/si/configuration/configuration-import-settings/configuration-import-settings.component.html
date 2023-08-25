@@ -32,7 +32,7 @@
         </div>
         <div class="tw-pt-18-px">
             <span class="tw-pl-12 tw-pr-6">
-            <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Account/Payment" disabled>
+            <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{showPaymentOrAccount}}" disabled>
             </span>
             <span class="tw-pl-36 tw-pr-3">
             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Categories" disabled>
@@ -106,11 +106,16 @@
                         <label class="tw-pl-2 tw-font-100" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields.</label>
                         <div class="tw-pt-4">
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-200-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
+                            <span class="tw-pr-32"></span>
                             <p-dropdown class="tw-pl-36" [options]="['Create a Custom Field']" placeholder="Select Expense Field"></p-dropdown>
+                            <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section" [disabled]="true"></p-inputSwitch>
                         </div>
-                        <div class="tw-pt-4 tw-pl-8">
-                            <input type="text" class="tw-text-14-px !tw-font-500 tw-w-200-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
+                        <div class="tw-pt-4 tw-pl-12">
+                            <input type="text" class="tw-text-14-px !tw-font-500 tw-w-150-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
+                            <span class="tw-pl-36"></span>
+                            <span class="tw-pl-4"></span>
                             <p-dropdown class="tw-pl-28" [options]="['Create a Custom Field']" placeholder="Select Expense Field"></p-dropdown>
+                            <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section" [disabled]="true"></p-inputSwitch>
                         </div>
                     </div>
                     <div class="expense-fields--errors" style="color: warning;" *ngIf="expenseField.status==='INVALID' && expenseField.value.source_field && expenseField.value.destination_field">
@@ -126,7 +131,7 @@
             </div>            
         </div>
         <div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="null" [isButtonDisabled]="true"></app-configuration-step-footer>
+            <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!importSettingsForm.valid"></app-configuration-step-footer>
         </div>
     </form>
 </div>
