@@ -98,6 +98,18 @@
                         <span class="delete-button tw-pl-1" *ngIf="i>2" (click)="removeExpenseField(i, '')">🗑️</span>
                         <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section"></p-inputSwitch>
                     </div>
+                    <div class="tw-pt-4" *ngIf="i==0 && showCostCodeCostType">
+                        <input type="checkbox" />
+                        <label class="tw-pl-2 tw-font-100" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields.</label>
+                        <div class="tw-pt-4">
+                            <input type="text" class="tw-text-14-px !tw-font-500 tw-w-200-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
+                            <p-dropdown class="tw-pl-36" [options]="['Create a Custom Field']" placeholder="Select Expense Field"></p-dropdown>
+                        </div>
+                        <div class="tw-pt-4 tw-pl-8">
+                            <input type="text" class="tw-text-14-px !tw-font-500 tw-w-200-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
+                            <p-dropdown class="tw-pl-28" [options]="['Create a Custom Field']" placeholder="Select Expense Field"></p-dropdown>
+                        </div>
+                    </div>
                     <div class="expense-fields--errors" style="color: warning;" *ngIf="expenseField.status === 'INVALID' && expenseField.value.source_field && expenseField.value.destination_field">
                         Fyle and Sage Intacct fields should be unique
                     </div>

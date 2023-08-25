@@ -11,6 +11,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-configuration-import-settings',
@@ -42,6 +43,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   fyleFields: ExpenseField[];
 
   showAddButton: boolean = true;
+
+  showCostCodeCostType: boolean = false;
 
   constructor(
     private router: Router,
@@ -95,11 +98,21 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     this.showAddButton = this.showOrHideAddButton();
   }
 
-
   private importSettingWatcher(): void {
     this.importSettingsForm?.controls?.importTaxCodes?.valueChanges.subscribe((isImportTaxEnabled) => {
       if (!isImportTaxEnabled) {
         this.importSettingsForm?.controls?.sageIntacctTaxCodes?.setValue(null);
+      }
+    });
+    this.costCodesCostTypes();
+  }
+
+  private costCodesCostTypes(): void {
+    this.importSettingsForm.controls.expenseFields.valueChanges.subscribe((expenseField) => {
+      if(expenseField[0].destination_field==='PROJECT' && expenseField[0].source_field==='PROJECT' && expenseField[0].import_to_fyle) {
+        this.showCostCodeCostType = true;
+      } else {
+          this.showCostCodeCostType = false;
       }
     });
   }
