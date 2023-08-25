@@ -109,7 +109,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   private costCodesCostTypes(): void {
     this.importSettingsForm.controls.expenseFields.valueChanges.subscribe((expenseField) => {
-      if(expenseField[0].destination_field==='PROJECT' && expenseField[0].source_field==='PROJECT' && expenseField[0].import_to_fyle) {
+      if (expenseField[0].destination_field==='PROJECT' && expenseField[0].source_field==='PROJECT' && expenseField[0].import_to_fyle) {
         this.showCostCodeCostType = true;
       } else {
           this.showCostCodeCostType = false;

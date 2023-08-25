@@ -27,7 +27,7 @@
             <div class="fields-header-text tw-pl-32 tw-pr-36">Fyle Fields</div>
             <div class="fields-header-text tw-pl-36 tw-flex">
                 Import to Fyle
-                <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-slightly-normal-text-color tw-pl-2"></svg-icon-sprite>
+                <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-faded-text-color"></svg-icon-sprite>
             </div>
         </div>
         <div class="tw-pt-18-px">
@@ -81,24 +81,27 @@
             <div class="tw-p-24-px" formArrayName="expenseFields">
                 <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
                     <div class="fields-header-text tw-pr-36">Sage Intacct Dimensions</div>
-                    <div class="fields-header-text tw-pl-32 tw-pr-36">Fyle Fields</div>
+                    <div class="fields-header-text tw-pl-32 tw-pr-32">Fyle Fields</div>
                     <div class="fields-header-text tw-pl-36 tw-flex">
                         Import to Fyle
-                        <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-slightly-normal-text-color tw-pl-2"></svg-icon-sprite>
+                        <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-faded-text-color"></svg-icon-sprite>
                     </div>
                 </div>
                 <div class="row tw-pt-18-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="p-d-flex p-ai-center">
                         <p-dropdown [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
                             optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pr-10"></p-dropdown>
-                        <p-dropdown [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
-                        optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pl-32">
-                        </p-dropdown>
-                        <span class="tw-pl-5" *ngIf="i<3"></span>
-                        <span class="delete-button tw-pl-1" *ngIf="i>2" (click)="removeExpenseField(i, '')">🗑️</span>
+                            <p-dropdown [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
+                            optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pl-32" [showClear]="true">
+                                <ng-template pTemplate="selectedItem" let-item>
+                                    <div class="selected-item-container">
+                                        {{ item.display_name }}
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>                            
                         <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section"></p-inputSwitch>
                     </div>
-                    <div class="tw-pt-4" *ngIf="i==0 && showCostCodeCostType">
+                    <div class="tw-pt-4" *ngIf="i===0 && showCostCodeCostType">
                         <input type="checkbox" />
                         <label class="tw-pl-2 tw-font-100" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields.</label>
                         <div class="tw-pt-4">
@@ -110,7 +113,7 @@
                             <p-dropdown class="tw-pl-28" [options]="['Create a Custom Field']" placeholder="Select Expense Field"></p-dropdown>
                         </div>
                     </div>
-                    <div class="expense-fields--errors" style="color: warning;" *ngIf="expenseField.status === 'INVALID' && expenseField.value.source_field && expenseField.value.destination_field">
+                    <div class="expense-fields--errors" style="color: warning;" *ngIf="expenseField.status==='INVALID' && expenseField.value.source_field && expenseField.value.destination_field">
                         Fyle and Sage Intacct fields should be unique
                     </div>
                 </div>

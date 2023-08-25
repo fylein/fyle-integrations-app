@@ -1,0 +1,68 @@
+<div>
+    <div class="expense-field-creation-dialog--header-section">
+      <h3 class="expense-field-creation-dialog--header-text single-line-text">
+        Create a new 'Select type' field in Fyle
+      </h3>
+      <img src="assets/images/svgs/actions/close.svg" (click)="closeDialog()"
+        class="expense-field-creation-dialog--close-icon sub-text-color pointer" />
+    </div>
+  
+    <div class="expense-field-creation-dialog--horizontal-separator"></div>
+  
+    <form [formGroup]="expenseFieldsCreationForm">
+      <div *ngIf="existingFields.indexOf(expenseFieldsCreationForm.value.name.toLowerCase()) !== -1"
+        class="expense-field-creation-dialog--error-section">
+        <div class="expense-field-creation-dialog--error-contents">
+          <!-- <img src="assets/images/svgs/general/error.svg" class="expense-field-creation-dialog--error-icon" /> -->
+          <h5 class="expense-field-creation-dialog--error-text sub-text-color paragraph">
+            Oops! It looks like another field with the same name already exists in your Fyle account. Would you please
+            give the field a different name?
+          </h5>
+        </div>
+      </div>
+  
+      <!-- Name Field -->
+      <div>
+        <label class="expense-field-creation-dialog--name-text sub-text-color">
+          Name
+          <app-mandatory-field></app-mandatory-field>
+        </label>
+        <input pInputText type="text" formControlName="name" placeholder="Enter Name">
+      </div>
+  
+      <!-- Placeholder Field -->
+      <div>
+        <label class="expense-field-creation-dialog--name-text sub-text-color">
+          Placeholder
+        </label>
+        <input pInputText type="text" formControlName="placeholder"
+          [placeholder]="'Enter ' + (expenseFieldsCreationForm.value.name ? expenseFieldsCreationForm.value.name : 'Placeholder')">
+      </div>
+  
+      <!-- Field Type (Disabled) -->
+      <div>
+        <label class="expense-field-creation-dialog--name-text sub-text-color">
+          Field Type
+        </label>
+        <input pInputText type="text" placeholder="Select Field" disabled>
+      </div>
+  
+      <!-- Label Section -->
+      <div class="expense-field-creation-dialog--label-section">
+        <div class="expense-field-creation-dialog--label-content">
+          <label class="expense-field-creation-dialog--name-text sub-text-color">
+            {{expenseFieldsCreationForm.value.name ? expenseFieldsCreationForm.value.name : 'Label'}}
+          </label>
+          <input pInputText type="text"
+            [placeholder]="expenseFieldsCreationForm.value.placeholder ? expenseFieldsCreationForm.value.placeholder : 'Enter Text'">
+        </div>
+      </div>
+  
+      <!-- Buttons -->
+      <div class="expense-field-creation-dialog--btn-section">
+        <button pButton type="button" label="Cancel" class="expense-field-creation-dialog--cancel-btn-text" (click)="closeDialog()"></button>
+        <button pButton type="button" label="Create & Save" [disabled]="!expenseFieldsCreationForm.valid || existingFields.indexOf(expenseFieldsCreationForm.value.name.toLowerCase()) !== -1" (click)="save()" [ngClass]="{'expense-field-creation-dialog--cta-btn': !(!expenseFieldsCreationForm.valid || existingFields.indexOf(expenseFieldsCreationForm.value.name.toLowerCase()) !== -1)}"></button>
+      </div>
+    </form>
+  </div>
+  
