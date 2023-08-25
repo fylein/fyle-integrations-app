@@ -69,8 +69,8 @@ export class ImportSettings {
                     source_field_id: 1,
                     is_enabled: true
                 }
-                ],
-            }
+                ]
+            };
 
         return importSettingPayload;
     }
