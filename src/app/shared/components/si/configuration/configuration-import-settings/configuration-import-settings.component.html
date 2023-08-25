@@ -81,7 +81,7 @@
             <div class="tw-p-24-px" formArrayName="expenseFields">
                 <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
                     <div class="fields-header-text tw-pr-36">Sage Intacct Dimensions</div>
-                    <div class="fields-header-text tw-pl-32 tw-pr-32">Fyle Fields</div>
+                    <div class="fields-header-text tw-pl-32 tw-pr-36">Fyle Fields</div>
                     <div class="fields-header-text tw-pl-36 tw-flex">
                         Import to Fyle
                         <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-slightly-normal-text-color tw-pl-2"></svg-icon-sprite>
@@ -94,6 +94,8 @@
                         <p-dropdown [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                         optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pl-32">
                         </p-dropdown>
+                        <span class="tw-pl-5" *ngIf="i<3"></span>
+                        <span class="delete-button tw-pl-1" *ngIf="i>2" (click)="removeExpenseField(i, '')">🗑️</span>
                         <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section"></p-inputSwitch>
                     </div>
                     <div class="expense-fields--errors" style="color: warning;" *ngIf="expenseField.status === 'INVALID' && expenseField.value.source_field && expenseField.value.destination_field">
