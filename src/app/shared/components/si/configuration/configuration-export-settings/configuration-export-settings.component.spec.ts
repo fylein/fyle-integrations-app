@@ -62,18 +62,18 @@ describe('ConfigurationExportSettingsComponent', () => {
       ]
     })
     .compileComponents();
-  
+
     fixture = TestBed.createComponent(ConfigurationExportSettingsComponent);
     component = fixture.componentInstance;
     siExportSettingService = TestBed.inject(SiExportSettingService);
     fixture.detectChanges();
   });
-  
+
   it('should initialize export settings form with data', async () => {
     const mappingServiceSpy = TestBed.inject(SiMappingsService);
     const exportSettingServiceSpy = TestBed.inject(SiExportSettingService);
     const httpMock = TestBed.inject(HttpTestingController);
-  
+
     spyOn(mappingServiceSpy, 'getGroupedDestinationAttributes').and.returnValue(of({
       ACCOUNT: [],
       EXPENSE_PAYMENT_TYPE: [],
@@ -81,18 +81,18 @@ describe('ConfigurationExportSettingsComponent', () => {
       CHARGE_CARD_NUMBER: []
     }));
     spyOn(exportSettingServiceSpy, 'getExportSettings').and.returnValue(of(mockSettings));
-  
+
     component.ngOnInit();
-  
+
     await fixture.whenStable();
-  
+
     // Expect the HTTP request and provide a mock response
     const req = httpMock.expectOne('/api/workspaces/1/sage_intacct/destination_attributes/?attribute_types=ACCOUNT,EXPENSE_PAYMENT_TYPE,VENDOR,CHARGE_CARD_NUMBER');
-    req.flush({ /* your mock response data here */ });
-  
+    req.flush({ /* Your mock response data here */ });
+
     expect(component.exportSettingsForm).toBeDefined();
   });
-  
+
   afterEach(() => {
     const httpMock = TestBed.inject(HttpTestingController);
     httpMock.verify(); // Verify that no unmatched requests are outstanding
