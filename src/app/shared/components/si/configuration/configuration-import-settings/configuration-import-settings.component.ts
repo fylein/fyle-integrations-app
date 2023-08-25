@@ -41,7 +41,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   fyleFields: ExpenseField[];
 
-  showAddButton: boolean;
+  showAddButton: boolean = true;
 
   constructor(
     private router: Router,
@@ -104,6 +104,26 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
   }
 
+  private constructFormArray(): FormGroup[] {
+    const expenseFieldFormArray: FormGroup[] = [];
+    this.sageIntacctFields.forEach((sageIntacctField) => {
+      this.importSettings.mapping_settings.forEach((mappingSetting) => {
+        if (sageIntacctField.attribute_type === mappingSetting.destination_field) {
+          expenseFieldFormArray.push(this.createExpenseField(mappingSetting.source_field, mappingSetting.destination_field, mappingSetting.import_to_fyle, mappingSetting.is_custom));
+        }
+      });
+      if (sageIntacctField.attribute_type==='PROJECT' || sageIntacctField.attribute_type==='DEPARTMENT' || sageIntacctField.attribute_type==='CLASS') {
+        expenseFieldFormArray.push(this.createExpenseField('', sageIntacctField.attribute_type));
+      }
+    });
+    this.sageIntacctFields.forEach((sageIntacctField) => {
+      if (expenseFieldFormArray.length<3) {
+        expenseFieldFormArray.push(this.createExpenseField('', sageIntacctField.attribute_type));
+      }
+    });
+    return expenseFieldFormArray;
+  }
+
   private getSettingsAndSetupForm(): void {
     const destinationAttributes = ['TAX_DETAIL'];
 
@@ -122,17 +142,14 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         this.sageIntacctFields = sageIntacctFields;
         this.fyleFields = fyleFields;
         this.sageIntacctTaxGroup = groupedAttributesResponse.TAX_DETAIL;
-
         this.importSettings = importSettings;
-
-        const expenseFieldFormArray: FormGroup[] = [this.createExpenseField()];
 
         this.importSettingsForm = this.formBuilder.group({
           importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
           importCategories: [importSettings.configurations.import_categories || null],
           importTaxCodes: [importSettings.configurations.import_tax_codes || null],
           sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.id.toString() === this.importSettings?.general_mappings?.default_tax_code.id)) || null],
-          expenseFields: this.formBuilder.array(expenseFieldFormArray)
+          expenseFields: this.formBuilder.array(this.constructFormArray())
         });
 
         this.isLoading = false;
