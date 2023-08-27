@@ -47,7 +47,6 @@ import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
-import { ExpenseFieldCreationDialogComponent } from './components/si/configuration/configuration-import-settings/expense-field-creation-dialog/expense-field-creation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -78,8 +77,7 @@ import { ExpenseFieldCreationDialogComponent } from './components/si/configurati
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
     ConfigurationExportSettingsComponent,
-    ConfigurationImportSettingsComponent,
-    ExpenseFieldCreationDialogComponent
+    ConfigurationImportSettingsComponent
   ],
   imports: [
     CommonModule,
