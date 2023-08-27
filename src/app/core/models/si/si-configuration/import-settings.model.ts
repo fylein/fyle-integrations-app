@@ -7,7 +7,7 @@ export type Configuration = {
     import_tax_codes: boolean
 }
 
-export type GeneralMappings = {
+export type ImportSettingGeneralMapping = {
     default_tax_code: DefaultDestinationAttribute
 }
 
@@ -19,7 +19,7 @@ export type MappingSetting = {
     source_placeholder: null
 }
 
-export type DependantFieldSetting = {
+export type DependentFieldSetting = {
     id: number,
     attribute_type: string,
     source_field_id: number,
@@ -28,17 +28,17 @@ export type DependantFieldSetting = {
 
 export type ImportSettingGet = {
     configurations: Configuration,
-    general_mappings: GeneralMappings,
+    general_mappings: ImportSettingGeneralMapping,
     mapping_settings: MappingSetting[],
-    dependent_field_settings: DependantFieldSetting[]
+    dependent_field_settings: DependentFieldSetting
     workspace_id: number
 }
 
 export type ImportSettingPost = {
     configurations: Configuration,
-    general_mappings: GeneralMappings,
+    general_mappings: ImportSettingGeneralMapping,
     mapping_settings: MappingSetting[],
-    dependent_field_settings: DependantFieldSetting[]
+    dependent_field_settings: DependentFieldSetting
   }
 export class ImportSettings {
     static constructPayload(exportSettingsForm: FormGroup): ImportSettingPost{
@@ -63,13 +63,12 @@ export class ImportSettings {
                         source_placeholder: null
                     }
                 ],
-                dependent_field_settings: [ {
+                dependent_field_settings: {
                     id: 1,
                     attribute_type: 'string',
                     source_field_id: 1,
                     is_enabled: true
                 }
-                ]
             };
 
         return importSettingPayload;

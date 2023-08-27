@@ -92,28 +92,16 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     this.showAddButton = this.showOrHideAddButton();
   }
 
-  removeExpenseField(index: number, sourceField: string) {
-
-    const expenseFields = this.importSettingsForm.get('expenseFields') as FormArray;
-    expenseFields.removeAt(index);
-
-    // Remove custom field option from the Fyle fields drop down if the corresponding row is deleted
-    if (sourceField && sourceField !== 'PROJECT' && sourceField !== 'COST_CENTER') {
-      this.fyleFields = this.fyleFields.filter(mappingRow => mappingRow.attribute_type !== sourceField);
-    }
-    this.showAddButton = this.showOrHideAddButton();
-  }
-
   private importSettingWatcher(): void {
     this.importSettingsForm?.controls?.importTaxCodes?.valueChanges.subscribe((isImportTaxEnabled) => {
       if (!isImportTaxEnabled) {
         this.importSettingsForm?.controls?.sageIntacctTaxCodes?.setValue(null);
       }
     });
-    this.costCodesCostTypes();
+    this.costCodesCostTypesWatcher();
   }
 
-  private costCodesCostTypes(): void {
+  private costCodesCostTypesWatcher(): void {
     this.importSettingsForm.controls.expenseFields.valueChanges.subscribe((expenseField) => {
       if (expenseField[0].destination_field==='PROJECT' && expenseField[0].source_field==='PROJECT' && expenseField[0].import_to_fyle) {
         this.showCostCodeCostType = true;
