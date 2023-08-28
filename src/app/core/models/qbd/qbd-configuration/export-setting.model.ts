@@ -13,6 +13,7 @@ export type QBDExportSettingGet = {
     is_simplify_report_closure_enabled: boolean,
     reimbursable_expenses_export_type: QBDReimbursableExpensesObject | null,
     bank_account_name: string | null,
+    mileage_account_name : string | null,
     reimbursable_expense_state: ExpenseState | null,
     reimbursable_expense_date: QBDExportDateType | null,
     reimbursable_expense_grouped_by: QBDExpenseGroupedBy | null,
@@ -28,6 +29,7 @@ export type QBDExportSettingGet = {
 export type QBDExportSettingPost = {
     reimbursable_expenses_export_type: QBDReimbursableExpensesObject | null,
     bank_account_name: string | null,
+    mileage_account_name : string | null,
     reimbursable_expense_state: ExpenseState | null,
     reimbursable_expense_date: QBDExportDateType | null,
     reimbursable_expense_grouped_by: QBDExpenseGroupedBy | null,
@@ -44,6 +46,7 @@ export class ExportSettingModel {
       const exportSettingPayload: QBDExportSettingPost = {
             reimbursable_expenses_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
             bank_account_name: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : null,
+            mileage_account_name: exportSettingsForm.get('mileageAccountName')?.value ? exportSettingsForm.get('mileageAccountName')?.value : null,
             reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
             reimbursable_expense_date: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
             reimbursable_expense_grouped_by: exportSettingsForm.get('reimbursableExpense')?.value && exportSettingsForm.get('reimbursableExportGroup')?.value ? exportSettingsForm.get('reimbursableExportGroup')?.value : null,
