@@ -90,7 +90,7 @@
                 <div class="row tw-pt-18-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="p-d-flex p-ai-center">
                         <p-dropdown [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
-                            optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pr-10"></p-dropdown>
+                        optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pr-10"></p-dropdown>                    
                             <p-dropdown [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                             optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pl-32" [showClear]="true">
                                 <ng-template pTemplate="selectedItem" let-item>
@@ -117,11 +117,11 @@
                             <p-dropdown class="tw-pl-28" [options]="['Create a Custom Field']" placeholder="Select Expense Field"></p-dropdown>
                             <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section" [disabled]="true"></p-inputSwitch>
                         </div>
-                    </div>
-                    <div class="expense-fields--errors" style="color: warning;" *ngIf="expenseField.status==='INVALID' && expenseField.value.source_field && expenseField.value.destination_field">
-                        Fyle and Sage Intacct fields should be unique
-                    </div>
+                    </div>                      
                 </div>
+                <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="importSettingsForm.get('expenseFields')?.hasError('duplicateFyleFields') || importSettingsForm.get('expenseFields')?.hasError('duplicateSageIntacctFields')">
+                    *Fyle and Sage Intacct Fields should be unique.
+                  </div>                  
             </div>
             <div *ngIf="showAddButton" class="add-button-container tw-pl-4">
                 <svg-icon-sprite src="add" width="20px" height="20px" class="tw-text-slightly-normal-text-color" (click)="addExpenseField()"></svg-icon-sprite>
@@ -134,4 +134,31 @@
             <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!importSettingsForm.valid"></app-configuration-step-footer>
         </div>
     </form>
-</div>
+    <!-- <p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
+        <div>
+          <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
+            <div class="tw-flex tw-justify-between tw-items-center">
+              <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">Add Custom Field</p>
+              <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="showDialog = false"></i>
+            </div>
+          </div>
+          <div class="tw-p-24-px">
+            <form [formGroup]="customFieldDialogForm">
+              <p class="tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
+                Custom Field Name <span class="tw-text-mandatory-field-color">*</span>
+              </p>
+              <input formControlName="customFieldName" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter custom field name" required /> -->
+              <!-- Add your error message component here if needed -->
+              <!-- <div class="tw-flex tw-justify-end tw-pt-24-px ">
+                <button type="button" class="cancel-btn" (click)="showDialog = false">
+                  Cancel
+                </button>
+                <button type="button" class="save-btn" pButton [disabled]="!customFieldDialogForm.valid" (click)="addCustomField()">
+                  Add and Save
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </p-dialog>
+</div> -->
