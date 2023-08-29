@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ClickEvent, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/si/misc/expense-field.model';
-import { ImportSettingGet, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
+import { ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
@@ -57,9 +57,13 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   customFieldControl: AbstractControl;
 
+  customFieldForDependentField: boolean = false;
+
   private sessionStartTime = new Date();
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field',display_name: 'Create a Custom Field' }];
+  dependentFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];;
+
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
 
   constructor(
     private router: Router,
@@ -80,7 +84,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }
-  
 
   createExpenseField(sourceField: string = '', destinationField: string = '', isCustom: boolean = false, importToFyle: boolean = false, parentField: string = '') {
     const formControllers = {
@@ -136,6 +139,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       source_placeholder: null
     };
     this.expenseFields.push(this.createFormGroup(defaultFieldData));
+    this.importSettingWatcher();
     this.showAddButton = this.showOrHideAddButton();
   }
 
@@ -145,30 +149,55 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   }
 
   saveCustomField() {
-    this.customField = this.customFieldForm.value;
-    if (this.customFieldControl) {
-      this.fyleFields.pop();
-      this.fyleFields.push(this.customField);
-      this.fyleFields.push(this.customFieldOption[0]);
-      this.customFieldControl.patchValue({
-        source_field: this.customField.attribute_type
-      });
-    
-    this.customFieldControl.value.import_to_fyle = true;
-    this.customFieldControl.value.is_custom = true;
-    (<FormGroup>this.customFieldControl).controls['import_to_fyle'].setValue(true);
-    (<FormGroup>this.customFieldControl).controls['is_custom'].setValue(true);
-    (<FormGroup>this.customFieldControl).controls['source_field'].disable();
-    (<FormGroup>this.customFieldControl).controls['import_to_fyle'].disable();
-    this.customFieldForm.reset();
-    this.showDialog = false;
+    if (this.customFieldForDependentField) {
+      this.customField = {
+        attribute_type: this.customFieldForm.value.attribute_type.replace(/([A-Z])/g, "_$1").toLowerCase(),
+        display_name: this.customFieldForm.value.attribute_type,
+        source_placeholder: this.customFieldForm.value.source_placeholder
+      }
+      if (this.customFieldControl) {
+        this.dependentFieldOption.push(this.customField);
+        this.customFieldControl.patchValue({
+          attribute_type: this.customFieldForm.value.attribute_type.replace(/([A-Z])/g, "_$1").toLowerCase(),
+          display_name: this.customFieldForm.value.attribute_type,
+          source_placeholder: this.customFieldForm.value.source_placeholder
+        });
+      this.customFieldControl.value.is_custom = true;
+      this.customFieldForm.reset();
+      this.showDialog = false;
+      }
+      this.customFieldControl.disable();
+      this.customFieldForDependentField = false;
+    } else {
+      this.customField = {
+        attribute_type: this.customFieldForm.value.attribute_type.replace(/([A-Z])/g, "_$1").toLowerCase(),
+        display_name: this.customFieldForm.value.attribute_type,
+        source_placeholder: this.customFieldForm.value.source_placeholder
+      }
+      if (this.customFieldControl) {
+        this.fyleFields.pop();
+        this.fyleFields.push(this.customField);
+        this.fyleFields.push(this.customFieldOption[0]);
+        this.customFieldControl.patchValue({
+          source_field: this.customField.attribute_type
+        });
+      this.customFieldControl.value.import_to_fyle = true;
+      this.customFieldControl.value.is_custom = true;
+      (<FormGroup>this.customFieldControl).controls['import_to_fyle'].setValue(true);
+      (<FormGroup>this.customFieldControl).controls['is_custom'].setValue(true);
+      (<FormGroup>this.customFieldControl).controls['source_field'].disable();
+      (<FormGroup>this.customFieldControl).controls['import_to_fyle'].disable();
+      this.customFieldForm.reset();
+      this.showDialog = false;
+      }
     }
   }
 
   private addCustomField() {
     this.customFieldForm = this.formBuilder.group({
-      display_name: [null, Validators.required],
-      attribute_type: [null, Validators.required]
+      attribute_type: [null, Validators.required],
+      display_name: [null],
+      placeholder: [null, Validators.required]
     });
     this.showDialog=true;
   };
@@ -181,12 +210,38 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           this.showCostCodeCostType = false;
       }
     });
+
+    this.importSettingsForm.controls.costCodes.valueChanges.subscribe((value) => {
+      if (value.attribute_type === 'custom_field') {
+        this.customFieldForDependentField = true;
+        this.addCustomField();
+        this.customFieldControl = this.importSettingsForm.controls.costCodes;
+        if (value.source_field === 'custom_field') {
+          this.importSettingsForm.controls.costCodes.patchValue({
+              source_field: null
+            });
+        }
+        }
+    });
+  
+    this.importSettingsForm.controls.costTypes.valueChanges.subscribe((value) => {
+      if (value.attribute_type === 'custom_field') {
+        this.customFieldForDependentField = true;
+        this.addCustomField();
+        this.customFieldControl = this.importSettingsForm.controls.costTypes;
+        if (value.source_field === 'custom_field') {
+          this.importSettingsForm.controls.costTypes.patchValue({
+              source_field: null
+            });
+        }
+        }
+    });
   }
 
   private importSettingWatcher(): void {
     const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control, index) => {
-      control.valueChanges.subscribe(value => {    
+      control.valueChanges.subscribe(value => {
         if (value.source_field === 'custom_field') {
          this.addCustomField();
          this.customFieldControl = control;
@@ -198,9 +253,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         }
       });
     });
-    this.importSettingsForm?.controls?.importTaxCodes?.valueChanges.subscribe((isImportTaxEnabled) => {
+    this.importSettingsForm.controls.importTaxCodes?.valueChanges.subscribe((isImportTaxEnabled) => {
       if (!isImportTaxEnabled) {
+        this.importSettingsForm.controls?.sageIntacctTaxCodes.setValidators([Validators.required]);
+      } else {
         this.importSettingsForm?.controls?.sageIntacctTaxCodes?.setValue(null);
+        this.importSettingsForm.controls?.sageIntacctTaxCodes.clearValidators();
       }
     });
     this.costCodesCostTypesWatcher();
@@ -208,7 +266,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   private createFormGroup(data: MappingSetting): FormGroup {
     return this.formBuilder.group({
-      source_field: [data.source_field || '', [Validators.required]],
+      source_field: [data.source_field || ''],
       destination_field: [data.destination_field || '', [Validators.required]],
       import_to_fyle: [data.import_to_fyle || false],
       is_custom: [data.is_custom || false]
@@ -297,8 +355,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
           importCategories: [importSettings.configurations.import_categories || null],
           importTaxCodes: [importSettings.configurations.import_tax_codes || null],
-          sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.id.toString() === this.importSettings?.general_mappings?.default_tax_code?.id)) || null],
-          expenseFields: this.formBuilder.array(this.constructFormArray(), this.uniqueFieldsValidator())
+          costCodes: [importSettings.dependent_field_settings?.cost_code_field_name || null],
+          dependentFieldImportToggle: [true],
+          costTypes: [importSettings.dependent_field_settings?.cost_type_field_name || null],
+          isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
+          sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.id.toString() === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
+          expenseFields: this.formBuilder.array(this.constructFormArray(), this.uniqueFieldsValidator()),
         });
         this.importSettingWatcher();
         this.costCodesCostTypesWatcher();
@@ -313,12 +375,14 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   save(): void {
     this.saveInProgress = true;
+    // console.log(this.importSettingsForm);
     const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm);
-    this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingGet) => {
+    // console.log(importSettingPayload);
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.IMPORT_SETTINGS) {
-        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.IMPORT_SETTINGS, 2, importSettingPayload);
+        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
       } else {
         this.trackingService.intacctUpdateEvent(
           IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,

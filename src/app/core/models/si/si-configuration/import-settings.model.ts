@@ -20,19 +20,12 @@ export type MappingSetting = {
 }
 
 export type DependentFieldSetting = {
-    id: number,
-    project_field_id: number,
-    cost_code_field_id: number,
-    cost_type_field_id: number,
     is_import_enabled: boolean,
     cost_code_field_name: string,
-    cost_code_placeholder: null,
+    cost_code_placeholder: string,
     cost_type_field_name: string,
-    cost_type_placeholder: null,
-    last_successful_import_at: string,
-    created_at: string,
-    updated_at: string,
-    workspace: 1
+    cost_type_placeholder: string,
+    workspace: number
 }
 
 export type ImportSettingGet = {
@@ -50,44 +43,45 @@ export type ImportSettingPost = {
     dependent_field_settings: DependentFieldSetting
   }
 export class ImportSettings {
-    static constructPayload(importSettings: FormGroup): ImportSettingPost{
-        console.log(importSettings.value.expenseField);
+    static constructPayload(importSettingsForm: FormGroup): ImportSettingPost{
+        console.log(importSettingsForm.value);
+        const expenseFieldArray = importSettingsForm.value.expenseFields;
+
+        // First filter out objects where import_to_fyle is false
+        const filteredExpenseFieldArray = expenseFieldArray.filter((field: MappingSetting) => field.import_to_fyle);
+        
+        // Then map over the filtered array
+        const mappingSettings = filteredExpenseFieldArray.map((field: MappingSetting) => {
+          return {
+            source_field: field.source_field,
+            destination_field: field.destination_field,
+            import_to_fyle: field.import_to_fyle,
+            is_custom: field.is_custom,
+            source_placeholder: field.source_placeholder // You can replace this with field.source_placeholder if it exists in your form
+          };
+        });
+        
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
-                    import_categories: importSettings.value.import_categories,
-                    import_tax_codes: importSettings.value.import_tax_codes,
-                    import_vendors_as_merchants: importSettings.value.import_vendors_as_merchants
+                    import_categories: importSettingsForm.value.importCategories,
+                    import_tax_codes: importSettingsForm.value.importTaxCodes,
+                    import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant
                 },
                 general_mappings: {
-                    default_tax_code: importSettings.value.import_vendors_as_merchants ? {
-                        name: importSettings.value.sageIntacctTaxCodes.attribute_type,
-                        id: importSettings.value.sageIntacctTaxCodes.id
-                    } : null
-                },
-                mapping_settings: [
-                    {
-                        source_field: "PROJECT",
-                        destination_field: "PROJECT",
-                        import_to_fyle: true,
-                        is_custom: false,
-                        source_placeholder: null
+                    default_tax_code: {
+                        name: importSettingsForm.value.sageIntacctTaxCodes.attribute_type,
+                        id: importSettingsForm.value.sageIntacctTaxCodes.id
                     }
-                ],
+                },
+                mapping_settings: mappingSettings,
                 dependent_field_settings: {
-                    id: 1,
-                    project_field_id: 182303,
-                    cost_code_field_id: 226513,
-                    cost_type_field_id: 226514,
                     is_import_enabled: true,
-                    cost_code_field_name: "Wow Cost Code",
-                    cost_code_placeholder: null,
-                    cost_type_field_name: "Wow Cost Type",
-                    cost_type_placeholder: null,
-                    last_successful_import_at: "2023-07-14T07:19:49.577045Z",
-                    created_at: "2023-07-14T07:19:01.724818Z",
-                    updated_at: "2023-07-14T07:19:01.724866Z",
+                    cost_code_field_name: "Cost Code",
+                        cost_code_placeholder: "Cost Code Placeholder",
+                    cost_type_field_name: "Cost Tyope",
+                        cost_type_placeholder: "Cost Type Placeholder",
                     workspace: 1
-                }
+                  }
             };
 
         return importSettingPayload;

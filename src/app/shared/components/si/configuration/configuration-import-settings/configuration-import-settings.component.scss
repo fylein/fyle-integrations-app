@@ -10,6 +10,40 @@
   @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
 }
 
+.form-input-disabled {
+  padding: 11px 0px 11px 14px;
+  background: #F5F5F5;
+  border: 1px solid #DFDFE2;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.label-content {
+  background: #F5F5F5;
+  border: 1px solid #DFDFE2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  height: 100px;
+}
+
+.name-text {
+  padding: 12px 0px 8px 16px;
+}
+
+.form-field {
+  padding: 8px 16px 22px 16px;
+}
+
+.form-input {
+  padding: 11px 0px 11px 14px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #DFDFE2;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+
 .container {
     display: flex;
     justify-content: center;
@@ -23,7 +57,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 16px;
-    max-width: auto; /* You can adjust this value as needed */
+    max-width: auto;
 }
 
 .sub-text-note {
