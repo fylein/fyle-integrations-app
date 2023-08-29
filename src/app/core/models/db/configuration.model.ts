@@ -10,13 +10,13 @@ export interface Configuration {
     import_categories: boolean;
     sync_fyle_to_sage_intacct_payments: boolean;
     sync_sage_intacct_to_fyle_payments: boolean;
-    auto_map_employees?: string; 
-    import_tax_codes?: boolean; 
+    auto_map_employees?: string;
+    import_tax_codes?: boolean;
     memo_structure: string[];
     auto_create_destination_entity: boolean;
-    is_simplify_report_closure_enabled: boolean; 
-    change_accounting_period: boolean; 
-    import_vendors_as_merchants: boolean; 
+    is_simplify_report_closure_enabled: boolean;
+    change_accounting_period: boolean;
+    import_vendors_as_merchants: boolean;
     created_at: Date;
     updated_at: Date;
   }
