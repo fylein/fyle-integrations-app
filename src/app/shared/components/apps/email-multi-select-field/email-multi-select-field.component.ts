@@ -6,6 +6,7 @@ import { ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { EmailOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -16,7 +17,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   selectedEmail: string | null;
 
-  @Input() options: QBDEmailOption[];
+  @Input() options: QBDEmailOption[] | EmailOption[];
 
   @Input() form: FormGroup;
 
