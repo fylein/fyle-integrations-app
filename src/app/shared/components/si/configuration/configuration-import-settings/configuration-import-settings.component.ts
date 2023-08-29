@@ -88,9 +88,16 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   addExpenseField() {
     this.expenseFields = this.importSettingsForm.get('expenseFields') as FormArray;
-    this.expenseFields.push(this.createExpenseField());
+    const defaultFieldData = {
+      source_field: '',
+      destination_field: '',
+      import_to_fyle: false,
+      is_custom: false
+    };
+    this.expenseFields.push(this.createFormGroup(defaultFieldData));
     this.showAddButton = this.showOrHideAddButton();
   }
+
 
   private importSettingWatcher(): void {
     this.importSettingsForm?.controls?.importTaxCodes?.valueChanges.subscribe((isImportTaxEnabled) => {
@@ -111,25 +118,62 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
   }
 
+  // Helper function to create form group
+  private createFormGroup(data: any): FormGroup {
+    return this.formBuilder.group({
+      source_field: [data.source_field || '', [Validators.required]],
+      destination_field: [data.destination_field || '', [Validators.required]],
+      import_to_fyle: [data.import_to_fyle || false],
+      is_custom: [data.is_custom || false]
+    });
+  }
+
+  // Main function to construct form array
   private constructFormArray(): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
+    const fieldMap = new Map<string, any>();
+
+    // First loop to populate fieldMap
     this.sageIntacctFields.forEach((sageIntacctField) => {
-      this.importSettings.mapping_settings.forEach((mappingSetting) => {
-        if (sageIntacctField.attribute_type === mappingSetting.destination_field) {
-          expenseFieldFormArray.push(this.createExpenseField(mappingSetting.source_field, mappingSetting.destination_field, mappingSetting.import_to_fyle, mappingSetting.is_custom));
+      const mappingSetting = this.importSettings.mapping_settings.find(
+        (setting) => setting.destination_field === sageIntacctField.attribute_type
+      );
+
+      const fieldData = mappingSetting || {
+        destination_field: sageIntacctField.attribute_type,
+        import_to_fyle: false,
+        is_custom: false,
+        source_field: ''
+      };
+
+      fieldMap.set(sageIntacctField.attribute_type, fieldData);
+    });
+
+    // Handle top priority fields
+    const topPriorityFields = ['PROJECT', 'DEPARTMENT', 'LOCATION'];
+    topPriorityFields.forEach((field) => {
+      const fieldData = fieldMap.get(field) || {
+        destination_field: '',
+        import_to_fyle: false,
+        is_custom: false,
+        source_field: ''
+      };
+      expenseFieldFormArray.push(this.createFormGroup(fieldData));
+    });
+
+    // Handle remaining fields
+    if (expenseFieldFormArray.length < 3) {
+      this.sageIntacctFields.forEach((sageIntacctField) => {
+        if (expenseFieldFormArray.length < 3) {
+          const fieldData = fieldMap.get(sageIntacctField.attribute_type);
+          expenseFieldFormArray.push(this.createFormGroup(fieldData));
         }
       });
-      if (sageIntacctField.attribute_type==='PROJECT' || sageIntacctField.attribute_type==='DEPARTMENT' || sageIntacctField.attribute_type==='CLASS') {
-        expenseFieldFormArray.push(this.createExpenseField('', sageIntacctField.attribute_type));
-      }
-    });
-    this.sageIntacctFields.forEach((sageIntacctField) => {
-      if (expenseFieldFormArray.length<3) {
-        expenseFieldFormArray.push(this.createExpenseField('', sageIntacctField.attribute_type));
-      }
-    });
+    }
+
     return expenseFieldFormArray;
   }
+
 
   private getSettingsAndSetupForm(): void {
     const destinationAttributes = ['TAX_DETAIL'];
