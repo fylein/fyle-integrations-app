@@ -99,6 +99,7 @@ export enum ClickEvent {
   SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
   ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',
   ADD_EMAIL_MANUALLY = 'Add Email Manually',
+  ADD_CUSTOM_FIELD = 'Add Custom Field',
   QBD_EXPORT = 'Export IIF files',
   CONNECT_INTACCT  = 'Connect Sage Intacct',
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
