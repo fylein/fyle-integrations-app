@@ -44,12 +44,11 @@ export type ImportSettingPost = {
   }
 export class ImportSettings {
     static constructPayload(importSettingsForm: FormGroup): ImportSettingPost{
-        console.log(importSettingsForm.value);
         const expenseFieldArray = importSettingsForm.value.expenseFields;
 
         // First filter out objects where import_to_fyle is false
         const filteredExpenseFieldArray = expenseFieldArray.filter((field: MappingSetting) => field.import_to_fyle);
-        
+
         // Then map over the filtered array
         const mappingSettings = filteredExpenseFieldArray.map((field: MappingSetting) => {
           return {
@@ -60,7 +59,7 @@ export class ImportSettings {
             source_placeholder: field.source_placeholder // You can replace this with field.source_placeholder if it exists in your form
           };
         });
-        
+
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
                     import_categories: importSettingsForm.value.importCategories,

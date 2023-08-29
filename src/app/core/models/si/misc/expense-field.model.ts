@@ -11,3 +11,4 @@ export type ExpenseField = {
     is_custom: boolean;
     source_placeholder: string;
 };
+
