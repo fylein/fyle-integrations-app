@@ -26,7 +26,7 @@ export interface WorkspaceGeneralSettings {
     use_intacct_employee_departments: boolean;
     use_intacct_employee_locations: boolean;
   }
-  
+
   export interface WorkspaceSchedules {
     enabled: boolean;
     start_datetime: string;
