@@ -1,3 +1,15 @@
+:host ::ng-deep .p-button {
+  @apply tw-w-fit #{!important};
+}
+
+.save-btn {
+  @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
+}
+
+.cancel-btn {
+  @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -80,4 +92,15 @@ svg-icon-sprite {
 
 .delete-button {
   cursor: pointer;
+}
+
+.custom-option {
+  color: rgb(232, 73, 99);
+  display: flex;
+}
+
+.icon-align {
+  margin-left: 0;
+  margin-right: 5px;
+  vertical-align: middle;
 }

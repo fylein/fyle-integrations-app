@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/si/misc/expense-field.model';
-import { ImportSettingGet, ImportSettings } from 'src/app/core/models/si/si-configuration/import-settings.model';
+import { ImportSettingGet, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
@@ -50,7 +50,17 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   showPaymentOrAccount: string;
 
+  showDialog: boolean;
+
+  customFieldForm: FormGroup;
+
+  customField: ExpenseField;
+
+  customFieldControl: AbstractControl;
+
   private sessionStartTime = new Date();
+
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field',display_name: 'Create a Custom Field' }];
 
   constructor(
     private router: Router,
@@ -88,25 +98,50 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   addExpenseField() {
     this.expenseFields = this.importSettingsForm.get('expenseFields') as FormArray;
-    const defaultFieldData = {
+    const defaultFieldData: MappingSetting = {
       source_field: '',
       destination_field: '',
       import_to_fyle: false,
-      is_custom: false
+      is_custom: false,
+      source_placeholder: null
     };
     this.expenseFields.push(this.createFormGroup(defaultFieldData));
     this.showAddButton = this.showOrHideAddButton();
   }
 
-
-  private importSettingWatcher(): void {
-    this.importSettingsForm?.controls?.importTaxCodes?.valueChanges.subscribe((isImportTaxEnabled) => {
-      if (!isImportTaxEnabled) {
-        this.importSettingsForm?.controls?.sageIntacctTaxCodes?.setValue(null);
-      }
-    });
-    this.costCodesCostTypesWatcher();
+  closeModel() {
+    this.customFieldForm.reset();
+    this.showDialog = false;
   }
+
+  saveCustomField() {
+    this.customField = this.customFieldForm.value;
+    if (this.customFieldControl) {
+      this.fyleFields.pop();
+      this.fyleFields.push(this.customField);
+      this.fyleFields.push(this.customFieldOption[0]);
+      this.customFieldControl.patchValue({
+        source_field: this.customField.attribute_type
+      });
+    
+    this.customFieldControl.value.import_to_fyle = true;
+    this.customFieldControl.value.is_custom = true;
+    (<FormGroup>this.customFieldControl).controls['import_to_fyle'].setValue(true);
+    (<FormGroup>this.customFieldControl).controls['is_custom'].setValue(true);
+    (<FormGroup>this.customFieldControl).controls['source_field'].disable();
+    (<FormGroup>this.customFieldControl).controls['import_to_fyle'].disable();
+    this.customFieldForm.reset();
+    this.showDialog = false;
+    }
+  }
+
+  private addCustomField() {
+    this.customFieldForm = this.formBuilder.group({
+      display_name: [null, Validators.required],
+      attribute_type: [null, Validators.required]
+    });
+    this.showDialog=true;
+  };
 
   private costCodesCostTypesWatcher(): void {
     this.importSettingsForm.controls.expenseFields.valueChanges.subscribe((expenseField) => {
@@ -118,8 +153,36 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
   }
 
-  // Helper function to create form group
-  private createFormGroup(data: any): FormGroup {
+  private isDistinctField(selectedField: string, allFields: string[]): boolean {
+    const occurrences = allFields.filter(field => field === selectedField).length;
+    return occurrences === 1;
+  }
+  
+
+  private importSettingWatcher(): void {
+    const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
+    expenseFieldArray.controls.forEach((control, index) => {
+      control.valueChanges.subscribe(value => {    
+        if (value.source_field === 'custom_field') {
+         this.addCustomField();
+         this.customFieldControl = control;
+         if (value.source_field === 'custom_field') {
+              control.patchValue({
+              source_field: null
+            });
+         }
+        }
+      });
+    });
+    this.importSettingsForm?.controls?.importTaxCodes?.valueChanges.subscribe((isImportTaxEnabled) => {
+      if (!isImportTaxEnabled) {
+        this.importSettingsForm?.controls?.sageIntacctTaxCodes?.setValue(null);
+      }
+    });
+    this.costCodesCostTypesWatcher();
+  }
+
+  private createFormGroup(data: MappingSetting): FormGroup {
     return this.formBuilder.group({
       source_field: [data.source_field || '', [Validators.required]],
       destination_field: [data.destination_field || '', [Validators.required]],
@@ -174,7 +237,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     return expenseFieldFormArray;
   }
 
-
   private getSettingsAndSetupForm(): void {
     const destinationAttributes = ['TAX_DETAIL'];
 
@@ -194,6 +256,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration]) => {
         this.sageIntacctFields = sageIntacctFields;
         this.fyleFields = fyleFields;
+        this.fyleFields.push(this.customFieldOption[0]);
         this.sageIntacctTaxGroup = groupedAttributesResponse.TAX_DETAIL;
         this.importSettings = importSettings;
         if (configuration.employee_field_mapping==='EMPLOYEE') {

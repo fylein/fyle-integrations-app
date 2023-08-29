@@ -93,12 +93,18 @@
                             optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pr-10"></p-dropdown>
                             <p-dropdown [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                             optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pl-32" [showClear]="true">
-                                <ng-template pTemplate="selectedItem" let-item>
-                                    <div class="selected-item-container">
-                                        {{ item.display_name }}
-                                    </div>
-                                </ng-template>
-                            </p-dropdown>                            
+                            <ng-template let-option pTemplate="item">
+                              <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
+                                <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
+                                {{ option.display_name }}
+                              </div>
+                            </ng-template>
+                            <ng-template pTemplate="selectedItem" let-item>
+                              <div class="selected-item-container">
+                                {{ item.display_name }}
+                              </div>
+                            </ng-template>
+                          </p-dropdown>                                                                             
                         <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section"></p-inputSwitch>
                     </div>
                     <div class="tw-pt-4" *ngIf="i===0 && showCostCodeCostType">
@@ -107,14 +113,28 @@
                         <div class="tw-pt-4">
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-200-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
                             <span class="tw-pr-32"></span>
-                            <p-dropdown class="tw-pl-36" [options]="['Create a Custom Field']" placeholder="Select Expense Field"></p-dropdown>
+                            <p-dropdown class="tw-pl-36" [options]="customFieldOption" placeholder="Select Expense Field">
+                                <ng-template let-option pTemplate="item">
+                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
+                                      <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
+                                      {{ option.display_name }}
+                                    </div>
+                                  </ng-template>
+                            </p-dropdown>
                             <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section" [disabled]="true"></p-inputSwitch>
                         </div>
                         <div class="tw-pt-4 tw-pl-12">
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-150-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
                             <span class="tw-pl-36"></span>
                             <span class="tw-pl-4"></span>
-                            <p-dropdown class="tw-pl-28" [options]="['Create a Custom Field']" placeholder="Select Expense Field"></p-dropdown>
+                            <p-dropdown class="tw-pl-28" [options]="customFieldOption" placeholder="Select Expense Field">
+                                <ng-template let-option pTemplate="item">
+                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
+                                      <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
+                                      {{ option.display_name }}
+                                    </div>
+                                  </ng-template>
+                            </p-dropdown>
                             <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section" [disabled]="true"></p-inputSwitch>
                         </div>
                     </div>
@@ -135,3 +155,35 @@
         </div>
     </form>
 </div>
+
+<p-dialog *ngIf="showDialog" [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDialog" [draggable]="false" [style]="{width: '468px'}">
+    <div [formGroup]="customFieldForm">
+        <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
+            <div class="tw-flex tw-justify-between tw-items-center">
+                <p class="tw-text-slightly-normal-text-color tw-text-24-px tw-font-500">Add new Custom Field</p>
+                <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()"></i>
+            </div>
+        </div>
+        <div class="tw-p-24-px">
+            <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
+                Field Name <span class="tw-text-mandatory-field-color">*</span>
+            </p>
+            <input formControlName="attribute_type" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
+            <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'Enter a valid type'"></app-mandatory-error-message>
+
+            <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
+                Placeholder Name <span class="tw-text-mandatory-field-color">*</span>
+            </p>
+            <input formControlName="display_name" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['display_name'].touched && !customFieldForm.controls['display_name'].valid && !customFieldForm.controls['display_name'].disabled ? 'error-box' : 'normal-box']" required/>
+            <app-mandatory-error-message *ngIf="customFieldForm.controls['display_name'].touched && !customFieldForm.controls['display_name'].valid && !customFieldForm.controls['display_name'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
+            <div class="tw-flex tw-justify-end tw-pt-24-px ">
+                <button type="button" class="cancel-btn" (click)="closeModel()">
+                    Cancel
+                </button>
+                <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid" (click)="saveCustomField()">
+                    Add and Save
+                </button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
