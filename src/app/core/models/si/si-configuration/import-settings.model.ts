@@ -8,7 +8,7 @@ export type Configuration = {
 }
 
 export type ImportSettingGeneralMapping = {
-    default_tax_code: DefaultDestinationAttribute
+    default_tax_code: DefaultDestinationAttribute | null
 }
 
 export type MappingSetting = {
@@ -21,9 +21,18 @@ export type MappingSetting = {
 
 export type DependentFieldSetting = {
     id: number,
-    attribute_type: string,
-    source_field_id: number,
-    is_enabled: boolean
+    project_field_id: number,
+    cost_code_field_id: number,
+    cost_type_field_id: number,
+    is_import_enabled: boolean,
+    cost_code_field_name: string,
+    cost_code_placeholder: null,
+    cost_type_field_name: string,
+    cost_type_placeholder: null,
+    last_successful_import_at: string,
+    created_at: string,
+    updated_at: string,
+    workspace: 1
 }
 
 export type ImportSettingGet = {
@@ -41,18 +50,19 @@ export type ImportSettingPost = {
     dependent_field_settings: DependentFieldSetting
   }
 export class ImportSettings {
-    static constructPayload(exportSettingsForm: FormGroup): ImportSettingPost{
+    static constructPayload(importSettings: FormGroup): ImportSettingPost{
+        console.log(importSettings.value.expenseField);
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
-                    import_categories: true,
-                    import_tax_codes: true,
-                    import_vendors_as_merchants: true
+                    import_categories: importSettings.value.import_categories,
+                    import_tax_codes: importSettings.value.import_tax_codes,
+                    import_vendors_as_merchants: importSettings.value.import_vendors_as_merchants
                 },
                 general_mappings: {
-                    default_tax_code: {
-                        name: "GST",
-                        id: '120'
-                    }
+                    default_tax_code: importSettings.value.import_vendors_as_merchants ? {
+                        name: importSettings.value.sageIntacctTaxCodes.attribute_type,
+                        id: importSettings.value.sageIntacctTaxCodes.id
+                    } : null
                 },
                 mapping_settings: [
                     {
@@ -65,9 +75,18 @@ export class ImportSettings {
                 ],
                 dependent_field_settings: {
                     id: 1,
-                    attribute_type: 'string',
-                    source_field_id: 1,
-                    is_enabled: true
+                    project_field_id: 182303,
+                    cost_code_field_id: 226513,
+                    cost_type_field_id: 226514,
+                    is_import_enabled: true,
+                    cost_code_field_name: "Wow Cost Code",
+                    cost_code_placeholder: null,
+                    cost_type_field_name: "Wow Cost Type",
+                    cost_type_placeholder: null,
+                    last_successful_import_at: "2023-07-14T07:19:49.577045Z",
+                    created_at: "2023-07-14T07:19:01.724818Z",
+                    updated_at: "2023-07-14T07:19:01.724866Z",
+                    workspace: 1
                 }
             };
 

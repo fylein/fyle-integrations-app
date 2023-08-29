@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -11,7 +11,6 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { CheckboxModule } from 'primeng/checkbox';
 
 @Component({
   selector: 'app-configuration-import-settings',
@@ -23,6 +22,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   isLoading: boolean = true;
 
   importSettingsForm: FormGroup;
+
+  customFieldForm: FormGroup;
 
   expenseFields: FormArray;
 
@@ -52,8 +53,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   showDialog: boolean;
 
-  customFieldForm: FormGroup;
-
   customField: ExpenseField;
 
   customFieldControl: AbstractControl;
@@ -76,9 +75,16 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     return this.importSettingsForm.get('expenseFields') as FormArray;
   }
 
+  toTitleCase(str: string) {
+    return str.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+  
+
   createExpenseField(sourceField: string = '', destinationField: string = '', isCustom: boolean = false, importToFyle: boolean = false, parentField: string = '') {
     const formControllers = {
-      source_field: [sourceField ? sourceField : '', [Validators.required]],
+      source_field: [sourceField ? sourceField : ''],
       destination_field: [destinationField ? destinationField : '', [Validators.required]],
       import_to_fyle: [importToFyle],
       is_custom: [isCustom]
@@ -87,6 +93,30 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     const group = this.formBuilder.group(formControllers);
 
     return group;
+  }
+
+  uniqueFieldsValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const formArray = control as FormArray;
+      const fyleFieldSet = new Set();
+      const sageIntacctFieldSet = new Set();
+  
+      for (let field of formArray.value) {
+        if (field.source_field && fyleFieldSet.has(field.source_field)) {
+          return { 'duplicateFyleFields': true };
+        }
+        if (field.destination_field && sageIntacctFieldSet.has(field.destination_field)) {
+          return { 'duplicateSageIntacctFields': true };
+        }
+        if (field.source_field) {
+          fyleFieldSet.add(field.source_field);
+        }
+        if (field.destination_field) {
+          sageIntacctFieldSet.add(field.destination_field);
+        }
+      }
+      return null;
+    };
   }
 
   showOrHideAddButton() {
@@ -254,7 +284,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       configuration
     ]).subscribe(
       ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration]) => {
-        this.sageIntacctFields = sageIntacctFields;
+        this.sageIntacctFields = sageIntacctFields.map(field => {
+          return {
+            ...field,
+            display_name: this.toTitleCase(field.display_name)
+          };
+        });
         this.fyleFields = fyleFields;
         this.fyleFields.push(this.customFieldOption[0]);
         this.sageIntacctTaxGroup = groupedAttributesResponse.TAX_DETAIL;
@@ -268,12 +303,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
           importCategories: [importSettings.configurations.import_categories || null],
           importTaxCodes: [importSettings.configurations.import_tax_codes || null],
-          sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.id.toString() === this.importSettings?.general_mappings?.default_tax_code.id)) || null],
-          expenseFields: this.formBuilder.array(this.constructFormArray())
+          sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.id.toString() === this.importSettings?.general_mappings?.default_tax_code?.id)) || null],
+          expenseFields: this.formBuilder.array(this.constructFormArray(), this.uniqueFieldsValidator())
         });
-
-        this.isLoading = false;
         this.importSettingWatcher();
+        this.costCodesCostTypesWatcher();
+        this.isLoading = false;
       }
     );
   }

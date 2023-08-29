@@ -90,7 +90,7 @@
                 <div class="row tw-pt-18-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="p-d-flex p-ai-center">
                         <p-dropdown [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
-                            optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pr-10"></p-dropdown>
+                        optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pr-10"></p-dropdown>                    
                             <p-dropdown [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                             optionLabel="display_name" optionValue="attribute_type" class="p-mr-2 tw-pl-32" [showClear]="true">
                             <ng-template let-option pTemplate="item">
@@ -137,11 +137,11 @@
                             </p-dropdown>
                             <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section" [disabled]="true"></p-inputSwitch>
                         </div>
-                    </div>
-                    <div class="expense-fields--errors" style="color: warning;" *ngIf="expenseField.status==='INVALID' && expenseField.value.source_field && expenseField.value.destination_field">
-                        Fyle and Sage Intacct fields should be unique
-                    </div>
+                    </div>                      
                 </div>
+                <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="importSettingsForm.get('expenseFields')?.hasError('duplicateFyleFields') || importSettingsForm.get('expenseFields')?.hasError('duplicateSageIntacctFields')">
+                    *Fyle and Sage Intacct Fields should be unique.
+                  </div>                  
             </div>
             <div *ngIf="showAddButton" class="add-button-container tw-pl-4">
                 <svg-icon-sprite src="add" width="20px" height="20px" class="tw-text-slightly-normal-text-color" (click)="addExpenseField()"></svg-icon-sprite>
