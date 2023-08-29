@@ -56,7 +56,7 @@ export class ImportSettings {
             destination_field: field.destination_field,
             import_to_fyle: field.import_to_fyle,
             is_custom: field.is_custom,
-            source_placeholder: field.source_placeholder // You can replace this with field.source_placeholder if it exists in your form
+            source_placeholder: field.source_placeholder
           };
         });
 
@@ -74,12 +74,12 @@ export class ImportSettings {
                 },
                 mapping_settings: mappingSettings,
                 dependent_field_settings: {
-                    is_import_enabled: true,
-                    cost_code_field_name: "Cost Code",
-                        cost_code_placeholder: "Cost Code Placeholder",
-                    cost_type_field_name: "Cost Tyope",
-                        cost_type_placeholder: "Cost Type Placeholder",
-                    workspace: 1
+                    is_import_enabled: importSettingsForm.value.isDependentImportEnabled,
+                    cost_code_field_name: importSettingsForm.value.costCodes.attribute_type,
+                    cost_code_placeholder: importSettingsForm.value.costCodes.source_placeholder,
+                    cost_type_field_name: importSettingsForm.value.costTypes.attribute_type,
+                    cost_type_placeholder: importSettingsForm.value.costTypes.source_placeholder,
+                    workspace: importSettingsForm.value.workspaceId
                   }
             };
 

@@ -7,6 +7,7 @@ import { AccountOptions, ClickEvent, ConfigurationCta, IntacctOnboardingState, I
 import { ExpenseField } from 'src/app/core/models/si/misc/expense-field.model';
 import { ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { StorageService } from 'src/app/core/services/core/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -72,6 +73,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
+    private storageService: StorageService,
     private workspaceService: SiWorkspaceService
   ) { }
 
@@ -360,6 +362,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           importTaxCodes: [importSettings.configurations.import_tax_codes || null],
           costCodes: [importSettings.dependent_field_settings?.cost_code_field_name || null],
           dependentFieldImportToggle: [true],
+          workspaceId: this.storageService.get('si.workspaceId'),
           costTypes: [importSettings.dependent_field_settings?.cost_type_field_name || null],
           isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
           sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.id.toString() === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
