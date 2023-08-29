@@ -183,12 +183,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
   }
 
-  private isDistinctField(selectedField: string, allFields: string[]): boolean {
-    const occurrences = allFields.filter(field => field === selectedField).length;
-    return occurrences === 1;
-  }
-  
-
   private importSettingWatcher(): void {
     const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control, index) => {
