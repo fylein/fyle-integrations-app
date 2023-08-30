@@ -1,6 +1,8 @@
 import { FormGroup } from "@angular/forms";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 
+const emptyDestinationAttribute = { id: null, name: null };
+
 export type Configuration = {
     import_vendors_as_merchants: boolean,
     import_categories: boolean,
@@ -8,7 +10,7 @@ export type Configuration = {
 }
 
 export type ImportSettingGeneralMapping = {
-    default_tax_code: DefaultDestinationAttribute | null
+    default_tax_code: DefaultDestinationAttribute
 }
 
 export type MappingSetting = {
@@ -67,10 +69,10 @@ export class ImportSettings {
                     import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant
                 },
                 general_mappings: {
-                    default_tax_code: {
-                        name: importSettingsForm.value.sageIntacctTaxCodes.attribute_type,
+                    default_tax_code: importSettingsForm.value.importTaxCodes ? {
+                        name: importSettingsForm.value.sageIntacctTaxCodes.value,
                         id: importSettingsForm.value.sageIntacctTaxCodes.id
-                    }
+                    } : emptyDestinationAttribute
                 },
                 mapping_settings: mappingSettings,
                 dependent_field_settings: {
