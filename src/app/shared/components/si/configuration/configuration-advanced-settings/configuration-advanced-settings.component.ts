@@ -532,7 +532,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   }
 
   isCCT(): boolean {
-    if(this.advancedSettingsForm.get('autoSyncPayments')?.value === PaymentSyncDirection.FYLE_TO_INTACCT) {
+    if (this.advancedSettingsForm.get('autoSyncPayments')?.value === PaymentSyncDirection.FYLE_TO_INTACCT) {
       return true;
     }
     return false;

@@ -87,7 +87,6 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   private assignSelectedEmail(emails: EmailOptions[]): void {
-    console.log(emails);
     if (emails.length) {
       this.selectedEmail = emails[0].email;
     } else {
@@ -103,7 +102,6 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   private getEmailOptions(additionalEmails: EmailOptions[], adminEmails: EmailOptions[]): EmailOptions[] {
-    console.log(adminEmails);
     return additionalEmails.concat(adminEmails).filter((email: EmailOptions, index: number, self: EmailOptions[]) => {
       return index === self.findIndex((e: EmailOptions) => {
         return e.email === email.email;
@@ -114,7 +112,6 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   private setupPage(): void {
     this.assignSelectedEmail(this.form.value.email);
     this.emails = this.getEmailOptions(this.form.value.email, this.options);
-    console.log(this.options);
     this.createEmailAdditionWatcher();
   }
 
