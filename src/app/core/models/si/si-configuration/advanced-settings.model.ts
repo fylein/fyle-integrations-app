@@ -168,7 +168,7 @@ export type AdvancedSettingsPost = {
           default_project: emptyDestinationAttribute,
           default_item: emptyDestinationAttribute,
           use_intacct_employee_departments: false,
-          use_intacct_employee_locations: false,
+          use_intacct_employee_locations: false
         },
         workspace_schedules: {
           enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
