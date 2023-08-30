@@ -602,8 +602,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       }
       this.saveInProgress = false;
       if (this.isOnboarding) {
-        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_SETTINGS);
-        this.router.navigate([`/integrations/intacct/onboarding/advanced_settings`]);
+        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.COMPLETE);
+        this.router.navigate([`/integrations/intacct/onboarding/done`]);
       }
     }, () => {
       this.saveInProgress = false;
