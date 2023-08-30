@@ -217,7 +217,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
 
     this.importSettingsForm.controls.costCodes.valueChanges.subscribe((value) => {
-      if (value.attribute_type === 'custom_field') {
+      if (value?.attribute_type === 'custom_field') {
         this.customFieldForDependentField = true;
         this.addCustomField();
         this.customFieldControl = this.importSettingsForm.controls.costCodes;
@@ -230,7 +230,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
 
     this.importSettingsForm.controls.costTypes.valueChanges.subscribe((value) => {
-      if (value.attribute_type === 'custom_field') {
+      if (value?.attribute_type === 'custom_field') {
         this.customFieldForDependentField = true;
         this.addCustomField();
         this.customFieldControl = this.importSettingsForm.controls.costTypes;
@@ -259,11 +259,11 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       });
     });
     this.importSettingsForm.controls.importTaxCodes?.valueChanges.subscribe((isImportTaxEnabled) => {
-      if (!isImportTaxEnabled) {
+      if (isImportTaxEnabled) {
         this.importSettingsForm.controls?.sageIntacctTaxCodes.setValidators([Validators.required]);
       } else {
-        this.importSettingsForm?.controls?.sageIntacctTaxCodes?.setValue(null);
-        this.importSettingsForm.controls?.sageIntacctTaxCodes.clearValidators();
+        this.importSettingsForm.controls.sageIntacctTaxCodes.clearValidators();
+        this.importSettingsForm.controls.sageIntacctTaxCodes.updateValueAndValidity();
       }
     });
     this.costCodesCostTypesWatcher();
@@ -381,9 +381,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   save(): void {
     this.saveInProgress = true;
-    // Console.log(this.importSettingsForm);
     const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm);
-    // Console.log(importSettingPayload);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
