@@ -1,3 +1,6 @@
+import { FormGroup } from "@angular/forms";
+import { PaymentSyncDirection } from "../../enum/enum.model";
+
 export interface GeneralMappingEntity {
     id: string;
     name: string;
@@ -7,6 +10,12 @@ export interface GeneralMappingEntity {
     email: string;
     name: string;
   }
+
+  export type AdvancedSettingFormOption = {
+    label: string,
+    value: string | null | PaymentSyncDirection
+}
+
 export interface WorkspaceGeneralSettings {
     change_accounting_period: boolean;
     sync_fyle_to_sage_intacct_payments: boolean;
@@ -48,5 +57,36 @@ export type AdvancedSettingsPost = {
     workspace_schedules: WorkspaceSchedules;
   }
 
-export class AdvancedSettings {
-}
+  export class AdvancedSettingModel {
+    static constructPayload(advancedSettingsForm: FormGroup): AdvancedSettingsPost {
+      const emptyDestinationAttribute = {id: '', name: ''};
+      const advancedSettingPayload: AdvancedSettingsPost = {
+        workspace_general_settings: {
+          auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantsAsVendors')?.value,
+          sync_fyle_to_sage_intacct_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.FYLE_TO_INTACCT ? true : false,
+          sync_sage_intacct_to_fyle_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === PaymentSyncDirection.INTACCT_TO_FYLE ? true : false,
+          auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
+          change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
+          memo_structure: advancedSettingsForm.get('memoStructure')?.value
+        },
+        general_mappings: {
+          payment_account: emptyDestinationAttribute,
+          default_location: emptyDestinationAttribute,
+          default_department: emptyDestinationAttribute,
+          default_class: emptyDestinationAttribute,
+          default_project: emptyDestinationAttribute,
+          default_item: emptyDestinationAttribute,
+          use_intacct_employee_departments: false,
+          use_intacct_employee_locations: false,
+        },
+        workspace_schedules: {
+          enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
+          start_datetime: '',
+          interval_hours: advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
+          emails_selected: advancedSettingsForm.get('emails')?.value ? advancedSettingsForm.get('emails')?.value : null,
+          additional_email_options: advancedSettingsForm.get('addedEmail')?.value ? advancedSettingsForm.get('addedEmail')?.value : null
+        }
+      };
+      return advancedSettingPayload;
+    }
+  }

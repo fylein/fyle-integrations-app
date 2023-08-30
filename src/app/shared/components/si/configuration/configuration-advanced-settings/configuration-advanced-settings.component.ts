@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { ConfigurationCta, RedirectLink } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingsGet } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { ConfigurationCta, PaymentSyncDirection, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { AdvancedSettingFormOption, AdvancedSettingsGet } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
@@ -36,6 +36,21 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   memoStructure: string[] = [];
 
   defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+
+  paymentSyncOptions: AdvancedSettingFormOption[] = [
+    {
+      label: 'None',
+      value: null
+    },
+    {
+      label: 'Export Fyle ACH Payments to Sage Intacct',
+      value: PaymentSyncDirection.FYLE_TO_INTACCT
+    },
+    {
+      label: 'Import Sage Intacct Online Payments into Fyle',
+      value: PaymentSyncDirection.INTACCT_TO_FYLE
+    }
+  ];
 
   constructor(
     private router: Router,
@@ -75,13 +90,37 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       }
     });
   }
-
-  private initializeExportSettingsFormWithData(): void {
-
-    this.advancedSettingsForm = this.formBuilder.group({
-      autoSyncPayments: [null]
+  
+  private createMemoStructureWatcher(): void {
+    this.memoStructure = this.advancedSettingsForm.value.setDescriptionField;
+    this.formatMemoPreview();
+    this.advancedSettingsForm.controls.setDescriptionField.valueChanges.subscribe((memoChanges) => {
+      console.log(memoChanges);
+      this.memoStructure = memoChanges;
+      this.formatMemoPreview();
     });
   }
+
+  private initializeExportSettingsFormWithData(): void {
+    this.advancedSettingsForm = this.formBuilder.group({
+      scheduleAutoExport: [null],
+      errorNotificationEmail: [null],
+      autoSyncPayments: [null],
+      autoCreateEmployeeVendor: [null],
+      postEntriesCurrentPeriod: [null],
+      setDescriptionField: [this.defaultMemoFields, Validators.required],
+      skipSelectiveExpenses: [null],
+      defaultLocation: [null],
+      defaultDepartment: [null],
+      defaultProject: [null],
+      defaultClass: [null],
+      defaultItems: [null],
+      useEmployeeLocation: [null],
+      useEmployeeDepartment: [null],
+    });
+    this.createMemoStructureWatcher();
+  }
+  
 
   private getSettingsAndSetupForm(): void {
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();

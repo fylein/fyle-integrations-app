@@ -31,7 +31,7 @@
                 [options]="['abcd']"
                 [iconPath]="'email'"
                 [placeholder]="'Set Schedule'"
-                [formControllerName]="'autoSyncPayments'"></app-configuration-select-field>
+                [formControllerName]="'scheduleAutoExport'"></app-configuration-select-field>
                 <app-email-multi-select-field
                     [form]="advancedSettingsForm"
                     [label]="'Send Error Notification to'"
@@ -41,7 +41,7 @@
                     [options]="[{name:'anish', email:'abcd@rmail.com'}]"
                     [iconPath]="'expense'"
                     [placeholder]="'Select email address'"
-                    [formControllerName]="'autoSyncPayments'">
+                    [formControllerName]="'errorNotificationEmail'">
                 </app-email-multi-select-field>
             </div>
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -51,7 +51,7 @@
             [mandatoryErrorListName]="'payment sync method'"
             [label]="'Auto-Sync Payment Status for Reimbursable Expenses'"
             [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within Fyle or outside Fyle.'"
-            [options]="['abcd']"
+            [options]="paymentSyncOptions"
             [iconPath]="'sync'"
             [placeholder]="'Select payment sync method'"
             [formControllerName]="'autoSyncPayments'"></app-configuration-select-field>
@@ -72,14 +72,14 @@
                 [form]="advancedSettingsForm"
                 [label]="'Auto-Create Employee/Vendor'" 
                 [subLabel]="'When matching Employee/Vendor record is not found for an employee in Fyle, the integration will auto-create a new record in Sage Intacct.'" 
-                [formControllerName]="'autoSyncPayments'"></app-configuration-toggle-field>
+                [formControllerName]="'autoCreateEmployeeVendor'"></app-configuration-toggle-field>
             </div>
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Post Entries in the Current Accounting Period'" 
                 [subLabel]="'If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.'" 
-                [formControllerName]="'autoSyncPayments'"></app-configuration-toggle-field>
+                [formControllerName]="'postEntriesCurrentPeriod'"></app-configuration-toggle-field>
             </div>
         </div>
 
@@ -97,10 +97,10 @@
                 [form]="advancedSettingsForm"
                 [label]="'Set the Description Field in Sage Intacct'"
                 [subLabel]="'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.'"
-                [options]="['abcd','efgh']"
+                [options]="defaultMemoFields"
                 [iconPath]="'expense'"
                 [placeholder]="'Select Description'"
-                [formControllerName]="'autoSyncPayments'"></app-configuration-multi-select>
+                [formControllerName]="'setDescriptionField'"></app-configuration-multi-select>
                 <div class="tw-p-24-px">
                     <p class="tw-text-12-px tw-mb-12-px tw-text-faded-text-color">Preview of the Description Field</p>
                     <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px">
@@ -113,7 +113,7 @@
                 [form]="advancedSettingsForm"
                 [label]="'Skip Selective Expenses from being Exported to Sage Intacct'" 
                 [subLabel]="'The integration will export all the expenses once they reach their export state. If you would like to skip few expenses from being exported, set up a conditional rule here.'" 
-                [formControllerName]="'autoSyncPayments'"></app-configuration-toggle-field>
+                [formControllerName]="'skipSelectiveExpenses'"></app-configuration-toggle-field>
             </div>
         </div>
 
@@ -129,9 +129,9 @@
             <div class="tw-pt-4 tw-pl-6 field-label">
                 <div class="tw-font-200"><label>Default Location</label></div>
                 <div class="tw-pt-2">
-                    <p-dropdown [options]="['abcd']"></p-dropdown>
+                    <p-dropdown [options]="['abcd']" formControlName="defaultLocation"></p-dropdown>
                     <span class="tw-pl-4">
-                        <input type="checkbox" />
+                        <input formControlName="useEmployeeLocation" type="checkbox" />
                         <label class="tw-pl-2 tw-font-100" for="checkbox">Use Employee's Location in Sage Intacct</label>
                     </span>
                 </div>  
@@ -140,9 +140,9 @@
               <div class="tw-pt-4 tw-pl-6 field-label">
                 <div class="tw-font-200"><label>Default Department</label></div>
                 <div class="tw-pt-2">
-                    <p-dropdown [options]="['abcd']"></p-dropdown>
+                    <p-dropdown [options]="['abcd']" formControlName="defaultDepartment"></p-dropdown>
                     <span class="tw-pl-4">
-                        <input type="checkbox" />
+                        <input formControlName="useEmployeeDepartment" type="checkbox" />
                         <label class="tw-pl-2 tw-font-100" for="checkbox">Use Employee's Department in Sage Intacct</label>
                     </span>
                 </div>  
@@ -151,21 +151,21 @@
               <div class="tw-pt-4 tw-pl-6 field-label">
                 <div class="tw-font-200"><label>Default Project</label></div>
                 <div class="tw-pt-2">
-                    <p-dropdown [options]="['abcd']"></p-dropdown>
+                    <p-dropdown [options]="['abcd']" formControlName="defaultProject"></p-dropdown>
                 </div>  
               </div> 
 
               <div class="tw-pt-4 tw-pl-6 field-label">
                 <div class="tw-font-200"><label>Default Class</label></div>
                 <div class="tw-pt-2">
-                    <p-dropdown [options]="['abcd']"></p-dropdown>
+                    <p-dropdown [options]="['abcd']" formControlName="defaultClass"></p-dropdown>
                 </div>  
               </div> 
 
               <div class="tw-pt-4 tw-pl-6 field-label">
                 <div class="tw-font-200"><label>Default Items</label></div>
                 <div class="tw-pt-2">
-                    <p-dropdown [options]="['abcd']"></p-dropdown>
+                    <p-dropdown [options]="['abcd']" formControlName="defaultItems"></p-dropdown>
                 </div>  
               </div> 
         </div>
