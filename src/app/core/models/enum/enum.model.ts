@@ -5,6 +5,17 @@ export enum IntegrationView {
   TRAVEL = 'TRAVEL'
 }
 
+export enum AccountOptions {
+  EXPENSE_TYPE = 'EXPENSE_TYPE',
+  ACCOUNT = 'ACCOUNT'
+}
+
+export enum AutoMapEmployeeOptions {
+  EMAIL = 'EMAIL',
+  NAME = 'NAME',
+  EMPLOYEE_CODE = 'EMPLOYEE_CODE'
+}
+
 export enum AccountingIntegrationApp {
   QBO = 'QBO',
   NETSUITE = 'NetSuite',

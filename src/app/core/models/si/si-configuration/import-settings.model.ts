@@ -1,6 +1,8 @@
 import { FormGroup } from "@angular/forms";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 
+const emptyDestinationAttribute = { id: null, name: null };
+
 export type Configuration = {
     import_vendors_as_merchants: boolean,
     import_categories: boolean,
@@ -8,7 +10,7 @@ export type Configuration = {
 }
 
 export type ImportSettingGeneralMapping = {
-    default_tax_code: DefaultDestinationAttribute | null
+    default_tax_code: DefaultDestinationAttribute
 }
 
 export type MappingSetting = {
@@ -20,19 +22,12 @@ export type MappingSetting = {
 }
 
 export type DependentFieldSetting = {
-    id: number,
-    project_field_id: number,
-    cost_code_field_id: number,
-    cost_type_field_id: number,
     is_import_enabled: boolean,
     cost_code_field_name: string,
-    cost_code_placeholder: null,
+    cost_code_placeholder: string,
     cost_type_field_name: string,
-    cost_type_placeholder: null,
-    last_successful_import_at: string,
-    created_at: string,
-    updated_at: string,
-    workspace: 1
+    cost_type_placeholder: string,
+    workspace: number
 }
 
 export type ImportSettingGet = {
@@ -50,44 +45,44 @@ export type ImportSettingPost = {
     dependent_field_settings: DependentFieldSetting
   }
 export class ImportSettings {
-    static constructPayload(importSettings: FormGroup): ImportSettingPost{
-        console.log(importSettings.value.expenseField);
+    static constructPayload(importSettingsForm: FormGroup): ImportSettingPost{
+        const expenseFieldArray = importSettingsForm.value.expenseFields;
+
+        // First filter out objects where import_to_fyle is false
+        const filteredExpenseFieldArray = expenseFieldArray.filter((field: MappingSetting) => field.import_to_fyle);
+
+        // Then map over the filtered array
+        const mappingSettings = filteredExpenseFieldArray.map((field: MappingSetting) => {
+          return {
+            source_field: field.source_field,
+            destination_field: field.destination_field,
+            import_to_fyle: field.import_to_fyle,
+            is_custom: field.is_custom,
+            source_placeholder: field.source_placeholder
+          };
+        });
+
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
-                    import_categories: importSettings.value.import_categories,
-                    import_tax_codes: importSettings.value.import_tax_codes,
-                    import_vendors_as_merchants: importSettings.value.import_vendors_as_merchants
+                    import_categories: importSettingsForm.value.importCategories,
+                    import_tax_codes: importSettingsForm.value.importTaxCodes,
+                    import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant
                 },
                 general_mappings: {
-                    default_tax_code: importSettings.value.import_vendors_as_merchants ? {
-                        name: importSettings.value.sageIntacctTaxCodes.attribute_type,
-                        id: importSettings.value.sageIntacctTaxCodes.id
-                    } : null
+                    default_tax_code: importSettingsForm.value.importTaxCodes ? {
+                        name: importSettingsForm.value.sageIntacctTaxCodes.value,
+                        id: importSettingsForm.value.sageIntacctTaxCodes.id
+                    } : emptyDestinationAttribute
                 },
-                mapping_settings: [
-                    {
-                        source_field: "PROJECT",
-                        destination_field: "PROJECT",
-                        import_to_fyle: true,
-                        is_custom: false,
-                        source_placeholder: null
-                    }
-                ],
+                mapping_settings: mappingSettings,
                 dependent_field_settings: {
-                    id: 1,
-                    project_field_id: 182303,
-                    cost_code_field_id: 226513,
-                    cost_type_field_id: 226514,
-                    is_import_enabled: true,
-                    cost_code_field_name: "Wow Cost Code",
-                    cost_code_placeholder: null,
-                    cost_type_field_name: "Wow Cost Type",
-                    cost_type_placeholder: null,
-                    last_successful_import_at: "2023-07-14T07:19:49.577045Z",
-                    created_at: "2023-07-14T07:19:01.724818Z",
-                    updated_at: "2023-07-14T07:19:01.724866Z",
-                    workspace: 1
-                }
+                    is_import_enabled: importSettingsForm.value.isDependentImportEnabled,
+                    cost_code_field_name: importSettingsForm.value.costCodes.attribute_type,
+                    cost_code_placeholder: importSettingsForm.value.costCodes.source_placeholder,
+                    cost_type_field_name: importSettingsForm.value.costTypes.attribute_type,
+                    cost_type_placeholder: importSettingsForm.value.costTypes.source_placeholder,
+                    workspace: importSettingsForm.value.workspaceId
+                  }
             };
 
         return importSettingPayload;

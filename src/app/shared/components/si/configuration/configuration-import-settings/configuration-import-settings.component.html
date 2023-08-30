@@ -107,13 +107,13 @@
                           </p-dropdown>                                                                             
                         <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section"></p-inputSwitch>
                     </div>
-                    <div class="tw-pt-4" *ngIf="i===0 && showCostCodeCostType">
-                        <input type="checkbox" />
+                    <div class="tw-pt-4" *ngIf="i===0 && showCostCodeCostType" [formGroup]="importSettingsForm">
+                        <input formControlName="isDependentImportEnabled" type="checkbox" />
                         <label class="tw-pl-2 tw-font-100" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields.</label>
-                        <div class="tw-pt-4">
+                        <div class="tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-200-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
                             <span class="tw-pr-32"></span>
-                            <p-dropdown class="tw-pl-36" [options]="customFieldOption" placeholder="Select Expense Field">
+                            <p-dropdown class="tw-pl-36" formControlName="costCodes" [options]="dependentFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -121,13 +121,13 @@
                                     </div>
                                   </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-16 input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                         </div>
-                        <div class="tw-pt-4 tw-pl-12">
+                        <div class="tw-pt-4 tw-pl-12" *ngIf="importSettingsForm.value.isDependentImportEnabled">
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-150-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
                             <span class="tw-pl-36"></span>
                             <span class="tw-pl-4"></span>
-                            <p-dropdown class="tw-pl-28" [options]="customFieldOption" placeholder="Select Expense Field">
+                            <p-dropdown class="tw-pl-28" formControlName="costTypes" [options]="dependentFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -135,7 +135,7 @@
                                     </div>
                                   </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-16 input-toggle-section" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-16 input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                         </div>
                     </div>                      
                 </div>
@@ -174,8 +174,30 @@
             <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
                 Placeholder Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="display_name" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['display_name'].touched && !customFieldForm.controls['display_name'].valid && !customFieldForm.controls['display_name'].disabled ? 'error-box' : 'normal-box']" required/>
-            <app-mandatory-error-message *ngIf="customFieldForm.controls['display_name'].touched && !customFieldForm.controls['display_name'].valid && !customFieldForm.controls['display_name'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
+            <input formControlName="placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['placeholder'].touched && !customFieldForm.controls['placeholder'].valid && !customFieldForm.controls['placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+            <app-mandatory-error-message *ngIf="customFieldForm.controls['placeholder'].touched && !customFieldForm.controls['placeholder'].valid && !customFieldForm.controls['placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
+
+            <div>
+                <h5 class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
+                  Field Type
+                </h5>
+                <div class="tw-w-388-px tw-h-48-px">
+                  <input class="tw-w-388-px form-input-disabled" type="text" placeholder="Select Field" disabled>
+                </div>
+              </div>
+
+              <div class="label-section tw-pt-8">
+                <div class="label-content tw-w-388-px">
+                  <h5 class="name-text sub-text-color">
+                    {{customFieldForm.value.attribute_type ? customFieldForm.value.attribute_type : 'Label'}}
+                  </h5>
+                  <div class="form-field tw-pt-4-px">
+                    <input class="form-input tw-w-320-px" type="text"
+                    [placeholder]="customFieldForm.value.placeholder ? customFieldForm.value.placeholder : 'Enter Text'">
+                  </div>
+                </div>
+              </div>              
+            
             <div class="tw-flex tw-justify-end tw-pt-24-px ">
                 <button type="button" class="cancel-btn" (click)="closeModel()">
                     Cancel

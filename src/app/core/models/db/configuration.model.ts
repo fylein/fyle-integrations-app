@@ -1,4 +1,4 @@
-import { CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject } from "../enum/enum.model";
+import { AutoMapEmployeeOptions, CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject } from "../enum/enum.model";
 
 export interface Configuration {
     id: number;
@@ -10,7 +10,7 @@ export interface Configuration {
     import_categories: boolean;
     sync_fyle_to_sage_intacct_payments: boolean;
     sync_sage_intacct_to_fyle_payments: boolean;
-    auto_map_employees?: string;
+    auto_map_employees?: AutoMapEmployeeOptions;
     import_tax_codes?: boolean;
     memo_structure: string[];
     auto_create_destination_entity: boolean;
