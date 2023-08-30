@@ -6,7 +6,7 @@ import { ExportSettingFormOption } from 'src/app/core/models/si/si-configuration
 import { ClickEvent, CorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { AdvancedSettingFormOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -15,7 +15,7 @@ import { AdvancedSettingFormOption } from 'src/app/core/models/si/si-configurati
 })
 export class ConfigurationSelectFieldComponent implements OnInit {
 
-  @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[] | AdvancedSettingFormOption[];
+  @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | HourOption[];
 
   @Input() destinationAttributes: DestinationAttribute[];
 

@@ -23,5 +23,11 @@ export type GroupedDestinationAttribute = {
   EXPENSE_PAYMENT_TYPE: DestinationAttribute[],
   VENDOR: DestinationAttribute[],
   CHARGE_CARD_NUMBER: DestinationAttribute[],
-  TAX_DETAIL: DestinationAttribute[]
+  TAX_DETAIL: DestinationAttribute[],
+  LOCATION: DestinationAttribute[],
+  DEPARTMENT: DestinationAttribute[],
+  PROJECT: DestinationAttribute[],
+  CLASS: DestinationAttribute[],
+  ITEM: DestinationAttribute[],
+  PAYMENT_ACCOUNT: DestinationAttribute[]
 };

@@ -7,6 +7,7 @@ import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/field-ma
 import { LocationEntityPost } from '../../models/si/si-configuration/connector.model';
 import { ExportSettingPost } from '../../models/si/si-configuration/export-settings.model';
 import { ImportSettingPost } from '../../models/si/si-configuration/import-settings.model';
+import { AdvancedSettingsPost } from '../../models/si/si-configuration/advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -85,7 +86,7 @@ export class TrackingService {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 
-  integrationsOnboardingCompletion(eventName: IntacctOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | void): void {
+  integrationsOnboardingCompletion(eventName: IntacctOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | AdvancedSettingsPost | void): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 

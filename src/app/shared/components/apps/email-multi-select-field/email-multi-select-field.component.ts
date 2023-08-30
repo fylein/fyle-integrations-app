@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { EmailOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
@@ -17,7 +17,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   selectedEmail: string | null;
 
-  @Input() options: QBDEmailOption[] | EmailOption[];
+  @Input() options: EmailOptions[];
 
   @Input() form: FormGroup;
 
@@ -46,7 +46,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   showDialog: boolean;
 
-  emails: QBDEmailOption[];
+  emails: EmailOptions[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -86,7 +86,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Email address saved successfully');
   }
 
-  private assignSelectedEmail(emails: QBDEmailOption[]): void {
+  private assignSelectedEmail(emails: EmailOptions[]): void {
+    console.log(emails);
     if (emails.length) {
       this.selectedEmail = emails[0].email;
     } else {
@@ -96,14 +97,15 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   private createEmailAdditionWatcher(): void {
     this.assignSelectedEmail(this.form.value.email);
-    this.form.controls.email.valueChanges.subscribe((emails: QBDEmailOption[]) => {
+    this.form.controls.email.valueChanges.subscribe((emails: EmailOptions[]) => {
       this.assignSelectedEmail(emails);
     });
   }
 
-  private getEmailOptions(additionalEmails: QBDEmailOption[], adminEmails: QBDEmailOption[]): QBDEmailOption[] {
-    return additionalEmails.concat(adminEmails).filter((email: QBDEmailOption, index: number, self: QBDEmailOption[]) => {
-      return index === self.findIndex((e: QBDEmailOption) => {
+  private getEmailOptions(additionalEmails: EmailOptions[], adminEmails: EmailOptions[]): EmailOptions[] {
+    console.log(adminEmails);
+    return additionalEmails.concat(adminEmails).filter((email: EmailOptions, index: number, self: EmailOptions[]) => {
+      return index === self.findIndex((e: EmailOptions) => {
         return e.email === email.email;
       });
     });
@@ -112,6 +114,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   private setupPage(): void {
     this.assignSelectedEmail(this.form.value.email);
     this.emails = this.getEmailOptions(this.form.value.email, this.options);
+    console.log(this.options);
     this.createEmailAdditionWatcher();
   }
 

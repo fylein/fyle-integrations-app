@@ -3,6 +3,8 @@ import { SiApiService } from '../si-core/si-api.service';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { Observable } from 'rxjs';
 import { AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, SkipExport } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
+import { StorageService } from '../../core/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +13,13 @@ export class SiAdvancedSettingService {
 
   constructor(
     private apiService: SiApiService,
+    private storageService: StorageService,
     private workspaceService: SiWorkspaceService
   ) { }
+
+  getOrgId(): string {
+    return this.storageService.get('orgId');
+  }
 
   postExpenseFilter(skipExport: SkipExport): Observable<SkipExport> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, skipExport);
