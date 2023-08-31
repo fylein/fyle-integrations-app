@@ -80,7 +80,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       return {
         location_entity_name: locationEntity[0].value,
         destination_id: locationEntity[0].destination_id,
-        country_name: locationEntity[0].detail.country,
+        country_name: locationEntity[0].detail.country ? locationEntity[0].detail.country : null,
         workspace: this.workspaceId
       };
     }
@@ -111,7 +111,19 @@ export class IntacctLocationEntityComponent implements OnInit {
     this.workspaceId = this.storageService.get('si.workspaceId');
     this.isOnboarding = this.router.url.includes('onboarding');
     this.mappingsService.getSageIntacctDestinationAttributes(IntacctField.LOCATION_ENTITY).subscribe((locationEntities) => {
-      this.locationEntityOptions = locationEntities;
+      const topLevelOption = {
+        id: 1,
+        attribute_type: 'LOCATION_ENTITY',
+        display_name: 'Location Entity',
+        destination_id: 'top_level',
+        value: 'Top Level',
+        active: true,
+        created_at: new Date(),
+        updated_at: new Date(),
+        workspace: this.workspaceId,
+        detail: {}
+      };
+      this.locationEntityOptions = [topLevelOption].concat(locationEntities);
       this.setupLocationEntityMapping();
     });
   }

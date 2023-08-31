@@ -1,9 +1,9 @@
 export type IntacctDestinationAttributeDetail = {
-  email: string;
-  customer_id: string;
-  customer_name: string;
-  gl_account_no: string;
-  gl_account_title: string;
-  is_reimbursable: boolean;
-  country: string;
+  email?: string;
+  customer_id?: string;
+  customer_name?: string;
+  gl_account_no?: string;
+  gl_account_title?: string;
+  is_reimbursable?: boolean;
+  country?: string;
 };
