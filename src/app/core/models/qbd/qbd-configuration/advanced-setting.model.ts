@@ -1,15 +1,16 @@
 import { FormGroup } from "@angular/forms";
 import { QBDScheduleFrequency } from "../../enum/enum.model";
 
-export type QBDEmailOption = {
+export type EmailOptions = {
     name: string,
     email: string
 }
+
 export type QBDAdvancedSettingsPost = {
     expense_memo_structure: string[],
     top_memo_structure: string[] | null,
     schedule_is_enabled: boolean,
-    emails_selected: QBDEmailOption[],
+    emails_selected: EmailOptions[],
     day_of_month: string | null,
     day_of_week: string | null,
     frequency: QBDScheduleFrequency | null,
@@ -24,7 +25,7 @@ export type QBDAdvancedSettingsGet = {
     top_memo_structure: string[],
     schedule_is_enabled: boolean,
     schedule_id: number | null,
-    emails_selected: QBDEmailOption[],
+    emails_selected: EmailOptions[],
     day_of_month: string | null,
     day_of_week: string | null,
     frequency: QBDScheduleFrequency | null,

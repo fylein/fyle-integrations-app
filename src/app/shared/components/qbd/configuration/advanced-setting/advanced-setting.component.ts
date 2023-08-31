@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClickEvent, Page, ConfigurationCta, QBDOnboardingState, ProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingModel, QBDAdvancedSettingsGet, QBDEmailOption } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { AdvancedSettingModel, QBDAdvancedSettingsGet, EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -49,7 +49,7 @@ export class AdvancedSettingComponent implements OnInit {
 
   defaultTopMemoOptions: string[] = ["employee_email", "employee_name", "purpose", "merchant"];
 
-  adminEmails: QBDEmailOption[];
+  adminEmails: EmailOptions[];
 
   weeklyOptions: string[] = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
 
@@ -171,7 +171,7 @@ export class AdvancedSettingComponent implements OnInit {
 
   getAdminEmails() {
     this.isLoading= true;
-    this.orgService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOption[]) => {
+    this.orgService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
       this.adminEmails = emailResponse;
       this.getSettingsAndSetupForm();
     });
