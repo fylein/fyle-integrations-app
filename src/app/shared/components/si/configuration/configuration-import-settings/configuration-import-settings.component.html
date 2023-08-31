@@ -113,7 +113,7 @@
                         <div class="tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-200-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
                             <span class="tw-pr-32"></span>
-                            <p-dropdown class="tw-pl-36" formControlName="costCodes" [options]="dependentFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                            <p-dropdown class="tw-pl-36" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -127,7 +127,7 @@
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-150-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
                             <span class="tw-pl-36"></span>
                             <span class="tw-pl-4"></span>
-                            <p-dropdown class="tw-pl-28" formControlName="costTypes" [options]="dependentFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                            <p-dropdown class="tw-pl-28" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -174,8 +174,8 @@
             <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
                 Placeholder Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['placeholder'].touched && !customFieldForm.controls['placeholder'].valid && !customFieldForm.controls['placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
-            <app-mandatory-error-message *ngIf="customFieldForm.controls['placeholder'].touched && !customFieldForm.controls['placeholder'].valid && !customFieldForm.controls['placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
+            <input formControlName="source_placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+            <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
 
             <div>
                 <h5 class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
@@ -193,7 +193,7 @@
                   </h5>
                   <div class="form-field tw-pt-4-px">
                     <input class="form-input tw-w-320-px" type="text"
-                    [placeholder]="customFieldForm.value.placeholder ? customFieldForm.value.placeholder : 'Enter Text'">
+                    [placeholder]="customFieldForm.value.source_placeholder ? customFieldForm.value.source_placeholder : 'Enter Text'">
                   </div>
                 </div>
               </div>              
