@@ -17,10 +17,6 @@ export class SiAdvancedSettingService {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  getOrgId(): string {
-    return this.storageService.get('orgId');
-  }
-
   postExpenseFilter(skipExport: SkipExport): Observable<SkipExport> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, skipExport);
   }

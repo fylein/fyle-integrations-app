@@ -1,5 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { PaymentSyncDirection } from "../../enum/enum.model";
+import { EmailOptions } from "../../qbd/qbd-configuration/advanced-setting.model";
 
   export interface GeneralMappingEntity {
     id: string;
@@ -121,7 +122,7 @@ export interface Configuration {
     memo_structure: string[];
   }
 
-  export interface GeneralMappings {
+  export interface AdvancedSettingGeneralMapping {
     payment_account: GeneralMappingEntity;
     default_location: GeneralMappingEntity;
     default_department: GeneralMappingEntity;
@@ -136,51 +137,52 @@ export interface Configuration {
     enabled: boolean;
     start_datetime: string;
     interval_hours: number;
-    emails_selected: string[];
+    emails_selected: string[] | [];
     additional_email_options: EmailOption[];
   }
 
 export type AdvancedSettingsGet = {
     configurations: Configuration;
-    general_mappings: GeneralMappings;
+    general_mappings: AdvancedSettingGeneralMapping;
     workspace_schedules: WorkspaceSchedules;
     workspace_id: number;
 }
 
 export type AdvancedSettingsPost = {
     configurations: Configuration;
-    general_mappings: GeneralMappings;
+    general_mappings: AdvancedSettingGeneralMapping;
     workspace_schedules: WorkspaceSchedules;
   }
 
   export class AdvancedSetting {
     static constructPayload(advancedSettingsForm: FormGroup): AdvancedSettingsPost {
-      const emptyDestinationAttribute = {id: '', name: ''};
+      console.log(advancedSettingsForm);
+      const emptyDestinationAttribute = { name: null, id: null};
       const advancedSettingPayload: AdvancedSettingsPost = {
         configurations: {
           auto_create_merchant_destination_entity: true,
           sync_fyle_to_sage_intacct_payments: advancedSettingsForm.get('autoSyncPayments')?.value === PaymentSyncDirection.FYLE_TO_INTACCT ? true : false,
           sync_sage_intacct_to_fyle_payments: advancedSettingsForm.get('autoSyncPayments')?.value === PaymentSyncDirection.INTACCT_TO_FYLE ? true : false,
-          auto_create_destination_entity: advancedSettingsForm.get('autoCreateEmployeeVendor')?.value,
+          auto_create_destination_entity: advancedSettingsForm.get('autoCreateEmployeeVendor')?.value ? advancedSettingsForm.value.autoCreateEmployeeVendor : null,
           change_accounting_period: advancedSettingsForm.get('postEntriesCurrentPeriod')?.value ? false : true,
           memo_structure: advancedSettingsForm.get('setDescriptionField')?.value
         },
         general_mappings: {
-          payment_account: advancedSettingsForm.get('defaultPaymentAccount')?.value?.value ? {id: advancedSettingsForm.get('defaultPaymentAccount')?.value.id, name: advancedSettingsForm.get('defaultPaymentAccount')?.value.value} : emptyDestinationAttribute,
-          default_location: advancedSettingsForm.get('defaultLocation')?.value?.value ? {id: advancedSettingsForm.get('defaultLocation')?.value.id, name: advancedSettingsForm.get('defaultLocation')?.value.value} : emptyDestinationAttribute,
-          default_department: advancedSettingsForm.get('defaultDepartment')?.value?.value ? {id: advancedSettingsForm.get('defaultDepartment')?.value.id, name: advancedSettingsForm.get('defaultDepartment')?.value.value} : emptyDestinationAttribute,
-          default_class: advancedSettingsForm.get('defaultClass')?.value?.value ? {id: advancedSettingsForm.get('defaultClass')?.value.id, name: advancedSettingsForm.get('defaultClass')?.value.value} : emptyDestinationAttribute,
-          default_project: advancedSettingsForm.get('defaultProject')?.value?.value ? {id: advancedSettingsForm.get('defaultProject')?.value.id, name: advancedSettingsForm.get('defaultProject')?.value.value} : emptyDestinationAttribute,
-          default_item: advancedSettingsForm.get('defaultItems')?.value?.value ? {id: advancedSettingsForm.get('defaultItems')?.value.id, name: advancedSettingsForm.get('defaultItems')?.value.value} : emptyDestinationAttribute,
-          use_intacct_employee_departments: advancedSettingsForm.get('useEmployeeLocation')?.value,
-          use_intacct_employee_locations: advancedSettingsForm.get('useEmployeeDepartment')?.value
+          payment_account: advancedSettingsForm.get('defaultPaymentAccount')?.value ? {name: advancedSettingsForm.value.defaultPaymentAccount.value, id: advancedSettingsForm.value.defaultPaymentAccount.id} : emptyDestinationAttribute,
+          default_location: advancedSettingsForm.get('defaultLocation')?.value ? {name: advancedSettingsForm.value.defaultLocation.value, id: advancedSettingsForm.value.defaultLocation.destination_id} : emptyDestinationAttribute,
+          default_department: advancedSettingsForm.get('defaultDepartment')?.value ? {name: advancedSettingsForm.value.defaultDepartment.value, id: advancedSettingsForm.value.defaultDepartment.destination_id} : emptyDestinationAttribute,
+          default_class: advancedSettingsForm.get('defaultClass')?.value ? {name: advancedSettingsForm.value.defaultClass.value, id: advancedSettingsForm.value.defaultClass.id} : emptyDestinationAttribute,
+          default_project: advancedSettingsForm.get('defaultProject')?.value ? {name: advancedSettingsForm.value.defaultProject.value, id: advancedSettingsForm.value.defaultProject.id} : emptyDestinationAttribute,
+          default_item: advancedSettingsForm.get('defaultItems')?.value ? {name: advancedSettingsForm.value.defaultItems.value, id: advancedSettingsForm.value.defaultItems.id} : emptyDestinationAttribute,
+          use_intacct_employee_departments: advancedSettingsForm.get('useEmployeeLocation')?.value ? true : false,
+          use_intacct_employee_locations: advancedSettingsForm.get('useEmployeeDepartment')?.value ? true : false
         },
         workspace_schedules: {
-          enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
+          enabled: advancedSettingsForm.get('scheduleAutoExport')?.value ? true : false,
           start_datetime: '',
-          interval_hours: advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
-          emails_selected: advancedSettingsForm.get('emails')?.value ? advancedSettingsForm.get('emails')?.value : null,
-          additional_email_options: advancedSettingsForm.get('addedEmail')?.value ? advancedSettingsForm.get('addedEmail')?.value : null
+          interval_hours: advancedSettingsForm.get('scheduleAutoExport')?.value ? advancedSettingsForm.get('scheduleAutoExport')?.value : null,
+          emails_selected: advancedSettingsForm.get('email')?.value ? advancedSettingsForm.get('email')?.value.map((item: EmailOptions) => item.email) : [],
+          additional_email_options: advancedSettingsForm.get('addedEmail')?.value ? advancedSettingsForm.value.email : null
         }
       };
       return advancedSettingPayload;

@@ -185,23 +185,36 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     });
   }
 
-  private initializeExportSettingsFormWithData(): void {
+  private initializeAdvancedSettingsFormWithData(): void {
+    const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
+    const findObjectById = (array: DestinationAttribute[], id: string) => array?.find(item => item.id.toString() === id) || null;
+    const filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOptions[]) => {
+      for (const email of emailToSearch) {
+        const foundAdmin = adminEmails.find(item => item.email === email);
+        if (foundAdmin) {
+          return foundAdmin;
+        }
+      }
+      return [];
+    };
+    console.log(this.advancedSettings);
     this.advancedSettingsForm = this.formBuilder.group({
-      scheduleAutoExport: [null],
-      errorNotificationEmail: [null],
-      autoSyncPayments: [null],
-      autoCreateEmployeeVendor: [null],
-      postEntriesCurrentPeriod: [null],
-      setDescriptionField: [this.defaultMemoFields, Validators.required],
-      skipSelectiveExpenses: [null],
-      defaultLocation: [null],
-      defaultDepartment: [null],
-      defaultProject: [null],
-      defaultClass: [null],
-      defaultItems: [null],
-      defaultPaymentAccount: [null],
-      useEmployeeLocation: [null],
-      useEmployeeDepartment: [null]
+      scheduleAutoExport: [this.advancedSettings.workspace_schedules?.interval_hours ? this.advancedSettings.workspace_schedules?.interval_hours : null],
+      email: [this.advancedSettings?.workspace_schedules?.emails_selected.length > 0 ? filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
+      search: [],
+      autoSyncPayments: [this.advancedSettings.configurations.sync_fyle_to_sage_intacct_payments ? PaymentSyncDirection.FYLE_TO_INTACCT : PaymentSyncDirection.INTACCT_TO_FYLE],
+      autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
+      postEntriesCurrentPeriod: [this.advancedSettings.configurations.change_accounting_period ? false : true],
+      setDescriptionField: [this.advancedSettings.configurations.memo_structure ? this.advancedSettings.configurations.memo_structure : this.defaultMemoFields, Validators.required],
+      skipSelectiveExpenses: [false],
+      defaultLocation: [findObjectByDestinationId(this.sageIntacctLocations, this.advancedSettings.general_mappings.default_location.id)],
+      defaultDepartment: [findObjectByDestinationId(this.sageIntacctDepartments, this.advancedSettings.general_mappings.default_department.id)],
+      defaultProject: [findObjectByDestinationId(this.sageIntacctProjects, this.advancedSettings.general_mappings.default_project.id)],
+      defaultClass: [findObjectByDestinationId(this.sageIntacctClasses, this.advancedSettings.general_mappings.default_class.id)],
+      defaultItems: [findObjectByDestinationId(this.sageIntacctDefaultItem, this.advancedSettings.general_mappings.default_item.id)],
+      defaultPaymentAccount: [findObjectById(this.sageIntacctPaymentAccount, this.advancedSettings.general_mappings.payment_account.id)],
+      useEmployeeLocation: [this.advancedSettings.general_mappings.use_intacct_employee_locations ? this.advancedSettings.general_mappings.use_intacct_employee_locations : null],
+      useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null]
     });
     this.createMemoStructureWatcher();
   }
@@ -539,11 +552,13 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   }
 
   private getSettingsAndSetupForm(): void {
+    this.isLoading = true;
+    this.isOnboarding = this.router.url.includes('onboarding');
+  
     const destinationAttributes = ['LOCATION', 'DEPARTMENT', 'PROJECT', 'CLASS', 'ITEM', 'PAYMENT_ACCOUNT'];
 
     const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
-    const schedules$ = this.advancedSettingsService.getAdvancedSettings();
     const skipExport$ = this.advancedSettingsService.getExpenseFilter();
 
     // Hours Options for Scheduled Exports
@@ -557,6 +572,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       groupedAttributes: groupedAttributes$
     }).subscribe(
       ({ advancedSettings, skipExport, groupedAttributes }) => {
+        console.log(advancedSettings);
         this.advancedSettings = advancedSettings;
         this.skipExport = skipExport;
         this.sageIntacctLocations = groupedAttributes.LOCATION;
@@ -565,7 +581,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         this.sageIntacctProjects = groupedAttributes.PROJECT;
         this.sageIntacctClasses = groupedAttributes.CLASS;
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
-        this.initializeExportSettingsFormWithData();
+        this.initializeAdvancedSettingsFormWithData();
         this.isLoading = false;
       });
   }
@@ -603,7 +619,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       this.saveInProgress = false;
       if (this.isOnboarding) {
         this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_SETTINGS);
-        this.router.navigate([`/integrations/intacct/onboarding/advanced_settings`]);
+        this.router.navigate([`/integrations/intacct/onboarding/done`]);
       }
     }, () => {
       this.saveInProgress = false;
