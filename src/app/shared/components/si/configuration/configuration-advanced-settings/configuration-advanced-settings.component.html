@@ -23,15 +23,16 @@
             </div>
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-select-field
-                [form]="advancedSettingsForm"
-                [isFieldMandatory]="true"
-                [mandatoryErrorListName]="'automatic export method'"
-                [label]="'Schedule Automatic Export'"
-                [subLabel]="'Set a frequency based on how often you want your expenses in Fyle to be exported to Sage Intacct.'"
-                [options]="hours"
-                [iconPath]="'email'"
-                [placeholder]="'Set Schedule'"
-                [formControllerName]="'scheduleAutoExport'"></app-configuration-select-field>
+                    [form]="advancedSettingsForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'automatic export method'"
+                    [label]="'Schedule Automatic Export'"
+                    [subLabel]="'Set a frequency based on how often you want your expenses in Fyle to be exported to Sage Intacct.'"
+                    [options]="hours"
+                    [iconPath]="'email'"
+                    [placeholder]="'Set Schedule'"
+                    [formControllerName]="'scheduleAutoExport'">
+                </app-configuration-select-field>
                 <app-email-multi-select-field
                     [form]="advancedSettingsForm"
                     [label]="'Send Error Notification to'"
@@ -41,7 +42,7 @@
                     [options]="adminEmails"
                     [iconPath]="'expense'"
                     [placeholder]="'Select email address'"
-                    [formControllerName]="'errorNotificationEmail'">
+                    [formControllerName]="'email'">
                 </app-email-multi-select-field>
             </div>
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

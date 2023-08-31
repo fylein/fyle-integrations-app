@@ -25,14 +25,14 @@ export class AuthService {
     return this.apiService.post('/auth/login/', { code: code });
   }
 
-  getAccessToken(): string | null {
-    const user: MinimalUser | null = this.userService.getUserProfile();
+  getAccessToken(key: string = 'user'): string | null {
+    const user: MinimalUser | null = this.userService.getUserProfile(key);
 
     return user ? user.access_token : null;
   }
 
-  getRefreshToken(): string | null {
-    const user: MinimalUser | null = this.userService.getUserProfile();
+  getRefreshToken(key: string = 'user'): string | null {
+    const user: MinimalUser | null = this.userService.getUserProfile(key);
 
     return user ? user.refresh_token : null;
   }
@@ -41,8 +41,8 @@ export class AuthService {
     return this.apiService.post('/auth/refresh/', { refresh_token: refreshToken });
   }
 
-  updateAccessToken(accessToken: string): string | null {
-    const user: MinimalUser | null = this.userService.getUserProfile();
+  updateAccessToken(accessToken: string, key: string = 'user'): string | null {
+    const user: MinimalUser | null = this.userService.getUserProfile(key);
 
     if (user) {
       user.access_token = accessToken;
