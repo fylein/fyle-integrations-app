@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
       };
       this.userService.storeUserProfile(user);
       this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
-      this.siAuthService.siLogin(user.refresh_token).subscribe();
+      this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
       this.router.navigate(['/integrations']);
     });
   }
