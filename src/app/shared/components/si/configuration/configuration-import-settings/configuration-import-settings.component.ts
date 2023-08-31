@@ -64,6 +64,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   dependentFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
 
+  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
+
+  private isCostCodeFieldSelected: boolean = false;
+
+  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
+
   customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
 
   constructor(
@@ -158,7 +164,11 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         source_placeholder: this.customFieldForm.value.source_placeholder
       };
       if (this.customFieldControl) {
-        this.dependentFieldOption.push(this.customField);
+        if (this.isCostCodeFieldSelected) {
+          this.costCodeFieldOption.push(this.customField)
+        } else {
+          this.costTypeFieldOption.push(this.customField)
+        }
         this.customFieldControl.patchValue({
           attribute_type: this.customFieldForm.value.attribute_type.replace(/([A-Z])/g, "_$1").toLowerCase(),
           display_name: this.customFieldForm.value.attribute_type,
@@ -217,6 +227,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
 
     this.importSettingsForm.controls.costCodes.valueChanges.subscribe((value) => {
+      this.isCostCodeFieldSelected = true;
       if (value?.attribute_type === 'custom_field') {
         this.customFieldForDependentField = true;
         this.addCustomField();
@@ -230,6 +241,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
 
     this.importSettingsForm.controls.costTypes.valueChanges.subscribe((value) => {
+      this.isCostCodeFieldSelected = false;
       if (value?.attribute_type === 'custom_field') {
         this.customFieldForDependentField = true;
         this.addCustomField();
@@ -351,6 +363,29 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         this.fyleFields.push(this.customFieldOption[0]);
         this.sageIntacctTaxGroup = groupedAttributesResponse.TAX_DETAIL;
         this.importSettings = importSettings;
+
+        const mappingSettings: MappingSetting[] = this.importSettings.mapping_settings;
+
+        for (const setting of mappingSettings) {
+          const { source_field, destination_field, import_to_fyle } = setting;
+          if (source_field === 'PROJECT' && destination_field === 'PROJECT' && import_to_fyle === true) {
+            this.showCostCodeCostType = true;
+              this.customField = {
+                attribute_type: importSettings.dependent_field_settings.cost_code_field_name,
+                display_name: importSettings.dependent_field_settings.cost_code_field_name,
+                source_placeholder: importSettings.dependent_field_settings.cost_code_placeholder
+              };
+              this.costCodeFieldOption.push(this.customField);
+              this.customField = {
+                attribute_type: importSettings.dependent_field_settings.cost_type_field_name,
+                display_name: importSettings.dependent_field_settings.cost_type_field_name,
+                source_placeholder: importSettings.dependent_field_settings.cost_type_placeholder
+              };
+              this.costTypeFieldOption.push(this.customField);
+            break;
+          }
+        }
+
         if (configuration.employee_field_mapping==='EMPLOYEE') {
           this.showPaymentOrAccount = AccountOptions.EXPENSE_TYPE;
         } else {

@@ -453,6 +453,9 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
 
   private getSettingsAndSetupForm(): void {
+    this.isLoading = true;
+    this.isOnboarding = this.router.url.includes('onboarding');
+
     const destinationAttributes = ['ACCOUNT', 'EXPENSE_PAYMENT_TYPE', 'VENDOR', 'CHARGE_CARD_NUMBER'];
 
     const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);

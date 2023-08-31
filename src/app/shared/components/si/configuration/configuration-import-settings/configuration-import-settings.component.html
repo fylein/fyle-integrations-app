@@ -113,7 +113,7 @@
                         <div class="tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-200-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
                             <span class="tw-pr-32"></span>
-                            <p-dropdown class="tw-pl-36" formControlName="costCodes" [options]="dependentFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                            <p-dropdown class="tw-pl-36" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -127,7 +127,7 @@
                             <input type="text" class="tw-text-14-px !tw-font-500 tw-w-150-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
                             <span class="tw-pl-36"></span>
                             <span class="tw-pl-4"></span>
-                            <p-dropdown class="tw-pl-28" formControlName="costTypes" [options]="dependentFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                            <p-dropdown class="tw-pl-28" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>

@@ -28,7 +28,7 @@ export type DependentFieldSetting = {
     cost_type_field_name: string,
     cost_type_placeholder: string,
     workspace: number
-}
+  };  
 
 export type ImportSettingGet = {
     configurations: Configuration,
@@ -42,10 +42,11 @@ export type ImportSettingPost = {
     configurations: Configuration,
     general_mappings: ImportSettingGeneralMapping,
     mapping_settings: MappingSetting[],
-    dependent_field_settings: DependentFieldSetting
+    dependent_field_settings: DependentFieldSetting | null
   }
 export class ImportSettings {
     static constructPayload(importSettingsForm: FormGroup): ImportSettingPost{
+        console.log(importSettingsForm);
         const expenseFieldArray = importSettingsForm.value.expenseFields;
 
         // First filter out objects where import_to_fyle is false
@@ -62,6 +63,14 @@ export class ImportSettings {
           };
         });
 
+        const dependentFieldSetting = importSettingsForm.value.isDependentImportEnabled ? {
+            is_import_enabled: importSettingsForm.value.isDependentImportEnabled,
+            cost_code_field_name: importSettingsForm.get('costCodes')?.value?.attribute_type,
+            cost_code_placeholder: importSettingsForm.get('costCodes')?.value?.source_placeholder,
+            cost_type_field_name: importSettingsForm.get('costTypes')?.value?.attribute_type,
+            cost_type_placeholder:importSettingsForm.get('costTypes')?.value?.source_placeholder,
+            workspace: importSettingsForm.value.workspaceId
+        } : null;
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
                     import_categories: importSettingsForm.value.importCategories,
@@ -75,14 +84,7 @@ export class ImportSettings {
                     } : emptyDestinationAttribute
                 },
                 mapping_settings: mappingSettings,
-                dependent_field_settings: {
-                    is_import_enabled: importSettingsForm.value.isDependentImportEnabled,
-                    cost_code_field_name: importSettingsForm.value.costCodes.attribute_type,
-                    cost_code_placeholder: importSettingsForm.value.costCodes.source_placeholder,
-                    cost_type_field_name: importSettingsForm.value.costTypes.attribute_type,
-                    cost_type_placeholder: importSettingsForm.value.costTypes.source_placeholder,
-                    workspace: importSettingsForm.value.workspaceId
-                  }
+                dependent_field_settings: dependentFieldSetting
             };
 
         return importSettingPayload;
