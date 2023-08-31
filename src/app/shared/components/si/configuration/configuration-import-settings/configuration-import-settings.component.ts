@@ -154,9 +154,9 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       };
       if (this.customFieldControl) {
         if (this.isCostCodeFieldSelected) {
-          this.costCodeFieldOption.push(this.customField)
+          this.costCodeFieldOption.push(this.customField);
         } else {
-          this.costTypeFieldOption.push(this.customField)
+          this.costTypeFieldOption.push(this.customField);
         }
         this.customFieldControl.patchValue({
           attribute_type: this.customFieldForm.value.attribute_type.replace(/([A-Z])/g, "_$1").toLowerCase(),

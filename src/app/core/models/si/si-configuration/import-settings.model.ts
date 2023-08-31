@@ -28,7 +28,7 @@ export type DependentFieldSetting = {
     cost_type_field_name: string,
     cost_type_placeholder: string,
     workspace: number
-  };  
+  };
 
 export type ImportSettingGet = {
     configurations: Configuration,
@@ -46,7 +46,6 @@ export type ImportSettingPost = {
   }
 export class ImportSettings {
     static constructPayload(importSettingsForm: FormGroup, dependentFieldSettings: DependentFieldSetting | null): ImportSettingPost{
-        console.log(importSettingsForm);
         const expenseFieldArray = importSettingsForm.value.expenseFields;
 
         // First filter out objects where import_to_fyle is false
@@ -68,7 +67,7 @@ export class ImportSettings {
             cost_code_field_name: importSettingsForm.get('costCodes')?.value?.attribute_type,
             cost_code_placeholder: importSettingsForm.get('costCodes')?.value?.source_placeholder,
             cost_type_field_name: importSettingsForm.get('costTypes')?.value?.attribute_type,
-            cost_type_placeholder:importSettingsForm.get('costTypes')?.value?.source_placeholder,
+            cost_type_placeholder: importSettingsForm.get('costTypes')?.value?.source_placeholder,
             workspace: importSettingsForm.value.workspaceId
         } : null;
         const importSettingPayload: ImportSettingPost = {
