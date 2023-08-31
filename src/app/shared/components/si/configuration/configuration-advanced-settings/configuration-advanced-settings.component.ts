@@ -189,14 +189,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     const findObjectById = (array: DestinationAttribute[], id: string) => array?.find(item => item.id.toString() === id) || null;
     const filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOptions[]) => {
+      const adminEmailsList: EmailOptions[] = [];
       for (const email of emailToSearch) {
-        const foundAdmin = adminEmails.find(item => item.email === email);
-        if (foundAdmin) {
-          return foundAdmin;
-        }
+        adminEmails.find(item => item.email === email ? adminEmailsList.push(item) : null);
       }
-      return [];
-    };
+      return adminEmailsList;
+    };    
     this.advancedSettingsForm = this.formBuilder.group({
       scheduleAutoExport: [this.advancedSettings.workspace_schedules?.interval_hours ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected.length > 0 ? filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
