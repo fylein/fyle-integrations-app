@@ -344,6 +344,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   }
 
   private getSettingsAndSetupForm(): void {
+    this.isLoading = true;
+    this.isOnboarding = this.router.url.includes('onboarding');
     const destinationAttributes = ['TAX_DETAIL'];
 
     const sageIntacctFieldsObservable = this.mappingService.getSageIntacctFields();
