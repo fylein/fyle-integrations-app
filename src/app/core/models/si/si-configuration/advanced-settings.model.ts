@@ -186,7 +186,7 @@ export type AdvancedSettingsPost = {
           enabled: !!getFormValue('scheduleAutoExport'),
           start_datetime: '',
           interval_hours: getFormValue('scheduleAutoExport'),
-          emails_selected: getFormValue('email')?.map((item: EmailOptions) => item.email) || [],
+          emails_selected: advancedSettingsForm.get('email')?.value ? advancedSettingsForm.get('email')?.value.map((item: EmailOptions) => item.email) : [],
           additional_email_options: getFormValue('addedEmail')
         }
       };
