@@ -191,10 +191,10 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     const filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOptions[]) => {
       const adminEmailsList: EmailOptions[] = [];
       for (const email of emailToSearch) {
-        adminEmails.find(item => item.email === email ? adminEmailsList.push(item) : null);
+        adminEmails.find(item => (item.email === email ? adminEmailsList.push(item) : null));
       }
       return adminEmailsList;
-    };    
+    };
     this.advancedSettingsForm = this.formBuilder.group({
       scheduleAutoExport: [this.advancedSettings.workspace_schedules?.interval_hours ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected.length > 0 ? filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
