@@ -10,6 +10,7 @@ import { Org } from 'src/app/core/models/org/org.model';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { Token } from 'src/app/core/models/misc/token.model';
+import { MinimalUser } from 'src/app/core/models/db/user.model';
 
 @Component({
   selector: 'app-landing',
@@ -103,7 +104,16 @@ export class LandingComponent implements OnInit {
     this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
       const authCode = redirectUri.split('code=')[1].split('&')[0];
       this.siAuthService.loginWithAuthCode(authCode).subscribe((token: Token) => {
-        this.storageService.set('si.user', token.user);
+        const user: MinimalUser = {
+          'email': token.user.email,
+          'access_token': token.access_token,
+          'refresh_token': token.refresh_token,
+          'full_name': token.user.full_name,
+          'user_id': token.user.user_id,
+          'org_id': token.user.org_id,
+          'org_name': token.user.org_name
+        };
+        this.storageService.set('si.user', user);
         this.openInAppIntegration(InAppIntegration.INTACCT);
       });
     });
