@@ -554,7 +554,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
-  
+
     const destinationAttributes = ['LOCATION', 'DEPARTMENT', 'PROJECT', 'CLASS', 'ITEM', 'PAYMENT_ACCOUNT'];
 
     const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
