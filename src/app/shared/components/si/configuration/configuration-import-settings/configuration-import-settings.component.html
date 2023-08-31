@@ -174,8 +174,8 @@
             <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
                 Placeholder Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['placeholder'].touched && !customFieldForm.controls['placeholder'].valid && !customFieldForm.controls['placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
-            <app-mandatory-error-message *ngIf="customFieldForm.controls['placeholder'].touched && !customFieldForm.controls['placeholder'].valid && !customFieldForm.controls['placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
+            <input formControlName="source_placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+            <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
 
             <div>
                 <h5 class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
@@ -193,7 +193,7 @@
                   </h5>
                   <div class="form-field tw-pt-4-px">
                     <input class="form-input tw-w-320-px" type="text"
-                    [placeholder]="customFieldForm.value.placeholder ? customFieldForm.value.placeholder : 'Enter Text'">
+                    [placeholder]="customFieldForm.value.source_placeholder ? customFieldForm.value.source_placeholder : 'Enter Text'">
                   </div>
                 </div>
               </div>              

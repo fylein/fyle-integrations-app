@@ -45,17 +45,17 @@ export type ImportSettingPost = {
     dependent_field_settings: DependentFieldSetting | null
   }
 export class ImportSettings {
-    static constructPayload(importSettingsForm: FormGroup): ImportSettingPost{
+    static constructPayload(importSettingsForm: FormGroup, dependentFieldSettings: DependentFieldSetting | null): ImportSettingPost{
         console.log(importSettingsForm);
         const expenseFieldArray = importSettingsForm.value.expenseFields;
 
         // First filter out objects where import_to_fyle is false
-        const filteredExpenseFieldArray = expenseFieldArray.filter((field: MappingSetting) => field.import_to_fyle);
+        const filteredExpenseFieldArray = expenseFieldArray.filter((field: MappingSetting) => field.destination_field && field.source_field);
 
         // Then map over the filtered array
         const mappingSettings = filteredExpenseFieldArray.map((field: MappingSetting) => {
           return {
-            source_field: field.source_field,
+            source_field: field.source_field.toUpperCase(),
             destination_field: field.destination_field,
             import_to_fyle: field.import_to_fyle,
             is_custom: field.is_custom,
@@ -63,7 +63,7 @@ export class ImportSettings {
           };
         });
 
-        const dependentFieldSetting = importSettingsForm.value.isDependentImportEnabled ? {
+        const dependentFieldSetting = dependentFieldSettings ? {
             is_import_enabled: importSettingsForm.value.isDependentImportEnabled,
             cost_code_field_name: importSettingsForm.get('costCodes')?.value?.attribute_type,
             cost_code_placeholder: importSettingsForm.get('costCodes')?.value?.source_placeholder,
