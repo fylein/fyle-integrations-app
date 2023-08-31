@@ -1,0 +1,139 @@
+:host ::ng-deep .p-button {
+  @apply tw-w-fit #{!important};
+}
+
+.save-btn {
+  @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
+}
+
+.cancel-btn {
+  @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
+}
+
+.form-input-disabled {
+  padding: 11px 0px 11px 14px;
+  background: #F5F5F5;
+  border: 1px solid #DFDFE2;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.label-content {
+  background: #F5F5F5;
+  border: 1px solid #DFDFE2;
+  box-sizing: border-box;
+  border-radius: 4px;
+  height: 100px;
+}
+
+.name-text {
+  padding: 12px 0px 8px 16px;
+}
+
+.form-field {
+  padding: 8px 16px 22px;
+}
+
+.form-input {
+  padding: 11px 0px 11px 14px;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #DFDFE2;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.sub-text {
+    border-radius: 8px;
+    border: 1px solid var(--grayscale-light-border, #ECECEE);
+    background: var(--grayscale-background, #FAFCFF);
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    max-width: auto;
+}
+
+.sub-text-note {
+    display: flex;
+    padding: 16px;
+    align-items: flex-start;
+    align-self: stretch;
+    border-radius: 4px;
+    background: var(--shades-info, #EFF5FC);
+    font-size: 0.84em;
+    font-weight: 400;
+    color: #5a5d72;
+    font-style: normal;
+}
+
+  .fields-header {
+    display: flex;
+    width: 90%;
+  }
+
+  .fields-header-text {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 18px;
+    &--fyle {
+      margin-right: 11%;
+    }
+  }
+  
+  :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
+    content: 'Yes';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 8px;
+    bottom: 1px;
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
+}
+
+:host ::ng-deep .p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
+    content: 'No';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 24px;
+    bottom: 1px;
+    font-size: 12px;
+    color: white;
+    font-weight: 500;
+}
+  
+.add-button-container {
+  display: flex;
+  align-items: center;
+}
+
+.add-row-text,
+svg-icon-sprite {
+  cursor: pointer; /* Changes the cursor to a hand when hovering */
+  margin-left: 10px; /* Adds some space between the icon and the text */
+}
+
+.delete-button {
+  cursor: pointer;
+}
+
+.custom-option {
+  color: rgb(232, 73, 99);
+  display: flex;
+}
+
+.icon-align {
+  margin-left: 0;
+  margin-right: 5px;
+  vertical-align: middle;
+}

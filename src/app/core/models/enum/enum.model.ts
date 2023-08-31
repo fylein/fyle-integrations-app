@@ -5,6 +5,17 @@ export enum IntegrationView {
   TRAVEL = 'TRAVEL'
 }
 
+export enum AccountOptions {
+  EXPENSE_TYPE = 'EXPENSE_TYPE',
+  ACCOUNT = 'ACCOUNT'
+}
+
+export enum AutoMapEmployeeOptions {
+  EMAIL = 'EMAIL',
+  NAME = 'NAME',
+  EMPLOYEE_CODE = 'EMPLOYEE_CODE'
+}
+
 export enum AccountingIntegrationApp {
   QBO = 'QBO',
   NETSUITE = 'NetSuite',
@@ -48,7 +59,8 @@ export enum UpdateEvent {
 export enum IntacctUpdateEvent {
   CONNECT_INTACCT = 'Connect Sage Intacct',
   EXPORT_SETTING_INTACCT = 'Export Settings Intacct',
-  IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct'
+  IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct',
+  ADVANCED_SETTINGS_INTACCT= 'Advanced Settings Intacct',
 }
 
 export enum AppName {
@@ -98,6 +110,7 @@ export enum ClickEvent {
   SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
   ADD_BAMBOO_HR_EMAIL_MANUALLY = 'Add Bamboo HR Email Manually',
   ADD_EMAIL_MANUALLY = 'Add Email Manually',
+  ADD_CUSTOM_FIELD = 'Add Custom Field',
   QBD_EXPORT = 'Export IIF files',
   CONNECT_INTACCT  = 'Connect Sage Intacct',
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
