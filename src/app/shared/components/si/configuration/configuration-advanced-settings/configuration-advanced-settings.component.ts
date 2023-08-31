@@ -197,7 +197,6 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       }
       return [];
     };
-    console.log(this.advancedSettings);
     this.advancedSettingsForm = this.formBuilder.group({
       scheduleAutoExport: [this.advancedSettings.workspace_schedules?.interval_hours ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected.length > 0 ? filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
@@ -572,7 +571,6 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       groupedAttributes: groupedAttributes$
     }).subscribe(
       ({ advancedSettings, skipExport, groupedAttributes }) => {
-        console.log(advancedSettings);
         this.advancedSettings = advancedSettings;
         this.skipExport = skipExport;
         this.sageIntacctLocations = groupedAttributes.LOCATION;

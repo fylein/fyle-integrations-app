@@ -156,35 +156,41 @@ export type AdvancedSettingsPost = {
 
   export class AdvancedSetting {
     static constructPayload(advancedSettingsForm: FormGroup): AdvancedSettingsPost {
-      console.log(advancedSettingsForm);
-      const emptyDestinationAttribute = { name: null, id: null};
+      const getFormValue = (key: string) => advancedSettingsForm.get(key)?.value;
+
+      const mapAttribute = (key: string, idKey: string, valueKey: string) => {
+        const value = getFormValue(key);
+        return value ? { name: value[valueKey], id: value[idKey] } : { name: null, id: null };
+      };
+
       const advancedSettingPayload: AdvancedSettingsPost = {
         configurations: {
           auto_create_merchant_destination_entity: true,
-          sync_fyle_to_sage_intacct_payments: advancedSettingsForm.get('autoSyncPayments')?.value === PaymentSyncDirection.FYLE_TO_INTACCT ? true : false,
-          sync_sage_intacct_to_fyle_payments: advancedSettingsForm.get('autoSyncPayments')?.value === PaymentSyncDirection.INTACCT_TO_FYLE ? true : false,
-          auto_create_destination_entity: advancedSettingsForm.get('autoCreateEmployeeVendor')?.value ? advancedSettingsForm.value.autoCreateEmployeeVendor : null,
-          change_accounting_period: advancedSettingsForm.get('postEntriesCurrentPeriod')?.value ? false : true,
-          memo_structure: advancedSettingsForm.get('setDescriptionField')?.value
+          sync_fyle_to_sage_intacct_payments: getFormValue('autoSyncPayments') === PaymentSyncDirection.FYLE_TO_INTACCT,
+          sync_sage_intacct_to_fyle_payments: getFormValue('autoSyncPayments') === PaymentSyncDirection.INTACCT_TO_FYLE,
+          auto_create_destination_entity: getFormValue('autoCreateEmployeeVendor'),
+          change_accounting_period: !getFormValue('postEntriesCurrentPeriod'),
+          memo_structure: getFormValue('setDescriptionField')
         },
         general_mappings: {
-          payment_account: advancedSettingsForm.get('defaultPaymentAccount')?.value ? {name: advancedSettingsForm.value.defaultPaymentAccount.value, id: advancedSettingsForm.value.defaultPaymentAccount.id} : emptyDestinationAttribute,
-          default_location: advancedSettingsForm.get('defaultLocation')?.value ? {name: advancedSettingsForm.value.defaultLocation.value, id: advancedSettingsForm.value.defaultLocation.destination_id} : emptyDestinationAttribute,
-          default_department: advancedSettingsForm.get('defaultDepartment')?.value ? {name: advancedSettingsForm.value.defaultDepartment.value, id: advancedSettingsForm.value.defaultDepartment.destination_id} : emptyDestinationAttribute,
-          default_class: advancedSettingsForm.get('defaultClass')?.value ? {name: advancedSettingsForm.value.defaultClass.value, id: advancedSettingsForm.value.defaultClass.id} : emptyDestinationAttribute,
-          default_project: advancedSettingsForm.get('defaultProject')?.value ? {name: advancedSettingsForm.value.defaultProject.value, id: advancedSettingsForm.value.defaultProject.id} : emptyDestinationAttribute,
-          default_item: advancedSettingsForm.get('defaultItems')?.value ? {name: advancedSettingsForm.value.defaultItems.value, id: advancedSettingsForm.value.defaultItems.id} : emptyDestinationAttribute,
-          use_intacct_employee_departments: advancedSettingsForm.get('useEmployeeLocation')?.value ? true : false,
-          use_intacct_employee_locations: advancedSettingsForm.get('useEmployeeDepartment')?.value ? true : false
+          payment_account: mapAttribute('defaultPaymentAccount', 'id', 'value'),
+          default_location: mapAttribute('defaultLocation', 'destination_id', 'value'),
+          default_department: mapAttribute('defaultDepartment', 'destination_id', 'value'),
+          default_class: mapAttribute('defaultClass', 'id', 'value'),
+          default_project: mapAttribute('defaultProject', 'id', 'value'),
+          default_item: mapAttribute('defaultItems', 'id', 'value'),
+          use_intacct_employee_departments: !!getFormValue('useEmployeeLocation'),
+          use_intacct_employee_locations: !!getFormValue('useEmployeeDepartment')
         },
         workspace_schedules: {
-          enabled: advancedSettingsForm.get('scheduleAutoExport')?.value ? true : false,
+          enabled: !!getFormValue('scheduleAutoExport'),
           start_datetime: '',
-          interval_hours: advancedSettingsForm.get('scheduleAutoExport')?.value ? advancedSettingsForm.get('scheduleAutoExport')?.value : null,
-          emails_selected: advancedSettingsForm.get('email')?.value ? advancedSettingsForm.get('email')?.value.map((item: EmailOptions) => item.email) : [],
-          additional_email_options: advancedSettingsForm.get('addedEmail')?.value ? advancedSettingsForm.value.email : null
+          interval_hours: getFormValue('scheduleAutoExport'),
+          emails_selected: getFormValue('email')?.map((item: EmailOptions) => item.email) || [],
+          additional_email_options: getFormValue('addedEmail')
         }
       };
+
       return advancedSettingPayload;
     }
   }
