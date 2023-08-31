@@ -28,7 +28,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.isTokenMandatory(request.url)) {
-      return this.getAccessToken().pipe(
+      return this.getAccessToken(request.url).pipe(
         switchMap((accessToken) => {
           if (!accessToken) {
             return this.handleError({ status: 401, error: 'Unauthorized' } as HttpErrorResponse);
@@ -62,8 +62,9 @@ export class JwtInterceptor implements HttpInterceptor {
    * If multiple API call initiated then `this.refreshTokenInProgress` will block multiple access_token call
    * Reference: https://stackoverflow.com/a/57638101
    */
-  private getAccessToken(): Observable<string | null> {
-    const accessToken = this.authService.getAccessToken();
+  private getAccessToken(url: string): Observable<string | null> {
+    const keyName = url.includes('sage-intacct') ? 'si.user': 'user';
+    const accessToken = this.authService.getAccessToken(keyName);
 
     if (accessToken && !this.isTokenExpiring(accessToken)) {
       return of(accessToken);
@@ -72,7 +73,7 @@ export class JwtInterceptor implements HttpInterceptor {
     if (!this.refreshTokenInProgress) {
       this.refreshTokenInProgress = true;
       this.refreshTokenSubject.next(null);
-      return this.refreshAccessToken().pipe(
+      return this.refreshAccessToken(url).pipe(
         switchMap((newAccessToken) => {
           this.refreshTokenInProgress = false;
           this.refreshTokenSubject.next(newAccessToken);
@@ -84,7 +85,7 @@ export class JwtInterceptor implements HttpInterceptor {
     return this.refreshTokenSubject.pipe(
       filter((result) => result !== null),
       take(1),
-      map(() => this.authService.getAccessToken())
+      map(() => this.authService.getAccessToken(keyName))
     );
   }
 
@@ -103,13 +104,14 @@ export class JwtInterceptor implements HttpInterceptor {
     }
   }
 
-  private refreshAccessToken(): Observable<string | null> {
-    const refreshToken = this.authService.getRefreshToken();
+  private refreshAccessToken(url: string): Observable<string | null> {
+    const keyName = url.includes('sage-intacct') ? 'si.user': 'user';
+    const refreshToken = this.authService.getRefreshToken(keyName);
 
     if (refreshToken) {
       return this.authService.refreshAccessToken(refreshToken).pipe(
         catchError((error) => this.handleError(error)),
-        map((token: Token) => this.authService.updateAccessToken(token.access_token))
+        map((token: Token) => this.authService.updateAccessToken(token.access_token, keyName))
       );
     }
 

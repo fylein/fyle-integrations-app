@@ -7,6 +7,10 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
 import { Org } from 'src/app/core/models/org/org.model';
+import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
+import { StorageService } from 'src/app/core/services/core/storage.service';
+import { Token } from 'src/app/core/models/misc/token.model';
+import { MinimalUser } from 'src/app/core/models/db/user.model';
 
 @Component({
   selector: 'app-landing',
@@ -21,11 +25,11 @@ export class LandingComponent implements OnInit {
 
   InAppIntegration = InAppIntegration;
 
-  isTravelperkAllowed: boolean = false;
-
-  isGustoAllowed: boolean = false;
-
   org: Org = this.orgService.getCachedOrg();
+
+  isTravelperkAllowed: boolean = this.org.allow_travelperk;
+
+  isGustoAllowed: boolean = this.org.allow_gusto;
 
 
   private readonly integrationTabsInitialState: IntegrationsView = {
@@ -69,9 +73,10 @@ export class LandingComponent implements OnInit {
   constructor(
     private eventsService: EventsService,
     private router: Router,
+    private siAuthService: SiAuthService,
+    private storageService: StorageService,
     private trackingService: TrackingService,
     private orgService: OrgService
-
   ) { }
 
 
@@ -95,8 +100,26 @@ export class LandingComponent implements OnInit {
     this.router.navigate([this.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 
+  private setupLoginWatcher(): void {
+    this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
+      const authCode = redirectUri.split('code=')[1].split('&')[0];
+      this.siAuthService.loginWithAuthCode(authCode).subscribe((token: Token) => {
+        const user: MinimalUser = {
+          'email': token.user.email,
+          'access_token': token.access_token,
+          'refresh_token': token.refresh_token,
+          'full_name': token.user.full_name,
+          'user_id': token.user.user_id,
+          'org_id': token.user.org_id,
+          'org_name': token.user.org_name
+        };
+        this.storageService.set('si.user', user);
+        this.openInAppIntegration(InAppIntegration.INTACCT);
+      });
+    });
+  }
+
   ngOnInit(): void {
-    this.isGustoAllowed = this.org.allow_gusto;
-    this.isTravelperkAllowed = this.org.allow_travelperk;
+    this.setupLoginWatcher();
   }
 }

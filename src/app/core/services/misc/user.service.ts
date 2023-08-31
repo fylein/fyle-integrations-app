@@ -11,11 +11,11 @@ export class UserService {
     private storageService: StorageService
   ) { }
 
-  storeUserProfile(userProfile: MinimalUser): void {
-    this.storageService.set('user', userProfile);
+  storeUserProfile(userProfile: MinimalUser, key: string = 'user'): void {
+    this.storageService.set(key, userProfile);
   }
 
-  getUserProfile(): MinimalUser {
-    return this.storageService.get('user');
+  getUserProfile(key: string = 'user'): MinimalUser {
+    return this.storageService.get(key);
   }
 }

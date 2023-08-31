@@ -116,7 +116,7 @@ describe('JwtInterceptor', () => {
 
   it('should call getRefreshToken', () => {
     spyOn(authService, 'getRefreshToken').and.returnValue(null);
-    expect((interceptor as any).getAccessToken()).toBeDefined();
+    expect((interceptor as any).getAccessToken('user')).toBeDefined();
     expect(authService.getRefreshToken).toHaveBeenCalled();
   });
 
@@ -135,7 +135,7 @@ describe('JwtInterceptor', () => {
     spyOn(authService, 'getAccessToken').and.returnValue(dummyAccessToken);
     spyOn((interceptor as any), 'isTokenExpiring').and.returnValue(false);
 
-    expect((interceptor as any).getAccessToken()).toBeDefined();
+    expect((interceptor as any).getAccessToken('user')).toBeDefined();
   });
 
   it('should check for expiry date', () => {
