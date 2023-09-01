@@ -1,0 +1,55 @@
+.fields-header-1,
+.fields-header-2,
+.fields-header-3 {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  color: #5a5d72;
+}
+
+.where-text {
+  padding-left: 100px;
+  width: 70px;
+  height: 18px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.add-icon {
+  text-align: center;
+  cursor: pointer;
+  padding-left: 30px;
+  padding-bottom: 25px;
+  max-width: 24px;
+  max-height: 24px;
+  margin-right: 8px;
+}
+
+.add-row-text {
+  cursor: pointer;
+  font-weight: 350;
+}
+
+.add-condition-btn {
+  margin-left: 40px;
+  margin-top: 50px;
+}
+.add-condition-btn:hover {
+  color: #FF3366;
+  cursor: pointer;
+}
+
+.validation-text {
+  padding-left: 70px;
+  padding-bottom: 15px;
+}
+
+.delete-icon {
+  text-align: center;
+  cursor: pointer;
+  max-width: 20px;
+  max-height: 20px;
+  margin-left: 26.5px;
+}

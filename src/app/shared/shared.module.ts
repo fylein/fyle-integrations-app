@@ -48,6 +48,7 @@ import { IntacctConnectorComponent } from './components/si/core/intacct-connecto
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
 import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
+import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { ConfigurationAdvancedSettingsComponent } from './components/si/configur
     IntacctLocationEntityComponent,
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
-    ConfigurationAdvancedSettingsComponent
+    ConfigurationAdvancedSettingsComponent,
+    SkipExportComponent
   ],
   imports: [
     CommonModule,

@@ -109,86 +109,19 @@
                     </div>
                 </div>
             </div>
-            <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <!-- <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Skip Selective Expenses from being Exported to Sage Intacct'" 
                 [subLabel]="'The integration will export all the expenses once they reach their export state. If you would like to skip few expenses from being exported, set up a conditional rule here.'" 
                 [formControllerName]="'skipSelectiveExpenses'"></app-configuration-toggle-field>
-                <div *ngIf="false">
-                    <div class="layout-column layout-align-start-stretch">
-                      <form [formGroup]="skipExportForm" class="layout-column layout-align-start-stretch">
-                        <!-- Headers for First Condition -->
-                        <div class="layout-row layout-align-start-center">
-                          <div class="flex-15"></div>
-                          <div class="fields-header-1 flex-25">
-                            Condition
-                            <app-mandatory-field></app-mandatory-field>
-                          </div>
-                          <div class="fields-header-2 flex-25">
-                            Operator
-                            <app-mandatory-field></app-mandatory-field>
-                          </div>
-                          <div class="fields-header-3 flex-25" *ngIf="showValueHeader1()">
-                            Value
-                            <app-mandatory-field></app-mandatory-field>
-                          </div>
-                        </div>
-                        <!-- First Condition Fields -->
-                        <div class="layout-row layout-align-start-center">
-                          <span class="flex-15">Where</span>
-                          <p-dropdown [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select the condition" class="flex-25"></p-dropdown>
-                          <p-dropdown [options]="operatorFieldOptions1" formControlName="operator1" placeholder="Select the operator" class="flex-25"></p-dropdown>
-                          <input type="text" formControlName="value1" placeholder="Enter a value" *ngIf="showInputField1()" class="flex-25">
-                          <p-chips [(ngModel)]="valueOption1" *ngIf="showChipField1()" class="flex-25"></p-chips>
-                          <p-calendar  *ngIf="showDateField1()" formControlName="value1" class="flex-25"></p-calendar>
-                          <!-- [(ngModel)]="date1" -->
-                        </div>
-                        <!-- Additional Conditions -->
-                        <div *ngIf="showAdditionalCondition">
-                          <!-- Headers for Additional Condition -->
-                          <div class="layout-row layout-align-start-center">
-                            <div class="flex-15"></div>
-                            <div class="fields-header-1 flex-25">
-                              Condition
-                              <app-mandatory-field></app-mandatory-field>
-                            </div>
-                            <div class="fields-header-2 flex-25">
-                              Operator
-                              <app-mandatory-field></app-mandatory-field>
-                            </div>
-                            <div class="fields-header-3 flex-25" *ngIf="showValueHeader2()">
-                              Value
-                              <app-mandatory-field></app-mandatory-field>
-                            </div>
-                          </div>
-                          <!-- Additional Condition Fields -->
-                          <div class="layout-row layout-align-start-center">
-                            <span class="flex-5"></span>
-                            <p-dropdown [options]="joinByOptions" formControlName="join_by" placeholder="AND" class="flex-10"></p-dropdown>
-                            <p-dropdown [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select the condition" class="flex-25"></p-dropdown>
-                            <p-dropdown [options]="operatorFieldOptions2" formControlName="operator2" placeholder="Select the operator" class="flex-25"></p-dropdown>
-                            <input type="text" formControlName="value2" placeholder="Enter a value" *ngIf="showInputField2()" class="flex-25">
-                            <p-chips [(ngModel)]="valueOption2" *ngIf="showChipField2()" class="flex-25"></p-chips>
-                            <p-calendar formControlName="value2" class="flex-25"></p-calendar>
-                            <!--  [(ngModel)]="date2" *ngIf="showDateField2()" -->
-                            <img class="delete-icon" src="assets/images/pngs/delete.svg" (click)="remCondition()" pTooltip="Remove condition">
-                          </div>
-                          <div class="validation-text" *ngIf="checkValidationCondition()">
-                            <p>Condition selected should be distinct.</p>
-                          </div>
-                        </div>
-                        <!-- Add Condition Button -->
-                        <div class="add-condition-btn layout-align-start-stretch layout-row" *ngIf="showAddButton">
-                          <img class="add-icon" src="assets/images/pngs/add.svg" (click)="updateAdditionalFilterVisibility(true)">
-                          <a class="add-row-text" (click)="updateAdditionalFilterVisibility(true)">Add Condition</a>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-            </div>
+                <div *ngIf="!advancedSettingsForm.value.skipSelectiveExpenses">
+                  <app-skip-export
+                  [enableSkipExport]="!advancedSettingsForm.value.skipSelectiveExpenses">
+                  </app-skip-export>
+                </div>
+            </div> -->
         </div>
-
         <div class="tw-mb-16-px">
             <div class="container">
                 <div class="sub-text">
