@@ -18,8 +18,6 @@ import { OnboardingImportSettingComponent } from './onboarding-import-setting/on
     OnboardingIntacctConnectorComponent,
     OnboardingLandingComponent,
     OnboardingComponent,
-    DashboardComponent,
-    MainComponent,
     OnboardingComponent,
     OnboardingDoneComponent,
     OnboardingImportSettingComponent,

@@ -1,1 +1,33 @@
-<p>dashboard works!</p>
+<div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+<div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+
+<div *ngIf="!isLoading" class="tw-py-40-px tw-px-120-px">
+    <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+        <div class="tw-p-24-px">
+            <div class="tw-flex tw-justify-between tw-items-center ">
+                <div class="tw-w-3/5">
+                    <h3 class="tw-text-18-px tw-font-500 tw-text-slightly-normal-text-color">Sit back and relax!</h3>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pt-2-px">No new expenses to export in the configured state of export in Fyle. Once you start processing payments or closing your expenses, they will be automatically available here.</h5>
+                </div>
+                <div class="tw-flex tw-items-end tw-justify-end">
+                    <div>
+                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="null" [disabled]="true" >
+                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="true">Export
+                                <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                            </p>
+                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="false">Exporting ...
+                            </p>
+                        </button><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+        
+    </div>
+</div>

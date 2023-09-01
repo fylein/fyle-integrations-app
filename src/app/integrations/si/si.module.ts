@@ -7,11 +7,15 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { SiRoutingModule } from './si-routing.module';
+import { MainComponent } from './main/main.component';
+import { DashboardComponent } from './main/dashboard/dashboard.component';
 
 
 @NgModule({
   declarations: [
-    SiComponent
+    SiComponent,
+    MainComponent,
+    DashboardComponent
   ],
   imports: [
     CommonModule,
