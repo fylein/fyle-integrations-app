@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, UntypedFormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingModel, EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
-import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ConditionField, CustomOperatorOption, ExpenseFilterResponse, HourOption, JoinOptions, SkipExport, constructPayload1, constructPayload2 } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
@@ -33,10 +33,6 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   ConfigurationCtaText = ConfigurationCta;
 
   advancedSettings: AdvancedSettingsGet;
-
-  skipExport: ExpenseFilterResponse;
-
-  expenseFilters: SkipExport[];
 
   memoPreviewText: string;
 
@@ -179,7 +175,6 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
     const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
-    const skipExport$ = this.advancedSettingsService.getExpenseFilter();
 
     // Hours Options for Scheduled Exports
     for (let i = 1; i <= 24; i++) {
@@ -188,12 +183,10 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
     forkJoin({
       advancedSettings: advancedSettings$,
-      skipExport: skipExport$,
       groupedAttributes: groupedAttributes$
     }).subscribe(
-      ({ advancedSettings, skipExport, groupedAttributes }) => {
+      ({ advancedSettings, groupedAttributes }) => {
         this.advancedSettings = advancedSettings;
-        this.skipExport = skipExport;
         this.sageIntacctLocations = groupedAttributes.LOCATION;
         this.sageIntacctDefaultItem = groupedAttributes.ITEM;
         this.sageIntacctDepartments = groupedAttributes.DEPARTMENT;

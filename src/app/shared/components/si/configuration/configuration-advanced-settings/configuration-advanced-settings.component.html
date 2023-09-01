@@ -109,15 +109,19 @@
                     </div>
                 </div>
             </div>
-            <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <!-- <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Skip Selective Expenses from being Exported to Sage Intacct'" 
                 [subLabel]="'The integration will export all the expenses once they reach their export state. If you would like to skip few expenses from being exported, set up a conditional rule here.'" 
                 [formControllerName]="'skipSelectiveExpenses'"></app-configuration-toggle-field>
-            </div>
+                <div *ngIf="!advancedSettingsForm.value.skipSelectiveExpenses">
+                  <app-skip-export
+                  [enableSkipExport]="!advancedSettingsForm.value.skipSelectiveExpenses">
+                  </app-skip-export>
+                </div>
+            </div> -->
         </div>
-
         <div class="tw-mb-16-px">
             <div class="container">
                 <div class="sub-text">
