@@ -45,7 +45,7 @@ describe('SiAuthService', () => {
         user_id: "5Ga9HC3qctus"
       }
     };
-    service.siLogin('eeeee').subscribe(value => {
+    service.loginWithRefreshToken('eeeee').subscribe(value => {
       const responseKeys = Object.keys(siLoginResponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);

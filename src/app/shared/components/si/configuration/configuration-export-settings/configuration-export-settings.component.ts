@@ -367,13 +367,13 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
 
     private exportFieldsWatcher(): void {
-      if (this.exportSettings?.configurations.reimbursable_expenses_object===IntacctReimbursableExpensesObject.BILL || this.exportSettings?.configurations.reimbursable_expenses_object===IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
+      if (this.exportSettings?.configurations?.reimbursable_expenses_object===IntacctReimbursableExpensesObject.BILL || this.exportSettings?.configurations?.reimbursable_expenses_object===IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
         this.exportSettingsForm.get('employeeFieldMapping')?.disable();
       }
-      if (!this.exportSettings?.configurations.reimbursable_expenses_object && this.exportSettings?.configurations.corporate_credit_card_expenses_object!=='JOURNAL_ENTRY') {
+      if (!this.exportSettings?.configurations?.reimbursable_expenses_object && this.exportSettings?.configurations?.corporate_credit_card_expenses_object!=='JOURNAL_ENTRY') {
         this.exportSettingsForm.get('cccEntityName')?.disable();
       }
-      if (this.exportSettings?.configurations.corporate_credit_card_expenses_object === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+      if (this.exportSettings?.configurations?.corporate_credit_card_expenses_object === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
         this.exportSettingsForm.controls.cccExportGroup.setValue('Expense');
         this.exportSettingsForm.controls.cccExportGroup.disable();
       }
@@ -421,32 +421,41 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       };
     }
 
-  private initializeExportSettingsFormWithData(): void {
+    private initializeExportSettingsFormWithData(): void {
+      const configurations = this.exportSettings?.configurations;
+      const generalMappings = this.exportSettings?.general_mappings;
+      const findObjectById = (array: DestinationAttribute[], id: string) => array?.find(item => item.id.toString() === id) || null;
+
       this.exportSettingsForm = this.formBuilder.group({
-        reimbursableExpense: [!!this.exportSettings?.configurations.reimbursable_expenses_object, this.exportSelectionValidator()],
-        reimbursableExportType: [this.exportSettings?.configurations.reimbursable_expenses_object],
-        reimbursableExpensePaymentType: [(this.sageIntacctExpensePaymentType?.find(paymentType => paymentType.id.toString() === this.exportSettings?.general_mappings.default_reimbursable_expense_payment_type.id)) || null],
-        reimbursableExportGroup: [this.getExportGroup(this.exportSettings?.expense_group_settings.reimbursable_expense_group_fields)],
+        reimbursableExpense: [Boolean(configurations?.reimbursable_expenses_object) || null, this.exportSelectionValidator()],
+        reimbursableExportType: [configurations?.reimbursable_expenses_object || null],
+        reimbursableExpensePaymentType: [findObjectById(this.sageIntacctExpensePaymentType, generalMappings?.default_reimbursable_expense_payment_type.id)],
+        reimbursableExportGroup: [this.getExportGroup(this.exportSettings?.expense_group_settings.reimbursable_expense_group_fields) || null],
         reimbursableExportDate: [this.exportSettings?.expense_group_settings.reimbursable_export_date_type || null],
         reimbursableExpenseState: [this.exportSettings?.expense_group_settings.expense_state || null],
-        employeeFieldMapping: [this.exportSettings?.configurations.employee_field_mapping || null],
-        autoMapEmployees: [this.exportSettings?.configurations.auto_map_employees || null],
-        glAccount: [(this.sageIntacctDefaultGLAccounts?.find(glAccount => glAccount.id.toString() === this.exportSettings?.general_mappings.default_gl_account.id)) || null],
-        creditCardExpense: [!!this.exportSettings?.configurations.corporate_credit_card_expenses_object, this.exportSelectionValidator()],
-        cccExportType: [this.exportSettings?.configurations.corporate_credit_card_expenses_object || null],
+        employeeFieldMapping: [configurations?.employee_field_mapping || null],
+        autoMapEmployees: [configurations?.auto_map_employees || null],
+        glAccount: [findObjectById(this.sageIntacctDefaultGLAccounts, generalMappings?.default_gl_account.id)],
+        creditCardExpense: [Boolean(configurations?.corporate_credit_card_expenses_object), this.exportSelectionValidator()],
+        cccExportType: [configurations?.corporate_credit_card_expenses_object || null],
         cccExportGroup: [this.getExportGroup(this.exportSettings?.expense_group_settings.corporate_credit_card_expense_group_fields)],
         cccExportDate: [this.exportSettings?.expense_group_settings.ccc_export_date_type || null],
         cccExpenseState: [this.exportSettings?.expense_group_settings.ccc_expense_state || null],
-        cccExpensePaymentType: [(this.sageIntacctCCCExpensePaymentType?.find(cccExpensePaymentType => cccExpensePaymentType.id.toString() === this.exportSettings?.general_mappings.default_ccc_expense_payment_type.id)) || null],
-        creditCardVendor: [(this.sageIntacctDefaultVendor?.find(creditCardVendor => creditCardVendor.id.toString() === this.exportSettings?.general_mappings.default_ccc_vendor.id)) || null],
-        creditCard: [(this.sageIntacctDefaultGLAccounts?.find(creditCard => creditCard.id.toString() === this.exportSettings?.general_mappings.default_credit_card.id)) || null],
-        chargeCard: [(this.sageIntacctDefaultChargeCard?.find(chargeCard => chargeCard.id.toString() === this.exportSettings?.general_mappings.default_charge_card.id)) || null],
-        cccEntityName: [!(!!this.exportSettings?.configurations.reimbursable_expenses_object) ? this.exportSettings?.configurations.employee_field_mapping : null]
+        cccExpensePaymentType: [findObjectById(this.sageIntacctCCCExpensePaymentType, generalMappings?.default_ccc_expense_payment_type.id)],
+        creditCardVendor: [findObjectById(this.sageIntacctDefaultVendor, generalMappings?.default_ccc_vendor.id)],
+        creditCard: [findObjectById(this.sageIntacctDefaultGLAccounts, generalMappings?.default_credit_card.id)],
+        chargeCard: [findObjectById(this.sageIntacctDefaultChargeCard, generalMappings?.default_charge_card.id)],
+        cccEntityName: [!Boolean(configurations?.reimbursable_expenses_object) ? configurations?.employee_field_mapping : null]
       });
+
       this.exportFieldsWatcher();
-  }
+    }
+
 
   private getSettingsAndSetupForm(): void {
+    this.isLoading = true;
+    this.isOnboarding = this.router.url.includes('onboarding');
+
     const destinationAttributes = ['ACCOUNT', 'EXPENSE_PAYMENT_TYPE', 'VENDOR', 'CHARGE_CARD_NUMBER'];
 
     const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);

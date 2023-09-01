@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/core/services/core/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
+import { EXPOSE_INTACCT_NEW_APP } from 'src/app/core/services/core/events.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -34,7 +36,11 @@ export class LoginComponent implements OnInit {
       };
       this.userService.storeUserProfile(user);
       this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
-      this.siAuthService.siLogin(user.refresh_token).subscribe();
+
+      // TODO: Only local dev needs this, read from env and call loginWithRefreshToken
+      if (!EXPOSE_INTACCT_NEW_APP) {
+        this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+      }
       this.router.navigate(['/integrations']);
     });
   }

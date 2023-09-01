@@ -46,6 +46,8 @@ import { ConfigurationExportSettingsComponent } from './components/si/configurat
 import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
+import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
+import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,9 @@ import { IntacctLocationEntityComponent } from './components/si/core/intacct-loc
     IntacctStepperComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
-    ConfigurationExportSettingsComponent
+    ConfigurationExportSettingsComponent,
+    ConfigurationImportSettingsComponent,
+    ConfigurationAdvancedSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -131,7 +135,9 @@ import { IntacctLocationEntityComponent } from './components/si/core/intacct-loc
     ConfigurationStepHeaderComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
-    ConfigurationExportSettingsComponent
+    ConfigurationExportSettingsComponent,
+    ConfigurationImportSettingsComponent,
+    ConfigurationAdvancedSettingsComponent
   ]
 })
 export class SharedModule { }
