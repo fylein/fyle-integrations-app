@@ -18,7 +18,7 @@ export class SkipExportComponent implements OnInit {
   date2: Date;
 
   expenseFilters: SkipExport[];
-  
+
   showExpenseFilters: boolean;
 
   skippedCondition1: string;
@@ -83,7 +83,7 @@ export class SkipExportComponent implements OnInit {
 
   valueOption2: any[] = [];
 
-  // separatorKeysCodes: number[] = [ENTER, COMMA];
+  // SeparatorKeysCodes: number[] = [ENTER, COMMA];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -186,19 +186,19 @@ export class SkipExportComponent implements OnInit {
 
   }
 
-  // add1(addEvent1: MatChipInputEvent): void {
-  //   const input = addEvent1.input;
-  //   const value = addEvent1.value;
+  // Add1(addEvent1: MatChipInputEvent): void {
+  //   Const input = addEvent1.input;
+  //   Const value = addEvent1.value;
 
-  //   if ((value || '').trim()) {
-  //     this.valueOption1.push(value);
-  //     if (this.valueOption1.length) {
-  //       this.skipExportForm.controls.value1.clearValidators();
+  //   If ((value || '').trim()) {
+  //     This.valueOption1.push(value);
+  //     If (this.valueOption1.length) {
+  //       This.skipExportForm.controls.value1.clearValidators();
   //     }
   //   }
 
-  //   if (input) {
-  //     input.value = '';
+  //   If (input) {
+  //     Input.value = '';
   //   }
   // }
 
@@ -215,19 +215,19 @@ export class SkipExportComponent implements OnInit {
     }
   }
 
-  // add2(addEvent2: MatChipInputEvent): void {
-  //   const input = addEvent2.input;
-  //   const value = addEvent2.value;
+  // Add2(addEvent2: MatChipInputEvent): void {
+  //   Const input = addEvent2.input;
+  //   Const value = addEvent2.value;
 
-  //   if ((value || '').trim()) {
-  //     this.valueOption2.push(value);
-  //     if (this.valueOption2.length) {
-  //       this.skipExportForm.controls.value2.clearValidators();
+  //   If ((value || '').trim()) {
+  //     This.valueOption2.push(value);
+  //     If (this.valueOption2.length) {
+  //       This.skipExportForm.controls.value2.clearValidators();
   //     }
   //   }
 
-  //   if (input) {
-  //     input.value = '';
+  //   If (input) {
+  //     Input.value = '';
   //   }
   // }
 
@@ -607,7 +607,7 @@ export class SkipExportComponent implements OnInit {
       this.setupSkipExportForm(response, []);
     });
   }
-  
+
 
   ngOnInit(): void {
     this.getSettingsAndSetupForm();
