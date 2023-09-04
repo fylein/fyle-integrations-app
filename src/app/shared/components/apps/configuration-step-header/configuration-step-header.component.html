@@ -5,6 +5,7 @@
         </h3>
         <button
           *ngIf="showSyncButton"
+          (click)="refreshSageIntacctDimension()"
           class="tw-flex tw-items-center tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-4 tw-py-1 tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform"
         >
           <span class="tw-text-sm tw-mr-1">&#8634;</span>
