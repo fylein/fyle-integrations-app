@@ -23,7 +23,7 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   ) { }
 
   refreshSageIntacctDimension() {
-    this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe();
+    this.mappingsService.refreshSageIntacctDimensions().subscribe();
   }
 
   ngOnInit(): void {
