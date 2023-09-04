@@ -27,7 +27,121 @@
             </div>
         </div>
     </div>
-    <div class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
-        
+    <div *ngIf="false" class="tw-flex tw-justify-center tw-items-center tw-pt-36">
+        <div class="tw-text-center">
+          <img class="tw-pr-4" src="assets/icons/dashboard-illustration.svg" alt="">
+          <p class="tw-pt-8 tw-font-300">There are no expenses to export at the moment!</p>
+        </div>
+      </div>
+    <div *ngIf="true" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+        <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
+                <h4 class="tw-font-500">Your Last Export</h4>
+        </div>
+        <div class="tw-border-separator tw-border-1-px">
+            <div *ngIf="true" class="tw-p-10 tw-rounded-6-px tw-bg-white">
+                <div *ngIf="true" class="inside-container tw-mt-10-px tw-p-10 tw-rounded-6-px tw-bg-white">
+                    <div class="tw-flex tw-items-center">
+                        <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-2">
+                        Successful Expenses <span class="tw-ml-24 tw-pl-8-px">04</span> 
+                        <a href="#" class="tw-ml-4 tw-text-pink">View</a>
+                        <div class="tw-ml-auto tw-flex tw-flex-col">
+                        <span>Last Export at: 08:00 AM, 18 May 2023</span>
+                        </div>
+                    </div>
+                    <div class="tw-flex tw-items-center">
+                        <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-2">
+                        Failed Expenses <span class="tw-ml-32 tw-pl-10-px">00</span> 
+                        <a href="#" class="tw-ml-4 tw-text-pink">View</a>
+                        <div class="tw-ml-auto tw-flex tw-flex-col">
+                        <span>Next export at: 12:00 PM, 20 May 2023</span>
+                        </div>
+                    </div>
+                </div>                  
+            </div>
+        </div>
     </div>
-</div>
+    <div *ngIf="true" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+        <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
+                <h4 class="tw-font-500">Errors</h4>
+        </div>
+        <div class="tw-border-separator tw-border-1-px">
+            <div *ngIf="true" class="tw-mt-10-px tw-p-2 tw-rounded-6-px tw-bg-white">
+                <div class="tw-p-24-px">
+                    <div class="container">
+                        <div class="sub-text-container">
+                            <h4 class="tw-text-16-px !tw-font-500 ">Integrations Errors</h4>
+                            <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-4">Check and resolve these errors before trying to re-export them again.</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="tw-pl-24-px tw-pr-24-px">
+                    <div class="container">
+                        <div class="inside-container">
+                            <h4 class="tw-text-16-px !tw-font-500 ">Employee Mapping Errors</h4>
+                            <div class="flex-wrapper">
+                                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2">
+                                    <p>Map the employees in Fyle to their corresponding records in Sage Intacct<br>based on unique parameter.</p>
+                                </h5>
+                                <button type="button" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
+                                    Resolve
+                                </button>                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tw-pl-24-px tw-pr-24-px tw-mt-3">
+                    <div class="container">
+                        <div class="inside-container">
+                            <h4 class="tw-text-16-px !tw-font-500 ">Category Mapping Errors</h4>
+                            <div class="flex-wrapper">
+                                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>Map the employees in Fyle to their corresponding records in Sage Intacct<br>based on unique parameter.</p>
+                                </h5>
+                                <button type="button" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
+                                    Resolve
+                            </button> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tw-pl-24-px tw-pr-24-px tw-mt-3">
+                    <div class="container">
+                        <div class="inside-container">
+                            <h4 class="tw-text-16-px !tw-font-500 ">Corporate Card Mapping Errors</h4>
+                            <div class="flex-wrapper">
+                                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>Map the employees in Fyle to their corresponding records in Sage Intacct<br>based on unique parameter.</p>
+                                </h5>
+                                <button type="button" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
+                                    Resolve
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tw-p-24-px">
+                    <div class="container">
+                        <div class="sub-text-container">
+                            <h4 class="tw-text-16-px !tw-font-500 ">Sage Intacct Errors</h4>
+                            <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-4">Check and resolve these errors before trying to re-export them again.</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="tw-pl-24-px tw-pr-24-px tw-pb-6">
+                    <div class="container">
+                        <div class="inside-container">
+                            <h4 class="tw-text-16-px !tw-font-500 ">Validation Fault / 2500</h4>
+                            <div class="flex-wrapper">
+                                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>Account assigned to this transaction has been deleted. Before you can modify this transaction, you must restore Activity.</p>
+                                </h5>
+                                <button type="button" class="tw-flex tw-items-center tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-4 tw-py-1 tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
+                                    View Expense
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>

@@ -46,7 +46,7 @@ export class SkipExportComponent implements OnInit {
   joinByOptions = [JoinOptions.AND, JoinOptions.OR];
 
   getSkipExportSubLabel(): string {
-    const subLabel = 'You could choose to skip the export of certain expenses from Fyle to QBO by setting up a conditional rule.';
+    const subLabel = 'You could choose to skip the export of certain expenses from Fyle to Sage Intacct by setting up a conditional rule.';
     const linkText = 'Read more';
     const linkUrl = 'https://help.fylehq.com/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online';
 

@@ -256,3 +256,69 @@ export enum QBDOnboardingState {
     FYLE_TO_INTACCT = 'fyle_to_intacct',
     INTACCT_TO_FYLE = 'intacct_to_fyle'
   }
+
+  export enum IntacctErrorType {
+    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING',
+    TAX_MAPPING = 'TAX_MAPPING',
+    INTACCT_ERROR = 'QBO_ERROR'
+  }
+
+  export enum FyleReferenceType {
+    REPORT_ID = 'report_id',
+    EXPENSE_REPORT = 'claim_number',
+    PAYMENT = 'settlement_id',
+    EXPENSE = 'expense_id'
+  }
+
+  export enum MappingState {
+    MAPPED = 'MAPPED',
+    UNMAPPED = 'UNMAPPED',
+    ALL = 'ALL'
+  }
+
+  export enum SageIntacctField {
+    ACCOUNT = 'ACCOUNT',
+    CUSTOMER = 'CUSTOMER',
+    DEPARTMENT = 'DEPARTMENT',
+    CLASS = 'CLASS',
+    TAX_CODE = 'TAX_CODE'
+  }
+
+  export enum MappingSourceField {
+    PROJECT = 'PROJECT',
+    COST_CENTER = 'COST_CENTER',
+    TAX_GROUP = 'TAX_GROUP'
+  }
+
+  export enum MappingDestinationField {
+    CUSTOMER = 'CUSTOMER',
+    CLASS = 'CLASS',
+    DEPARTMENT = 'DEPARTMENT',
+    TAX_CODE = 'TAX_CODE'
+  }
+
+  export enum TaskLogType {
+    CREATING_BILL = 'CREATING_BILL',
+    CREATING_EXPENSE = 'CREATING_EXPENSE',
+    CREATING_CHECK = 'CREATING_CHECK',
+    CREATING_JOURNAL_ENTRY = 'CREATING_JOURNAL_ENTRY',
+    CREATING_CREDIT_CARD_PURCHASE = 'CREATING_CREDIT_CARD_PURCHASE',
+    CREATING_CREDIT_CARD_CREDIT = 'CREATING_CREDIT_CARD_CREDIT',
+    CREATING_DEBIT_CARD_EXPENSE = 'CREATING_DEBIT_CARD_EXPENSE',
+    CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
+    FETCHING_EXPENSE = 'FETCHING_EXPENSE'
+  }
+  
+  export enum TaskLogState {
+    ENQUEUED = 'ENQUEUED',
+    IN_PROGRESS = 'IN_PROGRESS',
+    FAILED = 'FAILED',
+    FATAL = 'FATAL',
+    COMPLETE = 'COMPLETE',
+  }
+  
+  export enum ExportMode {
+    MANUAL = 'MANUAL',
+    AUTO = 'AUTO'
+  }

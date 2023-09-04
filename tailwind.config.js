@@ -22,7 +22,8 @@ const customColors = {
   'alert-toast': '#DA1E28',
   'cta-disabled': '#FFC2D6',
   'line-inactive': '#CCCDD7',
-  'progress-bar-bg': '#FFF0F5'
+  'progress-bar-bg': '#FFF0F5',
+  'pink': '#D23669',
 };
 
 module.exports = {
