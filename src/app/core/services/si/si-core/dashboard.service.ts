@@ -3,10 +3,11 @@ import { firstValueFrom, from, Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
-import { ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-field.model';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';
 import { TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { TaskGetParams, TaskResponse } from 'src/app/core/models/si/db/task-log.model';
+import { Error } from 'src/app/core/models/si/db/error.model';
+import { ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,7 +58,7 @@ export class DashboardService {
 
   private async getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: TaskResponse): Promise<TaskResponse> {
     const taskResponse = await firstValueFrom(this.getTasks(limit, status, expenseGroupIds, taskType, allTasks.next));
-  
+
     if (allTasks.count === 0) {
       allTasks = taskResponse;
     } else {
@@ -66,13 +67,13 @@ export class DashboardService {
       allTasks.previous = taskResponse.previous;
       allTasks.results = allTasks.results.concat(taskResponse.results);
     }
-  
+
     if (taskResponse.next) {
       return this.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks);
     }
-  
+
     return allTasks;
-  }  
+  }
 
   getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null): Observable<TaskResponse> {
     const offset = 0;

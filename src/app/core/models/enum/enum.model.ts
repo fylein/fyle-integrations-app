@@ -261,7 +261,7 @@ export enum QBDOnboardingState {
     EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
     CATEGORY_MAPPING = 'CATEGORY_MAPPING',
     TAX_MAPPING = 'TAX_MAPPING',
-    INTACCT_ERROR = 'QBO_ERROR'
+    INTACCT_ERROR = 'INTACCT_ERROR'
   }
 
   export enum FyleReferenceType {
@@ -321,4 +321,9 @@ export enum QBDOnboardingState {
   export enum ExportMode {
     MANUAL = 'MANUAL',
     AUTO = 'AUTO'
+  }
+
+  export enum ExportState {
+    SUCCESS = 'SUCCESS',
+    FAILED = 'FAILED'
   }

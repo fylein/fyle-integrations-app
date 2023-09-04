@@ -11,7 +11,3 @@ export type ExpenseField = {
     is_custom: boolean;
     source_placeholder: string;
 };
-
-export type ExportableExpenseGroup = {
-  exportable_expense_group_ids: number[];
-};
