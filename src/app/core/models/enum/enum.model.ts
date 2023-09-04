@@ -309,7 +309,7 @@ export enum QBDOnboardingState {
     CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
     FETCHING_EXPENSE = 'FETCHING_EXPENSE'
   }
-  
+
   export enum TaskLogState {
     ENQUEUED = 'ENQUEUED',
     IN_PROGRESS = 'IN_PROGRESS',
@@ -317,7 +317,7 @@ export enum QBDOnboardingState {
     FATAL = 'FATAL',
     COMPLETE = 'COMPLETE',
   }
-  
+
   export enum ExportMode {
     MANUAL = 'MANUAL',
     AUTO = 'AUTO'
