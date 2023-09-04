@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, Observable } from 'rxjs';
+import { firstValueFrom, from, Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
@@ -42,6 +42,37 @@ export class DashboardService {
   getLastExport(): Observable<LastExport> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_detail/`, {});
   }
+
+  getAllTasks(status: TaskLogState[], expenseGroupIds: number[] = [], taskType: TaskLogType[] = []): Observable<TaskResponse> {
+    const limit = 500;
+    const allTasks: TaskResponse = {
+      count: 0,
+      next: null,
+      previous: null,
+      results: []
+    };
+
+    return from(this.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks));
+  }
+
+  private async getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: TaskResponse): Promise<TaskResponse> {
+    const taskResponse = await firstValueFrom(this.getTasks(limit, status, expenseGroupIds, taskType, allTasks.next));
+  
+    if (allTasks.count === 0) {
+      allTasks = taskResponse;
+    } else {
+      allTasks.count = taskResponse.count;
+      allTasks.next = taskResponse.next;
+      allTasks.previous = taskResponse.previous;
+      allTasks.results = allTasks.results.concat(taskResponse.results);
+    }
+  
+    if (taskResponse.next) {
+      return this.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks);
+    }
+  
+    return allTasks;
+  }  
 
   getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null): Observable<TaskResponse> {
     const offset = 0;
