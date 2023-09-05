@@ -28,3 +28,7 @@
     align-items: flex-start;
     justify-content: space-between
 }
+
+.export-btn:disabled {
+    @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
+}
