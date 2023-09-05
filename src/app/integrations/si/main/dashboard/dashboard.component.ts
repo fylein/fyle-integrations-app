@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
   exportProgressPercentage: number = 0;
 
-  exportableExpenseGroupIds: number[];
+  exportableExpenseGroupIds: number[] = [];
 
   lastExport: LastExport | null;
 
