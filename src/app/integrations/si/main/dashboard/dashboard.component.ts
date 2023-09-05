@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
-import { ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model copy';
 import { ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
   exportProgressPercentage: number = 0;
 
-  exportableExpenseGroupIds: number[];
+  exportableExpenseGroupIds: number[] = [];
 
   lastExport: LastExport | null;
 
@@ -164,6 +164,16 @@ export class DashboardComponent implements OnInit {
       }
       this.isLoading = false;
     });
+  }
+
+  export(): void {
+    if (!this.exportInProgress && this.exportableExpenseGroupIds.length) {
+      this.exportInProgress = true;
+      this.trackingService.onClickEvent(ClickEvent.INTACCT_EXPORT);
+      this.dashboardService.exportExpenseGroups().subscribe(() => {
+        this.pollExportStatus(this.exportableExpenseGroupIds);
+      });
+    }
   }
 
   ngOnInit(): void {

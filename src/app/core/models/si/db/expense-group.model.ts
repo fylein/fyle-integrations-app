@@ -31,18 +31,6 @@ export type ExpenseGroupResponse = {
   results: ExpenseGroup[];
 };
 
-export interface ExpenseGroupList {
-  exportedAt: Date;
-  employee: [string, string];
-  expenseType: 'Credit Card' | 'Reimbursable';
-  referenceNumber: string;
-  exportedAs: string;
-  qboUrl: string;
-  fyleUrl: string;
-  fyleReferenceType: FyleReferenceType;
-  expenses: Expense[];
-}
-
 export interface SkipExportList {
   updated_at: Date;
   employee: [string, string];

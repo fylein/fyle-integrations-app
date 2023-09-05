@@ -5,7 +5,7 @@
     <app-loader></app-loader>
 </div>
 
-<div *ngIf="!isLoading" class="tw-py-40-px tw-px-120-px">
+<div *ngIf="!importInProgress && !isLoading" class="tw-py-40-px tw-px-120-px">
     <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">
@@ -18,20 +18,23 @@
                     <h5 *ngIf="exportInProgress">This may take a few minutes. Please wait...</h5>
                     <div *ngIf="!exportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row">
                         <h5>{{ exportableExpenseGroupIds.length - failedExpenseGroupCount > 0 ? exportableExpenseGroupIds.length - failedExpenseGroupCount : 0 }} new Transaction{{(exportableExpenseGroupIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed Transaction{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
-                      </div>
+                    </div>
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="null" [disabled]="true" >
-                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="true">Export
+                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="export()" [ngClass]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress">
+                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="!exportInProgress">Export
                                 <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                             </p>
-                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="false">Exporting ...
+                            <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="exportInProgress">Exporting ...
                             </p>
                         </button><br>
                     </div>
                 </div>
             </div>
+        </div>
+        <div  *ngIf="exportInProgress">
+            <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]='false'></p-progressBar>
         </div>
     </div>
     <div *ngIf="false" class="tw-flex tw-justify-center tw-items-center tw-pt-36">
@@ -49,18 +52,29 @@
                 <div *ngIf="true" class="inside-container tw-mt-10-px tw-p-10 tw-rounded-6-px tw-bg-white">
                     <div class="tw-flex tw-items-center">
                         <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-2">
-                        Successful Expenses <span class="tw-ml-24 tw-pl-8-px">04</span> 
+                        Successful Expenses
+                        <span class="tw-ml-24 tw-pl-8-px">
+                            {{ lastExport?.successful_expense_groups_count | number:'2.0-0' }}
+                        </span>                          
                         <a href="#" class="tw-ml-4 tw-text-pink">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
-                        <span>Last Export at: 08:00 AM, 18 May 2023</span>
+                            <span>
+                                Last Export at: 
+                                {{ lastExport?.last_exported_at | date: 'h:mm a' }},
+                                {{ lastExport?.last_exported_at | date: 'dd MMM yyyy' }}
+                            </span>                              
                         </div>
                     </div>
                     <div class="tw-flex tw-items-center">
                         <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-2">
-                        Failed Expenses <span class="tw-ml-32 tw-pl-10-px">00</span> 
+                        Failed Expenses <span class="tw-ml-32 tw-pl-10-px">{{ lastExport?.failed_expense_groups_count | number:'2.0-0' }}</span> 
                         <a href="#" class="tw-ml-4 tw-text-pink">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
-                        <span>Next export at: 12:00 PM, 20 May 2023</span>
+                            <span>
+                                Next Export at: 
+                                {{ lastExport?.next_export_at | date: 'h:mm a' }}, 
+                                {{ lastExport?.next_export_at | date: 'dd MMM yyyy' }}
+                            </span> 
                         </div>
                     </div>
                 </div>                  
@@ -152,3 +166,4 @@
             </div>
         </div>
     </div>
+</div>

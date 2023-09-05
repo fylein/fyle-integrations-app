@@ -114,6 +114,7 @@ export enum ClickEvent {
   QBD_EXPORT = 'Export IIF files',
   CONNECT_INTACCT  = 'Connect Sage Intacct',
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
+  INTACCT_EXPORT = 'Export Sage Intacct'
 }
 
 export enum ProgressPhase {
