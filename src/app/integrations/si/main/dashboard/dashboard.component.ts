@@ -140,7 +140,6 @@ export class DashboardComponent implements OnInit {
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.taskType),
       this.exportLogService.getExpenseGroupSettings()
     ]).subscribe((responses) => {
-      console.log(responses);
       this.lastExport = responses[0];
       this.errors = this.formatErrors(responses[1]);
       this.employeeFieldMapping = responses[2].employee_field_mapping;
