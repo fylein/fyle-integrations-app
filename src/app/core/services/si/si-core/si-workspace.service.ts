@@ -40,6 +40,6 @@ export class SiWorkspaceService {
   }
 
   getConfiguration(): Observable<Configuration> {
-    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
+    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }
 }
