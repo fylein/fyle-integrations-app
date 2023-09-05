@@ -22,7 +22,7 @@
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="null" [disabled]="true" >
+                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="export()" [disabled]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'">
                             <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="true">Export
                                 <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                             </p>
@@ -49,7 +49,7 @@
                 <div *ngIf="true" class="inside-container tw-mt-10-px tw-p-10 tw-rounded-6-px tw-bg-white">
                     <div class="tw-flex tw-items-center">
                         <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-2">
-                        Successful Expenses <span class="tw-ml-24 tw-pl-8-px">04</span> 
+                        Successful Expenses <span class="tw-ml-24 tw-pl-8-px">{{ lastExport?.successful_expense_groups_count }}</span> 
                         <a href="#" class="tw-ml-4 tw-text-pink">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
                         <span>Last Export at: 08:00 AM, 18 May 2023</span>
