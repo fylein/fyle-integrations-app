@@ -64,7 +64,7 @@ export class ExportLogComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private paginatorService: PaginatorService,
+    private paginatorService: PaginatorService
 
   ) { }
 
@@ -89,7 +89,7 @@ export class ExportLogComponent implements OnInit {
     const event = {
       value: this.dateOptions[3]
     };
-    // this.dateFilter(event);
+    // This.dateFilter(event);
   }
 
   private setupForm(): void {
@@ -100,25 +100,25 @@ export class ExportLogComponent implements OnInit {
       end: ['']
     });
 
-    // this.exportLogForm.controls.searchOption.valueChanges.subscribe((searchTerm: string) => {
-    //   if (searchTerm) {
-    //     this.expenseGroups.filter = searchTerm.trim().toLowerCase();
+    // This.exportLogForm.controls.searchOption.valueChanges.subscribe((searchTerm: string) => {
+    //   If (searchTerm) {
+    //     This.expenseGroups.filter = searchTerm.trim().toLowerCase();
     //   } else {
-    //     this.expenseGroups.filter = '';
+    //     This.expenseGroups.filter = '';
     //   }
     // });
 
-    // this.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
-    //   if (dateRange) {
-    //     this.selectedDateFilter = {
-    //       startDate: dateRange.startDate,
-    //       endDate: dateRange.endDate
+    // This.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
+    //   If (dateRange) {
+    //     This.selectedDateFilter = {
+    //       StartDate: dateRange.startDate,
+    //       EndDate: dateRange.endDate
     //     };
 
-    //     this.trackDateFilter('existing', this.selectedDateFilter);
+    //     This.trackDateFilter('existing', this.selectedDateFilter);
 
-    //     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-    //     this.getExpenseGroups(paginator);
+    //     Const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+    //     This.getExpenseGroups(paginator);
     //   }
     // });
   }
@@ -126,11 +126,11 @@ export class ExportLogComponent implements OnInit {
   private getExpenseGroupsAndSetupPage(): void {
     this.setupForm();
 
-    // this.setupSkipExportForm();
+    // This.setupSkipExportForm();
 
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
 
-    // this.getExpenseGroups(paginator);
+    // This.getExpenseGroups(paginator);
   }
 
 
