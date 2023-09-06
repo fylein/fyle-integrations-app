@@ -261,7 +261,6 @@ export enum QBDOnboardingState {
   export enum IntacctErrorType {
     EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
     CATEGORY_MAPPING = 'CATEGORY_MAPPING',
-    TAX_MAPPING = 'TAX_MAPPING',
     INTACCT_ERROR = 'INTACCT_ERROR'
   }
 
