@@ -3,7 +3,7 @@ import { DestinationAttribute } from "../../db/destination-attribute.model";
 import { FyleField, MappingState, SageIntacctField } from "../../enum/enum.model";
 import { Error } from "./error.model";
 import { ExpenseAttribute, ExtendedExpenseAttribute } from "./expense-attribute.model";
-import { MinimalMappingSetting } from "./mapping-setting.model copy";
+import { MinimalMappingSetting } from "./mapping-setting.model";
 
 export type MappingPost = {
   source_type: string;

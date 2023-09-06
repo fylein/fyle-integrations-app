@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
-import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model copy';
+import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
 import { ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';
 import { Task } from 'src/app/core/models/si/db/task-log.model';
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
 
-  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_EXPENSE, TaskLogType.CREATING_CHECK, TaskLogType.CREATING_CREDIT_CARD_PURCHASE, TaskLogType.CREATING_JOURNAL_ENTRY, TaskLogType.CREATING_CREDIT_CARD_CREDIT, TaskLogType.CREATING_DEBIT_CARD_EXPENSE];
+  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSES, TaskLogType.CREATING_BILLS, TaskLogType.CREATING_AP_PAYMENT, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS, TaskLogType.CREATING_REIMBURSEMENT];
 
   constructor(
     private dashboardService: DashboardService,
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableExpenseGroupIds, this.taskType))),
       takeWhile((response) => response.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length > 0, true)
     ).subscribe((res) => {
-      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSE && task.type !== TaskLogType.CREATING_BILL_PAYMENT) && exportableExpenseGroupIds.includes(task.expense_group)).length;
+      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_BILLS) && exportableExpenseGroupIds.includes(task.expense_group)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableExpenseGroupIds.length) * 100);
 
       if (res.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length === 0) {
