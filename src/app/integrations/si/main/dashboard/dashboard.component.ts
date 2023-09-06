@@ -44,8 +44,7 @@ export class DashboardComponent implements OnInit {
 
   groupedErrorStat: GroupedErrorStat = {
     [IntacctErrorType.EMPLOYEE_MAPPING]: null,
-    [IntacctErrorType.CATEGORY_MAPPING]: null,
-    [IntacctErrorType.TAX_MAPPING]: null
+    [IntacctErrorType.CATEGORY_MAPPING]: null
   };
 
   ExportState = ExportState;
@@ -87,8 +86,7 @@ export class DashboardComponent implements OnInit {
           this.errors = this.formatErrors(responses[0]);
           this.groupedErrorStat = {
             EMPLOYEE_MAPPING: null,
-            CATEGORY_MAPPING: null,
-            TAX_MAPPING: null
+            CATEGORY_MAPPING: null
           };
           this.lastExport = responses[1];
           this.isLoading = false;
@@ -114,7 +112,6 @@ export class DashboardComponent implements OnInit {
     }, {
       [IntacctErrorType.EMPLOYEE_MAPPING]: [],
       [IntacctErrorType.CATEGORY_MAPPING]: [],
-      [IntacctErrorType.TAX_MAPPING]: [],
       [IntacctErrorType.INTACCT_ERROR]: []
     });
   }
@@ -142,6 +139,7 @@ export class DashboardComponent implements OnInit {
     ]).subscribe((responses) => {
       this.lastExport = responses[0];
       this.errors = this.formatErrors(responses[1]);
+      console.log(this.errors);
       this.employeeFieldMapping = responses[2].employee_field_mapping;
       this.expenseGroupSetting = this.getExpenseGroupingSetting(responses[4]);
       this.importState = responses[4].expense_state;
