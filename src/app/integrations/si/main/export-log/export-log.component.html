@@ -7,7 +7,66 @@
 <div *ngIf="!isLoading" class="tw-py-40-px tw-px-120-px">
     <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-p-24-px">
+
             
+            <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
+                <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-16-px tw-rounded-4-px drop-down">
+                    <div>
+                        <!-- <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite> -->
+                    </div>
+                    <!-- dateFilter($event) -->
+                    <p-dropdown [options]="dateOptions" formControlName="dateRange" (onChange)="null" (click)="dropDownWatcher()">
+                        <ng-template let-item pTemplate="selectedItem">
+                            <div *ngIf="exportLogForm.controls.dateRange.value">
+                                <div class="my-dropdown-selected-item">
+                                    {{exportLogForm.controls.dateRange.value.dateRange}}
+                                </div>
+                            </div>
+                            <div *ngIf="!exportLogForm.controls.dateRange.value">
+                                <div class="my-dropdown-selected-item tw-text-placeholder">
+                                    Select date range
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template let-date pTemplate="item">
+                            <div>
+                                <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" *ngIf="date.dateRange === presentDate" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
+                                <p class="tw-text-sub-text-color tw-text-14-px" [ngClass]="{'!tw-text-mandatory-field-color' : exportLogForm.controls.dateRange.value === date }" *ngIf="date.dateRange !== presentDate">{{ date.dateRange | titlecase | snakeCaseToSpaceCase }}</p>
+                                <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange !== presentDate && date.dateRange !== 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}} - {{date.endDate | date : 'MMM dd, yyyy'}}</p>
+                                <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p>
+                            </div>
+                        </ng-template> 
+                    </p-dropdown>
+                </div>
+            </div>
+            <div class="tw-pt-24-px tw-border-y-2-px tw-border-y-separator tw-box-border tw-px-24-px tw-pt-24-px">
+                <div *ngIf="expenseGroups.count > 0">
+                    <p-table [value]="expenseGroups.results">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Date and Time of Export</th>
+                                <th>Employee Name and ID</th>
+                                <th>Expense Type</th>
+                                <th>Reference ID</th>
+                                <th>Exported As</th>
+                                <th>Link to Sage</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-exports let-i="rowIndex">
+                            <tr>
+                                <td>
+                                    <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
+                                    <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{exports.created_at | date : "HH:ss"}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+                <div *ngIf="expenseGroups.count === 0">
+                    <app-zero-state-with-illustration></app-zero-state-with-illustration>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

@@ -31,7 +31,6 @@ import { ConfigurationImportSettingComponent } from './main/configuration/config
     SharedModule,
     TabMenuModule,
     DropdownModule,
-    TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })

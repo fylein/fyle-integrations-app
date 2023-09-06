@@ -326,3 +326,8 @@ export enum QBDOnboardingState {
     SUCCESS = 'SUCCESS',
     FAILED = 'FAILED'
   }
+
+  export enum PaginatorPage {
+    MAPPING = 'mapping',
+    EXPORT_LOG = 'export-log'
+  }
