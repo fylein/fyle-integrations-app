@@ -6,9 +6,7 @@ import { ExportLogComponent } from './export-log.component';
 
 
 @NgModule({
-  declarations: [
-    ExportLogComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     ExportLogRoutingModule
