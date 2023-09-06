@@ -92,7 +92,7 @@ export class DashboardService {
     }
 
     if (taskType) {
-      const typeKey = 'type__in';
+      const typeKey = 'type';
       apiParams[typeKey] = taskType;
     }
 

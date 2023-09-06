@@ -19,7 +19,6 @@ export type Error = {
 export type GroupedErrors = {
   [IntacctErrorType.EMPLOYEE_MAPPING]: Error[];
   [IntacctErrorType.CATEGORY_MAPPING]: Error[];
-  [IntacctErrorType.TAX_MAPPING]: Error[];
   [IntacctErrorType.INTACCT_ERROR]: Error[];
 }
 
@@ -31,5 +30,4 @@ export type ErrorStat = {
 export type GroupedErrorStat = {
   [IntacctErrorType.EMPLOYEE_MAPPING]: null | ErrorStat;
   [IntacctErrorType.CATEGORY_MAPPING]: null | ErrorStat;
-  [IntacctErrorType.TAX_MAPPING]: null | ErrorStat;
 }

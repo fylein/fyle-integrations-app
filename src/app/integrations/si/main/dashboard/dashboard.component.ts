@@ -44,8 +44,7 @@ export class DashboardComponent implements OnInit {
 
   groupedErrorStat: GroupedErrorStat = {
     [IntacctErrorType.EMPLOYEE_MAPPING]: null,
-    [IntacctErrorType.CATEGORY_MAPPING]: null,
-    [IntacctErrorType.TAX_MAPPING]: null
+    [IntacctErrorType.CATEGORY_MAPPING]: null
   };
 
   ExportState = ExportState;
@@ -75,7 +74,7 @@ export class DashboardComponent implements OnInit {
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableExpenseGroupIds, this.taskType))),
       takeWhile((response) => response.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length > 0, true)
     ).subscribe((res) => {
-      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_BILLS) && exportableExpenseGroupIds.includes(task.expense_group)).length;
+      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableExpenseGroupIds.includes(task.expense_group)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableExpenseGroupIds.length) * 100);
 
       if (res.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length === 0) {
@@ -87,8 +86,7 @@ export class DashboardComponent implements OnInit {
           this.errors = this.formatErrors(responses[0]);
           this.groupedErrorStat = {
             EMPLOYEE_MAPPING: null,
-            CATEGORY_MAPPING: null,
-            TAX_MAPPING: null
+            CATEGORY_MAPPING: null
           };
           this.lastExport = responses[1];
           this.isLoading = false;
@@ -114,7 +112,6 @@ export class DashboardComponent implements OnInit {
     }, {
       [IntacctErrorType.EMPLOYEE_MAPPING]: [],
       [IntacctErrorType.CATEGORY_MAPPING]: [],
-      [IntacctErrorType.TAX_MAPPING]: [],
       [IntacctErrorType.INTACCT_ERROR]: []
     });
   }
