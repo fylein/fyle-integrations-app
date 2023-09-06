@@ -3,9 +3,9 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { ExportLogService } from './export-log.service';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
-import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model copy';
 import { CCCExpenseState, ExpenseState, ExportDateType, FyleReferenceType, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse } from 'src/app/core/models/si/db/expense-group.model';
+import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
 
 describe('ExportLogService', () => {
   let service: ExportLogService;

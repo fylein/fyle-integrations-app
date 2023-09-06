@@ -82,12 +82,12 @@ export class DashboardService {
       offset: offset
     };
     if (status.length) {
-      const statusKey = 'status__in';
+      const statusKey = 'status';
       apiParams[statusKey] = status;
     }
 
     if (expenseGroupIds.length) {
-      const expenseKey = 'expense_group_id__in';
+      const expenseKey = 'expense_group_id';
       apiParams[expenseKey] = expenseGroupIds;
     }
 
