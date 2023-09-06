@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
-import { ExpenseField } from 'src/app/core/models/si/misc/expense-field.model';
+import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
 
 @Injectable({

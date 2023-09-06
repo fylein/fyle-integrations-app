@@ -114,6 +114,7 @@ export enum ClickEvent {
   QBD_EXPORT = 'Export IIF files',
   CONNECT_INTACCT  = 'Connect Sage Intacct',
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
+  INTACCT_EXPORT = 'Export Sage Intacct'
 }
 
 export enum ProgressPhase {
@@ -255,4 +256,72 @@ export enum QBDOnboardingState {
   export enum PaymentSyncDirection {
     FYLE_TO_INTACCT = 'fyle_to_intacct',
     INTACCT_TO_FYLE = 'intacct_to_fyle'
+  }
+
+  export enum IntacctErrorType {
+    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING',
+    INTACCT_ERROR = 'INTACCT_ERROR'
+  }
+
+  export enum FyleReferenceType {
+    REPORT_ID = 'report_id',
+    EXPENSE_REPORT = 'claim_number',
+    PAYMENT = 'settlement_id',
+    EXPENSE = 'expense_id'
+  }
+
+  export enum MappingState {
+    MAPPED = 'MAPPED',
+    UNMAPPED = 'UNMAPPED',
+    ALL = 'ALL'
+  }
+
+  export enum SageIntacctField {
+    ACCOUNT = 'ACCOUNT',
+    CUSTOMER = 'CUSTOMER',
+    DEPARTMENT = 'DEPARTMENT',
+    CLASS = 'CLASS',
+    TAX_CODE = 'TAX_CODE'
+  }
+
+  export enum MappingSourceField {
+    PROJECT = 'PROJECT',
+    COST_CENTER = 'COST_CENTER',
+    TAX_GROUP = 'TAX_GROUP'
+  }
+
+  export enum MappingDestinationField {
+    CUSTOMER = 'CUSTOMER',
+    CLASS = 'CLASS',
+    DEPARTMENT = 'DEPARTMENT',
+    TAX_CODE = 'TAX_CODE'
+  }
+
+  export enum TaskLogType {
+    CREATING_AP_PAYMENT = 'CREATING_AP_PAYMENT',
+    CREATING_EXPENSE_REPORTS = 'CREATING_EXPENSE_REPORTS',
+    CREATING_CHARGE_CARD_TRANSACTIONS = 'CREATING_CHARGE_CARD_TRANSACTIONS',
+    CREATING_JOURNAL_ENTRIES = 'CREATING_JOURNAL_ENTRIES',
+    FETCHING_EXPENSES = 'FETCHING_EXPENSES',
+    CREATING_BILLS = 'CREATING_BILLS',
+    CREATING_REIMBURSEMENT = 'CREATING_REIMBURSEMENT'
+  }
+
+  export enum TaskLogState {
+    ENQUEUED = 'ENQUEUED',
+    IN_PROGRESS = 'IN_PROGRESS',
+    FAILED = 'FAILED',
+    FATAL = 'FATAL',
+    COMPLETE = 'COMPLETE',
+  }
+
+  export enum ExportMode {
+    MANUAL = 'MANUAL',
+    AUTO = 'AUTO'
+  }
+
+  export enum ExportState {
+    SUCCESS = 'SUCCESS',
+    FAILED = 'FAILED'
   }
