@@ -8,21 +8,22 @@ export type SageIntacctError = {
 };
 
 export type Task = {
-  bill: number;
-  cheque: number;
-  created_at: Date;
-  credit_card_purchase: number;
-  detail: any;
-  quickbooks_errors: SageIntacctError[];
-  expense_group: number;
   id: number;
-  journal_entry: number;
-  bill_payment: number;
-  status: TaskLogState;
-  task_id: string;
-  type: TaskLogType;
-  updated_at: Date;
   workspace: number;
+  type: TaskLogType;
+  task_id: string;
+  expense_group: number;
+  bill: number;
+  expense_report: number;
+  charge_card_transaction: number;
+  journal_entry: number;
+  ap_payment: number;
+  sage_intacct_reimbursement: number;
+  status: TaskLogState;
+  detail: any;
+  sage_intacct_errors: SageIntacctError[];
+  created_at: Date;
+  updated_at: Date;
 };
 
 export type TaskResponse = {
@@ -37,5 +38,5 @@ export type TaskGetParams = {
   offset?: number;
   status?: string[];
   expense_group_id?: number[];
-  type__in?: string[];
+  type?: string[];
 };
