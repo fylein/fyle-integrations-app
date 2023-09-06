@@ -59,7 +59,7 @@ export class DashboardComponent implements OnInit {
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
 
-  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSES, TaskLogType.CREATING_BILLS, TaskLogType.CREATING_AP_PAYMENT, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS, TaskLogType.CREATING_REIMBURSEMENT];
+  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSES, TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
 
   constructor(
     private dashboardService: DashboardService,
