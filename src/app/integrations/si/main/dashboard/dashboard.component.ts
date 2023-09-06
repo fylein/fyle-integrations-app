@@ -139,7 +139,6 @@ export class DashboardComponent implements OnInit {
     ]).subscribe((responses) => {
       this.lastExport = responses[0];
       this.errors = this.formatErrors(responses[1]);
-      console.log(this.errors);
       this.employeeFieldMapping = responses[2].employee_field_mapping;
       this.expenseGroupSetting = this.getExpenseGroupingSetting(responses[4]);
       this.importState = responses[4].expense_state;
