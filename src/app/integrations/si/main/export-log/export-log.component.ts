@@ -103,7 +103,6 @@ export class ExportLogComponent implements OnInit {
   offsetChanges(limit: number): void {
     this.isLoading = true;
     this.limit = limit;
-    // this.pageNo = 0;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(limit, this.offset);
   }
@@ -127,7 +126,7 @@ export class ExportLogComponent implements OnInit {
     }
     this.isCalendarVisible = true;
   }
-  
+
   showCalendar(event: Event) {
     event.stopPropagation();
     this.isCalendarVisible = true;
@@ -190,13 +189,13 @@ export class ExportLogComponent implements OnInit {
       end: ['']
     });
 
-    // this.exportLogForm.controls.searchOption.valueChanges.subscribe((searchTerm: string) => {
-    //   if (searchTerm) {
-    //     this.expenseGroups.filter = searchTerm.trim().toLowerCase();
-    //   } else {
-    //     this.expenseGroups.filter = '';
-    //   }
-    // });
+    this.exportLogForm.controls.searchOption.valueChanges.subscribe((searchTerm: string) => {
+      if (searchTerm) {
+        // This.expenseGroups.filter = searchTerm.trim().toLowerCase();
+      } else {
+        // This.expenseGroups.filter = '';
+      }
+    });
 
     this.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
       if (dateRange) {
