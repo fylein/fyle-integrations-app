@@ -168,7 +168,6 @@ export class ExportLogComponent implements OnInit {
         });
       });
       this.expenseGroups = expenseGroups;
-      console.log(expenseGroups);
       this.isLoading = false;
     });
   }
