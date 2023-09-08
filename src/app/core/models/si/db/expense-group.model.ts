@@ -2,23 +2,19 @@ import { FyleReferenceType } from "../../enum/enum.model";
 import { Expense } from "./expense.model";
 
 export type ExpenseGroupDescription = {
-  [FyleReferenceType.EXPENSE_REPORT]: string;
-  [FyleReferenceType.REPORT_ID]: string;
+  claim_number: string;
   employee_email: string;
-  [FyleReferenceType.EXPENSE]: string;
-  [FyleReferenceType.PAYMENT]: string;
 };
 
 export type ExpenseGroup = {
   id: number;
   fund_source: string;
   description: ExpenseGroupDescription;
-  // Having any here is okay, different intacct exports has different structures
   response_logs: any;
-  export_type: string;
   employee_name: string;
-  exported_at: Date;
   created_at: Date;
+  export_type: string;
+  exported_at: Date;
   updated_at: Date;
   workspace: number;
   expenses: Expense[];
@@ -31,10 +27,22 @@ export type ExpenseGroupResponse = {
   results: ExpenseGroup[];
 };
 
+export interface ExpenseGroupList {
+  exportedAt: Date;
+  employee: [string, string];
+  expenseType: 'Corporate Card' | 'Reimbursable';
+  referenceNumber: string;
+  exportedAs: string;
+  intacctUrl: string;
+  fyleUrl: string;
+  fyleReferenceType: FyleReferenceType | null;
+  expenses: Expense[];
+}
+
 export interface SkipExportList {
   updated_at: Date;
   employee: [string, string];
-  expenseType: 'Credit Card' | 'Reimbursable';
+  expenseType: 'Corporate Card' | 'Reimbursable';
   claim_number: string;
 }
 

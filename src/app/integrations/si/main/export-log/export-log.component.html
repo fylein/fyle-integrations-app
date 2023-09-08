@@ -4,18 +4,25 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="tw-py-40-px tw-px-120-px">
-    <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
-        <div class="tw-p-24-px">
 
-            
-            <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
-                <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-16-px tw-rounded-4-px drop-down">
-                    <div>
-                        <!-- <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite> -->
-                    </div>
-                    <!-- dateFilter($event) -->
-                    <p-dropdown [options]="dateOptions" formControlName="dateRange" (onChange)="null" (click)="dropDownWatcher()">
+
+<div *ngIf="!isLoading" class="tw-py-40-px tw-px-120-px">
+    <div>
+        <p-tabMenu [model]="modules" [activeItem]="activeModule"></p-tabMenu>
+    </div>
+    <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+        <div *ngIf="totalCount > 0" class="tw-p-24-px">
+            <div [formGroup]="exportLogForm" class="tw-flex tw-items-center tw-mb-4">
+
+                <span class="p-input-icon-right custom-search-field">
+                    <i class="pi pi-search"></i>
+                    <input class="tw-pb-1 tw-pt-1" type="text" (input)="dt1.filterGlobal($event, 'contains')" placeholder="Search by Employee Name or Expense ID" />
+                </span>
+                <span class="tw-pl-4">
+                    <p-dropdown [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
+                        <div class="calendar-icon">
+                        <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
+                        </div>
                         <ng-template let-item pTemplate="selectedItem">
                             <div *ngIf="exportLogForm.controls.dateRange.value">
                                 <div class="my-dropdown-selected-item">
@@ -37,36 +44,90 @@
                             </div>
                         </ng-template> 
                     </p-dropdown>
-                </div>
-            </div>
-            <div class="tw-pt-24-px tw-border-y-2-px tw-border-y-separator tw-box-border tw-px-24-px tw-pt-24-px">
-                <div *ngIf="expenseGroups.count > 0">
-                    <p-table [value]="expenseGroups.results">
-                        <ng-template pTemplate="header">
-                            <tr>
-                                <th>Date and Time of Export</th>
-                                <th>Employee Name and ID</th>
-                                <th>Expense Type</th>
-                                <th>Reference ID</th>
-                                <th>Exported As</th>
-                                <th>Link to Sage</th>
-                            </tr>
-                        </ng-template>
-                        <ng-template pTemplate="body" let-exports let-i="rowIndex">
-                            <tr>
-                                <td>
-                                    <p class="tw-font-400 tw-text-sub-text-color">{{exports.created_at | date}}</p>
-                                    <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{exports.created_at | date : "HH:ss"}}</span>
-                                </td>
-                            </tr>
-                        </ng-template>
-                    </p-table>
-                </div>
-                <div *ngIf="expenseGroups.count === 0">
-                    <app-zero-state-with-illustration></app-zero-state-with-illustration>
-                </div>
+                </span>
             </div>
 
+            <p-table #dt1 [value]="expenseGroups">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Date and Time of Export</th>
+                        <th>Employee Name and ID</th>
+                        <th>Expense Type</th>
+                        <th>Reference ID</th>
+                        <th>Exported As</th>
+                        <th>Link to Sage</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData>
+                    <tr class="clickable-row" (click)="showDialog('top-right')">
+                        <td>
+                            <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
+                            <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>
+                        </td>
+                        <td>
+                            <h4>
+                                {{rowData.employee[0]}}
+                            </h4>
+                            <h5 class="tw-font-400 !tw-text-12-px tw-text-placeholder">
+                                {{rowData.employee[1]}}
+                            </h5>
+                        </td>
+                        <td>{{rowData.expenseType | titlecase}}</td>
+                        <td>{{rowData.referenceNumber}}</td>
+                        <td>{{rowData.exportedAs | titlecase}}</td>
+                        <td>
+                            <div *ngIf="rowData.intacctUrl">
+                              <button (click)="openUrl(rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
+                                <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
+                              </button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <div *ngIf="expenseGroups.length > 0" class="tw-p-24-px">
+                <app-paginator  [totalCount]="totalCount" (offsetChangeEvent)="offsetChanges($event)" (pageChangeEvent)="pageChanges($event)"></app-paginator>
+            </div>
+        </div>
+        <div *ngIf="totalCount === 0">
+            <div class="tw-flex tw-h-3/6 tw-text-center tw-p-56-px">
+                <div class="tw-m-auto">
+                    <img src="assets/illustrations/integrations-zero-state.svg" width="200px" hight="200px" class="tw-inline-block">
+                    <div class="tw-pt-20-px">
+                        <h4 class="tw-font-500 !tw-text-16-px tw-text-slightly-normal-text-color">No records to show yet!</h4>
+                        <p class="tw-pt-8-px tw-font-400 !tw-text-14-px tw-text-faded-text-color">All your successful exports and their details<br>
+                            will be stored here.</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<p-dialog header="Expenses" [(visible)]="visible" [position]="position" [style]="{ width: '50vw', height: '974px' }">
+    <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
+        <p-table #dt2 [value]="expenseGroups">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Expense No.</th>
+                    <th>Report No.</th>
+                    <th>View</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData>
+                <tr>
+                    <td>{{rowData.expenses}}</td>
+                    <td>{{rowData.referenceNumber}}</td>
+                    <td>
+                        <div *ngIf="rowData.intacctUrl">
+                          <button (click)="openUrl(rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
+                            <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
+                          </button>
+                        </div>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</p-dialog>

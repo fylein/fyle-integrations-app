@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
-import { TabMenuModule } from 'primeng/tabmenu';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',

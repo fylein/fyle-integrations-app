@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
-import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { MenuItem } from 'primeng/api';
+import { FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
 import { IntacctExportTriggerResponse } from 'src/app/core/models/si/db/export-log.model';
 import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-export-log',
@@ -17,9 +22,11 @@ export class ExportLogComponent implements OnInit {
 
   totalCount: number;
 
-  limit: number = 10;
+  limit: number;
 
-  pageNo: number = 0;
+  offset: number = 0;
+
+  pageNo: number;
 
   dateOptions: DateFilter[] = [
     {
@@ -44,29 +51,75 @@ export class ExportLogComponent implements OnInit {
     }
   ];
 
-  selectedDateFilter: DateFilter | null = null;
+  modules: MenuItem[] = [
+    {label: 'Completed', routerLink: '/integrations/intacct/main/export_log/'},
+    {label: 'Skipped', routerLink: '/integrations/intacct/main/export_log/'}
+  ];
+
+  activeModule: MenuItem;
+
+  selectedDateFilter: SelectedDateFilter | null;
 
   presentDate = new Date().toLocaleDateString();
 
   exportLogForm: FormGroup;
 
-  isCalendarVisible: boolean = false;
+  isCalendarVisible: boolean;
 
   isRecordPresent: boolean = false;
 
-  expenseGroups: IntacctExportTriggerResponse;
+  expenseGroups: ExpenseGroupList [];
 
-  emptyExpenseGroup: IntacctExportTriggerResponse;
+  count: number;
 
-  skipExport: IntacctExportTriggerResponse;
+  state: string;
 
-  emptySkipExportList: IntacctExportTriggerResponse;
+  pageSize: number;
+
+  pageNumber = 0;
 
   constructor(
     private formBuilder: FormBuilder,
-    private paginatorService: PaginatorService
-
+    private exportLogService: ExportLogService,
+    private paginatorService: PaginatorService,
+    private trackingService: TrackingService
   ) { }
+
+  dateValue: Date;
+
+  visible: boolean = false;
+
+  position: string = 'center';
+
+  showDialog(position: string) {
+      this.position = position;
+      this.visible = true;
+  }
+
+  openUrl(url: string) {
+    window.open(url, '_blank');
+  }
+
+  offsetChanges(limit: number): void {
+    this.isLoading = true;
+    this.limit = limit;
+    // this.pageNo = 0;
+    this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
+    this.getExpenseGroups(limit, this.offset);
+  }
+
+  pageChanges(offset: number): void {
+    this.isLoading = true;
+    this.offset = offset;
+    this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
+    this.getExpenseGroups(this.limit, offset);
+  }
+
+  dateFilter(event: any): void {
+    this.isLoading = true;
+    this.selectedDateFilter = event.value;
+    this.getExpenseGroups(this.limit, this.offset);
+  }
 
   dropDownWatcher() {
     if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
@@ -74,7 +127,7 @@ export class ExportLogComponent implements OnInit {
     }
     this.isCalendarVisible = true;
   }
-
+  
   showCalendar(event: Event) {
     event.stopPropagation();
     this.isCalendarVisible = true;
@@ -89,7 +142,44 @@ export class ExportLogComponent implements OnInit {
     const event = {
       value: this.dateOptions[3]
     };
-    // This.dateFilter(event);
+    this.dateFilter(event);
+  }
+
+  getExpenseGroups(limit: number, offset:number) {
+    this.isLoading = true;
+    const expenseGroups: ExpenseGroupList[] = [];
+
+    if (this.limit !== limit) {
+      this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
+    }
+
+    return this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(expenseGroupResponse => {
+      this.totalCount = expenseGroupResponse.count;
+      expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
+        expenseGroups.push({
+          exportedAt: expenseGroup.exported_at,
+          employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
+          expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
+          fyleReferenceType: null,
+          referenceNumber: expenseGroup.description.claim_number,
+          exportedAs: expenseGroup.export_type,
+          fyleUrl: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/${'expense_id'}`,
+          intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
+          expenses: expenseGroup.expenses
+        });
+      });
+      this.expenseGroups = expenseGroups;
+      console.log(expenseGroups);
+      this.isLoading = false;
+    });
+  }
+
+  private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
+    const trackingProperty = {
+      filterType,
+      ...selectedDateFilter
+    };
+    this.trackingService.onDateFilter(trackingProperty);
   }
 
   private setupForm(): void {
@@ -100,37 +190,35 @@ export class ExportLogComponent implements OnInit {
       end: ['']
     });
 
-    // This.exportLogForm.controls.searchOption.valueChanges.subscribe((searchTerm: string) => {
-    //   If (searchTerm) {
-    //     This.expenseGroups.filter = searchTerm.trim().toLowerCase();
+    // this.exportLogForm.controls.searchOption.valueChanges.subscribe((searchTerm: string) => {
+    //   if (searchTerm) {
+    //     this.expenseGroups.filter = searchTerm.trim().toLowerCase();
     //   } else {
-    //     This.expenseGroups.filter = '';
+    //     this.expenseGroups.filter = '';
     //   }
     // });
 
-    // This.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
-    //   If (dateRange) {
-    //     This.selectedDateFilter = {
-    //       StartDate: dateRange.startDate,
-    //       EndDate: dateRange.endDate
-    //     };
+    this.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
+      if (dateRange) {
+        this.selectedDateFilter = {
+          startDate: dateRange.startDate,
+          endDate: dateRange.endDate
+        };
 
-    //     This.trackDateFilter('existing', this.selectedDateFilter);
+        this.trackDateFilter('existing', this.selectedDateFilter);
 
-    //     Const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-    //     This.getExpenseGroups(paginator);
-    //   }
-    // });
+        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+        this.getExpenseGroups(paginator.limit, paginator.offset);
+      }
+    });
   }
 
   private getExpenseGroupsAndSetupPage(): void {
     this.setupForm();
 
-    // This.setupSkipExportForm();
-
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
 
-    // This.getExpenseGroups(paginator);
+    this.getExpenseGroups(paginator.limit, paginator.offset);
   }
 
 
