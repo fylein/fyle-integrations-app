@@ -21,6 +21,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ErrorComponent } from './components/core/error/error.component';
 import { TrimCharacterPipe } from './pipes/trim-character.pipe';
 import { SnakeCaseToSpaceCasePipe } from './pipes/snake-case-to-space-case.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 import { PaginatorComponent } from './helper/paginator/paginator.component';
 import { MandatoryFieldComponent } from './helper/mandatory-field/mandatory-field.component';
 import { MandatoryErrorMessageComponent } from './helper/mandatory-error-message/mandatory-error-message.component';
@@ -45,6 +46,10 @@ import { AppIntegrationLandingComponent } from './components/apps/app-integratio
 import { IntacctStepperComponent } from './components/apps/intacct-stepper/intacct-stepper.component';
 import { IntacctLocationEntityComponent } from './components/apps/intacct-location-entity/intacct-location-entity.component';
 import { IntacctConnectorComponent } from './components/apps/intacct-connector/intacct-connector.component';
+import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
+import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
+import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -53,6 +58,7 @@ import { IntacctConnectorComponent } from './components/apps/intacct-connector/i
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
+    SearchPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -73,7 +79,10 @@ import { IntacctConnectorComponent } from './components/apps/intacct-connector/i
     AppIntegrationLandingComponent,
     IntacctStepperComponent,
     IntacctConnectorComponent,
-    IntacctLocationEntityComponent
+    IntacctLocationEntityComponent,
+    MappingTableComponent,
+    MappingFilterComponent,
+    MappingHeaderSectionComponent
   ],
   imports: [
     CommonModule,
@@ -94,6 +103,7 @@ import { IntacctConnectorComponent } from './components/apps/intacct-connector/i
     ProgressBarModule,
     CalendarModule,
     CascadeSelectModule,
+    TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -103,6 +113,7 @@ import { IntacctConnectorComponent } from './components/apps/intacct-connector/i
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
+    SearchPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -128,7 +139,10 @@ import { IntacctConnectorComponent } from './components/apps/intacct-connector/i
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
     IntacctConnectorComponent,
-    IntacctLocationEntityComponent
+    IntacctLocationEntityComponent,
+    MappingTableComponent,
+    MappingFilterComponent,
+    MappingHeaderSectionComponent
   ]
 })
 export class SharedModule { }

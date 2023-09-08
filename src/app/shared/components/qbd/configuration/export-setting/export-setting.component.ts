@@ -7,6 +7,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 
 @Component({
   selector: 'app-export-setting',
@@ -104,7 +105,8 @@ export class ExportSettingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private mappingService: QbdMappingService
   ) { }
 
   reimbursableExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
@@ -345,6 +347,7 @@ export class ExportSettingComponent implements OnInit {
     this.exportSettingService.postQbdExportSettings(exportSettingPayload).subscribe((response: QBDExportSettingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      this.mappingService.refreshMappingPages();
       this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.EXPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
@@ -363,6 +366,8 @@ export class ExportSettingComponent implements OnInit {
         this.workspaceService.setOnboardingState(QBDOnboardingState.FIELD_MAPPINGS);
         this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);
       }
+
+
     }, () => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
-import { ClickEvent, Page, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
@@ -74,6 +74,10 @@ export class DashboardComponent implements OnInit {
 
   sessionStartTime: Date = new Date();
 
+  PaginatorPage = PaginatorPage;
+
+  currentPage: number = 1;
+
   constructor(
     private iifLogsService: QbdIifLogsService,
     private formBuilder: FormBuilder,
@@ -129,6 +133,7 @@ export class DashboardComponent implements OnInit {
     this.isLoading = true;
     this.limit = limit;
     this.pageNo = 0;
+    this.currentPage = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
@@ -140,6 +145,7 @@ export class DashboardComponent implements OnInit {
   pageChanges(pageNo: number): void {
     this.isLoading = true;
     this.pageNo = pageNo;
+    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;

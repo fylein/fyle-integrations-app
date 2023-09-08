@@ -1,0 +1,10 @@
+th {
+    @apply tw-text-12-px tw-text-normal-text-color tw-font-500 tw-h-40-px tw-py-10-px #{!important}
+}
+
+td {
+    @apply tw-text-14-px tw-text-sub-text-color tw-font-400 #{!important}
+}
+.pi-check:before {
+    @apply tw-text-14-px tw-cursor-pointer tw-text-faded-text-color #{!important};
+ }

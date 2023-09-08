@@ -189,3 +189,13 @@ export enum QBDOnboardingState {
     EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
     EXPORT_JOURNALS = 'EXPORT_JOURNALS'
   }
+
+  export enum PaginatorPage {
+    MAPPING = 'mapping',
+    DASHBOARD = 'dashboard'
+  }
+
+  export enum FilterOptions {
+    MAPPED = 'Mapped',
+    UNMAPPED = 'Unmapped'
+  }

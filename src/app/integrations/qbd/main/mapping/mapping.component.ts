@@ -1,0 +1,27 @@
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+
+@Component({
+  selector: 'app-mapping',
+  templateUrl: './mapping.component.html',
+  styleUrls: ['./mapping.component.scss']
+})
+export class MappingComponent implements OnInit {
+
+  modules: MenuItem[] = [
+    {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'},
+  ];
+
+  activeModule: MenuItem;
+
+  constructor(
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    this.activeModule = this.modules[0];
+    this.router.navigateByUrl(this.modules[0].routerLink);
+  }
+
+}

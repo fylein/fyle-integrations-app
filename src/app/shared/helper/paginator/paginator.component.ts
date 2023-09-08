@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-paginator',
@@ -9,7 +10,7 @@ export class PaginatorComponent implements OnInit {
 
   pageNumbers: number[] = [10, 50, 100, 200];
 
-  page: number = 1;
+  @Input() page: number;
 
   @Output() offsetChangeEvent = new EventEmitter<number>();
 
@@ -17,12 +18,28 @@ export class PaginatorComponent implements OnInit {
 
   @Input() totalCount: number;
 
-  dropDownValue: number = 10;
+  @Input() pageType:  PaginatorPage;
+
+  @Input() dropDownValue: number = 10;
 
   totalPages: number;
 
+  PaginatorPage = PaginatorPage;
+
   constructor() { }
 
+  goToEndPages(targetPage: number) {
+    if(targetPage == 1) {
+      this.page = 1
+      this.pageChangeEvent.emit(0);
+    }
+    else {
+      this.page = targetPage
+      const offsetValue = (targetPage-1) * this.dropDownValue;
+      this.pageChangeEvent.emit(offsetValue);
+    }
+  }
+  
   offsetChanges(event:any) {
     this.totalPages = Math.ceil(this.totalCount/this.dropDownValue);
     this.offsetChangeEvent.emit(event.value);
