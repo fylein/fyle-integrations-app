@@ -57,8 +57,8 @@ export class IntacctConnectorComponent implements OnInit {
         si_company_id: companyID,
         si_user_password: userPassword
       }).subscribe((response) => {
-        this.setupConnectionStatus.emit(true);
         this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
+          this.setupConnectionStatus.emit(true);
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
           this.isLoading = false;
         });

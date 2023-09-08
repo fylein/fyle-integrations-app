@@ -10,10 +10,6 @@ import { ConfigurationImportSettingComponent } from './configuration-import-sett
 
 @NgModule({
   declarations: [
-    ConfigurationComponent,
-    ConfigurationExportSettingComponent,
-    ConfigurationAdvancedSettingComponent,
-    ConfigurationImportSettingComponent
   ],
   imports: [
     CommonModule,

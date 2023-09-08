@@ -32,7 +32,7 @@ import { ExportSettingComponent } from './components/qbd/configuration/export-se
 import { AdvancedSettingComponent } from './components/qbd/configuration/advanced-setting/advanced-setting.component';
 import { FieldMappingComponent } from './components/qbd/configuration/field-mapping/field-mapping.component';
 import { ConfigurationToggleFieldComponent } from './components/qbd/configuration/configuration-toggle-field/configuration-toggle-field.component';
-import { ConfigurationSelectFieldComponent } from './components/qbd/configuration/configuration-select-field/configuration-select-field.component';
+import { ConfigurationSelectFieldComponent } from './components/apps/configuration-select-field/configuration-select-field.component';
 import { ConfigurationRadioFieldComponent } from './components/qbd/configuration/configuration-radio-field/configuration-radio-field.component';
 import { ConfigurationStepFooterComponent } from './components/apps/configuration-step-footer/configuration-step-footer.component';
 import { ConfigurationStepHeaderComponent } from './components/apps/configuration-step-header/configuration-step-header.component';
@@ -43,13 +43,20 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
 import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
-import { IntacctStepperComponent } from './components/apps/intacct-stepper/intacct-stepper.component';
-import { IntacctLocationEntityComponent } from './components/apps/intacct-location-entity/intacct-location-entity.component';
-import { IntacctConnectorComponent } from './components/apps/intacct-connector/intacct-connector.component';
+// import { IntacctStepperComponent } from './components/apps/intacct-stepper/intacct-stepper.component';
+// import { IntacctLocationEntityComponent } from './components/apps/intacct-location-entity/intacct-location-entity.component';
+// import { IntacctConnectorComponent } from './components/apps/intacct-connector/intacct-connector.component';
 import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
 import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
 import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
 import { TableModule } from 'primeng/table';
+import { ConfigurationExportSettingsComponent } from './components/si/configuration/configuration-export-settings/configuration-export-settings.component';
+// import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
+// import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
+// import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
+import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
+import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
+import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
 
 @NgModule({
   declarations: [
@@ -77,12 +84,16 @@ import { TableModule } from 'primeng/table';
     ConfigurationMultiSelectComponent,
     ConfigurationLabelComponent,
     AppIntegrationLandingComponent,
-    IntacctStepperComponent,
-    IntacctConnectorComponent,
-    IntacctLocationEntityComponent,
+    // IntacctStepperComponent,
+    // IntacctConnectorComponent,
+    // IntacctLocationEntityComponent,
     MappingTableComponent,
     MappingFilterComponent,
-    MappingHeaderSectionComponent
+    MappingHeaderSectionComponent,
+    ConfigurationExportSettingsComponent,
+    ConfigurationImportSettingsComponent,
+    ConfigurationAdvancedSettingsComponent,
+    SkipExportComponent
   ],
   imports: [
     CommonModule,
@@ -135,14 +146,17 @@ import { TableModule } from 'primeng/table';
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     CascadeSelectModule,
-    IntacctStepperComponent,
+    // IntacctStepperComponent,
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
-    IntacctConnectorComponent,
-    IntacctLocationEntityComponent,
+    // IntacctConnectorComponent,
+    // IntacctLocationEntityComponent,
     MappingTableComponent,
     MappingFilterComponent,
-    MappingHeaderSectionComponent
+    MappingHeaderSectionComponent,
+    ConfigurationExportSettingsComponent,
+    ConfigurationImportSettingsComponent,
+    ConfigurationAdvancedSettingsComponent
   ]
 })
 export class SharedModule { }

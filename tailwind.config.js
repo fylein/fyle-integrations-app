@@ -26,7 +26,8 @@ const customColors = {
   'mapped-green-border': '#D9EBE1',
   'mapped-green-bg': '#EEF8F2',
   'unmapped-red-border': '#F5C0C3',
-  'unmapped-red-bg': '#FCE9EA'
+  'unmapped-red-bg': '#FCE9EA',
+  'pink': '#D23669',
 };
 
 module.exports = {
@@ -262,6 +263,7 @@ module.exports = {
         '420-px': '420px',
         '452-px': '452px',
         '466-px': '466px',
+        '600-px': '600px',
         '4-vw': '4vw',
         '14-vw': '14vw',
         '20-vw': '20vw',

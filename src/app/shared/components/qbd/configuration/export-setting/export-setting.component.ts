@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroupedBy, QBDExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, QBDCCCExpenseState, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroupedBy, ExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, CCCExpenseState, RedirectLink } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
@@ -237,7 +237,7 @@ export class ExportSettingComponent implements OnInit {
               forbidden = false;
             }
           }
-        } else if ((control.value === QBDExpenseState.PAID || control.value === QBDExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
+        } else if ((control.value === ExpenseState.PAID || control.value === ExpenseState.PAYMENT_PROCESSING) && (control.parent?.get('reimbursableExpense')?.value || control.parent?.get('creditCardExpense')?.value)) {
           forbidden = false;
         }
         if (!forbidden) {
@@ -258,22 +258,22 @@ export class ExportSettingComponent implements OnInit {
     this.cccExpenseStateOptions = [
       {
         label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
-        value: this.is_simplify_report_closure_enabled ? QBDCCCExpenseState.APPROVED: QBDCCCExpenseState.PAYMENT_PROCESSING
+        value: this.is_simplify_report_closure_enabled ? CCCExpenseState.APPROVED: CCCExpenseState.PAYMENT_PROCESSING
       },
       {
         label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-        value: QBDCCCExpenseState.PAID
+        value: CCCExpenseState.PAID
       }
     ];
 
     this.expenseStateOptions = [
       {
         label: this.is_simplify_report_closure_enabled ? 'Processing' : 'Payment Processing',
-        value: QBDExpenseState.PAYMENT_PROCESSING
+        value: ExpenseState.PAYMENT_PROCESSING
       },
       {
         label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',
-        value: QBDExpenseState.PAID
+        value: ExpenseState.PAID
       }
     ];
   }
@@ -306,6 +306,7 @@ export class ExportSettingComponent implements OnInit {
         cccExportGroup: [this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by : this.expenseGroupingFieldOptions[1].value],
         cccExportDate: [this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : this.cccExpenseGroupingDateOptions[0].value],
         bankAccount: [this.exportSettings?.bank_account_name ? this.exportSettings?.bank_account_name : null],
+        mileageAccountName: [this.exportSettings?.mileage_account_name ? this.exportSettings?.mileage_account_name : null],
         cccEntityName: [this.exportSettings?.credit_card_entity_name_preference ? this.exportSettings?.credit_card_entity_name_preference : null],
         cccAccountName: [this.exportSettings?.credit_card_account_name ? this.exportSettings?.credit_card_account_name : null],
         reimbursableExpenseState: [this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null],
@@ -326,6 +327,7 @@ export class ExportSettingComponent implements OnInit {
           cccExportGroup: [this.expenseGroupingFieldOptions[1].value],
           cccExportDate: [this.cccExpenseGroupingDateOptions[0].value],
           bankAccount: [null],
+          mileageAccountName: [null],
           cccEntityName: [null],
           cccAccountName: [null],
           reimbursableExpenseState: [null],
