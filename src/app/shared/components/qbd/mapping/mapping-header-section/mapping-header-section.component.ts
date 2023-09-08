@@ -15,7 +15,7 @@ export class MappingHeaderSectionComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
+
   }
 
 }

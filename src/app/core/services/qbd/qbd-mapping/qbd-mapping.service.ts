@@ -24,8 +24,8 @@ export class QbdMappingService {
       attribute_type: sourceType.toUpperCase()
     };
 
-		if(mappingState != null){
-			params.destination_value__isnull = mappingState
+		if (mappingState !== null){
+			params.destination_value__isnull = mappingState;
 		}
 
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/`, params);
@@ -41,7 +41,7 @@ export class QbdMappingService {
 
   refreshMappingPages(): void {
     this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, {}).subscribe((exportSettingResponse : QBDExportSettingGet) => {
-      const showMapping = exportSettingResponse.credit_card_expense_export_type ? true : false
+      const showMapping = exportSettingResponse.credit_card_expense_export_type ? true : false;
       this.getMappingPagesForSideNavBar.emit(showMapping);
     });
   }

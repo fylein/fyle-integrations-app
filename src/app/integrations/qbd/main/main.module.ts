@@ -23,7 +23,7 @@ import { TableModule } from 'primeng/table';
     DropdownModule,
     TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
-    MainRoutingModule,
+    MainRoutingModule
   ]
 })
 export class MainModule { }

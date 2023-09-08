@@ -20,27 +20,27 @@ export class MappingTableComponent implements OnInit {
   constructor() { }
 
   onTextBoxChange(event: any, index: number) {
-    const tragetValue: string = event.target.value
-    this.destinationValue = tragetValue
+    const tragetValue: string = event.target.value;
+    this.destinationValue = tragetValue;
   }
 
   onBlurEvent() {
-    this.isSelectedRow = 0
+    this.isSelectedRow = 0;
   }
 
   isTypingInBox(event: any, row: Mapping) {
-    if(event.keyCode === 13) {
-      this.isSelectedRow = 0
-      this.saveRow(row)
+    if (event.keyCode === 13) {
+      this.isSelectedRow = 0;
+      this.saveRow(row);
     }
-    this.isSelectedRow = row.id
+    this.isSelectedRow = row.id;
   }
 
   saveRow(data: Mapping) {
-    data.destination_value = this.destinationValue
-    const mappingPayload = MappingModel.constructPayload(data)
-    this.postMapping.emit(mappingPayload)
-    this.isSelectedRow = 0
+    data.destination_value = this.destinationValue;
+    const mappingPayload = MappingModel.constructPayload(data);
+    this.postMapping.emit(mappingPayload);
+    this.isSelectedRow = 0;
   }
 
   ngOnInit(): void {

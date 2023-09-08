@@ -36,86 +36,81 @@ export class MappingFilterComponent implements OnInit {
   isInputFocused: boolean = false;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: UntypedFormBuilder
   ) { }
 
   clearSearch() {
     this.form.controls.searchOption.patchValue(null);
     this.isInputFocused = false;
-    this.mappingSearchingEvent.emit('')
+    this.mappingSearchingEvent.emit('');
   }
 
   onBlurEvent(event: any) {
-    console.log("kl", this.form.controls.searchOption.value, event)
-    if(event.target.value === null) {
-      this.openSearchBox = true
+    if (event.target.value === null) {
+      this.openSearchBox = true;
     } else {
-      this.openSearchBox = false
+      this.openSearchBox = false;
     }
   }
 
   openSerchBoxFn() {
-    this.openSearchBox = false
+    this.openSearchBox = false;
   }
 
   getItemClass(item: string): string {
-    if(item == FilterOptions.MAPPED) {
-      return 'mapped'
+    if (item === FilterOptions.MAPPED) {
+      return 'mapped';
     }
-    return 'unmapped' 
+    return 'unmapped';
   }
 
   removeFilter() {
-    this.form.controls.filterOption.patchValue(null)
-    this.mappingFilterChangeEvent.emit(null)
+    this.form.controls.filterOption.patchValue(null);
+    this.mappingFilterChangeEvent.emit(null);
   }
 
   filterChanges() {
     this.form.controls.filterOption.valueChanges.subscribe((isFilterOptions) => {
     if (isFilterOptions.value === FilterOptions.MAPPED) {
-      this.mappingFilterChangeEvent.emit(false)
+      this.mappingFilterChangeEvent.emit(false);
+    } else if (isFilterOptions.value === FilterOptions.UNMAPPED) {
+      this.mappingFilterChangeEvent.emit(true);
+    } else {
+      this.mappingFilterChangeEvent.emit(null);
     }
-    else if(isFilterOptions.value === FilterOptions.UNMAPPED) {
-      this.mappingFilterChangeEvent.emit(true)
-    }
-    else {
-      this.mappingFilterChangeEvent.emit(null)
-    }
-    })
+    });
   }
 
   searchingFilter() {
     this.form.controls.searchOption.valueChanges
     .pipe(debounceTime(1500))
     .subscribe((searchValue) => {
-        console.log("s", searchValue)
-        this.mappingSearchingEvent.emit(searchValue)
-    })
+        this.mappingSearchingEvent.emit(searchValue);
+    });
   }
 
   filterWatcher() {
-    this.filterChanges()
+    this.filterChanges();
 
-    this.searchingFilter()
+    this.searchingFilter();
   }
 
   setupFilter() {
     this.form = this.formBuilder.group({
       searchOption: ['kjhkjh'],
-      filterOption: [],
+      filterOption: []
     });
-    if (this.mappingFilter != null) {
-      const filter = this.mappingFilter ? this.mappingsFilter[1] : this.mappingsFilter[0]
-      this.form.controls.filterOption.patchValue(filter)
-    }
-    else {
-      this.form.controls.filterOption.patchValue(null)
+    if (this.mappingFilter === null) {
+      const filter = this.mappingFilter ? this.mappingsFilter[1] : this.mappingsFilter[0];
+      this.form.controls.filterOption.patchValue(filter);
+    } else {
+      this.form.controls.filterOption.patchValue(null);
     }
     this.filterWatcher();
   }
 
   ngOnInit(): void {
-    this.setupFilter()
+    this.setupFilter();
   }
 
 }

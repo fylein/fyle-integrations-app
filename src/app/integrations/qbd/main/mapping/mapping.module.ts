@@ -17,7 +17,7 @@ import { GenericMappingComponent } from './generic-mapping/generic-mapping.compo
     TableModule,
     TabMenuModule,
     SharedModule,
-    MappingRoutingModule,
+    MappingRoutingModule
   ]
 })
 export class MappingModule { }

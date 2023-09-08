@@ -16,21 +16,20 @@ export class MainComponent implements OnInit {
     {label: 'Mapping', routerLink: '/integrations/qbd/main/mapping'}
   ];
 
-  originModules: MenuItem[] = this.modules.concat()
+  originModules: MenuItem[] = this.modules.concat();
 
   activeModule: MenuItem;
 
   constructor(
     private router: Router,
     private mappingService: QbdMappingService
-  ) { 
+  ) {
     this.mappingService.getMappingPagesForSideNavBar.subscribe((showMapping: Boolean) => {
       if (showMapping) {
-        this.modules = this.originModules
-      }
-      else {
-        const module = this.modules.filter(item => item.label !== 'Mapping')
-        this.modules = module
+        this.modules = this.originModules;
+      } else {
+        const module = this.modules.filter(item => item.label !== 'Mapping');
+        this.modules = module;
       }
     });
   }

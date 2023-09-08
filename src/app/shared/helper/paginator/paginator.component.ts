@@ -29,17 +29,16 @@ export class PaginatorComponent implements OnInit {
   constructor() { }
 
   goToEndPages(targetPage: number) {
-    if(targetPage == 1) {
-      this.page = 1
+    if (targetPage === 1) {
+      this.page = 1;
       this.pageChangeEvent.emit(0);
-    }
-    else {
-      this.page = targetPage
+    } else {
+      this.page = targetPage;
       const offsetValue = (targetPage-1) * this.dropDownValue;
       this.pageChangeEvent.emit(offsetValue);
     }
   }
-  
+
   offsetChanges(event:any) {
     this.totalPages = Math.ceil(this.totalCount/this.dropDownValue);
     this.offsetChangeEvent.emit(event.value);

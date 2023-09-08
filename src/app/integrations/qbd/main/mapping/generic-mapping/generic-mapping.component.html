@@ -16,7 +16,7 @@
         <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >
             <app-paginator [totalCount]="totalCount" (offsetChangeEvent)="offsetChanges($event)" (pageChangeEvent)="pageChanges($event)" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit"></app-paginator>
         </div>
-        <div *ngIf="totalCount == 0">
+        <div *ngIf="totalCount === 0">
             <app-zero-state-with-illustration [mainText]="'No corporate card to show yet!'" [subText]="'Add corporate cards to Fyle to map them to individual credit card account in QuickBooks Desktop'"></app-zero-state-with-illustration>
         </div>
     </div>

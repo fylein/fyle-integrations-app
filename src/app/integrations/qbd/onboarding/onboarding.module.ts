@@ -15,7 +15,7 @@ import { LandingComponent } from './onboarding-landing/landing.component';
     OnboardingExportSettingComponent,
     OnboardingFieldSettingComponent,
     OnboardingAdvancedSettingComponent,
-    LandingComponent,
+    LandingComponent
   ],
   imports: [
     CommonModule,

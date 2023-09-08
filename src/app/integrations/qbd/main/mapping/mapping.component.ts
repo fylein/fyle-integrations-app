@@ -10,7 +10,7 @@ import { MenuItem } from 'primeng/api';
 export class MappingComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'},
+    {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'}
   ];
 
   activeModule: MenuItem;

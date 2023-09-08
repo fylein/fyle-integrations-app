@@ -1,16 +1,16 @@
 <div class="tw-flex tw-justify-between tw-items-center">
     <div>
-        <span *ngIf="pageType == PaginatorPage.DASHBOARD">Page {{page}} of {{totalPages}}</span>
+        <span *ngIf="pageType === PaginatorPage.DASHBOARD">Page {{page}} of {{totalPages}}</span>
     </div>
     <div class="tw-flex tw-items-center">
         <div class="tw-flex tw-items-center tw-pr-30-px">
-            <span *ngIf="pageType == PaginatorPage.DASHBOARD" class="tw-pr-10-px">Show</span>
-            <span *ngIf="pageType != PaginatorPage.DASHBOARD" class="tw-pr-10-px">Items per page:</span>
+            <span *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-pr-10-px">Show</span>
+            <span *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-pr-10-px">Items per page:</span>
             <div>
                 <p-dropdown [options]="pageNumbers" (onChange)="offsetChanges($event)" [(ngModel)]="dropDownValue">
                     <ng-template let-value pTemplate="selectedItem" >
                         <div *ngIf="dropDownValue" class="tw-flex">
-                            <p class="tw-text-normal-text-color tw-text-12-px !tw-font-500">{{ value }} <span *ngIf="pageType == PaginatorPage.DASHBOARD">Items</span></p>
+                            <p class="tw-text-normal-text-color tw-text-12-px !tw-font-500">{{ value }} <span *ngIf="pageType === PaginatorPage.DASHBOARD">Items</span></p>
                         </div>
                         <div *ngIf="!dropDownValue" class="tw-text-placeholder">
                             Select size of page
@@ -18,15 +18,15 @@
                     </ng-template>
                     <ng-template let-day pTemplate="item">
                         <div>
-                            <p class="tw-text-sub-text-color tw-text-14-px">{{ day }} <span *ngIf="pageType == PaginatorPage.DASHBOARD">Items</span></p>
+                            <p class="tw-text-sub-text-color tw-text-14-px">{{ day }} <span *ngIf="pageType === PaginatorPage.DASHBOARD">Items</span></p>
                         </div>
                     </ng-template> 
                 </p-dropdown>
             </div>
         </div>
         <div class="tw-flex tw-items-center">
-            <span *ngIf="pageType == PaginatorPage.DASHBOARD" class="tw-pr-10-px">Page</span>
-            <div *ngIf="pageType == PaginatorPage.DASHBOARD" class="tw-border tw-border-separator tw-flex tw-items-center tw-rounded-4-px">
+            <span *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-pr-10-px">Page</span>
+            <div *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-border tw-border-separator tw-flex tw-items-center tw-rounded-4-px">
                 <div class="tw-border-r tw-border-r-separator">
                     <button type="button" class="tw-h-32-px tw-w-30-px prevBtn" (click)="previousPageChange(page)" [disabled]="page === 1" >
                         <i class="pi pi-angle-left tw-w-6-px tw-h-12-px tw-pt-6-px"></i>
@@ -41,7 +41,7 @@
                     </button>
                 </div>
             </div>
-            <div *ngIf="pageType != PaginatorPage.DASHBOARD" class="tw-flex tw-justify-between">
+            <div *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-flex tw-justify-between">
                 <div class="">
                     <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-flex tw-place-items-center tw-place-items-center tw-pt-2-px" (click)="goToEndPages(1)" [disabled]="page === 1" >
                         <i class="pi pi-minus tw-rotate-90"></i><i class="pi pi-chevron-left"></i>

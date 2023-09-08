@@ -17,7 +17,7 @@ export class GenericMappingComponent implements OnInit {
   isLoading: boolean;
 
   mappingState: MappingStats;
-  
+
   mappings: MappingResponse;
 
   originMapping: MappingResponse;
@@ -29,23 +29,23 @@ export class GenericMappingComponent implements OnInit {
   pageNo: number = 0;
 
   totalCount: number;
-  
+
   selectedMappingFilter: any;
 
   PaginatorPage = PaginatorPage;
 
   currentPage: number = 1;
-  
+
   searchValue: string;
 
   constructor(
     private mappingService: QbdMappingService,
     private route: ActivatedRoute,
-    private toastService: IntegrationsToastService,
+    private toastService: IntegrationsToastService
   ) { }
 
   private callGetMappings() {
-    this.mappingService.getMappings(this.limit, this.pageNo,this.sourceType ,this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
+    this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
       this.mappings = qbdMappingResult;
       this.totalCount = this.mappings.count;
       this.isLoading = false;
@@ -53,71 +53,66 @@ export class GenericMappingComponent implements OnInit {
   }
 
   mappingSeachingFilter(searchValue: string) {
-    console.log(searchValue)
-    if(searchValue.length > 0) {
-      console.log('ed')
-      const results: any[] = this.originMapping.results.filter((mapping) => 
+    if (searchValue.length > 0) {
+      const results: any[] = this.originMapping.results.filter((mapping) =>
         mapping.source_value.toLowerCase().includes(searchValue)
-      )
-      this.mappings.results = results
+      );
+      this.mappings.results = results;
+    } else {
+      this.callGetMappings();
     }
-    else {
-      this.callGetMappings()
-    }
-    this.totalCount = this.mappings.results.length
-    console.log(this.totalCount, 'ds')
+    this.totalCount = this.mappings.results.length;
   }
 
   postMapping(mappingPayload: MappingPost) {
     this.mappingService.postMappings(mappingPayload).subscribe(() => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping done successfully');
-      // this.callGetMappings()
-    }, ()=>{
+    }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving the mappings, please try again later');
-    })
+    });
   }
 
   offsetChanges(limit: number): void {
     this.isLoading = true;
     this.limit = limit;
     this.pageNo = 0;
-    this.currentPage = 1
+    this.currentPage = 1;
     this.selectedMappingFilter = this.selectedMappingFilter ? this.selectedMappingFilter : null;
-    this.callGetMappings()
+    this.callGetMappings();
   }
 
   pageChanges(pageNo: number): void {
     this.isLoading = true;
     this.pageNo = pageNo;
-    this.currentPage = Math.ceil(this.pageNo / this.limit)+1
+    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
     this.selectedMappingFilter = this.selectedMappingFilter ? this.selectedMappingFilter : null;
-    this.callGetMappings()
+    this.callGetMappings();
   }
 
   mappingStateFilter(state: boolean | null): void {
     this.isLoading = true;
     this.selectedMappingFilter = state;
-    this.currentPage = 1
-    this.callGetMappings()
+    this.currentPage = 1;
+    this.callGetMappings();
   }
 
   setupPage() {
-    this.isLoading = true
+    this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getMappingStats(this.sourceType),
-      this.mappingService.getMappings(this.limit,this.pageNo,this.sourceType,null)
+      this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, null)
     ]).subscribe((response) => {
-      this.mappingState = response[0]
-      this.originMapping = response[1]
-      this.mappings = response[1]
-      this.totalCount = this.mappings.count
-      this.isLoading = false
-    })
+      this.mappingState = response[0];
+      this.originMapping = response[1];
+      this.mappings = response[1];
+      this.totalCount = this.mappings.count;
+      this.isLoading = false;
+    });
   }
 
   ngOnInit(): void {
-    this.setupPage()
+    this.setupPage();
   }
 
 }
