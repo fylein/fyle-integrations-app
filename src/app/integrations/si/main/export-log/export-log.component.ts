@@ -72,6 +72,8 @@ export class ExportLogComponent implements OnInit {
 
   originalExpenseGroups: ExpenseGroupList [];
 
+  isDateSelected: boolean = false;
+
   count: number;
 
   state: string;
@@ -134,6 +136,7 @@ export class ExportLogComponent implements OnInit {
 
   dateFilter(event: any): void {
     this.isLoading = true;
+    this.isDateSelected = true;
     this.selectedDateFilter = event.value;
     this.getExpenseGroups(this.limit, this.offset);
   }
@@ -171,7 +174,9 @@ export class ExportLogComponent implements OnInit {
     }
 
     return this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(expenseGroupResponse => {
-      this.totalCount = expenseGroupResponse.count;
+      if (!this.isDateSelected) {
+        this.totalCount = expenseGroupResponse.count;
+      }
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
         expenseGroups.push({
           exportedAt: expenseGroup.exported_at,
