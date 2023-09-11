@@ -16,7 +16,7 @@
 
                 <span class="p-input-icon-right custom-search-field">
                     <i class="pi pi-search"></i>
-                    <input class="tw-pb-1 tw-pt-1" type="text" (input)="dt1.filterGlobal($event, 'contains')" placeholder="Search by Employee Name or Expense ID" />
+                    <input class="tw-pb-1 tw-pt-1" type="text" (input)="filterTable($event)" placeholder="Search by Employee Name or Expense ID" />
                 </span>
                 <span class="tw-pl-4">
                     <p-dropdown [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">

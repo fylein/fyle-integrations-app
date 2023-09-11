@@ -70,6 +70,8 @@ export class ExportLogComponent implements OnInit {
 
   expenseGroups: ExpenseGroupList [];
 
+  originalExpenseGroups: ExpenseGroupList [];
+
   count: number;
 
   state: string;
@@ -96,6 +98,25 @@ export class ExportLogComponent implements OnInit {
   openUrl(url: string) {
     window.open(url, '_blank');
   }
+
+  public filterTable(event: any) {
+    const query = event.target.value.toLowerCase();
+    
+    this.expenseGroups = this.originalExpenseGroups.filter((group: ExpenseGroupList) => {
+      const employeeName = group.employee ? group.employee[0] : '';  // the first string in the employee array
+      const employeeID = group.employee ? group.employee[1] : '';  // the second string in the employee array
+      const expenseType = group.expenseType ? group.expenseType : '';
+      const referenceNumber = group.referenceNumber ? group.referenceNumber : '';
+      
+      return (
+        employeeName.toLowerCase().includes(query) ||
+        employeeID.toLowerCase().includes(query) ||
+        expenseType.toLowerCase().includes(query) ||
+        referenceNumber.toLowerCase().includes(query)
+      ); 
+    });
+  }
+  
 
   offsetChanges(limit: number): void {
     this.isLoading = true;
@@ -165,6 +186,7 @@ export class ExportLogComponent implements OnInit {
         });
       });
       this.expenseGroups = expenseGroups;
+      this.originalExpenseGroups = [...this.expenseGroups];
       this.isLoading = false;
     });
   }
@@ -183,14 +205,6 @@ export class ExportLogComponent implements OnInit {
       dateRange: [null],
       start: [''],
       end: ['']
-    });
-
-    this.exportLogForm.controls.searchOption.valueChanges.subscribe((searchTerm: string) => {
-      if (searchTerm) {
-        // This.expenseGroups.filter = searchTerm.trim().toLowerCase();
-      } else {
-        // This.expenseGroups.filter = '';
-      }
     });
 
     this.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
