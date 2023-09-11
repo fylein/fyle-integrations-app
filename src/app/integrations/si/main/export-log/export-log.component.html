@@ -60,7 +60,8 @@
                 </ng-template>
 
                 <ng-template pTemplate="body" let-rowData>
-                    <tr class="clickable-row" (click)="isChildTableVisible()">
+                    <tr class="clickable-row" (click)="isChildTableVisible(rowData.index)">
+
                         <td>
                             <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
                             <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>
@@ -117,27 +118,23 @@
     </div>
 </div>
 
-<p-dialog header="Expenses" [(visible)]="visible" [position]="'top-right'" [style]="{ width: '50vw', height: '974px' }">
+<p-dialog header="Expenses" [(visible)]="visible" [position]="'top-right'" [modal]="true" [draggable]="false" [style]="{ width: '50vw', height: '974px' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
-        <p-table #dt2 [value]="expenseGroups">
+        <p-table #dt2 [value]="childTableExpenseGroup">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Expense No.</th>
-                    <th>Report No.</th>
-                    <th>View</th>
+                    <th>Expense ID.</th>
+                    <th>Merchant</th>
+                    <th>Category</th>
+                    <th>Amount</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
                 <tr>
-                    <td>{{rowData.expenses}}</td>
-                    <td>{{rowData.referenceNumber}}</td>
-                    <td>
-                        <div *ngIf="rowData.intacctUrl">
-                          <button (click)="openUrl(rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
-                            <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
-                          </button>
-                        </div>
-                    </td>
+                    <td>{{ rowData.expenses[0].expense_number }}</td>
+                    <td>{{ rowData.expenses[0].vendor ? rowData.expenses[0].vendor : '-' }}</td>
+                    <td>{{ rowData.expenses[0].category }}</td>
+                    <td>{{ rowData.expenses[0].amount }}</td>
                 </tr>
             </ng-template>
         </p-table>

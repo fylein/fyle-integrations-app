@@ -28,6 +28,7 @@ export type ExpenseGroupResponse = {
 };
 
 export interface ExpenseGroupList {
+  index: number;
   exportedAt: Date;
   employee: [string, string];
   expenseType: 'Corporate Card' | 'Reimbursable';
