@@ -83,9 +83,8 @@ export class DashboardComponent implements OnInit {
 
   getExpenseGroups(limit: number, offset: number, status: string) {
     const expenseGroups: ExpenseGroupList[] = [];
-    
+
     return this.exportLogService.getExpenseGroups(status==='COMPLETE' ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null).subscribe(expenseGroupResponse => {
-      console.log(expenseGroupResponse);
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
         expenseGroups.push({
           exportedAt: (status==='COMPLETE' ? expenseGroup.exported_at : expenseGroup.updated_at),
