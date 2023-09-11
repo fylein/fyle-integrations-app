@@ -87,6 +87,7 @@ export class DashboardComponent implements OnInit {
     return this.exportLogService.getExpenseGroups(status==='COMPLETE' ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null).subscribe(expenseGroupResponse => {
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
         expenseGroups.push({
+          index: 0,
           exportedAt: (status==='COMPLETE' ? expenseGroup.exported_at : expenseGroup.updated_at),
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
