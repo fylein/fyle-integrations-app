@@ -89,10 +89,7 @@ export class ExportLogComponent implements OnInit {
 
   visible: boolean = false;
 
-  position: string = 'center';
-
-  showDialog(position: string) {
-      this.position = position;
+  isChildTableVisible() {
       this.visible = true;
   }
 

@@ -36,12 +36,12 @@ export class ExportLogService {
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-      params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+      params.start_date = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
+      params.end_date = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
     }
 
     if (exportedAt) {
-      params.exported_at__gte = exportedAt;
+      params.start_date = exportedAt;
     }
 
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
@@ -67,28 +67,8 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
   }
 
-  getExpensesByExpenseGroupId(expenseGroupId: number): Observable<Expense[]> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_groups/${expenseGroupId}/expenses/`, {});
-  }
-
-  getExpensesGroupById(expenseGroupId: number): Observable<ExpenseGroup> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_groups/${expenseGroupId}/`, {});
-  }
-
-  syncExpenseGroups() {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.post(`/workspaces/${workspaceId}/fyle/expense_groups/trigger/`, {});
-  }
-
   getExpenseGroupSettings(): Observable<ExpenseGroupSetting> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_group_settings/`, {});
-  }
-
-  createExpenseGroupsSettings(expenseGroupSettingsPayload: ExpenseGroupSetting): Observable<ExpenseGroupSetting> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.post(`/workspaces/${workspaceId}/fyle/expense_group_settings/`, expenseGroupSettingsPayload);
   }
 }
