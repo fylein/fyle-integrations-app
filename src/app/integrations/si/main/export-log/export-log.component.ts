@@ -72,6 +72,8 @@ export class ExportLogComponent implements OnInit {
 
   originalExpenseGroups: ExpenseGroupList [];
 
+  childTableExpenseGroup: ExpenseGroupList [] = [];
+
   isDateSelected: boolean = false;
 
   count: number;
@@ -81,6 +83,8 @@ export class ExportLogComponent implements OnInit {
   pageSize: number;
 
   pageNumber = 0;
+
+  clickedExportLogIndex: number = 0;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -93,8 +97,10 @@ export class ExportLogComponent implements OnInit {
 
   visible: boolean = false;
 
-  isChildTableVisible() {
-      this.visible = true;
+  isChildTableVisible(index: number) {
+    this.clickedExportLogIndex = index;
+    this.childTableExpenseGroup[0] = this.expenseGroups[this.clickedExportLogIndex];
+    this.visible = true;
   }
 
   openUrl(url: string) {
@@ -177,8 +183,9 @@ export class ExportLogComponent implements OnInit {
       if (!this.isDateSelected) {
         this.totalCount = expenseGroupResponse.count;
       }
-      expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
+      expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
         expenseGroups.push({
+          index: index++,  // Here's where we add the index
           exportedAt: expenseGroup.exported_at,
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
