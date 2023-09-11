@@ -1,6 +1,6 @@
-import { FilterOptions } from "../../enum/enum.model";
+import { MappingState } from "../../enum/enum.model";
 
 export type SelectFormOption = {
   label: string;
-  value: FilterOptions;
+  value: MappingState;
 }

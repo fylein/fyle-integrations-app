@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
@@ -20,8 +20,6 @@ export class GenericMappingComponent implements OnInit {
 
   mappings: MappingResponse;
 
-  originMapping: MappingResponse;
-
   sourceType: string;
 
   limit: number = 10;
@@ -30,7 +28,7 @@ export class GenericMappingComponent implements OnInit {
 
   totalCount: number;
 
-  selectedMappingFilter: any;
+  selectedMappingFilter: MappingState = MappingState.ALL;
 
   PaginatorPage = PaginatorPage;
 
@@ -38,13 +36,17 @@ export class GenericMappingComponent implements OnInit {
 
   searchValue: string;
 
+  destinationFieldType = FieldType;
+
+  appName: AppName = AppName.QBD;
+
   constructor(
     private mappingService: QbdMappingService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService
   ) { }
 
-  private callGetMappings() {
+  private getFilteredMappings() {
     this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
       this.mappings = qbdMappingResult;
       this.totalCount = this.mappings.count;
@@ -54,12 +56,12 @@ export class GenericMappingComponent implements OnInit {
 
   mappingSeachingFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: any[] = this.originMapping.results.filter((mapping) =>
+      const results: Mapping[] = this.mappings.results.filter((mapping) =>
         mapping.source_value.toLowerCase().includes(searchValue)
       );
       this.mappings.results = results;
     } else {
-      this.callGetMappings();
+      this.getFilteredMappings();
     }
     this.totalCount = this.mappings.results.length;
   }
@@ -72,28 +74,28 @@ export class GenericMappingComponent implements OnInit {
     });
   }
 
-  offsetChanges(limit: number): void {
+  pageSizeChanges(limit: number): void {
     this.isLoading = true;
     this.limit = limit;
     this.pageNo = 0;
     this.currentPage = 1;
-    this.selectedMappingFilter = this.selectedMappingFilter ? this.selectedMappingFilter : null;
-    this.callGetMappings();
+    this.getFilteredMappings();
   }
 
-  pageChanges(pageNo: number): void {
+  pageOffsetChanges(pageNo: number): void {
     this.isLoading = true;
     this.pageNo = pageNo;
     this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
-    this.selectedMappingFilter = this.selectedMappingFilter ? this.selectedMappingFilter : null;
-    this.callGetMappings();
+    this.getFilteredMappings();
   }
 
-  mappingStateFilter(state: boolean | null): void {
+  mappingStateFilter(state: MappingState): void {
     this.isLoading = true;
     this.selectedMappingFilter = state;
     this.currentPage = 1;
-    this.callGetMappings();
+    this.limit = 10;
+    this.pageNo = 0;
+    this.getFilteredMappings();
   }
 
   setupPage() {
@@ -101,10 +103,9 @@ export class GenericMappingComponent implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getMappingStats(this.sourceType),
-      this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, null)
+      this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
     ]).subscribe((response) => {
       this.mappingState = response[0];
-      this.originMapping = response[1];
       this.mappings = response[1];
       this.totalCount = this.mappings.count;
       this.isLoading = false;

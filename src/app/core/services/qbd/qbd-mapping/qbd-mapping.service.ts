@@ -4,6 +4,7 @@ import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
 import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { Observable } from 'rxjs';
 import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { MappingState } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,15 +18,17 @@ export class QbdMappingService {
     private workspaceService: QbdWorkspaceService
   ) { }
 
-  getMappings(limit: number, offset: number, sourceType: string, mappingState: boolean|null): Observable<MappingResponse> {
+  getMappings(limit: number, offset: number, sourceType: string, mappingState: MappingState): Observable<MappingResponse> {
     const params: any = {
       limit,
       offset,
       attribute_type: sourceType.toUpperCase()
     };
 
-		if (mappingState !== null){
-			params.destination_value__isnull = mappingState;
+		if (mappingState === MappingState.MAPPED){
+			params.destination_value__isnull = false;
+		} else if (mappingState === MappingState.UNMAPPED){
+			params.destination_value__isnull = true;
 		}
 
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/`, params);

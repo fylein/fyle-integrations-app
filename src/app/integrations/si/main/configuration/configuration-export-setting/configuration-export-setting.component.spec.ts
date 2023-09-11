@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConfigurationExportSettingComponent } from './configuration-export-setting.component';
+import { FormBuilder } from '@angular/forms';
 
 describe('ConfigurationExportSettingComponent', () => {
   let component: ConfigurationExportSettingComponent;
@@ -8,7 +9,8 @@ describe('ConfigurationExportSettingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationExportSettingComponent ]
+      declarations: [ ConfigurationExportSettingComponent ],
+      providers: [ FormBuilder ]
     })
     .compileComponents();
 

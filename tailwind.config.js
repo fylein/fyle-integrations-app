@@ -340,11 +340,7 @@ module.exports = {
       },
       top: {
         '70': '70%'
-      },
-      // borderRadius: {
-      //   '2xl': '14px',
-      //   '50': 
-      // }
+      }
     },
   },
   plugins: [],

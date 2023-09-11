@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
-import { FilterOptions } from 'src/app/core/models/enum/enum.model';
+import { MappingState } from 'src/app/core/models/enum/enum.model';
+import { Mapping } from 'src/app/core/models/qbd/db/mapping.model';
 import { SelectFormOption } from 'src/app/core/models/qbd/misc/select-form-option.model';
 
 @Component({
@@ -11,29 +12,26 @@ import { SelectFormOption } from 'src/app/core/models/qbd/misc/select-form-optio
 })
 export class MappingFilterComponent implements OnInit {
 
-  @Input() mappingData: any;
+  @Input() mappingFilter: MappingState;
 
-  @Input() mappingFilter: boolean | null;
-
-  @Output() mappingFilterChangeEvent = new EventEmitter<boolean | null>();
+  @Output() mappingFilterChangeEvent = new EventEmitter<MappingState>();
 
   @Output() mappingSearchingEvent = new EventEmitter<string>();
 
   mappingsFilter: SelectFormOption[] = [{
     label: 'MAPPED',
-    value: FilterOptions.MAPPED
+    value: MappingState.MAPPED
   }, {
     label: 'UNMAPPED',
-    value: FilterOptions.UNMAPPED
+    value: MappingState.UNMAPPED
   }];
 
   form: UntypedFormGroup;
 
   selectedFilter: any;
 
-  openSearchBox: boolean = false;
+  isSearchBoxActive: boolean = false;
 
-  isInputFocused: boolean = false;
 
   constructor(
     private formBuilder: UntypedFormBuilder
@@ -41,24 +39,25 @@ export class MappingFilterComponent implements OnInit {
 
   clearSearch() {
     this.form.controls.searchOption.patchValue(null);
-    this.isInputFocused = false;
+    const event = {
+      target: {
+        value: ''
+      }
+    };
+    this.onFocusOut(event);
     this.mappingSearchingEvent.emit('');
   }
 
-  onBlurEvent(event: any) {
-    if (event.target.value === null) {
-      this.openSearchBox = true;
+  onFocusOut(event: any) {
+    if (event.target.value === '') {
+      this.isSearchBoxActive = false;
     } else {
-      this.openSearchBox = false;
+      this.isSearchBoxActive = true;
     }
   }
 
-  openSerchBoxFn() {
-    this.openSearchBox = false;
-  }
-
-  getItemClass(item: string): string {
-    if (item === FilterOptions.MAPPED) {
+  getSelectedFilter(item: string): string {
+    if (item === MappingState.MAPPED) {
       return 'mapped';
     }
     return 'unmapped';
@@ -66,30 +65,22 @@ export class MappingFilterComponent implements OnInit {
 
   removeFilter() {
     this.form.controls.filterOption.patchValue(null);
-    this.mappingFilterChangeEvent.emit(null);
+    this.mappingFilterChangeEvent.emit(MappingState.ALL);
   }
 
   filterChanges() {
     this.form.controls.filterOption.valueChanges.subscribe((isFilterOptions) => {
-    if (isFilterOptions.value === FilterOptions.MAPPED) {
-      this.mappingFilterChangeEvent.emit(false);
-    } else if (isFilterOptions.value === FilterOptions.UNMAPPED) {
-      this.mappingFilterChangeEvent.emit(true);
-    } else {
-      this.mappingFilterChangeEvent.emit(null);
-    }
+      this.mappingFilterChangeEvent.emit(isFilterOptions.value);
     });
   }
 
   searchingFilter() {
-    this.form.controls.searchOption.valueChanges
-    .pipe(debounceTime(1500))
-    .subscribe((searchValue) => {
+    this.form.controls.searchOption.valueChanges.subscribe((searchValue) => {
         this.mappingSearchingEvent.emit(searchValue);
     });
   }
 
-  filterWatcher() {
+  setupMappingFilterWatcher() {
     this.filterChanges();
 
     this.searchingFilter();
@@ -97,16 +88,16 @@ export class MappingFilterComponent implements OnInit {
 
   setupFilter() {
     this.form = this.formBuilder.group({
-      searchOption: ['kjhkjh'],
+      searchOption: [],
       filterOption: []
     });
-    if (this.mappingFilter === null) {
-      const filter = this.mappingFilter ? this.mappingsFilter[1] : this.mappingsFilter[0];
-      this.form.controls.filterOption.patchValue(filter);
+    if (this.mappingFilter !== MappingState.ALL) {
+      const filter = this.mappingsFilter.filter((filter: SelectFormOption) => filter.value === this.mappingFilter);
+      this.form.controls.filterOption.patchValue(filter[0]);
     } else {
       this.form.controls.filterOption.patchValue(null);
     }
-    this.filterWatcher();
+    this.setupMappingFilterWatcher();
   }
 
   ngOnInit(): void {

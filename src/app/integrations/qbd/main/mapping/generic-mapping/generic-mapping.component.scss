@@ -3,7 +3,7 @@
     @apply tw-text-placeholder #{!important};
 }
 
-:host ::ng-deep .p-dropdown {
+:host ::ng-deep .mappingFilterDropdown .p-dropdown {
     @apply tw-w-200-px #{!important}
 }
 

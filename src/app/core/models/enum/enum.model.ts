@@ -258,15 +258,13 @@ export enum QBDOnboardingState {
     DASHBOARD = 'dashboard'
   }
 
-  export enum FilterOptions {
-    MAPPED = 'Mapped',
-    UNMAPPED = 'Unmapped',
-    EXPORT_BILLS = 'EXPORT_BILLS',
-    REIMBURSABLE = 'REIMBURSABLE',
-    CREDIT_CARD = 'CREDIT_CARD',
-    EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
-    EXPORT_JOURNALS = 'EXPORT_JOURNALS'
-  }
+  // Export enum FilterOptions {
+  //   EXPORT_BILLS = 'EXPORT_BILLS',
+  //   REIMBURSABLE = 'REIMBURSABLE',
+  //   CREDIT_CARD = 'CREDIT_CARD',
+  //   EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
+  //   EXPORT_JOURNALS = 'EXPORT_JOURNALS'
+  // }
 
   export enum PaymentSyncDirection {
     FYLE_TO_INTACCT = 'fyle_to_intacct',
@@ -339,4 +337,9 @@ export enum QBDOnboardingState {
   export enum ExportState {
     SUCCESS = 'SUCCESS',
     FAILED = 'FAILED'
+  }
+
+  export enum FieldType {
+    TEXT = 'TEXT',
+    SELECT = 'SELECT'
   }

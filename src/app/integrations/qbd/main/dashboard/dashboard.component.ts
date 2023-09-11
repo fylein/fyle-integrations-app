@@ -129,7 +129,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  offsetChanges(limit: number): void {
+  pageSizeChanges(limit: number): void {
     this.isLoading = true;
     this.limit = limit;
     this.pageNo = 0;
@@ -142,7 +142,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  pageChanges(pageNo: number): void {
+  pageOffsetChanges(pageNo: number): void {
     this.isLoading = true;
     this.pageNo = pageNo;
     this.currentPage = Math.ceil(this.pageNo / this.limit)+1;

@@ -116,7 +116,7 @@
             </div>
         </div>
         <div *ngIf="accountingExports.count > 0" class="tw-p-24-px">
-            <app-paginator [totalCount]="totalCount" (offsetChangeEvent)="offsetChanges($event)" (pageChangeEvent)="pageChanges($event)" [pageType]="PaginatorPage.DASHBOARD" [page]="currentPage" [dropDownValue]="limit"></app-paginator>
+            <app-paginator [totalCount]="totalCount"(pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)" [pageType]="PaginatorPage.DASHBOARD" [page]="currentPage" [dropDownValue]="limit"></app-paginator>
         </div>
     </div>
 </div>

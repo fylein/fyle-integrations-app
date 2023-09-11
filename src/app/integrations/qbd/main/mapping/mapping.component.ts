@@ -9,7 +9,7 @@ import { MenuItem } from 'primeng/api';
 })
 export class MappingComponent implements OnInit {
 
-  modules: MenuItem[] = [
+  mappingPages: MenuItem[] = [
     {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'}
   ];
 
@@ -20,8 +20,8 @@ export class MappingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
+    this.activeModule = this.mappingPages[0];
+    this.router.navigateByUrl(this.mappingPages[0].routerLink);
   }
 
 }
