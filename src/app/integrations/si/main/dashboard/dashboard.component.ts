@@ -3,7 +3,7 @@ import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, t
 import { ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
-import { ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
+import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';
 import { Task } from 'src/app/core/models/si/db/task-log.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -11,6 +11,7 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,8 @@ export class DashboardComponent implements OnInit {
   importInProgress: boolean = true;
 
   isChildTableVisible: boolean = false;
+
+  childTableHeader: string;
 
   processedCount: number = 0;
 
@@ -72,8 +75,32 @@ export class DashboardComponent implements OnInit {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  childTableVisibility() {
+  childTableVisibility(status: string) {
+    this.childTableHeader = status==='COMPLETE' ? 'Successful' : 'Failed';
+    this.getExpenseGroups(10, 1, status);
     this.isChildTableVisible = true;
+  }
+
+  getExpenseGroups(limit: number, offset: number, status: string) {
+    const expenseGroups: ExpenseGroupList[] = [];
+    
+    return this.exportLogService.getExpenseGroups(status==='COMPLETE' ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null).subscribe(expenseGroupResponse => {
+      console.log(expenseGroupResponse);
+      expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
+        expenseGroups.push({
+          exportedAt: (status==='COMPLETE' ? expenseGroup.exported_at : expenseGroup.updated_at),
+          employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
+          expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
+          fyleReferenceType: null,
+          referenceNumber: expenseGroup.description.claim_number,
+          exportedAs: expenseGroup.export_type,
+          fyleUrl: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/${'expense_id'}`,
+          intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
+          expenses: expenseGroup.expenses
+        });
+      });
+      this.expenseGroups = expenseGroups;
+    });
   }
 
   private pollExportStatus(exportableExpenseGroupIds: number[] = []): void {
