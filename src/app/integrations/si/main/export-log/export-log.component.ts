@@ -103,22 +103,22 @@ export class ExportLogComponent implements OnInit {
 
   public filterTable(event: any) {
     const query = event.target.value.toLowerCase();
-    
+
     this.expenseGroups = this.originalExpenseGroups.filter((group: ExpenseGroupList) => {
-      const employeeName = group.employee ? group.employee[0] : '';  // the first string in the employee array
-      const employeeID = group.employee ? group.employee[1] : '';  // the second string in the employee array
+      const employeeName = group.employee ? group.employee[0] : '';  // The first string in the employee array
+      const employeeID = group.employee ? group.employee[1] : '';  // The second string in the employee array
       const expenseType = group.expenseType ? group.expenseType : '';
       const referenceNumber = group.referenceNumber ? group.referenceNumber : '';
-      
+
       return (
         employeeName.toLowerCase().includes(query) ||
         employeeID.toLowerCase().includes(query) ||
         expenseType.toLowerCase().includes(query) ||
         referenceNumber.toLowerCase().includes(query)
-      ); 
+      );
     });
   }
-  
+
 
   offsetChanges(limit: number): void {
     this.isLoading = true;
