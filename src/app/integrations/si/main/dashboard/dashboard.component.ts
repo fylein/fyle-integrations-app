@@ -3,7 +3,7 @@ import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, t
 import { ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
-import { ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
+import { ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';
 import { Task } from 'src/app/core/models/si/db/task-log.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -19,10 +19,11 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class DashboardComponent implements OnInit {
 
-
   isLoading: boolean = false;
 
   importInProgress: boolean = true;
+
+  isChildTableVisible: boolean = false;
 
   processedCount: number = 0;
 
@@ -41,6 +42,8 @@ export class DashboardComponent implements OnInit {
   employeeFieldMapping: FyleField;
 
   expenseGroupSetting: string;
+
+  expenseGroups: ExpenseGroupList [];
 
   groupedErrorStat: GroupedErrorStat = {
     [IntacctErrorType.EMPLOYEE_MAPPING]: null,
@@ -68,6 +71,10 @@ export class DashboardComponent implements OnInit {
     private userService: UserService,
     private workspaceService: SiWorkspaceService
   ) { }
+
+  childTableVisibility() {
+    this.isChildTableVisible = true;
+  }
 
   private pollExportStatus(exportableExpenseGroupIds: number[] = []): void {
     interval(3000).pipe(
