@@ -60,8 +60,8 @@
                         <div class="tw-ml-auto tw-flex tw-flex-col">
                             <span>
                                 Last Export at: 
-                                {{ lastExport?.last_exported_at | date: 'h:mm a' }},
-                                {{ lastExport?.last_exported_at | date: 'dd MMM yyyy' }}
+                                {{ lastExport ? (lastExport.last_exported_at | date: 'h:mm a,') : 'None' }}
+                                {{ lastExport ? (lastExport.last_exported_at | date: 'dd MMM yyyy') : '' }}
                             </span>                              
                         </div>
                     </div>
@@ -72,8 +72,8 @@
                         <div class="tw-ml-auto tw-flex tw-flex-col">
                             <span>
                                 Next Export at: 
-                                {{ lastExport?.next_export_at | date: 'h:mm a' }}, 
-                                {{ lastExport?.next_export_at | date: 'dd MMM yyyy' }}
+                                {{ lastExport?.next_export_at ? (lastExport?.next_export_at | date: 'h:mm a,') : 'None' }}
+                                {{ lastExport ? (lastExport.next_export_at | date: 'dd MMM yyyy') : '' }}
                             </span> 
                         </div>
                     </div>
