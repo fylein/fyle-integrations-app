@@ -348,7 +348,6 @@ export class SkipExportComponent implements OnInit {
 
   saveSkipExportFields() {
     const valueField = this.skipExportForm.getRawValue();
-    console.log(valueField.join_by.value);
     if (this.showAddButton && this.expenseFilters.length > 1) {
       this.advancedSettingsService
       .deleteExpenseFilter(this.expenseFilters[1].id)
@@ -609,7 +608,7 @@ export class SkipExportComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     forkJoin([
       this.advancedSettingsService.getExpenseFilter(),
-      this.advancedSettingsService.getFyleCustomFields(),
+      this.advancedSettingsService.getFyleCustomFields()
     ]).subscribe((responses) => {
       this.expenseFilters = responses[0].results;
       this.conditionFieldOptions = responses[1];
