@@ -60,7 +60,7 @@
                 </ng-template>
 
                 <ng-template pTemplate="body" let-rowData>
-                    <tr class="clickable-row" (click)="isChildTableVisible(rowData.index)">
+                    <tr class="clickable-row" (click)="displayChildTable(rowData.index)">
 
                         <td>
                             <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
@@ -120,7 +120,7 @@
 
 <p-dialog header="Expenses" [(visible)]="visible" [position]="'top-right'" [modal]="true" [draggable]="false" [style]="{ width: '50vw', height: '974px' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
-        <p-table #dt2 [value]="childTableExpenseGroup">
+        <p-table #dt2 [value]="expenses">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Expense ID.</th>
