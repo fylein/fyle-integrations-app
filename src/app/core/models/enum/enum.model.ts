@@ -328,10 +328,10 @@ export enum QBDOnboardingState {
 
   export enum PaginatorPage {
     MAPPING = 'mapping',
-    DASHBOARD = 'dashboard'
+    DASHBOARD = 'dashboard',
     EXPORT_LOG = 'export-log'
   }
-  
+
   export enum FieldType {
     TEXT = 'TEXT',
     SELECT = 'SELECT'
