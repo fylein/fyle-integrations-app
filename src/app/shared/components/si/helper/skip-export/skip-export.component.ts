@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/si/misc/skip-export.model';
 import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
@@ -12,6 +13,10 @@ import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configurat
 export class SkipExportComponent implements OnInit {
 
   @Input() enableSkipExport: boolean = true;
+
+  isLoading: boolean = true;
+
+  skipExportForm: FormGroup;
 
   date1: Date;
 
@@ -28,8 +33,6 @@ export class SkipExportComponent implements OnInit {
   isDisabledChip1: boolean = false;
 
   isDisabledChip2: boolean = false;
-
-  skipExportForm: FormGroup;
 
   showAdditionalCondition: boolean = false;
 
@@ -83,8 +86,6 @@ export class SkipExportComponent implements OnInit {
 
   valueOption2: any[] = [];
 
-  // SeparatorKeysCodes: number[] = [ENTER, COMMA];
-
   constructor(
     private formBuilder: FormBuilder,
     private advancedSettingsService: SiAdvancedSettingService
@@ -114,10 +115,6 @@ export class SkipExportComponent implements OnInit {
         this.showAdditionalCondition = false;
         this.showAddButton = true;
       }
-  }
-
-  private setCustomValidators(): void {
-    this.skipExportWatcher();
   }
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
@@ -345,8 +342,13 @@ export class SkipExportComponent implements OnInit {
     return this.skipExportForm.value?.condition2?.field_name !== 'report_title' && (!this.skipExportForm.value?.condition2 || this.skipExportForm.value?.condition2?.type==='SELECT' || this.skipExportForm.value?.condition2?.type==='TEXT' || this.skipExportForm.value?.condition2?.type==='NUMBER') && (this.skipExportForm.value.operator2 !== 'is_empty')  && (this.skipExportForm.value.operator2 !== 'is_not_empty');
   }
 
+  showDateField2() {
+    return this.skipExportForm.value?.condition2?.type==='DATE' && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
+  }
+
   saveSkipExportFields() {
     const valueField = this.skipExportForm.getRawValue();
+    console.log(valueField.join_by.value);
     if (this.showAddButton && this.expenseFilters.length > 1) {
       this.advancedSettingsService
       .deleteExpenseFilter(this.expenseFilters[1].id)
@@ -366,10 +368,11 @@ export class SkipExportComponent implements OnInit {
         valueField.operator1 = 'in';
       }
       if (valueField.join_by) {
+        valueField.join_by = valueField.join_by.value;
         if (valueField.condition2.field_name !== 'report_title' && valueField.operator2 === 'iexact') {
           valueField.operator2 = 'in';
         }
-    }
+      }
     if (valueField.condition1.is_custom === true) {
       if (valueField.operator1 === 'is_empty') {
         valueField.value1 = ['True'];
@@ -528,6 +531,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   fieldWatcher() {
+    this.skipExportWatcher();
     this.conditionFieldWatcher();
     this.operatorFieldWatcher();
   }
@@ -540,6 +544,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
+    this.isLoading = true;
     this.showExpenseFilters = response.count > 0;
     this.setConditionFields(response, conditionArray);
     this.setOperatorFieldOptions(response, conditionArray);
@@ -597,20 +602,22 @@ export class SkipExportComponent implements OnInit {
         }
       }
     }
-
     this.fieldWatcher();
+    this.isLoading = false;
   }
 
   private getSettingsAndSetupForm(): void {
-    this.advancedSettingsService.getExpenseFilter().subscribe(response => {
-      this.expenseFilters = response.results;
-      this.setupSkipExportForm(response, []);
+    forkJoin([
+      this.advancedSettingsService.getExpenseFilter(),
+      this.advancedSettingsService.getFyleCustomFields(),
+    ]).subscribe((responses) => {
+      this.expenseFilters = responses[0].results;
+      this.conditionFieldOptions = responses[1];
+      this.setupSkipExportForm(responses[0], []);
     });
   }
-
 
   ngOnInit(): void {
     this.getSettingsAndSetupForm();
   }
-
 }
