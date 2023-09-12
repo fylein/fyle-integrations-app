@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
-import { FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
-import { IntacctExportTriggerResponse } from 'src/app/core/models/si/db/export-log.model';
 import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
@@ -70,9 +69,9 @@ export class ExportLogComponent implements OnInit {
 
   expenseGroups: ExpenseGroupList [];
 
-  originalExpenseGroups: ExpenseGroupList [];
+  filteredExpenseGroups: ExpenseGroupList [];
 
-  childTableExpenseGroup: ExpenseGroupList [] = [];
+  expenses: any [] = [];
 
   isDateSelected: boolean = false;
 
@@ -97,9 +96,9 @@ export class ExportLogComponent implements OnInit {
 
   visible: boolean = false;
 
-  isChildTableVisible(index: number) {
+  displayChildTable(index: number) {
     this.clickedExportLogIndex = index;
-    this.childTableExpenseGroup[0] = this.expenseGroups[this.clickedExportLogIndex];
+    this.expenses = this.filteredExpenseGroups[this.clickedExportLogIndex].expenses;
     this.visible = true;
   }
 
@@ -110,9 +109,9 @@ export class ExportLogComponent implements OnInit {
   public filterTable(event: any) {
     const query = event.target.value.toLowerCase();
 
-    this.expenseGroups = this.originalExpenseGroups.filter((group: ExpenseGroupList) => {
-      const employeeName = group.employee ? group.employee[0] : '';  // The first string in the employee array
-      const employeeID = group.employee ? group.employee[1] : '';  // The second string in the employee array
+    this.filteredExpenseGroups = this.expenseGroups.filter((group: ExpenseGroupList) => {
+      const employeeName = group.employee ? group.employee[0] : '';
+      const employeeID = group.employee ? group.employee[1] : '';
       const expenseType = group.expenseType ? group.expenseType : '';
       const referenceNumber = group.referenceNumber ? group.referenceNumber : '';
 
@@ -185,7 +184,7 @@ export class ExportLogComponent implements OnInit {
       }
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
         expenseGroups.push({
-          index: index++,  // Here's where we add the index
+          index: index++,
           exportedAt: expenseGroup.exported_at,
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
@@ -197,8 +196,8 @@ export class ExportLogComponent implements OnInit {
           expenses: expenseGroup.expenses
         });
       });
-      this.expenseGroups = expenseGroups;
-      this.originalExpenseGroups = [...this.expenseGroups];
+      this.filteredExpenseGroups = expenseGroups;
+      this.expenseGroups = [...this.filteredExpenseGroups];
       this.isLoading = false;
     });
   }

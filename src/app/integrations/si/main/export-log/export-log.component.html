@@ -47,7 +47,7 @@
                 </span>
             </div>
 
-            <p-table *ngIf="expenseGroups.length > 0" #dt1 [value]="expenseGroups">
+            <p-table *ngIf="filteredExpenseGroups.length > 0" #dt1 [value]="filteredExpenseGroups">
                 <ng-template pTemplate="header">
                     <tr>
                         <th>Date and Time of Export</th>
@@ -60,7 +60,7 @@
                 </ng-template>
 
                 <ng-template pTemplate="body" let-rowData>
-                    <tr class="clickable-row" (click)="isChildTableVisible(rowData.index)">
+                    <tr class="clickable-row" (click)="displayChildTable(rowData.index)">
 
                         <td>
                             <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
@@ -88,11 +88,11 @@
                 </ng-template>
             </p-table>
 
-            <div *ngIf="expenseGroups.length > 0" class="tw-p-24-px">
-                <app-paginator [totalCount]="totalCount" (offsetChangeEvent)="offsetChanges($event)" (pageChangeEvent)="pageChanges($event)"></app-paginator>
+            <div *ngIf="filteredExpenseGroups.length > 0" class="tw-p-24-px">
+                <app-paginator [totalCount]="totalCount" (pageSizeChangeEvent)="offsetChanges($event)" (pageOffsetChangeEvent)="pageChanges($event)"></app-paginator>
             </div>
 
-            <div *ngIf="!expenseGroups.length" class="tw-flex tw-h-3/6 tw-text-center tw-p-56-px">
+            <div *ngIf="!filteredExpenseGroups.length" class="tw-flex tw-h-3/6 tw-text-center tw-p-56-px">
                 <div class="tw-m-auto">
                     <img src="assets/illustrations/integrations-zero-state.svg" width="200px" hight="200px" class="tw-inline-block">
                     <div class="tw-pt-20-px">
@@ -120,7 +120,7 @@
 
 <p-dialog header="Expenses" [(visible)]="visible" [position]="'top-right'" [modal]="true" [draggable]="false" [style]="{ width: '50vw', height: '974px' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
-        <p-table #dt2 [value]="childTableExpenseGroup">
+        <p-table #dt2 [value]="expenses">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Expense ID.</th>
@@ -130,11 +130,11 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
-                <tr>
-                    <td>{{ rowData.expenses[0].expense_number }}</td>
-                    <td>{{ rowData.expenses[0].vendor ? rowData.expenses[0].vendor : '-' }}</td>
-                    <td>{{ rowData.expenses[0].category }}</td>
-                    <td>{{ rowData.expenses[0].amount }}</td>
+                <tr *ngFor="let expense of expenses">
+                    <td>{{ expense.expense_number }}</td>
+                    <td>{{ expense.vendor ? expense.vendor : '-' }}</td>
+                    <td>{{ expense.category }}</td>
+                    <td>{{ expense.amount }}</td>
                 </tr>
             </ng-template>
         </p-table>

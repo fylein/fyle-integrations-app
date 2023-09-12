@@ -23,6 +23,10 @@ const customColors = {
   'cta-disabled': '#FFC2D6',
   'line-inactive': '#CCCDD7',
   'progress-bar-bg': '#FFF0F5',
+  'mapped-green-border': '#D9EBE1',
+  'mapped-green-bg': '#EEF8F2',
+  'unmapped-red-border': '#F5C0C3',
+  'unmapped-red-bg': '#FCE9EA',
   'pink': '#D23669',
 };
 
@@ -245,6 +249,7 @@ module.exports = {
         '160-px': '160px',
         '176-px': '176px',
         '200-px': '200px',
+        '220-px': '220px',
         '246-px': '246px',
         '260-px': '260px',
         '270-px': '270px',
@@ -305,7 +310,8 @@ module.exports = {
         'separator': customColors['separator'],
         'line-inactive': customColors['line-inactive'],
         'alert-toast': customColors['alert-toast'],
-        'sub-text-color': customColors['sub-text-color']
+        'sub-text-color': customColors['sub-text-color'],
+        ...customColors
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',

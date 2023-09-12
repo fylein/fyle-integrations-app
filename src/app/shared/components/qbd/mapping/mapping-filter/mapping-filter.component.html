@@ -1,0 +1,40 @@
+<div class="tw-flex tw-justify-start tw-items-end" [formGroup]="form">
+    <div class="tw-mr-16-px tw-flex tw-content-end">
+        <div *ngIf="!isSearchBoxActive" class="tw-flex tw-justify-start tw-items-center tw-cursor-pointer tw-border tw-border-box-color tw-pt-8-px tw-pb-6-px tw-px-10-px tw-rounded-4-px drop-down" (click)="isSearchBoxActive = true">
+            <div>
+                <i class="pi pi-search tw-w-18-px tw-h-18-px"></i>
+            </div>
+        </div>
+        <div *ngIf="isSearchBoxActive">
+            <div class="p-inputgroup" (focusout)="onFocusOut($event)">
+                <span class="p-inputgroup-addon !tw-bg-white !tw-border-r-0 !tw-px-0">
+                  <i class="pi pi-search"></i>
+                </span>
+                <input pInputText type="text" formControlName="searchOption" class="!tw-py-5-px !tw-pl-0 !tw-border-l-0" [ngClass]="{'textbox': form.controls.searchOption.value !== ''}">
+                <span *ngIf="form.controls.searchOption.value !== ''" class="p-inputgroup-addon !tw-bg-white !tw-border-l-0 !tw-px-0">
+                    <i class="pi pi-times tw-cursor-pointer" (click)="clearSearch()"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="tw-pl-16-px">
+            <p class="tw-text-12-px tw-text-faded-text-color tw-text-500 tw-pb-8-px">Status</p>
+        </div>
+        <div class="tw-border-l tw-border-l-separator tw-pl-16-px">
+            <p-dropdown [options]="mappingsFilter" class="mappingFilterDropdown"  formControlName="filterOption" optionLabel="label"
+                placeholder="Select Status" [ngClass]="{'selectedItem': form.controls.filterOption.value !== null, 'filterDropdown': form.controls.filterOption.value === ''}">
+                <ng-template let-item pTemplate="item">
+                    <div [ngClass]="getSelectedFilter(item.value)">{{ item.label }}</div>
+                </ng-template>
+                <ng-template let-value pTemplate="selectedItem">
+                    <div class="tw-flex tw-justify-between tw-items-center">
+                        <p [ngClass]="getSelectedFilter(form.controls.filterOption.value.value)">{{ form.controls.filterOption.value.label }}</p>
+                        <i class="pi pi-times" (click)="removeFilter()"></i>
+                    </div>
+                    <div></div>
+                </ng-template>
+            </p-dropdown>
+        </div>
+    </div>
+</div>
