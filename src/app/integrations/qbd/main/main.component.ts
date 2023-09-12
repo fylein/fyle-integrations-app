@@ -12,13 +12,13 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-map
 })
 export class MainComponent implements OnInit {
 
-  originModules: MenuItem[] = [
+  modules: MenuItem[] = [
     {label: 'Dashboard', routerLink: '/integrations/qbd/main/dashboard'},
     {label: 'Configuration', routerLink: '/integrations/qbd/main/configuration'},
     {label: 'Mapping', routerLink: '/integrations/qbd/main/mapping'}
   ];
 
-  modules: MenuItem[];
+  activeModules: MenuItem[];
 
   activeModule: MenuItem;
 
@@ -29,10 +29,10 @@ export class MainComponent implements OnInit {
   ) {
     this.mappingService.getMappingPagesForSideNavBar.subscribe((showMapping: Boolean) => {
       if (showMapping) {
-        this.modules = this.originModules;
+        this.activeModules = this.modules;
       } else {
-        const module = this.originModules.filter(item => item.label !== 'Mapping');
-        this.modules = module;
+        const module = this.modules.filter(item => item.label !== 'Mapping');
+        this.activeModules = module;
       }
     });
   }
@@ -44,13 +44,9 @@ export class MainComponent implements OnInit {
       } else {
         this.mappingService.getMappingPagesForSideNavBar.emit(false);
       }
-      this.activeModule = this.modules[0];
-      this.router.navigateByUrl(this.modules[0].routerLink);
+      this.activeModule = this.activeModules[0];
+      this.router.navigateByUrl(this.activeModules[0].routerLink);
     });
   }
 
 }
-function QBDExportSettingGet(error: any): void {
-  throw new Error('Function not implemented.');
-}
-

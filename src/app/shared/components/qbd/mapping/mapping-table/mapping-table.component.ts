@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AppName, FieldType, OperatingSystem } from 'src/app/core/models/enum/enum.model';
+import { FieldType, OperatingSystem } from 'src/app/core/models/enum/enum.model';
 import { Mapping, MappingModel, MappingPost } from 'src/app/core/models/qbd/db/mapping.model';
 
 @Component({
@@ -14,17 +14,17 @@ export class MappingTableComponent implements OnInit {
 
   @Input() destinationFieldType: FieldType;
 
-  @Input() appName: AppName;
+  @Input() headerText1: string;
+
+  @Input() headerText2: string;
 
   @Input() operatingSystem: string;
 
   @Output() postMapping = new EventEmitter<MappingPost>();
 
-  @ViewChild('customTooltip') customTooltip: any;
-
   allOS = OperatingSystem;
 
-  isSelectedRow: number;
+  focussedMappingId: number;
 
   destinationValue: string;
 
@@ -39,17 +39,17 @@ export class MappingTableComponent implements OnInit {
 
   isTypingInBox(event: any, row: Mapping) {
     if (event.keyCode === 13) {
-      this.isSelectedRow = 0;
-      this.saveRow(row);
+      this.focussedMappingId = 0;
+      this.postTextFieldValue(row);
     }
-    this.isSelectedRow = row.id;
+    this.focussedMappingId = row.id;
   }
 
-  saveRow(data: Mapping) {
+  postTextFieldValue(data: Mapping) {
     data.destination_value = this.destinationValue;
     const mappingPayload = MappingModel.constructPayload(data);
     this.postMapping.emit(mappingPayload);
-    this.isSelectedRow = 0;
+    this.focussedMappingId = 0;
   }
 
   getToolTip() {

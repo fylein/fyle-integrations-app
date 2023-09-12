@@ -11,10 +11,10 @@
             <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)"></app-mapping-filter>
         </div>
         <div *ngIf="totalCount > 0" >
-            <app-mapping-table [mappings]="mappings.results" (postMapping)="postMapping($event)" [destinationFieldType]="destinationFieldType.TEXT" [appName]="appName" [operatingSystem]="operationgSystem"></app-mapping-table>
+            <app-mapping-table [mappings]="filterMappings" [destinationFieldType]="destinationFieldType.TEXT" [headerText1]="'Corporate Card in Fyle'" [headerText2]="'QuickBooks Desktop Credit Card Account'" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-mapping-table>
         </div>
         <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >
-            <app-paginator [totalCount]="totalCount" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit"></app-paginator>
+            <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
         </div>
         <div *ngIf="totalCount === 0">
             <app-zero-state-with-illustration [mainText]="'No corporate card to show yet!'" [subText]="'Add corporate cards to Fyle to map them to individual credit card account in QuickBooks Desktop'"></app-zero-state-with-illustration>

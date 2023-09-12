@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { AppName, FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
@@ -20,6 +19,8 @@ export class GenericMappingComponent implements OnInit {
   mappingState: MappingStats;
 
   mappings: MappingResponse;
+
+  filterMappings: Mapping[];
 
   sourceType: string;
 
@@ -39,8 +40,6 @@ export class GenericMappingComponent implements OnInit {
 
   destinationFieldType = FieldType;
 
-  appName: AppName = AppName.QBD;
-
   operationgSystem: string;
 
   constructor(
@@ -52,7 +51,7 @@ export class GenericMappingComponent implements OnInit {
 
   private getFilteredMappings() {
     this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
-      this.mappings = qbdMappingResult;
+      this.filterMappings = qbdMappingResult.results.concat();
       this.totalCount = this.mappings.count;
       this.isLoading = false;
     });
@@ -67,11 +66,11 @@ export class GenericMappingComponent implements OnInit {
       const results: Mapping[] = this.mappings.results.filter((mapping) =>
         mapping.source_value.toLowerCase().includes(searchValue)
       );
-      this.mappings.results = results;
+      this.filterMappings = results;
     } else {
-      this.getFilteredMappings();
+      this.filterMappings = this.mappings.results.concat();
     }
-    this.totalCount = this.mappings.results.length;
+    this.totalCount = this.filterMappings.length;
   }
 
   postMapping(mappingPayload: MappingPost) {
@@ -115,6 +114,7 @@ export class GenericMappingComponent implements OnInit {
     ]).subscribe((response) => {
       this.mappingState = response[0];
       this.mappings = response[1];
+      this.filterMappings = this.mappings.results.concat();
       this.totalCount = this.mappings.count;
       this.getOps();
       this.isLoading = false;

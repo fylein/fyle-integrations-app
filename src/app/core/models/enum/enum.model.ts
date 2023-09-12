@@ -258,14 +258,6 @@ export enum QBDOnboardingState {
     DASHBOARD = 'dashboard'
   }
 
-  // Export enum FilterOptions {
-  //   EXPORT_BILLS = 'EXPORT_BILLS',
-  //   REIMBURSABLE = 'REIMBURSABLE',
-  //   CREDIT_CARD = 'CREDIT_CARD',
-  //   EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
-  //   EXPORT_JOURNALS = 'EXPORT_JOURNALS'
-  // }
-
   export enum PaymentSyncDirection {
     FYLE_TO_INTACCT = 'fyle_to_intacct',
     INTACCT_TO_FYLE = 'intacct_to_fyle'
