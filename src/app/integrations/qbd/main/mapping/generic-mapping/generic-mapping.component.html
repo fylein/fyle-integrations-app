@@ -1,0 +1,23 @@
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!isLoading" class="tw-py-16-px tw-px-120-px">
+    <div>
+        <app-mapping-header-section [sourceType]="'corporate_card'" [mappingStats]="mappingState"></app-mapping-header-section>
+    </div>
+
+    <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
+        <div class="tw-p-24-px tw-border tw-border-b-separator">
+            <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)"></app-mapping-filter>
+        </div>
+        <div *ngIf="totalCount > 0" >
+            <app-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="'Corporate Card in Fyle'" [destinationHeaderName]="'QuickBooks Desktop Credit Card Account'" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-mapping-table>
+        </div>
+        <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >
+            <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
+        </div>
+        <div *ngIf="totalCount === 0">
+            <app-zero-state-with-illustration [mainText]="'No corporate card to show yet!'" [subText]="'Add corporate cards to Fyle to map them to individual credit card account in QuickBooks Desktop'"></app-zero-state-with-illustration>
+        </div>
+    </div>
+</div>

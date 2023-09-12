@@ -69,7 +69,7 @@ export class ExportLogComponent implements OnInit {
 
   expenseGroups: ExpenseGroupList [];
 
-  originalExpenseGroups: ExpenseGroupList [];
+  filteredExpenseGroups: ExpenseGroupList [];
 
   expenses: any [] = [];
 
@@ -98,7 +98,7 @@ export class ExportLogComponent implements OnInit {
 
   displayChildTable(index: number) {
     this.clickedExportLogIndex = index;
-    this.expenses = this.expenseGroups[this.clickedExportLogIndex].expenses;
+    this.expenses = this.filteredExpenseGroups[this.clickedExportLogIndex].expenses;
     this.visible = true;
   }
 
@@ -109,9 +109,9 @@ export class ExportLogComponent implements OnInit {
   public filterTable(event: any) {
     const query = event.target.value.toLowerCase();
 
-    this.expenseGroups = this.originalExpenseGroups.filter((group: ExpenseGroupList) => {
-      const employeeName = group.employee ? group.employee[0] : '';  // The first string in the employee array
-      const employeeID = group.employee ? group.employee[1] : '';  // The second string in the employee array
+    this.filteredExpenseGroups = this.expenseGroups.filter((group: ExpenseGroupList) => {
+      const employeeName = group.employee ? group.employee[0] : '';
+      const employeeID = group.employee ? group.employee[1] : '';
       const expenseType = group.expenseType ? group.expenseType : '';
       const referenceNumber = group.referenceNumber ? group.referenceNumber : '';
 
@@ -184,7 +184,7 @@ export class ExportLogComponent implements OnInit {
       }
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
         expenseGroups.push({
-          index: index++,  // Here's where we add the index
+          index: index++,
           exportedAt: expenseGroup.exported_at,
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
@@ -196,8 +196,8 @@ export class ExportLogComponent implements OnInit {
           expenses: expenseGroup.expenses
         });
       });
-      this.expenseGroups = expenseGroups;
-      this.originalExpenseGroups = [...this.expenseGroups];
+      this.filteredExpenseGroups = expenseGroups;
+      this.expenseGroups = [...this.filteredExpenseGroups];
       this.isLoading = false;
     });
   }
