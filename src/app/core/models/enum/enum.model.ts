@@ -246,11 +246,11 @@ export enum QBDOnboardingState {
   }
 
   export enum QBDAccountingExportsType {
-  EXPORT_BILLS = 'EXPORT_BILLS',
-  REIMBURSABLE = 'REIMBURSABLE',
-  CREDIT_CARD = 'CREDIT_CARD',
-  EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
-  EXPORT_JOURNALS = 'EXPORT_JOURNALS'
+    EXPORT_BILLS = 'EXPORT_BILLS',
+    REIMBURSABLE = 'REIMBURSABLE',
+    CREDIT_CARD = 'CREDIT_CARD',
+    EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
+    EXPORT_JOURNALS = 'EXPORT_JOURNALS'
   }
 
   export enum PaymentSyncDirection {
@@ -328,5 +328,16 @@ export enum QBDOnboardingState {
 
   export enum PaginatorPage {
     MAPPING = 'mapping',
+    DASHBOARD = 'dashboard'
     EXPORT_LOG = 'export-log'
+  }
+  
+  export enum FieldType {
+    TEXT = 'TEXT',
+    SELECT = 'SELECT'
+  }
+
+  export enum OperatingSystem {
+    WIN = 'Win',
+    MAC = 'Mac'
   }

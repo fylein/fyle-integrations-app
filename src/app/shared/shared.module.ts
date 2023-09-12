@@ -21,6 +21,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ErrorComponent } from './components/core/error/error.component';
 import { TrimCharacterPipe } from './pipes/trim-character.pipe';
 import { SnakeCaseToSpaceCasePipe } from './pipes/snake-case-to-space-case.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 import { PaginatorComponent } from './helper/paginator/paginator.component';
 import { MandatoryFieldComponent } from './helper/mandatory-field/mandatory-field.component';
 import { MandatoryErrorMessageComponent } from './helper/mandatory-error-message/mandatory-error-message.component';
@@ -42,6 +43,10 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
 import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
+import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
+import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
+import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
+import { TableModule } from 'primeng/table';
 import { ConfigurationExportSettingsComponent } from './components/si/configuration/configuration-export-settings/configuration-export-settings.component';
 import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
@@ -57,6 +62,7 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
+    SearchPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -78,6 +84,9 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     IntacctStepperComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
+    MappingTableComponent,
+    MappingFilterComponent,
+    MappingHeaderSectionComponent,
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
@@ -102,6 +111,7 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     ProgressBarModule,
     CalendarModule,
     CascadeSelectModule,
+    TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -111,6 +121,7 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
+    SearchPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -137,6 +148,9 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     ConfigurationStepHeaderComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
+    MappingTableComponent,
+    MappingFilterComponent,
+    MappingHeaderSectionComponent,
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent

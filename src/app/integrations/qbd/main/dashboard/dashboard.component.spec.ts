@@ -77,21 +77,21 @@ describe('DashboardComponent', () => {
     expect(component.downloadingExportId[0]).toBeFalse();
   });
 
-  it('offsetChanges function check', () => {
-    expect(component.offsetChanges(10)).toBeUndefined();
+  it('pageSizeChanges function check', () => {
+    expect(component.pageSizeChanges(10)).toBeUndefined();
     expect(component.pageNo).toEqual(0);
     component.selectedDateFilter = null;
     fixture.detectChanges();
-    expect(component.offsetChanges(10)).toBeUndefined();
+    expect(component.pageSizeChanges(10)).toBeUndefined();
     expect(component.pageNo).toEqual(0);
   });
 
-  it('pageChanges function check', () => {
-    expect(component.pageChanges(0)).toBeUndefined();
+  it('pageOffsetChangess function check', () => {
+    expect(component.pageOffsetChanges(0)).toBeUndefined();
     expect(component.pageNo).toEqual(0);
     component.selectedDateFilter = null;
     fixture.detectChanges();
-    expect(component.pageChanges(0)).toBeUndefined();
+    expect(component.pageOffsetChanges(0)).toBeUndefined();
     expect(component.pageNo).toEqual(0);
   });
 
