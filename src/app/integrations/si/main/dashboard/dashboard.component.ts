@@ -26,9 +26,9 @@ export class DashboardComponent implements OnInit {
 
   isExportLogVisible: boolean = false;
 
-  taskLogStatusComplete: TaskLogState.COMPLETE;
+  taskLogStatusComplete: TaskLogState = TaskLogState.COMPLETE;
 
-  taskLogStatusFailed: TaskLogState.FAILED;
+  taskLogStatusFailed: TaskLogState = TaskLogState.FAILED;
 
   exportLogHeader: string;
 
@@ -88,19 +88,13 @@ export class DashboardComponent implements OnInit {
   getExpenseGroups(limit: number, offset: number, status: TaskLogState) {
     const expenseGroups: ExpenseGroupList[] = [];
 
-    return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null).subscribe(expenseGroupResponse => {
+    return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null, this.lastExport?.last_exported_at).subscribe(expenseGroupResponse => {
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
         expenseGroups.push({
-          index: 0,
           exportedAt: (status===TaskLogState.COMPLETE ? expenseGroup.exported_at : expenseGroup.updated_at),
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
-          expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
-          fyleReferenceType: null,
           referenceNumber: expenseGroup.description.claim_number,
           exportedAs: expenseGroup.export_type,
-          fyleUrl: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/${'expense_id'}`,
-          intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
-          expenses: expenseGroup.expenses
         });
       });
       this.expenseGroups = expenseGroups;
