@@ -617,7 +617,6 @@ export class SkipExportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.enableSkipExport);
     this.getSettingsAndSetupForm();
   }
 }
