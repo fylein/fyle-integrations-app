@@ -12,7 +12,7 @@ import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configurat
 })
 export class SkipExportComponent implements OnInit {
 
-  @Input() enableSkipExport: boolean = true;
+  @Input() enableSkipExport: boolean;
 
   isLoading: boolean = true;
 
@@ -617,6 +617,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.enableSkipExport);
     this.getSettingsAndSetupForm();
   }
 }
