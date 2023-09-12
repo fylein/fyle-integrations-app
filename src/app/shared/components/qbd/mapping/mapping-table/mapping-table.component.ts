@@ -61,7 +61,6 @@ export class MappingTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getToolTipText();
   }
 
 }
