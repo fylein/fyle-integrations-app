@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-zero-state-with-illustration',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./zero-state-with-illustration.component.scss']
 })
 export class ZeroStateWithIllustrationComponent implements OnInit {
+
+  @Input() mainText: string;
+
+  @Input() subText: string;
 
   constructor() { }
 

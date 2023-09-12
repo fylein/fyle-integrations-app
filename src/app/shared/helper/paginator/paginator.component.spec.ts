@@ -24,21 +24,21 @@ describe('PaginatorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('offsetChanges function change', () => {
-    spyOn(component.offsetChangeEvent, 'emit');
-    expect(component.offsetChanges({value: 10})).toBeUndefined();
-    expect(component.offsetChangeEvent.emit).toHaveBeenCalled();
+  it('pageSizeChanges function change', () => {
+    spyOn(component.pageSizeChangeEvent, 'emit');
+    expect(component.pageSizeChanges({value: 10})).toBeUndefined();
+    expect(component.pageSizeChangeEvent.emit).toHaveBeenCalled();
   });
 
   it('previousPageChange function change', () => {
-    spyOn(component.pageChangeEvent, 'emit');
+    spyOn(component.pageOffsetChangeEvent, 'emit');
     expect(component.previousPageChange(2)).toBeUndefined();
-    expect(component.pageChangeEvent.emit).toHaveBeenCalled();
+    expect(component.pageOffsetChangeEvent.emit).toHaveBeenCalled();
   });
 
   it('nextPageChange function change', () => {
-    spyOn(component.pageChangeEvent, 'emit');
+    spyOn(component.pageOffsetChangeEvent, 'emit');
     expect(component.nextPageChange(1)).toBeUndefined();
-    expect(component.pageChangeEvent.emit).toHaveBeenCalled();
+    expect(component.pageOffsetChangeEvent.emit).toHaveBeenCalled();
   });
 });
