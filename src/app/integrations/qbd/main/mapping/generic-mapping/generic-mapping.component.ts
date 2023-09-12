@@ -20,7 +20,7 @@ export class GenericMappingComponent implements OnInit {
 
   mappings: MappingResponse;
 
-  filterMappings: Mapping[];
+  filteredMappings: Mapping[];
 
   sourceType: string;
 
@@ -51,7 +51,7 @@ export class GenericMappingComponent implements OnInit {
 
   private getFilteredMappings() {
     this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
-      this.filterMappings = qbdMappingResult.results.concat();
+      this.filteredMappings = qbdMappingResult.results.concat();
       this.totalCount = this.mappings.count;
       this.isLoading = false;
     });
@@ -66,11 +66,11 @@ export class GenericMappingComponent implements OnInit {
       const results: Mapping[] = this.mappings.results.filter((mapping) =>
         mapping.source_value.toLowerCase().includes(searchValue)
       );
-      this.filterMappings = results;
+      this.filteredMappings = results;
     } else {
-      this.filterMappings = this.mappings.results.concat();
+      this.filteredMappings = this.mappings.results.concat();
     }
-    this.totalCount = this.filterMappings.length;
+    this.totalCount = this.filteredMappings.length;
   }
 
   postMapping(mappingPayload: MappingPost) {
@@ -114,7 +114,7 @@ export class GenericMappingComponent implements OnInit {
     ]).subscribe((response) => {
       this.mappingState = response[0];
       this.mappings = response[1];
-      this.filterMappings = this.mappings.results.concat();
+      this.filteredMappings = this.mappings.results.concat();
       this.totalCount = this.mappings.count;
       this.getOps();
       this.isLoading = false;

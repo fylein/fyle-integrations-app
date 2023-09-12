@@ -14,9 +14,9 @@ export class MappingTableComponent implements OnInit {
 
   @Input() destinationFieldType: FieldType;
 
-  @Input() headerText1: string;
+  @Input() fyleHeaderName: string;
 
-  @Input() headerText2: string;
+  @Input() destinationHeaderName: string;
 
   @Input() operatingSystem: string;
 
@@ -33,8 +33,8 @@ export class MappingTableComponent implements OnInit {
   constructor() { }
 
   onTextBoxChange(event: any, index: number) {
-    const tragetValue: string = event.target.value;
-    this.destinationValue = tragetValue;
+    const targetValue: string = event.target.value;
+    this.destinationValue = targetValue;
   }
 
   isTypingInBox(event: any, row: Mapping) {
@@ -52,14 +52,16 @@ export class MappingTableComponent implements OnInit {
     this.focussedMappingId = 0;
   }
 
-  getToolTip() {
-    if (this.operatingSystem === OperatingSystem.MAC) {
-      return '<div style="padding:0px 6px 4px;text-align: center;><p style="font-size:12px;padding-top:0">Save</p><p style="margin-top:5px;padding:4px;background: #A9ACBC80;font-size:10px;border-radius: 4px;">return<p></div>';
-    }
-    return '<div style="padding:0px 6px 4px;text-align: center;><p style="font-size:12px;padding-top:0">Save</p><p style="margin-top:5px;padding:4px;background: #A9ACBC80;font-size:10px;border-radius: 4px;">⏎<p></div>';
+  getToolTipText() {
+    return `
+            <div style="padding:0px 6px 4px;text-align: center;>
+              <p style="font-size:12px;padding-top:0">Save</p>
+              <p style="margin-top:5px;padding:4px;background: #A9ACBC80;font-size:10px;border-radius: 4px;">${this.operatingSystem === OperatingSystem.MAC ? `return` : `⏎`}<p>
+            </div>`;
   }
 
   ngOnInit(): void {
+    this.getToolTipText();
   }
 
 }
