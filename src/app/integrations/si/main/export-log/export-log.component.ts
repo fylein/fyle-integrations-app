@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MenuItem } from 'primeng/api';
-import { FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
-import { IntacctExportTriggerResponse } from 'src/app/core/models/si/db/export-log.model';
 import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
@@ -72,7 +71,7 @@ export class ExportLogComponent implements OnInit {
 
   originalExpenseGroups: ExpenseGroupList [];
 
-  childTableExpenseGroup: ExpenseGroupList [] = [];
+  expenses: ExpenseGroupList [] = [];
 
   isDateSelected: boolean = false;
 
@@ -97,9 +96,9 @@ export class ExportLogComponent implements OnInit {
 
   visible: boolean = false;
 
-  isChildTableVisible(index: number) {
+  displayChildTable(index: number) {
     this.clickedExportLogIndex = index;
-    this.childTableExpenseGroup[0] = this.expenseGroups[this.clickedExportLogIndex];
+    this.expenses[0] = this.expenseGroups[this.clickedExportLogIndex];
     this.visible = true;
   }
 
