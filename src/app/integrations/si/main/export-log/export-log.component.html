@@ -130,11 +130,11 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
-                <tr>
-                    <td>{{ rowData.expenses[0].expense_number }}</td>
-                    <td>{{ rowData.expenses[0].vendor ? rowData.expenses[0].vendor : '-' }}</td>
-                    <td>{{ rowData.expenses[0].category }}</td>
-                    <td>{{ rowData.expenses[0].amount }}</td>
+                <tr *ngFor="let expense of expenses">
+                    <td>{{ expense.expense_number }}</td>
+                    <td>{{ expense.vendor ? expense.vendor : '-' }}</td>
+                    <td>{{ expense.category }}</td>
+                    <td>{{ expense.amount }}</td>
                 </tr>
             </ng-template>
         </p-table>

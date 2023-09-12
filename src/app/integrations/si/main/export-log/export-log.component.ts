@@ -71,7 +71,7 @@ export class ExportLogComponent implements OnInit {
 
   originalExpenseGroups: ExpenseGroupList [];
 
-  expenses: ExpenseGroupList [] = [];
+  expenses: any [] = [];
 
   isDateSelected: boolean = false;
 
@@ -98,7 +98,7 @@ export class ExportLogComponent implements OnInit {
 
   displayChildTable(index: number) {
     this.clickedExportLogIndex = index;
-    this.expenses[0] = this.expenseGroups[this.clickedExportLogIndex];
+    this.expenses = this.expenseGroups[this.clickedExportLogIndex].expenses;
     this.visible = true;
   }
 

@@ -56,7 +56,7 @@
                         <span class="tw-ml-24 tw-pl-8-px">
                             {{ lastExport?.successful_expense_groups_count | number:'2.0-0' }}
                         </span>                          
-                        <a (click)="childTableVisibility('COMPLETE')" class="tw-ml-4 tw-text-pink pointer">View</a>
+                        <a (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-4 tw-text-pink pointer">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
                             <span>
                                 Last Export at: 
@@ -68,7 +68,7 @@
                     <div class="tw-flex tw-items-center">
                         <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-2">
                         Failed Expenses <span class="tw-ml-32 tw-pl-10-px">{{ lastExport?.failed_expense_groups_count | number:'2.0-0' }}</span> 
-                        <a (click)="childTableVisibility('FAILED')" class="tw-ml-4 tw-text-pink pointer">View</a>
+                        <a (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-4 tw-text-pink pointer">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
                             <span>
                                 Next Export at: 
@@ -154,14 +154,14 @@
     </div>
 </div>
 
-<p-dialog header="{{childTableHeader}} Expenses" [(visible)]="isChildTableVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '974px' }">
+<p-dialog header="{{exportLogHeader}} Expenses" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '974px' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <p-table #dt2 [value]="expenseGroups">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Date and Time of Export</th>
                     <th>Employee Name and ID</th>
-                    <th *ngIf="childTableHeader==='Successful'">Exported As</th>
+                    <th *ngIf="exportLogHeader==='Successful'">Exported As</th>
                     <th>Reference ID</th>
                 </tr>
             </ng-template>
@@ -179,7 +179,7 @@
                             {{rowData.employee[1]}}
                         </h5>
                     </td>
-                    <td *ngIf="childTableHeader==='Successful'">{{rowData.exportedAs | titlecase}}</td>
+                    <td *ngIf="exportLogHeader==='Successful'">{{rowData.exportedAs | titlecase}}</td>
                     <td>{{rowData.referenceNumber}}</td>
                 </tr>
             </ng-template>
