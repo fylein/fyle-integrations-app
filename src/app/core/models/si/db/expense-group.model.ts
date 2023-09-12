@@ -28,16 +28,16 @@ export type ExpenseGroupResponse = {
 };
 
 export interface ExpenseGroupList {
-  index: number;
+  index?: number;
   exportedAt: Date;
   employee: [string, string];
-  expenseType: 'Corporate Card' | 'Reimbursable';
+  expenseType?: 'Corporate Card' | 'Reimbursable';
   referenceNumber: string;
   exportedAs: string;
-  intacctUrl: string;
-  fyleUrl: string;
-  fyleReferenceType: FyleReferenceType | null;
-  expenses: Expense[];
+  intacctUrl?: string;
+  fyleUrl?: string;
+  fyleReferenceType?: FyleReferenceType | null;
+  expenses?: Expense[];
 }
 
 export interface SkipExportList {
