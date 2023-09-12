@@ -95,6 +95,7 @@ export class DashboardComponent implements OnInit {
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           referenceNumber: expenseGroup.description.claim_number,
           exportedAs: expenseGroup.export_type,
+          expenses: expenseGroup.expenses
         });
       });
       this.expenseGroups = expenseGroups;

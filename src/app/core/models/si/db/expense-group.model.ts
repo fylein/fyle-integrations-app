@@ -37,7 +37,7 @@ export interface ExpenseGroupList {
   intacctUrl?: string;
   fyleUrl?: string;
   fyleReferenceType?: FyleReferenceType | null;
-  expenses?: Expense[];
+  expenses: Expense[];
 }
 
 export interface SkipExportList {
