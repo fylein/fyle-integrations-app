@@ -343,3 +343,8 @@ export enum QBDOnboardingState {
     TEXT = 'TEXT',
     SELECT = 'SELECT'
   }
+
+  export enum OperatingSystem {
+    WIN = 'Win',
+    MAC = 'Mac'
+  }

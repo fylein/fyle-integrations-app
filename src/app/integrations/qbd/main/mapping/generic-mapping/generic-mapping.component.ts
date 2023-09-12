@@ -5,6 +5,7 @@ import { forkJoin } from 'rxjs';
 import { AppName, FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { WindowService } from 'src/app/core/services/core/window.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 
 @Component({
@@ -40,10 +41,13 @@ export class GenericMappingComponent implements OnInit {
 
   appName: AppName = AppName.QBD;
 
+  operationgSystem: string;
+
   constructor(
     private mappingService: QbdMappingService,
     private route: ActivatedRoute,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private window: WindowService
   ) { }
 
   private getFilteredMappings() {
@@ -52,6 +56,10 @@ export class GenericMappingComponent implements OnInit {
       this.totalCount = this.mappings.count;
       this.isLoading = false;
     });
+  }
+
+  getOps() {
+    this.operationgSystem = this.window.getOperatingSystem();
   }
 
   mappingSeachingFilter(searchValue: string) {
@@ -108,6 +116,7 @@ export class GenericMappingComponent implements OnInit {
       this.mappingState = response[0];
       this.mappings = response[1];
       this.totalCount = this.mappings.count;
+      this.getOps();
       this.isLoading = false;
     });
   }

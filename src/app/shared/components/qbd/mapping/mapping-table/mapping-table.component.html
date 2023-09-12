@@ -12,9 +12,9 @@
                 <td>{{ mapping.source_value }}</td>
                 <td>
                     <span class="p-input-icon-right" (keydown)="isTypingInBox($event, mapping)" *ngIf="destinationFieldType === fieldType.TEXT">
-                        <i *ngIf="isSelectedRow === mapping.id" class="pi pi-check" (click)="saveRow(mapping)"></i>
+                        <i *ngIf="isSelectedRow === mapping.id" class="pi pi-check tooltip" (click)="saveRow(mapping)" [pTooltip]="getToolTip()" [escape]="false"  tooltipPosition="top"></i>
                         <input type="text" pInputText placeholder="Enter Credit card account" class="!tw-w-220-px !tw-py-10-px" [value]="mapping.destination_value" (input)="onTextBoxChange($event, rowIndex)">        
-                    </span> 
+                    </span>  
                 </td>
                 <td>
                     <p *ngIf="mapping.destination_value" class="mapped">MAPPED</p>
@@ -23,4 +23,5 @@
             </tr>
         </ng-template>
     </p-table>
+    <p>kjkj</p>
 </div>

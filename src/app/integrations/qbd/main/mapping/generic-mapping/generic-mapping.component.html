@@ -11,7 +11,7 @@
             <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)"></app-mapping-filter>
         </div>
         <div *ngIf="totalCount > 0" >
-            <app-mapping-table [mappings]="mappings.results" (postMapping)="postMapping($event)" [destinationFieldType]="destinationFieldType.TEXT" [appName]="appName"></app-mapping-table>
+            <app-mapping-table [mappings]="mappings.results" (postMapping)="postMapping($event)" [destinationFieldType]="destinationFieldType.TEXT" [appName]="appName" [operatingSystem]="operationgSystem"></app-mapping-table>
         </div>
         <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >
             <app-paginator [totalCount]="totalCount" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit"></app-paginator>
