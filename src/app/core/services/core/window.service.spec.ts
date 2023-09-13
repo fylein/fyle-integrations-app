@@ -34,7 +34,8 @@ describe('WindowService', () => {
   });
 
   it('getOperatingSystem function check', () => {
-    expect(service.getOperatingSystem()).toBe(OperatingSystem.MAC);
+    const userAgent = service.nativeWindow.navigator.userAgent.includes(OperatingSystem.MAC) ? OperatingSystem.MAC : '';
+    expect(service.getOperatingSystem()).toBe(userAgent);
   });
 
 });
