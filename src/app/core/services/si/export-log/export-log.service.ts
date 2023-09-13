@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, from, mergeMap, of, reduce, takeWhile } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Cacheable } from 'ts-cacheable';
 import { SiApiService } from '../si-core/si-api.service';
@@ -9,6 +9,7 @@ import { FyleReferenceType, TaskLogState } from 'src/app/core/models/enum/enum.m
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
+import { Expense } from 'src/app/core/models/si/db/expense.model';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +26,13 @@ export class ExportLogService {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: string | void): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState | TaskLogState.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: string | void): Observable<ExpenseGroupResponse> {
     const params: any = {
       limit,
       offset
     };
-    params.tasklog__status = state;
+    params.state = state;
+
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
@@ -39,32 +41,34 @@ export class ExportLogService {
     }
 
     if (exportedAt) {
-      params.exported_at = exportedAt;
+      params.start_date = exportedAt;
     }
 
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
   }
 
-  @Cacheable()
-  getExpenseGroupSettings(): Observable<ExpenseGroupSetting> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_group_settings/`, {});
+  getReferenceType(description: Partial<ExpenseGroupDescription>): FyleReferenceType {
+    let referenceType = FyleReferenceType.EXPENSE_REPORT;
+
+    if (FyleReferenceType.EXPENSE in description) {
+      referenceType = FyleReferenceType.EXPENSE;
+    } else if (FyleReferenceType.EXPENSE_REPORT in description) {
+      referenceType = FyleReferenceType.EXPENSE_REPORT;
+    } else if (FyleReferenceType.PAYMENT in description) {
+      referenceType = FyleReferenceType.PAYMENT;
+    }
+
+    return referenceType;
   }
 
-  @Cacheable()
-  getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null): Observable<SkipExportLogResponse> {
-    const params: any = {
-      limit,
-      offset,
-      is_skipped: 'true',
-      org_id: this.org_id
-    };
+  getSkipExportLogs(limit: number, offset: number): Observable<SkipExportLogResponse> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
 
-    if (selectedDateFilter) {
-      const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
-      const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      params.start_date = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-      params.end_date = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
-    }
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expenses/`, params);
+    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
+  }
+
+  getExpenseGroupSettings(): Observable<ExpenseGroupSetting> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_group_settings/`, {});
   }
 }
