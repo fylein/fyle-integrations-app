@@ -51,4 +51,8 @@ describe('ConfigurationSelectFieldComponent', () => {
     fixture.detectChanges();
     expect(component.ngOnInit()).toBeUndefined();
   });
+
+  it('showIntacctExportTable function check', () => {
+    expect(component.showIntacctExportTable(null, null)).toBeUndefined();
+  });
 });

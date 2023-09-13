@@ -49,7 +49,7 @@ export class GenericMappingComponent implements OnInit {
     private window: WindowService
   ) { }
 
-  private getFilteredMappings() {
+  private getFilteredMappings(): void {
     this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
       this.filteredMappings = qbdMappingResult.results.concat();
       this.totalCount = this.mappings.count;
@@ -57,11 +57,11 @@ export class GenericMappingComponent implements OnInit {
     });
   }
 
-  getOps() {
+  getOps(): void {
     this.operationgSystem = this.window.getOperatingSystem();
   }
 
-  mappingSeachingFilter(searchValue: string) {
+  mappingSeachingFilter(searchValue: string): void {
     if (searchValue.length > 0) {
       const results: Mapping[] = this.mappings.results.filter((mapping) =>
         mapping.source_value.toLowerCase().includes(searchValue)
@@ -73,7 +73,7 @@ export class GenericMappingComponent implements OnInit {
     this.totalCount = this.filteredMappings.length;
   }
 
-  postMapping(mappingPayload: MappingPost) {
+  postMapping(mappingPayload: MappingPost): void {
     this.mappingService.postMappings(mappingPayload).subscribe(() => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping done successfully');
     }, () => {
@@ -105,7 +105,7 @@ export class GenericMappingComponent implements OnInit {
     this.getFilteredMappings();
   }
 
-  setupPage() {
+  private setupPage(): void {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([

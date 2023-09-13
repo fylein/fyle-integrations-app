@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ClickEvent } from '../../models/enum/enum.model';
+import { ClickEvent, IntacctOnboardingState, IntacctUpdateEvent } from '../../models/enum/enum.model';
 
 import { TrackingService } from './tracking.service';
 
@@ -44,5 +44,13 @@ describe('TrackingService', () => {
       '0.duration': 1,
       '1.duration': 2
     });
+  });
+
+  it('integrationsOnboardingCompletion service check', () => {
+    expect(service.integrationsOnboardingCompletion(IntacctOnboardingState.EXPORT_SETTINGS, 3)).toBeUndefined();
+  });
+
+  it('intacctUpdateEvent service check', () => {
+    expect(service.intacctUpdateEvent(IntacctUpdateEvent.EXPORT_SETTING_INTACCT)).toBeUndefined();
   });
 });

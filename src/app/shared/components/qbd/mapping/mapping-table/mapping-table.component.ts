@@ -32,27 +32,28 @@ export class MappingTableComponent implements OnInit {
 
   constructor() { }
 
-  onTextBoxChange(event: any, index: number) {
+  onTextBoxChange(event: any): void {
     const targetValue: string = event.target.value;
     this.destinationValue = targetValue;
   }
 
-  isTypingInBox(event: any, row: Mapping) {
+  isTypingInBox(event: any, row: Mapping): void {
     if (event.keyCode === 13) {
       this.focussedMappingId = 0;
       this.postTextFieldValue(row);
+    } else {
+      this.focussedMappingId = row.id;
     }
-    this.focussedMappingId = row.id;
   }
 
-  postTextFieldValue(data: Mapping) {
+  postTextFieldValue(data: Mapping): void {
     data.destination_value = this.destinationValue;
     const mappingPayload = MappingModel.constructPayload(data);
     this.postMapping.emit(mappingPayload);
     this.focussedMappingId = 0;
   }
 
-  getToolTipText() {
+  getToolTipText(): string {
     return `
             <div style="padding:0px 6px 4px;text-align: center;>
               <p style="font-size:12px;padding-top:0">Save</p>
