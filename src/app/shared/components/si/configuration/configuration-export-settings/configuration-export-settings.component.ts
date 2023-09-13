@@ -64,10 +64,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       value: ExpenseGroupingFieldOption.CLAIM_NUMBER
     },
     {
-      label: 'Payment',
-      value: ExpenseGroupingFieldOption.SETTLEMENT_ID
-    },
-    {
       label: 'Expense',
       value: ExpenseGroupingFieldOption.EXPENSE_ID
     }
