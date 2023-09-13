@@ -13,6 +13,7 @@ import { ConfigurationComponent } from './main/configuration/configuration.compo
 import { ConfigurationExportSettingComponent } from './main/configuration/configuration-export-setting/configuration-export-setting.component';
 import { ConfigurationAdvancedSettingComponent } from './main/configuration/configuration-advanced-setting/configuration-advanced-setting.component';
 import { ConfigurationImportSettingComponent } from './main/configuration/configuration-import-setting/configuration-import-setting.component';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -26,6 +27,8 @@ import { ConfigurationImportSettingComponent } from './main/configuration/config
     ConfigurationImportSettingComponent
   ],
   imports: [
+    DialogModule,
+    TableModule,
     CommonModule,
     SiRoutingModule,
     SharedModule,
