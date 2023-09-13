@@ -20,6 +20,8 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  showDialog: boolean = true;
+
   exportSettingsForm: FormGroup;
 
   RedirectLink = RedirectLink;
@@ -116,6 +118,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   ];
 
   autoMapEmployeeOptions: ExportSettingFormOption[] = [
+    { label: 'None', value: null },
     { label: 'Match emails on Fyle and Sage Intacct', value: 'EMAIL' },
     { label: 'Match names on Fyle and Sage Intacct', value: 'NAME' },
     { label: 'Match Fyle Employee Code to Sage Intacct Name', value: 'EMPLOYEE_CODE' }
