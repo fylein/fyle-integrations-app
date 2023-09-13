@@ -77,7 +77,6 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     private router: Router,
     private advancedSettingsService: SiAdvancedSettingService,
     private formBuilder: FormBuilder,
-    private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
@@ -200,7 +199,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   getAdminEmails() {
     this.isLoading= true;
-    this.orgService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
+    this.advancedSettingsService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
       this.adminEmails = emailResponse;
       this.getSettingsAndSetupForm();
     });
