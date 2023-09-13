@@ -15,7 +15,6 @@ import { CompletedExportLogComponent } from './completed-export-log/completed-ex
   declarations: [
     ExportLogComponent,
     SkipExportLogComponent,
-    SkipExportLogComponent,
     CompletedExportLogComponent
   ],
   imports: [
