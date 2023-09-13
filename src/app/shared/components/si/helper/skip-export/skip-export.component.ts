@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/si/misc/skip-export.model';
@@ -14,9 +14,11 @@ export class SkipExportComponent implements OnInit {
 
   @Input() enableSkipExport: boolean;
 
-  isLoading: boolean = true;
+  @Input() skipExportForm: FormGroup;
 
-  skipExportForm: FormGroup;
+  @Output() skipExportFormChange = new EventEmitter<FormGroup>();
+
+  isLoading: boolean = true;
 
   date1: Date;
 
@@ -92,6 +94,11 @@ export class SkipExportComponent implements OnInit {
   ) { }
 
   private skipExportWatcher(): void {
+
+      this.skipExportForm.valueChanges.subscribe(() => {
+        this.skipExportFormChange.emit(this.skipExportForm);
+      });
+
       if (this.enableSkipExport) {
         this.skipExportForm.controls.condition1.setValidators(Validators.required);
         this.skipExportForm.controls.operator1.setValidators(Validators.required);
@@ -181,64 +188,6 @@ export class SkipExportComponent implements OnInit {
       }
         return '';
 
-  }
-
-  // Add1(addEvent1: MatChipInputEvent): void {
-  //   Const input = addEvent1.input;
-  //   Const value = addEvent1.value;
-
-  //   If ((value || '').trim()) {
-  //     This.valueOption1.push(value);
-  //     If (this.valueOption1.length) {
-  //       This.skipExportForm.controls.value1.clearValidators();
-  //     }
-  //   }
-
-  //   If (input) {
-  //     Input.value = '';
-  //   }
-  // }
-
-  remove1(chipValue: any): void {
-    const index = this.valueOption1.indexOf(chipValue);
-
-    if (index >= 0) {
-      this.valueOption1.splice(index, 1);
-    }
-    if (this.valueOption1.length===0) {
-      this.skipExportForm.controls.value1.setValue('');
-    this.skipExportForm.controls.value1.setValidators(Validators.required);
-    this.skipExportForm.controls.value1.updateValueAndValidity();
-    }
-  }
-
-  // Add2(addEvent2: MatChipInputEvent): void {
-  //   Const input = addEvent2.input;
-  //   Const value = addEvent2.value;
-
-  //   If ((value || '').trim()) {
-  //     This.valueOption2.push(value);
-  //     If (this.valueOption2.length) {
-  //       This.skipExportForm.controls.value2.clearValidators();
-  //     }
-  //   }
-
-  //   If (input) {
-  //     Input.value = '';
-  //   }
-  // }
-
-  remove2(chipValue: any): void {
-    const index = this.valueOption2.indexOf(chipValue);
-
-    if (index >= 0) {
-      this.valueOption2.splice(index, 1);
-    }
-    if (this.valueOption2.length===0) {
-      this.skipExportForm.controls.value2.setValue('');
-      this.skipExportForm.controls.value2.setValidators(Validators.required);
-      this.skipExportForm.controls.value2.updateValueAndValidity();
-      }
   }
 
   resetAdditionalFilter() {
@@ -354,7 +303,7 @@ export class SkipExportComponent implements OnInit {
       .subscribe((skipExport1: SkipExport) => {
       });
     }
-    if (!this.enableSkipExport && this.expenseFilters.length > 0) {
+    if (!this.enableSkipExport) {
       this.advancedSettingsService
       .deleteExpenseFilter(this.expenseFilters[0].id)
       .subscribe((skipExport1: SkipExport) => {
