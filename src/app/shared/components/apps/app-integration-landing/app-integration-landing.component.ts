@@ -11,7 +11,7 @@ import { WindowService } from 'src/app/core/services/core/window.service';
 export class AppIntegrationLandingComponent implements OnInit {
 
   @Input() headlineText: string;
-  
+
   @Input() headerText: string;
 
   @Input() svgPath: string;
