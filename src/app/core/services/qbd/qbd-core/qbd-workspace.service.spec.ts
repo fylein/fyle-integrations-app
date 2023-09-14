@@ -95,6 +95,18 @@ describe('QbdWorkspaceService', () => {
     expect(state).toEqual(response);
   });
 
+  it('syncFyleDimensions function check', () => {
+    service.syncFyleDimensions().subscribe((value) => {
+      expect(value).toEqual({})
+    });
+
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/workspaces/1/fyle/sync_dimensions/`
+    });
+    req.flush({});    
+  })
+
 });
 
 

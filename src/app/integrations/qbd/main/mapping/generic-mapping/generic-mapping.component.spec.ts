@@ -58,8 +58,8 @@ describe('GenericMappingComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('getOps function check', () => {
-    expect(component.getOps()).toBeUndefined();
+  it('getOperatingSystem function check', () => {
+    expect(component.getOperatingSystem()).toBeUndefined();
     expect(component.operationgSystem).toEqual(OperatingSystem.MAC);
   });
 

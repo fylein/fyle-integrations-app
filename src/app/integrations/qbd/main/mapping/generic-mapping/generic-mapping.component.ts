@@ -57,7 +57,7 @@ export class GenericMappingComponent implements OnInit {
     });
   }
 
-  getOps(): void {
+  getOperatingSystem(): void {
     this.operationgSystem = this.window.getOperatingSystem();
   }
 
@@ -116,7 +116,7 @@ export class GenericMappingComponent implements OnInit {
       this.mappings = response[1];
       this.filteredMappings = this.mappings.results.concat();
       this.totalCount = this.mappings.count;
-      this.getOps();
+      this.getOperatingSystem();
       this.isLoading = false;
     });
   }
