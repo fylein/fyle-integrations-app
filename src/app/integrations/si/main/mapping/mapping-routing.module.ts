@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: 'generic_mapping',
         component: GenericMappingComponent
-      },
+      }
     ]
   }
 ];

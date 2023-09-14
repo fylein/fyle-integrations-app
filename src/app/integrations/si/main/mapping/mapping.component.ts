@@ -12,7 +12,7 @@ export class MappingComponent implements OnInit {
   mappingPages: MenuItem[] = [
     {label: 'Employee', routerLink: '/integrations/intacct/main/mapping/employee_mapping'},
     {label: 'Category', routerLink: '/integrations/intacct/main/mapping/category_mapping'},
-    {label: 'Generic', routerLink: '/integrations/intacct/main/mapping/generic_mapping'},
+    {label: 'Generic', routerLink: '/integrations/intacct/main/mapping/generic_mapping'}
   ];
 
   activeModule: MenuItem;
