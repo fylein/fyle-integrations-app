@@ -7,6 +7,7 @@ import { ClickEvent, CorporateCreditCardExpensesObject, IntacctReimbursableExpen
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -25,7 +26,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() label: string;
 
-  @Input() subLabel: string;
+  @Input() subLabel: string | SafeHtml;
 
   @Input() placeholder: string;
 
@@ -56,5 +57,9 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     };
 
     this.trackingService.onClickEvent(ClickEvent.PREVIEW_INTACCT_EXPORT);
+  }
+
+  showDialog() {
+    console.log('abcd');
   }
 }
