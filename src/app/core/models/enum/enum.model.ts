@@ -6,8 +6,8 @@ export enum IntegrationView {
 }
 
 export enum AccountOptions {
-  EXPENSE_TYPE = 'EXPENSE_TYPE',
-  ACCOUNT = 'ACCOUNT'
+  EXPENSE_TYPE = 'Expense Type',
+  ACCOUNT = 'GL Account'
 }
 
 export enum AutoMapEmployeeOptions {
