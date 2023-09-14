@@ -6,6 +6,7 @@ import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
+import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/si/db/mapping-setting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -75,5 +76,28 @@ export class SiMappingsService {
         TAX_DETAIL: []
       });
     }));
+  }
+
+  getMappingSettings(): Observable<MappingSettingResponse> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, {});
+  }
+
+  postMappingSettings(mappingSettings: MappingSetting[]): Observable<MappingSetting[]> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, mappingSettings);
+  }
+
+  getMappings(sourceType: string, uri: string, limit: number = 500, offset: number = 0, tableDimension: number = 2, sourceActive?: boolean): Observable<MappingSettingResponse> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    const params: {source_type: string, limit: number, offset: number, table_dimension: number, source_active?: boolean} = {
+      source_type: sourceType,
+      limit,
+      offset,
+      table_dimension: tableDimension
+    };
+    if (sourceActive) {
+      params.source_active = sourceActive;
+    }
+    const url = uri ? uri.split('/api')[1] : `/workspaces/${workspaceId}/mappings/`;
+    return this.apiService.get(url, params);
   }
 }
