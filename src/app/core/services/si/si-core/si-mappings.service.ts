@@ -7,6 +7,9 @@ import { SiWorkspaceService } from './si-workspace.service';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
 import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/si/db/mapping-setting.model';
+import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
+import { EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping-response.model';
+import { EmployeeMapping } from 'src/app/core/models/si/db/employee-mapping.model';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +81,31 @@ export class SiMappingsService {
     }));
   }
 
+  getCategoryMappings(pageLimit: number, pageOffset: number): Observable<CategoryMappingsResponse> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(
+      `/workspaces/${workspaceId}/mappings/category/`, {
+        limit: pageLimit,
+        offset: pageOffset,
+        source_active : true
+      }
+    );
+  }
+
+  getEmployeeMappings(pageLimit: number, pageOffset: number): Observable<EmployeeMappingsResponse> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(
+      `/workspaces/${workspaceId}/mappings/employee/`, {
+        limit: pageLimit,
+        offset: pageOffset
+      }
+    );
+  }
+
+  postEmployeeMappings(employeeMapping: EmployeeMapping): Observable<EmployeeMapping> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/employee/`, employeeMapping);
+  }
+
   getMappingSettings(): Observable<MappingSettingResponse> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, {});
   }
@@ -86,7 +114,11 @@ export class SiMappingsService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, mappingSettings);
   }
 
-  getMappings(sourceType: string, uri: string, limit: number = 500, offset: number = 0, tableDimension: number = 2, sourceActive?: boolean): Observable<MappingSettingResponse> {
+  triggerAutoMapEmployees() {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
+  }
+
+  getMappings(limit: number = 500, offset: number = 0, sourceType: string, uri: string, tableDimension: number = 2, sourceActive?: boolean): Observable<MappingSettingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: {source_type: string, limit: number, offset: number, table_dimension: number, source_active?: boolean} = {
       source_type: sourceType,

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FieldType, MappingState, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
-import { Mapping, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
+import { MappingIntacct, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -20,7 +20,7 @@ export class GenericMappingComponent implements OnInit {
 
   mappings: MappingResponse;
 
-  filteredMappings: Mapping[];
+  filteredMappings: MappingIntacct[];
 
   sourceType: string;
 
