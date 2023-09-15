@@ -10,6 +10,7 @@ import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/si/d
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
 import { EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping-response.model';
 import { EmployeeMapping } from 'src/app/core/models/si/db/employee-mapping.model';
+import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,19 @@ export class SiMappingsService {
 
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/fyle_fields/`, {}
     );
+  }
+
+  getFyleExpenseAttributes(attributeType: string, active?: boolean): Observable<MappingSource[]> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    const params: {attribute_type: string, active?: boolean} = {
+      attribute_type: attributeType
+    };
+
+    if (active) {
+      params.active = active;
+    }
+
+    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_attributes/`, params);
   }
 
   getSageIntacctDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
@@ -95,9 +109,11 @@ export class SiMappingsService {
   getEmployeeMappings(pageLimit: number, pageOffset: number): Observable<EmployeeMappingsResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.get(
-      `/workspaces/${workspaceId}/mappings/employee/`, {
+      `/workspaces/${workspaceId}/mappings/employee_attributes/`, {
         limit: pageLimit,
-        offset: pageOffset
+        offset: pageOffset,
+        mapped: 'ALL',
+        destination_type: 'VENDOR'
       }
     );
   }

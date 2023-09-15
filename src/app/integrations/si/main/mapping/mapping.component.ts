@@ -40,7 +40,7 @@ export class MappingComponent implements OnInit {
         response.results.forEach((item) => {
           this.mappingPages.push({
             label: this.snakeToTitleCase(item.source_field),
-            routerLink: '/integrations/intacct/main/mapping/generic_mapping'
+            routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
           });
         });
       }

@@ -29,5 +29,6 @@ export type GroupedDestinationAttribute = {
   PROJECT: DestinationAttribute[],
   CLASS: DestinationAttribute[],
   ITEM: DestinationAttribute[],
-  PAYMENT_ACCOUNT: DestinationAttribute[]
+  PAYMENT_ACCOUNT: DestinationAttribute[],
+  EMPLOYEE: DestinationAttribute[]
 };

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { FieldType, MappingState, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { MappingIntacct, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
@@ -80,17 +81,17 @@ export class GenericMappingComponent implements OnInit {
   setupPage() {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
-    // ForkJoin([
-    //   This.mappingService.getMappingStats(this.sourceType),
-    //   This.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
-    // ]).subscribe((response) => {
-    //   This.mappingState = response[0];
-    //   This.mappings = response[1];
-    //   This.filteredMappings = this.mappings.results.concat();
-    //   This.totalCount = this.mappings.count;
-    //   This.getOps();
-    //   This.isLoading = false;
-    // });
+    forkJoin([
+      // This.mappingService.getMappingStats(this.sourceType),
+      // This.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
+    ]).subscribe((response) => {
+      // This.mappingState = response[0];
+      // This.mappings = response[1];
+      // This.filteredMappings = this.mappings.results.concat();
+      // This.totalCount = this.mappings.count;
+      // This.getOps();
+      // This.isLoading = false;
+    });
   }
 
   ngOnInit(): void {

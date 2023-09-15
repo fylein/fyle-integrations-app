@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { forkJoin } from 'rxjs';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { Configuration } from 'src/app/core/models/si/db/configuration.model';
 import { EmployeeMapping } from 'src/app/core/models/si/db/employee-mapping.model';
+import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
+import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
 import { MappingIntacct, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
@@ -16,11 +21,19 @@ export class EmployeeMappingComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  employeeFieldMapping: FyleField;
+
   mappingState: MappingStats;
 
-  mappings: MappingResponse;
+  mappings: EmployeeMapping[];
+
+  fyleEmployeeOptions: DestinationAttribute[];
 
   filteredMappings: EmployeeMapping[];
+
+  sageIntacctEmployee: MappingDestination[];
+
+  sageIntacctEmployeeOptions: MappingDestination[];
 
   sourceType: string;
 
@@ -52,7 +65,6 @@ export class EmployeeMappingComponent implements OnInit {
   private getFilteredMappings() {
     this.mappingService.getEmployeeMappings(this.limit, this.pageNo).subscribe((intacctMappingResult: MappingResponse) => {
       this.filteredMappings = intacctMappingResult.results.concat();
-      this.totalCount = this.mappings.count;
       this.isLoading = false;
     });
   }
@@ -68,12 +80,12 @@ export class EmployeeMappingComponent implements OnInit {
 
   mappingSeachingFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: EmployeeMapping[] = this.mappings.results.filter((mapping) =>
+      const results: EmployeeMapping[] = this.mappings.filter((mapping) =>
         mapping.source_employee.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
     } else {
-      this.filteredMappings = this.mappings.results.concat();
+      this.filteredMappings = this.mappings.concat();
     }
     this.totalCount = this.filteredMappings.length;
   }
@@ -101,18 +113,41 @@ export class EmployeeMappingComponent implements OnInit {
     });
   }
 
+  getAttributesFilteredByConfig() {
+    const attributes = [];
+
+    if (this.employeeFieldMapping === 'VENDOR') {
+      attributes.push('VENDOR');
+    } else if (this.employeeFieldMapping === 'EMPLOYEE') {
+      attributes.push('EMPLOYEE');
+    }
+
+    return attributes;
+  }
+
   setupPage() {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
-    this.mappingService.getEmployeeMappings(10, 1).subscribe((response) => {
-      this.mappings = response;
-      this.filteredMappings = this.mappings.results.concat();
-    });
-    this.isLoading = false;
+
+    forkJoin([
+      this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
+      this.mappingService.getEmployeeMappings(10, 1)
+    ]).subscribe(
+      ([groupedDestResponse, employeeMappingResponse]) => {
+        this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
+        this.totalCount = employeeMappingResponse.count;
+        this.mappings = employeeMappingResponse.results;
+        this.filteredMappings = this.mappings.concat();
+        this.isLoading = false;  // Setting the loading flag to false.
+      }
+    );
   }
 
   ngOnInit(): void {
-    this.setupPage();
+    this.mappingService.getConfiguration().subscribe((response) => {
+      this.employeeFieldMapping = response.employee_field_mapping;
+      this.setupPage();
+    });
   }
 
 }

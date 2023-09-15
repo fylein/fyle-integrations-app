@@ -20,7 +20,7 @@ const routes: Routes = [
         component: CategoryMappingComponent
       },
       {
-        path: 'generic_mapping',
+        path: ':source_field',
         component: GenericMappingComponent
       }
     ]
