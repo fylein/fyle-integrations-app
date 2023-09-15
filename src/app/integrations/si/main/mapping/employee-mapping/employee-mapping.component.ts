@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Configuration } from 'src/app/core/models/si/db/configuration.model';
-import { EmployeeMapping } from 'src/app/core/models/si/db/employee-mapping.model';
+import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
 import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
 import { MappingIntacct, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/si/db/mapping.model';
@@ -26,11 +26,11 @@ export class EmployeeMappingComponent implements OnInit {
 
   mappingState: MappingStats;
 
-  mappings: EmployeeMapping[];
+  mappings: EmployeeMappingResult[];
 
   fyleEmployeeOptions: DestinationAttribute[];
 
-  filteredMappings: EmployeeMapping[];
+  filteredMappings: EmployeeMappingResult[];
 
   sageIntacctEmployee: MappingDestination[];
 
@@ -65,25 +65,38 @@ export class EmployeeMappingComponent implements OnInit {
   ) { }
 
   private getFilteredMappings() {
-    this.mappingService.getEmployeeMappings(this.limit, this.pageNo).subscribe((intacctMappingResult: MappingResponse) => {
+    this.mappingService.getEmployeeMappings(this.limit, this.pageNo).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.isLoading = false;
     });
   }
 
-  save(selectedRow: EmployeeMapping): void {
-    const employeeMapping = {
+  getDropdownValue(employeeMapping: EmployeeMapping[]) {
+    // TODO check setting employee or vendor(destinataion)
+    if (employeeMapping.length) {
+      if (employeeMapping[0].destination_vendor) {
+        return employeeMapping[0].destination_vendor;
+      } 
+    }
+    return null;
+  }
+  
+
+  save(selectedRow: EmployeeMapping, event: any): void {
+    // todo : handle existing mapping when we change config
+    console.log(selectedRow, event);
+    const employeeMapping: EmployeeMappingPost = {
       source_employee: {
-        id: selectedRow.source_employee.id
+        id: selectedRow.id
       },
       destination_vendor: {
-        id: selectedRow.destination_vendor ? selectedRow.destination_vendor.id : 0
+        id: event.value.id //either destination employee or vendor should have event.value.id
       },
       destination_employee: {
-        id: selectedRow.destination_employee ? selectedRow.destination_employee.id : 0
+        id: selectedRow.destination_employee ? selectedRow.destination_employee.id : null
       },
       destination_card_account: {
-        id: 0
+        id: null
       },
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
@@ -110,8 +123,8 @@ export class EmployeeMappingComponent implements OnInit {
 
   mappingSeachingFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: EmployeeMapping[] = this.mappings.filter((mapping) =>
-        mapping.source_employee.value?.toLowerCase().includes(searchValue)
+      const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
+        mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
     } else {
@@ -167,6 +180,7 @@ export class EmployeeMappingComponent implements OnInit {
         this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
         this.totalCount = employeeMappingResponse.count;
         this.mappings = employeeMappingResponse.results;
+        console.log(this.mappings);
         this.filteredMappings = this.mappings.concat();
         this.isLoading = false;  // Setting the loading flag to false.
       }

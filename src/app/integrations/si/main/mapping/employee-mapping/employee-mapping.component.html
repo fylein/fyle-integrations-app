@@ -44,12 +44,14 @@
                       <tr>
                         <td>{{ mapping.value }}</td>
                         <td>
-                          <p-dropdown [(ngModel)]="mapping.value" [options]="fyleEmployeeOptions" optionLabel="value" placeholder="Select an Option" (onChange)="save(mapping)">
+                          <p-dropdown [ngModel]="getDropdownValue(mapping.employeemapping)" [options]="fyleEmployeeOptions" optionLabel="value" placeholder="Select an Option" (onChange)="save(mapping, $event)">
                           </p-dropdown>
                         </td>
                         <td>
-                          <p *ngIf="mapping.destination_value" class="mapped">MAPPED</p>
-                          <p *ngIf="!mapping.destination_value" class="unmapped">UNMAPPED</p>
+                            <!-- TODO: add a search atlast -->
+                            <!-- add mapped unmapped value to third column -->
+                          <p *ngIf="getDropdownValue(mapping.employeemapping)" class="mapped">MAPPED</p>
+                          <p *ngIf="!getDropdownValue(mapping.employeemapping)" class="unmapped">UNMAPPED</p>
                         </td>
                       </tr>
                     </ng-template>

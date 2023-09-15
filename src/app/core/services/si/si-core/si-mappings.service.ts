@@ -8,8 +8,7 @@ import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
 import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/si/db/mapping-setting.model';
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
-import { EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping-response.model';
-import { EmployeeMapping } from 'src/app/core/models/si/db/employee-mapping.model';
+import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
 
 @Injectable({
@@ -118,7 +117,7 @@ export class SiMappingsService {
     );
   }
 
-  postEmployeeMappings(employeeMapping: EmployeeMapping): Observable<EmployeeMapping> {
+  postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/employee/`, employeeMapping);
   }
 
