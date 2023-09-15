@@ -16,7 +16,7 @@ export class GenericMappingComponent implements OnInit {
 
   isLoading: boolean;
 
-  mappingState: MappingStats;
+  mappingStats: MappingStats;
 
   mappings: MappingResponse;
 
@@ -75,7 +75,10 @@ export class GenericMappingComponent implements OnInit {
 
   postMapping(mappingPayload: MappingPost): void {
     this.mappingService.postMappings(mappingPayload).subscribe(() => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping done successfully');
+      this.mappingService.getMappingStats(this.sourceType).subscribe((mappingStat: MappingStats) => {
+        this.mappingStats = mappingStat;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping done successfully');
+      });
     }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving the mappings, please try again later');
     });
@@ -112,7 +115,7 @@ export class GenericMappingComponent implements OnInit {
       this.mappingService.getMappingStats(this.sourceType),
       this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
     ]).subscribe((response) => {
-      this.mappingState = response[0];
+      this.mappingStats = response[0];
       this.mappings = response[1];
       this.filteredMappings = this.mappings.results.concat();
       this.totalCount = this.mappings.count;
