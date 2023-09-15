@@ -40,4 +40,8 @@ export class SiAdvancedSettingService {
   postAdvancedSettings(advancedSettingsPayload: AdvancedSettingsPost): Observable<AdvancedSettingsGet> {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_settings/`, advancedSettingsPayload);
   }
+
+  getAdditionalEmails(): Observable<EmailOption[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/admins/`, {});
+  }
 }
