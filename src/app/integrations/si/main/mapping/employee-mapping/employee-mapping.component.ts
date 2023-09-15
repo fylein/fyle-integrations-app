@@ -72,8 +72,6 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   save(selectedRow: EmployeeMapping): void {
-    // You can add validation logic here, similar to your submit() function
-    console.log(selectedRow);
     const employeeMapping = {
       source_employee: {
         id: selectedRow.source_employee.id
@@ -89,18 +87,17 @@ export class EmployeeMappingComponent implements OnInit {
       },
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
-    
+
     this.isLoading = true;
-    
+
     this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
-      console.log(employeeMapping);
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
       this.isLoading = false;
     }, err => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
       this.isLoading = false;
     });
-  }  
+  }
 
   mappingStateFilter(state: MappingState): void {
     this.isLoading = true;
