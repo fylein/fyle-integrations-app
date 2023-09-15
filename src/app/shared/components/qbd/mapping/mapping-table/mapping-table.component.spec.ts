@@ -37,8 +37,15 @@ describe('MappingTableComponent', () => {
     const event = {
       keyCode: 13
     };
+    component.destinationValue = '';
     expect(component.isTypingInBox(event, postMappingResponse)).toBeUndefined();
     expect(component.focussedMappingId).toEqual(0);
+    expect(postMappingResponse.destination_value).toBeNull();
+
+    component.destinationValue = 'kjkjkj';
+    expect(component.isTypingInBox(event, postMappingResponse)).toBeUndefined();
+    expect(component.focussedMappingId).toEqual(0);
+    expect(postMappingResponse.destination_value).toEqual(component.destinationValue);
 
     const event1 = {
       keyCode: 1

@@ -52,7 +52,7 @@ export class GenericMappingComponent implements OnInit {
   private getFilteredMappings(): void {
     this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
       this.filteredMappings = qbdMappingResult.results.concat();
-      this.totalCount = this.mappings.count;
+      this.totalCount = qbdMappingResult.count;
       this.isLoading = false;
     });
   }

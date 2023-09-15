@@ -47,7 +47,7 @@ export class MappingTableComponent implements OnInit {
   }
 
   postTextFieldValue(data: Mapping): void {
-    data.destination_value = this.destinationValue;
+    data.destination_value = this.destinationValue.length > 0 ? this.destinationValue : null;
     const mappingPayload = MappingModel.constructPayload(data);
     this.postMapping.emit(mappingPayload);
     this.focussedMappingId = 0;
