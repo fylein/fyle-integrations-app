@@ -31,30 +31,29 @@
             <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)"></app-mapping-filter>
         </div>
         <div *ngIf="totalCount > 0" >
-            <!-- <app-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="'Employee in Fyle'" [destinationHeaderName]="'QuickBooks Desktop Credit Card Account'" [operatingSystem]="operationgSystem" (postIntacctMapping)="postMapping($event)"></app-mapping-table> -->
             <div>
                 <p-table [value]="mappings" [tableStyle]="{ 'min-width': '50rem' }">
                     <ng-template pTemplate="header">
-                        <tr>
-                            <th>Employees in Fyle</th>
-                            <th>Employees in Intacct</th>
-                            <th>Status</th>
-                        </tr>
+                      <tr>
+                        <th>{{getAttributesFilteredByConfig()[0]}} in Fyle</th>
+                        <th>{{getAttributesFilteredByConfig()[0]}} in Intacct</th>
+                        <th>Status</th>
+                      </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
-                        <tr>
-                            <td>{{ mapping.value }}</td>
-                            <td>
-                                <p-dropdown [options]="fyleEmployeeOptions" optionLabel="value" placeholder="Select an Option">
-                                </p-dropdown> 
-                            </td>
-                            <td>
-                                <p *ngIf="mapping.destination_value" class="mapped">MAPPED</p>
-                                <p *ngIf="!mapping.destination_value" class="unmapped">UNMAPPED</p>
-                            </td>
-                        </tr>
+                    <ng-template pTemplate="body" let-mapping>
+                      <tr>
+                        <td>{{ mapping.value }}</td>
+                        <td>
+                          <p-dropdown [(ngModel)]="mapping.value" [options]="fyleEmployeeOptions" optionLabel="value" placeholder="Select an Option" (onChange)="save(mapping)">
+                          </p-dropdown>
+                        </td>
+                        <td>
+                          <p *ngIf="mapping.destination_value" class="mapped">MAPPED</p>
+                          <p *ngIf="!mapping.destination_value" class="unmapped">UNMAPPED</p>
+                        </td>
+                      </tr>
                     </ng-template>
-                </p-table>
+                  </p-table>                  
             </div>
         </div>
         <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >

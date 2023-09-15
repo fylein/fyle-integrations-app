@@ -11,6 +11,7 @@ import { MappingIntacct, MappingPost, MappingResponse, MappingStats } from 'src/
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
   selector: 'app-employee-mapping',
@@ -59,7 +60,8 @@ export class EmployeeMappingComponent implements OnInit {
     private mappingService: SiMappingsService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService,
-    private window: WindowService
+    private window: WindowService,
+    private workspaceService: SiWorkspaceService
   ) { }
 
   private getFilteredMappings() {
@@ -68,6 +70,37 @@ export class EmployeeMappingComponent implements OnInit {
       this.isLoading = false;
     });
   }
+
+  save(selectedRow: EmployeeMapping): void {
+    // You can add validation logic here, similar to your submit() function
+    console.log(selectedRow);
+    const employeeMapping = {
+      source_employee: {
+        id: selectedRow.source_employee.id
+      },
+      destination_vendor: {
+        id: selectedRow.destination_vendor ? selectedRow.destination_vendor.id : 0
+      },
+      destination_employee: {
+        id: selectedRow.destination_employee ? selectedRow.destination_employee.id : 0
+      },
+      destination_card_account: {
+        id: 0
+      },
+      workspace: parseInt(this.workspaceService.getWorkspaceId())
+    };
+    
+    this.isLoading = true;
+    
+    this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
+      console.log(employeeMapping);
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
+      this.isLoading = false;
+    }, err => {
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+      this.isLoading = false;
+    });
+  }  
 
   mappingStateFilter(state: MappingState): void {
     this.isLoading = true;

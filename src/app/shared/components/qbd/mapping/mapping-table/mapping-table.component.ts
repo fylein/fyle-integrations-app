@@ -24,8 +24,6 @@ export class MappingTableComponent implements OnInit {
 
   @Output() postMapping = new EventEmitter<MappingPost>();
 
-  @Output() postIntacctMapping = new EventEmitter<EmployeeMapping>();
-
   allOS = OperatingSystem;
 
   focussedMappingId: number;
