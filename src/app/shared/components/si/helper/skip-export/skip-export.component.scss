@@ -75,16 +75,12 @@
   @apply tw-cursor-pointer tw-w-360-px tw-h-40-px;
 }
 
-/* Additional styles for your requirements */
 :host ::ng-deep .p-chips-token {
   height: 24px;  /* Reduced height */
   align-items: center;  /* Center content */
   background-color: white !important;  /* Change background color to white */
   border: 1px solid #ccc;  /* Optional: Add a border to make it visible against the white background */
-}
-
-:host ::ng-deep .p-chips-token-label {
-  padding: 4px 8px;  /* Reduced padding */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  /* Add shadow */
 }
 
 /* To remove blue hover and other styles */
@@ -107,13 +103,10 @@
 
 /* Change text color to black */
 :host ::ng-deep .p-chips-token-label {
+  padding: 4px 8px;  /* Reduced padding */
   color: black !important;  /* Change text color to black */
 }
 
-/* Add shadow to chips */
-:host ::ng-deep .p-chips-token {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);  /* Add shadow */
-}
 
 :host ::ng-deep .p-chips-token-icon {
   color: black !important;
