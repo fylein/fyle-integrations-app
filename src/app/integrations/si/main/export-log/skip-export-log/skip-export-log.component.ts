@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { SkipExportLogResponse, SkipExportList, SkipExportLog } from 'src/app/core/models/si/db/expense-group.model';
+import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
@@ -64,7 +65,7 @@ export class SkipExportLogComponent implements OnInit {
 
   filteredExpenseGroups: SkipExportList [];
 
-  expenses: any [] = [];
+  expenses: Expense [] = [];
 
   isDateSelected: boolean = false;
 

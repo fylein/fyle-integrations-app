@@ -260,17 +260,16 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       });
   }
 
-  // GetAdminEmails() {
-  //   This.isLoading= true;
-  //   This.orgService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
-  //     This.adminEmails = emailResponse;
-  //     This.getSettingsAndSetupForm();
-  //   });
-  // }
+  getAdminEmails() {
+    this.isLoading= true;
+    this.orgService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
+      this.adminEmails = emailResponse;
+      this.getSettingsAndSetupForm();
+    });
+  }
 
   ngOnInit(): void {
-    // This.getAdminEmails();
-    this.getSettingsAndSetupForm();
+    this.getAdminEmails();
   }
 
 }
