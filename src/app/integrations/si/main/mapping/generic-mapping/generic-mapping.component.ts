@@ -29,7 +29,7 @@ export class GenericMappingComponent implements OnInit {
   pageNo: number = 0;
 
   totalCount: number;
-  
+
   selectedMappingFilter: MappingState = MappingState.ALL;
 
   PaginatorPage = PaginatorPage;
@@ -53,43 +53,43 @@ export class GenericMappingComponent implements OnInit {
     this.operationgSystem = this.window.getOperatingSystem();
   }
 
-  // pageSizeChanges(limit: number): void {
-  //   this.isLoading = true;
-  //   this.limit = limit;
-  //   this.pageNo = 0;
-  //   this.currentPage = 1;
-  //   this.getFilteredMappings();
+  // PageSizeChanges(limit: number): void {
+  //   This.isLoading = true;
+  //   This.limit = limit;
+  //   This.pageNo = 0;
+  //   This.currentPage = 1;
+  //   This.getFilteredMappings();
   // }
 
-  // pageOffsetChanges(pageNo: number): void {
-  //   this.isLoading = true;
-  //   this.pageNo = pageNo;
-  //   this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
-  //   this.getFilteredMappings();
+  // PageOffsetChanges(pageNo: number): void {
+  //   This.isLoading = true;
+  //   This.pageNo = pageNo;
+  //   This.currentPage = Math.ceil(this.pageNo / this.limit)+1;
+  //   This.getFilteredMappings();
   // }
 
-  // mappingStateFilter(state: MappingState): void {
-  //   this.isLoading = true;
-  //   this.selectedMappingFilter = state;
-  //   this.currentPage = 1;
-  //   this.limit = 10;
-  //   this.pageNo = 0;
-  //   this.getFilteredMappings();
+  // MappingStateFilter(state: MappingState): void {
+  //   This.isLoading = true;
+  //   This.selectedMappingFilter = state;
+  //   This.currentPage = 1;
+  //   This.limit = 10;
+  //   This.pageNo = 0;
+  //   This.getFilteredMappings();
   // }
 
   setupPage() {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
-    // forkJoin([
-    //   this.mappingService.getMappingStats(this.sourceType),
-    //   this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
+    // ForkJoin([
+    //   This.mappingService.getMappingStats(this.sourceType),
+    //   This.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
     // ]).subscribe((response) => {
-    //   this.mappingState = response[0];
-    //   this.mappings = response[1];
-    //   this.filteredMappings = this.mappings.results.concat();
-    //   this.totalCount = this.mappings.count;
-    //   this.getOps();
-    //   this.isLoading = false;
+    //   This.mappingState = response[0];
+    //   This.mappings = response[1];
+    //   This.filteredMappings = this.mappings.results.concat();
+    //   This.totalCount = this.mappings.count;
+    //   This.getOps();
+    //   This.isLoading = false;
     // });
   }
 

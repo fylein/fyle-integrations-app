@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* Tslint:disable */
 import { EmployeeMapping } from './employee-mapping.model';
 
 export type EmployeeMappingsResponse = {

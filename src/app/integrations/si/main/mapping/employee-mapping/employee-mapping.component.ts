@@ -104,8 +104,7 @@ export class EmployeeMappingComponent implements OnInit {
   setupPage() {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
-    this.mappingService.getEmployeeMappings(10,1).subscribe((response) => {
-      console.log(response);
+    this.mappingService.getEmployeeMappings(10, 1).subscribe((response) => {
       this.mappings = response;
       this.filteredMappings = this.mappings.results.concat();
     });

@@ -15,7 +15,7 @@ export class MappingComponent implements OnInit {
 
   mappingPages: MenuItem[] = [
     {label: 'Employee', routerLink: '/integrations/intacct/main/mapping/employee_mapping'},
-    {label: 'Category', routerLink: '/integrations/intacct/main/mapping/category_mapping'},
+    {label: 'Category', routerLink: '/integrations/intacct/main/mapping/category_mapping'}
   ];
 
   activeModule: MenuItem;
@@ -46,13 +46,12 @@ export class MappingComponent implements OnInit {
       }
     });
     this.isLoading = false;
-  }  
+  }
 
   ngOnInit(): void {
     this.activeModule = this.mappingPages[0];
     this.router.navigateByUrl(this.mappingPages[0].routerLink);
     this.setupPages();
-    console.log(this.mappingPages);
   }
 
 }

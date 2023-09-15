@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* Tslint:disable */
 
 export type DestinationAttributeDetail = {
   email: string;

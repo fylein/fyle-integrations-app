@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* Tslint:disable */
 
 import { DestinationAttributeDetail } from "./destination-attribute-detail.model";
 

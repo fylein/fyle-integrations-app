@@ -87,7 +87,7 @@ export class SiMappingsService {
       `/workspaces/${workspaceId}/mappings/category/`, {
         limit: pageLimit,
         offset: pageOffset,
-        source_active : true
+        source_active: true
       }
     );
   }
@@ -118,7 +118,7 @@ export class SiMappingsService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
   }
 
-  getMappings(limit: number = 500, offset: number = 0, sourceType: string, uri: string, tableDimension: number = 2, sourceActive?: boolean): Observable<MappingSettingResponse> {
+  getMappings(sourceType: string, uri: string, sourceActive?: boolean, limit: number = 500, offset: number = 0, tableDimension: number = 2): Observable<MappingSettingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: {source_type: string, limit: number, offset: number, table_dimension: number, source_active?: boolean} = {
       source_type: sourceType,
