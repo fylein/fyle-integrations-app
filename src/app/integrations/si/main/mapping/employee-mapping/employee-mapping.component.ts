@@ -76,21 +76,20 @@ export class EmployeeMappingComponent implements OnInit {
     if (employeeMapping.length) {
       if (employeeMapping[0].destination_vendor) {
         return employeeMapping[0].destination_vendor;
-      } 
+      }
     }
     return null;
   }
-  
+
 
   save(selectedRow: EmployeeMapping, event: any): void {
-    // todo : handle existing mapping when we change config
-    console.log(selectedRow, event);
+    // Todo : handle existing mapping when we change config
     const employeeMapping: EmployeeMappingPost = {
       source_employee: {
         id: selectedRow.id
       },
       destination_vendor: {
-        id: event.value.id //either destination employee or vendor should have event.value.id
+        id: event.value.id // Either destination employee or vendor should have event.value.id
       },
       destination_employee: {
         id: selectedRow.destination_employee ? selectedRow.destination_employee.id : null
@@ -180,7 +179,6 @@ export class EmployeeMappingComponent implements OnInit {
         this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
         this.totalCount = employeeMappingResponse.count;
         this.mappings = employeeMappingResponse.results;
-        console.log(this.mappings);
         this.filteredMappings = this.mappings.concat();
         this.isLoading = false;  // Setting the loading flag to false.
       }
