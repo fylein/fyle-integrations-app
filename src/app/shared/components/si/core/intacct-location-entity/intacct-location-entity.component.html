@@ -33,11 +33,9 @@
     </div>
     <div class="p-col tw-flex tw-justify-center tw-items-center">
       <div class="connector--connection-blocks tw-relative">
-        <div class="connector--connection-block-separator-1 tw-absolute"></div>
         <div>
           <img src="assets/gifs/disconnect.gif" height="100px" width="100px" alt="Disconnect GIF" />
         </div>
-        <div class="connector--connection-block-separator-2 tw-absolute"></div>
       </div>
     </div>
     <div>
@@ -50,13 +48,10 @@
           </div>
         </div>
           <div class="select-location-entity">
-          <app-configuration-select-field *ngIf="!locationEntity"
-          [form]="locationEntityForm"
-          [destinationAttributes]="locationEntityOptions"
-          [placeholder]="'Select Location Entity'"
-          [formControllerName]="'locationEntity'"></app-configuration-select-field>
+          <p-dropdown class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControllerName="locationEntity" [options]="locationEntityOptions">
+          </p-dropdown>
         </div>
-          <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity">
+          <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity tw-pl-4">
             {{ locationEntity.location_entity_name | trimCharacter: 26 }}
           </h3>          
       </form>

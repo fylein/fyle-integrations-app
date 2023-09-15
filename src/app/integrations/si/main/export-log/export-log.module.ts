@@ -7,11 +7,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { DialogModule } from 'primeng/dialog';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { SkipExportLogComponent } from './skip-export-log/skip-export-log.component';
+import { CompletedExportLogComponent } from './completed-export-log/completed-export-log.component';
 
 
 @NgModule({
   declarations: [
-    ExportLogComponent
+    ExportLogComponent,
+    SkipExportLogComponent,
+    CompletedExportLogComponent
   ],
   imports: [
     TabMenuModule,
