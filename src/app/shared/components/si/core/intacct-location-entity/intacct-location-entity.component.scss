@@ -68,31 +68,6 @@
   padding-top: 8px;
 }
 
-.connector--connection-block-separator {
-  border-left: 1px solid #F5F5F5;
-  height: 150px; /* Increased height */
-  top: 50%;
-  transform: translateY(-50%);
-  left: 50%;
-}
-
-.connector--connection-block-separator-1,
-.connector--connection-block-separator-2 {
-  position: absolute;
-  border-left: 1px solid #F5F5F5;
-  height: 200px; /* Adjusted height to span from top to bottom */
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.connector--connection-block-separator-1 {
-  left: -82px;
-}
-
-.connector--connection-block-separator-2 {
-  right: -82px;
-}
-
 /* PrimeNG component styles */
 .p-grid {
   display: grid;
@@ -129,4 +104,27 @@
 
 .select-location-entity{
   text-align: left;
+}
+
+.connector {
+  &--connection-block-separator {
+    border-top: 1px solid #F5F5F5;
+    transform: rotate(90deg);
+    position: absolute;
+    margin-left: -82px;
+  }
+
+  &--connection-block-separator-1 {
+    @extend .connector--connection-block-separator;
+    width: 102px;
+    height: 160px;
+    margin-top: -112px;
+  }
+
+  &--connection-block-separator-2 {
+    @extend .connector--connection-block-separator;
+    width: 165px;
+    height: 100px;
+    margin-top: 7px;
+  }
 }
