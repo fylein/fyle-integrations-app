@@ -131,13 +131,11 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   mappingSeachingFilter(searchValue: string) {
-    console.log(searchValue);
     if (searchValue.length > 0) {
       const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
         mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
-      console.log(results);
     } else {
       this.filteredMappings = this.mappings.concat();
     }

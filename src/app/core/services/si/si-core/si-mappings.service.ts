@@ -115,8 +115,7 @@ export class SiMappingsService {
 
   getEmployeeMappings(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState): Observable<EmployeeMappingsResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    let isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
-    console.log(isMapped, mappingState);
+    const isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
     return this.apiService.get(
       `/workspaces/${workspaceId}/mappings/employee_attributes/`, {
         limit: pageLimit,
