@@ -30,7 +30,11 @@ export class EmployeeMappingComponent implements OnInit {
 
   mappings: EmployeeMappingResult[];
 
+  searchTerm: string = '';
+
   fyleEmployeeOptions: DestinationAttribute[];
+
+  filteredfyleEmployeeOptions: DestinationAttribute[] = [];
 
   filteredMappings: EmployeeMappingResult[];
 
@@ -64,6 +68,12 @@ export class EmployeeMappingComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: SiWorkspaceService
   ) { }
+
+  filterOptions() {
+    this.filteredfyleEmployeeOptions = this.fyleEmployeeOptions
+      .filter(option => option.value.toLowerCase().includes(this.searchTerm.toLowerCase()))
+      .slice(0, 15);
+  }
 
   triggerAutoMapEmployees() {
     const that = this;
