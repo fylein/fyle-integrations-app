@@ -8,7 +8,6 @@ import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
@@ -82,7 +81,6 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     private router: Router,
     private advancedSettingsService: SiAdvancedSettingService,
     private formBuilder: FormBuilder,
-    private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,

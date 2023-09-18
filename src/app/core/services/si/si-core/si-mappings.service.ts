@@ -10,6 +10,8 @@ import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/si/d
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
+import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
+import { MappingState } from 'src/app/core/models/enum/enum.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +29,12 @@ export class SiMappingsService {
     return this.apiService.post(`/workspaces/${workspaceId}/sage_intacct/refresh_dimensions/`, {
       dimensions_to_sync: dimensionsToSync
     });
+  }
+
+  getMappingStats(sourceType: string, destinationType: string): Observable<MappingStats> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, { source_type: sourceType, destination_type: destinationType });
   }
 
   getConfiguration(): Observable<Configuration>{
@@ -105,14 +113,16 @@ export class SiMappingsService {
     );
   }
 
-  getEmployeeMappings(pageLimit: number, pageOffset: number): Observable<EmployeeMappingsResponse> {
+  getEmployeeMappings(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState): Observable<EmployeeMappingsResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
+    let isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
+    console.log(isMapped, mappingState);
     return this.apiService.get(
       `/workspaces/${workspaceId}/mappings/employee_attributes/`, {
         limit: pageLimit,
         offset: pageOffset,
-        mapped: 'ALL',
-        destination_type: 'VENDOR'
+        mapped: isMapped,
+        destination_type: sourceType
       }
     );
   }

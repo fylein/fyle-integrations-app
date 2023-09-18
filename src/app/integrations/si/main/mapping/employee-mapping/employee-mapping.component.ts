@@ -24,7 +24,9 @@ export class EmployeeMappingComponent implements OnInit {
 
   employeeFieldMapping: FyleField;
 
-  mappingState: MappingStats;
+  mappingStats: MappingStats;
+
+  employeeMapping: EmployeeMappingsResponse;
 
   mappings: EmployeeMappingResult[];
 
@@ -60,13 +62,25 @@ export class EmployeeMappingComponent implements OnInit {
     private mappingService: SiMappingsService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService,
-    private window: WindowService,
     private workspaceService: SiWorkspaceService
   ) { }
 
+  triggerAutoMapEmployees() {
+    const that = this;
+    that.isLoading = true;
+    that.mappingService.triggerAutoMapEmployees().subscribe(() => {
+      that.isLoading = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
+    }, error => {
+      that.isLoading = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
+    });
+  }
+
   private getFilteredMappings() {
-    this.mappingService.getEmployeeMappings(this.limit, this.pageNo).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
+    this.mappingService.getEmployeeMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
       this.filteredMappings = intacctMappingResult.results.concat();
+      this.totalCount = this.filteredMappings.length;
       this.isLoading = false;
     });
   }
@@ -100,14 +114,10 @@ export class EmployeeMappingComponent implements OnInit {
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
 
-    this.isLoading = true;
-
     this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
-      this.isLoading = false;
     }, err => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
-      this.isLoading = false;
     });
   }
 
@@ -121,11 +131,13 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   mappingSeachingFilter(searchValue: string) {
+    console.log(searchValue);
     if (searchValue.length > 0) {
       const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
         mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
+      console.log(results);
     } else {
       this.filteredMappings = this.mappings.concat();
     }
@@ -168,27 +180,29 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   setupPage() {
-    this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
-
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getEmployeeMappings(10, 1)
+      this.mappingService.getEmployeeMappings(10, 1, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
+      this.mappingService.getMappingStats(this.sourceType, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
-      ([groupedDestResponse, employeeMappingResponse]) => {
+      ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
         this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
+        this.employeeMapping = employeeMappingResponse;
         this.totalCount = employeeMappingResponse.count;
         this.mappings = employeeMappingResponse.results;
+        this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
-        this.isLoading = false;  // Setting the loading flag to false.
       }
     );
   }
 
   ngOnInit(): void {
     this.mappingService.getConfiguration().subscribe((response) => {
+      this.isLoading = true;
       this.employeeFieldMapping = response.employee_field_mapping;
       this.setupPage();
+      this.isLoading = false;
     });
   }
 
