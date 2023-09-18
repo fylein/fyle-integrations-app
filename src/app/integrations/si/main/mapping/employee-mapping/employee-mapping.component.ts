@@ -20,7 +20,7 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class EmployeeMappingComponent implements OnInit {
 
-  isLoading: boolean = false;
+  isLoading: boolean;
 
   employeeFieldMapping: FyleField;
 
@@ -182,7 +182,7 @@ export class EmployeeMappingComponent implements OnInit {
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
       this.mappingService.getEmployeeMappings(10, 1, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
-      this.mappingService.getMappingStats(this.sourceType, this.getAttributesFilteredByConfig()[0])
+      this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
         this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
