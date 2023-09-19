@@ -69,6 +69,13 @@ export class EmployeeMappingComponent implements OnInit {
     private workspaceService: SiWorkspaceService
   ) { }
 
+  tableDropdownWidth() {
+    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
+    if (element) {
+      element.style.width = '300px';
+    }
+  }
+
   filterOptions() {
     this.filteredfyleEmployeeOptions = this.fyleEmployeeOptions
       .filter(option => option.value.toLowerCase().includes(this.searchTerm.toLowerCase()))
@@ -96,15 +103,15 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   getDropdownValue(employeeMapping: EmployeeMapping[]) {
-    // TODO check setting employee or vendor(destinataion)
     if (employeeMapping.length) {
-      if (employeeMapping[0].destination_vendor) {
+      if (this.getAttributesFilteredByConfig()[0]===FyleField.VENDOR) {
         return employeeMapping[0].destination_vendor;
+      } else if (this.getAttributesFilteredByConfig()[0]===FyleField.EMPLOYEE) {
+        return employeeMapping[0].destination_employee;
       }
     }
     return null;
   }
-
 
   save(selectedRow: EmployeeMapping, event: any): void {
     // Todo : handle existing mapping when we change config
@@ -113,17 +120,16 @@ export class EmployeeMappingComponent implements OnInit {
         id: selectedRow.id
       },
       destination_vendor: {
-        id: event.value.id // Either destination employee or vendor should have event.value.id
+        id: this.getAttributesFilteredByConfig()[0]===FyleField.VENDOR ? event.value.id : null
       },
       destination_employee: {
-        id: selectedRow.destination_employee ? selectedRow.destination_employee.id : null
+        id: this.getAttributesFilteredByConfig()[0]===FyleField.EMPLOYEE ? event.value.id : null
       },
       destination_card_account: {
         id: null
       },
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
-
     this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
     }, err => {

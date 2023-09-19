@@ -41,7 +41,7 @@
         </div>
         <div *ngIf="totalCount > 0" >
             <div>
-                <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem' }">
+                <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
                     <ng-template pTemplate="header">
                       <tr>
                         <th>{{getAttributesFilteredByConfig()[0] | titlecase}} in Fyle</th>
@@ -53,11 +53,18 @@
                       <tr>
                         <td>{{ mapping.value }}</td>
                         <td>
-                          <p-dropdown [ngModel]="getDropdownValue(mapping.employeemapping)" [options]="fyleEmployeeOptions" optionLabel="value" placeholder="Select an Option" (onChange)="save(mapping, $event)">
-                          </p-dropdown>
+                            <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
+                            [ngModel]="getDropdownValue(mapping.employeemapping)" 
+                            [options]="fyleEmployeeOptions" 
+                            optionLabel="value" 
+                            placeholder="Select an Option" 
+                            (onChange)="save(mapping, $event); getDropdownValue(mapping.employeemapping)"
+                            [filter]="true"
+                            filterBy="value">
+                            </p-dropdown>                
                         </td>
                         <td>
-                            <!-- TODO: add a search atlast -->
+                            <!-- TODO: Add a Search -->
                           <p *ngIf="getDropdownValue(mapping.employeemapping)" class="mapped">MAPPED</p>
                           <p *ngIf="!getDropdownValue(mapping.employeemapping)" class="unmapped">UNMAPPED</p>
                         </td>

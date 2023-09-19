@@ -96,6 +96,7 @@ export class SiMappingsService {
         ACCOUNT: [],
         EXPENSE_PAYMENT_TYPE: [],
         VENDOR: [],
+        EMPLOYEE: [],
         CHARGE_CARD_NUMBER: [],
         TAX_DETAIL: []
       });
@@ -120,7 +121,7 @@ export class SiMappingsService {
       `/workspaces/${workspaceId}/mappings/employee_attributes/`, {
         limit: pageLimit,
         offset: pageOffset,
-        mapped: isMapped,
+        mapped: mappingState===MappingState.ALL ? MappingState.ALL : isMapped,
         destination_type: sourceType
       }
     );
