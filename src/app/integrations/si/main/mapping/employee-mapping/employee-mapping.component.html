@@ -39,18 +39,17 @@
         <div class="tw-p-24-px tw-border tw-border-b-separator">
             <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)"></app-mapping-filter>
         </div>
-        <div *ngIf="totalCount > 0" >
-            <div>
-                <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
-                    <ng-template pTemplate="header">
-                      <tr>
-                        <th>{{getAttributesFilteredByConfig()[0] | titlecase}} in Fyle</th>
-                        <th>{{getAttributesFilteredByConfig()[0] | titlecase}} in Intacct</th>
-                        <th>Status</th>
-                      </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-mapping>
-                      <tr>
+        <div *ngIf="filteredMappingCount" >
+            <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
+                <ng-template pTemplate="header">
+                    <tr>
+                    <th>Employee Email</th>
+                    <th>Sage Intacct {{getAttributesFilteredByConfig()[0] | titlecase}}</th>
+                    <th>Status</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-mapping>
+                    <tr>
                         <td>{{ mapping.value }}</td>
                         <td>
                             <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
@@ -64,19 +63,17 @@
                             </p-dropdown>                
                         </td>
                         <td>
-                            <!-- TODO: Add a Search -->
-                          <p *ngIf="getDropdownValue(mapping.employeemapping)" class="mapped">MAPPED</p>
-                          <p *ngIf="!getDropdownValue(mapping.employeemapping)" class="unmapped">UNMAPPED</p>
+                            <p *ngIf="getDropdownValue(mapping.employeemapping)" class="mapped">MAPPED</p>
+                            <p *ngIf="!getDropdownValue(mapping.employeemapping)" class="unmapped">UNMAPPED</p>
                         </td>
-                      </tr>
-                    </ng-template>
-                  </p-table>                  
-            </div>
+                    </tr>
+                </ng-template>
+                </p-table>
         </div>
-        <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >
+        <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="filteredMappingCount" >
             <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
         </div>
-        <div *ngIf="totalCount === 0">
+        <div *ngIf="!filteredMappingCount">
             <app-zero-state-with-illustration [mainText]="'No employees to show yet!'" [subText]="'Looks like your search term does not match any of Employee mappings'"></app-zero-state-with-illustration>
         </div>
     </div>

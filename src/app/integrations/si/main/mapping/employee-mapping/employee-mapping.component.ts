@@ -20,7 +20,9 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class EmployeeMappingComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = true;
+
+  isInitialSetupComplete: boolean = false;
 
   employeeFieldMapping: FyleField;
 
@@ -49,6 +51,8 @@ export class EmployeeMappingComponent implements OnInit {
   pageNo: number = 0;
 
   totalCount: number;
+
+  filteredMappingCount: number;
 
   selectedMappingFilter: MappingState = MappingState.ALL;
 
@@ -97,7 +101,7 @@ export class EmployeeMappingComponent implements OnInit {
   private getFilteredMappings() {
     this.mappingService.getEmployeeMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
       this.filteredMappings = intacctMappingResult.results.concat();
-      this.totalCount = this.filteredMappings.length;
+      this.filteredMappingCount = this.filteredMappings.length;
       this.isLoading = false;
     });
   }
@@ -114,7 +118,6 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   save(selectedRow: EmployeeMapping, event: any): void {
-    // Todo : handle existing mapping when we change config
     const employeeMapping: EmployeeMappingPost = {
       source_employee: {
         id: selectedRow.id
@@ -132,9 +135,25 @@ export class EmployeeMappingComponent implements OnInit {
     };
     this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
+      this.setupPage();
     }, err => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
     });
+  }
+
+  pageSizeChanges(limit: number): void {
+    this.isLoading = true;
+    this.limit = limit;
+    this.pageNo = 0;
+    this.currentPage = 1;
+    this.getFilteredMappings();
+  }
+
+  pageOffsetChanges(pageNo: number): void {
+    this.isLoading = true;
+    this.pageNo = pageNo;
+    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
+    this.getFilteredMappings();
   }
 
   mappingStateFilter(state: MappingState): void {
@@ -155,22 +174,7 @@ export class EmployeeMappingComponent implements OnInit {
     } else {
       this.filteredMappings = this.mappings.concat();
     }
-    this.totalCount = this.filteredMappings.length;
-  }
-
-  pageSizeChanges(limit: number): void {
-    this.isLoading = true;
-    this.limit = limit;
-    this.pageNo = 0;
-    this.currentPage = 1;
-    this.getFilteredMappings();
-  }
-
-  pageOffsetChanges(pageNo: number): void {
-    this.isLoading = true;
-    this.pageNo = pageNo;
-    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
-    this.getFilteredMappings();
+    this.filteredMappingCount = this.filteredMappings.length;
   }
 
   postMapping(mappingPayload: EmployeeMapping) {
@@ -201,12 +205,17 @@ export class EmployeeMappingComponent implements OnInit {
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
+        this.totalCount = employeeMappingResponse.count;
         this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
         this.employeeMapping = employeeMappingResponse;
-        this.totalCount = employeeMappingResponse.count;
+        if (!this.isInitialSetupComplete) {
+          this.filteredMappingCount = employeeMappingResponse.count;
+        }
         this.mappings = employeeMappingResponse.results;
         this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
+        this.isInitialSetupComplete = true;
+        this.isLoading = false;
       }
     );
   }
@@ -216,7 +225,6 @@ export class EmployeeMappingComponent implements OnInit {
       this.isLoading = true;
       this.employeeFieldMapping = response.employee_field_mapping;
       this.setupPage();
-      this.isLoading = false;
     });
   }
 
