@@ -1,8 +1,9 @@
 
 import { DestinationAttribute } from "../../db/destination-attribute.model";
 import { FyleField, MappingState, SageIntacctField } from "../../enum/enum.model";
+import { EmployeeMapping } from "./employee-mapping.model";
 import { Error } from "./error.model";
-import { ExpenseAttribute, ExtendedExpenseAttribute } from "./expense-attribute.model";
+import { ExpenseAttribute } from "./expense-attribute.model";
 import { MinimalMappingSetting } from "./mapping-setting.model";
 
 export type MappingPost = {
@@ -13,7 +14,7 @@ export type MappingPost = {
   destination_value: string;
 };
 
-export interface Mapping extends MappingPost {
+export interface MappingIntacct extends MappingPost {
   id: number;
   source: ExpenseAttribute;
   destination: DestinationAttribute;
@@ -26,7 +27,7 @@ export type MappingResponse = {
   count: number;
   next: string;
   previous: string;
-  results: ExtendedExpenseAttribute[];
+  results: EmployeeMapping[];
 };
 
 export type MappingList = {

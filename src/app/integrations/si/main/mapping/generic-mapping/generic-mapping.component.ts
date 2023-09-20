@@ -1,4 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
+import { Configuration } from 'src/app/core/models/db/configuration.model';
+import { MappingSetting, MappingSettingResponse, MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
+import { MappingIntacct, MappingPost, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { WindowService } from 'src/app/core/services/core/window.service';
+import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { TitleCasePipe } from '@angular/common';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { EmployeeMappingResult } from 'src/app/core/models/si/db/employee-mapping.model';
+import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-generic-mapping',
@@ -7,9 +22,156 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GenericMappingComponent implements OnInit {
 
-  constructor() { }
+  isLoading: boolean;
+
+  configuration: Configuration;
+
+  mappingSetting: MinimalMappingSetting;
+
+  mappingStats: MappingStats;
+
+  mappings: ExtendedExpenseAttribute[];
+
+  filteredMappings: ExtendedExpenseAttribute[];
+
+  dropdownOptions: DestinationAttribute[];
+
+  page: string;
+
+  sourceType: string;
+
+  limit: number = 10;
+
+  pageNo: number = 0;
+
+  totalCount: number;
+
+  filteredMappingCount: number;
+
+  selectedMappingFilter: MappingState = MappingState.ALL;
+
+  PaginatorPage = PaginatorPage;
+
+  currentPage: number = 1;
+
+  searchValue: string;
+
+  destinationFieldType = FieldType;
+
+  operationgSystem: string;
+
+  constructor(
+    private route: ActivatedRoute,
+    private toastService: IntegrationsToastService,
+    private window: WindowService,
+    private mappingService: SiMappingsService
+  ) { }
+
+  tableDropdownWidth() {
+    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
+    if (element) {
+      element.style.width = '300px';
+    }
+  }
+
+  getDropdownValue(mapping: ExtendedExpenseAttribute) {
+    if (mapping.mapping.length) {
+      return mapping.mapping[0].destination;
+    }
+    return null;
+  }
+
+  save(selectedRow: ExtendedExpenseAttribute, event:any) {
+    const payload: MappingPost = {
+      source_type: this.mappingSetting.source_field,
+      source_value: selectedRow.value,
+      destination_type: this.mappingSetting.destination_field,
+      destination_id: event.value.destination_id,
+      destination_value: event.value.value
+    };
+    this.mappingService.postMapping(payload).subscribe(() => {
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping saved successfully');
+      this.setupPage();
+    }, err => {
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+    });
+  }
+
+  private getFilteredMappings() {
+    this.mappingService.getMappings(MappingState.ALL, this.limit, this.pageNo, this.sourceType, this.mappingSetting.destination_field).subscribe((response: ExtendedExpenseAttributeResponse) => {
+      this.filteredMappings = response.results.concat();
+      this.filteredMappingCount = this.filteredMappings.length;
+      this.isLoading = false;
+    });
+  }
+
+  pageSizeChanges(limit: number): void {
+    this.isLoading = true;
+    this.limit = limit;
+    this.pageNo = 0;
+    this.currentPage = 1;
+    this.getFilteredMappings();
+  }
+
+  pageOffsetChanges(pageNo: number): void {
+    this.isLoading = true;
+    this.pageNo = pageNo;
+    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
+    this.getFilteredMappings();
+  }
+
+  mappingStateFilter(state: MappingState): void {
+    this.isLoading = true;
+    this.selectedMappingFilter = state;
+    this.currentPage = 1;
+    this.limit = 10;
+    this.pageNo = 0;
+    this.getFilteredMappings();
+  }
+
+  mappingSearchFilter(searchValue: string) {
+    if (searchValue.length > 0) {
+      const results: ExtendedExpenseAttribute[] = this.mappings.filter((mapping) =>
+        mapping.value?.toLowerCase().includes(searchValue)
+      );
+      this.filteredMappings = results;
+    } else {
+      this.filteredMappings = this.mappings.concat();
+    }
+    this.filteredMappingCount = this.filteredMappings.length;
+  }
+
+  setupPage() {
+    this.isLoading = true;
+    this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
+    forkJoin([
+      this.mappingService.getConfiguration(),
+      this.mappingService.getMappingSettings()
+    ]).subscribe((response) => {
+      const mappingSetting = response[1].results.filter((mappingSetting) => mappingSetting.source_field === this.sourceType.toUpperCase());
+      this.mappingSetting = mappingSetting[0];
+      this.page = `${new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.mappingSetting.source_field))} Mapping`;
+      this.configuration = response[0];
+      forkJoin([
+        this.mappingService.getSageIntacctDestinationAttributes(this.mappingSetting.destination_field),
+        this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field),
+        this.mappingService.getMappings(MappingState.ALL, this.limit, this.pageNo, this.sourceType, this.mappingSetting.destination_field)
+      ]).subscribe(([options, mappingStats, mappings]) => {
+        this.mappingStats = mappingStats;
+        this.totalCount = mappings.count;
+        this.mappings = mappings.results;
+        this.filteredMappings = this.mappings.concat();
+        this.dropdownOptions = options;
+        this.isLoading = false;
+      });
+    });
+  }
 
   ngOnInit(): void {
+    this.route.params.subscribe(() => {
+      this.isLoading = true;
+      this.setupPage();
+    });
   }
 
 }
