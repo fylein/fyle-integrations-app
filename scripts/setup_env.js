@@ -21,6 +21,12 @@ const environment = {
   travelperk_redirect_uri: `${process.env.TRAVELPERK_REDIRECT_URI ? process.env.TRAVELPERK_REDIRECT_URI : '{{TRAVELPERK_REDIRECT_URI}}'}`,
   travelperk_base_url: `${process.env.TRAVELPERK_BASE_URL ? process.env.TRAVELPERK_BASE_URL : '{{TRAVELPERK_BASE_URL}}'}`,
   travelperk_client_id: `${process.env.TRAVELPERK_CLIENT_ID ? process.env.TRAVELPERK_CLIENT_ID : '{{TRAVELPERK_CLIENT_ID}}'}`,
+  refiner_survey: {
+    intacct: {
+      onboarding_done_survery_id: `${process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID ? process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID : '{{REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID}}'}`,
+      export_done_survery_id: `${process.env.REFINER_INTACCT_EXPORT_DONE_SURVEY_ID ? process.env.REFINER_INTACCT_EXPORT_DONE_SURVEY_ID : '{{REFINER_INTACCT_EXPORT_DONE_SURVEY_ID}}'}`,
+    }
+  },
 };
 
 const targetPath = './src/environments/environment.json';
