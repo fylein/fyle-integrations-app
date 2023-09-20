@@ -167,7 +167,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     ) { }
 
     showDialog() {
-      console.log('abcd');
     }
 
     getSubLabel(type: string) {

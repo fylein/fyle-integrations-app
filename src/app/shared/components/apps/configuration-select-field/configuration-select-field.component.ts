@@ -60,6 +60,5 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   showDialog() {
-    console.log('abcd');
   }
 }
