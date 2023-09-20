@@ -10,6 +10,10 @@
   @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
 }
 
+:host ::ng-deep .p-dropdown {
+  transform: scale(0.9);
+}
+
 .form-input-disabled {
   padding: 11px 0px 11px 14px;
   background: #F5F5F5;
@@ -78,8 +82,8 @@
   }
 
   .fields-header-text {
-    font-weight: 500;
-    font-size: 18px;
+    font-weight: 600;
+    font-size: 14px;
     line-height: 18px;
     &--fyle {
       margin-right: 11%;
@@ -117,10 +121,13 @@
   align-items: center;
 }
 
-.add-row-text,
 svg-icon-sprite {
-  cursor: pointer; /* Changes the cursor to a hand when hovering */
   margin-left: 10px; /* Adds some space between the icon and the text */
+}
+
+.add-row-text {
+  cursor: pointer; /* Changes the cursor to a hand when hovering */
+  color: #F36;
 }
 
 .delete-button {

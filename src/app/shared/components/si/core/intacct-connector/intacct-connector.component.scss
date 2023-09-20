@@ -10,6 +10,11 @@
     @apply tw-border-slightly-normal-text-color #{!important};
 }
 
+input.custom-focus:focus {
+  outline: none;
+  border: 1px solid black !important;
+}
+
 .container {
     display: flex;
     flex-direction: column;

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -19,6 +20,8 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 export class ConfigurationExportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
+
+  isDialogClicked: boolean = true;
 
   exportSettingsForm: FormGroup;
 
@@ -60,10 +63,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     {
       label: 'Report',
       value: ExpenseGroupingFieldOption.CLAIM_NUMBER
-    },
-    {
-      label: 'Payment',
-      value: ExpenseGroupingFieldOption.SETTLEMENT_ID
     },
     {
       label: 'Expense',
@@ -116,11 +115,17 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   ];
 
   autoMapEmployeeOptions: ExportSettingFormOption[] = [
+    { label: 'None', value: null },
     { label: 'Match emails on Fyle and Sage Intacct', value: 'EMAIL' },
     { label: 'Match names on Fyle and Sage Intacct', value: 'NAME' },
     { label: 'Match Fyle Employee Code to Sage Intacct Name', value: 'EMPLOYEE_CODE' }
   ];
 
+  exportTableData = [
+    { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
+    { exportModule: 'Bill', employeeMapping: 'Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'Accounts Payable' },
+    { exportModule: 'Journal Entry', employeeMapping: 'Employee/Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'General Ledger' }
+  ];
 
   reimbursableExportTypes: ExportSettingFormOption[] = [
     {
@@ -157,8 +162,20 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
-    private mappingService: SiMappingsService
+    private mappingService: SiMappingsService,
+    private sanitizer: DomSanitizer
     ) { }
+
+    showDialog() {
+      console.log('abcd');
+    }
+
+    getSubLabel(type: string) {
+      if (type==='reimbursableExportType') {
+        return this.sanitizer.bypassSecurityTrustHtml(`Choose the type of transaction record that you would like to create in Sage Intacct while exporting expenses from Fyle. <p (click)="showDialog()">abcd</p> for more details.`);
+      }
+      return '';
+    }
 
     private getExportGroup(exportGroups: string[] | null): string {
       if (exportGroups) {
