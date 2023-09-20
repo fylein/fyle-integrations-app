@@ -341,3 +341,8 @@ export enum QBDOnboardingState {
     WIN = 'Win',
     MAC = 'Mac'
   }
+
+  export enum RefinerSurveyType {
+    ONBOARDING_DONE = 'Onboarding Done',
+    EXPORT_DONE = 'Export Done'
+  }
