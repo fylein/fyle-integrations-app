@@ -114,6 +114,7 @@ export enum ClickEvent {
   QBD_EXPORT = 'Export IIF files',
   CONNECT_INTACCT  = 'Connect Sage Intacct',
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
+  INTACCT_EXPORT = 'Export Sage Intacct'
 }
 
 export enum ProgressPhase {
@@ -123,7 +124,7 @@ export enum ProgressPhase {
 
 export enum IntacctOnboardingState {
   CONNECTION = 'CONNECTION',
-  LOCATION_ENTITY = 'LOCATION_ENTITY',
+  LOCATION_ENTITY = 'LOCATION_ENTITY_MAPPINGS',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
@@ -245,14 +246,98 @@ export enum QBDOnboardingState {
   }
 
   export enum QBDAccountingExportsType {
-  EXPORT_BILLS = 'EXPORT_BILLS',
-  REIMBURSABLE = 'REIMBURSABLE',
-  CREDIT_CARD = 'CREDIT_CARD',
-  EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
-  EXPORT_JOURNALS = 'EXPORT_JOURNALS'
+    EXPORT_BILLS = 'EXPORT_BILLS',
+    REIMBURSABLE = 'REIMBURSABLE',
+    CREDIT_CARD = 'CREDIT_CARD',
+    EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
+    EXPORT_JOURNALS = 'EXPORT_JOURNALS'
   }
 
   export enum PaymentSyncDirection {
     FYLE_TO_INTACCT = 'fyle_to_intacct',
     INTACCT_TO_FYLE = 'intacct_to_fyle'
+  }
+
+  export enum IntacctErrorType {
+    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING',
+    INTACCT_ERROR = 'INTACCT_ERROR'
+  }
+
+  export enum FyleReferenceType {
+    REPORT_ID = 'report_id',
+    EXPENSE_REPORT = 'claim_number',
+    PAYMENT = 'settlement_id',
+    EXPENSE = 'expense_id'
+  }
+
+  export enum MappingState {
+    MAPPED = 'MAPPED',
+    UNMAPPED = 'UNMAPPED',
+    ALL = 'ALL'
+  }
+
+  export enum SageIntacctField {
+    ACCOUNT = 'ACCOUNT',
+    CUSTOMER = 'CUSTOMER',
+    DEPARTMENT = 'DEPARTMENT',
+    CLASS = 'CLASS',
+    TAX_CODE = 'TAX_CODE'
+  }
+
+  export enum MappingSourceField {
+    PROJECT = 'PROJECT',
+    COST_CENTER = 'COST_CENTER',
+    TAX_GROUP = 'TAX_GROUP'
+  }
+
+  export enum MappingDestinationField {
+    CUSTOMER = 'CUSTOMER',
+    CLASS = 'CLASS',
+    DEPARTMENT = 'DEPARTMENT',
+    TAX_CODE = 'TAX_CODE'
+  }
+
+  export enum TaskLogType {
+    CREATING_AP_PAYMENT = 'CREATING_AP_PAYMENT',
+    CREATING_EXPENSE_REPORTS = 'CREATING_EXPENSE_REPORTS',
+    CREATING_CHARGE_CARD_TRANSACTIONS = 'CREATING_CHARGE_CARD_TRANSACTIONS',
+    CREATING_JOURNAL_ENTRIES = 'CREATING_JOURNAL_ENTRIES',
+    FETCHING_EXPENSES = 'FETCHING_EXPENSES',
+    CREATING_BILLS = 'CREATING_BILLS',
+    CREATING_REIMBURSEMENT = 'CREATING_REIMBURSEMENT'
+  }
+
+  export enum TaskLogState {
+    ENQUEUED = 'ENQUEUED',
+    IN_PROGRESS = 'IN_PROGRESS',
+    FAILED = 'FAILED',
+    FATAL = 'FATAL',
+    COMPLETE = 'COMPLETE',
+  }
+
+  export enum ExportMode {
+    MANUAL = 'MANUAL',
+    AUTO = 'AUTO'
+  }
+
+  export enum ExportState {
+    SUCCESS = 'SUCCESS',
+    FAILED = 'FAILED'
+  }
+
+  export enum PaginatorPage {
+    MAPPING = 'mapping',
+    DASHBOARD = 'dashboard',
+    EXPORT_LOG = 'export-log'
+  }
+
+  export enum FieldType {
+    TEXT = 'TEXT',
+    SELECT = 'SELECT'
+  }
+
+  export enum OperatingSystem {
+    WIN = 'Win',
+    MAC = 'Mac'
   }

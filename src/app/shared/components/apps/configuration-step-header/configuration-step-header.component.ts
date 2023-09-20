@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WindowService } from 'src/app/core/services/core/window.service';
+import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
   selector: 'app-configuration-step-header',
@@ -17,8 +18,13 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   @Input() showSyncButton: boolean;
 
   constructor(
-    public windowService: WindowService
+    public windowService: WindowService,
+    private mappingsService: SiMappingsService
   ) { }
+
+  refreshSageIntacctDimension() {
+    this.mappingsService.refreshSageIntacctDimensions().subscribe();
+  }
 
   ngOnInit(): void {
   }

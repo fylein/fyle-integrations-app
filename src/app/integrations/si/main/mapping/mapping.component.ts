@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { forkJoin } from 'rxjs';
+import { FyleField } from 'src/app/core/models/enum/enum.model';
+import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
   selector: 'app-mapping',
@@ -7,9 +13,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MappingComponent implements OnInit {
 
-  constructor() { }
+  isLoading: boolean;
+
+  mappingPages: MenuItem[] = [
+    {label: 'Employee', routerLink: '/integrations/intacct/main/mapping/employee_mapping'},
+    {label: 'Category', routerLink: '/integrations/intacct/main/mapping/category_mapping'}
+  ];
+
+  activeModule: MenuItem;
+
+  constructor(
+    private router: Router,
+    private mappingService: SiMappingsService
+  ) { }
+
+  private setupPages(): void {
+    this.isLoading = true;
+    this.mappingService.getMappingSettings().subscribe((response) => {
+      if (response.results && Array.isArray(response.results)) {
+        response.results.forEach((item) => {
+          if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY') {
+this.mappingPages.push({
+            label: new SnakeCaseToSpaceCasePipe().transform(item.source_field),
+            routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
+          });
+}
+        });
+      }
+    });
+    this.isLoading = false;
+  }
 
   ngOnInit(): void {
+    this.activeModule = this.mappingPages[0];
+    this.router.navigateByUrl(this.mappingPages[0].routerLink);
+    this.setupPages();
   }
 
 }

@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
 import { SiImportSettingService } from './si-import-setting.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('SiImportSettingService', () => {
   let service: SiImportSettingService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [SiImportSettingService]
+    });
     service = TestBed.inject(SiImportSettingService);
   });
 

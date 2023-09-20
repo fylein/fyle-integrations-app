@@ -97,4 +97,8 @@ export class TrackingService {
   intacctUpdateEvent (eventName: IntacctUpdateEvent, additionalProperties: Partial<UpdateIntacctEventAdditionalProperty> | void): void {
     this.eventTrack(`Update event: ${eventName}`, additionalProperties);
   }
+
+  onDateFilter(properties: {filterType: 'existing' | 'custom', startDate: Date, endDate: Date}): void {
+    this.eventTrack('Date filter', properties);
+  }
 }

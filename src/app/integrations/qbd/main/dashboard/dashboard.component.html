@@ -112,11 +112,11 @@
                 </p-table>
             </div>
             <div *ngIf="accountingExports.count === 0">
-                <app-zero-state-with-illustration></app-zero-state-with-illustration>
+                <app-zero-state-with-illustration [mainText]="'No IIF logs to show yet!'" [subText]="'All your successful exports and their details will be stored here.'"></app-zero-state-with-illustration>
             </div>
         </div>
         <div *ngIf="accountingExports.count > 0" class="tw-p-24-px">
-            <app-paginator [totalCount]="totalCount" (offsetChangeEvent)="offsetChanges($event)" (pageChangeEvent)="pageChanges($event)"></app-paginator>
+            <app-paginator [totalCount]="totalCount"(pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)" [pageType]="PaginatorPage.DASHBOARD" [page]="currentPage" [dropDownValue]="limit"></app-paginator>
         </div>
     </div>
 </div>

@@ -7,19 +7,33 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { SiRoutingModule } from './si-routing.module';
+import { MainComponent } from './main/main.component';
+import { DashboardComponent } from './main/dashboard/dashboard.component';
+import { ConfigurationComponent } from './main/configuration/configuration.component';
+import { ConfigurationExportSettingComponent } from './main/configuration/configuration-export-setting/configuration-export-setting.component';
+import { ConfigurationAdvancedSettingComponent } from './main/configuration/configuration-advanced-setting/configuration-advanced-setting.component';
+import { ConfigurationImportSettingComponent } from './main/configuration/configuration-import-setting/configuration-import-setting.component';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
   declarations: [
-    SiComponent
+    SiComponent,
+    MainComponent,
+    DashboardComponent,
+    ConfigurationComponent,
+    ConfigurationExportSettingComponent,
+    ConfigurationAdvancedSettingComponent,
+    ConfigurationImportSettingComponent
   ],
   imports: [
+    DialogModule,
+    TableModule,
     CommonModule,
     SiRoutingModule,
     SharedModule,
     TabMenuModule,
     DropdownModule,
-    TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })

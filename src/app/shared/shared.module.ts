@@ -21,6 +21,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ErrorComponent } from './components/core/error/error.component';
 import { TrimCharacterPipe } from './pipes/trim-character.pipe';
 import { SnakeCaseToSpaceCasePipe } from './pipes/snake-case-to-space-case.pipe';
+import { SearchPipe } from './pipes/search.pipe';
 import { PaginatorComponent } from './helper/paginator/paginator.component';
 import { MandatoryFieldComponent } from './helper/mandatory-field/mandatory-field.component';
 import { MandatoryErrorMessageComponent } from './helper/mandatory-error-message/mandatory-error-message.component';
@@ -42,12 +43,18 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
 import { CalendarModule } from 'primeng/calendar';
 import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
+import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
+import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
+import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
+import { TableModule } from 'primeng/table';
 import { ConfigurationExportSettingsComponent } from './components/si/configuration/configuration-export-settings/configuration-export-settings.component';
 import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
 import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
+import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
+import {ChipsModule} from 'primeng/chips';
 
 @NgModule({
   declarations: [
@@ -56,6 +63,7 @@ import { ConfigurationAdvancedSettingsComponent } from './components/si/configur
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
+    SearchPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -77,9 +85,13 @@ import { ConfigurationAdvancedSettingsComponent } from './components/si/configur
     IntacctStepperComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
+    MappingTableComponent,
+    MappingFilterComponent,
+    MappingHeaderSectionComponent,
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
-    ConfigurationAdvancedSettingsComponent
+    ConfigurationAdvancedSettingsComponent,
+    SkipExportComponent
   ],
   imports: [
     CommonModule,
@@ -99,7 +111,9 @@ import { ConfigurationAdvancedSettingsComponent } from './components/si/configur
     DragDropModule,
     ProgressBarModule,
     CalendarModule,
+    ChipsModule,
     CascadeSelectModule,
+    TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -109,6 +123,7 @@ import { ConfigurationAdvancedSettingsComponent } from './components/si/configur
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
+    SearchPipe,
     PaginatorComponent,
     MandatoryFieldComponent,
     MandatoryErrorMessageComponent,
@@ -127,6 +142,7 @@ import { ConfigurationAdvancedSettingsComponent } from './components/si/configur
     ConfigurationMultiSelectComponent,
     DropdownModule,
     CalendarModule,
+    ChipsModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     CascadeSelectModule,
@@ -135,6 +151,9 @@ import { ConfigurationAdvancedSettingsComponent } from './components/si/configur
     ConfigurationStepHeaderComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
+    MappingTableComponent,
+    MappingFilterComponent,
+    MappingHeaderSectionComponent,
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent
