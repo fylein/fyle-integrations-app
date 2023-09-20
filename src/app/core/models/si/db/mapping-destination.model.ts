@@ -1,8 +1,5 @@
-/* Tslint:disable */
-
 import { DestinationAttributeDetail } from "./destination-attribute-detail.model";
 
-// TODO: Use something for serialization / deserialization
 export type MappingDestination = {
   id?: number;
   attribute_type?: string;

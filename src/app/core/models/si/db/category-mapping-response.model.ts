@@ -1,4 +1,3 @@
-/* Tslint:disable */
 import { CategoryMapping } from "./category-mapping.model";
 
 export type CategoryMappingsResponse = {

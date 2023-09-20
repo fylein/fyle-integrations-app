@@ -1,6 +1,5 @@
-/* Tslint:disable */
 import { ExpenseAttributeDetail } from "./expense-attribute-detail.model";
-// TODO: Use something for serialization / deserialization
+
 export type MappingSource = {
   id: number;
   attribute_type?: string;

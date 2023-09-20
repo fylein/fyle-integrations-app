@@ -12,6 +12,8 @@ import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from '
 import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
+import { CategoryMapping } from 'src/app/core/models/si/db/category-mapping.model';
+import { GeneralMapping } from 'src/app/core/models/si/db/mappings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +96,7 @@ export class SiMappingsService {
         return groupedAttributes;
       }, {
         ACCOUNT: [],
+        EXPENSE_TYPE: [],
         EXPENSE_PAYMENT_TYPE: [],
         VENDOR: [],
         EMPLOYEE: [],
@@ -103,15 +106,22 @@ export class SiMappingsService {
     }));
   }
 
-  getCategoryMappings(pageLimit: number, pageOffset: number): Observable<CategoryMappingsResponse> {
+  getCategoryMappings(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState): Observable<CategoryMappingsResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
+    const isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
     return this.apiService.get(
       `/workspaces/${workspaceId}/mappings/category/`, {
         limit: pageLimit,
         offset: pageOffset,
-        source_active: true
+        mapped: mappingState===MappingState.ALL ? MappingState.ALL : isMapped,
+        destination_type: sourceType
       }
     );
+  }
+
+  postCategoryMappings(mapping: CategoryMapping): Observable<GeneralMapping> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.post(`/workspaces/${workspaceId}/mappings/category/`, mapping);
   }
 
   getEmployeeMappings(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState): Observable<EmployeeMappingsResponse> {

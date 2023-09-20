@@ -20,6 +20,7 @@ export type DefaultDestinationAttribute = {
 
 export type GroupedDestinationAttribute = {
   ACCOUNT: DestinationAttribute[],
+  EXPENSE_TYPE: DestinationAttribute[],
   EXPENSE_PAYMENT_TYPE: DestinationAttribute[],
   VENDOR: DestinationAttribute[],
   CHARGE_CARD_NUMBER: DestinationAttribute[],
