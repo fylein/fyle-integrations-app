@@ -32,11 +32,12 @@ export class MappingComponent implements OnInit {
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
-          if(item.source_field!=FyleField.EMPLOYEE && item.source_field!='CATEGORY')
-          this.mappingPages.push({
+          if (item.source_field!=FyleField.EMPLOYEE && item.source_field!='CATEGORY') {
+this.mappingPages.push({
             label: new SnakeCaseToSpaceCasePipe().transform(item.source_field),
             routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
           });
+}
         });
       }
     });
