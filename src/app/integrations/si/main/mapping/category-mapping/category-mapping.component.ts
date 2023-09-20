@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { CorporateCreditCardExpensesObject, FieldType, FyleField, IntacctReimbursableExpensesObject, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
-import { CategoryMapping } from 'src/app/core/models/si/db/category-mapping.model';
+import { CategoryMapping, CategoryMappingResult } from 'src/app/core/models/si/db/category-mapping.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
@@ -143,44 +143,39 @@ export class CategoryMappingComponent implements OnInit {
   getDropdownValue(categoryMapping: CategoryMapping[]) {
     if (categoryMapping.length) {
       if (this.employeeFieldMapping === FyleField.VENDOR) {
-        return categoryMapping[0].destination_account?.id;
+        return categoryMapping[0].destination_account;
       } else if (this.employeeFieldMapping === FyleField.EMPLOYEE) {
-        return categoryMapping[0].destination_expense_head?.id;
+        return categoryMapping[0].destination_expense_head;
       }
     }
     return null;
   }
 
-  save(selectedRow: CategoryMapping, event: any) {
-    const sourceId = selectedRow.source_category.id;
-    const destinationAccountId = this.employeeFieldMapping === FyleField.VENDOR ? event.value.id : null;
-    const destinationExpenseHeadId = this.employeeFieldMapping === FyleField.EMPLOYEE ? event.value.id : null;
+  save(selectedRow: CategoryMappingResult, event: any) {
+    const sourceId = selectedRow.id;
+    this.isLoading = true;
 
-    if ((destinationAccountId || destinationExpenseHeadId)) {
-      this.isLoading = true;
+    const categoryMappingsPayload: CategoryMapping = {
+      source_category: {
+        id: sourceId
+      },
+      destination_account: {
+        id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.categorymapping.length && selectedRow.categorymapping[0].destination_account ? selectedRow.categorymapping[0].destination_account?.id : null)
+      },
+      destination_expense_head: {
+        id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.categorymapping.length && selectedRow.categorymapping[0].destination_expense_head ? selectedRow.categorymapping[0].destination_expense_head?.id : null)
+      },
+      workspace: parseInt(this.workspaceService.getWorkspaceId())
+    };
 
-      const categoryMappingsPayload: CategoryMapping = {
-        source_category: {
-          id: sourceId
-        },
-        destination_account: {
-          id: destinationAccountId
-        },
-        destination_expense_head: {
-          id: destinationExpenseHeadId
-        },
-        workspace: parseInt(this.workspaceService.getWorkspaceId())
-      };
-
-      this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
-        this.setupPage();
-        this.isLoading = false;
-      }, () => {
-        this.isLoading = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
-      });
-    }
+    this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
+      this.setupPage();
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+    });
   }
 
   setupPage() {

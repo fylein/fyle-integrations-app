@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { FieldType, MappingState, PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
 import { MappingSetting, MappingSettingResponse, MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
-import { MappingIntacct, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
+import { MappingIntacct, MappingPost, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { EmployeeMappingResult } from 'src/app/core/models/si/db/employee-mapping.model';
+import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-generic-mapping',
@@ -27,9 +30,11 @@ export class GenericMappingComponent implements OnInit {
 
   mappingStats: MappingStats;
 
-  mappings: MappingSettingResponse;
+  mappings: ExtendedExpenseAttribute[];
 
-  filteredMappings: MappingSetting[];
+  filteredMappings: ExtendedExpenseAttribute[];
+
+  dropdownOptions: DestinationAttribute[];
 
   page: string;
 
@@ -40,6 +45,8 @@ export class GenericMappingComponent implements OnInit {
   pageNo: number = 0;
 
   totalCount: number;
+
+  filteredMappingCount: number;
 
   selectedMappingFilter: MappingState = MappingState.ALL;
 
@@ -60,12 +67,42 @@ export class GenericMappingComponent implements OnInit {
     private mappingService: SiMappingsService
   ) { }
 
+  tableDropdownWidth() {
+    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
+    if (element) {
+      element.style.width = '300px';
+    }
+  }
+
+  getDropdownValue(mapping: ExtendedExpenseAttribute) {
+    if (mapping.mapping.length) {
+      return mapping.mapping[0].destination;
+    }
+    return null;
+  }
+
+  save(selectedRow: ExtendedExpenseAttribute, event:any) {
+    const payload: MappingPost = {
+      source_type: this.mappingSetting.source_field,
+      source_value: selectedRow.value,
+      destination_type: this.mappingSetting.destination_field,
+      destination_id: event.value.destination_id,
+      destination_value: event.value.value
+    };
+    this.mappingService.postMapping(payload).subscribe(() => {
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping saved successfully');
+      this.setupPage();
+    }, err => {
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+    });
+  }
+
   private getFilteredMappings() {
-    // This.mappingService.getEmployeeMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
-    //   This.filteredMappings = intacctMappingResult.results.concat();
-    //   This.filteredMappingCount = this.filteredMappings.length;
-    //   This.isLoading = false;
-    // });
+    this.mappingService.getMappings(MappingState.ALL, this.limit, this.pageNo, this.sourceType, this.mappingSetting.destination_field).subscribe((response: ExtendedExpenseAttributeResponse) => {
+      this.filteredMappings = response.results.concat();
+      this.filteredMappingCount = this.filteredMappings.length;
+      this.isLoading = false;
+    });
   }
 
   pageSizeChanges(limit: number): void {
@@ -93,15 +130,15 @@ export class GenericMappingComponent implements OnInit {
   }
 
   mappingSearchFilter(searchValue: string) {
-    // If (searchValue.length > 0) {
-    //   Const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
-    //     Mapping.value?.toLowerCase().includes(searchValue)
-    //   );
-    //   This.filteredMappings = results;
-    // } else {
-    //   This.filteredMappings = this.mappings.concat();
-    // }
-    // This.filteredMappingCount = this.filteredMappings.length;
+    if (searchValue.length > 0) {
+      const results: ExtendedExpenseAttribute[] = this.mappings.filter((mapping) =>
+        mapping.value?.toLowerCase().includes(searchValue)
+      );
+      this.filteredMappings = results;
+    } else {
+      this.filteredMappings = this.mappings.concat();
+    }
+    this.filteredMappingCount = this.filteredMappings.length;
   }
 
   setupPage() {
@@ -115,20 +152,26 @@ export class GenericMappingComponent implements OnInit {
       this.mappingSetting = mappingSetting[0];
       this.page = `${new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.mappingSetting.source_field))} Mapping`;
       this.configuration = response[0];
-      this.mappings = response[1];
-      this.filteredMappings = this.mappings.results.concat();
-      this.totalCount = this.mappings.count;
-
-      this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field).subscribe((mappingStats: MappingStats) => {
+      forkJoin([
+        this.mappingService.getSageIntacctDestinationAttributes(this.mappingSetting.destination_field),
+        this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field),
+        this.mappingService.getMappings(MappingState.ALL, this.limit, this.pageNo, this.sourceType, this.mappingSetting.destination_field)
+      ]).subscribe(([options, mappingStats, mappings]) => {
         this.mappingStats = mappingStats;
+        this.totalCount = mappings.count;
+        this.mappings = mappings.results;
+        this.filteredMappings = this.mappings.concat();
+        this.dropdownOptions = options;
+        this.isLoading = false;
       });
-
-      this.isLoading = false;
     });
   }
 
   ngOnInit(): void {
-    this.setupPage();
+    this.route.params.subscribe(() => {
+      this.isLoading = true;
+      this.setupPage();
+    });
   }
 
 }

@@ -32,13 +32,13 @@ export class EmployeeMappingComponent implements OnInit {
 
   mappings: EmployeeMappingResult[];
 
+  filteredMappings: EmployeeMappingResult[];
+
   searchTerm: string = '';
 
   fyleEmployeeOptions: DestinationAttribute[];
 
   filteredfyleEmployeeOptions: DestinationAttribute[] = [];
-
-  filteredMappings: EmployeeMappingResult[];
 
   sageIntacctEmployee: MappingDestination[];
 
@@ -114,16 +114,16 @@ export class EmployeeMappingComponent implements OnInit {
   save(selectedRow: EmployeeMappingResult, event: any): void {
     const employeeMapping: EmployeeMappingPost = {
       source_employee: {
-        id: selectedRow.employeemapping[0].source_employee.id
+        id: selectedRow.id
       },
       destination_vendor: {
-        id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.employeemapping && selectedRow.employeemapping[0].destination_vendor ? selectedRow.employeemapping[0].destination_vendor?.id : null)
+        id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.employeemapping.length && selectedRow.employeemapping[0].destination_vendor ? selectedRow.employeemapping[0].destination_vendor?.id : null)
       },
       destination_employee: {
-        id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.employeemapping && selectedRow.employeemapping[0].destination_employee ? selectedRow.employeemapping[0].destination_employee?.id : null)
+        id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.employeemapping.length && selectedRow.employeemapping[0].destination_employee ? selectedRow.employeemapping[0].destination_employee?.id : null)
       },
       destination_card_account: {
-        id: (selectedRow.employeemapping && selectedRow.employeemapping[0].destination_card_account ? selectedRow.employeemapping[0].destination_card_account?.id : null)
+        id: (selectedRow.employeemapping.length && selectedRow.employeemapping[0].destination_card_account ? selectedRow.employeemapping[0].destination_card_account?.id : null)
       },
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };

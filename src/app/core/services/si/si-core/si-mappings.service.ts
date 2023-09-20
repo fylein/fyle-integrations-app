@@ -9,10 +9,11 @@ import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/si/d
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
-import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
+import { MappingIntacct, MappingPost, MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { CategoryMapping } from 'src/app/core/models/si/db/category-mapping.model';
 import { GeneralMapping } from 'src/app/core/models/si/db/mappings.model';
+import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 
 @Injectable({
   providedIn: 'root'
@@ -152,18 +153,24 @@ export class SiMappingsService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
   }
 
-  getMappings(sourceType: string, uri: string, sourceActive?: boolean, limit: number = 500, offset: number = 0, tableDimension: number = 2): Observable<MappingSettingResponse> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {source_type: string, limit: number, offset: number, table_dimension: number, source_active?: boolean} = {
-      source_type: sourceType,
+  getMappings(mappingState: MappingState, limit: number, offset: number, sourceType: string, destinationType: string): Observable<ExtendedExpenseAttributeResponse> {
+    const isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
+    const params: any = {
       limit,
       offset,
-      table_dimension: tableDimension
+      mapped: mappingState===MappingState.ALL ? MappingState.ALL : isMapped,
+      source_type: sourceType.toUpperCase(),
+      destination_type: destinationType
     };
-    if (sourceActive) {
-      params.source_active = sourceActive;
-    }
-    const url = uri ? uri.split('/api')[1] : `/workspaces/${workspaceId}/mappings/`;
-    return this.apiService.get(url, params);
+
+    // If (alphabetsFilter.length) {
+    //   Params.mapping_source_alphabets = alphabetsFilter;
+    // }
+
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/expense_attributes/`, params);
+  }
+
+  postMapping(mapping: MappingPost): Observable<EmployeeMapping> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 }

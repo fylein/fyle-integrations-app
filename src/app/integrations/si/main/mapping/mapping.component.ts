@@ -1,3 +1,4 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
@@ -33,20 +34,20 @@ export class MappingComponent implements OnInit {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY') {
-this.mappingPages.push({
-            label: new SnakeCaseToSpaceCasePipe().transform(item.source_field),
+          this.mappingPages.push({
+            label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
             routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
           });
 }
         });
       }
+      this.router.navigateByUrl(this.mappingPages[0].routerLink);
+      this.isLoading = false;
     });
-    this.isLoading = false;
   }
 
   ngOnInit(): void {
     this.activeModule = this.mappingPages[0];
-    this.router.navigateByUrl(this.mappingPages[0].routerLink);
     this.setupPages();
   }
 

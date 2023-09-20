@@ -41,21 +41,21 @@
                     </ng-template>
                     <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
                         <tr>
-                            <td>{{ mapping.source_category.value }}</td>
+                            <td>{{ mapping.value }}</td>
                             <td>
                                 <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
                                 [options]="getCategoryMappingOptions()" 
                                 optionLabel="value" 
                                 placeholder="Select an Option" 
                                 (onChange)="save(mapping, $event); getDropdownValue(mapping)"
-                                [ngModel]="getDropdownValue(mapping)"
+                                [ngModel]="getDropdownValue(mapping.categorymapping)"
                                 [filter]="true"
                                 filterBy="value">
                                 </p-dropdown> 
                             </td>
                             <td>
-                                <p *ngIf="mapping.destination_value" class="mapped">MAPPED</p>
-                                <p *ngIf="!mapping.destination_value" class="unmapped">UNMAPPED</p>
+                                <p *ngIf="getDropdownValue(mapping.categorymapping)" class="mapped">MAPPED</p>
+                                <p *ngIf="!getDropdownValue(mapping.categorymapping)" class="unmapped">UNMAPPED</p>
                             </td>
                         </tr>
                     </ng-template>

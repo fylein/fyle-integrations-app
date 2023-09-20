@@ -12,7 +12,7 @@ export type EmployeeMapping = {
 };
 
 export type EmployeeMappingResult = {
-  id?: number;
+  id: number;
   employeemapping: EmployeeMapping[];
   attribute_type?: string;
   display_name?: string;

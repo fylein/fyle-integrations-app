@@ -42,23 +42,22 @@
                     <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
                         <tr>
                             <td>
-                                <!-- {{ mapping.source_category.value }} -->
+                                {{ mapping.value }}
                             </td>
                             <td>
-                                <p-dropdown></p-dropdown>
-                                <!-- <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                                [options]="getCategoryMappingOptions()" 
+                                <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
+                                [options]="dropdownOptions" 
                                 optionLabel="value" 
                                 placeholder="Select an Option" 
-                                (onChange)="save(mapping, $event); getDropdownValue(mapping)"
+                                (onChange)="save(mapping, $event);"
                                 [ngModel]="getDropdownValue(mapping)"
                                 [filter]="true"
                                 filterBy="value">
-                                </p-dropdown>  -->
+                                </p-dropdown> 
                             </td>
                             <td>
-                                <p *ngIf="mapping.destination_value" class="mapped">MAPPED</p>
-                                <p *ngIf="!mapping.destination_value" class="unmapped">UNMAPPED</p>
+                                <p *ngIf="mapping.mapping.length" class="mapped">MAPPED</p>
+                                <p *ngIf="!mapping.mapping.length" class="unmapped">UNMAPPED</p>
                             </td>
                         </tr>
                     </ng-template>
