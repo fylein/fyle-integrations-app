@@ -77,7 +77,7 @@ export class GenericMappingComponent implements OnInit {
     this.mappingService.postMappings(mappingPayload).subscribe(() => {
       this.mappingService.getMappingStats(this.sourceType).subscribe((mappingStat: MappingStats) => {
         this.mappingStats = mappingStat;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping done successfully');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Changes saved successfully');
       });
     }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving the mappings, please try again later');
