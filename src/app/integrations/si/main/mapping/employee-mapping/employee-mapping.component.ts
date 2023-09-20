@@ -111,19 +111,20 @@ export class EmployeeMappingComponent implements OnInit {
     return null;
   }
 
-  save(selectedRow: EmployeeMapping, event: any): void {
+  save(selectedRow: EmployeeMappingResult, event: any): void {
+    console.log(selectedRow, event);
     const employeeMapping: EmployeeMappingPost = {
       source_employee: {
-        id: selectedRow.id
+        id: selectedRow.employeemapping[0].source_employee.id
       },
       destination_vendor: {
-        id: this.getAttributesFilteredByConfig()[0]===FyleField.VENDOR ? event.value.id : null
+        id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.employeemapping && selectedRow.employeemapping[0].destination_vendor ? selectedRow.employeemapping[0].destination_vendor?.id : null)
       },
       destination_employee: {
-        id: this.getAttributesFilteredByConfig()[0]===FyleField.EMPLOYEE ? event.value.id : null
+        id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.employeemapping && selectedRow.employeemapping[0].destination_employee ? selectedRow.employeemapping[0].destination_employee?.id : null)
       },
       destination_card_account: {
-        id: null
+        id: (selectedRow.employeemapping && selectedRow.employeemapping[0].destination_card_account ? selectedRow.employeemapping[0].destination_card_account?.id : null)
       },
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
@@ -216,10 +217,8 @@ export class EmployeeMappingComponent implements OnInit {
 
   ngOnInit(): void {
     this.mappingService.getConfiguration().subscribe((response) => {
-      this.isLoading = true;
       this.employeeFieldMapping = response.employee_field_mapping;
       this.setupPage();
-      this.isLoading = false;
     });
   }
 
