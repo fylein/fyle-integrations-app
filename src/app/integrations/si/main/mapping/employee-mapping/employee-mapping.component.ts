@@ -112,7 +112,6 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   save(selectedRow: EmployeeMappingResult, event: any): void {
-    console.log(selectedRow, event);
     const employeeMapping: EmployeeMappingPost = {
       source_employee: {
         id: selectedRow.employeemapping[0].source_employee.id

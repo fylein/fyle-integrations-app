@@ -61,10 +61,10 @@ export class GenericMappingComponent implements OnInit {
   ) { }
 
   private getFilteredMappings() {
-    // this.mappingService.getEmployeeMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
-    //   this.filteredMappings = intacctMappingResult.results.concat();
-    //   this.filteredMappingCount = this.filteredMappings.length;
-    //   this.isLoading = false;
+    // This.mappingService.getEmployeeMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
+    //   This.filteredMappings = intacctMappingResult.results.concat();
+    //   This.filteredMappingCount = this.filteredMappings.length;
+    //   This.isLoading = false;
     // });
   }
 
@@ -93,15 +93,15 @@ export class GenericMappingComponent implements OnInit {
   }
 
   mappingSearchFilter(searchValue: string) {
-    // if (searchValue.length > 0) {
-    //   const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
-    //     mapping.value?.toLowerCase().includes(searchValue)
+    // If (searchValue.length > 0) {
+    //   Const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
+    //     Mapping.value?.toLowerCase().includes(searchValue)
     //   );
-    //   this.filteredMappings = results;
+    //   This.filteredMappings = results;
     // } else {
-    //   this.filteredMappings = this.mappings.concat();
+    //   This.filteredMappings = this.mappings.concat();
     // }
-    // this.filteredMappingCount = this.filteredMappings.length;
+    // This.filteredMappingCount = this.filteredMappings.length;
   }
 
   setupPage() {
@@ -111,7 +111,6 @@ export class GenericMappingComponent implements OnInit {
       this.mappingService.getConfiguration(),
       this.mappingService.getMappingSettings()
     ]).subscribe((response) => {
-      console.log(response);
       const mappingSetting = response[1].results.filter((mappingSetting) => mappingSetting.source_field === this.sourceType.toUpperCase());
       this.mappingSetting = mappingSetting[0];
       this.page = `${new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.mappingSetting.source_field))} Mapping`;
