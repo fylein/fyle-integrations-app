@@ -80,12 +80,6 @@ export class EmployeeMappingComponent implements OnInit {
     }
   }
 
-  filterOptions() {
-    this.filteredfyleEmployeeOptions = this.fyleEmployeeOptions
-      .filter(option => option.value.toLowerCase().includes(this.searchTerm.toLowerCase()))
-      .slice(0, 15);
-  }
-
   triggerAutoMapEmployees() {
     const that = this;
     that.isLoading = true;
@@ -108,9 +102,9 @@ export class EmployeeMappingComponent implements OnInit {
 
   getDropdownValue(employeeMapping: EmployeeMapping[]) {
     if (employeeMapping.length) {
-      if (this.getAttributesFilteredByConfig()[0]===FyleField.VENDOR) {
+      if (this.employeeFieldMapping===FyleField.VENDOR) {
         return employeeMapping[0].destination_vendor;
-      } else if (this.getAttributesFilteredByConfig()[0]===FyleField.EMPLOYEE) {
+      } else if (this.employeeFieldMapping===FyleField.EMPLOYEE) {
         return employeeMapping[0].destination_employee;
       }
     }
@@ -165,7 +159,7 @@ export class EmployeeMappingComponent implements OnInit {
     this.getFilteredMappings();
   }
 
-  mappingSeachingFilter(searchValue: string) {
+  mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
       const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
         mapping.value?.toLowerCase().includes(searchValue)
@@ -225,6 +219,7 @@ export class EmployeeMappingComponent implements OnInit {
       this.isLoading = true;
       this.employeeFieldMapping = response.employee_field_mapping;
       this.setupPage();
+      this.isLoading = false;
     });
   }
 

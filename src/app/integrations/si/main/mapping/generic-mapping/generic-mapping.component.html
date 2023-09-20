@@ -1,3 +1,75 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
+<div *ngIf="!isLoading" class="tw-py-16-px tw-px-120-px">
+    <div class="tw-inline-flex tw-space-x-4">
+        <div class="tw-rounded-10-px tw-bg-white tw-border-1-px tw-border-separator tw-p-16-px tw-w-200-px tw-h-84-px">
+            <div class="tw-w-36-px tw-h-6-px tw-rounded-12-px tw-border tw-bg-mandatory-field-color">
+            </div>
+            <div class="tw-pt-8-px tw-text-faded-text-color tw-text-12-px">
+                <p>Total Items</p>
+            </div>
+            <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
+                <p>{{mappingStats?.all_attributes_count}}</p>
+            </div>
+        </div>
+    
+        <div class="tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-p-16-px tw-w-200-px tw-h-84-px">
+            <div class="tw-w-36-px tw-h-6-px tw-rounded-12-px tw-border tw-bg-mandatory-field-color">
+            </div>
+            <div class="tw-pt-8-px tw-text-faded-text-color tw-text-12-px">
+                <p>Unmapped Items</p>
+            </div>
+            <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
+                <p>{{mappingStats?.unmapped_attributes_count}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
+        <div class="tw-p-24-px tw-border tw-border-b-separator">
+            <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)"></app-mapping-filter>
+        </div>
+        <div *ngIf="totalCount > 0" >
+            <div>
+                <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem' }">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>{{ this.sourceType | snakeCaseToSpaceCase | titlecase }}</th>
+                            <th>Mapping</th>
+                            <th>Status</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
+                        <tr>
+                            <td>
+                                <!-- {{ mapping.source_category.value }} -->
+                            </td>
+                            <td>
+                                <p-dropdown></p-dropdown>
+                                <!-- <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
+                                [options]="getCategoryMappingOptions()" 
+                                optionLabel="value" 
+                                placeholder="Select an Option" 
+                                (onChange)="save(mapping, $event); getDropdownValue(mapping)"
+                                [ngModel]="getDropdownValue(mapping)"
+                                [filter]="true"
+                                filterBy="value">
+                                </p-dropdown>  -->
+                            </td>
+                            <td>
+                                <p *ngIf="mapping.destination_value" class="mapped">MAPPED</p>
+                                <p *ngIf="!mapping.destination_value" class="unmapped">UNMAPPED</p>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+        <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount" >
+            <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
+        </div>
+        <div *ngIf="!totalCount">
+            <app-zero-state-with-illustration [mainText]="'No categories to show yet!'" [subText]="'Looks like your search term does not match any of Category mappings'"></app-zero-state-with-illustration>
+        </div>
+    </div>
+</div>

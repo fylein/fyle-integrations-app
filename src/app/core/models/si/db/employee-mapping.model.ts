@@ -2,7 +2,6 @@ import { ExpenseAttributeDetail } from './expense-attribute-detail.model';
 import { MappingDestination } from './mapping-destination.model';
 import { MappingSource } from './mapping-source.model';
 
-/* Tslint:disable */
 export type EmployeeMapping = {
   id: number;
   source_employee: MappingSource;

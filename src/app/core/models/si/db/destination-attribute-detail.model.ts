@@ -1,5 +1,3 @@
-/* Tslint:disable */
-
 export type DestinationAttributeDetail = {
   email: string;
   customer_id: string;

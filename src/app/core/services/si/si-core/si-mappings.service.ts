@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
@@ -110,7 +109,7 @@ export class SiMappingsService {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
     return this.apiService.get(
-      `/workspaces/${workspaceId}/mappings/category/`, {
+      `/workspaces/${workspaceId}/mappings/category_attributes/`, {
         limit: pageLimit,
         offset: pageOffset,
         mapped: mappingState===MappingState.ALL ? MappingState.ALL : isMapped,

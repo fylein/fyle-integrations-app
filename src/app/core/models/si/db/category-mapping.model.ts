@@ -1,8 +1,6 @@
 import { MappingDestination } from "./mapping-destination.model";
 import { MappingSource } from "./mapping-source.model";
 
-
-/* Tslint:disable */
 export type CategoryMapping = {
   id?: number;
   source_category: MappingSource;

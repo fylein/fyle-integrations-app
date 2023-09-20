@@ -18,7 +18,7 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class CategoryMappingComponent implements OnInit {
 
-  isLoading: boolean = false;
+  isLoading: boolean = true;
 
   isInitialSetupComplete: boolean = false;
 
@@ -77,7 +77,7 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   getCategoryMappingOptions() {
-    if (this.getAttributesFilteredByConfig()[0]==='EXPENSE_TYPE'){
+    if (this.employeeFieldMapping === FyleField.EMPLOYEE){
       return this.sageIntacctExpenseTypes;
     }
     return this.sageIntacctAccounts;
@@ -91,7 +91,7 @@ export class CategoryMappingComponent implements OnInit {
     });
   }
 
-  mappingSeachingFilter(searchValue: string) {
+  mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
       const results: CategoryMapping[] = this.mappings.filter((mapping) =>
         mapping.source_category.value?.toLowerCase().includes(searchValue)
@@ -142,9 +142,9 @@ export class CategoryMappingComponent implements OnInit {
 
   getDropdownValue(categoryMapping: CategoryMapping[]) {
     if (categoryMapping.length) {
-      if (this.getAttributesFilteredByConfig()[0]==='ACCOUNT') {
+      if (this.employeeFieldMapping === FyleField.VENDOR) {
         return categoryMapping[0].destination_account?.id;
-      } else if (this.getAttributesFilteredByConfig()[0]==='EXPENSE_TYPE') {
+      } else if (this.employeeFieldMapping === FyleField.EMPLOYEE) {
         return categoryMapping[0].destination_expense_head?.id;
       }
     }
@@ -153,8 +153,8 @@ export class CategoryMappingComponent implements OnInit {
 
   save(selectedRow: CategoryMapping, event: any) {
     const sourceId = selectedRow.source_category.id;
-    const destinationAccountId = this.getAttributesFilteredByConfig()[0]==='ACCOUNT' ? event.value.id : null;
-    const destinationExpenseHeadId = this.getAttributesFilteredByConfig()[0]==='EXPENSE_TYPE' ? event.value.id : null;
+    const destinationAccountId = this.employeeFieldMapping === FyleField.VENDOR ? event.value.id : null;
+    const destinationExpenseHeadId = this.employeeFieldMapping === FyleField.EMPLOYEE ? event.value.id : null;
 
     if ((destinationAccountId || destinationExpenseHeadId)) {
       this.isLoading = true;
@@ -184,7 +184,6 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   setupPage() {
-    this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
@@ -205,12 +204,10 @@ export class CategoryMappingComponent implements OnInit {
         this.isLoading = false;
       }
     );
-    this.isLoading = false;
   }
 
   ngOnInit(): void {
     this.mappingService.getConfiguration().subscribe((response) => {
-      this.isLoading = true;
       this.employeeFieldMapping = response.employee_field_mapping;
       this.reimbursableExpenseObject = response.reimbursable_expenses_object;
       this.cccExpenseObject = response.corporate_credit_card_expenses_object;

@@ -1,5 +1,3 @@
-/* Tslint:disable */
-
 export type ExpenseAttributeDetail = {
   location: string;
   full_name: string;

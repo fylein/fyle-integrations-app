@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { forkJoin } from 'rxjs';
+import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
   selector: 'app-mapping',
@@ -25,21 +27,14 @@ export class MappingComponent implements OnInit {
     private mappingService: SiMappingsService
   ) { }
 
-  private snakeToTitleCase(str: string): string {
-    return str
-      .replace(/_/g, ' ') // Replace underscores with spaces
-      .replace(/\w\S*/g, (txt) => {
-        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); // Title case
-      });
-  }
-
   private setupPages(): void {
     this.isLoading = true;
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
+          if(item.source_field!=FyleField.EMPLOYEE && item.source_field!='CATEGORY')
           this.mappingPages.push({
-            label: this.snakeToTitleCase(item.source_field),
+            label: new SnakeCaseToSpaceCasePipe().transform(item.source_field),
             routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
           });
         });

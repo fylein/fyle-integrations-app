@@ -3,10 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { FieldType, MappingState, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
+import { Configuration } from 'src/app/core/models/db/configuration.model';
+import { MappingSetting, MappingSettingResponse, MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
 import { MappingIntacct, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { TitleCasePipe } from '@angular/common';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
   selector: 'app-generic-mapping',
@@ -17,11 +21,17 @@ export class GenericMappingComponent implements OnInit {
 
   isLoading: boolean;
 
-  mappingState: MappingStats;
+  configuration: Configuration;
 
-  mappings: MappingResponse;
+  mappingSetting: MinimalMappingSetting;
 
-  filteredMappings: MappingIntacct[];
+  mappingStats: MappingStats;
+
+  mappings: MappingSettingResponse;
+
+  filteredMappings: MappingSetting[];
+
+  page: string;
 
   sourceType: string;
 
@@ -50,47 +60,71 @@ export class GenericMappingComponent implements OnInit {
     private mappingService: SiMappingsService
   ) { }
 
-  getOps() {
-    this.operationgSystem = this.window.getOperatingSystem();
+  private getFilteredMappings() {
+    // this.mappingService.getEmployeeMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
+    //   this.filteredMappings = intacctMappingResult.results.concat();
+    //   this.filteredMappingCount = this.filteredMappings.length;
+    //   this.isLoading = false;
+    // });
   }
 
-  // PageSizeChanges(limit: number): void {
-  //   This.isLoading = true;
-  //   This.limit = limit;
-  //   This.pageNo = 0;
-  //   This.currentPage = 1;
-  //   This.getFilteredMappings();
-  // }
+  pageSizeChanges(limit: number): void {
+    this.isLoading = true;
+    this.limit = limit;
+    this.pageNo = 0;
+    this.currentPage = 1;
+    this.getFilteredMappings();
+  }
 
-  // PageOffsetChanges(pageNo: number): void {
-  //   This.isLoading = true;
-  //   This.pageNo = pageNo;
-  //   This.currentPage = Math.ceil(this.pageNo / this.limit)+1;
-  //   This.getFilteredMappings();
-  // }
+  pageOffsetChanges(pageNo: number): void {
+    this.isLoading = true;
+    this.pageNo = pageNo;
+    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
+    this.getFilteredMappings();
+  }
 
-  // MappingStateFilter(state: MappingState): void {
-  //   This.isLoading = true;
-  //   This.selectedMappingFilter = state;
-  //   This.currentPage = 1;
-  //   This.limit = 10;
-  //   This.pageNo = 0;
-  //   This.getFilteredMappings();
-  // }
+  mappingStateFilter(state: MappingState): void {
+    this.isLoading = true;
+    this.selectedMappingFilter = state;
+    this.currentPage = 1;
+    this.limit = 10;
+    this.pageNo = 0;
+    this.getFilteredMappings();
+  }
+
+  mappingSearchFilter(searchValue: string) {
+    // if (searchValue.length > 0) {
+    //   const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
+    //     mapping.value?.toLowerCase().includes(searchValue)
+    //   );
+    //   this.filteredMappings = results;
+    // } else {
+    //   this.filteredMappings = this.mappings.concat();
+    // }
+    // this.filteredMappingCount = this.filteredMappings.length;
+  }
 
   setupPage() {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
-      // This.mappingService.getMappingStats(this.sourceType),
-      // This.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
+      this.mappingService.getConfiguration(),
+      this.mappingService.getMappingSettings()
     ]).subscribe((response) => {
-      // This.mappingState = response[0];
-      // This.mappings = response[1];
-      // This.filteredMappings = this.mappings.results.concat();
-      // This.totalCount = this.mappings.count;
-      // This.getOps();
-      // This.isLoading = false;
+      console.log(response);
+      const mappingSetting = response[1].results.filter((mappingSetting) => mappingSetting.source_field === this.sourceType.toUpperCase());
+      this.mappingSetting = mappingSetting[0];
+      this.page = `${new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.mappingSetting.source_field))} Mapping`;
+      this.configuration = response[0];
+      this.mappings = response[1];
+      this.filteredMappings = this.mappings.results.concat();
+      this.totalCount = this.mappings.count;
+
+      this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field).subscribe((mappingStats: MappingStats) => {
+        this.mappingStats = mappingStats;
+      });
+
+      this.isLoading = false;
     });
   }
 
