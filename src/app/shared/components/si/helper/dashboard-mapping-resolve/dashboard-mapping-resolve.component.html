@@ -15,7 +15,7 @@
                     [options]="getCategoryMappingOptions()" 
                     optionLabel="value" 
                     placeholder="Select an Option" 
-                    (onChange)="saveCategoryMapping(mapping, $event); getCategoryDropdownValue(mapping)"
+                    (onChange)="saveCategoryMapping(mapping, $event);"
                     [ngModel]="getCategoryDropdownValue(mapping.categorymapping)"
                     [filter]="true"
                     filterBy="value">
