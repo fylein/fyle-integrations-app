@@ -446,7 +446,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       }
       this.saveInProgress = false;
       if (this.isOnboarding) {
-        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_SETTINGS);
+        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_CONFIGURATION);
         this.router.navigate([`/integrations/intacct/onboarding/advanced_settings`]);
       }
     }, () => {

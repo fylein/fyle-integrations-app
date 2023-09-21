@@ -235,8 +235,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       }
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
-      if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingsPayload);
+      if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_CONFIGURATION) {
+        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.ADVANCED_CONFIGURATION, 3, advancedSettingsPayload);
       } else {
         this.trackingService.intacctUpdateEvent(
           IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,
@@ -249,7 +249,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       }
       this.saveInProgress = false;
       if (this.isOnboarding) {
-        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_SETTINGS);
+        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_CONFIGURATION);
         this.router.navigate([`/integrations/intacct/onboarding/done`]);
       }
     }, () => {

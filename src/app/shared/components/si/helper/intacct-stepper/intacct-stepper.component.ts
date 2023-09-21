@@ -81,7 +81,7 @@ export class IntacctStepperComponent implements OnInit {
       [IntacctOnboardingState.LOCATION_ENTITY]: 2,
       [IntacctOnboardingState.EXPORT_SETTINGS]: 3,
       [IntacctOnboardingState.IMPORT_SETTINGS]: 4,
-      [IntacctOnboardingState.ADVANCED_SETTINGS]: 5,
+      [IntacctOnboardingState.ADVANCED_CONFIGURATION]: 5,
       [IntacctOnboardingState.COMPLETE]: 6
     };
 
