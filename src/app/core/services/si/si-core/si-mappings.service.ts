@@ -11,7 +11,7 @@ import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from '
 import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
 import { MappingIntacct, MappingPost, MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
-import { CategoryMapping } from 'src/app/core/models/si/db/category-mapping.model';
+import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
 import { GeneralMapping } from 'src/app/core/models/si/db/mappings.model';
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 
@@ -119,7 +119,7 @@ export class SiMappingsService {
     );
   }
 
-  postCategoryMappings(mapping: CategoryMapping): Observable<GeneralMapping> {
+  postCategoryMappings(mapping: CategoryMappingPost): Observable<CategoryMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/category/`, mapping);
   }

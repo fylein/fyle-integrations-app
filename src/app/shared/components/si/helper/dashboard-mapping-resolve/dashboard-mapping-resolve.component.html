@@ -1,17 +1,55 @@
 <div *ngIf="!isLoading">
-      <p-table [value]="dummyData">
+    <div *ngIf="mappingType==='CATEGORY_MAPPING'">
+      <p-table [value]="filteredCategoryMappings" [tableStyle]="{ 'min-width': '20rem' }">
         <ng-template pTemplate="header">
-          <tr>
+            <tr>
+                <th>Category</th>
+                <th>{{getCategoryAttributeType()[0] | snakeCaseToSpaceCase | titlecase}}</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
+            <tr>
+                <td>{{ mapping.value }}</td>
+                <td>
+                    <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
+                    [options]="getCategoryMappingOptions()" 
+                    optionLabel="value" 
+                    placeholder="Select an Option" 
+                    (onChange)="saveCategoryMapping(mapping, $event); getCategoryDropdownValue(mapping)"
+                    [ngModel]="getCategoryDropdownValue(mapping.categorymapping)"
+                    [filter]="true"
+                    filterBy="value">
+                    </p-dropdown> 
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+    </div>
+    <div *ngIf="mappingType==='EMPLOYEE_MAPPING'">
+      <p-table [value]="filteredEmployeeMappings" [tableStyle]="{ 'min-width': '50rem'}">
+        <ng-template pTemplate="header">
+            <tr>
             <th>Employee Email</th>
-            <th>Sage Intacct Employee</th>
-          </tr>
+            <th>Sage Intacct {{getEmployeeAttributeType()[0] | titlecase}}</th>
+            </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowData>
-          <tr>
-            <td>{{rowData.email}}</td>
-            <td>{{rowData.sageIntacctEmployee}}</td>
-          </tr>
+        <ng-template pTemplate="body" let-mapping>
+            <tr>
+                <td>{{ mapping.value }}</td>
+                <td>
+                    <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
+                    [ngModel]="getEmployeeDropdownValue(mapping.employeemapping)" 
+                    [options]="fyleEmployeeOptions" 
+                    optionLabel="value" 
+                    placeholder="Select an Option" 
+                    (onChange)="saveEmployeeMapping(mapping, $event); getEmployeeDropdownValue(mapping.employeemapping)"
+                    [filter]="true"
+                    filterBy="value">
+                    </p-dropdown>                
+                </td>
+            </tr>
         </ng-template>
-      </p-table>
+        </p-table>
+    </div>
 </div>
   

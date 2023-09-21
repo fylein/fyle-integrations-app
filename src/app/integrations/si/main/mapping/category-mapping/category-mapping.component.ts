@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { CorporateCreditCardExpensesObject, FieldType, FyleField, IntacctReimbursableExpensesObject, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
-import { CategoryMapping, CategoryMappingResult } from 'src/app/core/models/si/db/category-mapping.model';
+import { CategoryMapping, CategoryMappingPost, CategoryMappingResult } from 'src/app/core/models/si/db/category-mapping.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
@@ -33,8 +33,6 @@ export class CategoryMappingComponent implements OnInit {
   sageIntacctAccounts: DestinationAttribute[];
 
   sageIntacctExpenseTypes: DestinationAttribute[];
-
-  mappingState: MappingStats;
 
   mappings: CategoryMapping[];
 
@@ -155,7 +153,7 @@ export class CategoryMappingComponent implements OnInit {
     const sourceId = selectedRow.id;
     this.isLoading = true;
 
-    const categoryMappingsPayload: CategoryMapping = {
+    const categoryMappingsPayload: CategoryMappingPost = {
       source_category: {
         id: sourceId
       },

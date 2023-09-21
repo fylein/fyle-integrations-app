@@ -68,7 +68,9 @@ export class DashboardComponent implements OnInit {
 
   employeeName: string = this.userService.getUserProfile().full_name;
 
-  intacctErrorType: string;
+  intacctErrorType: IntacctErrorType;
+
+  IntacctErrorType = IntacctErrorType;
 
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
 
@@ -85,7 +87,8 @@ export class DashboardComponent implements OnInit {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  showResolve(errorType: string) {
+  showResolve(errorType: IntacctErrorType) {
+    console.log(errorType);
     this.intacctErrorType = errorType;
     this.isMappingResolveVisible = true;
   }
