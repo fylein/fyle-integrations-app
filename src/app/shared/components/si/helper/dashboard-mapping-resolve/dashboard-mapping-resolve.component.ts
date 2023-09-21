@@ -158,7 +158,7 @@ export class DashboardMappingResolveComponent implements OnInit {
     };
 
     this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
-      this.mappingService.getCategoryMappings(500, 0, this.getCategoryAttributeType()[0], this.selectedMappingFilter).subscribe((response)=>{
+      this.mappingService.getCategoryMappings(500, 0, this.getCategoryAttributeType()[0], this.selectedMappingFilter).subscribe((response) => {
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
         this.filteredCategoryMappings = response.results;
         this.isLoading = false;

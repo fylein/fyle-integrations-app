@@ -88,7 +88,6 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   showResolve(errorType: IntacctErrorType) {
-    console.log(errorType);
     this.intacctErrorType = errorType;
     this.isMappingResolveVisible = true;
   }
