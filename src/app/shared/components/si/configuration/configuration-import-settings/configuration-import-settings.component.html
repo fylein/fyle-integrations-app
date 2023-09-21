@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
-            <div class="fields-header-text tw-pl-48-px tw-w-36-vw">Sage Intacct Dimensions</div>
+            <div class="fields-header-text tw-pl-48-px tw-w-450-px">Sage Intacct Dimensions</div>
             <div class="fields-header-text tw-w-30-vw">Fyle Fields</div>
             <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
                 Import to Fyle
@@ -31,9 +31,10 @@
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
-            <div class="tw-pl-48-px tw-w-36-vw">
+            <div class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{intacctCategoryDestination | snakeCaseToSpaceCase | titlecase}}" disabled>
             </div>
+            <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
             <div class="tw-w-30-vw">
                 <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Categories" disabled>
             </div>
@@ -42,9 +43,10 @@
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
-            <span class="tw-pl-48-px tw-w-36-vw">
+            <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Vendor" disabled>
             </span>
+            <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
             <span class="tw-w-30-vw">
                 <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Merchant" disabled>
             </span>
@@ -53,9 +55,10 @@
             </span>
         </div>
         <div class="tw-flex tw-pt-18-px">
-            <span class="tw-pl-48-px tw-w-36-vw">
+            <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax Detail" disabled>
             </span>
+            <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
             <span class="tw-w-30-vw">
                 <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax Group" disabled>
             </span>
@@ -80,7 +83,7 @@
             </div>
             <div class="tw-p-22-px" formArrayName="expenseFields">
                 <div class="tw-flex fields-header" fxLayout="row" fxLayoutAlign="start center">
-                    <div class="fields-header-text tw-pl-4-px tw-w-[33vw] tw-whitespace-nowrap">Sage Intacct Dimensions</div>
+                    <div class="fields-header-text tw-pl-4-px tw-w-404-px tw-whitespace-nowrap">Sage Intacct Dimensions</div>
                     <div class="fields-header-text tw-w-30-vw tw-whitespace-nowrap">Fyle Fields</div>
                     <div class="fields-header-text tw-flex tw-whitespace-nowrap">
                         Import to Fyle
@@ -90,7 +93,8 @@
                 <div class="tw-pt-18-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="tw-flex">
                             <p-dropdown appendTo="body" [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
-                            optionLabel="display_name" optionValue="attribute_type" class="tw-w-32-vw"></p-dropdown>
+                            optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
+                            <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
                             <p-dropdown appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                             optionLabel="display_name" optionValue="attribute_type" class="tw-w-28-vw" [showClear]="true">
                                 <ng-template let-option pTemplate="item">
@@ -105,16 +109,17 @@
                                 </div>
                                 </ng-template>
                           </p-dropdown>                                                                             
-                        <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-12 input-toggle-section"></p-inputSwitch>
+                        <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
                     </div>
                     <div class="tw-pt-4" *ngIf="i===0 && showCostCodeCostType" [formGroup]="importSettingsForm">
                         <input class="tw-ml-4" formControlName="isDependentImportEnabled" type="checkbox" />
                         <label class="tw-pl-2 tw-font-300" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields.</label>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
-                            <div class="tw-w-32-vw">
-                                <input type="text" class="tw-text-14-px !tw-ml-40-px !tw-font-500 tw-w-246-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
+                            <div>
+                                <input type="text" class="tw-text-14-px !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
                             </div>
-                            <p-dropdown appendTo="body" class="tw-w-[31.3vw]" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                            <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
+                            <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -122,13 +127,14 @@
                                     </div>
                                   </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
-                            <div class="tw-w-32-vw">
-                                <input type="text" class="tw-text-14-px !tw-ml-60-px !tw-font-500 tw-w-226-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
+                            <div>
+                                <input type="text" class="tw-text-14-px !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
                             </div>
-                            <p-dropdown appendTo="body" class="tw-w-[31.5vw]" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                            <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
+                            <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -136,7 +142,7 @@
                                     </div>
                                   </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                         </div>
                     </div>                      
                 </div>
