@@ -171,14 +171,6 @@ export class EmployeeMappingComponent implements OnInit {
     this.filteredMappingCount = this.filteredMappings.length;
   }
 
-  postMapping(mappingPayload: EmployeeMapping) {
-    this.mappingService.postEmployeeMappings(mappingPayload).subscribe(() => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping done successfully');
-    }, () => {
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving the mappings, please try again later');
-    });
-  }
-
   getAttributesFilteredByConfig() {
     const attributes = [];
 

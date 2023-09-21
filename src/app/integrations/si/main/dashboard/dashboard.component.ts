@@ -27,6 +27,8 @@ export class DashboardComponent implements OnInit {
 
   isExportLogVisible: boolean = false;
 
+  isMappingResolveVisible: boolean = false;
+
   taskLogStatusComplete: TaskLogState = TaskLogState.COMPLETE;
 
   taskLogStatusFailed: TaskLogState = TaskLogState.FAILED;
@@ -66,6 +68,10 @@ export class DashboardComponent implements OnInit {
 
   employeeName: string = this.userService.getUserProfile().full_name;
 
+  intacctErrorType: IntacctErrorType;
+
+  IntacctErrorType = IntacctErrorType;
+
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
@@ -80,6 +86,11 @@ export class DashboardComponent implements OnInit {
     private userService: UserService,
     private workspaceService: SiWorkspaceService
   ) { }
+
+  showResolve(errorType: IntacctErrorType) {
+    this.intacctErrorType = errorType;
+    this.isMappingResolveVisible = true;
+  }
 
   showExportLog(status: TaskLogState) {
     this.exportLogHeader = status===this.taskLogStatusComplete ? 'Successful' : 'Failed';
