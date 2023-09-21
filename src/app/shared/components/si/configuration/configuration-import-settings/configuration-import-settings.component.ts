@@ -380,6 +380,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           const { source_field, destination_field, import_to_fyle } = setting;
           if (source_field === 'PROJECT' && destination_field === 'PROJECT' && import_to_fyle === true) {
             this.showCostCodeCostType = true;
+            if (importSettings.dependent_field_settings?.is_import_enabled) {
               this.customField = {
                 attribute_type: importSettings.dependent_field_settings.cost_code_field_name,
                 display_name: importSettings.dependent_field_settings.cost_code_field_name,
@@ -392,6 +393,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
                 source_placeholder: importSettings.dependent_field_settings.cost_type_placeholder
               };
               this.costTypeFieldOption.push(this.customField);
+            }
             break;
           }
         }
