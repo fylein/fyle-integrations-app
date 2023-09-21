@@ -1,5 +1,5 @@
 th {
-    @apply tw-text-12-px tw-text-normal-text-color tw-font-500 tw-h-40-px tw-py-10-px #{!important};
+    @apply tw-text-12-px tw-text-normal-text-color tw-font-500 tw-h-40-px tw-py-10-px tw-bg-disabled-bg-color tw-border-r-1-px tw-border-box-color #{!important};
 }
 
 td {
@@ -8,6 +8,10 @@ td {
 
 .pi-check:before {
     @apply tw-text-14-px tw-cursor-pointer tw-text-faded-text-color #{!important};
+}
+
+.p-inputtext {
+    @apply tw-w-220-px tw-h-40-px tw-py-10-px tw-text-slightly-normal-text-color #{!important}
 }
 
 :host ::ng-deep .tooltip-main {

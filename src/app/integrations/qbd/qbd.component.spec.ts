@@ -21,7 +21,8 @@ describe('QbdComponent', () => {
     localStorage.setItem('user', JSON.stringify(localStorageDump));
     const service1 = {
       getQBDWorkspace: () => of(workspaceResponse),
-      postQBDWorkspace: () => of(workspaceResponse)
+      postQBDWorkspace: () => of(workspaceResponse),
+      syncFyleDimensions: () => of({})
     };
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule, HttpClientModule, HttpClientTestingModule],

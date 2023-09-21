@@ -37,4 +37,8 @@ export class QbdWorkspaceService {
     const onboardingState = this.storageService.get('QBDOnboardingState');
     return onboardingState ? onboardingState : QBDOnboardingState.EXPORT_SETTINGS;
   }
+
+  syncFyleDimensions() {
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/sync_dimensions/`, {});
+  }
 }

@@ -23,6 +23,7 @@ jobs:
         CALLBACK_URI: "http://lolo.fyle.tech/callback"
         API_URL: "http://lolo.fyle.tech"
         FYLE_APP_URL: "http://lolo.fyle.tech"
+        SI_API_URL: "http://lolo.fyle.tech"
     - name: Unit Test Coverage
       uses: fylein/comment-test-coverage@master
       with:
