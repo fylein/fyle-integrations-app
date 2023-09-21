@@ -58,8 +58,4 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
     this.trackingService.onClickEvent(ClickEvent.PREVIEW_INTACCT_EXPORT);
   }
-
-  showDialog() {
-    console.log('abcd');
-  }
 }
