@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AccountOptions, ClickEvent, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
@@ -50,7 +50,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   showCostCodeCostType: boolean = false;
 
-  showPaymentOrAccount: AccountOptions;
+  intacctCategoryDestination: IntacctCategoryDestination;
 
   showDialog: boolean;
 
@@ -397,9 +397,9 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         }
 
         if (configuration.employee_field_mapping==='EMPLOYEE') {
-          this.showPaymentOrAccount = AccountOptions.EXPENSE_TYPE;
+          this.intacctCategoryDestination = IntacctCategoryDestination.EXPENSE_TYPE;
         } else {
-          this.showPaymentOrAccount = AccountOptions.ACCOUNT;
+          this.intacctCategoryDestination = IntacctCategoryDestination.ACCOUNT;
         }
         this.importSettingsForm = this.formBuilder.group({
           importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
