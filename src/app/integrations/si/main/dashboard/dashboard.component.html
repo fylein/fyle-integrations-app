@@ -54,9 +54,9 @@
                         <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-2">
                         Successful Expenses
                         <span class="tw-ml-24 tw-pl-8-px">
-                            {{ lastExport?.successful_expense_groups_count | number:'2.0-0' }}
+                            {{ lastExport?.successful_expense_groups_count }}
                         </span>                          
-                        <a (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-4 tw-text-pink pointer">View</a>
+                        <a *ngIf="lastExport?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-4 tw-text-pink pointer">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
                             <span>
                                 Last Export at: 
@@ -67,8 +67,8 @@
                     </div>
                     <div class="tw-flex tw-items-center">
                         <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-2">
-                        Failed Expenses <span class="tw-ml-32 tw-pl-10-px">{{ lastExport?.failed_expense_groups_count | number:'2.0-0' }}</span> 
-                        <a (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-4 tw-text-pink pointer">View</a>
+                        Failed Expenses <span class="tw-ml-32 tw-pl-10-px">{{ lastExport?.failed_expense_groups_count }}</span> 
+                        <a *ngIf="lastExport?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-4 tw-text-pink pointer">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
                             <span>
                                 Next Export at: 
@@ -104,7 +104,7 @@
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2">
                                     <p>Map the employees in Fyle to their corresponding records in Sage Intacct<br>based on unique parameter.</p>
                                 </h5>
-                                <button type="button" (click)="showResolve(IntacctErrorType.EMPLOYEE_MAPPING)" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
+                                <button type="button" (click)="showMappingResolve(IntacctErrorType.EMPLOYEE_MAPPING)" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
                                     Resolve
                                 </button>
                             </div>
@@ -119,7 +119,7 @@
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>Map the employees in Fyle to their corresponding records in Sage Intacct<br>based on unique parameter.</p>
                                 </h5>
-                                <button type="button" (click)="showResolve(IntacctErrorType.CATEGORY_MAPPING)" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
+                                <button type="button" (click)="showMappingResolve(IntacctErrorType.CATEGORY_MAPPING)" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
                                     Resolve
                                 </button>
                             </div>
@@ -141,7 +141,7 @@
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>{{ error.error_detail }}</p>
                                 </h5>
-                                <button type="button" class="tw-flex tw-items-center tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-4 tw-py-1 tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
+                                <button type="button" (click)="showIntacctErrorDialog(error)" class="tw-flex tw-items-center tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-4 tw-py-1 tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
                                     View Expense
                                 </button>
                             </div>
@@ -195,6 +195,16 @@
             <p>{{intacctErrorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
           </p-header>
         <app-dashboard-mapping-resolve [mappingType]="intacctErrorType" [isDialogVisible]="isMappingResolveVisible"></app-dashboard-mapping-resolve>
+    </p-dialog>
+</div>
+
+<!-- Intacct Errors -->
+<div *ngIf="intacctErrorDialogVisible">
+    <p-dialog [(visible)]="intacctErrorDialogVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'960px' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+        <p-header>
+            <p>Intacct Errors</p>
+        </p-header>
+        <app-dashboard-intacct-errors [intacctErrorExpenses]="intacctErrorExpenseGroup"></app-dashboard-intacct-errors>
     </p-dialog>
 </div>
 

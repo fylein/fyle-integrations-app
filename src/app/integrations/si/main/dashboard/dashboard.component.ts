@@ -4,6 +4,7 @@ import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenc
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
 import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
+import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';
 import { Task } from 'src/app/core/models/si/db/task-log.model';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
@@ -28,6 +29,10 @@ export class DashboardComponent implements OnInit {
   isExportLogVisible: boolean = false;
 
   isMappingResolveVisible: boolean = false;
+
+  intacctErrorDialogVisible: boolean = false;
+
+  intacctErrorExpenseGroup: Expense[] = [];
 
   taskLogStatusComplete: TaskLogState = TaskLogState.COMPLETE;
 
@@ -87,9 +92,14 @@ export class DashboardComponent implements OnInit {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  showResolve(errorType: IntacctErrorType) {
+  showMappingResolve(errorType: IntacctErrorType) {
     this.intacctErrorType = errorType;
     this.isMappingResolveVisible = true;
+  }
+
+  showIntacctErrorDialog(intacctError: Error) {
+    this.intacctErrorDialogVisible = true;
+    this.intacctErrorExpenseGroup = intacctError.expense_group.expenses;
   }
 
   showExportLog(status: TaskLogState) {
