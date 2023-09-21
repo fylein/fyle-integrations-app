@@ -32,7 +32,9 @@ export class DashboardComponent implements OnInit {
 
   intacctErrorDialogVisible: boolean = false;
 
-  intacctErrorExpenseGroup: Expense[] = [];
+  intacctErrorExpenses: Expense[] = [];
+
+  intacctErrorDetail: string;
 
   taskLogStatusComplete: TaskLogState = TaskLogState.COMPLETE;
 
@@ -99,7 +101,8 @@ export class DashboardComponent implements OnInit {
 
   showIntacctErrorDialog(intacctError: Error) {
     this.intacctErrorDialogVisible = true;
-    this.intacctErrorExpenseGroup = intacctError.expense_group.expenses;
+    this.intacctErrorDetail = intacctError.error_detail;
+    this.intacctErrorExpenses = intacctError.expense_group.expenses;
   }
 
   showExportLog(status: TaskLogState) {
