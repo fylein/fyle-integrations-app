@@ -56,6 +56,7 @@ import { ConfigurationAdvancedSettingsComponent } from './components/si/configur
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
 import {ChipsModule} from 'primeng/chips';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
+import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { DashboardMappingResolveComponent } from './components/si/helper/dashboa
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
     SkipExportComponent,
-    DashboardMappingResolveComponent
+    DashboardMappingResolveComponent,
+    DashboardIntacctErrorsComponent
   ],
   imports: [
     CommonModule,
@@ -159,7 +161,8 @@ import { DashboardMappingResolveComponent } from './components/si/helper/dashboa
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
-    DashboardMappingResolveComponent
+    DashboardMappingResolveComponent,
+    DashboardIntacctErrorsComponent
   ]
 })
 export class SharedModule { }
