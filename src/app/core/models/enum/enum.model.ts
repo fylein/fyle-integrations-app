@@ -7,7 +7,7 @@ export enum IntegrationView {
 
 export enum IntacctCategoryDestination {
   EXPENSE_TYPE = 'EXPENSE_TYPE',
-  ACCOUNT = 'ACCOUNT'
+  ACCOUNT = 'GL_ACCOUNT'
 }
 
 export enum AutoMapEmployeeOptions {

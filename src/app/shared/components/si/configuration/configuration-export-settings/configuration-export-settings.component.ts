@@ -170,10 +170,13 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       return '';
     }
 
-    getExportType(exportType: IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject): string {
-      const lowerCaseWord = exportType.toLowerCase();
+    getExportType(exportType: IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject | null): string {
+      if (exportType) {
+        const lowerCaseWord = exportType.toLowerCase();
+          return lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
+      }
 
-      return lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
+      return 'export';
     }
 
     private setUpExpenseStates(): void {
