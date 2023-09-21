@@ -65,7 +65,7 @@
                     </td>
                     <td>{{rowData.expenseType | titlecase}}</td>
                     <td>{{rowData.referenceNumber}}</td>
-                    <td>{{rowData.exportedAs | titlecase}}</td>
+                    <td>{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
                     <td>
                         <div *ngIf="rowData.intacctUrl">
                           <button (click)="openUrl(rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
