@@ -44,12 +44,12 @@
   width: 302px;
 }
 
-.connector--switch-org-inner-section {
-  padding-top: 8px;
+.connector--connection-block-separator-1 {
+  left: -82px;
 }
 
-.connector--switch-org-text {
-  padding-top: 8px;
+.connector--connection-block-separator-2 {
+  right: -82px;
 }
 
 /* PrimeNG component styles */
@@ -57,10 +57,6 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
-}
-
-.p-col {
-  padding: 10px;
 }
 
 .actionable-text {

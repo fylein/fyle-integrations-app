@@ -9,6 +9,9 @@ import { WindowService } from 'src/app/core/services/core/window.service';
   styleUrls: ['./app-integration-landing.component.scss']
 })
 export class AppIntegrationLandingComponent implements OnInit {
+
+  @Input() headlineText: string;
+
   @Input() headerText: string;
 
   @Input() svgPath: string;
