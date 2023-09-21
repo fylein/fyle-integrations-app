@@ -48,15 +48,15 @@
           </div>
         </div>
           <div class="select-location-entity">
-          <p-dropdown class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControllerName="locationEntity" [options]="locationEntityOptions">
-          </p-dropdown>
+            <p-dropdown (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
+            </p-dropdown>
         </div>
           <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity tw-pl-4">
             {{ locationEntity.location_entity_name | trimCharacter: 26 }}
           </h3>          
       </form>
       <div class="connector--org-switch-separator"></div>
-      <div class="connector--fyle-section-text align-center sub-text-color bold intacct-location-prompt">
+      <div *ngIf="!locationEntity" class="connector--fyle-section-text align-center sub-text-color bold intacct-location-prompt">
         Please select a Location (Entity) from Sage Intacct to proceed further.
       </div>
     </div>

@@ -55,6 +55,10 @@ export class IntacctLocationEntityComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
+  patchFormValue(event: any): void {
+    this.locationEntityForm.controls.locationEntity.patchValue(event.value);
+  }
+
   save() {
     this.isLoading = true;
     this.saveInProgress = true;
@@ -138,7 +142,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.isLoading = false;
     }, () => {
       this.locationEntityForm = this.formBuilder.group({
-        locationEntity: ['', Validators.required]
+        locationEntity: [null, Validators.required]
       });
       this.isLoading = false;
     });
