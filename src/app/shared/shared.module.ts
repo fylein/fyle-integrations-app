@@ -55,6 +55,7 @@ import { ConfigurationImportSettingsComponent } from './components/si/configurat
 import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
 import {ChipsModule} from 'primeng/chips';
+import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import {ChipsModule} from 'primeng/chips';
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
-    SkipExportComponent
+    SkipExportComponent,
+    DashboardMappingResolveComponent
   ],
   imports: [
     CommonModule,
@@ -156,7 +158,8 @@ import {ChipsModule} from 'primeng/chips';
     MappingHeaderSectionComponent,
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
-    ConfigurationAdvancedSettingsComponent
+    ConfigurationAdvancedSettingsComponent,
+    DashboardMappingResolveComponent
   ]
 })
 export class SharedModule { }
