@@ -253,11 +253,6 @@ export enum QBDOnboardingState {
     EXPORT_JOURNALS = 'EXPORT_JOURNALS'
   }
 
-  export enum PaginatorPage {
-    MAPPING = 'mapping',
-    DASHBOARD = 'dashboard'
-  }
-
   export enum PaymentSyncDirection {
     FYLE_TO_INTACCT = 'fyle_to_intacct',
     INTACCT_TO_FYLE = 'intacct_to_fyle'
@@ -331,6 +326,12 @@ export enum QBDOnboardingState {
     FAILED = 'FAILED'
   }
 
+  export enum PaginatorPage {
+    MAPPING = 'mapping',
+    DASHBOARD = 'dashboard',
+    EXPORT_LOG = 'export-log'
+  }
+
   export enum FieldType {
     TEXT = 'TEXT',
     SELECT = 'SELECT'
@@ -339,4 +340,9 @@ export enum QBDOnboardingState {
   export enum OperatingSystem {
     WIN = 'Win',
     MAC = 'Mac'
+  }
+
+  export enum RefinerSurveyType {
+    ONBOARDING_DONE = 'Onboarding Done',
+    EXPORT_DONE = 'Export Done'
   }

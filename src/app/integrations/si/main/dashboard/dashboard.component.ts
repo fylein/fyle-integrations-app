@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
-import { ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
-import { ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
+import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';
 import { Task } from 'src/app/core/models/si/db/task-log.model';
+import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,10 +21,19 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class DashboardComponent implements OnInit {
 
-
   isLoading: boolean = false;
 
   importInProgress: boolean = true;
+
+  isExportLogVisible: boolean = false;
+
+  isMappingResolveVisible: boolean = false;
+
+  taskLogStatusComplete: TaskLogState = TaskLogState.COMPLETE;
+
+  taskLogStatusFailed: TaskLogState = TaskLogState.FAILED;
+
+  exportLogHeader: string;
 
   processedCount: number = 0;
 
@@ -42,6 +53,8 @@ export class DashboardComponent implements OnInit {
 
   expenseGroupSetting: string;
 
+  expenseGroups: ExpenseGroupList [];
+
   groupedErrorStat: GroupedErrorStat = {
     [IntacctErrorType.EMPLOYEE_MAPPING]: null,
     [IntacctErrorType.CATEGORY_MAPPING]: null
@@ -55,6 +68,10 @@ export class DashboardComponent implements OnInit {
 
   employeeName: string = this.userService.getUserProfile().full_name;
 
+  intacctErrorType: IntacctErrorType;
+
+  IntacctErrorType = IntacctErrorType;
+
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
@@ -64,10 +81,39 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private exportLogService: ExportLogService,
+    private refinerService: RefinerService,
     private trackingService: TrackingService,
     private userService: UserService,
     private workspaceService: SiWorkspaceService
   ) { }
+
+  showResolve(errorType: IntacctErrorType) {
+    this.intacctErrorType = errorType;
+    this.isMappingResolveVisible = true;
+  }
+
+  showExportLog(status: TaskLogState) {
+    this.exportLogHeader = status===this.taskLogStatusComplete ? 'Successful' : 'Failed';
+    this.getExpenseGroups(500, 1, status);
+    this.isExportLogVisible = true;
+  }
+
+  getExpenseGroups(limit: number, offset: number, status: TaskLogState) {
+    const expenseGroups: ExpenseGroupList[] = [];
+
+    return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null, this.lastExport?.last_exported_at).subscribe(expenseGroupResponse => {
+      expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
+        expenseGroups.push({
+          exportedAt: (status===TaskLogState.COMPLETE ? expenseGroup.exported_at : expenseGroup.updated_at),
+          employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
+          referenceNumber: expenseGroup.description.claim_number,
+          exportedAs: expenseGroup.export_type,
+          expenses: expenseGroup.expenses
+        });
+      });
+      this.expenseGroups = expenseGroups;
+    });
+  }
 
   private pollExportStatus(exportableExpenseGroupIds: number[] = []): void {
     interval(3000).pipe(
@@ -97,6 +143,12 @@ export class DashboardComponent implements OnInit {
           this.exportInProgress = false;
           this.exportProgressPercentage = 0;
           this.processedCount = 0;
+
+          if (this.failedExpenseGroupCount === 0) {
+            this.refinerService.triggerSurvey(
+              AppName.INTACCT, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+            );
+          }
         });
       }
     });

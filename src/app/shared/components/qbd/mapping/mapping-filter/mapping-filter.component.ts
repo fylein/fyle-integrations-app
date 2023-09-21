@@ -70,7 +70,7 @@ export class MappingFilterComponent implements OnInit {
 
   filterChanges(): void {
     this.form.controls.filterOption.valueChanges.subscribe((isFilterOptions) => {
-      this.mappingFilterChangeEvent.emit(isFilterOptions.value);
+      this.mappingFilterChangeEvent.emit(isFilterOptions?.value);
     });
   }
 

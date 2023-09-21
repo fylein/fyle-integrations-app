@@ -54,6 +54,8 @@ import { IntacctLocationEntityComponent } from './components/si/core/intacct-loc
 import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
 import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
+import {ChipsModule} from 'primeng/chips';
+import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +92,8 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
-    SkipExportComponent
+    SkipExportComponent,
+    DashboardMappingResolveComponent
   ],
   imports: [
     CommonModule,
@@ -110,6 +113,7 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     DragDropModule,
     ProgressBarModule,
     CalendarModule,
+    ChipsModule,
     CascadeSelectModule,
     TableModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
@@ -140,6 +144,7 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     ConfigurationMultiSelectComponent,
     DropdownModule,
     CalendarModule,
+    ChipsModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     CascadeSelectModule,
@@ -153,7 +158,8 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
     MappingHeaderSectionComponent,
     ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
-    ConfigurationAdvancedSettingsComponent
+    ConfigurationAdvancedSettingsComponent,
+    DashboardMappingResolveComponent
   ]
 })
 export class SharedModule { }

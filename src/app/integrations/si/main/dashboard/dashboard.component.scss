@@ -2,6 +2,10 @@
     justify-content: center;
 }
 
+.pointer {
+    cursor: pointer;
+}
+
 .inside-container {
     border-radius: 8px;
     border: 1px solid var(--grayscale-light-border, #ECECEE);

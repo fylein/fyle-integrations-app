@@ -1,4 +1,4 @@
-import { Mapping } from "./mapping.model";
+import { MappingIntacct } from "./mapping.model";
 
 
 export type ExpenseAttributeDetail = {
@@ -29,7 +29,7 @@ export type MinimalExpenseAttribute = {
 };
 
 export interface ExtendedExpenseAttribute extends ExpenseAttribute {
-  mapping: Mapping[];
+  mapping: MappingIntacct[];
 }
 
 export type ExtendedExpenseAttributeResponse = {
