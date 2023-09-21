@@ -48,18 +48,14 @@
           </div>
         </div>
           <div class="select-location-entity">
-          <p-dropdown class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControlName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
+          <p-dropdown class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControlName="locationEntity" [options]="locationEntityOptions">
           </p-dropdown>
         </div>
-          <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity tw-pl-4">
           <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold location-entity tw-pl-4">
             {{ locationEntity.location_entity_name | trimCharacter: 26 }}
           </h3>          
       </form>
       <div class="connector--org-switch-separator"></div>
-      <h5 *ngIf="locationEntity?.location_entity_name" class="sub-text-color tw-mt-4 tw-mb-32">
-        Not the Sage Intacct entity that you wish to connect? 
-      </h5>
       <div *ngIf="!locationEntity?.location_entity_name" class="connector--fyle-section-sub-text sub-text-color bold ">
         Please select a Location (Entity) from Sage Intacct to proceed further.
       </div>

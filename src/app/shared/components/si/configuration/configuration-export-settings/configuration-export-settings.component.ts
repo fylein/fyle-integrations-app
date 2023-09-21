@@ -166,10 +166,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private sanitizer: DomSanitizer
     ) { }
 
-    showDialog() {
-      console.log('abcd');
-    }
-
     getSubLabel(type: string) {
       if (type==='reimbursableExportType') {
         return this.sanitizer.bypassSecurityTrustHtml(`Choose the type of transaction record that you would like to create in Sage Intacct while exporting expenses from Fyle. <p (click)="showDialog()">abcd</p> for more details.`);
