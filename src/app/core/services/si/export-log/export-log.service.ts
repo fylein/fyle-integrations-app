@@ -26,7 +26,7 @@ export class ExportLogService {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  getExpenseGroups(state: TaskLogState | TaskLogState.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: Date | void): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState | TaskLogState.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: Date | void | null): Observable<ExpenseGroupResponse> {
     const params: any = {
       limit,
       offset

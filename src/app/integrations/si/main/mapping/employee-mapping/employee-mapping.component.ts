@@ -187,7 +187,7 @@ export class EmployeeMappingComponent implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getEmployeeMappings(10, 1, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
+      this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {

@@ -29,8 +29,6 @@ export class DashboardMappingResolveComponent implements OnInit {
 
   intacctErrorType: IntacctErrorType;
 
-  selectedMappingFilter: MappingState = MappingState.UNMAPPED;
-
   // Employee Mapping
   fyleEmployeeOptions: DestinationAttribute[];
 
@@ -110,7 +108,7 @@ export class DashboardMappingResolveComponent implements OnInit {
   setupEmployeeMapping() {
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getEmployeeAttributeType()),
-      this.mappingService.getEmployeeMappings(10, 1, this.getEmployeeAttributeType()[0], this.selectedMappingFilter)
+      this.mappingService.getEmployeeMappings(500, 0, this.getEmployeeAttributeType()[0], MappingState.UNMAPPED)
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse]) => {
         this.fyleEmployeeOptions = this.getEmployeeAttributeType()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
@@ -158,7 +156,7 @@ export class DashboardMappingResolveComponent implements OnInit {
     };
 
     this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
-      this.mappingService.getCategoryMappings(500, 0, this.getCategoryAttributeType()[0], this.selectedMappingFilter).subscribe((response) => {
+      this.mappingService.getCategoryMappings(500, 0, this.getCategoryAttributeType()[0], MappingState.UNMAPPED).subscribe((response) => {
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
         this.filteredCategoryMappings = response.results;
         this.isLoading = false;
@@ -183,7 +181,7 @@ export class DashboardMappingResolveComponent implements OnInit {
   setupCategoryMapping() {
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getCategoryAttributeType()),
-      this.mappingService.getCategoryMappings(500, 0, this.getCategoryAttributeType()[0], this.selectedMappingFilter)
+      this.mappingService.getCategoryMappings(500, 0, this.getCategoryAttributeType()[0], MappingState.UNMAPPED)
     ]).subscribe(
       ([groupedDestResponse, categoryMappingResponse]) => {
         this.sageIntacctExpenseTypes = groupedDestResponse.EXPENSE_TYPE;
