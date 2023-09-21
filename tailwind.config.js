@@ -28,7 +28,6 @@ const customColors = {
   'unmapped-red-border': '#F5C0C3',
   'unmapped-red-bg': '#FCE9EA',
   'pink': '#D23669',
-  'pink-box-border': '#FF336629'
 };
 
 module.exports = {
@@ -45,7 +44,6 @@ module.exports = {
     },
     fontSize: {
       '9-px':'9px',
-      '11-px': '11px',
       '12-px': '12px',
       '14-px': '14px',
       '16-px': '16px',

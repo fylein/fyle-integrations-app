@@ -213,8 +213,4 @@ describe('ExportSettingComponent', () => {
     ];
     expect(component.reimbursableExpenseGroupingDateOptionsFn()).toEqual(reimbursableExpenseGroupingDateOptions);
   });
-
-  it('navigateToMapping function check', () => {
-    expect(component.navigateToMapping()).toBeUndefined();
-  });
 });

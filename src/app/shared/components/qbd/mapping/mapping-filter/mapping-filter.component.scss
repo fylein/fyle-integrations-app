@@ -1,7 +1,3 @@
 .p-inputtext:enabled:focus-visible {
     @apply tw-shadow-none tw-border-check-box #{!important};
 }
-
-.pi-search {
-    @apply tw-text-faded-text-color #{!important}
-}

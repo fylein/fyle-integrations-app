@@ -109,10 +109,6 @@ export class ExportSettingComponent implements OnInit {
     private mappingService: QbdMappingService
   ) { }
 
-  navigateToMapping() {
-    this.router.navigate([`/integrations/qbd/main/mapping`]);
-  }
-
   reimbursableExpenseGroupingDateOptionsFn(): QBDExportSettingFormOption[] {
     const reimbursableExpenseGroup: QBDExportSettingFormOption[] = [];
     reimbursableExpenseGroup.push(this.reimbursableExpenseGroupingDateOptions[1]);

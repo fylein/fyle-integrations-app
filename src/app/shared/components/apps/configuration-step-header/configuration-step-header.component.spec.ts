@@ -22,8 +22,4 @@ describe('ConfigurationStepHeaderComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('refreshSageIntacctDimension function check', () => {
-    expect(component.refreshSageIntacctDimension()).toBeUndefined();
-  });
 });

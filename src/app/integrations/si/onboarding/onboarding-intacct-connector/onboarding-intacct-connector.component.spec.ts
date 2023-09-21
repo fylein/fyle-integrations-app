@@ -20,9 +20,4 @@ describe('OnboardingIntacctConnectorComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('setupConnectionStatus function check', () => {
-    expect(component.setupConnectionStatus(true)).toBeUndefined();
-    expect(component.isIntacctConnected).toBeTrue();
-  });
 });

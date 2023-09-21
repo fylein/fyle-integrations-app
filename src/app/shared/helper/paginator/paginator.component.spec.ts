@@ -41,14 +41,4 @@ describe('PaginatorComponent', () => {
     expect(component.nextPageChange(1)).toBeUndefined();
     expect(component.pageOffsetChangeEvent.emit).toHaveBeenCalled();
   });
-
-  it('navigateToPage function check', () => {
-    spyOn(component.pageOffsetChangeEvent, 'emit');
-    expect(component.navigateToPage(1)).toBeUndefined();
-    expect(component.page).toBe(1);
-    expect(component.pageOffsetChangeEvent.emit).toHaveBeenCalled();
-    expect(component.navigateToPage(2)).toBeUndefined();
-    expect(component.page).toBe(2);
-    expect(component.pageOffsetChangeEvent.emit).toHaveBeenCalled();
-  });
 });

@@ -43,24 +43,24 @@
             </div>
             <div *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-flex tw-justify-between">
                 <div class="">
-                    <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-flex tw-place-items-center tw-place-items-center tw-pt-2-px tw-mr-12-px" (click)="navigateToPage(1)" [disabled]="page === 1" >
+                    <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-flex tw-place-items-center tw-place-items-center tw-pt-2-px" (click)="navigateToPage(1)" [disabled]="page === 1" >
                         <i class="pi pi-minus tw-rotate-90"></i><i class="pi pi-chevron-left"></i>
                     </button>
                 </div>
                 <div class="">
-                    <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-mr-8-px" (click)="previousPageChange(page)" [disabled]="page === 1" >
+                    <button type="button" class="tw-h-32-px tw-w-32-px prevBtn" (click)="previousPageChange(page)" [disabled]="page === 1" >
                         <i class="pi pi-chevron-left tw-w-6-px tw-h-12-px tw-pt-6-px"></i>
                     </button>
                 </div>
-                <div class="tw-w-fix tw-h-32-px tw-flex tw-items-center tw-justify-center tw-border-2-px tw-border-separator tw-py-8-px tw-px-12-px tw-rounded-4-px tw-bg-white tw-mr-10-px">
+                <div class="tw-w-fix tw-h-32-px tw-flex tw-items-center tw-justify-center tw-border-2-px tw-border-separator tw-py-8-px tw-px-12-px tw-rounded-4-px tw-bg-white">
                     {{page}} of {{totalPages}}
                 </div>
-                <div >
-                    <button type="button" class="tw-h-32-px tw-w-32-px nextBtn tw-mr-12-px" (click)="nextPageChange(page)" [disabled]="page === totalPages">
+                <div class="">
+                    <button type="button" class="tw-h-32-px tw-w-32-px nextBtn" (click)="nextPageChange(page)" [disabled]="page === totalPages">
                         <i class="pi pi-chevron-right tw-w-6-px tw-h-12-px tw-pt-6-px"></i>
                     </button>
                 </div>
-                <div>
+                <div class="">
                     <button type="button" class="tw-h-32-px tw-w-32-px tw-ml-10-px nextBtn tw-flex tw-place-items-center tw-place-items-center tw-pt-2-px" (click)="navigateToPage(totalPages)" [disabled]="page === totalPages">
                         <i class="pi pi-chevron-right"></i><i class="pi pi-minus tw-rotate-90"></i>
                     </button>

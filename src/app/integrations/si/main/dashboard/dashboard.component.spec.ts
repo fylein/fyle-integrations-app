@@ -8,11 +8,6 @@ describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
 
   beforeEach(async () => {
-    const localStorageDump = {
-      email: 'fyle@fyle.in',
-      org_id: '2'
-    };
-    localStorage.setItem('user', JSON.stringify(localStorageDump));
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [ DashboardComponent ]

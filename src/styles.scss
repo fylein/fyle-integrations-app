@@ -260,9 +260,6 @@ p {
     @apply tw-bg-disabled-bg-color #{!important};
 }
 
-.p-toast {
-    @apply tw-opacity-100 #{!important}
-}
 .p-toast .p-toast-message.p-toast-message-success {
     @apply tw-border-none #{!important};
 }

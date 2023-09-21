@@ -16,7 +16,7 @@ export class GenericMappingComponent implements OnInit {
 
   isLoading: boolean;
 
-  mappingStats: MappingStats;
+  mappingState: MappingStats;
 
   mappings: MappingResponse;
 
@@ -49,19 +49,19 @@ export class GenericMappingComponent implements OnInit {
     private window: WindowService
   ) { }
 
-  private getFilteredMappings(): void {
+  private getFilteredMappings() {
     this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
       this.filteredMappings = qbdMappingResult.results.concat();
-      this.totalCount = qbdMappingResult.count;
+      this.totalCount = this.mappings.count;
       this.isLoading = false;
     });
   }
 
-  getOperatingSystem(): void {
+  getOps() {
     this.operationgSystem = this.window.getOperatingSystem();
   }
 
-  mappingSeachingFilter(searchValue: string): void {
+  mappingSeachingFilter(searchValue: string) {
     if (searchValue.length > 0) {
       const results: Mapping[] = this.mappings.results.filter((mapping) =>
         mapping.source_value.toLowerCase().includes(searchValue)
@@ -73,12 +73,9 @@ export class GenericMappingComponent implements OnInit {
     this.totalCount = this.filteredMappings.length;
   }
 
-  postMapping(mappingPayload: MappingPost): void {
+  postMapping(mappingPayload: MappingPost) {
     this.mappingService.postMappings(mappingPayload).subscribe(() => {
-      this.mappingService.getMappingStats(this.sourceType).subscribe((mappingStat: MappingStats) => {
-        this.mappingStats = mappingStat;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Changes saved successfully');
-      });
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping done successfully');
     }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving the mappings, please try again later');
     });
@@ -108,18 +105,18 @@ export class GenericMappingComponent implements OnInit {
     this.getFilteredMappings();
   }
 
-  private setupPage(): void {
+  setupPage() {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getMappingStats(this.sourceType),
       this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
     ]).subscribe((response) => {
-      this.mappingStats = response[0];
+      this.mappingState = response[0];
       this.mappings = response[1];
       this.filteredMappings = this.mappings.results.concat();
       this.totalCount = this.mappings.count;
-      this.getOperatingSystem();
+      this.getOps();
       this.isLoading = false;
     });
   }

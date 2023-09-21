@@ -37,7 +37,7 @@ export class MappingFilterComponent implements OnInit {
     private formBuilder: UntypedFormBuilder
   ) { }
 
-  clearSearch(): void {
+  clearSearch() {
     this.form.controls.searchOption.patchValue(null);
     const event = {
       target: {
@@ -48,7 +48,7 @@ export class MappingFilterComponent implements OnInit {
     this.mappingSearchingEvent.emit('');
   }
 
-  onFocusOut(event: any): void {
+  onFocusOut(event: any) {
     if (event.target.value === '') {
       this.isSearchBoxActive = false;
     } else {
@@ -63,30 +63,30 @@ export class MappingFilterComponent implements OnInit {
     return 'unmapped';
   }
 
-  removeFilter(): void {
-    this.form.controls.filterOption.patchValue('');
+  removeFilter() {
+    this.form.controls.filterOption.patchValue(null);
     this.mappingFilterChangeEvent.emit(MappingState.ALL);
   }
 
-  filterChanges(): void {
+  filterChanges() {
     this.form.controls.filterOption.valueChanges.subscribe((isFilterOptions) => {
       this.mappingFilterChangeEvent.emit(isFilterOptions?.value);
     });
   }
 
-  searchingFilter(): void {
+  searchingFilter() {
     this.form.controls.searchOption.valueChanges.subscribe((searchValue) => {
         this.mappingSearchingEvent.emit(searchValue);
     });
   }
 
-  setupMappingFilterWatcher(): void {
+  setupMappingFilterWatcher() {
     this.filterChanges();
 
     this.searchingFilter();
   }
 
-  private setupFilter(): void {
+  setupFilter() {
     this.form = this.formBuilder.group({
       searchOption: [],
       filterOption: []

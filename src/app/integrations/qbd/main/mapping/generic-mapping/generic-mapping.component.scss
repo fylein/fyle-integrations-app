@@ -8,11 +8,11 @@
 }
 
 :host ::ng-deep .mapped {
-    @apply tw-text-11-px tw-rounded-full tw-border tw-border-solid tw-border-mapped-green-border tw-bg-mapped-green-bg tw-py-4-px tw-px-12-px tw-text-success-toast tw-w-fit #{!important}
+    @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-mapped-green-border tw-bg-mapped-green-bg tw-py-4-px tw-px-12-px tw-text-success-toast tw-w-fit #{!important}
 }
 
 :host ::ng-deep .unmapped {
-    @apply tw-text-11-px tw-rounded-full tw-border tw-border-solid tw-border-unmapped-red-border tw-bg-unmapped-red-bg tw-py-4-px tw-px-12-px tw-text-alert-toast tw-w-fit #{!important}
+    @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-unmapped-red-border tw-bg-unmapped-red-bg tw-py-4-px tw-px-12-px tw-text-alert-toast tw-w-fit #{!important}
 }
 
 :host ::ng-deep .filterDropdown .p-dropdown .p-dropdown-label.p-inputtext {

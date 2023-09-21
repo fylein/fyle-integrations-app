@@ -3,11 +3,11 @@
 </div>
 <div *ngIf="!isLoading" class="tw-py-16-px tw-px-120-px">
     <div>
-        <app-mapping-header-section [sourceType]="'corporate_card'" [mappingStats]="mappingStats"></app-mapping-header-section>
+        <app-mapping-header-section [sourceType]="'corporate_card'" [mappingStats]="mappingState"></app-mapping-header-section>
     </div>
 
     <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
-        <div class="tw-p-24-px">
+        <div class="tw-p-24-px tw-border tw-border-b-separator">
             <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)"></app-mapping-filter>
         </div>
         <div *ngIf="totalCount > 0" >

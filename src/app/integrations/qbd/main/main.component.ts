@@ -14,8 +14,8 @@ export class MainComponent implements OnInit {
 
   modules: MenuItem[] = [
     {label: 'Dashboard', routerLink: '/integrations/qbd/main/dashboard'},
-    {label: 'Configuration', routerLink: '/integrations/qbd/main/configuration'},
-    {label: 'Mapping', routerLink: '/integrations/qbd/main/mapping'}
+    {label: 'Configuration', routerLink: '/integrations/qbd/main/configuration'}
+    // {label: 'Mapping', routerLink: '/integrations/qbd/main/mapping'}
   ];
 
   activeModules: MenuItem[];
