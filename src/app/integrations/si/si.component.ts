@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntacctWorkspace } from 'src/app/core/models/si/db/workspaces.model';
 import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
+import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
@@ -25,11 +25,11 @@ export class SiComponent implements OnInit {
   windowReference: Window;
 
   constructor(
+    private appcuesService: AppcuesService,
     private storageService: StorageService,
     private router: Router,
     private userService: IntegrationsUserService,
     private workspaceService: SiWorkspaceService,
-    private connectorService : IntacctConnectorService,
     private windowService: WindowService
   ) {
     this.windowReference = this.windowService.nativeWindow;
@@ -54,6 +54,7 @@ export class SiComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('si.workspaceId', this.workspace.id);
     this.storageService.set('si.onboardingState', this.workspace.onboarding_state);
+    this.appcuesService.initialiseAppcues(AppName.INTACCT);
     this.isLoading = false;
     this.navigate();
   }
@@ -72,6 +73,11 @@ export class SiComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        (window as any).Appcues && (window as any).Appcues.page();
+      }
+    });
     this.getOrCreateWorkspace();
   }
 

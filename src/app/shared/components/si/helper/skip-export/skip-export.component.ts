@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/si/misc/skip-export.model';
 import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
@@ -11,7 +12,13 @@ import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configurat
 })
 export class SkipExportComponent implements OnInit {
 
-  @Input() enableSkipExport: boolean = true;
+  @Input() enableSkipExport: boolean;
+
+  @Input() skipExportForm: FormGroup;
+
+  @Output() skipExportFormChange = new EventEmitter<FormGroup>();
+
+  isLoading: boolean = true;
 
   date1: Date;
 
@@ -28,8 +35,6 @@ export class SkipExportComponent implements OnInit {
   isDisabledChip1: boolean = false;
 
   isDisabledChip2: boolean = false;
-
-  skipExportForm: FormGroup;
 
   showAdditionalCondition: boolean = false;
 
@@ -83,14 +88,17 @@ export class SkipExportComponent implements OnInit {
 
   valueOption2: any[] = [];
 
-  // SeparatorKeysCodes: number[] = [ENTER, COMMA];
-
   constructor(
     private formBuilder: FormBuilder,
     private advancedSettingsService: SiAdvancedSettingService
   ) { }
 
   private skipExportWatcher(): void {
+
+      this.skipExportForm.valueChanges.subscribe(() => {
+        this.skipExportFormChange.emit(this.skipExportForm);
+      });
+
       if (this.enableSkipExport) {
         this.skipExportForm.controls.condition1.setValidators(Validators.required);
         this.skipExportForm.controls.operator1.setValidators(Validators.required);
@@ -114,10 +122,6 @@ export class SkipExportComponent implements OnInit {
         this.showAdditionalCondition = false;
         this.showAddButton = true;
       }
-  }
-
-  private setCustomValidators(): void {
-    this.skipExportWatcher();
   }
 
   private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
@@ -184,64 +188,6 @@ export class SkipExportComponent implements OnInit {
       }
         return '';
 
-  }
-
-  // Add1(addEvent1: MatChipInputEvent): void {
-  //   Const input = addEvent1.input;
-  //   Const value = addEvent1.value;
-
-  //   If ((value || '').trim()) {
-  //     This.valueOption1.push(value);
-  //     If (this.valueOption1.length) {
-  //       This.skipExportForm.controls.value1.clearValidators();
-  //     }
-  //   }
-
-  //   If (input) {
-  //     Input.value = '';
-  //   }
-  // }
-
-  remove1(chipValue: any): void {
-    const index = this.valueOption1.indexOf(chipValue);
-
-    if (index >= 0) {
-      this.valueOption1.splice(index, 1);
-    }
-    if (this.valueOption1.length===0) {
-      this.skipExportForm.controls.value1.setValue('');
-    this.skipExportForm.controls.value1.setValidators(Validators.required);
-    this.skipExportForm.controls.value1.updateValueAndValidity();
-    }
-  }
-
-  // Add2(addEvent2: MatChipInputEvent): void {
-  //   Const input = addEvent2.input;
-  //   Const value = addEvent2.value;
-
-  //   If ((value || '').trim()) {
-  //     This.valueOption2.push(value);
-  //     If (this.valueOption2.length) {
-  //       This.skipExportForm.controls.value2.clearValidators();
-  //     }
-  //   }
-
-  //   If (input) {
-  //     Input.value = '';
-  //   }
-  // }
-
-  remove2(chipValue: any): void {
-    const index = this.valueOption2.indexOf(chipValue);
-
-    if (index >= 0) {
-      this.valueOption2.splice(index, 1);
-    }
-    if (this.valueOption2.length===0) {
-      this.skipExportForm.controls.value2.setValue('');
-      this.skipExportForm.controls.value2.setValidators(Validators.required);
-      this.skipExportForm.controls.value2.updateValueAndValidity();
-      }
   }
 
   resetAdditionalFilter() {
@@ -345,6 +291,10 @@ export class SkipExportComponent implements OnInit {
     return this.skipExportForm.value?.condition2?.field_name !== 'report_title' && (!this.skipExportForm.value?.condition2 || this.skipExportForm.value?.condition2?.type==='SELECT' || this.skipExportForm.value?.condition2?.type==='TEXT' || this.skipExportForm.value?.condition2?.type==='NUMBER') && (this.skipExportForm.value.operator2 !== 'is_empty')  && (this.skipExportForm.value.operator2 !== 'is_not_empty');
   }
 
+  showDateField2() {
+    return this.skipExportForm.value?.condition2?.type==='DATE' && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
+  }
+
   saveSkipExportFields() {
     const valueField = this.skipExportForm.getRawValue();
     if (this.showAddButton && this.expenseFilters.length > 1) {
@@ -353,7 +303,7 @@ export class SkipExportComponent implements OnInit {
       .subscribe((skipExport1: SkipExport) => {
       });
     }
-    if (!this.enableSkipExport && this.expenseFilters.length > 0) {
+    if (!this.enableSkipExport) {
       this.advancedSettingsService
       .deleteExpenseFilter(this.expenseFilters[0].id)
       .subscribe((skipExport1: SkipExport) => {
@@ -366,10 +316,11 @@ export class SkipExportComponent implements OnInit {
         valueField.operator1 = 'in';
       }
       if (valueField.join_by) {
+        valueField.join_by = valueField.join_by.value;
         if (valueField.condition2.field_name !== 'report_title' && valueField.operator2 === 'iexact') {
           valueField.operator2 = 'in';
         }
-    }
+      }
     if (valueField.condition1.is_custom === true) {
       if (valueField.operator1 === 'is_empty') {
         valueField.value1 = ['True'];
@@ -528,6 +479,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   fieldWatcher() {
+    this.skipExportWatcher();
     this.conditionFieldWatcher();
     this.operatorFieldWatcher();
   }
@@ -540,6 +492,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
+    this.isLoading = true;
     this.showExpenseFilters = response.count > 0;
     this.setConditionFields(response, conditionArray);
     this.setOperatorFieldOptions(response, conditionArray);
@@ -597,20 +550,22 @@ export class SkipExportComponent implements OnInit {
         }
       }
     }
-
     this.fieldWatcher();
+    this.isLoading = false;
   }
 
   private getSettingsAndSetupForm(): void {
-    this.advancedSettingsService.getExpenseFilter().subscribe(response => {
-      this.expenseFilters = response.results;
-      this.setupSkipExportForm(response, []);
+    forkJoin([
+      this.advancedSettingsService.getExpenseFilter(),
+      this.advancedSettingsService.getFyleCustomFields()
+    ]).subscribe((responses) => {
+      this.expenseFilters = responses[0].results;
+      this.conditionFieldOptions = responses[1];
+      this.setupSkipExportForm(responses[0], []);
     });
   }
-
 
   ngOnInit(): void {
     this.getSettingsAndSetupForm();
   }
-
 }

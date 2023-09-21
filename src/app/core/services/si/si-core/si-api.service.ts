@@ -4,7 +4,7 @@ import { catchError, Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const API_BASE_URL = environment.api_url;
+const API_BASE_URL = environment.si_api_url;
 
 const httpOptions = {
   headers: new HttpHeaders({

@@ -3,7 +3,7 @@ import { AutoMapEmployeeOptions, CorporateCreditCardExpensesObject, FyleField, I
 export interface Configuration {
     id: number;
     workspace: number;
-    employee_field_mapping?: FyleField;
+    employee_field_mapping: FyleField;
     reimbursable_expenses_object?: IntacctReimbursableExpensesObject;
     corporate_credit_card_expenses_object?: CorporateCreditCardExpensesObject;
     import_projects: boolean;

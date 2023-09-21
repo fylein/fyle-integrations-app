@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -8,10 +8,10 @@ import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { OrgService } from 'src/app/core/services/org/org.service';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { SkipExportComponent } from '../../helper/skip-export/skip-export.component';
 
 @Component({
   selector: 'app-configuration-advanced-settings',
@@ -20,9 +20,13 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
+  @ViewChild('skipExportChild') skipExportChild: SkipExportComponent;
+
   isLoading: boolean = true;
 
   advancedSettingsForm: FormGroup;
+
+  skipExportForm: FormGroup;
 
   RedirectLink = RedirectLink;
 
@@ -36,7 +40,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   memoPreviewText: string;
 
-  adminEmails: EmailOptions[];
+  adminEmails: EmailOptions[] = [];
 
   hours: HourOption[] = [];
 
@@ -121,7 +125,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     });
   }
 
-  private initializeAdvancedSettingsFormWithData(): void {
+  private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
     const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     const findObjectById = (array: DestinationAttribute[], id: string) => array?.find(item => item.id.toString() === id) || null;
     const filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOptions[]) => {
@@ -139,7 +143,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
       postEntriesCurrentPeriod: [this.advancedSettings.configurations.change_accounting_period ? false : true],
       setDescriptionField: [this.advancedSettings.configurations.memo_structure ? this.advancedSettings.configurations.memo_structure : this.defaultMemoFields, Validators.required],
-      skipSelectiveExpenses: [false],
+      skipSelectiveExpenses: [isSkippedExpense],
       defaultLocation: [findObjectByDestinationId(this.sageIntacctLocations, this.advancedSettings.general_mappings.default_location.id)],
       defaultDepartment: [findObjectByDestinationId(this.sageIntacctDepartments, this.advancedSettings.general_mappings.default_department.id)],
       defaultProject: [findObjectByDestinationId(this.sageIntacctProjects, this.advancedSettings.general_mappings.default_project.id)],
@@ -166,6 +170,24 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     return false;
   }
 
+  private initializeSkipExportForm(): void {
+    this.skipExportForm = this.formBuilder.group({
+      condition1: [''],
+      operator1: [''],
+      value1: [['']],
+      customFieldType1: [''],
+      join_by: [''],
+      condition2: [''],
+      operator2: [''],
+      value2: [['']],
+      customFieldType2: ['']
+    });
+  }
+
+  updateForm(updatedForm: FormGroup) {
+    this.skipExportForm = updatedForm;
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -174,6 +196,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
     const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
+    const expenseFilters$ = this.advancedSettingsService.getExpenseFilter();
 
     // Hours Options for Scheduled Exports
     for (let i = 1; i <= 24; i++) {
@@ -182,9 +205,10 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
     forkJoin({
       advancedSettings: advancedSettings$,
-      groupedAttributes: groupedAttributes$
+      groupedAttributes: groupedAttributes$,
+      expenseFilter: expenseFilters$
     }).subscribe(
-      ({ advancedSettings, groupedAttributes }) => {
+      ({ advancedSettings, groupedAttributes, expenseFilter }) => {
         this.advancedSettings = advancedSettings;
         this.sageIntacctLocations = groupedAttributes.LOCATION;
         this.sageIntacctDefaultItem = groupedAttributes.ITEM;
@@ -192,17 +216,10 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         this.sageIntacctProjects = groupedAttributes.PROJECT;
         this.sageIntacctClasses = groupedAttributes.CLASS;
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
-        this.initializeAdvancedSettingsFormWithData();
+        this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
+        this.initializeSkipExportForm();
         this.isLoading = false;
       });
-  }
-
-  getAdminEmails() {
-    this.isLoading= true;
-    this.advancedSettingsService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
-      this.adminEmails = emailResponse;
-      this.getSettingsAndSetupForm();
-    });
   }
 
   private getPhase(): ProgressPhase {
@@ -213,6 +230,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     this.saveInProgress = true;
     const advancedSettingsPayload = AdvancedSetting.constructPayload(this.advancedSettingsForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingsPayload).subscribe((response: AdvancedSettingsPost) => {
+      if (this.advancedSettingsForm.value.skipSelectiveExpenses) {
+        this.skipExportChild.saveSkipExportFields();
+      }
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_SETTINGS) {
@@ -236,6 +256,14 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
       });
+  }
+
+  getAdminEmails() {
+    this.isLoading= true;
+    this.advancedSettingsService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
+      this.adminEmails = emailResponse;
+      this.getSettingsAndSetupForm();
+    });
   }
 
   ngOnInit(): void {

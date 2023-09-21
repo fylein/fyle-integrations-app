@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { SiApiService } from '../si-core/si-api.service';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { Observable } from 'rxjs';
-import { AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, SkipExport } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { AdvancedSettingsGet, AdvancedSettingsPost, ConditionField, ExpenseFilterResponse, SkipExport } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { StorageService } from '../../core/storage.service';
 
@@ -16,6 +16,10 @@ export class SiAdvancedSettingService {
     private storageService: StorageService,
     private workspaceService: SiWorkspaceService
   ) { }
+
+  getFyleCustomFields(): Observable<ConditionField[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/custom_fields/`, {});
+  }
 
   postExpenseFilter(skipExport: SkipExport): Observable<SkipExport> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, skipExport);

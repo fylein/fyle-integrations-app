@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
-import { ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
 import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
+import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';
 import { Task } from 'src/app/core/models/si/db/task-log.model';
+import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
@@ -25,6 +27,14 @@ export class DashboardComponent implements OnInit {
   importInProgress: boolean = true;
 
   isExportLogVisible: boolean = false;
+
+  isMappingResolveVisible: boolean = false;
+
+  intacctErrorDialogVisible: boolean = false;
+
+  intacctErrorExpenses: Expense[] = [];
+
+  intacctErrorDetail: string;
 
   taskLogStatusComplete: TaskLogState = TaskLogState.COMPLETE;
 
@@ -65,6 +75,10 @@ export class DashboardComponent implements OnInit {
 
   employeeName: string = this.userService.getUserProfile().full_name;
 
+  intacctErrorType: IntacctErrorType;
+
+  IntacctErrorType = IntacctErrorType;
+
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
@@ -74,10 +88,22 @@ export class DashboardComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private exportLogService: ExportLogService,
+    private refinerService: RefinerService,
     private trackingService: TrackingService,
     private userService: UserService,
     private workspaceService: SiWorkspaceService
   ) { }
+
+  showMappingResolve(errorType: IntacctErrorType) {
+    this.intacctErrorType = errorType;
+    this.isMappingResolveVisible = true;
+  }
+
+  showIntacctErrorDialog(intacctError: Error) {
+    this.intacctErrorDialogVisible = true;
+    this.intacctErrorDetail = intacctError.error_detail;
+    this.intacctErrorExpenses = intacctError.expense_group.expenses;
+  }
 
   showExportLog(status: TaskLogState) {
     this.exportLogHeader = status===this.taskLogStatusComplete ? 'Successful' : 'Failed';
@@ -130,6 +156,12 @@ export class DashboardComponent implements OnInit {
           this.exportInProgress = false;
           this.exportProgressPercentage = 0;
           this.processedCount = 0;
+
+          if (this.failedExpenseGroupCount === 0) {
+            this.refinerService.triggerSurvey(
+              AppName.INTACCT, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+            );
+          }
         });
       }
     });
