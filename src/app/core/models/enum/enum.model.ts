@@ -5,7 +5,7 @@ export enum IntegrationView {
   TRAVEL = 'TRAVEL'
 }
 
-export enum AccountOptions {
+export enum IntacctCategoryDestination {
   EXPENSE_TYPE = 'EXPENSE_TYPE',
   ACCOUNT = 'ACCOUNT'
 }

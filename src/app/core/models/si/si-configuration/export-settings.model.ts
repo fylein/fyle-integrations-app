@@ -4,7 +4,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/dest
 
 export type ExportSettingFormOption = {
     label: string,
-    value: ExpenseState | IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExportDateType | string | FyleField;
+    value: ExpenseState | IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExportDateType | string | FyleField | null;
 }
 
 export type ExportSettingConfiguration = {

@@ -72,9 +72,9 @@ export class ImportSettings {
         } : null;
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
-                    import_categories: importSettingsForm.value.importCategories,
-                    import_tax_codes: importSettingsForm.value.importTaxCodes,
-                    import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant
+                    import_categories: importSettingsForm.value.importCategories ? importSettingsForm.value.importCategories : false,
+                    import_tax_codes: importSettingsForm.value.importTaxCodes ? importSettingsForm.value.importTaxCodes : false,
+                    import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant ? importSettingsForm.value.importVendorAsMerchant : false
                 },
                 general_mappings: {
                     default_tax_code: importSettingsForm.value.importTaxCodes ? {
