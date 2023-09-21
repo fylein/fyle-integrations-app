@@ -89,9 +89,9 @@
                 </div>
                 <div class="tw-pt-18-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="tw-flex">
-                            <p-dropdown [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
+                            <p-dropdown appendTo="body" [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
                             optionLabel="display_name" optionValue="attribute_type" class="tw-w-32-vw"></p-dropdown>
-                            <p-dropdown [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
+                            <p-dropdown appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                             optionLabel="display_name" optionValue="attribute_type" class="tw-w-28-vw" [showClear]="true">
                                 <ng-template let-option pTemplate="item">
                                 <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
@@ -114,7 +114,7 @@
                             <div class="tw-w-32-vw">
                                 <input type="text" class="tw-text-14-px !tw-ml-40-px !tw-font-500 tw-w-246-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
                             </div>
-                            <p-dropdown class="tw-w-[31.3vw]" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                            <p-dropdown appendTo="body" class="tw-w-[31.3vw]" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -128,7 +128,7 @@
                             <div class="tw-w-32-vw">
                                 <input type="text" class="tw-text-14-px !tw-ml-60-px !tw-font-500 tw-w-226-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
                             </div>
-                            <p-dropdown class="tw-w-[31.5vw]" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                            <p-dropdown appendTo="body" class="tw-w-[31.5vw]" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                       <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
