@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 
 @Component({
   selector: 'app-onboarding-intacct-connector',

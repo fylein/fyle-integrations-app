@@ -1,13 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ConfigurationCta, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { StorageService } from 'src/app/core/services/core/storage.service';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { OnboardingIntacctConnectorComponent } from 'src/app/integrations/si/onboarding/onboarding-intacct-connector/onboarding-intacct-connector.component';
-import { SiComponent } from 'src/app/integrations/si/si.component';
 
 @Component({
   selector: 'app-intacct-connector',
