@@ -16,7 +16,7 @@ export class DashboardMappingResolveComponent implements OnInit {
   @Input() isDialogVisible: boolean = false;
 
   constructor() { }
-  
+
   ngOnInit(): void {
   }
 

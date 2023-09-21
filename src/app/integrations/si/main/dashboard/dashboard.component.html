@@ -154,6 +154,7 @@
     </div>
 </div>
 
+<!-- Expenses Table -->
 <p-dialog header="{{exportLogHeader}} Expenses" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '974px' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <p-table #dt2 [value]="expenseGroups">
@@ -186,6 +187,8 @@
         </p-table>
     </div>
 </p-dialog>
+
+<!-- Mapping Errors -->
 <p-dialog [(visible)]="isMappingResolveVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'960px' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
     <p-header>
         <p>{{intacctErrorType | snakeCaseToSpaceCase | titlecase }} Mapping Errors</p>
