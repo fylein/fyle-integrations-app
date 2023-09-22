@@ -95,8 +95,9 @@ export class CompletedExportLogComponent implements OnInit {
     this.visible = true;
   }
 
-  openUrl(url: string) {
+  openUrl(event: Event, url: string) {
     window.open(url, '_blank');
+    event.stopPropagation();
   }
 
   public filterTable(event: any) {

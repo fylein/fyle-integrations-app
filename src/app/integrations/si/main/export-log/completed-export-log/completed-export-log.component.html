@@ -68,7 +68,7 @@
                     <td>{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
                     <td>
                         <div *ngIf="rowData.intacctUrl">
-                          <button (click)="openUrl(rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
+                          <button (click)="openUrl($event, rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
                             <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
                           </button>
                         </div>
