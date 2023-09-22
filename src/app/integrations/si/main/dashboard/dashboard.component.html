@@ -43,7 +43,7 @@
           <p class="tw-pt-8 tw-font-300">There are no expenses to export at the moment!</p>
         </div>
       </div>
-    <div *ngIf="lastExport" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="tw-font-500">Your Last Export</h4>
         </div>
@@ -54,7 +54,7 @@
                         <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-2">
                         Successful Expenses
                         <span class="tw-ml-24 tw-pl-8-px">
-                            {{ lastExport?.successful_expense_groups_count }}
+                            {{ lastExport?.successful_expense_groups_count ? lastExport?.successful_expense_groups_count : 0 }}
                         </span>                          
                         <a *ngIf="lastExport?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-4 tw-text-pink pointer">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
@@ -67,7 +67,7 @@
                     </div>
                     <div class="tw-flex tw-items-center">
                         <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-2">
-                        Failed Expenses <span class="tw-ml-32 tw-pl-10-px">{{ lastExport?.failed_expense_groups_count }}</span> 
+                        Failed Expenses <span class="tw-ml-32 tw-pl-10-px">{{ lastExport?.failed_expense_groups_count ? lastExport?.failed_expense_groups_count : 0 }}</span>
                         <a *ngIf="lastExport?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-4 tw-text-pink pointer">View</a>
                         <div class="tw-ml-auto tw-flex tw-flex-col">
                             <span>
