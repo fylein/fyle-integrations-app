@@ -7,7 +7,7 @@ export enum IntegrationView {
 
 export enum IntacctCategoryDestination {
   EXPENSE_TYPE = 'EXPENSE_TYPE',
-  ACCOUNT = 'ACCOUNT'
+  ACCOUNT = 'GL_ACCOUNT'
 }
 
 export enum AutoMapEmployeeOptions {
@@ -127,7 +127,7 @@ export enum IntacctOnboardingState {
   LOCATION_ENTITY = 'LOCATION_ENTITY_MAPPINGS',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
-  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
   COMPLETE = 'COMPLETE'
 }
 

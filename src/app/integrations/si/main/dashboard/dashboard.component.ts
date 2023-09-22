@@ -106,15 +106,16 @@ export class DashboardComponent implements OnInit {
   }
 
   showExportLog(status: TaskLogState) {
-    this.exportLogHeader = status===this.taskLogStatusComplete ? 'Successful' : 'Failed';
-    this.getExpenseGroups(500, 1, status);
+    this.exportLogHeader = status === this.taskLogStatusComplete ? 'Successful' : 'Failed';
+    this.getExpenseGroups(500, 0, status);
     this.isExportLogVisible = true;
   }
 
   getExpenseGroups(limit: number, offset: number, status: TaskLogState) {
     const expenseGroups: ExpenseGroupList[] = [];
+    const exportedAt = status === TaskLogState.COMPLETE ? this.lastExport?.last_exported_at : null;
 
-    return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null, this.lastExport?.last_exported_at).subscribe(expenseGroupResponse => {
+    return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null, exportedAt).subscribe(expenseGroupResponse => {
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
         expenseGroups.push({
           exportedAt: (status===TaskLogState.COMPLETE ? expenseGroup.exported_at : expenseGroup.updated_at),

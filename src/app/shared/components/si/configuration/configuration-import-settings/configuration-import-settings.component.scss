@@ -78,16 +78,12 @@
 
   .fields-header {
     display: flex;
-    width: 90%;
   }
 
   .fields-header-text {
     font-weight: 600;
     font-size: 14px;
     line-height: 18px;
-    &--fyle {
-      margin-right: 11%;
-    }
   }
   
   :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {

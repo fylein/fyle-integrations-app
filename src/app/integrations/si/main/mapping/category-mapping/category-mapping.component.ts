@@ -180,7 +180,7 @@ export class CategoryMappingComponent implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getCategoryMappings(10, 1, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
+      this.mappingService.getCategoryMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
       this.mappingService.getMappingStats('CATEGORY', this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, categoryMappingResponse, mappingStat]) => {

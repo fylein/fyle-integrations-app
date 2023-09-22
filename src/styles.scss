@@ -8,7 +8,7 @@ body {
 }
 
 body {
-    @apply tw-m-0-px tw-text-normal-text-color tw-font-aktiv-grotesk tw-text-16-px ;
+    @apply tw-m-0-px tw-text-normal-text-color tw-font-aktiv-grotesk tw-text-16-px;
 }
 
 p {
@@ -115,7 +115,7 @@ p {
 
 // Dropdown
 .p-dropdown {
-    @apply lg:tw-w-300-px md:tw-w-260-px ;
+    @apply lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] #{!important};
 }
 .p-dropdown .p-dropdown-label {
     &.p-inputtext {
