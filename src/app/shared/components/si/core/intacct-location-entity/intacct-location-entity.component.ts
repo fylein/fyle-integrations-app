@@ -31,6 +31,8 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   isOnboarding: boolean;
 
+  isRefreshDimensionInProgress: boolean;
+
   saveInProgress: boolean = false;
 
   workspaceId: number;
@@ -67,9 +69,10 @@ export class IntacctLocationEntityComponent implements OnInit {
     const locationEntityMappingPayload: LocationEntityPost = this.getLocationEntityMappingPayload(locationEntityId);
 
     this.connectorService.postLocationEntityMapping(locationEntityMappingPayload).subscribe(
-      () => {
+      (locationEntity) => {
+        this.locationEntity = locationEntity;
+        this.isLoading = false;
         this.handleSuccess(locationEntityMappingPayload);
-        this.saveInProgress = false;
       },
       () => {
         this.isLoading = false;
@@ -96,7 +99,12 @@ export class IntacctLocationEntityComponent implements OnInit {
     };
   }
 
+  navigateToExportSetting() {
+    this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
+  }
+
   private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {
+    this.isRefreshDimensionInProgress = true;
     this.mappingsService.refreshSageIntacctDimensions().subscribe(() => {
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
         this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);

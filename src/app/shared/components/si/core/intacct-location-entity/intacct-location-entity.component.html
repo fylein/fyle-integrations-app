@@ -43,9 +43,14 @@
           <div *ngIf="!locationEntity" class="tw-pt-16-px tw-w-300-px sub-text-color bold tw-text-center">
             Please select a Location (Entity) from Sage Intacct to proceed further.
           </div>
+
+          <div *ngIf="isRefreshDimensionInProgress" class="tw-pt-16-px tw-w-300-px sub-text-color bold tw-text-center">
+            Please hold on; we are fetching data from your Sage Intacct account, which may take a few seconds.
+          </div>
       </form>
   </div>
-  <div *ngIf="!locationEntity">
-    <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
+  <div>
+    <app-configuration-step-footer *ngIf="!locationEntity" [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
+    <app-configuration-step-footer *ngIf="locationEntity" [ctaText]="ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
   </div>
 </div>
