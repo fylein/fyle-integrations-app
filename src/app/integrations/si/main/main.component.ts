@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api/menuitem';
+import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -18,8 +19,13 @@ export class MainComponent implements OnInit {
   activeModule: MenuItem;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private mappingsService: SiMappingsService
   ) { }
+
+  refreshSageIntacctDimension() {
+    this.mappingsService.refreshSageIntacctDimensions().subscribe();
+  }
 
   ngOnInit(): void {
     this.activeModule = this.modules[0];

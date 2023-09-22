@@ -57,6 +57,7 @@ import { SkipExportComponent } from './components/si/helper/skip-export/skip-exp
 import {ChipsModule} from 'primeng/chips';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboar
     ChipsModule,
     CascadeSelectModule,
     TableModule,
+    SplitButtonModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -147,6 +149,7 @@ import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboar
     DropdownModule,
     CalendarModule,
     ChipsModule,
+    SplitButtonModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     CascadeSelectModule,

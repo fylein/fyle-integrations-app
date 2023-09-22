@@ -1,6 +1,13 @@
 <div>
-    <div class="main-tab">
+    <div class="main-tab tw-flex">
         <p-tabMenu [model]="modules" [activeItem]="activeModule" ></p-tabMenu>
+        <button [pTooltip]="'The integration will import all the newly updated Sage Intacct dimensions and Fyle expenses in the configured state of export'"
+        (click)="refreshSageIntacctDimension()"
+        class="tw-ml-auto tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-4 tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
+        <span class="tw-text-sm tw-mr-1"><img src="assets/icons/stepper/sync.svg"> </span>
+        Sync
+      </button>
+      <p-splitButton class="tw-ml-2 tw-flex tw-items-center focus:tw-ring-0 tw-justify-center" label="More"></p-splitButton>
     </div>
     <div>
         <router-outlet></router-outlet>
