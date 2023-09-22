@@ -128,12 +128,12 @@ export type AdvancedSettingsPost = {
           memo_structure: getFormValue('setDescriptionField')
         },
         general_mappings: {
-          payment_account: mapAttribute('defaultPaymentAccount', 'id', 'value'),
+          payment_account: mapAttribute('defaultPaymentAccount', 'destination_id', 'value'),
           default_location: mapAttribute('defaultLocation', 'destination_id', 'value'),
           default_department: mapAttribute('defaultDepartment', 'destination_id', 'value'),
-          default_class: mapAttribute('defaultClass', 'id', 'value'),
-          default_project: mapAttribute('defaultProject', 'id', 'value'),
-          default_item: mapAttribute('defaultItems', 'id', 'value'),
+          default_class: mapAttribute('defaultClass', 'destination_id', 'value'),
+          default_project: mapAttribute('defaultProject', 'destination_id', 'value'),
+          default_item: mapAttribute('defaultItems', 'destination_id', 'value'),
           use_intacct_employee_departments: !!getFormValue('useEmployeeLocation'),
           use_intacct_employee_locations: !!getFormValue('useEmployeeDepartment')
         },
