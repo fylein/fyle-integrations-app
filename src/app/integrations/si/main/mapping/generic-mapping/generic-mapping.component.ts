@@ -4,14 +4,13 @@ import { forkJoin } from 'rxjs';
 import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
-import { MappingSetting, MappingSettingResponse, MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
-import { MappingIntacct, MappingPost, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
+import { MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
+import { MappingPost, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { EmployeeMappingResult } from 'src/app/core/models/si/db/employee-mapping.model';
 import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
@@ -98,7 +97,7 @@ export class GenericMappingComponent implements OnInit {
   }
 
   private getFilteredMappings() {
-    this.mappingService.getMappings(MappingState.ALL, this.limit, this.pageNo, this.sourceType, this.mappingSetting.destination_field).subscribe((response: ExtendedExpenseAttributeResponse) => {
+    this.mappingService.getMappings(this.selectedMappingFilter, this.limit, this.pageNo, this.sourceType, this.mappingSetting.destination_field).subscribe((response: ExtendedExpenseAttributeResponse) => {
       this.filteredMappings = response.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.isLoading = false;

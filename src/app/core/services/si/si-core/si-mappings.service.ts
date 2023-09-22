@@ -9,10 +9,9 @@ import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/si/d
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
-import { MappingIntacct, MappingPost, MappingStats } from 'src/app/core/models/si/db/mapping.model';
+import { MappingPost, MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
-import { GeneralMapping } from 'src/app/core/models/si/db/mappings.model';
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 
 @Injectable({
@@ -36,7 +35,11 @@ export class SiMappingsService {
   getMappingStats(sourceType: string, destinationType: string): Observable<MappingStats> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
-    return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, { source_type: sourceType, destination_type: destinationType });
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, {
+      source_type: sourceType,
+      destination_type: destinationType,
+      app_name: 'INTACCT'
+    });
   }
 
   getConfiguration(): Observable<Configuration>{
