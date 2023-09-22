@@ -17,3 +17,9 @@ export type UpdateEventAdditionalProperty = {
     oldState: ExportSettingGet | ImportSettingGet | AdvancedSettingsGet,
     newState: ImportSettings
   };
+
+  export type MappingAlphabeticalFilterAdditionalProperty = {
+    alphabetList: string[],
+    allSelected: boolean,
+    page: string
+  };

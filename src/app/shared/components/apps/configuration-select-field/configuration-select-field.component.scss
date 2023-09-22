@@ -21,3 +21,19 @@
 :host ::ng-deep .normal-box .p-dropdown.p-focus {
     @apply tw-border-slightly-normal-text-color #{!important};
 }
+
+.sub-text {
+    color: #5A5D72;
+    font-family: 'Aktiv Grotesk', sans-serif;
+    font-size: 12px;
+  }
+  
+  .sub-text a {
+    color: #4c5ac8;
+    cursor: pointer;
+  }
+
+  .smaller-th th {
+    font-size: 14px;
+    font-weight: 400;
+}

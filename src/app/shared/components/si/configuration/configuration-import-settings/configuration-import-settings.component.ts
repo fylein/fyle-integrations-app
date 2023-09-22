@@ -211,6 +211,20 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       this.importSettingsForm.controls.costTypes.disable();
     }
 
+    this.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe((isDependentImportEnabled) => {
+      if (isDependentImportEnabled) {
+        this.importSettingsForm.controls.costCodes.enable();
+        this.importSettingsForm.controls.costTypes.enable();
+        this.importSettingsForm.controls.costCodes.setValidators(Validators.required);
+        this.importSettingsForm.controls.costTypes.setValidators(Validators.required);
+      } else {
+        this.importSettingsForm.controls.costCodes.disable();
+      this.importSettingsForm.controls.costTypes.disable();
+        this.importSettingsForm.controls.costCodes.clearValidators();
+        this.importSettingsForm.controls.costTypes.clearValidators();
+      }
+    });
+
     this.importSettingsForm.controls.costCodes.valueChanges.subscribe((value) => {
       this.isCostCodeFieldSelected = true;
       if (value?.attribute_type === 'custom_field') {
@@ -446,7 +460,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       }
       this.saveInProgress = false;
       if (this.isOnboarding) {
-        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_SETTINGS);
+        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_CONFIGURATION);
         this.router.navigate([`/integrations/intacct/onboarding/advanced_settings`]);
       }
     }, () => {

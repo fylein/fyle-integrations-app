@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, FyleField, IntacctOnboardingState, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
@@ -12,6 +12,7 @@ import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configurat
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SkipExportComponent } from '../../helper/skip-export/skip-export.component';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-configuration-advanced-settings',
@@ -58,6 +59,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   sageIntacctPaymentAccount: DestinationAttribute[];
 
+  employeeFieldMapping: FyleField;
+
   private sessionStartTime = new Date();
 
   defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
@@ -86,6 +89,10 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService
   ) { }
+  
+  getEmployeeField() {
+    return new TitleCasePipe().transform(this.employeeFieldMapping);
+  }
 
   private formatMemoPreview(): void {
     const time = Date.now();
@@ -197,6 +204,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
     const expenseFilters$ = this.advancedSettingsService.getExpenseFilter();
+    const config$ = this.mappingService.getConfiguration();
 
     // Hours Options for Scheduled Exports
     for (let i = 1; i <= 24; i++) {
@@ -206,9 +214,10 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     forkJoin({
       advancedSettings: advancedSettings$,
       groupedAttributes: groupedAttributes$,
-      expenseFilter: expenseFilters$
+      expenseFilter: expenseFilters$,
+      configuration: config$
     }).subscribe(
-      ({ advancedSettings, groupedAttributes, expenseFilter }) => {
+      ({ advancedSettings, groupedAttributes, expenseFilter, configuration }) => {
         this.advancedSettings = advancedSettings;
         this.sageIntacctLocations = groupedAttributes.LOCATION;
         this.sageIntacctDefaultItem = groupedAttributes.ITEM;
@@ -216,6 +225,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         this.sageIntacctProjects = groupedAttributes.PROJECT;
         this.sageIntacctClasses = groupedAttributes.CLASS;
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
+        this.employeeFieldMapping = configuration.employee_field_mapping
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();
         this.isLoading = false;
@@ -235,8 +245,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       }
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
-      if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingsPayload);
+      if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_CONFIGURATION) {
+        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.ADVANCED_CONFIGURATION, 3, advancedSettingsPayload);
       } else {
         this.trackingService.intacctUpdateEvent(
           IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,
@@ -249,7 +259,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       }
       this.saveInProgress = false;
       if (this.isOnboarding) {
-        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_SETTINGS);
+        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.ADVANCED_CONFIGURATION);
         this.router.navigate([`/integrations/intacct/onboarding/done`]);
       }
     }, () => {

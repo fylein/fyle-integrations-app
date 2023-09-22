@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, UpdateEvent } from '../../models/enum/enum.model';
-import { UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
+import { MappingAlphabeticalFilterAdditionalProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
 import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/field-mapping.model';
@@ -100,5 +100,9 @@ export class TrackingService {
 
   onDateFilter(properties: {filterType: 'existing' | 'custom', startDate: Date, endDate: Date}): void {
     this.eventTrack('Date filter', properties);
+  }
+
+  onMappingsAlphabeticalFilter(properties: MappingAlphabeticalFilterAdditionalProperty): void {
+    this.eventTrack('Mappings Alphabetical Filter', properties);
   }
 }

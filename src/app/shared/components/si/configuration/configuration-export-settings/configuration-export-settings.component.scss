@@ -9,8 +9,3 @@
 :host ::ng-deep .normal-box :enabled:focus-visible {
     @apply tw-border-slightly-normal-text-color #{!important};
 }
-
-.smaller-th th {
-    font-size: 14px;
-    font-weight: 400;
-}
