@@ -19,7 +19,7 @@
         </div>
         <div *ngIf="options && !destinationAttributes && !simpleOptions">
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
-                <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
+                <p-dropdown appendTo="body" [showClear]="showClearIcon" [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                 </p-dropdown>
                 <div *ngIf="form.controls[formControllerName].value==='JOURNAL_ENTRY' || form.controls[formControllerName].value === 'EXPENSE_REPORT' || form.controls[formControllerName].value === 'BILL'" class="sub-text">
                     <span>Click </span>

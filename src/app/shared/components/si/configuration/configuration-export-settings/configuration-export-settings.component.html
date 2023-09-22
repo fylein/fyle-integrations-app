@@ -81,7 +81,8 @@
                         <div *ngIf="exportSettingsForm.value.reimbursableExportType">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
-                            [isFieldMandatory]="true"
+                            [isFieldMandatory]="false"
+                            [showClearIcon]="true"
                             [mandatoryErrorListName]="'employee mapping'"
                             [label]="'How should Employees in Fyle be mapped to ' + getExportType(exportSettingsForm.value.reimbursableExportType) + ' in Sage Intacct?'"
                             [subLabel]="'Automatically map the employees in Fyle to their corresponding records in Sage Intacct based on a unique parameter.'"
@@ -91,7 +92,7 @@
                             [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
                         </div>
                     </div>
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -115,7 +116,7 @@
                         [placeholder]="'Select date'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -221,7 +222,7 @@
                                 </div>
                             </div>
                         </div>
-                        <app-configuration-select-field
+                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
@@ -244,7 +245,7 @@
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     </div>
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!==CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"

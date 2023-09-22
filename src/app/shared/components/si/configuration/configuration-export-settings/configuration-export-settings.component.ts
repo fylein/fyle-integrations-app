@@ -115,7 +115,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   ];
 
   autoMapEmployeeOptions: ExportSettingFormOption[] = [
-    { label: 'None', value: null },
     { label: 'Match emails on Fyle and Sage Intacct', value: 'EMAIL' },
     { label: 'Match names on Fyle and Sage Intacct', value: 'NAME' },
     { label: 'Match Fyle Employee Code to Sage Intacct Name', value: 'EMPLOYEE_CODE' }
@@ -204,7 +203,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     }
 
     private setCCExpenseDateOptions(cccExportType: CorporateCreditCardExpensesObject) : void {
-    if (cccExportType === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION){
+    if (cccExportType === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
       this.cccExpenseGroupingDateOptions = [
         {
           label: 'Card Transaction Post date',
@@ -215,6 +214,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           value: ExportDateType.SPENT_AT
         }
       ];
+      this.exportSettingsForm?.controls.cccExportDate.patchValue(ExportDateType.SPENT_AT);
     } else {
       this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions;
     }
@@ -250,18 +250,12 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           this.exportSettingsForm.controls.reimbursableExportGroup.setValidators(Validators.required);
           this.exportSettingsForm.controls.reimbursableExportDate.setValidators(Validators.required);
           this.exportSettingsForm.controls.reimbursableExpenseState.setValidators(Validators.required);
-          this.exportSettingsForm.controls.autoMapEmployees.setValidators(Validators.required);
         } else {
           this.exportSettingsForm.controls.reimbursableExportType.clearValidators();
           this.exportSettingsForm.controls.reimbursableExportGroup.clearValidators();
           this.exportSettingsForm.controls.reimbursableExportDate.clearValidators();
           this.exportSettingsForm.controls.reimbursableExpenseState.clearValidators();
-          this.exportSettingsForm.controls.autoMapEmployees.clearValidators();
-          this.exportSettingsForm.controls.reimbursableExpenseState.setValue(null);
           this.exportSettingsForm.controls.reimbursableExportType.setValue(null);
-          this.exportSettingsForm.controls.reimbursableExportGroup.setValue(null);
-          this.exportSettingsForm.controls.reimbursableExportDate.setValue(null);
-          this.exportSettingsForm.controls.autoMapEmployees.setValue(null);
         }
       });
       this.reimbursableExportTypeWatcher();
@@ -313,9 +307,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
           this.exportSettingsForm.controls.cccExportDate.clearValidators();
           this.exportSettingsForm.controls.cccExpenseState.clearValidators();
           this.exportSettingsForm.controls.cccExportType.setValue(null);
-          this.exportSettingsForm.controls.cccExpenseState.setValue(null);
-          this.exportSettingsForm.controls.cccExportGroup.setValue(null);
-          this.exportSettingsForm.controls.cccExportDate.setValue(null);
         }
       });
       this.cccExportTypeWatcher();
