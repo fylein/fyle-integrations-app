@@ -55,7 +55,7 @@
                                 [formControllerName]="'reimbursableExpensePaymentType'"></app-configuration-select-field>
                             </div>
                     </div>
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.JOURNAL_ENTRY"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
