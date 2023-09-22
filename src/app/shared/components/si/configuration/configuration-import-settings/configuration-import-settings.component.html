@@ -116,7 +116,7 @@
                         <label class="tw-pl-2 tw-font-300" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields.</label>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
                             <div>
-                                <input type="text" class="tw-text-14-px !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Codes" disabled>
+                                <input type="text" class="tw-text-14-px !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Code" disabled>
                             </div>
                             <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">

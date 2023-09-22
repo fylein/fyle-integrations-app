@@ -121,12 +121,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     { label: 'Match Fyle Employee Code to Sage Intacct Name', value: 'EMPLOYEE_CODE' }
   ];
 
-  exportTableData = [
-    { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
-    { exportModule: 'Bill', employeeMapping: 'Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'Accounts Payable' },
-    { exportModule: 'Journal Entry', employeeMapping: 'Employee/Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'General Ledger' }
-  ];
-
   reimbursableExportTypes: ExportSettingFormOption[] = [
     {
       label: 'Expense Report',
@@ -165,13 +159,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer
     ) { }
-
-    getSubLabel(type: string) {
-      if (type==='reimbursableExportType') {
-        return this.sanitizer.bypassSecurityTrustHtml(`Choose the type of transaction record that you would like to create in Sage Intacct while exporting expenses from Fyle. <p (click)="showDialog()">abcd</p> for more details.`);
-      }
-      return '';
-    }
 
     private getExportGroup(exportGroups: string[] | null): string {
       if (exportGroups) {
