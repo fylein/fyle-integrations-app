@@ -53,7 +53,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   constructor(
     private trackingService: TrackingService,
-    private router: Router,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
