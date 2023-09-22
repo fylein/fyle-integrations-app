@@ -8,6 +8,7 @@ import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -48,11 +49,16 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   exportType: string;
 
+  isOnboarding: boolean = false;
+
   constructor(
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private router: Router,
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
+  }
 
   showExportPreviewDialog(exportType: string) {
     this.isExportTypeDialogVisible = true;
