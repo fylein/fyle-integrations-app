@@ -63,6 +63,7 @@ export class QbdComponent implements OnInit {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('QBDOnboardingState', this.workspace.onboarding_state);
+    this.workspaceService.syncFyleDimensions().subscribe();
     this.isLoading = false;
     this.navigate();
   }

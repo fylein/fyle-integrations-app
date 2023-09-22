@@ -64,5 +64,10 @@ describe('AppHeaderComponent', () => {
     tick();
 
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbd/onboarding/export_settings']);
+    component.postConnectionRoute = 'intacct/onboarding/connector';
+    component.connectIntegration();
+    tick();
+
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/intacct/onboarding/connector']);
   }));
 });

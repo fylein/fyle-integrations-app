@@ -43,5 +43,7 @@ it('should create', () => {
 
 it('ngOnIng function check', async () => {
   expect((component as any).getOrCreateWorkspace()).toBeUndefined();
+  spyOn(workspace, 'getWorkspace').and.returnValue(of([]));
+  expect((component as any).getOrCreateWorkspace()).toBeUndefined();
 });
 });

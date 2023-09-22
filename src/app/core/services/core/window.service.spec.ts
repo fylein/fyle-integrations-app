@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { WindowService } from './window.service';
+import { OperatingSystem } from '../../models/enum/enum.model';
 
 describe('WindowService', () => {
   let service: WindowService;
@@ -9,7 +10,7 @@ describe('WindowService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: 'Window', useValue: mockWindow }]
+      providers: [ WindowService ]
     });
     service = TestBed.inject(WindowService);
   });
@@ -30,6 +31,11 @@ describe('WindowService', () => {
 
   it('should redirect to given url', () => {
     expect(service.nativeWindow).toBeTruthy();
+  });
+
+  it('getOperatingSystem function check', () => {
+    const userAgent = service.nativeWindow.navigator.userAgent.includes(OperatingSystem.MAC) ? OperatingSystem.MAC : '';
+    expect(service.getOperatingSystem()).toBe(userAgent);
   });
 
 });

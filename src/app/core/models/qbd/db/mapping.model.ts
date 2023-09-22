@@ -2,7 +2,7 @@ export type MappingPost = {
   attribute_type: string;
   source_value: string;
   source_id: string;
-  destination_value: string;
+  destination_value: string | null;
 };
 
 export interface Mapping extends MappingPost {
