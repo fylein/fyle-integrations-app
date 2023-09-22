@@ -59,6 +59,6 @@ describe('RedirectComponent', () => {
         }
       }
     };
-    expect(component).toBeTruthy();
+    expect(component.ngOnInit()).toBeUndefined();
   });
 });

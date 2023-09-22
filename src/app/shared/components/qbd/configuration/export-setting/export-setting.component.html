@@ -141,6 +141,20 @@
                                     </div>
                                 </div>
 
+                                <div class="tw-pl-16 tw-pr-24-px">
+                                    <div class="tw-p-12-px tw-bg-info-section tw-rounded-4-px tw-flex tw-flex-row tw-items-start">
+                                        <div class="tw-mr-6-px tw-mt-2-px">
+                                            <div class="tw-w-4 tw-h-4 tw-rounded-full tw-bg-info tw-flex tw-items-center tw-justify-center">
+                                                <strong class="tw-text-white tw-text-12-px tw-font-bold">i</strong>
+                                            </div>
+                                        </div>
+                                        <div class="tw-text-14-px tw-text-400 tw-text-faded-text-color">
+                                            <span *ngIf="isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the integration dashboard after launching the integration.</span>
+                                            <span *ngIf="!isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the <a class="tw-text-hyperlink-color tw-cursor-pointer" (click)="navigateToMapping()">Mapping section</a>.</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div>
                                     <app-configuration-select-field
                                         [form]="exportSettingsForm"

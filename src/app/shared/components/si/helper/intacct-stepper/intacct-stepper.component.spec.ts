@@ -17,7 +17,7 @@ describe('IntacctStepperComponent', () => {
 
   beforeEach(async () => {
     service2 = {
-      getIntacctOnboardingState: () => IntacctOnboardingState.CONNECTION
+      getIntacctOnboardingState: () => IntacctOnboardingState.EXPORT_SETTINGS
     };
     localStorage.setItem('IntacctOnboardingState', JSON.stringify('EXPORT_SETTINGS'));
     await TestBed.configureTestingModule({

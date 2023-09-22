@@ -138,4 +138,17 @@ describe('TravelperkService', () => {
 
     req.flush(travelperkConfigurationMockData);
   });
+
+  it('connect function check', () => {
+    service.connect('deded').subscribe((value) => {
+      expect(value).toEqual({});
+    });
+
+    const req = httpMock.expectOne({
+      method: 'POST',
+      url: `${API_BASE_URL}/orgs/1/travelperk/connect/`
+    });
+
+    req.flush({});
+  });
 });

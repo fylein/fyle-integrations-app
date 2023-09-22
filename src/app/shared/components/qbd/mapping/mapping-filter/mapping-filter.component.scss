@@ -2,6 +2,10 @@
     @apply tw-shadow-none tw-border-check-box #{!important};
 }
 
+.pi-search {
+    @apply tw-text-faded-text-color #{!important}
+}
+
 :host ::ng-deep .mapping-filter {
     &--filters-section {
       padding: 32px 0px 28px 24px;
