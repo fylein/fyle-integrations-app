@@ -8,6 +8,7 @@ import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { SafeHtml } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -44,11 +45,37 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   timeOption: string[] = ['01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'];
 
+  isExportTypeDialogVisible: boolean = false;
+
+  exportType: string;
+
+  isOnboarding: boolean = false;
+
+  isExportTableVisible: boolean = false;
+
+  exportTableData = [
+    { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
+    { exportModule: 'Bill', employeeMapping: 'Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'Accounts Payable' },
+    { exportModule: 'Journal Entry', employeeMapping: 'Employee/Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'General Ledger' }
+  ];
+
   constructor(
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private router: Router
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
+  }
+
+  showExportTable() {
+    this.isExportTableVisible = true;
+  }
+
+  showExportPreviewDialog(exportType: string) {
+    this.isExportTypeDialogVisible = true;
+    this.exportType = exportType;
+  }
 
   showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
     const data: PreviewPage = {

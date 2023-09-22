@@ -51,7 +51,7 @@
             [isFieldMandatory]="true"
             [mandatoryErrorListName]="'payment sync method'"
             [label]="'Auto-Sync Payment Status for Reimbursable Expenses'"
-            [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within Fyle or outside Fyle.'"
+            [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within Fyle or outside Fyle. Click here to read more.'"
             [options]="paymentSyncOptions"
             [iconPath]="'sync'"
             [placeholder]="'Select payment sync method'"
@@ -71,8 +71,8 @@
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
-                [label]="'Auto-Create Employee/Vendor'" 
-                [subLabel]="'When matching Employee/Vendor record is not found for an employee in Fyle, the integration will auto-create a new record in Sage Intacct.'" 
+                [label]="'Auto-Create ' + getEmployeeField()" 
+                [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in Fyle, the integration will auto-create a new record in Sage Intacct.'" 
                 [formControllerName]="'autoCreateEmployeeVendor'"></app-configuration-toggle-field>
             </div>
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -130,7 +130,7 @@
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500 ">Default Field Values</h4>
                     <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-4">
-                        If you've set up any field as a mandatory field in Sage Intacct and don't collect a value from your employees for the same, you can configure a value here that will be added to all your expenses.
+                        If you've made a field mandatory in Sage Intacct but don't collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For Location and Department, you can opt to use the values from your employee records in Sage Intacct.
                     </h5>
                 </div>
             </div>
