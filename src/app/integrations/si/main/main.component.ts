@@ -16,6 +16,8 @@ export class MainComponent implements OnInit {
     {label: 'Configuration', routerLink: '/integrations/intacct/main/configuration'}
   ];
 
+  DropdownItem: MenuItem[];
+
   activeModule: MenuItem;
 
   constructor(
@@ -30,6 +32,10 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
+    this.DropdownItem = [
+      {label: 'Google', icon: 'pi pi-refresh', command: () => window.open('https://www.google.com', '_blank')},
+      {label: 'GitHub', icon: 'pi pi-times', command: () => window.open('https://www.github.com', '_blank')}
+    ];
   }
 
 }
