@@ -61,7 +61,7 @@
                         </h5>
                     </td>
                     <td>{{rowData.expenseType | titlecase}}</td>
-                    <td>{{rowData.claim_number}}</td>
+                    <td class="tw-underline tw-cursor-pointer" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.claim_number}}</td>
                 </tr>
             </ng-template>
         </p-table>

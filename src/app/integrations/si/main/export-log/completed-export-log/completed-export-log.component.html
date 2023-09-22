@@ -64,7 +64,7 @@
                         </h5>
                     </td>
                     <td>{{rowData.expenseType | titlecase}}</td>
-                    <td>{{rowData.referenceNumber}}</td>
+                    <td class="tw-underline" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
                     <td>{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
                     <td>
                         <div *ngIf="rowData.intacctUrl">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
@@ -177,6 +177,7 @@ export class CompletedExportLogComponent implements OnInit {
         this.totalCount = expenseGroupResponse.count;
       }
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
+        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
         expenseGroups.push({
           index: index++,
           exportedAt: expenseGroup.exported_at,
@@ -185,7 +186,7 @@ export class CompletedExportLogComponent implements OnInit {
           fyleReferenceType: null,
           referenceNumber: expenseGroup.description.claim_number,
           exportedAs: expenseGroup.export_type,
-          fyleUrl: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/${'expense_id'}`,
+          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
           intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
           expenses: expenseGroup.expenses
         });

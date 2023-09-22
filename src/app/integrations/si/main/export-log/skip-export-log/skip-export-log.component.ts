@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { SkipExportLogResponse, SkipExportList, SkipExportLog } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
@@ -127,6 +127,11 @@ export class SkipExportLogComponent implements OnInit {
     this.getExpenseGroups(this.limit, this.offset);
   }
 
+  openUrl(event: Event, url: string) {
+    window.open(url, '_blank');
+    event.stopPropagation();
+  }
+
   dropDownWatcher() {
     if (this.skipExportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
       this.isCalendarVisible = false;
@@ -168,7 +173,8 @@ export class SkipExportLogComponent implements OnInit {
           updated_at: skippedExpenses.updated_at,
           claim_number: skippedExpenses.claim_number,
           employee: [skippedExpenses.employee_name, skippedExpenses.employee_email],
-          expenseType: skippedExpenses.fund_source === 'Personal' ? 'Reimbursable' : 'Corporate Card'
+          expenseType: skippedExpenses.fund_source === 'Personal' ? 'Reimbursable' : 'Corporate Card',
+          fyleUrl: `${environment.fyle_app_url}/app/main/#/view_expense/${skippedExpenses.expense_id}`
         });
       });
       this.filteredExpenseGroups = expenseGroups;

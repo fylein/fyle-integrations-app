@@ -105,6 +105,11 @@ export class DashboardComponent implements OnInit {
     this.intacctErrorExpenses = intacctError.expense_group.expenses;
   }
 
+  openUrl(event: Event, url: string) {
+    window.open(url, '_blank');
+    event.stopPropagation();
+  }
+
   showExportLog(status: TaskLogState) {
     this.exportLogHeader = status === this.taskLogStatusComplete ? 'Successful' : 'Failed';
     this.getExpenseGroups(500, 0, status);
@@ -117,12 +122,14 @@ export class DashboardComponent implements OnInit {
 
     return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null, exportedAt).subscribe(expenseGroupResponse => {
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
+        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
         expenseGroups.push({
           exportedAt: (status===TaskLogState.COMPLETE ? expenseGroup.exported_at : expenseGroup.updated_at),
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           referenceNumber: expenseGroup.description.claim_number,
           exportedAs: expenseGroup.export_type,
-          expenses: expenseGroup.expenses
+          expenses: expenseGroup.expenses,
+          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
         });
       });
       this.expenseGroups = expenseGroups;
