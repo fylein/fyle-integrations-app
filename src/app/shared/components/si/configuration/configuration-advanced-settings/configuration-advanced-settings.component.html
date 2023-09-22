@@ -135,50 +135,50 @@
                 </div>
             </div>
             <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Location</label></div>
+                <div><label>Default Location</label></div>
                 <div class="tw-pt-2">
                     <p-dropdown [options]="sageIntacctLocations" optionLabel="value" formControlName="defaultLocation" placeholder="Select Location"></p-dropdown>
                     <span class="tw-pl-4">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
-                        <label class="tw-pl-2 tw-font-100" for="checkbox">Use Employee's Location in Sage Intacct</label>
+                        <label class="tw-pl-2" for="checkbox">Use Employee's Location in Sage Intacct</label>
                     </span>
                 </div>  
               </div>
 
               <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Department</label></div>
+                <div><label>Default Department</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown [options]="sageIntacctDepartments" optionLabel="value" formControlName="defaultDepartment" placeholder="Select Department"></p-dropdown>
                     <span class="tw-pl-4">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
-                        <label class="tw-pl-2 tw-font-100" for="checkbox">Use Employee's Department in Sage Intacct</label>
+                        <label class="tw-pl-2" for="checkbox">Use Employee's Department in Sage Intacct</label>
                     </span>
                 </div>  
               </div> 
 
               <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Project</label></div>
+                <div><label>Default Project</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown [options]="sageIntacctProjects" optionLabel="value" formControlName="defaultProject" placeholder="Select Project"></p-dropdown>
                 </div>  
               </div> 
 
               <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Class</label></div>
+                <div><label>Default Class</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown [options]="sageIntacctClasses" optionLabel="value" formControlName="defaultClass" placeholder="Select Class"></p-dropdown>
                 </div>  
               </div> 
 
               <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Items</label></div>
+                <div><label>Default Items</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown [options]="sageIntacctDefaultItem" optionLabel="value" formControlName="defaultItems" placeholder="Select Item"></p-dropdown>
                 </div>  
               </div>
 
               <div class="tw-pt-4 tw-pl-6 field-label" *ngIf="isCCT()">
-                <div class="tw-font-200"><label>Payment Account</label></div>
+                <div><label>Payment Account</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown [options]="sageIntacctPaymentAccount" optionLabel="value" formControlName="defaultPaymentAccount" placeholder="Select Item"></p-dropdown>
                 </div>  

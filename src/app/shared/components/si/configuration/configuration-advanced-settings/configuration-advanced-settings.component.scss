@@ -12,8 +12,9 @@
 }
 
 .field-label {
-    color: var(--grayscale-label, #5A5D72);
-    font-family: Aktiv Grotesk;
-    font-size: 14px;
-    font-weight: 400;
+    // color: var(--grayscale-label, #5A5D72);
+    // font-family: Aktiv Grotesk;
+    // font-size: 14px;
+    // font-weight: 400;
+    @apply tw-text-faded-text-color tw-text-14-px;
 }
