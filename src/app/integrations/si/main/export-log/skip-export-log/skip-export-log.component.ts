@@ -25,7 +25,7 @@ export class SkipExportLogComponent implements OnInit {
 
   offset: number = 0;
 
-  pageNo: number;
+  currentPage: number = 1;
 
   dateOptions: DateFilter[] = [
     {
@@ -106,15 +106,17 @@ export class SkipExportLogComponent implements OnInit {
     });
   }
 
-  offsetChanges(limit: number): void {
+  pageSizeChanges(limit: number): void {
     this.isLoading = true;
     this.limit = limit;
+    this.currentPage = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(limit, this.offset);
   }
 
   pageChanges(offset: number): void {
     this.isLoading = true;
+    this.currentPage = Math.ceil(offset / this.limit) + 1;
     this.offset = offset;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(this.limit, offset);
@@ -210,6 +212,8 @@ export class SkipExportLogComponent implements OnInit {
     this.setupForm();
 
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+    this.limit = paginator.limit;
+    this.offset = paginator.offset;
 
     this.getExpenseGroups(paginator.limit, paginator.offset);
   }

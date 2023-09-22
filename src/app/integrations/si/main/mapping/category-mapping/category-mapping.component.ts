@@ -6,8 +6,9 @@ import { CorporateCreditCardExpensesObject, FieldType, FyleField, IntacctReimbur
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
 import { CategoryMapping, CategoryMappingPost, CategoryMappingResult } from 'src/app/core/models/si/db/category-mapping.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
+import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
@@ -40,7 +41,9 @@ export class CategoryMappingComponent implements OnInit {
 
   sourceType: string;
 
-  limit: number = 10;
+  limit: number;
+
+  offset: number = 0;
 
   pageNo: number = 0;
 
@@ -63,6 +66,7 @@ export class CategoryMappingComponent implements OnInit {
   constructor(
     private mappingService: SiMappingsService,
     private route: ActivatedRoute,
+    private paginatorService: PaginatorService,
     private workspaceService: SiWorkspaceService,
     private toastService: IntegrationsToastService
   ) { }
@@ -103,6 +107,9 @@ export class CategoryMappingComponent implements OnInit {
 
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
+    if (this.limit !== limit) {
+      this.paginatorService.storePageSize(PaginatorPage.MAPPING, limit);
+    }
     this.limit = limit;
     this.pageNo = 0;
     this.currentPage = 1;
@@ -177,10 +184,14 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   setupPage() {
+    const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
+    this.limit = paginator.limit;
+    this.offset = paginator.offset;
+
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getCategoryMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
+      this.mappingService.getCategoryMappings(paginator.limit, paginator.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
       this.mappingService.getMappingStats('CATEGORY', this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, categoryMappingResponse, mappingStat]) => {

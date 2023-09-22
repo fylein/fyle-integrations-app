@@ -129,7 +129,7 @@ export class DashboardComponent implements OnInit {
           referenceNumber: expenseGroup.description.claim_number,
           exportedAs: expenseGroup.export_type,
           expenses: expenseGroup.expenses,
-          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
+          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType)
         });
       });
       this.expenseGroups = expenseGroups;

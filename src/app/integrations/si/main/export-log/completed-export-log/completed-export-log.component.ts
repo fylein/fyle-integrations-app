@@ -8,7 +8,6 @@ import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-completed-export-log',
@@ -25,7 +24,7 @@ export class CompletedExportLogComponent implements OnInit {
 
   offset: number = 0;
 
-  pageNo: number;
+  currentPage: number = 1;
 
   dateOptions: DateFilter[] = [
     {
@@ -119,9 +118,10 @@ export class CompletedExportLogComponent implements OnInit {
   }
 
 
-  offsetChanges(limit: number): void {
+  pageSizeChanges(limit: number): void {
     this.isLoading = true;
     this.limit = limit;
+    this.currentPage = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(limit, this.offset);
   }
@@ -129,6 +129,7 @@ export class CompletedExportLogComponent implements OnInit {
   pageChanges(offset: number): void {
     this.isLoading = true;
     this.offset = offset;
+    this.currentPage = Math.ceil(offset / this.limit) + 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(this.limit, offset);
   }
@@ -224,6 +225,8 @@ export class CompletedExportLogComponent implements OnInit {
     this.setupForm();
 
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+    this.limit = paginator.limit;
+    this.offset = paginator.offset;
 
     this.getExpenseGroups(paginator.limit, paginator.offset);
   }

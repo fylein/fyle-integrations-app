@@ -67,7 +67,7 @@
         </p-table>
 
         <div *ngIf="filteredExpenseGroups.length > 0" class="tw-p-24-px">
-            <app-paginator [totalCount]="totalCount" (pageSizeChangeEvent)="offsetChanges($event)" (pageOffsetChangeEvent)="pageChanges($event)"></app-paginator>
+            <app-paginator [dropDownValue]="limit" [page]="currentPage" [totalCount]="totalCount" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageChanges($event)"></app-paginator>
         </div>
 
         <div *ngIf="!filteredExpenseGroups.length" class="tw-flex tw-h-3/6 tw-text-center tw-p-56-px">
