@@ -19,6 +19,11 @@
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
                 <p-dropdown [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                 </p-dropdown>
+                <div *ngIf="form.controls[formControllerName].value === 'JOURNAL_ENTRY' || form.controls[formControllerName].value === 'EXPENSE_REPORT' || form.controls[formControllerName].value === 'BILL'" class="sub-text">
+                    <span>Click </span>
+                    <a (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
+                    <span> to preview how it looks on Sage Intacct</span>
+                </div>
             </div>
             <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end" *ngIf="formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay'">
                 <div *ngIf="formControllerName === 'dayOfWeek'" class="tw-mr-18-px dropdown-monthy">
@@ -72,5 +77,15 @@
         <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px']">
             <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
         </div> 
+    </div>
+</div>
+
+<div *ngIf="isExportTypeDialogVisible">
+    <div class="card flex justify-content-center">
+        <p-dialog header="Export Settings" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isExportTypeDialogVisible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+            <img *ngIf="exportType==='EXPENSE_REPORT'" src="assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg">
+            <img *ngIf="exportType==='BILL'" src="assets/illustrations/sageIntacct/Reimbursable Bill.jpg">
+            <img *ngIf="exportType==='JOURNAL_ENTRY'" src="assets/illustrations/sageIntacct/Reimbursable Journal Entry.jpg">
+        </p-dialog>
     </div>
 </div>

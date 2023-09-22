@@ -166,13 +166,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private sanitizer: DomSanitizer
     ) { }
 
-    getSubLabel(type: string) {
-      if (type==='reimbursableExportType') {
-        return this.sanitizer.bypassSecurityTrustHtml(`Choose the type of transaction record that you would like to create in Sage Intacct while exporting expenses from Fyle. <p (click)="showDialog()">abcd</p> for more details.`);
-      }
-      return '';
-    }
-
     private getExportGroup(exportGroups: string[] | null): string {
       if (exportGroups) {
         const exportGroup = exportGroups.find((exportGroup) => {
@@ -184,9 +177,9 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     }
 
     getExportType(exportType: IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject): string {
-      const lowerCaseWord = exportType.toLowerCase();
+      const lowerCaseWord = exportType?.toLowerCase();
 
-      return lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
+      return lowerCaseWord?.charAt(0).toUpperCase() + lowerCaseWord?.slice(1);
     }
 
     private setUpExpenseStates(): void {
