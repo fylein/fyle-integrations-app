@@ -139,7 +139,7 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   getDropdownValue(categoryMapping: CategoryMapping[]) {
-    if (categoryMapping.length) {
+    if (categoryMapping?.length) {
       if (this.employeeFieldMapping === FyleField.VENDOR) {
         return categoryMapping[0].destination_account;
       } else if (this.employeeFieldMapping === FyleField.EMPLOYEE) {
