@@ -10,3 +10,10 @@
     // gap: 16px;
     max-width: auto; /* You can adjust this value as needed */
 }
+
+.field-label {
+    color: var(--grayscale-label, #5A5D72);
+    font-family: Aktiv Grotesk;
+    font-size: 14px;
+    font-weight: 400;
+}

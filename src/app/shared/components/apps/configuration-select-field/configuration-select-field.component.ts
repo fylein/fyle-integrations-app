@@ -51,6 +51,14 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   isOnboarding: boolean = false;
 
+  isExportTableVisible: boolean = false;
+
+  exportTableData = [
+    { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
+    { exportModule: 'Bill', employeeMapping: 'Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'Accounts Payable' },
+    { exportModule: 'Journal Entry', employeeMapping: 'Employee/Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'General Ledger' }
+  ];
+
   constructor(
     private trackingService: TrackingService,
     private router: Router
@@ -58,6 +66,10 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
+  }
+
+  showExportTable() {
+    this.isExportTableVisible = true;
   }
 
   showExportPreviewDialog(exportType: string) {
