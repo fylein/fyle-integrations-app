@@ -8,6 +8,7 @@ import { GenericMappingComponent } from './generic-mapping/generic-mapping.compo
 import { TabMenuModule } from 'primeng/tabmenu';
 import { TableModule } from 'primeng/table';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { IconSpriteModule } from 'ng-svg-icon-sprite';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     TableModule,
     TabMenuModule,
     SharedModule,
-    MappingRoutingModule
+    MappingRoutingModule,
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
 export class MappingModule { }
