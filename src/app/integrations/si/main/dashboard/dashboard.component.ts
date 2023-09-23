@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  importInProgress: boolean = true;
+  isImportInProgress: boolean = true;
 
   isExportLogVisible: boolean = false;
 
@@ -85,7 +85,7 @@ export class DashboardComponent implements OnInit {
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
 
-  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSES, TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
+  private taskType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
 
   constructor(
     private dashboardService: DashboardService,
@@ -249,7 +249,7 @@ export class DashboardComponent implements OnInit {
       this.failedExpenseGroupCount = responses[3].results.filter((task: Task) => task.status === TaskLogState.FAILED).length;
 
       if (queuedTasks.length) {
-        this.importInProgress = false;
+        this.isImportInProgress = false;
         this.exportInProgress = true;
         this.exportableExpenseGroupIds = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
         this.pollExportStatus(this.exportableExpenseGroupIds);
@@ -257,7 +257,7 @@ export class DashboardComponent implements OnInit {
         this.dashboardService.importExpenseGroups().subscribe(() => {
           this.dashboardService.getExportableGroupsIds().subscribe((exportableExpenseGroups: ExportableExpenseGroup) => {
             this.exportableExpenseGroupIds = exportableExpenseGroups.exportable_expense_group_ids;
-            this.importInProgress = false;
+            this.isImportInProgress = false;
           });
         });
       }

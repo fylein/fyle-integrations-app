@@ -98,9 +98,9 @@
                             <p *ngIf="!expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">Sage Intacct Fields should be unique</p>
                         </div>
                             <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
-                            <div>
+                            <div class="tw-w-28-vw">
                                 <p-dropdown appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
-                                optionLabel="display_name" optionValue="attribute_type" class="tw-w-28-vw" [showClear]="true">
+                                optionLabel="display_name" optionValue="attribute_type" [showClear]="true">
                                     <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                         <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>

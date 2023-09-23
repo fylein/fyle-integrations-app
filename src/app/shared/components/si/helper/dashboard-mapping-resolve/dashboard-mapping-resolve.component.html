@@ -1,4 +1,4 @@
-<div *ngIf="!isLoading">
+<div>
     <div *ngIf="mappingType === 'CATEGORY_MAPPING'">
       <p-table [value]="groupedError" [tableStyle]="{ 'min-width': '20rem' }">
         <ng-template pTemplate="header">
@@ -8,7 +8,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error let-rowIndex="rowIndex">
-            <tr>
+            <tr *ngIf="!isLoading">
                 <td>{{ error.expense_attribute.value }}</td>
                 <td>
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
@@ -21,6 +21,7 @@
                     </p-dropdown> 
                 </td>
             </tr>
+            <ng-container *ngTemplateOutlet="shimmers"></ng-container>
         </ng-template>
     </p-table>
     </div>
@@ -33,7 +34,7 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-error>
-            <tr>
+            <tr *ngIf="!isLoading">
                 <td>{{ error.expense_attribute.value }}</td>
                 <td>
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
@@ -46,8 +47,15 @@
                     </p-dropdown>                
                 </td>
             </tr>
+            <ng-container *ngTemplateOutlet="shimmers"></ng-container>
         </ng-template>
         </p-table>
     </div>
 </div>
   
+<ng-template #shimmers>
+    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
+        <td *ngIf="isLoading"><p-skeleton width="150px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isLoading"><p-skeleton width="250px" height="28px" shape="rectangle"></p-skeleton></td>
+    </tr>
+</ng-template>
