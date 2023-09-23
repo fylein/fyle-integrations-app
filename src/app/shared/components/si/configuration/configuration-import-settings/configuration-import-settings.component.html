@@ -92,23 +92,29 @@
                 </div>
                 <div class="tw-pt-18-px" *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
                     <div class="tw-flex">
+                        <div>
                             <p-dropdown appendTo="body" [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
                             optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
+                            <p *ngIf="!expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">Sage Intacct Fields should be unique</p>
+                        </div>
                             <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
-                            <p-dropdown appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
-                            optionLabel="display_name" optionValue="attribute_type" class="tw-w-28-vw" [showClear]="true">
-                                <ng-template let-option pTemplate="item">
-                                <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
-                                    <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
-                                    {{ option.display_name }}
-                                </div>
-                                </ng-template>
-                                <ng-template pTemplate="selectedItem" let-item>
-                                <div class="selected-item-container">
-                                    {{ item.display_name }}
-                                </div>
-                                </ng-template>
-                          </p-dropdown>                                                                             
+                            <div>
+                                <p-dropdown appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
+                                optionLabel="display_name" optionValue="attribute_type" class="tw-w-28-vw" [showClear]="true">
+                                    <ng-template let-option pTemplate="item">
+                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
+                                        <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
+                                        {{ option.display_name }}
+                                    </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="selectedItem" let-item>
+                                    <div class="selected-item-container">
+                                        {{ item.display_name }}
+                                    </div>
+                                    </ng-template>
+                              </p-dropdown>
+                              <p *ngIf="!expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">Fyle Fields should be unique</p>
+                            </div>
                         <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
                     </div>
                     <div class="tw-pt-4" *ngIf="i===0 && showCostCodeCostType" [formGroup]="importSettingsForm">

@@ -98,7 +98,6 @@ export class CategoryMappingComponent implements OnInit {
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      console.log(this.filteredMappings);
       const results: CategoryMappingResult[] = this.filteredMappings.filter((mapping) =>
         mapping.value?.toLowerCase().includes(searchValue)
       );
