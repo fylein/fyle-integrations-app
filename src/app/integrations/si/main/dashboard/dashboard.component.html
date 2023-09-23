@@ -81,7 +81,7 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!isLoading && lastExport && (errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.INTACCT_ERROR.length)" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div *ngIf="!isLoading && lastExport && ((errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.INTACCT_ERROR.length) || (groupedErrorStat.EMPLOYEE_MAPPING || groupedErrorStat.CATEGORY_MAPPING))" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="tw-font-500">Errors</h4>
         </div>
@@ -100,13 +100,20 @@
                     <div class="container">
                         <div class="inside-container">
                             <h4 class="tw-text-16-px !tw-font-500 ">Employee Mapping Errors</h4>
+                            <h5 *ngIf="groupedErrorStat.EMPLOYEE_MAPPING" class="tw-pt-4-px tw-text-faded-text-color tw-text-12-px">{{ groupedErrorStat.EMPLOYEE_MAPPING?.resolvedCount }}/{{ groupedErrorStat.EMPLOYEE_MAPPING?.totalCount }} error(s) resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2">
                                     <p>Map the employees in Fyle to their corresponding records in Sage Intacct<br>based on unique parameter.</p>
                                 </h5>
-                                <button type="button" (click)="showMappingResolve(IntacctErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING)" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
+                                <button *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)" type="button" (click)="showMappingResolve(IntacctErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING)" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
                                     Resolve
                                 </button>
+                                <div class="tw-flex" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
+                                    <svg-icon-sprite src="green-tick" width="18px" height="18px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
+                                    <p class="tw-text-faded-text-color tw-text-14-px">
+                                      Resolved
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -116,12 +123,19 @@
                     <div class="container">
                         <div class="inside-container">
                             <h4 class="tw-text-16-px !tw-font-500 ">Category Mapping Errors</h4>
+                            <h5 *ngIf="groupedErrorStat.CATEGORY_MAPPING" class="tw-pt-4-px tw-text-faded-text-color tw-text-12-px">{{ groupedErrorStat.CATEGORY_MAPPING.resolvedCount }}/{{ groupedErrorStat.CATEGORY_MAPPING?.totalCount }} error(s) resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>Map the employees in Fyle to their corresponding records in Sage Intacct<br>based on unique parameter.</p>
                                 </h5>
-                                <button type="button" (click)="showMappingResolve(IntacctErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING)" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
+                                <button *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)" type="button" (click)="showMappingResolve(IntacctErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING)" class="tw-text-white tw-text-500 tw-px-30-px tw-py-12-px tw-bg-slightly-normal-text-color tw-rounded-4-px">
                                     Resolve
                                 </button>
+                                <div class="tw-flex" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
+                                    <svg-icon-sprite src="green-tick" width="18px" height="18px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
+                                    <p class="tw-text-faded-text-color tw-text-14-px">
+                                      Resolved
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -189,12 +203,12 @@
 </p-dialog>
 
 <!-- Mapping Errors -->
-<div *ngIf="isMappingResolveVisible">
-    <p-dialog [(visible)]="isMappingResolveVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'960px' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+<div>
+    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'top-right'" [style]="{ width: '50vw', height:'960px' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="showErrorStats()">
         <p-header>
             <p>{{intacctErrorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
           </p-header>
-        <app-dashboard-mapping-resolve [employeeFieldMapping]="employeeFieldMapping" [groupedError]="groupedError" [mappingType]="intacctErrorType" [isDialogVisible]="isMappingResolveVisible"></app-dashboard-mapping-resolve>
+        <app-dashboard-mapping-resolve *ngIf="isMappingResolveVisible" [employeeFieldMapping]="employeeFieldMapping" [groupedError]="groupedError" [mappingType]="intacctErrorType" [isDialogVisible]="isMappingResolveVisible"></app-dashboard-mapping-resolve>
     </p-dialog>
 </div>
 

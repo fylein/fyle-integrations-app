@@ -178,6 +178,32 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  showErrorStats(): void {
+    this.getExportErrors$.subscribe((errors) => {
+      const newError: GroupedErrors = this.formatErrors(errors);
+
+      if (this.errors.CATEGORY_MAPPING.length !== newError.CATEGORY_MAPPING.length) {
+        const totalCount = this.groupedErrorStat.CATEGORY_MAPPING ? this.groupedErrorStat.CATEGORY_MAPPING.totalCount : this.errors.CATEGORY_MAPPING.length;
+
+        this.groupedErrorStat.CATEGORY_MAPPING = {
+          resolvedCount: totalCount - newError.CATEGORY_MAPPING.length,
+          totalCount: totalCount
+        };
+      }
+
+      if (this.errors.EMPLOYEE_MAPPING.length !== newError.EMPLOYEE_MAPPING.length) {
+        const totalCount = this.groupedErrorStat.EMPLOYEE_MAPPING ? this.groupedErrorStat.EMPLOYEE_MAPPING.totalCount : this.errors.EMPLOYEE_MAPPING.length;
+
+        this.groupedErrorStat.EMPLOYEE_MAPPING = {
+          resolvedCount: totalCount - newError.EMPLOYEE_MAPPING.length,
+          totalCount: totalCount
+        };
+      }
+
+      this.errors = newError;
+    });
+  }
+
   private formatErrors(errors: Error[]): GroupedErrors {
     return errors.reduce((groupedErrors: GroupedErrors, error: Error) => {
       const group: Error[] = groupedErrors[error.type] || [];
