@@ -88,7 +88,7 @@ export class DashboardMappingResolveComponent implements OnInit {
     };
     this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
-    }, err => {
+    }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
     });
   }
@@ -140,7 +140,6 @@ export class DashboardMappingResolveComponent implements OnInit {
 
   saveCategoryMapping(selectedRow: CategoryMappingResult, event: any) {
     const sourceId = selectedRow.id;
-    this.isLoading = true;
 
     const categoryMappingsPayload: CategoryMappingPost = {
       source_category: {
@@ -156,14 +155,9 @@ export class DashboardMappingResolveComponent implements OnInit {
     };
 
     this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
-      this.mappingService.getCategoryMappings(500, 0, this.getCategoryAttributeType()[0], MappingState.UNMAPPED).subscribe((response) => {
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
-        this.filteredCategoryMappings = response.results;
-        this.isLoading = false;
-      });
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
     }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
-      this.isLoading = false;
     });
   }
 

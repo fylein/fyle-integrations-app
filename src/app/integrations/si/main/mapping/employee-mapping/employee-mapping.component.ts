@@ -127,10 +127,15 @@ export class EmployeeMappingComponent implements OnInit {
       },
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
-    this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
+    this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
+      // Decrement unmapped count only for new mappings, ignore updates
+      if (!selectedRow.employeemapping.length) {
+        this.mappingStats.unmapped_attributes_count -= 1;
+      }
+
+      selectedRow.employeemapping = [response];
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
-      this.setupPage();
-    }, err => {
+    }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
     });
   }

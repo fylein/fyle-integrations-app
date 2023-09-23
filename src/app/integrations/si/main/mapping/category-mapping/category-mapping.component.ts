@@ -158,7 +158,6 @@ export class CategoryMappingComponent implements OnInit {
 
   save(selectedRow: CategoryMappingResult, event: any) {
     const sourceId = selectedRow.id;
-    this.isLoading = true;
 
     const categoryMappingsPayload: CategoryMappingPost = {
       source_category: {
@@ -173,9 +172,14 @@ export class CategoryMappingComponent implements OnInit {
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
 
-    this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
+    this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
+      // Decrement unmapped count only for new mappings, ignore updates
+      if (!selectedRow.categorymapping.length) {
+        this.mappingStats.unmapped_attributes_count -= 1;
+      }
+
+      selectedRow.categorymapping = [response];
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
-      this.setupPage();
       this.isLoading = false;
     }, () => {
       this.isLoading = false;

@@ -90,10 +90,15 @@ export class GenericMappingComponent implements OnInit {
       destination_id: event.value.destination_id,
       destination_value: event.value.value
     };
-    this.mappingService.postMapping(payload).subscribe(() => {
+    this.mappingService.postMapping(payload).subscribe((response) => {
+      // Decrement unmapped count only for new mappings, ignore updates
+      if (!selectedRow.mapping.length) {
+        this.mappingStats.unmapped_attributes_count -= 1;
+      }
+
+      selectedRow.mapping = [response];
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping saved successfully');
-      this.setupPage();
-    }, err => {
+    }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
     });
   }
