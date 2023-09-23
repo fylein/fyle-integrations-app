@@ -19,4 +19,8 @@ export class SiAuthService {
   loginWithAuthCode(code: string): Observable<Token> {
     return this.apiService.post('/auth/login/', { code });
   }
+
+  refreshAccessToken(refreshToken: string): Observable<Token> {
+    return this.apiService.post('/auth/refresh/', { refresh_token: refreshToken });
+  }
 }
