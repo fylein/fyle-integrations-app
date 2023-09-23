@@ -1,22 +1,21 @@
 <div *ngIf="!isLoading">
-    <div *ngIf="mappingType==='CATEGORY_MAPPING'">
-      <p-table [value]="filteredCategoryMappings" [tableStyle]="{ 'min-width': '20rem' }">
+    <div *ngIf="mappingType === 'CATEGORY_MAPPING'">
+      <p-table [value]="groupedError" [tableStyle]="{ 'min-width': '20rem' }">
         <ng-template pTemplate="header">
             <tr>
                 <th>Category</th>
-                <th>{{getCategoryAttributeType()[0] | snakeCaseToSpaceCase | titlecase}}</th>
+                <th>{{getCategoryDestinationType() | snakeCaseToSpaceCase | titlecase}}</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-mapping let-rowIndex="rowIndex">
+        <ng-template pTemplate="body" let-error let-rowIndex="rowIndex">
             <tr>
-                <td>{{ mapping.value }}</td>
+                <td>{{ error.expense_attribute.value }}</td>
                 <td>
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
                     [options]="getCategoryMappingOptions()" 
                     optionLabel="value" 
                     placeholder="Select an Option" 
-                    (onChange)="saveCategoryMapping(mapping, $event);"
-                    [ngModel]="getCategoryDropdownValue(mapping.categorymapping)"
+                    (onChange)="saveCategoryMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
                     </p-dropdown> 
@@ -25,24 +24,23 @@
         </ng-template>
     </p-table>
     </div>
-    <div *ngIf="mappingType==='EMPLOYEE_MAPPING'">
-      <p-table [value]="filteredEmployeeMappings" [tableStyle]="{ 'min-width': '50rem'}">
+    <div *ngIf="mappingType === 'EMPLOYEE_MAPPING'">
+      <p-table [value]="groupedError" [tableStyle]="{ 'min-width': '50rem'}">
         <ng-template pTemplate="header">
             <tr>
             <th>Employee Email</th>
-            <th>Sage Intacct {{getEmployeeAttributeType()[0] | titlecase}}</th>
+            <th>Sage Intacct {{getEmployeeAttributeType() | titlecase}}</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-mapping>
+        <ng-template pTemplate="body" let-error>
             <tr>
-                <td>{{ mapping.value }}</td>
+                <td>{{ error.expense_attribute.value }}</td>
                 <td>
                     <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                    [ngModel]="getEmployeeDropdownValue(mapping.employeemapping)" 
                     [options]="fyleEmployeeOptions" 
                     optionLabel="value" 
                     placeholder="Select an Option" 
-                    (onChange)="saveEmployeeMapping(mapping, $event); getEmployeeDropdownValue(mapping.employeemapping)"
+                    (onChange)="saveEmployeeMapping(error.expense_attribute, $event);"
                     [filter]="true"
                     filterBy="value">
                     </p-dropdown>                

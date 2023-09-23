@@ -34,6 +34,8 @@ export class DashboardComponent implements OnInit {
 
   intacctErrorExpenses: Expense[] = [];
 
+  groupedError: Error[];
+
   intacctErrorDetail: string;
 
   taskLogStatusComplete: TaskLogState = TaskLogState.COMPLETE;
@@ -94,8 +96,9 @@ export class DashboardComponent implements OnInit {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  showMappingResolve(errorType: IntacctErrorType) {
+  showMappingResolve(errorType: IntacctErrorType, groupedError: Error[]) {
     this.intacctErrorType = errorType;
+    this.groupedError = groupedError;
     this.isMappingResolveVisible = true;
   }
 

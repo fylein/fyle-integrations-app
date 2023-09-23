@@ -1,7 +1,7 @@
 import { DestinationAttributeDetail } from "./destination-attribute-detail.model";
 
 export type MappingDestination = {
-  id?: number;
+  id?: number | null;
   attribute_type?: string;
   display_name?: string;
   value?: string;
