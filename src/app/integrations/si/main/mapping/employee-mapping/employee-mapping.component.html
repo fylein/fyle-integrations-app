@@ -37,7 +37,7 @@
 
     <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
         <div class="tw-p-24-px tw-border tw-border-b-separator">
-            <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)"></app-mapping-filter>
+            <app-mapping-filter [selectedAlphabeticalFilter]="alphabetFilter" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)" (mappingFilterUpdateHandler)="mappingFilterUpdate($event)"></app-mapping-filter>
         </div>
         <div *ngIf="filteredMappingCount" >
             <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">

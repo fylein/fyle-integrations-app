@@ -35,9 +35,9 @@ export class CategoryMappingComponent implements OnInit {
 
   sageIntacctExpenseTypes: DestinationAttribute[];
 
-  mappings: CategoryMapping[];
+  mappings: CategoryMappingResult[];
 
-  filteredMappings: CategoryMapping[];
+  filteredMappings: CategoryMappingResult[];
 
   sourceType: string;
 
@@ -63,6 +63,8 @@ export class CategoryMappingComponent implements OnInit {
 
   operationgSystem: string;
 
+  alphabetFilter: string = 'All';
+
   constructor(
     private mappingService: SiMappingsService,
     private route: ActivatedRoute,
@@ -86,17 +88,19 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   private getFilteredMappings() {
-    this.mappingService.getCategoryMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: CategoryMappingsResponse) => {
+    this.mappingService.getCategoryMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter).subscribe((intacctMappingResult: CategoryMappingsResponse) => {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
+      this.totalCount = intacctMappingResult.count;
       this.isLoading = false;
     });
   }
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: CategoryMapping[] = this.mappings.filter((mapping) =>
-        mapping.source_category.value?.toLowerCase().includes(searchValue)
+      console.log(this.filteredMappings);
+      const results: CategoryMappingResult[] = this.filteredMappings.filter((mapping) =>
+        mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
     } else {
@@ -127,8 +131,15 @@ export class CategoryMappingComponent implements OnInit {
     this.isLoading = true;
     this.selectedMappingFilter = state;
     this.currentPage = 1;
-    this.limit = 10;
     this.pageNo = 0;
+    this.getFilteredMappings();
+  }
+
+  mappingFilterUpdate(alphabet: string) {
+    this.isLoading = true;
+    this.alphabetFilter = alphabet;
+    this.currentPage = 1;
+    this.offset = 0;
     this.getFilteredMappings();
   }
 
@@ -195,7 +206,7 @@ export class CategoryMappingComponent implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getCategoryMappings(paginator.limit, paginator.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
+      this.mappingService.getCategoryMappings(paginator.limit, paginator.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
       this.mappingService.getMappingStats('CATEGORY', this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, categoryMappingResponse, mappingStat]) => {

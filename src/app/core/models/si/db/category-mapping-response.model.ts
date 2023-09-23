@@ -1,8 +1,8 @@
-import { CategoryMapping } from "./category-mapping.model";
+import { CategoryMappingResult } from "./category-mapping.model";
 
 export type CategoryMappingsResponse = {
   count: number;
   next: string;
   previous: string;
-  results: CategoryMapping[];
+  results: CategoryMappingResult[];
 };

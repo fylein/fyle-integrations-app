@@ -61,6 +61,8 @@ export class GenericMappingComponent implements OnInit {
 
   operationgSystem: string;
 
+  alphabetFilter: string = 'All';
+
   constructor(
     private paginatorService: PaginatorService,
     private route: ActivatedRoute,
@@ -104,9 +106,10 @@ export class GenericMappingComponent implements OnInit {
   }
 
   private getFilteredMappings() {
-    this.mappingService.getMappings(this.selectedMappingFilter, this.limit, this.offset, this.sourceType, this.mappingSetting.destination_field).subscribe((response: ExtendedExpenseAttributeResponse) => {
+    this.mappingService.getMappings(this.selectedMappingFilter, this.limit, this.offset, this.sourceType, this.mappingSetting.destination_field, this.alphabetFilter).subscribe((response: ExtendedExpenseAttributeResponse) => {
       this.filteredMappings = response.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
+      this.totalCount = response.count;
       this.isLoading = false;
     });
   }
@@ -129,6 +132,14 @@ export class GenericMappingComponent implements OnInit {
     this.getFilteredMappings();
   }
 
+  mappingFilterUpdate(alphabet: string) {
+    this.isLoading = true;
+    this.alphabetFilter = alphabet;
+    this.currentPage = 1;
+    this.offset = 0;
+    this.getFilteredMappings();
+  }
+
   mappingStateFilter(state: MappingState): void {
     this.isLoading = true;
     this.selectedMappingFilter = state;
@@ -139,7 +150,7 @@ export class GenericMappingComponent implements OnInit {
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: ExtendedExpenseAttribute[] = this.mappings.filter((mapping) =>
+      const results: ExtendedExpenseAttribute[] = this.filteredMappings.filter((mapping) =>
         mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
@@ -167,7 +178,7 @@ export class GenericMappingComponent implements OnInit {
       forkJoin([
         this.mappingService.getSageIntacctDestinationAttributes(this.mappingSetting.destination_field),
         this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field),
-        this.mappingService.getMappings(MappingState.ALL, this.limit, this.offset, this.sourceType, this.mappingSetting.destination_field)
+        this.mappingService.getMappings(MappingState.ALL, this.limit, this.offset, this.sourceType, this.mappingSetting.destination_field, this.alphabetFilter)
       ]).subscribe(([options, mappingStats, mappings]) => {
         this.mappingStats = mappingStats;
         this.totalCount = mappings.count;

@@ -65,6 +65,8 @@ export class EmployeeMappingComponent implements OnInit {
 
   operationgSystem: string;
 
+  alphabetFilter: string = 'All';
+
   constructor(
     private mappingService: SiMappingsService,
     private paginatorService: PaginatorService,
@@ -86,16 +88,17 @@ export class EmployeeMappingComponent implements OnInit {
     that.mappingService.triggerAutoMapEmployees().subscribe(() => {
       that.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
-    }, error => {
+    }, () => {
       that.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
     });
   }
 
   private getFilteredMappings() {
-    this.mappingService.getEmployeeMappings(this.limit, this.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
+    this.mappingService.getEmployeeMappings(this.limit, this.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
+      this.totalCount = intacctMappingResult.count;
       this.isLoading = false;
     });
   }
@@ -162,14 +165,13 @@ export class EmployeeMappingComponent implements OnInit {
     this.isLoading = true;
     this.selectedMappingFilter = state;
     this.currentPage = 1;
-    this.limit = 10;
     this.offset = 0;
     this.getFilteredMappings();
   }
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
+      const results: EmployeeMappingResult[] = this.filteredMappings.filter((mapping) =>
         mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
@@ -177,6 +179,14 @@ export class EmployeeMappingComponent implements OnInit {
       this.filteredMappings = this.mappings.concat();
     }
     this.filteredMappingCount = this.filteredMappings.length;
+  }
+
+  mappingFilterUpdate(alphabet: string) {
+    this.isLoading = true;
+    this.alphabetFilter = alphabet;
+    this.currentPage = 1;
+    this.offset = 0;
+    this.getFilteredMappings();
   }
 
   getAttributesFilteredByConfig() {
@@ -198,7 +208,7 @@ export class EmployeeMappingComponent implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
+      this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
