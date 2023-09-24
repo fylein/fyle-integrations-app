@@ -5,7 +5,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { MappingComponent } from './mapping/mapping.component';
 import { ButtonModule } from 'primeng/button';
-import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 @NgModule({
   declarations: [
@@ -16,8 +15,7 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
     TabMenuModule,
     ButtonModule,
     MainRoutingModule,
-    SharedModule,
-    CascadeSelectModule
+    SharedModule
   ]
 })
 export class MainModule { }

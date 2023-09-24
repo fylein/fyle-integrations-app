@@ -41,7 +41,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
 import { CalendarModule } from 'primeng/calendar';
-import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
 import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
 import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
@@ -119,7 +118,6 @@ import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboa
     ProgressBarModule,
     CalendarModule,
     ChipsModule,
-    CascadeSelectModule,
     TableModule,
     TabMenuModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
@@ -153,7 +151,6 @@ import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboa
     ChipsModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
-    CascadeSelectModule,
     IntacctStepperComponent,
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,

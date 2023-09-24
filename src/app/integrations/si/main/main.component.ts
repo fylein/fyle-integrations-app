@@ -7,14 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  selectedOption: string;
-
-  countries = [
-    {
-      name: 'Switch to Old View'
-    }
-  ];
-
   constructor() { }
 
   ngOnInit(): void {
