@@ -54,10 +54,11 @@ import { IntacctLocationEntityComponent } from './components/si/core/intacct-loc
 import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
 import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
-import {ChipsModule} from 'primeng/chips';
+import { ChipsModule } from 'primeng/chips';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
-import { SplitButtonModule } from 'primeng/splitbutton';
+import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboard-menu.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     ConfigurationAdvancedSettingsComponent,
     SkipExportComponent,
     DashboardMappingResolveComponent,
-    DashboardIntacctErrorsComponent
+    DashboardIntacctErrorsComponent,
+    DashboardMenuComponent
   ],
   imports: [
     CommonModule,
@@ -119,7 +121,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     ChipsModule,
     CascadeSelectModule,
     TableModule,
-    SplitButtonModule,
+    TabMenuModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -149,7 +151,6 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     DropdownModule,
     CalendarModule,
     ChipsModule,
-    SplitButtonModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     CascadeSelectModule,
@@ -165,7 +166,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
     DashboardMappingResolveComponent,
-    DashboardIntacctErrorsComponent
+    DashboardIntacctErrorsComponent,
+    DashboardMenuComponent
   ]
 })
 export class SharedModule { }
