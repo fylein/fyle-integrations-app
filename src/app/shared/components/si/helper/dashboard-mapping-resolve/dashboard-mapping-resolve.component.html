@@ -1,6 +1,6 @@
 <div *ngIf="!isLoading">
     <div *ngIf="mappingType==='CATEGORY_MAPPING'">
-      <p-table [value]="filteredCategoryMappings" [tableStyle]="{ 'min-width': '20rem' }">
+      <p-table [value]="filteredCategoryMappings">
         <ng-template pTemplate="header">
             <tr>
                 <th>Category</th>
@@ -26,7 +26,7 @@
     </p-table>
     </div>
     <div *ngIf="mappingType==='EMPLOYEE_MAPPING'">
-      <p-table [value]="filteredEmployeeMappings" [tableStyle]="{ 'min-width': '50rem'}">
+      <p-table [value]="filteredEmployeeMappings">
         <ng-template pTemplate="header">
             <tr>
             <th>Employee Email</th>

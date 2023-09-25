@@ -98,3 +98,8 @@
 :host ::ng-deep .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
     @apply tw-min-w-fit tw-top-2/3 #{!important};
 }
+  
+:host  ::ng-deep .p-dialog {
+    max-height: 100% !important;
+    margin: 0.1rem !important;
+  }  
