@@ -55,6 +55,10 @@ export class IntacctLocationEntityComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
+  goToNextStep() {
+
+  }
+
   patchFormValue(event: any): void {
     this.locationEntityForm.controls.locationEntity.patchValue(event.value);
   }
@@ -131,6 +135,8 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.setupLocationEntityMapping();
     });
   }
+
+  // country_name US top_level
 
   private setupLocationEntityMapping() {
     this.connectorService.getLocationEntityMapping().subscribe(locationEntityMappings => {
