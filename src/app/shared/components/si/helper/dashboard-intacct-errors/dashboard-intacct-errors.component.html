@@ -9,7 +9,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
             <tr>
-                <td>
+                <td class="tw-cursor-pointer tw-underline" (click)="openUrl($event, rowData.expense_id)">
                     {{rowData.expense_number}}
                 </td>
                 <td>
@@ -22,7 +22,7 @@
                 </td>
                 <td>
                     <h4>
-                        {{rowData.fund_source=== 'Personal' ? 'Reimbursable' : 'Corporate Card'}}
+                        {{rowData.fund_source === 'Personal' ? 'Reimbursable' : 'Corporate Card'}}
                     </h4>
                 </td>
             </tr>

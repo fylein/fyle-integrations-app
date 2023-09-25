@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard-intacct-errors',
@@ -12,6 +13,12 @@ export class DashboardIntacctErrorsComponent implements OnInit {
   @Input() intacctErrorExpenses: Expense[];
 
   constructor() { }
+
+  openUrl(event: Event, expense_id: string) {
+    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+    window.open(url, '_blank');
+    event.stopPropagation();
+  }
 
   ngOnInit(): void {
   }

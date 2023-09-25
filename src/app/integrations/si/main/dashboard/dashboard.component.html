@@ -63,7 +63,7 @@
           <p class="tw-pt-8 tw-font-300">There are no expenses to export at the moment!</p>
         </div>
       </div>
-    <div *ngIf="exportableExpenseGroupIds.length" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div *ngIf="lastExport || exportableExpenseGroupIds.length" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="tw-font-500">Your Last Export</h4>
         </div>
@@ -195,14 +195,16 @@
         <p-table #dt2 [value]="expenseGroups">
             <ng-template pTemplate="header">
                 <tr>
+                    <th>Reference ID</th>
                     <th>Date and Time of Export</th>
                     <th>Employee Name and ID</th>
                     <th *ngIf="exportLogHeader==='Successful'">Exported As</th>
-                    <th>Reference ID</th>
+                    <th *ngIf="exportLogHeader==='Successful'">Link to Sage Intacct</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
                 <tr>
+                    <td class="tw-underline tw-cursor-pointer" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
                     <td>
                         <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
                         <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>
@@ -216,7 +218,13 @@
                         </h5>
                     </td>
                     <td *ngIf="exportLogHeader==='Successful'">{{rowData.exportedAs | titlecase}}</td>
-                    <td class="tw-underline tw-cursor-pointer" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
+                    <td>
+                        <div *ngIf="rowData.intacctUrl">
+                          <button (click)="openUrl($event, rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
+                            <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
+                          </button>
+                        </div>
+                    </td>
                 </tr>
             </ng-template>
         </p-table>
