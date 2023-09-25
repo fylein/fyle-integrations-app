@@ -48,12 +48,4 @@
   <div *ngIf="!locationEntity">
     <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
   </div>
-  <div *ngIf="locationEntity" class="tw-flex tw-justify-between tw-p-24-px tw-border-t tw-border-t-gray-200">
-    <div class="tw-ml-auto"> <!-- Push the button to the right -->
-      <button pButton type="button" class="p-button-raised tw-w-32" (click)="goToNextStep()"> <!-- Reduced width -->
-        {{ "Continue" }}
-        <i class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
-      </button>
-    </div>
-  </div>  
 </div>

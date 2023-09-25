@@ -55,10 +55,6 @@ export class IntacctLocationEntityComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
-  goToNextStep() {
-
-  }
-
   patchFormValue(event: any): void {
     this.locationEntityForm.controls.locationEntity.patchValue(event.value);
   }

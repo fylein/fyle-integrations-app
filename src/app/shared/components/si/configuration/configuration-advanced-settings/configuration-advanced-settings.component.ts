@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, FyleField, IntacctOnboardingState, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
@@ -60,6 +60,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   sageIntacctPaymentAccount: DestinationAttribute[];
 
   employeeFieldMapping: FyleField;
+
+  reimbursableExpense?: IntacctReimbursableExpensesObject;
+
+  IntacctReimbursableExpensesObjectER: IntacctReimbursableExpensesObject.EXPENSE_REPORT;
+
+  IntacctReimbursableExpensesObjectBILL: IntacctReimbursableExpensesObject.BILL;
 
   private sessionStartTime = new Date();
 
@@ -153,9 +159,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       skipSelectiveExpenses: [isSkippedExpense],
       defaultLocation: [findObjectByDestinationId(this.sageIntacctLocations, this.advancedSettings.general_mappings.default_location.id)],
       defaultDepartment: [findObjectByDestinationId(this.sageIntacctDepartments, this.advancedSettings.general_mappings.default_department.id)],
-      defaultProject: [findObjectById(this.sageIntacctProjects, this.advancedSettings.general_mappings.default_project.id)],
-      defaultClass: [findObjectById(this.sageIntacctClasses, this.advancedSettings.general_mappings.default_class.id)],
-      defaultItems: [findObjectById(this.sageIntacctDefaultItem, this.advancedSettings.general_mappings.default_item.id)],
+      defaultProject: [findObjectByDestinationId(this.sageIntacctProjects, this.advancedSettings.general_mappings.default_project.id)],
+      defaultClass: [findObjectByDestinationId(this.sageIntacctClasses, this.advancedSettings.general_mappings.default_class.id)],
+      defaultItems: [findObjectByDestinationId(this.sageIntacctDefaultItem, this.advancedSettings.general_mappings.default_item.id)],
       defaultPaymentAccount: [findObjectById(this.sageIntacctPaymentAccount, this.advancedSettings.general_mappings.payment_account.id)],
       useEmployeeLocation: [this.advancedSettings.general_mappings.use_intacct_employee_locations ? this.advancedSettings.general_mappings.use_intacct_employee_locations : null],
       useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null]
@@ -225,6 +231,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         this.sageIntacctProjects = groupedAttributes.PROJECT;
         this.sageIntacctClasses = groupedAttributes.CLASS;
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
+        this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.employeeFieldMapping = configuration.employee_field_mapping;
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();

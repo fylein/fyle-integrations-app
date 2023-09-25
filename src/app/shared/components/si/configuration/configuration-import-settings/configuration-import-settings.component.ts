@@ -363,7 +363,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   }
 
   showImportTax(locationEntity: LocationEntityMapping) {
-    return locationEntity.country_name==='United States' || locationEntity.destination_id==='top_level' ? false : true;
+    return (locationEntity.country_name && locationEntity.country_name !== 'United States' && locationEntity.destination_id !== 'top_level') ? true : false;
   }
 
   private getSettingsAndSetupForm(): void {
