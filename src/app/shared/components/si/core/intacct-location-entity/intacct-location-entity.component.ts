@@ -136,8 +136,6 @@ export class IntacctLocationEntityComponent implements OnInit {
     });
   }
 
-  // country_name US top_level
-
   private setupLocationEntityMapping() {
     this.connectorService.getLocationEntityMapping().subscribe(locationEntityMappings => {
       this.locationEntity = locationEntityMappings;

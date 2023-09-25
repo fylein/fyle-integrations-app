@@ -76,7 +76,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   dependentFieldSettings: DependentFieldSetting | null;
 
-  showImportTax: boolean = true;
+  isImportTaxVisible: boolean = true;
 
   constructor(
     private router: Router,
@@ -362,6 +362,10 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     };
   }
 
+  showImportTax(locationEntity: LocationEntityMapping) {
+    return locationEntity.country_name==='United States' || locationEntity.destination_id==='top_level' ? false : true;
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -384,12 +388,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     ]).subscribe(
       ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration, locationEntity]) => {
         this.dependentFieldSettings = importSettings.dependent_field_settings;
-        if(locationEntity) {
-          if(locationEntity.country_name==='United States' || locationEntity.destination_id==='top_level') {
-            this.showImportTax = false;
-          }
-        }
-        console.log(locationEntity);
+        this.isImportTaxVisible = this.showImportTax(locationEntity);
         this.sageIntacctFields = sageIntacctFields.map(field => {
           return {
             ...field,
