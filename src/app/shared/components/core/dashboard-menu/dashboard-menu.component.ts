@@ -21,6 +21,8 @@ export class DashboardMenuComponent implements OnInit {
 
   activeModule: MenuItem;
 
+  moreDropdown: null;
+
   constructor(
     private router: Router,
     private mappingsService: SiMappingsService,
@@ -28,6 +30,7 @@ export class DashboardMenuComponent implements OnInit {
   ) { }
 
   redirectToOldApp(): void {
+    this.moreDropdown = null;
     this.windowService.openInNewTab(environment.si_callback_url);
   }
 
