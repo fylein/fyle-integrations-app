@@ -26,35 +26,47 @@
     content: none #{!important};
 }
 
-.export-btn:disabled {
+::ng-deep .export-btn:disabled {
     @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
 }
 
-:host ::ng-deep .p-calendar .p-inputtext {
-    @apply tw-p-0 tw-bg-white tw-border-0 tw-cursor-pointer tw-transition-none	;
+::ng-deep .p-calendar .p-inputtext {
+    @apply tw-py-6-px tw-px-0 tw-bg-white tw-border-0 tw-cursor-pointer tw-transition-none	#{!important};
+}
+
+::ng-deep .p-calendar .p-inputtext:hover {
+    @apply tw-bg-disabled-bg-color	#{!important};
+}
+
+:host ::ng-deep .p-dropdown-panel {
+    z-index: 1;
 }
 
 :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
     @apply tw-bg-disabled-bg-color #{!important};
 }
 
-:host ::ng-deep .p-calendar ::placeholder {
+::ng-deep .p-calendar ::placeholder {
     @apply tw-text-sub-text-color #{!important};
 }
 
-:host ::ng-deep .p-datepicker table td > span.p-highlight {
+::ng-deep .p-calendar .p-inputtext :not(:placeholder-shown) {
+    @apply tw-bg-disabled-bg-color #{!important};
+}
+
+::ng-deep .p-datepicker table td > span.p-highlight {
     @apply tw-text-white tw-bg-mandatory-field-color #{!important};
 }
 
-:host ::ng-deep .p-datepicker table td > span:focus {
+::ng-deep .p-datepicker table td > span:focus {
     @apply tw-shadow-none #{!important};
 }
 
-:host ::ng-deep .p-datepicker table th {
+::ng-deep .p-datepicker table th {
     @apply tw-text-center ;
 }
 
-:host ::ng-deep .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
+::ng-deep .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
     @apply tw-min-w-fit tw-top-2/3 #{!important};
 }
 
