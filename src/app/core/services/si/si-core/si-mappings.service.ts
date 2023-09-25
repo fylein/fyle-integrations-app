@@ -32,6 +32,12 @@ export class SiMappingsService {
     });
   }
 
+  refreshFyleDimensions() {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.apiService.post(`/workspaces/${workspaceId}/fyle/refresh_dimensions/`, {});
+  }
+
   getMappingStats(sourceType: string, destinationType: string): Observable<MappingStats> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 

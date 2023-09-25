@@ -28,11 +28,12 @@ export class DashboardMenuComponent implements OnInit {
   ) { }
 
   redirectToOldApp(): void {
-    this.windowService.redirect(environment.si_callback_url);
+    this.windowService.openInNewTab(environment.si_callback_url);
   }
 
-  refreshSageIntacctDimension() {
+  refreshDimensions() {
     this.mappingsService.refreshSageIntacctDimensions().subscribe();
+    this.mappingsService.refreshFyleDimensions().subscribe();
   }
 
   ngOnInit(): void {
