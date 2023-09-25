@@ -364,3 +364,8 @@ p {
 .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
     @apply tw-min-w-fit #{!important};
 }
+
+
+.p-dropdown-filter {
+    @apply tw-h-32-px;
+}
