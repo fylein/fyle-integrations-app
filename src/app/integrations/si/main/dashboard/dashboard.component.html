@@ -186,7 +186,7 @@
 </div>
 
 <!-- Expenses Table -->
-<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
+<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [modal]="true" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <p-table #dt2 [value]="expenseGroups">
             <ng-template pTemplate="header">
