@@ -70,7 +70,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   isOverflowing(element: any): boolean {
     return element.offsetWidth < element.scrollWidth;
-  }  
+  }
 
   showExportTable() {
     this.isExportTableVisible = true;
