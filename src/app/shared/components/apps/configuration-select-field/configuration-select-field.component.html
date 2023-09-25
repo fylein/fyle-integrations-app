@@ -8,7 +8,7 @@
             <h5 class="tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
             <h5 *ngIf="formControllerName!=='reimbursableExportType'" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel"></h5>
             <h5 *ngIf="formControllerName==='reimbursableExportType'" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
-                Choose the type of transaction record that you would like to create in Sage Intacct while exporting expenses from Fyle. <a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color">Click here</a> for more details.
+                Choose the type of transaction record that you would like to create in Sage Intacct while exporting expenses from Fyle. Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more details.
             </h5>
         </div>
     </div>
@@ -19,8 +19,17 @@
         </div>
         <div *ngIf="options && !destinationAttributes && !simpleOptions">
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
-                <p-dropdown appendTo="body" [showClear]="showClearIcon" [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
-                </p-dropdown>
+                <p-dropdown appendTo="body" [showClear]="showClearIcon" [options]="options" class="!tw-w-300-px" 
+                [formControlName]="formControllerName" [placeholder]="placeholder"
+                [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
+                <ng-template let-option pTemplate="item">
+                    <div #textElement 
+                         [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                         [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                        {{option.label}}
+                    </div>
+                </ng-template>
+            </p-dropdown>                     
                 <div *ngIf="form.controls[formControllerName].value==='JOURNAL_ENTRY' || form.controls[formControllerName].value === 'EXPENSE_REPORT' || form.controls[formControllerName].value === 'BILL'" class="sub-text">
                     <span>Click </span>
                     <a (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>

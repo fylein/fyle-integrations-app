@@ -18,3 +18,7 @@
 :host ::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
     @apply tw-mb-0 tw-mt-2-px #{!important};
 }
+
+p-dropdown .p-dropdown-open {
+    width: 360px !important;
+}

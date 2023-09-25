@@ -54,7 +54,7 @@
                 <p-inputSwitch formControlName="importVendorAsMerchant"></p-inputSwitch>
             </span>
         </div>
-        <div class="tw-flex tw-pt-18-px">
+        <div class="tw-flex tw-pt-18-px" *ngIf="isImportTaxVisible">
             <span class="tw-pl-48-px">
                 <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax Detail" disabled>
             </span>
@@ -66,8 +66,8 @@
                 <p-inputSwitch formControlName="importTaxCodes"></p-inputSwitch>
             </span>
         </div>
-        <div class="tw-pl-48-px tw-flex tw-pt-18-px" *ngIf="importSettingsForm.value?.importTaxCodes">
-            <p-dropdown [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" placeholder="Select Tax Group">
+        <div class="tw-flex tw-pl-48-px tw-pt-18-px" *ngIf="importSettingsForm.value?.importTaxCodes && isImportTaxVisible">
+            <p-dropdown appendTo="body" [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" placeholder="Select Tax Group">
             </p-dropdown>
         </div>
         <div class="tw-p-22-px">

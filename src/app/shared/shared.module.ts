@@ -41,7 +41,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
 import { CalendarModule } from 'primeng/calendar';
-import { CascadeSelectModule } from "primeng/cascadeselect";
 import { AppIntegrationLandingComponent } from './components/apps/app-integration-landing/app-integration-landing.component';
 import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
 import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
@@ -54,9 +53,11 @@ import { IntacctLocationEntityComponent } from './components/si/core/intacct-loc
 import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
 import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
-import {ChipsModule} from 'primeng/chips';
+import { ChipsModule } from 'primeng/chips';
+import { TabMenuModule } from 'primeng/tabmenu';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
+import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboard-menu.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboar
     ConfigurationAdvancedSettingsComponent,
     SkipExportComponent,
     DashboardMappingResolveComponent,
-    DashboardIntacctErrorsComponent
+    DashboardIntacctErrorsComponent,
+    DashboardMenuComponent
   ],
   imports: [
     CommonModule,
@@ -116,8 +118,8 @@ import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboar
     ProgressBarModule,
     CalendarModule,
     ChipsModule,
-    CascadeSelectModule,
     TableModule,
+    TabMenuModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
@@ -149,7 +151,6 @@ import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboar
     ChipsModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
-    CascadeSelectModule,
     IntacctStepperComponent,
     ConfigurationStepFooterComponent,
     ConfigurationStepHeaderComponent,
@@ -162,7 +163,8 @@ import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboar
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
     DashboardMappingResolveComponent,
-    DashboardIntacctErrorsComponent
+    DashboardIntacctErrorsComponent,
+    DashboardMenuComponent
   ]
 })
 export class SharedModule { }

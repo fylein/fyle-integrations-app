@@ -128,3 +128,8 @@
   font-size: 12px !important;
   color: grey !important;
 }
+
+:host ::ng-deep .p-dropdown {
+  transform: scale(0.9);
+  width: 220px !important;
+}

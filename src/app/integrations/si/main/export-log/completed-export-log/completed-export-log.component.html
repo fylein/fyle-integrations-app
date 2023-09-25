@@ -9,7 +9,7 @@
                 <input class="tw-pb-1 tw-pt-1" type="text" (input)="filterTable($event)" placeholder="Search by Employee Name or Expense ID" />
             </span>
             <span class="tw-pl-4">
-                <p-dropdown [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
+                <p-dropdown appendTo="body" [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
                     <div class="calendar-icon">
                     <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
                     </div>
@@ -106,7 +106,7 @@
     </div>
 </div>
 
-<p-dialog header="Expenses" [(visible)]="visible" [position]="'top-right'" [modal]="true" [draggable]="false" [style]="{ width: '50vw', height: '974px' }">
+<p-dialog header="Expenses" [(visible)]="visible" [position]="'top-right'" [modal]="true" [draggable]="false" [dismissableMask]="true" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <p-table #dt2 [value]="expenses">
             <ng-template pTemplate="header">

@@ -1,3 +1,4 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -158,6 +159,14 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer
     ) { }
+
+    employeeFieldMapping() {
+      return new TitleCasePipe().transform(this.exportSettingsForm.get('employeeFieldMapping')?.value);
+    }
+
+    cccEntityName() {
+      return new TitleCasePipe().transform(this.exportSettingsForm.get('cccEntityName')?.value);
+    }
 
     private getExportGroup(exportGroups: string[] | null): string {
       if (exportGroups) {

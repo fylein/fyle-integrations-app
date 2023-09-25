@@ -6,11 +6,13 @@ import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
+import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
+import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
@@ -75,9 +77,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   dependentFieldSettings: DependentFieldSetting | null;
 
+  isImportTaxVisible: boolean = true;
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
+    private connectorService: IntacctConnectorService,
     private importSettingService: SiImportSettingService,
     private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
@@ -338,6 +343,10 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     };
   }
 
+  showImportTax(locationEntity: LocationEntityMapping) {
+    return (locationEntity.country_name && locationEntity.country_name !== 'United States' && locationEntity.destination_id !== 'top_level') ? true : false;
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -348,16 +357,19 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     const groupedAttributesObservable = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
     const importSettingsObservable = this.importSettingService.getImportSettings();
     const configuration = this.mappingService.getConfiguration();
+    const locationEntity = this.connectorService.getLocationEntityMapping();
 
     forkJoin([
       sageIntacctFieldsObservable,
       fyleFieldsObservable,
       groupedAttributesObservable,
       importSettingsObservable,
-      configuration
+      configuration,
+      locationEntity
     ]).subscribe(
-      ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration]) => {
+      ([sageIntacctFields, fyleFields, groupedAttributesResponse, importSettings, configuration, locationEntity]) => {
         this.dependentFieldSettings = importSettings.dependent_field_settings;
+        this.isImportTaxVisible = this.showImportTax(locationEntity);
         this.sageIntacctFields = sageIntacctFields.map(field => {
           return {
             ...field,
