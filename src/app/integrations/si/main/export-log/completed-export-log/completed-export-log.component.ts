@@ -117,7 +117,6 @@ export class CompletedExportLogComponent implements OnInit {
     });
   }
 
-
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
     this.limit = limit;
@@ -159,10 +158,6 @@ export class CompletedExportLogComponent implements OnInit {
     this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
     this.presentDate = this.dateOptions[3].dateRange;
     this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
-    const event = {
-      value: this.dateOptions[3]
-    };
-    this.dateFilter(event);
   }
 
   getExpenseGroups(limit: number, offset:number) {
@@ -207,6 +202,7 @@ export class CompletedExportLogComponent implements OnInit {
     });
 
     this.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (dateRange) {
         this.selectedDateFilter = {
           startDate: dateRange.startDate,
@@ -214,8 +210,9 @@ export class CompletedExportLogComponent implements OnInit {
         };
 
         this.trackDateFilter('existing', this.selectedDateFilter);
-
-        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+        this.getExpenseGroups(paginator.limit, paginator.offset);
+      } else {
+        this.selectedDateFilter = null;
         this.getExpenseGroups(paginator.limit, paginator.offset);
       }
     });
