@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, FyleField, IntacctOnboardingState, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
@@ -60,6 +60,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   sageIntacctPaymentAccount: DestinationAttribute[];
 
   employeeFieldMapping: FyleField;
+
+  reimbursableExpense?: IntacctReimbursableExpensesObject;
+
+  IntacctReimbursableExpensesObjectER: IntacctReimbursableExpensesObject.EXPENSE_REPORT;
+
+  IntacctReimbursableExpensesObjectBILL: IntacctReimbursableExpensesObject.BILL;
 
   private sessionStartTime = new Date();
 
@@ -225,6 +231,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         this.sageIntacctProjects = groupedAttributes.PROJECT;
         this.sageIntacctClasses = groupedAttributes.CLASS;
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
+        this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.employeeFieldMapping = configuration.employee_field_mapping;
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();

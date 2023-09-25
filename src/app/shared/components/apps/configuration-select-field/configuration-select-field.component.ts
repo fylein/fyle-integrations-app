@@ -68,6 +68,10 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
   }
 
+  isOverflowing(element: any): boolean {
+    return element.offsetWidth < element.scrollWidth;
+  }
+
   showExportTable() {
     this.isExportTableVisible = true;
   }

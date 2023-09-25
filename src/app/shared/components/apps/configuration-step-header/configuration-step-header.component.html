@@ -12,14 +12,15 @@
           Sync
         </button>
       </div>                             
-    <h5 class="tw-text-faded-text-color !tw-text-14-px tw-pt-4-px tw-flex !tw-font-400 !tw-leading-4">
+    <h5 class="tw-text-faded-text-color tw-text-14-px tw-pt-4-px tw-flex !tw-font-400">
         {{ contentText }}
         <span *ngIf="redirectLink"
             class="tw-text-hyperlink-color tw-pl-4-px tw-flex tw-cursor-pointer"
             (click)="windowService.openInNewTab(redirectLink)">
             Read More
-            <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px"
-                class="tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px"></svg-icon-sprite>
+              <svg-icon-sprite src="open-in-new-tab" width="14px" height="14px"
+                class="tw-text-hyperlink-color tw-pl-2-px tw-pt-3-px">
+              </svg-icon-sprite>
         </span>
     </h5>
 </div>

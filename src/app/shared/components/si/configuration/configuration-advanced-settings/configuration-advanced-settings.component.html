@@ -24,7 +24,7 @@
             <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-select-field
                     [form]="advancedSettingsForm"
-                    [isFieldMandatory]="true"
+                    [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'automatic export method'"
                     [label]="'Schedule Automatic Export'"
                     [subLabel]="'Set a frequency based on how often you want your expenses in Fyle to be exported to Sage Intacct.'"
@@ -36,7 +36,7 @@
                 <app-email-multi-select-field
                     [form]="advancedSettingsForm"
                     [label]="'Send Error Notification to'"
-                    [isFieldMandatory]="true"
+                    [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'email for error notification'"
                     [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
                     [options]="adminEmails"
@@ -45,18 +45,30 @@
                     [formControllerName]="'email'">
                 </app-email-multi-select-field>
             </div>
-            <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-            <app-configuration-select-field
-            [form]="advancedSettingsForm"
-            [isFieldMandatory]="true"
-            [mandatoryErrorListName]="'payment sync method'"
-            [label]="'Auto-Sync Payment Status for Reimbursable Expenses'"
-            [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within Fyle or outside Fyle. Click here to read more.'"
-            [options]="paymentSyncOptions"
-            [iconPath]="'sync'"
-            [placeholder]="'Select payment sync method'"
-            [formControllerName]="'autoSyncPayments'"></app-configuration-select-field>
-        </div>
+            <div *ngIf="reimbursableExpense==='EXPENSE_REPORT' || reimbursableExpense==='BILL'" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                <app-configuration-select-field
+                [form]="advancedSettingsForm"
+                [isFieldMandatory]="false"
+                [mandatoryErrorListName]="'payment sync method'"
+                [label]="'Auto-Sync Payment Status for Reimbursable Expenses'"
+                [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within Fyle or outside Fyle.'"
+                [options]="paymentSyncOptions"
+                [iconPath]="'synced'"
+                [placeholder]="'Select payment sync method'"
+                [formControllerName]="'autoSyncPayments'"></app-configuration-select-field>
+                <div *ngIf="isCCT()">
+                    <app-configuration-select-field
+                    [form]="advancedSettingsForm"
+                    [isFieldMandatory]="true"
+                    [mandatoryErrorListName]="'payment account'"
+                    [label]="'Select Payment Account'"
+                    [subLabel]="'Select a Payment Account handling the payments for your employees within Fyle or outside Fyle.'"
+                    [destinationAttributes]="sageIntacctPaymentAccount"
+                    [iconPath]="'expense'"
+                    [placeholder]="'Select Payment Account'"
+                    [formControllerName]="'defaultPaymentAccount'"></app-configuration-select-field>
+                </div>
+            </div>
         </div>
 
         <div class="tw-mb-16-px">
@@ -135,54 +147,47 @@
                 </div>
             </div>
             <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Location</label></div>
+                <div class="tw-font-400"><label>Default Location</label></div>
                 <div class="tw-pt-2">
-                    <p-dropdown [options]="sageIntacctLocations" optionLabel="value" formControlName="defaultLocation" placeholder="Select Location"></p-dropdown>
+                    <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctLocations" optionLabel="value" formControlName="defaultLocation" placeholder="Select Location"></p-dropdown>
                     <span class="tw-pl-4">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
-                        <label class="tw-pl-2 tw-font-100" for="checkbox">Use Employee's Location in Sage Intacct</label>
+                        <label class="tw-pl-2 tw-font-400" for="checkbox">Use Employee's Location in Sage Intacct</label>
                     </span>
                 </div>  
               </div>
 
               <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Department</label></div>
+                <div class="tw-font-400"><label>Default Department</label></div>
                 <div class="tw-pt-2">
-                  <p-dropdown [options]="sageIntacctDepartments" optionLabel="value" formControlName="defaultDepartment" placeholder="Select Department"></p-dropdown>
+                  <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctDepartments" optionLabel="value" formControlName="defaultDepartment" placeholder="Select Department"></p-dropdown>
                     <span class="tw-pl-4">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
-                        <label class="tw-pl-2 tw-font-100" for="checkbox">Use Employee's Department in Sage Intacct</label>
+                        <label class="tw-pl-2 tw-font-400" for="checkbox">Use Employee's Department in Sage Intacct</label>
                     </span>
                 </div>  
               </div> 
 
               <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Project</label></div>
+                <div class="tw-font-400"><label>Default Project</label></div>
                 <div class="tw-pt-2">
-                  <p-dropdown [options]="sageIntacctProjects" optionLabel="value" formControlName="defaultProject" placeholder="Select Project"></p-dropdown>
+                  <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctProjects" optionLabel="value" formControlName="defaultProject" placeholder="Select Project"></p-dropdown>
                 </div>  
               </div> 
 
               <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Class</label></div>
+                <div class="tw-font-400"><label>Default Class</label></div>
                 <div class="tw-pt-2">
-                  <p-dropdown [options]="sageIntacctClasses" optionLabel="value" formControlName="defaultClass" placeholder="Select Class"></p-dropdown>
+                  <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctClasses" optionLabel="value" formControlName="defaultClass" placeholder="Select Class"></p-dropdown>
                 </div>  
               </div> 
 
               <div class="tw-pt-4 tw-pl-6 field-label">
-                <div class="tw-font-200"><label>Default Items</label></div>
+                <div class="tw-font-400"><label>Default Items</label></div>
                 <div class="tw-pt-2">
-                  <p-dropdown [options]="sageIntacctDefaultItem" optionLabel="value" formControlName="defaultItems" placeholder="Select Item"></p-dropdown>
+                  <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctDefaultItem" optionLabel="value" formControlName="defaultItems" placeholder="Select Item"></p-dropdown>
                 </div>  
               </div>
-
-              <div class="tw-pt-4 tw-pl-6 field-label" *ngIf="isCCT()">
-                <div class="tw-font-200"><label>Payment Account</label></div>
-                <div class="tw-pt-2">
-                  <p-dropdown [options]="sageIntacctPaymentAccount" optionLabel="value" formControlName="defaultPaymentAccount" placeholder="Select Item"></p-dropdown>
-                </div>  
-              </div> 
         </div>
     </div>
         <div>

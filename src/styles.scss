@@ -139,6 +139,14 @@ p {
     @apply tw-bg-disabled-bg-color tw-text-slightly-normal-text-color #{!important};
 }
 
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item, 
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    max-width: 18.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .p-dropdown.p-focus {
     @apply tw-shadow-none tw-border-slightly-normal-text-color #{!important};
 }
@@ -319,4 +327,12 @@ p {
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
     @apply tw-px-0 tw-pt-0 tw-pb-20-px tw-mx-24-px tw-mt-20-px #{!important};
+}
+
+.mapped {
+    @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-mapped-green-border tw-bg-mapped-green-bg tw-py-4-px tw-px-12-px tw-text-success-toast tw-w-fit #{!important}
+}
+
+.unmapped {
+    @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-unmapped-red-border tw-bg-unmapped-red-bg tw-py-4-px tw-px-12-px tw-text-alert-toast tw-w-fit #{!important}
 }

@@ -33,7 +33,7 @@
           </div>
         </div>
           <div class="tw-pt-16-px">
-            <p-dropdown (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
+            <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
             </p-dropdown>
         </div>
           <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold tw-pl-4">

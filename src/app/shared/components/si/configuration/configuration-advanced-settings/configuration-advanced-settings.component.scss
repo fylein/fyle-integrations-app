@@ -13,7 +13,10 @@
 
 .field-label {
     color: var(--grayscale-label, #5A5D72);
-    font-family: Aktiv Grotesk;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
+}
+
+p-dropdown .p-dropdown-open {
+    width: 360px !important;
 }
