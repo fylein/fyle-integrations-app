@@ -50,7 +50,7 @@
       </form>
   </div>
   <div>
-    <app-configuration-step-footer *ngIf="!locationEntity" [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
-    <app-configuration-step-footer *ngIf="locationEntity" [ctaText]="ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
+    <app-configuration-step-footer *ngIf="!locationEntity" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
+    <app-configuration-step-footer *ngIf="locationEntity" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
   </div>
 </div>
