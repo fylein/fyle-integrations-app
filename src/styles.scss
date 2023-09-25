@@ -336,3 +336,31 @@ p {
 .unmapped {
     @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-unmapped-red-border tw-bg-unmapped-red-bg tw-py-4-px tw-px-12-px tw-text-alert-toast tw-w-fit #{!important}
 }
+
+.p-calendar .p-inputtext {
+    @apply tw-p-0 tw-w-[100vw] tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none tw-text-sub-text-color #{!important};
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
+    @apply tw-bg-disabled-bg-color #{!important};
+}
+
+.p-calendar ::placeholder {
+    @apply tw-text-sub-text-color #{!important};
+}
+
+.p-datepicker table td > span.p-highlight {
+    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
+}
+
+.p-datepicker table td > span:focus {
+    @apply tw-shadow-none #{!important};
+}
+
+.p-datepicker table th {
+    @apply tw-text-center #{!important};
+}
+
+.p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
+    @apply tw-min-w-fit #{!important};
+}
