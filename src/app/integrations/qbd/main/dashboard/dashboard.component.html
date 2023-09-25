@@ -54,7 +54,7 @@
                 <div>
                     <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
                 </div>
-                <p-dropdown [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
+                <p-dropdown appendTo="body" [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
                     <ng-template let-item pTemplate="selectedItem">
                         <div *ngIf="exportLogForm.controls.dateRange.value">
                             <div class="my-dropdown-selected-item">

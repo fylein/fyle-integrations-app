@@ -7,7 +7,7 @@
             <span *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-pr-10-px">Show</span>
             <span *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-pr-10-px">Items per page:</span>
             <div>
-                <p-dropdown [options]="pageNumbers" (onChange)="pageSizeChanges($event)" [(ngModel)]="dropDownValue">
+                <p-dropdown appendTo="body" [options]="pageNumbers" (onChange)="pageSizeChanges($event)" [(ngModel)]="dropDownValue">
                     <ng-template let-value pTemplate="selectedItem" >
                         <div *ngIf="dropDownValue" class="tw-flex">
                             <p class="tw-text-normal-text-color tw-text-12-px !tw-font-500">{{ value }} <span *ngIf="pageType === PaginatorPage.DASHBOARD">Items</span></p>

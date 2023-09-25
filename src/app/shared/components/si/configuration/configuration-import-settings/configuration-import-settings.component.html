@@ -67,7 +67,7 @@
             </span>
         </div>
         <div class="tw-flex tw-pt-18-px" *ngIf="importSettingsForm.value?.importTaxCodes">
-            <p-dropdown [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" placeholder="Select Tax Group">
+            <p-dropdown appendTo="body" [options]="sageIntacctTaxGroup" optionLabel="value" class="tw-w-600-px" formControlName="sageIntacctTaxCodes" placeholder="Select Tax Group">
             </p-dropdown>
         </div>
         <div class="tw-p-22-px">

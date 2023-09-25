@@ -43,7 +43,7 @@
           <p class="tw-pt-8 tw-font-300">There are no expenses to export at the moment!</p>
         </div>
       </div>
-    <div *ngIf="lastExport" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div *ngIf="lastExport || exportableExpenseGroupIds.length" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="tw-font-500">Your Last Export</h4>
         </div>
@@ -155,7 +155,7 @@
 </div>
 
 <!-- Expenses Table -->
-<p-dialog header="{{exportLogHeader}} Expenses" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '974px' }">
+<p-dialog header="{{exportLogHeader}} Expenses" [(visible)]="isExportLogVisible" [position]="'top-right'" [dismissableMask]="true" [style]="{ width: '50vw', height: 'auto' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <p-table #dt2 [value]="expenseGroups">
             <ng-template pTemplate="header">
@@ -190,7 +190,7 @@
 
 <!-- Mapping Errors -->
 <div *ngIf="isMappingResolveVisible">
-    <p-dialog [(visible)]="isMappingResolveVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'960px' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+    <p-dialog [(visible)]="isMappingResolveVisible" [position]="'top-right'" [dismissableMask]="true" [style]="{ width: '50vw', height:'auto' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
         <p-header>
             <p>{{intacctErrorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
           </p-header>
@@ -200,7 +200,7 @@
 
 <!-- Intacct Errors -->
 <div *ngIf="intacctErrorDialogVisible">
-    <p-dialog [(visible)]="intacctErrorDialogVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'960px' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+    <p-dialog [(visible)]="intacctErrorDialogVisible" [position]="'top-right'" [dismissableMask]="true" [style]="{ width: '50vw', height:'auto' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
         <p-header>
             <p>Intacct Errors</p>
             <h3 class="sub-header">{{intacctErrorDetail}}</h3>

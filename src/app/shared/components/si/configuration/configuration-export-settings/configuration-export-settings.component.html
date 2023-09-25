@@ -74,7 +74,7 @@
                                     <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4" >Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.</h5>
                                 </div>
                                 <div class="tw-pl-18-px tw-pt-18-px">
-                                    <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="employeeFieldMapping">
+                                    <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="employeeFieldMapping" [value]="employeeFieldMapping()">
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
                         [label]="'At which state should the expenses be ready to export from Fyle?'"
-                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (Approved) or when the payment has been settled (Closed).'"
+                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (Processing) or when the payment has been settled (Closed).'"
                         [options]="expenseStateOptions"
                         [iconPath]="'questionmark'"
                         [placeholder]="'Select export state'"
@@ -217,7 +217,7 @@
                                     <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4" >'Select how you represent your employees in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct.'</h5>
                                 </div>
                                 <div class="tw-pl-18-px tw-pt-18-px">
-                                    <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="cccEntityName">
+                                    <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="cccEntityName" [value]="cccEntityName()">
                                 </div>
                             </div>
                         </div>
@@ -226,7 +226,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
                         [label]="'At which state should the expenses be ready to export from Fyle?'"
-                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (Approved) or when the payment has been settled (Closed)'"
+                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (Processing) or when the transaction has been settled (Closed)'"
                         [options]="cccExpenseStateOptions"
                         [iconPath]="'questionmark'"
                         [placeholder]="'Select export state'"
