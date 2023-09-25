@@ -188,7 +188,7 @@
 <!-- Expenses Table -->
 <p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [modal]="true" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
-        <p-table #dt2 [value]="expenseGroups">
+        <p-table #dt2 [value]="expenseGroups ? expenseGroups : dummyExpenseGroupList">
             <ng-template pTemplate="header">
                 <tr>
                     <th>Reference ID</th>
@@ -199,7 +199,7 @@
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
-                <tr>
+                <tr *ngIf="!isExportLogFetchInProgress">
                     <td class="tw-underline tw-cursor-pointer" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
                     <td>
                         <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
@@ -213,8 +213,8 @@
                             {{rowData.employee[1]}}
                         </h5>
                     </td>
-                    <td *ngIf="exportLogHeader==='Successful'">{{rowData.exportedAs | titlecase}}</td>
-                    <td>
+                    <td *ngIf="exportLogHeader==='Successful'">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
+                    <td *ngIf="exportLogHeader==='Successful'">
                         <div *ngIf="rowData.intacctUrl">
                           <button (click)="openUrl($event, rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
                             <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
@@ -222,6 +222,7 @@
                         </div>
                     </td>
                 </tr>
+                <ng-container *ngTemplateOutlet="shimmers"></ng-container>
             </ng-template>
         </p-table>
     </div>
@@ -247,3 +248,13 @@
         <app-dashboard-intacct-errors [intacctErrorExpenses]="intacctErrorExpenses"></app-dashboard-intacct-errors>
     </p-dialog>
 </div>
+
+<ng-template #shimmers>
+    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+    </tr>
+</ng-template>
