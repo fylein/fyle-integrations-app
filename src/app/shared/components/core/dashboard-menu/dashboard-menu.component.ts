@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { environment } from 'src/environments/environment';
@@ -25,6 +27,7 @@ export class DashboardMenuComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private toastService: IntegrationsToastService,
     private mappingsService: SiMappingsService,
     private windowService: WindowService
   ) { }
@@ -37,6 +40,7 @@ export class DashboardMenuComponent implements OnInit {
   refreshDimensions() {
     this.mappingsService.refreshSageIntacctDimensions().subscribe();
     this.mappingsService.refreshFyleDimensions().subscribe();
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct...');
   }
 
   ngOnInit(): void {
