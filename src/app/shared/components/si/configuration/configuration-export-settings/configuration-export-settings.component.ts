@@ -436,7 +436,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         reimbursableExportGroup: [this.getExportGroup(this.exportSettings?.expense_group_settings.reimbursable_expense_group_fields) || null],
         reimbursableExportDate: [this.exportSettings?.expense_group_settings.reimbursable_export_date_type || null],
         reimbursableExpenseState: [this.exportSettings?.expense_group_settings.expense_state || null],
-        employeeFieldMapping: [configurations?.employee_field_mapping || null],
+        employeeFieldMapping: [configurations?.employee_field_mapping.toLowerCase() || null],
         autoMapEmployees: [configurations?.auto_map_employees || null],
         glAccount: [findObjectById(this.sageIntacctDefaultGLAccounts, generalMappings?.default_gl_account.id)],
         creditCardExpense: [Boolean(configurations?.corporate_credit_card_expenses_object), this.exportSelectionValidator()],
