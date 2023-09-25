@@ -55,6 +55,8 @@ export class SiComponent implements OnInit {
     this.storageService.set('si.workspaceId', this.workspace.id);
     this.storageService.set('si.onboardingState', this.workspace.onboarding_state);
     this.appcuesService.initialiseAppcues(AppName.INTACCT);
+    this.workspaceService.syncFyleDimensions().subscribe();
+    this.workspaceService.syncIntacctDimensions().subscribe();
     this.isLoading = false;
     this.navigate();
   }

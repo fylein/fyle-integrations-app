@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -94,34 +95,14 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     return this.importSettingsForm.get('expenseFields') as FormArray;
   }
 
+  hasDuplicateOption(formGroup: AbstractControl, index: number, controlName: string): boolean {
+    return (formGroup as FormGroup).controls[controlName].valid;
+  }
+
   toTitleCase(str: string) {
     return str.replace(/\w\S*/g, function(txt) {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
-  }
-
-  uniqueFieldsValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const formArray = control as FormArray;
-      const fyleFieldSet = new Set();
-      const sageIntacctFieldSet = new Set();
-
-      for (const field of formArray.value) {
-        if (field.source_field && fyleFieldSet.has(field.source_field)) {
-          return { 'duplicateFyleFields': true };
-        }
-        if (field.destination_field && sageIntacctFieldSet.has(field.destination_field)) {
-          return { 'duplicateSageIntacctFields': true };
-        }
-        if (field.source_field) {
-          fyleFieldSet.add(field.source_field);
-        }
-        if (field.destination_field) {
-          sageIntacctFieldSet.add(field.destination_field);
-        }
-      }
-      return null;
-    };
   }
 
   showOrHideAddButton() {
@@ -298,8 +279,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   private createFormGroup(data: MappingSetting): FormGroup {
     return this.formBuilder.group({
-      source_field: [data.source_field || ''],
-      destination_field: [data.destination_field || '', [Validators.required]],
+      source_field: [data.source_field || '', RxwebValidators.unique()],
+      destination_field: [data.destination_field || '', Validators.compose([Validators.required, RxwebValidators.unique()])],
       import_to_fyle: [data.import_to_fyle || false],
       is_custom: [data.is_custom || false],
       source_placeholder: [data.source_placeholder || null]
@@ -439,7 +420,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           costTypes: [importSettings.dependent_field_settings?.is_import_enabled ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
           isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
           sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.id.toString() === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
-          expenseFields: this.formBuilder.array(this.constructFormArray(), this.uniqueFieldsValidator())
+          expenseFields: this.formBuilder.array(this.constructFormArray())
         });
         this.importSettingWatcher();
         this.costCodesCostTypesWatcher();

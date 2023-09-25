@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
@@ -8,7 +8,6 @@ import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-completed-export-log',
@@ -25,7 +24,7 @@ export class CompletedExportLogComponent implements OnInit {
 
   offset: number = 0;
 
-  pageNo: number;
+  currentPage: number = 1;
 
   dateOptions: DateFilter[] = [
     {
@@ -95,8 +94,9 @@ export class CompletedExportLogComponent implements OnInit {
     this.visible = true;
   }
 
-  openUrl(url: string) {
+  openUrl(event: Event, url: string) {
     window.open(url, '_blank');
+    event.stopPropagation();
   }
 
   public filterTable(event: any) {
@@ -118,9 +118,10 @@ export class CompletedExportLogComponent implements OnInit {
   }
 
 
-  offsetChanges(limit: number): void {
+  pageSizeChanges(limit: number): void {
     this.isLoading = true;
     this.limit = limit;
+    this.currentPage = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(limit, this.offset);
   }
@@ -128,6 +129,7 @@ export class CompletedExportLogComponent implements OnInit {
   pageChanges(offset: number): void {
     this.isLoading = true;
     this.offset = offset;
+    this.currentPage = Math.ceil(offset / this.limit) + 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(this.limit, offset);
   }
@@ -176,6 +178,7 @@ export class CompletedExportLogComponent implements OnInit {
         this.totalCount = expenseGroupResponse.count;
       }
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
+        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
         expenseGroups.push({
           index: index++,
           exportedAt: expenseGroup.exported_at,
@@ -184,7 +187,7 @@ export class CompletedExportLogComponent implements OnInit {
           fyleReferenceType: null,
           referenceNumber: expenseGroup.description.claim_number,
           exportedAs: expenseGroup.export_type,
-          fyleUrl: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/${'expense_id'}`,
+          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
           intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
           expenses: expenseGroup.expenses
         });
@@ -222,6 +225,8 @@ export class CompletedExportLogComponent implements OnInit {
     this.setupForm();
 
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+    this.limit = paginator.limit;
+    this.offset = paginator.offset;
 
     this.getExpenseGroups(paginator.limit, paginator.offset);
   }

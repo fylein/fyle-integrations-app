@@ -64,11 +64,11 @@
                         </h5>
                     </td>
                     <td>{{rowData.expenseType | titlecase}}</td>
-                    <td>{{rowData.referenceNumber}}</td>
+                    <td class="tw-underline" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
                     <td>{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
                     <td>
                         <div *ngIf="rowData.intacctUrl">
-                          <button (click)="openUrl(rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
+                          <button (click)="openUrl($event, rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
                             <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
                           </button>
                         </div>
@@ -78,7 +78,7 @@
         </p-table>
 
         <div *ngIf="filteredExpenseGroups.length > 0" class="tw-p-24-px">
-            <app-paginator [totalCount]="totalCount" (pageSizeChangeEvent)="offsetChanges($event)" (pageOffsetChangeEvent)="pageChanges($event)"></app-paginator>
+            <app-paginator [dropDownValue]="limit" [page]="currentPage" [totalCount]="totalCount" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageChanges($event)"></app-paginator>
         </div>
 
         <div *ngIf="!filteredExpenseGroups.length" class="tw-flex tw-h-3/6 tw-text-center tw-p-56-px">

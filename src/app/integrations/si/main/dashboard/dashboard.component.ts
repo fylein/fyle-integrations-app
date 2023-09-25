@@ -24,7 +24,7 @@ export class DashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  importInProgress: boolean = true;
+  isImportInProgress: boolean = true;
 
   isExportLogVisible: boolean = false;
 
@@ -33,6 +33,8 @@ export class DashboardComponent implements OnInit {
   intacctErrorDialogVisible: boolean = false;
 
   intacctErrorExpenses: Expense[] = [];
+
+  groupedError: Error[];
 
   intacctErrorDetail: string;
 
@@ -83,7 +85,7 @@ export class DashboardComponent implements OnInit {
 
   getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
 
-  private taskType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSES, TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
+  private taskType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
 
   constructor(
     private dashboardService: DashboardService,
@@ -94,8 +96,9 @@ export class DashboardComponent implements OnInit {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  showMappingResolve(errorType: IntacctErrorType) {
+  showMappingResolve(errorType: IntacctErrorType, groupedError: Error[]) {
     this.intacctErrorType = errorType;
+    this.groupedError = groupedError;
     this.isMappingResolveVisible = true;
   }
 
@@ -103,6 +106,11 @@ export class DashboardComponent implements OnInit {
     this.intacctErrorDialogVisible = true;
     this.intacctErrorDetail = intacctError.error_detail;
     this.intacctErrorExpenses = intacctError.expense_group.expenses;
+  }
+
+  openUrl(event: Event, url: string) {
+    window.open(url, '_blank');
+    event.stopPropagation();
   }
 
   showExportLog(status: TaskLogState) {
@@ -117,12 +125,14 @@ export class DashboardComponent implements OnInit {
 
     return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null, exportedAt).subscribe(expenseGroupResponse => {
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
+        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
         expenseGroups.push({
           exportedAt: (status===TaskLogState.COMPLETE ? expenseGroup.exported_at : expenseGroup.updated_at),
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           referenceNumber: expenseGroup.description.claim_number,
           exportedAs: expenseGroup.export_type,
-          expenses: expenseGroup.expenses
+          expenses: expenseGroup.expenses,
+          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType)
         });
       });
       this.expenseGroups = expenseGroups;
@@ -165,6 +175,32 @@ export class DashboardComponent implements OnInit {
           }
         });
       }
+    });
+  }
+
+  showErrorStats(): void {
+    this.getExportErrors$.subscribe((errors) => {
+      const newError: GroupedErrors = this.formatErrors(errors);
+
+      if (this.errors.CATEGORY_MAPPING.length !== newError.CATEGORY_MAPPING.length) {
+        const totalCount = this.groupedErrorStat.CATEGORY_MAPPING ? this.groupedErrorStat.CATEGORY_MAPPING.totalCount : this.errors.CATEGORY_MAPPING.length;
+
+        this.groupedErrorStat.CATEGORY_MAPPING = {
+          resolvedCount: totalCount - newError.CATEGORY_MAPPING.length,
+          totalCount: totalCount
+        };
+      }
+
+      if (this.errors.EMPLOYEE_MAPPING.length !== newError.EMPLOYEE_MAPPING.length) {
+        const totalCount = this.groupedErrorStat.EMPLOYEE_MAPPING ? this.groupedErrorStat.EMPLOYEE_MAPPING.totalCount : this.errors.EMPLOYEE_MAPPING.length;
+
+        this.groupedErrorStat.EMPLOYEE_MAPPING = {
+          resolvedCount: totalCount - newError.EMPLOYEE_MAPPING.length,
+          totalCount: totalCount
+        };
+      }
+
+      this.errors = newError;
     });
   }
 
@@ -213,7 +249,7 @@ export class DashboardComponent implements OnInit {
       this.failedExpenseGroupCount = responses[3].results.filter((task: Task) => task.status === TaskLogState.FAILED).length;
 
       if (queuedTasks.length) {
-        this.importInProgress = false;
+        this.isImportInProgress = false;
         this.exportInProgress = true;
         this.exportableExpenseGroupIds = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
         this.pollExportStatus(this.exportableExpenseGroupIds);
@@ -221,7 +257,7 @@ export class DashboardComponent implements OnInit {
         this.dashboardService.importExpenseGroups().subscribe(() => {
           this.dashboardService.getExportableGroupsIds().subscribe((exportableExpenseGroups: ExportableExpenseGroup) => {
             this.exportableExpenseGroupIds = exportableExpenseGroups.exportable_expense_group_ids;
-            this.importInProgress = false;
+            this.isImportInProgress = false;
           });
         });
       }

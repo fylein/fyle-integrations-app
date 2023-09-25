@@ -18,6 +18,16 @@ export class SiWorkspaceService {
   ) { }
 
   @Cacheable()
+  syncFyleDimensions() {
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/sync_dimensions/`, {});
+  }
+
+  @Cacheable()
+  syncIntacctDimensions() {
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/sage_intacct/sync_dimensions/`, {});
+  }
+
+  @Cacheable()
   getWorkspace(orgId: string): Observable<IntacctWorkspace[]> {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }

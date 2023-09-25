@@ -154,7 +154,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       search: [],
       autoSyncPayments: [this.advancedSettings.configurations.sync_fyle_to_sage_intacct_payments ? PaymentSyncDirection.FYLE_TO_INTACCT : PaymentSyncDirection.INTACCT_TO_FYLE],
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
-      postEntriesCurrentPeriod: [this.advancedSettings.configurations.change_accounting_period ? false : true],
+      postEntriesCurrentPeriod: [this.advancedSettings.configurations.change_accounting_period ? true : false],
       setDescriptionField: [this.advancedSettings.configurations.memo_structure ? this.advancedSettings.configurations.memo_structure : this.defaultMemoFields, Validators.required],
       skipSelectiveExpenses: [isSkippedExpense],
       defaultLocation: [findObjectByDestinationId(this.sageIntacctLocations, this.advancedSettings.general_mappings.default_location.id)],

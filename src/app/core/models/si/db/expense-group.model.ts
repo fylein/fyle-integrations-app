@@ -4,6 +4,9 @@ import { Expense } from "./expense.model";
 export type ExpenseGroupDescription = {
   claim_number: string;
   employee_email: string;
+  expense_id: string;
+  report_id: string;
+  settlement_id: string;
 };
 
 export type ExpenseGroup = {
@@ -45,6 +48,7 @@ export interface SkipExportList {
   employee: [string, string];
   expenseType: 'Corporate Card' | 'Reimbursable';
   claim_number: string;
+  fyleUrl: string;
 }
 
 export type SkipExportLog = {
@@ -53,6 +57,7 @@ export type SkipExportLog = {
   claim_number: string;
   updated_at: Date;
   fund_source: string;
+  expense_id: string;
 };
 
 export type SkipExportLogResponse = {

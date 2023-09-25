@@ -12,7 +12,6 @@ import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
 import { MappingIntacct, MappingPost, MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
-import { GeneralMapping } from 'src/app/core/models/si/db/mappings.model';
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 
 @Injectable({
@@ -36,7 +35,11 @@ export class SiMappingsService {
   getMappingStats(sourceType: string, destinationType: string): Observable<MappingStats> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
-    return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, { source_type: sourceType, destination_type: destinationType });
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, {
+      source_type: sourceType,
+      destination_type: destinationType,
+      app_name: 'INTACCT'
+    });
   }
 
   getConfiguration(): Observable<Configuration>{
@@ -106,16 +109,23 @@ export class SiMappingsService {
     }));
   }
 
-  getCategoryMappings(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState): Observable<CategoryMappingsResponse> {
+  getCategoryMappings(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string): Observable<CategoryMappingsResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
+
+    const params: { limit: number, offset: number, mapped: boolean | MappingState, destination_type: string, mapping_source_alphabets?: string } = {
+      limit: pageLimit,
+      offset: pageOffset,
+      mapped: mappingState===MappingState.ALL ? MappingState.ALL : isMapped,
+      destination_type: sourceType
+    };
+
+    if (alphabetsFilter && alphabetsFilter !== 'All') {
+      params.mapping_source_alphabets = alphabetsFilter;
+    }
+
     return this.apiService.get(
-      `/workspaces/${workspaceId}/mappings/category_attributes/`, {
-        limit: pageLimit,
-        offset: pageOffset,
-        mapped: mappingState===MappingState.ALL ? MappingState.ALL : isMapped,
-        destination_type: sourceType
-      }
+      `/workspaces/${workspaceId}/mappings/category_attributes/`, params
     );
   }
 
@@ -124,16 +134,22 @@ export class SiMappingsService {
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/category/`, mapping);
   }
 
-  getEmployeeMappings(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState): Observable<EmployeeMappingsResponse> {
+  getEmployeeMappings(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string): Observable<EmployeeMappingsResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
+    const isMapped: boolean = mappingState==='UNMAPPED' ? false : true;
+    const params: { limit: number, offset: number, mapped: boolean | MappingState, destination_type: string, mapping_source_alphabets?: string } = {
+      limit: pageLimit,
+      offset: pageOffset,
+      mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
+      destination_type: sourceType
+    };
+
+    if (alphabetsFilter && alphabetsFilter !== 'All') {
+      params.mapping_source_alphabets = alphabetsFilter;
+    }
+
     return this.apiService.get(
-      `/workspaces/${workspaceId}/mappings/employee_attributes/`, {
-        limit: pageLimit,
-        offset: pageOffset,
-        mapped: mappingState===MappingState.ALL ? MappingState.ALL : isMapped,
-        destination_type: sourceType
-      }
+      `/workspaces/${workspaceId}/mappings/employee_attributes/`, params
     );
   }
 
@@ -153,7 +169,7 @@ export class SiMappingsService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
   }
 
-  getMappings(mappingState: MappingState, limit: number, offset: number, sourceType: string, destinationType: string): Observable<ExtendedExpenseAttributeResponse> {
+  getMappings(mappingState: MappingState, limit: number, offset: number, sourceType: string, destinationType: string, alphabetsFilter: string): Observable<ExtendedExpenseAttributeResponse> {
     const isMapped: boolean = (mappingState==='UNMAPPED' ? false : true);
     const params: any = {
       limit,
@@ -163,14 +179,14 @@ export class SiMappingsService {
       destination_type: destinationType
     };
 
-    // If (alphabetsFilter.length) {
-    //   Params.mapping_source_alphabets = alphabetsFilter;
-    // }
+    if (alphabetsFilter && alphabetsFilter !== 'All') {
+      params.mapping_source_alphabets = alphabetsFilter;
+    }
 
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/expense_attributes/`, params);
   }
 
-  postMapping(mapping: MappingPost): Observable<EmployeeMapping> {
+  postMapping(mapping: MappingPost): Observable<MappingIntacct> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 }
