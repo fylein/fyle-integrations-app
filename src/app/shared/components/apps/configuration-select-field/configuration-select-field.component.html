@@ -19,8 +19,17 @@
         </div>
         <div *ngIf="options && !destinationAttributes && !simpleOptions">
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
-                <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
-                </p-dropdown>
+                <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px" 
+                [formControlName]="formControllerName" [placeholder]="placeholder"
+                [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
+                <ng-template let-option pTemplate="item">
+                    <div #textElement 
+                         [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                         [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                        {{option.label}}
+                    </div>
+                </ng-template>
+            </p-dropdown>                     
                 <div *ngIf="form.controls[formControllerName].value==='JOURNAL_ENTRY' || form.controls[formControllerName].value === 'EXPENSE_REPORT' || form.controls[formControllerName].value === 'BILL'" class="sub-text">
                     <span>Click </span>
                     <a (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
