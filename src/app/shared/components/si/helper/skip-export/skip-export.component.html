@@ -20,11 +20,16 @@
             <div class="tw-flex items-center dropdown-row tw-mt-2">
               <span class="where-text tw-mt-2">Where</span>
               <div class="tw-pl-4">
-                <p-dropdown appendTo="body" [options]="conditionFieldOptions" optionLabel="field_name" formControlName="condition1" placeholder="Select Condition">
+                <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select Condition">
+                  <!-- For options -->
                   <ng-template let-option pTemplate="item">
                     {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
                   </ng-template>
-                </p-dropdown>                
+                  <!-- For selected option -->
+                  <ng-template let-selectedOption pTemplate="selectedItem">
+                    {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                  </ng-template>
+                </p-dropdown>                               
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
                 [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
               </div>
@@ -65,11 +70,16 @@
               <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" optionLabel="value" formControlName="join_by" placeholder="Join"></p-dropdown>
             </div>
             <div class="tw-pl-4">
-              <p-dropdown appendTo="body" [options]="conditionFieldOptions" optionLabel="field_name" formControlName="condition2" placeholder="Select Condition">
+              <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select Condition">
+                <!-- For options -->
                 <ng-template let-option pTemplate="item">
                   {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
                 </ng-template>
-              </p-dropdown>                
+                <!-- For selected option -->
+                <ng-template let-selectedOption pTemplate="selectedItem">
+                  {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                </ng-template>
+              </p-dropdown>                            
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
               [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
             </div>
