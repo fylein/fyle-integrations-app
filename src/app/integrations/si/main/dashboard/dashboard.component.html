@@ -186,7 +186,7 @@
 </div>
 
 <!-- Expenses Table -->
-<p-dialog header="{{exportLogHeader}} Expenses" [(visible)]="isExportLogVisible" [position]="'top-right'" [dismissableMask]="true" [style]="{ width: '50vw', height: 'auto' }">
+<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: 'auto' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <p-table #dt2 [value]="expenseGroups">
             <ng-template pTemplate="header">
@@ -221,7 +221,7 @@
 
 <!-- Mapping Errors -->
 <div>
-    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'top-right'" [style]="{ width: '50vw', height:'auto' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="showErrorStats()">
+    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="showErrorStats()">
         <p-header>
             <p>{{intacctErrorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
           </p-header>
@@ -231,7 +231,7 @@
 
 <!-- Intacct Errors -->
 <div *ngIf="intacctErrorDialogVisible">
-    <p-dialog [(visible)]="intacctErrorDialogVisible" [position]="'top-right'" [dismissableMask]="true" [style]="{ width: '50vw', height:'auto' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+    <p-dialog [dismissableMask]="true" [(visible)]="intacctErrorDialogVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
         <p-header>
             <p>Intacct Errors</p>
             <h3 class="sub-header">{{intacctErrorDetail}}</h3>
