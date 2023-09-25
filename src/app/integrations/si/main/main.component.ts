@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api/menuitem';
+
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -8,22 +7,9 @@ import { MenuItem } from 'primeng/api/menuitem';
 })
 export class MainComponent implements OnInit {
 
-  modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/intacct/main/dashboard'},
-    {label: 'Export Log', routerLink: '/integrations/intacct/main/export_log'},
-    {label: 'Mapping', routerLink: '/integrations/intacct/main/mapping'},
-    {label: 'Configuration', routerLink: '/integrations/intacct/main/configuration'}
-  ];
-
-  activeModule: MenuItem;
-
-  constructor(
-    private router: Router
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.activeModule = this.modules[0];
-    this.router.navigateByUrl(this.modules[0].routerLink);
   }
 
 }
