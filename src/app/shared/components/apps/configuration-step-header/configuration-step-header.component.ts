@@ -22,8 +22,9 @@ export class ConfigurationStepHeaderComponent implements OnInit {
     private mappingsService: SiMappingsService
   ) { }
 
-  refreshSageIntacctDimension() {
+  refreshDimensions() {
     this.mappingsService.refreshSageIntacctDimensions().subscribe();
+    this.mappingsService.refreshFyleDimensions().subscribe();
   }
 
   ngOnInit(): void {
