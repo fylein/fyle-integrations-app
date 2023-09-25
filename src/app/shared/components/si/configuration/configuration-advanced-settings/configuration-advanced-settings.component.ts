@@ -89,7 +89,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService
   ) { }
-  
+
   getEmployeeField() {
     return new TitleCasePipe().transform(this.employeeFieldMapping);
   }
@@ -225,7 +225,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         this.sageIntacctProjects = groupedAttributes.PROJECT;
         this.sageIntacctClasses = groupedAttributes.CLASS;
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
-        this.employeeFieldMapping = configuration.employee_field_mapping
+        this.employeeFieldMapping = configuration.employee_field_mapping;
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();
         this.isLoading = false;
