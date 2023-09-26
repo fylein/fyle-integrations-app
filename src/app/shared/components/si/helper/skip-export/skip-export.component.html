@@ -2,24 +2,24 @@
 </div>
 <div *ngIf="enableSkipExport && !isLoading">
     <div class="tw-flex tw-flex-col">
-      <form [formGroup]="skipExportForm" class="tw-flex tw-flex-col tw-pl-10">
+      <form [formGroup]="skipExportForm" class="tw-flex tw-flex-col tw-pl-24-px">
             <div class="tw-flex">
-                <div class="tw-pl-24 tw-pr-4 fields-header-1">
+                <div class="tw-ml-96-px tw-w-220-px tw-mr-24-px fields-header">
                     Condition
-                    <app-mandatory-field></app-mandatory-field>
+                    <span class="tw-text-mandatory-field-color">*</span>
                 </div>
-                  <div class="tw-pl-36 tw-pr-4 fields-header-2">
+                  <div class="tw-w-220-px tw-mr-24-px fields-header">
                     Operator
-                  <app-mandatory-field></app-mandatory-field>
+                    <span class="tw-text-mandatory-field-color">*</span>
                 </div>
-                <div class="tw-pl-36 fields-header-3" *ngIf="showValueHeader1()">
+                <div class="tw-w-296-px fields-header" *ngIf="showValueHeader1()">
                   Value
-                  <app-mandatory-field></app-mandatory-field>
+                  <span class="tw-text-mandatory-field-color">*</span>
                 </div>
             </div>
-            <div class="tw-flex items-center dropdown-row tw-mt-2">
-              <span class="where-text tw-mt-2">Where</span>
-              <div class="tw-pl-4">
+            <div class="tw-flex dropdown-row tw-mt-8-px">
+              <p class="tw-text-14-px tw-text-sub-text-color tw-pt-6-px">Where</p>
+              <div class="tw-ml-54-px tw-mr-24-px">
                 <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select Condition">
                   <!-- For options -->
                   <ng-template let-option pTemplate="item">
@@ -33,43 +33,43 @@
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
                 [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
               </div>
-              <div class="tw-pl-4">
+              <div class="tw-mr-24-px">
                 <p-dropdown appendTo="body" [options]="operatorFieldOptions1" formControlName="operator1" placeholder="Select Operator"></p-dropdown>
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.operator1.touched && !skipExportForm.controls.operator1.valid"
                 [customErrorMessage]="'Please select the operator'"></app-mandatory-error-message>
               </div>
-              <div class="tw-pl-4" *ngIf="showInputField1()">
-                <input type="text" formControlName="value1" class="border p-2 rounded value-input-field" placeholder="Enter Value">
+              <div class="tw-w-296-px" *ngIf="showInputField1()">
+                <input type="text" formControlName="value1" class="value-input-field" placeholder="Enter Value">
               </div>
-              <div class="tw-pl-4" *ngIf="showDateField1()">
+              <div class="tw-w-296-px" *ngIf="showDateField1()">
                 <p-calendar [(ngModel)]="date1" formControlName="value1" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
               </div>
-              <div class="tw-pl-4" *ngIf="showChipField1()">
-                <p-chips [(ngModel)]="valueOption1" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
+              <div class="tw-w-296-px" *ngIf="showChipField1()">
+                <p-chips styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
                 <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
               </div>
         </div>
   
-        <div *ngIf="showAdditionalCondition" class="tw-mt-6 tw-mb-4">
-          <div class="tw-flex tw-mt-4">
-              <div class="tw-pl-24 tw-pr-4 fields-header-1">
+        <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
+          <div class="tw-flex tw-ml-96-px tw-mt-8-px">
+              <div class="tw-w-220-px tw-mr-24-px fields-header">
                   Condition
-                  <app-mandatory-field></app-mandatory-field>
+                  <span class="tw-text-mandatory-field-color">*</span>
               </div>
-                <div class="tw-pl-36 tw-pr-4 fields-header-2">
+                <div class="tw-w-220-px tw-mr-24-px fields-header">
                   Operator
-                <app-mandatory-field></app-mandatory-field>
+                <span class="tw-text-mandatory-field-color">*</span>
               </div>
-              <div class="tw-pl-36 fields-header-3" *ngIf="showValueHeader2()">
+              <div class="tw-w-296-px fields-header" *ngIf="showValueHeader2()">
                 Value
-                <app-mandatory-field></app-mandatory-field>
+                <span class="tw-text-mandatory-field-color">*</span>
               </div>
           </div>
-          <div class="tw-flex tw-mt-2 tw-mb-8">
+          <div class="tw-flex">
             <div class="joinby-field">
               <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" optionLabel="value" formControlName="join_by" placeholder="Join"></p-dropdown>
             </div>
-            <div class="tw-pl-4">
+            <div class="tw-ml-24-px tw-mr-24-px">
               <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select Condition">
                 <!-- For options -->
                 <ng-template let-option pTemplate="item">
@@ -83,31 +83,31 @@
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
               [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
             </div>
-            <div class="tw-pl-4">
+            <div class="tw-mr-24-px">
               <p-dropdown appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" placeholder="Select Operator"></p-dropdown>
               <app-mandatory-error-message *ngIf="skipExportForm.controls.operator2.touched && !skipExportForm.controls.operator2.valid"
               [customErrorMessage]="'Please select the operator'"></app-mandatory-error-message>
             </div>
-            <div *ngIf="showInputField2()" class="tw-pl-4">
+            <div *ngIf="showInputField2()" class="tw-w-296-px">
               <input type="text" formControlName="value2" placeholder="Enter a value" class="border p-2 rounded value-input-field" placeholder="Enter Value">
             </div>
-            <div *ngIf="showChipField2()" class="tw-pl-4">
-              <p-chips [(ngModel)]="valueOption2" formControlName="value2" placeholder="Enter Value"></p-chips>
+            <div *ngIf="showChipField2()" class="tw-w-296-px">
+              <p-chips styleClass="tw-w-[296px]" [(ngModel)]="valueOption2" formControlName="value2" placeholder="Enter Value"></p-chips>
               <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
             </div>
-            <div *ngIf="showDateField2()" class="tw-pl-4">
+            <div *ngIf="showDateField2()" class="tw-w-296-px">
               <p-calendar [(ngModel)]="date2" formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
-            <img class="delete-icon tw-mt-2" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
+            <img class="delete-icon" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
           </div>
-          <div class="tw-mt-4 tw-pl-26 tw-text-mandatory-field-color" *ngIf="checkValidationCondition()">
+          <div class=" tw-text-mandatory-field-color" *ngIf="checkValidationCondition()">
             <p>*Condition selected should be distinct.</p>
           </div>
         </div>
-        <div class="tw-flex items-center tw-pl-4 tw-mt-4 tw-mb-4" *ngIf="showAddButton">
+        <div class="tw-flex items-center tw-text-mandatory-field-color tw-pt-12-px tw-pb-24-px" *ngIf="showAddButton">
           <img src="assets/icons/add.svg" (click)="updateAdditionalFilterVisibility(true)">
-          <a class="tw-pl-2 add-row-text" (click)="updateAdditionalFilterVisibility(true)">
-            Add Condition
+          <a class="add-row-text tw-cursor-pointer tw-pl-8-px tw-text-14-px" (click)="updateAdditionalFilterVisibility(true)">
+            Add More Fields
           </a>
         </div>
       </form>
