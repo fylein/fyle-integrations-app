@@ -37,7 +37,7 @@
             </p-dropdown>
         </div>
     </div>
-    <div class="tw-pl-16-px tw-pb-6-px tw-text-14-px tw-items-center tw-justify-center">
+    <div *ngIf="!isAlphabetFilterHidden" class="tw-pl-16-px tw-pb-6-px tw-text-14-px tw-items-center tw-justify-center">
         <div class="tw-flex">
             <p class="tw-pr-8-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === 'All' ? 'tw-text-slightly-normal-text-color': 'tw-text-placeholder'" (click)="filterOptionUpdateHandler('All')">
                 All

@@ -20,6 +20,8 @@ export class MappingFilterComponent implements OnInit {
 
   @Output() mappingSearchingEvent = new EventEmitter<string>();
 
+  @Input() isAlphabetFilterHidden: boolean;
+
   @Input() page: string;
 
   filterOptions: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
