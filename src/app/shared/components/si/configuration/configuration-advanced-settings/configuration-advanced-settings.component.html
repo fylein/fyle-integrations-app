@@ -7,7 +7,7 @@
     [headerText]="'Advanced Settings'"
     [contentText]="'In this section, you can customize the integration based on your accounting requirements.'"
     [redirectLink]="RedirectLink.INTACCT"
-    [showSyncButton]="true"></app-configuration-step-header>
+    [showSyncButton]="isOnboarding"></app-configuration-step-header>
     </div>
 
     <form [formGroup]="advancedSettingsForm">

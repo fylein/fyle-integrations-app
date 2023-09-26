@@ -7,7 +7,7 @@
     [headerText]="'Export Settings'"
     [contentText]="'In this section, you can configure how and when expenses from Fyle should be exported to Sage Intacct.'"
     [redirectLink]="RedirectLink.INTACCT"
-    [showSyncButton]="true"></app-configuration-step-header>
+    [showSyncButton]="isOnboarding"></app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingsForm">
         <div class="tw-p-24-px">
@@ -20,7 +20,7 @@
                     [formControllerName]="'reimbursableExpense'"></app-configuration-toggle-field>
                 </div>
                 <div *ngIf="exportSettingsForm.value?.reimbursableExpense">
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -55,7 +55,7 @@
                                 [formControllerName]="'reimbursableExpensePaymentType'"></app-configuration-select-field>
                             </div>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.JOURNAL_ENTRY"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -92,7 +92,7 @@
                             [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
                         </div>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -104,7 +104,7 @@
                         [placeholder]="'Select export state'"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -116,7 +116,7 @@
                         [placeholder]="'Select date'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -139,7 +139,7 @@
                     [formControllerName]="'creditCardExpense'"></app-configuration-toggle-field>
                 </div>
                 <div *ngIf="exportSettingsForm.value?.creditCardExpense">
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -199,7 +199,7 @@
                             [formControllerName]="'chargeCard'"></app-configuration-select-field>
                         </div>
                     </div>
-                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY && !exportSettingsForm.value.reimbursableExpense"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -233,7 +233,7 @@
                         [placeholder]="'Select export state'"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -245,7 +245,7 @@
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!==CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
