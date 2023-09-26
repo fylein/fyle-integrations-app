@@ -1,5 +1,9 @@
-:host ::ng-deep .drop-down .p-dropdown {
+::ng-deep .drop-down .p-dropdown {
     @apply tw-w-200-px tw-border-0 #{!important};
+}
+
+::ng-deep .p-dropdown-panel {
+    @apply tw-w-201-px tw-rounded-8-px #{!important};
 }
 
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
@@ -26,36 +30,8 @@
     content: none #{!important};
 }
 
-.export-btn:disabled {
+::ng-deep .export-btn:disabled {
     @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
-}
-
-:host ::ng-deep .p-calendar .p-inputtext {
-    @apply tw-p-0 tw-bg-white tw-border-0 tw-cursor-pointer tw-transition-none	;
-}
-
-:host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
-    @apply tw-bg-disabled-bg-color #{!important};
-}
-
-:host ::ng-deep .p-calendar ::placeholder {
-    @apply tw-text-sub-text-color #{!important};
-}
-
-:host ::ng-deep .p-datepicker table td > span.p-highlight {
-    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
-}
-
-:host ::ng-deep .p-datepicker table td > span:focus {
-    @apply tw-shadow-none #{!important};
-}
-
-:host ::ng-deep .p-datepicker table th {
-    @apply tw-text-center ;
-}
-
-:host ::ng-deep .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
-    @apply tw-min-w-fit tw-top-2/3 #{!important};
 }
 
 :host ::ng-deep .prevBtn:disabled, :host ::ng-deep .nextBtn:disabled {
