@@ -3,13 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { Configuration } from 'src/app/core/models/si/db/configuration.model';
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
-import { MappingSource } from 'src/app/core/models/si/db/mapping-source.model';
-import { MappingIntacct, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/si/db/mapping.model';
+import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
+import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
@@ -48,7 +47,7 @@ export class EmployeeMappingComponent implements OnInit {
 
   limit: number = 10;
 
-  pageNo: number = 0;
+  offset: number = 0;
 
   totalCount: number;
 
@@ -66,8 +65,11 @@ export class EmployeeMappingComponent implements OnInit {
 
   operationgSystem: string;
 
+  alphabetFilter: string = 'All';
+
   constructor(
     private mappingService: SiMappingsService,
+    private paginatorService: PaginatorService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService,
     private workspaceService: SiWorkspaceService
@@ -86,16 +88,17 @@ export class EmployeeMappingComponent implements OnInit {
     that.mappingService.triggerAutoMapEmployees().subscribe(() => {
       that.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
-    }, error => {
+    }, () => {
       that.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
     });
   }
 
   private getFilteredMappings() {
-    this.mappingService.getEmployeeMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
+    this.mappingService.getEmployeeMappings(this.limit, this.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter).subscribe((intacctMappingResult: EmployeeMappingsResponse) => {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
+      this.totalCount = intacctMappingResult.count;
       this.isLoading = false;
     });
   }
@@ -127,26 +130,34 @@ export class EmployeeMappingComponent implements OnInit {
       },
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
-    this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
+    this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
+      // Decrement unmapped count only for new mappings, ignore updates
+      if (!selectedRow.employeemapping.length) {
+        this.mappingStats.unmapped_attributes_count -= 1;
+      }
+
+      selectedRow.employeemapping = [response];
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
-      this.setupPage();
-    }, err => {
+    }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
     });
   }
 
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
+    if (this.limit !== limit) {
+      this.paginatorService.storePageSize(PaginatorPage.MAPPING, limit);
+    }
     this.limit = limit;
-    this.pageNo = 0;
+    this.offset = 0;
     this.currentPage = 1;
     this.getFilteredMappings();
   }
 
-  pageOffsetChanges(pageNo: number): void {
+  pageOffsetChanges(offset: number): void {
     this.isLoading = true;
-    this.pageNo = pageNo;
-    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
+    this.offset = offset;
+    this.currentPage = Math.ceil(this.offset / this.limit)+1;
     this.getFilteredMappings();
   }
 
@@ -154,14 +165,13 @@ export class EmployeeMappingComponent implements OnInit {
     this.isLoading = true;
     this.selectedMappingFilter = state;
     this.currentPage = 1;
-    this.limit = 10;
-    this.pageNo = 0;
+    this.offset = 0;
     this.getFilteredMappings();
   }
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: EmployeeMappingResult[] = this.mappings.filter((mapping) =>
+      const results: EmployeeMappingResult[] = this.filteredMappings.filter((mapping) =>
         mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
@@ -169,6 +179,14 @@ export class EmployeeMappingComponent implements OnInit {
       this.filteredMappings = this.mappings.concat();
     }
     this.filteredMappingCount = this.filteredMappings.length;
+  }
+
+  mappingFilterUpdate(alphabet: string) {
+    this.isLoading = true;
+    this.alphabetFilter = alphabet;
+    this.currentPage = 1;
+    this.offset = 0;
+    this.getFilteredMappings();
   }
 
   getAttributesFilteredByConfig() {
@@ -184,10 +202,13 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   setupPage() {
+    const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
+    this.limit = paginator.limit;
+    this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
+      this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {

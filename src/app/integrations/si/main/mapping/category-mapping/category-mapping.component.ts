@@ -6,8 +6,9 @@ import { CorporateCreditCardExpensesObject, FieldType, FyleField, IntacctReimbur
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
 import { CategoryMapping, CategoryMappingPost, CategoryMappingResult } from 'src/app/core/models/si/db/category-mapping.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
+import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
@@ -34,13 +35,15 @@ export class CategoryMappingComponent implements OnInit {
 
   sageIntacctExpenseTypes: DestinationAttribute[];
 
-  mappings: CategoryMapping[];
+  mappings: CategoryMappingResult[];
 
-  filteredMappings: CategoryMapping[];
+  filteredMappings: CategoryMappingResult[];
 
   sourceType: string;
 
-  limit: number = 10;
+  limit: number;
+
+  offset: number = 0;
 
   pageNo: number = 0;
 
@@ -60,9 +63,12 @@ export class CategoryMappingComponent implements OnInit {
 
   operationgSystem: string;
 
+  alphabetFilter: string = 'All';
+
   constructor(
     private mappingService: SiMappingsService,
     private route: ActivatedRoute,
+    private paginatorService: PaginatorService,
     private workspaceService: SiWorkspaceService,
     private toastService: IntegrationsToastService
   ) { }
@@ -82,17 +88,18 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   private getFilteredMappings() {
-    this.mappingService.getCategoryMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter).subscribe((intacctMappingResult: CategoryMappingsResponse) => {
+    this.mappingService.getCategoryMappings(this.limit, this.pageNo, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter).subscribe((intacctMappingResult: CategoryMappingsResponse) => {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
+      this.totalCount = intacctMappingResult.count;
       this.isLoading = false;
     });
   }
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: CategoryMapping[] = this.mappings.filter((mapping) =>
-        mapping.source_category.value?.toLowerCase().includes(searchValue)
+      const results: CategoryMappingResult[] = this.filteredMappings.filter((mapping) =>
+        mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
     } else {
@@ -103,6 +110,9 @@ export class CategoryMappingComponent implements OnInit {
 
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
+    if (this.limit !== limit) {
+      this.paginatorService.storePageSize(PaginatorPage.MAPPING, limit);
+    }
     this.limit = limit;
     this.pageNo = 0;
     this.currentPage = 1;
@@ -120,8 +130,15 @@ export class CategoryMappingComponent implements OnInit {
     this.isLoading = true;
     this.selectedMappingFilter = state;
     this.currentPage = 1;
-    this.limit = 10;
     this.pageNo = 0;
+    this.getFilteredMappings();
+  }
+
+  mappingFilterUpdate(alphabet: string) {
+    this.isLoading = true;
+    this.alphabetFilter = alphabet;
+    this.currentPage = 1;
+    this.offset = 0;
     this.getFilteredMappings();
   }
 
@@ -151,7 +168,6 @@ export class CategoryMappingComponent implements OnInit {
 
   save(selectedRow: CategoryMappingResult, event: any) {
     const sourceId = selectedRow.id;
-    this.isLoading = true;
 
     const categoryMappingsPayload: CategoryMappingPost = {
       source_category: {
@@ -166,9 +182,14 @@ export class CategoryMappingComponent implements OnInit {
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
 
-    this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
+    this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
+      // Decrement unmapped count only for new mappings, ignore updates
+      if (!selectedRow.categorymapping.length) {
+        this.mappingStats.unmapped_attributes_count -= 1;
+      }
+
+      selectedRow.categorymapping = [response];
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
-      this.setupPage();
       this.isLoading = false;
     }, () => {
       this.isLoading = false;
@@ -177,10 +198,14 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   setupPage() {
+    const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
+    this.limit = paginator.limit;
+    this.offset = paginator.offset;
+
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getCategoryMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter),
+      this.mappingService.getCategoryMappings(paginator.limit, paginator.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
       this.mappingService.getMappingStats('CATEGORY', this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, categoryMappingResponse, mappingStat]) => {

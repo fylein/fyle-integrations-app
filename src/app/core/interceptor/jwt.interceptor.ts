@@ -13,13 +13,15 @@ import { globalCacheBusterNotifier } from 'ts-cacheable';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Token } from '../models/misc/token.model';
 import { AuthService } from '../services/core/auth.service';
+import { SiAuthService } from '../services/si/si-core/si-auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
   constructor(
+    private authService: AuthService,
     private jwtHelpter: JwtHelperService,
-    private authService: AuthService
+    private siAuthService: SiAuthService
   ) { }
 
   private refreshTokenInProgress = false;
@@ -109,7 +111,9 @@ export class JwtInterceptor implements HttpInterceptor {
     const refreshToken = this.authService.getRefreshToken(keyName);
 
     if (refreshToken) {
-      return this.authService.refreshAccessToken(refreshToken).pipe(
+      const refreshToken$ = keyName === 'user' ? this.authService.refreshAccessToken(refreshToken) : this.siAuthService.refreshAccessToken(refreshToken);
+
+      return refreshToken$.pipe(
         catchError((error) => this.handleError(error)),
         map((token: Token) => this.authService.updateAccessToken(token.access_token, keyName))
       );

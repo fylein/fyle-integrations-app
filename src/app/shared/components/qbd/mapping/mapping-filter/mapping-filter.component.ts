@@ -34,11 +34,11 @@ export class MappingFilterComponent implements OnInit {
 
   form: UntypedFormGroup;
 
-  selectedFilter: any;
+  @Input() selectedAlphabeticalFilter: string;
 
   isSearchBoxActive: boolean = false;
 
-  @Output() mappingFilterUpdateHandler = new EventEmitter<{}>();
+  @Output() mappingFilterUpdateHandler = new EventEmitter<string>();
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -103,25 +103,10 @@ export class MappingFilterComponent implements OnInit {
     this.trackingService.onMappingsAlphabeticalFilter(properties);
   }
 
-  addAllFilterHandler(): void {
-    this.form.controls.filterOption.patchValue([]);
-
-    this.trackAlphabeticalFilter(true);
-
-    this.mappingFilterUpdateHandler.emit({});
-  }
-
   filterOptionUpdateHandler(alphabet: string): void {
-    const index = this.form.value.filterOption.indexOf(alphabet);
-
-    if (index > -1) {
-      this.form.value.filterOption.splice(index, 1);
-    } else {
-      this.form.value.filterOption.push(alphabet);
-    }
-
+    this.selectedAlphabeticalFilter = alphabet;
+    this.mappingFilterUpdateHandler.emit(alphabet);
     this.trackAlphabeticalFilter();
-    this.mappingFilterUpdateHandler.emit({});
   }
 
   private setupFilter(): void {

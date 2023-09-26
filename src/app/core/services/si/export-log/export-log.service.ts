@@ -71,4 +71,17 @@ export class ExportLogService {
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_group_settings/`, {});
   }
+
+  generateFyleUrl(expenseGroup: ExpenseGroup, referenceType: FyleReferenceType) : string {
+    let url = `${environment.fyle_app_url}/app/`;
+    if (referenceType === FyleReferenceType.EXPENSE) {
+      url += `main/#/view_expense/${expenseGroup.expenses[0].expense_id}`;
+    } else if (referenceType === FyleReferenceType.EXPENSE_REPORT) {
+      url += `admin/#/reports/${expenseGroup.expenses[0].report_id}`;
+    } else if (referenceType === FyleReferenceType.PAYMENT) {
+      url += `admin/#/settlements/${expenseGroup.expenses[0].settlement_id}`;
+    }
+
+    return `${url}?org_id=${this.org_id}`;
+  }
 }

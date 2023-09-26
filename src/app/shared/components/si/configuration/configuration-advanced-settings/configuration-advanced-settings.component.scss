@@ -12,9 +12,11 @@
 }
 
 .field-label {
-    color: var(--grayscale-label, #5A5D72);
-    font-size: 14px;
-    font-weight: 500;
+    @apply tw-text-faded-text-color tw-text-14-px;
+}
+
+:host ::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
+    @apply tw-mb-0 tw-mt-2-px #{!important};
 }
 
 p-dropdown .p-dropdown-open {

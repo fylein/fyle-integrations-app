@@ -1,5 +1,5 @@
 <div class="tw-flex tw-justify-start tw-items-end" [formGroup]="form">
-    <div class="tw-mr-16-px tw-flex tw-content-end">
+    <div class="tw-mr-16-px tw-flex tw-content-center">
         <div *ngIf="!isSearchBoxActive" class="tw-flex tw-justify-start tw-items-center tw-cursor-pointer tw-border tw-border-box-color tw-pt-8-px tw-pb-6-px tw-px-10-px tw-rounded-4-px drop-down" (click)="isSearchBoxActive = true">
             <div>
                 <i class="pi pi-search tw-w-18-px tw-h-18-px"></i>
@@ -37,13 +37,12 @@
             </p-dropdown>
         </div>
     </div>
-</div>
-
-<!-- <div class="mapping-filter--filters-section">
-    <div class="align-center tw-flex">
-        <div [ngClass]="{'mapping-filter--filter-all-selected': form?.value?.filterOption?.length === 0}">
-        <h5 class="mapping-filter--filter-all-text pointer" (click)="addAllFilterHandler()">All</h5>
+    <div class="tw-pl-16-px tw-pb-6-px tw-text-14-px tw-items-center tw-justify-center">
+        <div class="tw-flex">
+            <p class="tw-pr-8-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === 'All' ? 'tw-text-slightly-normal-text-color': 'tw-text-placeholder'" (click)="filterOptionUpdateHandler('All')">
+                All
+            </p>
+            <p class="tw-pr-8-px tw-cursor-pointer" *ngFor="let option of filterOptions" [ngClass]="selectedAlphabeticalFilter === option ? 'tw-text-slightly-normal-text-color': 'tw-text-placeholder'" (click)="filterOptionUpdateHandler(option)">{{option}}</p>
         </div>
-        <h5 *ngFor="let option of filterOptions" [ngClass]="{'mapping-filter--filter-deselected-text': form?.value?.filterOption?.indexOf(option) === -1}" class="mapping-filter--filter-alphabet-list pointer" (click)="filterOptionUpdateHandler(option)">{{option}}</h5>
     </div>
-</div> -->
+</div>

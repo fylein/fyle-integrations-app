@@ -26,7 +26,7 @@ export class EventsService {
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }
-      } else if (message.data && JSON.parse(message.data).type === 'connectionStatusChange' && message.origin.includes('workato')) {
+      } else if (message.data && typeof(message.data) !== 'object' && JSON.parse(message.data).type === 'connectionStatusChange' && message.origin.includes('workato')) {
         this.getWorkatoConnectionStatus.emit(JSON.parse(message.data));
       }
     }, false);

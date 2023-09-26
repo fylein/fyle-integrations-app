@@ -4,16 +4,17 @@ import { forkJoin } from 'rxjs';
 import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
-import { MappingSetting, MappingSettingResponse, MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
-import { MappingIntacct, MappingPost, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
+import { MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
+import { MappingPost, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { EmployeeMappingResult } from 'src/app/core/models/si/db/employee-mapping.model';
 import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
+import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 
 @Component({
   selector: 'app-generic-mapping',
@@ -42,7 +43,7 @@ export class GenericMappingComponent implements OnInit {
 
   limit: number = 10;
 
-  pageNo: number = 0;
+  offset: number = 0;
 
   totalCount: number;
 
@@ -60,10 +61,12 @@ export class GenericMappingComponent implements OnInit {
 
   operationgSystem: string;
 
+  alphabetFilter: string = 'All';
+
   constructor(
+    private paginatorService: PaginatorService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService,
-    private window: WindowService,
     private mappingService: SiMappingsService
   ) { }
 
@@ -89,34 +92,51 @@ export class GenericMappingComponent implements OnInit {
       destination_id: event.value.destination_id,
       destination_value: event.value.value
     };
-    this.mappingService.postMapping(payload).subscribe(() => {
+    this.mappingService.postMapping(payload).subscribe((response) => {
+      // Decrement unmapped count only for new mappings, ignore updates
+      if (!selectedRow.mapping.length) {
+        this.mappingStats.unmapped_attributes_count -= 1;
+      }
+
+      selectedRow.mapping = [response];
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping saved successfully');
-      this.setupPage();
-    }, err => {
+    }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
     });
   }
 
   private getFilteredMappings() {
-    this.mappingService.getMappings(MappingState.ALL, this.limit, this.pageNo, this.sourceType, this.mappingSetting.destination_field).subscribe((response: ExtendedExpenseAttributeResponse) => {
+    this.mappingService.getMappings(this.selectedMappingFilter, this.limit, this.offset, this.sourceType, this.mappingSetting.destination_field, this.alphabetFilter).subscribe((response: ExtendedExpenseAttributeResponse) => {
       this.filteredMappings = response.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
+      this.totalCount = response.count;
       this.isLoading = false;
     });
   }
 
   pageSizeChanges(limit: number): void {
     this.isLoading = true;
+    if (this.limit !== limit) {
+      this.paginatorService.storePageSize(PaginatorPage.MAPPING, limit);
+    }
     this.limit = limit;
-    this.pageNo = 0;
+    this.offset = 0;
     this.currentPage = 1;
     this.getFilteredMappings();
   }
 
-  pageOffsetChanges(pageNo: number): void {
+  pageOffsetChanges(offset: number): void {
     this.isLoading = true;
-    this.pageNo = pageNo;
-    this.currentPage = Math.ceil(this.pageNo / this.limit)+1;
+    this.offset = offset;
+    this.currentPage = Math.ceil(this.offset / this.limit)+1;
+    this.getFilteredMappings();
+  }
+
+  mappingFilterUpdate(alphabet: string) {
+    this.isLoading = true;
+    this.alphabetFilter = alphabet;
+    this.currentPage = 1;
+    this.offset = 0;
     this.getFilteredMappings();
   }
 
@@ -124,14 +144,13 @@ export class GenericMappingComponent implements OnInit {
     this.isLoading = true;
     this.selectedMappingFilter = state;
     this.currentPage = 1;
-    this.limit = 10;
-    this.pageNo = 0;
+    this.offset = 0;
     this.getFilteredMappings();
   }
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: ExtendedExpenseAttribute[] = this.mappings.filter((mapping) =>
+      const results: ExtendedExpenseAttribute[] = this.filteredMappings.filter((mapping) =>
         mapping.value?.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
@@ -144,6 +163,10 @@ export class GenericMappingComponent implements OnInit {
   setupPage() {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
+    const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
+    this.limit = paginator.limit;
+    this.offset = paginator.offset;
+
     forkJoin([
       this.mappingService.getConfiguration(),
       this.mappingService.getMappingSettings()
@@ -155,7 +178,7 @@ export class GenericMappingComponent implements OnInit {
       forkJoin([
         this.mappingService.getSageIntacctDestinationAttributes(this.mappingSetting.destination_field),
         this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field),
-        this.mappingService.getMappings(MappingState.ALL, this.limit, this.pageNo, this.sourceType, this.mappingSetting.destination_field)
+        this.mappingService.getMappings(MappingState.ALL, this.limit, this.offset, this.sourceType, this.mappingSetting.destination_field, this.alphabetFilter)
       ]).subscribe(([options, mappingStats, mappings]) => {
         this.mappingStats = mappingStats;
         this.totalCount = mappings.count;
