@@ -1,5 +1,9 @@
-:host ::ng-deep .drop-down .p-dropdown {
+::ng-deep .drop-down .p-dropdown {
     @apply tw-w-200-px tw-border-0 #{!important};
+}
+
+::ng-deep .p-dropdown-panel {
+    @apply tw-w-201-px tw-rounded-8-px #{!important};
 }
 
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
