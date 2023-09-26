@@ -204,7 +204,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
-    @apply tw-mb-14-px #{!important};
+    @apply tw-mb-0 tw-mt-2-px #{!important};
 }
 
 .p-checkbox .p-checkbox-box {
@@ -338,10 +338,10 @@ p {
 }
 
 .p-calendar .p-inputtext {
-    @apply tw-p-0 tw-w-[100vw] tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none tw-text-sub-text-color #{!important};
+    @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none tw-text-sub-text-color #{!important};
 }
 
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext, .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext{
     @apply tw-bg-disabled-bg-color #{!important};
 }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page } from 'src/app/core/models/enum/enum.model';
 import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
-import { EventsService } from 'src/app/core/services/core/events.service';
+import { EXPOSE_INTACCT_NEW_APP, EventsService } from 'src/app/core/services/core/events.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
@@ -31,6 +31,7 @@ export class LandingComponent implements OnInit {
 
   isGustoAllowed: boolean = this.org.allow_gusto;
 
+  exposeIntacctNewApp: boolean = EXPOSE_INTACCT_NEW_APP;
 
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
