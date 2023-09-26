@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-mandatory-field',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mandatory-field.component.scss']
 })
 export class MandatoryFieldComponent implements OnInit {
+
+  @Input() noSpacing: boolean;
 
   constructor() { }
 
