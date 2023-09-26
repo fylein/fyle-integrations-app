@@ -16,12 +16,12 @@
             <div class="container">
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500 ">Automation</h4>
-                    <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-4">
+                    <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
                         You can automate the export and sync of your data in this section.
                     </h5>
                 </div>
             </div>
-            <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-select-field
                     [form]="advancedSettingsForm"
                     [isFieldMandatory]="false"
@@ -45,7 +45,7 @@
                     [formControllerName]="'email'">
                 </app-email-multi-select-field>
             </div>
-            <div *ngIf="reimbursableExpense==='EXPENSE_REPORT' || reimbursableExpense==='BILL'" class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div *ngIf="reimbursableExpense==='EXPENSE_REPORT' || reimbursableExpense==='BILL'" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-select-field
                 [form]="advancedSettingsForm"
                 [isFieldMandatory]="false"
@@ -80,14 +80,14 @@
                     </h5>
                 </div>
             </div>
-            <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Auto-Create ' + getEmployeeField()" 
                 [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in Fyle, the integration will auto-create a new record in Sage Intacct.'" 
                 [formControllerName]="'autoCreateEmployeeVendor'"></app-configuration-toggle-field>
             </div>
-            <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Post Entries in the Current Accounting Period'" 
@@ -105,7 +105,7 @@
                     </h5>
                 </div>
             </div>
-            <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-multi-select
                 [form]="advancedSettingsForm"
                 [label]="'Set the Description Field in Sage Intacct'"
@@ -114,14 +114,14 @@
                 [iconPath]="'expense'"
                 [placeholder]="'Select Description'"
                 [formControllerName]="'setDescriptionField'"></app-configuration-multi-select>
-                <div class="tw-p-24-px">
-                    <p class="tw-text-12-px tw-mb-12-px tw-text-faded-text-color">Preview of the Description Field</p>
-                    <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px">
+                <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
+                    <p class="tw-text-14-px tw-mb-12-px tw-text-faded-text-color">Preview of the Description Field</p>
+                    <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-10-px tw-px-16-px tw-text-faded-text-color">
                         <span>{{ memoPreviewText }}</span>
                     </div>
                 </div>
             </div>
-            <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Skip Selective Expenses from being Exported to Sage Intacct'" 
@@ -141,48 +141,48 @@
             <div class="container">
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500 ">Default Field Values</h4>
-                    <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-4">
+                    <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
                         If you've made a field mandatory in Sage Intacct but don't collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For Location and Department, you can opt to use the values from your employee records in Sage Intacct.
                     </h5>
                 </div>
             </div>
-            <div class="tw-pt-4 tw-pl-6 field-label">
+            <div class="tw-pt-28-px tw-pl-6 field-label">
                 <div><label>Default Location</label></div>
                 <div class="tw-pt-2">
                     <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctLocations" optionLabel="value" formControlName="defaultLocation" placeholder="Select Location"></p-dropdown>
-                    <span class="tw-pl-4">
+                    <span class="tw-pl-24-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
-                        <label class="tw-pl-2" for="checkbox">Use Employee's Location in Sage Intacct</label>
+                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in Sage Intacct</label>
                     </span>
                 </div>  
               </div>
 
-              <div class="tw-pt-4 tw-pl-6 field-label">
+              <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label>Default Department</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctDepartments" optionLabel="value" formControlName="defaultDepartment" placeholder="Select Department"></p-dropdown>
-                    <span class="tw-pl-4">
+                    <span class="tw-pl-24-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
-                        <label class="tw-pl-2" for="checkbox">Use Employee's Department in Sage Intacct</label>
+                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Sage Intacct</label>
                     </span>
                 </div>  
               </div> 
 
-              <div class="tw-pt-4 tw-pl-6 field-label">
+              <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label>Default Project</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctProjects" optionLabel="value" formControlName="defaultProject" placeholder="Select Project"></p-dropdown>
                 </div>  
               </div> 
 
-              <div class="tw-pt-4 tw-pl-6 field-label">
+              <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label>Default Class</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctClasses" optionLabel="value" formControlName="defaultClass" placeholder="Select Class"></p-dropdown>
                 </div>  
               </div> 
 
-              <div class="tw-pt-4 tw-pl-6 field-label">
+              <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label>Default Items</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctDefaultItem" optionLabel="value" formControlName="defaultItems" placeholder="Select Item"></p-dropdown>

@@ -17,7 +17,8 @@
                     [form]="exportSettingsForm"
                     [label]="'Export Reimbursable Expenses'" 
                     [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage Intacct .'" 
-                    [formControllerName]="'reimbursableExpense'"></app-configuration-toggle-field>
+                    [formControllerName]="'reimbursableExpense'"
+                    [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
                 <div *ngIf="exportSettingsForm.value?.reimbursableExpense">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -136,7 +137,8 @@
                     [form]="exportSettingsForm"
                     [label]="'Export Corporate Card Expenses'" 
                     [subLabel]="'Enable this to export Non-Reimbursable expenses from Fyle. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage Intacct.'" 
-                    [formControllerName]="'creditCardExpense'"></app-configuration-toggle-field>
+                    [formControllerName]="'creditCardExpense'"
+                    [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
                 <div *ngIf="exportSettingsForm.value?.creditCardExpense">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
