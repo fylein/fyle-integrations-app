@@ -10,7 +10,11 @@
                 <i class="pi pi-search"></i>
                 <input class="tw-pb-1 tw-pt-1 tw-text-14-px" type="text" (input)="filterTable($event)" placeholder="Search by Employee Name or Expense ID" />
             </span>
-            <span class="tw-pl-4">
+            <div class="tw-flex tw-mr-4"></div>
+            <span class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-12-px tw-rounded-4-px drop-down">
+                <div>
+                    <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
+                </div>
                 <p-dropdown placeholder="Select date range" [showClear]="true" appendTo="body" [options]="dateOptions" formControlName="dateRange" (click)="dropDownWatcher()">
                     <ng-template let-item pTemplate="selectedItem">
                         <div *ngIf="exportLogForm.controls.dateRange.value">
@@ -19,7 +23,7 @@
                             </div>
                         </div>
                         <div *ngIf="!exportLogForm.controls.dateRange.value">
-                            <div class="my-dropdown-selected-item tw-text-placeholder">
+                            <div class="my-dropdown-selected-item tw-text-placeholder tw-text-14-px">
                                 Select date range
                             </div>
                         </div>
@@ -82,10 +86,10 @@
 
         <div *ngIf="!filteredExpenseGroups.length" class="tw-flex tw-h-3/6 tw-text-center tw-p-56-px">
             <div class="tw-m-auto">
-                <img src="assets/illustrations/integrations-zero-state.svg" width="200px" hight="200px" class="tw-inline-block">
-                <div class="tw-pt-20-px">
-                    <h4 class="tw-font-500 !tw-text-16-px tw-text-slightly-normal-text-color">Sorry, no results found!</h4>
-                    <p>Looks like your search term does not match any<br>Employee Name or Expense ID</p>
+                <img src="assets/illustrations/search-result-empty.svg" width="200px" hight="200px" class="tw-inline-block">
+                <div class="tw-pt-12-px">
+                    <h4 class="tw-font-500 tw-text-14-px tw-text-slightly-normal-text-color">Sorry, no results found!</h4>
+                    <p class="tw-font-400 tw-text-14-px tw-text-faded-text-color tw-pt-8-px">We could not find what you were looking for.<br>Kindly check the keywords again.</p>
                 </div>
             </div>
         </div>
