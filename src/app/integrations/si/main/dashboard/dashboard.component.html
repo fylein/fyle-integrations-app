@@ -73,28 +73,34 @@
         <div class="tw-border-separator tw-border-1-px">
             <div *ngIf="true" class="tw-p-6 tw-rounded-6-px tw-bg-white">
                 <div *ngIf="true" class="inside-container tw-p-10 tw-rounded-6-px tw-bg-white">
-                    <div class="tw-flex tw-items-center">
-                        <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-2">
-                        <p class="tw-text-14-px">Successful Expenses</p>
-                        <span class="tw-ml-24 tw-pl-8-px">
-                            {{ lastExport?.successful_expense_groups_count ? lastExport?.successful_expense_groups_count : 0 }}
-                        </span>                          
-                        <a *ngIf="lastExport?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-4 tw-text-pink pointer">View</a>
-                        <div class="tw-ml-auto tw-flex tw-flex-col">
-                            <span>
+                    <div class="tw-flex tw-items-center tw-justify-between">
+                        <div class="tw-flex">
+                                <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-2">
+                                <p class="tw-text-14-px">Successful Expenses</p>
+                                <span class="tw-w-120-px tw-text-right">
+                                    {{ lastExport?.successful_expense_groups_count ? lastExport?.successful_expense_groups_count : 0 }}
+                                </span>  
+                            <a *ngIf="lastExport?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-4 tw-text-pink pointer">View</a>
+                        </div>
+                        <div class="tw-flex tw-flex-col">
+                            <span class="tw-w-240-px tw-text-left">
                                 <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Last Export at: </span>
                                 <span class="tw-text-14-px tw-font-500">{{ lastExport ? (lastExport.last_exported_at | date: 'h:mm a,') : 'None' }}
                                 {{ lastExport ? (lastExport.last_exported_at | date: 'dd MMM yyyy') : '' }}</span>
                             </span>                              
                         </div>
                     </div>
-                    <div class="tw-flex tw-items-center tw-mt-8-px">
-                        <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-2">
-                        <p class="tw-text-14-px">Failed Expenses</p>
-                        <span class="tw-ml-28 tw-pl-10-px">{{ lastExport?.failed_expense_groups_count ? lastExport?.failed_expense_groups_count : 0 }}</span>
-                        <a *ngIf="lastExport?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-4 tw-text-pink pointer">View</a>
-                        <div class="tw-ml-auto tw-flex tw-flex-col">
-                            <span>
+                    <div class="tw-flex tw-items-center tw-mt-8-px tw-justify-between">
+                        <div class="tw-flex">
+                            <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-2">
+                            <p class="tw-text-14-px">Failed Expenses</p>
+                            <span class="tw-w-150-px tw-text-right">
+                                {{ lastExport?.failed_expense_groups_count ? lastExport?.failed_expense_groups_count : 0 }}
+                            </span>
+                            <a *ngIf="lastExport?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-4 tw-text-pink pointer">View</a>
+                        </div>
+                        <div class="tw-flex tw-flex-col">
+                            <span class="tw-w-240-px tw-text-left">
                                 <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Next Export at: </span>
                                 <span class="tw-text-14-px tw-font-500">{{ lastExport?.next_export_at ? (lastExport?.next_export_at | date: 'h:mm a,') : 'None' }}
                                 {{ lastExport ? (lastExport.next_export_at | date: 'dd MMM yyyy') : '' }}</span>
@@ -123,7 +129,7 @@
                 <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat?.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px">
                     <div class="container">
                         <div class="inside-container">
-                            <h4 class="tw-text-16-px !tw-font-500 ">Employee Mapping Errors</h4>
+                            <h4 class="tw-text-14-px !tw-font-500 ">Employee Mapping Errors</h4>
                             <h5 *ngIf="groupedErrorStat.EMPLOYEE_MAPPING" class="tw-text-faded-text-color tw-text-12-px">{{ groupedErrorStat.EMPLOYEE_MAPPING?.resolvedCount }}/{{ groupedErrorStat.EMPLOYEE_MAPPING?.totalCount }} error(s) resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2">
@@ -146,7 +152,7 @@
                 <div *ngIf="errors?.CATEGORY_MAPPING?.length || (groupedErrorStat && groupedErrorStat.CATEGORY_MAPPING)" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container">
-                            <h4 class="tw-text-16-px !tw-font-500 ">Category Mapping Errors</h4>
+                            <h4 class="tw-text-14-px !tw-font-500 ">Category Mapping Errors</h4>
                             <h5 *ngIf="groupedErrorStat.CATEGORY_MAPPING" class="tw-pt-4-px tw-text-faded-text-color tw-text-12-px">{{ groupedErrorStat.CATEGORY_MAPPING.resolvedCount }}/{{ groupedErrorStat.CATEGORY_MAPPING?.totalCount }} error(s) resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>Map the employees in Fyle to their corresponding records in Sage Intacct.</p>
@@ -172,14 +178,14 @@
                         </div>
                     </div>
                 </div>
-                <div *ngFor="let error of errors?.INTACCT_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pb-6">
+                <div *ngFor="let error of errors?.INTACCT_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container">
-                            <h4 class="tw-text-16-px !tw-font-500 ">{{ error.error_title }}</h4>
+                            <h4 class="tw-text-14-px !tw-font-500 tw-w-auto">{{ error.error_title }}</h4>
                             <div class="flex-wrapper">
-                                <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>{{ error.error_detail }}</p>
+                                <h5 class="!tw-text-faded-text-color tw-text-12-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-2"><p>{{ error.error_detail }}</p>
                                 </h5>
-                                <button type="button" (click)="showIntacctErrorDialog(error)" class="tw-flex tw-items-center tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-2 tw-py-1 tw-border tw-border-gray-300 focus:tw-outline-none active:tw-scale-80 transition-transform tw-text-12-px tw-font-500">
+                                <button type="button" (click)="showIntacctErrorDialog(error)" class="tw-flex tw-items-center tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-3 tw-py-2 tw-border tw-border-gray-300 transition-transform tw-text-12-px tw-font-500">
                                     View Expense
                                 </button>
                             </div>
