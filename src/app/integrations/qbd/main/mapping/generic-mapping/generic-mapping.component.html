@@ -8,7 +8,7 @@
 
     <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
         <div class="tw-p-24-px">
-            <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)"></app-mapping-filter>
+            <app-mapping-filter [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)" [isAlphabetFilterHidden]="true"></app-mapping-filter>
         </div>
         <div *ngIf="totalCount > 0" >
             <app-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="'Corporate Card in Fyle'" [destinationHeaderName]="'QuickBooks Desktop Credit Card Account'" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-mapping-table>
