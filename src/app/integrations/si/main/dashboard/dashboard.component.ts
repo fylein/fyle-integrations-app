@@ -24,6 +24,8 @@ export class DashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  isExportLogFetchInProgress: boolean;
+
   isImportInProgress: boolean = true;
 
   isExportLogVisible: boolean = false;
@@ -87,6 +89,19 @@ export class DashboardComponent implements OnInit {
 
   private taskType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
 
+  readonly dummyExpenseGroupList: ExpenseGroupList[] = [{
+    index: 0,
+    exportedAt: new Date(),
+    employee: ['a', 'b'],
+    expenseType: 'Corporate Card',
+    referenceNumber: '123',
+    exportedAs: 'a',
+    intacctUrl: 'a',
+    fyleUrl: 'a',
+    fyleReferenceType: FyleReferenceType.EXPENSE,
+    expenses: []
+  }];
+
   constructor(
     private dashboardService: DashboardService,
     private exportLogService: ExportLogService,
@@ -114,6 +129,7 @@ export class DashboardComponent implements OnInit {
   }
 
   showExportLog(status: TaskLogState) {
+    this.isExportLogFetchInProgress = true;
     this.exportLogHeader = status === this.taskLogStatusComplete ? 'Successful' : 'Failed';
     this.getExpenseGroups(500, 0, status);
     this.isExportLogVisible = true;
@@ -132,10 +148,12 @@ export class DashboardComponent implements OnInit {
           referenceNumber: expenseGroup.description.claim_number,
           exportedAs: expenseGroup.export_type,
           expenses: expenseGroup.expenses,
-          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType)
+          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
+          intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`
         });
       });
       this.expenseGroups = expenseGroups;
+      this.isExportLogFetchInProgress = false;
     });
   }
 

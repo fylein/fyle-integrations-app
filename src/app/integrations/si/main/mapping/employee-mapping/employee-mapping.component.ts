@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AutoMapEmployeeOptions, FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
@@ -24,6 +24,8 @@ export class EmployeeMappingComponent implements OnInit {
   isInitialSetupComplete: boolean = false;
 
   employeeFieldMapping: FyleField;
+
+  autoMapEmployee: AutoMapEmployeeOptions | null;
 
   mappingStats: MappingStats;
 
@@ -230,6 +232,7 @@ export class EmployeeMappingComponent implements OnInit {
   ngOnInit(): void {
     this.mappingService.getConfiguration().subscribe((response) => {
       this.employeeFieldMapping = response.employee_field_mapping;
+      this.autoMapEmployee = response.auto_map_employees;
       this.setupPage();
     });
   }

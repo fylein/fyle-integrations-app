@@ -147,11 +147,10 @@ export class CategoryMappingComponent implements OnInit {
 
     if (this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
       attributes.push('EXPENSE_TYPE');
-    }
-
-    if ( this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.BILL ||  this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || (! this.reimbursableExpenseObject && (this.cccExpenseObject === CorporateCreditCardExpensesObject.JOURNAL_ENTRY || this.cccExpenseObject === CorporateCreditCardExpensesObject.BILL || this.cccExpenseObject === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION))) {
+    } else {
       attributes.push('ACCOUNT');
     }
+
     return attributes;
   }
 

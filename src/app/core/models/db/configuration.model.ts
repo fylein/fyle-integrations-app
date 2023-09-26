@@ -10,7 +10,7 @@ export interface Configuration {
     import_categories: boolean;
     sync_fyle_to_sage_intacct_payments: boolean;
     sync_sage_intacct_to_fyle_payments: boolean;
-    auto_map_employees?: AutoMapEmployeeOptions;
+    auto_map_employees: AutoMapEmployeeOptions | null;
     import_tax_codes?: boolean;
     memo_structure: string[];
     auto_create_destination_entity: boolean;

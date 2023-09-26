@@ -200,7 +200,8 @@ export enum QBDOnboardingState {
   SAVE = 'Save',
   SAVE_AND_CONTINUE = 'Save and Continue',
   CONTINUE = 'Continue',
-  SAVING = 'Saving'
+  SAVING = 'Saving',
+  SYNCING = 'Syncing'
   }
 
   export enum QBDReimbursableExpensesObject {
