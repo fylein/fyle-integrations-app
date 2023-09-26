@@ -36,7 +36,7 @@
             <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
             </p-dropdown>
         </div>
-          <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text tw-whitespace-nowrap tw-pl-4">
+          <h3 *ngIf="locationEntity" [pTooltip]="locationEntity.location_entity_name" [tooltipDisabled]="locationEntity.location_entity_name.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px center-align-text tw-whitespace-nowrap tw-cursor-default">
             {{ locationEntity.location_entity_name | trimCharacter: 26 }}
           </h3>
 
