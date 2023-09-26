@@ -2,9 +2,6 @@
     @apply tw-w-200-px tw-border-0 #{!important};
 }
 
-::ng-deep .p-dropdown-panel {
-    @apply tw-w-201-px tw-rounded-8-px #{!important};
-}
 
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
     @apply tw-text-sub-text-color tw-text-14-px tw-font-400 tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-box-color  #{!important};
