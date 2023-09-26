@@ -1,5 +1,7 @@
-<div *ngIf="isLoading">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
 </div>
+
 <div *ngIf="!isLoading" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
     <div *ngIf="totalCount > 0" class="tw-p-24-px">
         <div [formGroup]="exportLogForm" class="tw-flex tw-items-center tw-mb-4">
@@ -9,10 +11,7 @@
                 <input class="tw-pb-1 tw-pt-1" type="text" (input)="filterTable($event)" placeholder="Search by Employee Name or Expense ID" />
             </span>
             <span class="tw-pl-4">
-                <p-dropdown appendTo="body" [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
-                    <div class="calendar-icon">
-                    <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
-                    </div>
+                <p-dropdown placeholder="Select date range" [showClear]="true" appendTo="body" [options]="dateOptions" formControlName="dateRange" (click)="dropDownWatcher()">
                     <ng-template let-item pTemplate="selectedItem">
                         <div *ngIf="exportLogForm.controls.dateRange.value">
                             <div class="my-dropdown-selected-item">
@@ -45,7 +44,7 @@
                     <th>Expense Type</th>
                     <th>Reference ID</th>
                     <th>Exported As</th>
-                    <th>Link to Sage</th>
+                    <th>Link to Sage Intacct</th>
                 </tr>
             </ng-template>
 

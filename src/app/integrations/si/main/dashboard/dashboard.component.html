@@ -60,7 +60,7 @@
           <p class="tw-pt-8 tw-font-300">There are no expenses to export at the moment!</p>
         </div>
       </div>
-    <div class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div *ngIf="lastExport || exportableExpenseGroupIds.length" class="tw-mt-40-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="tw-font-500">Your Last Export</h4>
         </div>
@@ -186,19 +186,21 @@
 </div>
 
 <!-- Expenses Table -->
-<p-dialog header="{{exportLogHeader}} Expenses" [(visible)]="isExportLogVisible" [position]="'top-right'" [dismissableMask]="true" [style]="{ width: '50vw', height: 'auto' }">
+<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [modal]="true" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
-        <p-table #dt2 [value]="expenseGroups">
+        <p-table #dt2 [value]="expenseGroups ? expenseGroups : dummyExpenseGroupList">
             <ng-template pTemplate="header">
                 <tr>
+                    <th>Reference ID</th>
                     <th>Date and Time of Export</th>
                     <th>Employee Name and ID</th>
                     <th *ngIf="exportLogHeader==='Successful'">Exported As</th>
-                    <th>Reference ID</th>
+                    <th *ngIf="exportLogHeader==='Successful'">Link to Sage Intacct</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
-                <tr>
+                <tr *ngIf="!isExportLogFetchInProgress">
+                    <td class="tw-underline tw-cursor-pointer" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
                     <td>
                         <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
                         <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>
@@ -211,9 +213,16 @@
                             {{rowData.employee[1]}}
                         </h5>
                     </td>
-                    <td *ngIf="exportLogHeader==='Successful'">{{rowData.exportedAs | titlecase}}</td>
-                    <td class="tw-underline tw-cursor-pointer" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
+                    <td *ngIf="exportLogHeader==='Successful'">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
+                    <td *ngIf="exportLogHeader==='Successful'">
+                        <div *ngIf="rowData.intacctUrl">
+                          <button (click)="openUrl($event, rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
+                            <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
+                          </button>
+                        </div>
+                    </td>
                 </tr>
+                <ng-container *ngTemplateOutlet="shimmers"></ng-container>
             </ng-template>
         </p-table>
     </div>
@@ -221,7 +230,7 @@
 
 <!-- Mapping Errors -->
 <div>
-    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'top-right'" [style]="{ width: '50vw', height:'auto' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="showErrorStats()">
+    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="showErrorStats()">
         <p-header>
             <p>{{intacctErrorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
           </p-header>
@@ -231,7 +240,7 @@
 
 <!-- Intacct Errors -->
 <div *ngIf="intacctErrorDialogVisible">
-    <p-dialog [(visible)]="intacctErrorDialogVisible" [position]="'top-right'" [dismissableMask]="true" [style]="{ width: '50vw', height:'auto' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+    <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="intacctErrorDialogVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
         <p-header>
             <p>Intacct Errors</p>
             <h3 class="sub-header">{{intacctErrorDetail}}</h3>
@@ -239,3 +248,13 @@
         <app-dashboard-intacct-errors [intacctErrorExpenses]="intacctErrorExpenses"></app-dashboard-intacct-errors>
     </p-dialog>
 </div>
+
+<ng-template #shimmers>
+    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+    </tr>
+</ng-template>
