@@ -129,6 +129,16 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     });
   }
 
+  private createAutoSyncPaymentsWatcher(): void {
+    this.advancedSettingsForm.controls.autoSyncPayments.valueChanges.subscribe((paymentChanges) => {
+      if (paymentChanges === PaymentSyncDirection.FYLE_TO_INTACCT) {
+        this.advancedSettingsForm.controls.defaultPaymentAccount.setValidators([Validators.required]);
+      } else {
+        this.advancedSettingsForm.controls.defaultPaymentAccount.clearValidators();
+      }
+    });
+  }
+
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingsForm.value.setDescriptionField;
     this.formatMemoPreview();
@@ -166,6 +176,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       useEmployeeLocation: [this.advancedSettings.general_mappings.use_intacct_employee_locations ? this.advancedSettings.general_mappings.use_intacct_employee_locations : null],
       useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null]
     });
+    this.createAutoSyncPaymentsWatcher();
     this.createMemoStructureWatcher();
   }
 
