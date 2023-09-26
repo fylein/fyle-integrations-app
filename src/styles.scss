@@ -368,3 +368,7 @@ p {
 .p-dropdown-filter {
     @apply tw-h-32-px;
 }
+
+.p-dialog .p-dialog-header .p-dialog-title {
+    @apply tw-text-20-px tw-font-500 #{!important};
+}

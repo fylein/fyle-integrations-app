@@ -30,7 +30,7 @@
                     </div>
                 </ng-template>
             </p-dropdown>                     
-                <div *ngIf="form.controls[formControllerName].value==='JOURNAL_ENTRY' || form.controls[formControllerName].value === 'EXPENSE_REPORT' || form.controls[formControllerName].value === 'BILL'" class="sub-text">
+                <div *ngIf="form.controls[formControllerName].value==='JOURNAL_ENTRY' || form.controls[formControllerName].value === 'EXPENSE_REPORT' || form.controls[formControllerName].value === 'BILL'" class="sub-text tw-pt-3-px">
                     <span>Click </span>
                     <a (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
                     <span> to preview how it looks on Sage Intacct</span>
@@ -95,40 +95,21 @@
 </div>
 
 <div *ngIf="isExportTypeDialogVisible">
-    <div class="card flex justify-content-center">
-        <p-dialog header="Export Settings" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isExportTypeDialogVisible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
-            <img *ngIf="exportType==='EXPENSE_REPORT'" src="assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg">
-            <img *ngIf="exportType==='BILL'" src="assets/illustrations/sageIntacct/Reimbursable Bill.jpg">
-            <img *ngIf="exportType==='JOURNAL_ENTRY'" src="assets/illustrations/sageIntacct/Reimbursable Journal Entry.jpg">
+    <div>
+        <p-dialog header="Sage Intacct Preview" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isExportTypeDialogVisible" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
+            <div class="tw-flex tw-items-center tw-justify-center tw-px-24-px tw-pb-24-px">
+                <img height="300px" width="700px" *ngIf="exportType === 'EXPENSE_REPORT'" src="assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg">
+                <img height="300px" width="700px" *ngIf="exportType === 'BILL'" src="assets/illustrations/sageIntacct/Reimbursable Bill.jpg">
+                <img height="300px" width="700px" *ngIf="exportType === 'JOURNAL_ENTRY'" src="assets/illustrations/sageIntacct/Reimbursable Journal Entry.jpg">
+            </div>
         </p-dialog>
     </div>
 </div>
 
-<div class="card flex justify-content-center">
-    <p-dialog header="Export Settings" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isExportTableVisible" [breakpoints]="{ '960px': '80vw' }" [style]="{ width: '75vw' }" [draggable]="false" [resizable]="false">
-        <p-table [value]="exportTableData" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Export Module</th>
-                    <th>Employee Mapping</th>
-                    <th>Chart of Accounts</th>
-                    <th>Sage Intacct Module</th>
-                </tr>
-                <tr class="smaller-th">
-                    <th>Expenses can be exported in one of the modules below.</th>
-                    <th>Employees in Fyle will be mapped as Employee/Vendor based on your export module.</th>
-                    <th>One of the below mentioned accounts will be imported based on the export module.</th>
-                    <th>Based on the export module, expenses will be posted to one of the below modules in Sage Intacct.</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData>
-                <tr>
-                  <td>{{ rowData.exportModule }}</td>
-                  <td>{{ rowData.employeeMapping }}</td>
-                  <td>{{ rowData.chartOfAccounts }}</td>
-                  <td>{{ rowData.sageIntacctModule }}</td>
-                </tr>
-              </ng-template>
-        </p-table>
+<div>
+    <p-dialog header="Export Modules" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isExportTableVisible" [breakpoints]="{ '960px': '80vw' }"  [draggable]="false" [resizable]="false">
+        <div class="tw-flex tw-items-center tw-justify-center tw-px-24-px tw-pb-24-px">
+            <img src="assets/flow-charts/intacct-export-module.svg" />
+        </div>
     </p-dialog>
 </div>
