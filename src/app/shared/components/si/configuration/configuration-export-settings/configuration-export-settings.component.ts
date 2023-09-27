@@ -116,9 +116,9 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   ];
 
   autoMapEmployeeOptions: ExportSettingFormOption[] = [
-    { label: 'Match emails on Fyle and Sage Intacct', value: 'EMAIL' },
-    { label: 'Match names on Fyle and Sage Intacct', value: 'NAME' },
-    { label: 'Match Fyle Employee Code to Sage Intacct Name', value: 'EMPLOYEE_CODE' }
+    { label: 'Based on Employee E-mail ID', value: 'EMAIL' },
+    { label: 'Based on Employee Name', value: 'NAME' },
+    { label: 'Based on Employee Code', value: 'EMPLOYEE_CODE' }
   ];
 
   reimbursableExportTypes: ExportSettingFormOption[] = [
