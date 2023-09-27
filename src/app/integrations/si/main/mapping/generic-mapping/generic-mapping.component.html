@@ -70,8 +70,8 @@
         <div class="tw-p-24-px tw-border-t-separator" *ngIf="totalCount" >
             <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
         </div>
-        <div *ngIf="!totalCount">
-            <app-zero-state-with-illustration [mainText]="'No categories to show yet!'" [subText]="'Looks like your search term does not match any of Category mappings'"></app-zero-state-with-illustration>
+        <div *ngIf="!filteredMappingCount">
+            <app-zero-state-with-illustration [mainText]="'No results to show yet!'" [subText]="'Looks like your search term does not match any mappings'"></app-zero-state-with-illustration>
         </div>
     </div>
 </div>

@@ -115,11 +115,11 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!isLoading && lastExport && ((errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.INTACCT_ERROR.length) || (groupedErrorStat.EMPLOYEE_MAPPING || groupedErrorStat.CATEGORY_MAPPING))" class="tw-mt-24-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div *ngIf="!isLoading && lastExport && ((errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.INTACCT_ERROR.length) || (groupedErrorStat.EMPLOYEE_MAPPING || groupedErrorStat.CATEGORY_MAPPING))" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="!tw-font-500 !tw-text-18-px">Errors</h4>
         </div>
-        <div class="tw-border-separator tw-border-1-px tw-pb-24-px">
+        <div class="tw-border-separator tw-border-1-px">
             <div class="tw-mt-10-px tw-rounded-6-px tw-bg-white">
                 <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat?.EMPLOYEE_MAPPING || errors?.CATEGORY_MAPPING?.length || groupedErrorStat?.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
                     <div class="container">
@@ -130,7 +130,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat?.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px">
+                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat?.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
                     <div class="container">
                         <div class="inside-container">
                             <h4 class="tw-text-14-px !tw-font-500 tw-text-slightly-normal-text-color">Employee Mapping Errors</h4>
@@ -203,7 +203,7 @@
 </div>
 
 <!-- Expenses Table -->
-<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [modal]="true" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
+<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [modal]="true" [draggable]="false" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <p-table #dt2 [value]="expenseGroups ? expenseGroups : dummyExpenseGroupList">
             <ng-template pTemplate="header">
