@@ -122,7 +122,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
                 <tr *ngFor="let expense of expenses">
-                    <td>{{ expense.expense_number }}</td>
+                    <td class="tw-underline tw-cursor-pointer" (click)="openExpenseinFyle(rowData.expense_id)">{{expense.expense_number}}</td>
                     <td>{{ expense.vendor ? expense.vendor : '-' }}</td>
                     <td>{{ expense.category }}</td>
                     <td>{{ expense.amount }}</td>

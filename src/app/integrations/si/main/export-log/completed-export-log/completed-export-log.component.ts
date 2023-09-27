@@ -8,6 +8,7 @@ import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-completed-export-log',
@@ -92,6 +93,11 @@ export class CompletedExportLogComponent implements OnInit {
     this.clickedExportLogIndex = index;
     this.expenses = this.filteredExpenseGroups[this.clickedExportLogIndex].expenses;
     this.visible = true;
+  }
+
+  openExpenseinFyle(expense_id: string) {
+    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+    window.open(url, '_blank');
   }
 
   openUrl(event: Event, url: string) {
