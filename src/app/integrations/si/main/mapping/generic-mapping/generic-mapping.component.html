@@ -7,7 +7,7 @@
             <div class="tw-w-36-px tw-h-6-px tw-rounded-12-px tw-border tw-bg-cta-disabled">
             </div>
             <div class="tw-pt-8-px tw-text-faded-text-color tw-text-12-px">
-                <p>Total Items</p>
+                <p>Total {{ this.sourceType | snakeCaseToSpaceCase | titlecase }}</p>
             </div>
             <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
                 <p>{{mappingStats?.all_attributes_count}}</p>
@@ -18,7 +18,7 @@
             <div class="tw-w-36-px tw-h-6-px tw-rounded-12-px tw-border tw-bg-cta-disabled">
             </div>
             <div class="tw-pt-8-px tw-text-faded-text-color tw-text-12-px">
-                <p>Unmapped Items</p>
+                <p>Unmapped {{ this.sourceType | snakeCaseToSpaceCase | titlecase }}</p>
             </div>
             <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
                 <p>{{mappingStats?.unmapped_attributes_count}}</p>
@@ -34,8 +34,8 @@
                 <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem' }">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>{{ this.sourceType | snakeCaseToSpaceCase | titlecase }}</th>
-                            <th>Mapping</th>
+                            <th>{{ this.sourceType | snakeCaseToSpaceCase | titlecase }} in Fyle</th>
+                            <th>{{ this.sourceType | snakeCaseToSpaceCase | titlecase }} in Sage Intacct</th>
                             <th>Status</th>
                         </tr>
                     </ng-template>
