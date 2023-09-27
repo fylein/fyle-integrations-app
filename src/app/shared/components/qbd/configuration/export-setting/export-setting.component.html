@@ -17,7 +17,8 @@
                         [form]="exportSettingsForm"
                         [label]="'Export Reimbursable Expenses'" 
                         [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.'" 
-                        [formControllerName]="'reimbursableExpense'"></app-configuration-toggle-field>
+                        [formControllerName]="'reimbursableExpense'"
+                        [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.reimbursableExpense">
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -114,7 +115,8 @@
                         [form]="exportSettingsForm"
                         [label]="'Export Corporate Card Expenses'" 
                         [subLabel]="'Enable the export of <b>credit card</b> expenses from Fyle to QuickBooks Desktop.'" 
-                        [formControllerName]="'creditCardExpense'"></app-configuration-toggle-field>
+                        [formControllerName]="'creditCardExpense'"
+                        [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.creditCardExpense">
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

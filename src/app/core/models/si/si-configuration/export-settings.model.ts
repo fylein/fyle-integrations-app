@@ -63,7 +63,7 @@ export type ExportSettingPost = {
             configurations: {
                 reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
                 corporate_credit_card_expenses_object: getValueOrDefault(exportSettingsForm.get('cccExportType')),
-                employee_field_mapping: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : exportSettingsForm.get('cccEntityName')?.value.toUpperCase(),
+                employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase(),
                 auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees'))
             },
             general_mappings: {

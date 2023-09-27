@@ -1,10 +1,10 @@
 <div class="tw-absolute tw-bg-header-1 tw-h-168-px tw-w-[100%] tw-z-[-1]"></div>
 <div class="tw-absolute tw-bg-header-2 tw-h-168-px tw-w-[100%] tw-z-[-1]"></div>
 
-<div class="tw-py-24-px tw-py-30-px tw-text-slightly-normal-text-color">
+<div class="tw-py-60-px tw-text-slightly-normal-text-color">
     <div>
-        <div class="tw-normal-text-color tw-text-center tw-pb-16-px ">
-            <p class="!tw-font-400">Configure the following settings to set up your integration.</p>
+        <div class="tw-text-center tw-pb-38-px">
+            <p class="tw-font-500">Configure the following settings to set up your integration</p>
         </div>
         <div class="tw-flex tw-justify-center">
             <div *ngFor="let onboardingStep of onboardingSteps">
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[onboardingStep.step === 'Connect to Sage Intacct' ? 'step-name-connector' : '', onboardingStep.step === 'Export Settings' ? 'step-name-export' : '', onboardingStep.step === 'Import Settings' ? 'step-name-import' : '', onboardingStep.step === 'Advanced Settings' ? 'step-name-advanced' : '', !onboardingStep.active ? 'tw-text-faded-text-color' : 'tw-text-normal-text-color']">
+                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[onboardingStep.step === 'Connect to Sage Intacct' ? 'step-name-connector' : '', onboardingStep.step === 'Export Settings' ? 'step-name-export' : '', onboardingStep.step === 'Import Settings' ? 'step-name-import' : '', onboardingStep.step === 'Advanced Settings' ? 'step-name-advanced' : '']">
                         {{ onboardingStep.step }}
                     </div>
                 </div>

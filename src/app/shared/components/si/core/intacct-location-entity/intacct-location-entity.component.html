@@ -12,10 +12,10 @@
   </div>
   <div class="tw-flex">
     <div class="tw-w-40-vw tw-h-240-px tw-flex tw-flex-col tw-items-center tw-justify-center">
-      <h5 class="tw-font-700 align-center sub-text-color bold">
+      <h5 class="tw-text-14-px tw-font-500 align-center tw-text-sub-text-color tw-cursor-default">
         FYLE
       </h5>
-      <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-pt-18-px align-center default-cursor single-line-text bold">
+      <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px tw-pt-18-px tw-whitespace-nowrap tw-cursor-default">
         {{ fyleOrgName | trimCharacter: 26 }}
       </h3>
     </div>
@@ -25,9 +25,9 @@
       </div>
     </div>
       <form class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-40-vw" [formGroup]="locationEntityForm">
-        <div class="single-line-text bold">
+        <div class="tw-whitespace-nowrap">
           <div>
-            <h5 class="tw-items-center sub-text-color bold">
+            <h5 class="tw-text-14-px tw-font-500 tw-items-center tw-text-sub-text-color">
             SAGE INTACCT
           </h5>
           </div>
@@ -36,15 +36,15 @@
             <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
             </p-dropdown>
         </div>
-          <h3 *ngIf="locationEntity" [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length > 26" tooltipPosition="left" tooltipStyleClass="left" class="center-align-text default-cursor single-line-text bold tw-pl-4">
+          <h3 *ngIf="locationEntity" [pTooltip]="locationEntity.location_entity_name" [tooltipDisabled]="locationEntity.location_entity_name.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px center-align-text tw-whitespace-nowrap tw-cursor-default">
             {{ locationEntity.location_entity_name | trimCharacter: 26 }}
           </h3>
 
-          <div *ngIf="!locationEntity" class="tw-pt-16-px tw-w-300-px sub-text-color bold tw-text-center">
+          <div *ngIf="!locationEntity" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-faded-text-color tw-text-center">
             Please select a Location (Entity) from Sage Intacct to proceed further.
           </div>
 
-          <div *ngIf="isRefreshDimensionInProgress" class="tw-pt-16-px tw-w-300-px sub-text-color bold tw-text-center">
+          <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-faded-text-color tw-text-center">
             Please hold on; we are fetching data from your Sage Intacct account, which may take a few seconds.
           </div>
       </form>

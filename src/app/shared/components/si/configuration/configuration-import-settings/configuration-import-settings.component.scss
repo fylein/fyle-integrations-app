@@ -3,11 +3,11 @@
 }
 
 .save-btn {
-  @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
+  @apply tw-border tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
 }
 
 .cancel-btn {
-  @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
+  @apply tw-py-10-px tw-px-16-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px tw-text-faded-text-color tw-mr-16-px #{!important};
 }
 
 :host ::ng-deep .p-dropdown {
@@ -81,8 +81,7 @@
   }
 
   .fields-header-text {
-    font-weight: 600;
-    font-size: 14px;
+    font-weight: 500;
     line-height: 18px;
   }
   
@@ -139,4 +138,8 @@ svg-icon-sprite {
   margin-left: 0;
   margin-right: 5px;
   vertical-align: middle;
+}
+
+:host ::ng-deep input {
+  @apply tw-text-14-px #{!important};
 }
