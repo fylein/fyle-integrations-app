@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.model';
 import { WindowService } from './window.service';
 
-export const EXPOSE_INTACCT_NEW_APP = false;
+export const EXPOSE_INTACCT_NEW_APP = true;
 
 @Injectable({
   providedIn: 'root'

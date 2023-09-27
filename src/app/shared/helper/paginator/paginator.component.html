@@ -43,7 +43,7 @@
             </div>
             <div *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-flex tw-justify-between">
                 <div class="">
-                    <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-flex tw-place-items-center tw-place-items-center tw-pt-2-px tw-mr-12-px" (click)="navigateToPage(1)" [disabled]="page === 1" >
+                    <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-flex tw-place-items-center tw-pt-2-px tw-mr-12-px" (click)="navigateToPage(1)" [disabled]="page === 1" >
                         <i class="pi pi-minus tw-rotate-90"></i><i class="pi pi-chevron-left"></i>
                     </button>
                 </div>
@@ -61,7 +61,7 @@
                     </button>
                 </div>
                 <div>
-                    <button type="button" class="tw-h-32-px tw-w-32-px tw-ml-10-px nextBtn tw-flex tw-place-items-center tw-place-items-center tw-pt-2-px" (click)="navigateToPage(totalPages)" [disabled]="page === totalPages">
+                    <button type="button" class="tw-h-32-px tw-w-32-px tw-ml-10-px nextBtn tw-flex tw-place-items-center tw-pt-2-px" (click)="navigateToPage(totalPages)" [disabled]="page === totalPages">
                         <i class="pi pi-chevron-right"></i><i class="pi pi-minus tw-rotate-90"></i>
                     </button>
                 </div>
