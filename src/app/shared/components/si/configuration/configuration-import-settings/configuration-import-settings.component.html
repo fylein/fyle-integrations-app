@@ -228,3 +228,12 @@
         </div>
     </div>
 </p-dialog>
+
+<p-dialog *ngIf="showDependentFieldWarning" [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDependentFieldWarning" [draggable]="false" [style]="{width: '468px'}">
+    <span (click)="acceptDependentFieldWarning(false)">
+        Cancel
+    </span>
+    <span (click)="acceptDependentFieldWarning(true)">
+        Continue
+    </span>
+</p-dialog>

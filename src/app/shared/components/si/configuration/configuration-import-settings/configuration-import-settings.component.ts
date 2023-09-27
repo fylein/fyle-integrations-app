@@ -77,6 +77,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   isImportTaxVisible: boolean = true;
 
+  showDependentFieldWarning: boolean;
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
@@ -183,10 +185,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       if (expenseField[0].destination_field==='PROJECT' && expenseField[0].source_field==='PROJECT' && expenseField[0].import_to_fyle) {
         this.showCostCodeCostType = true;
       } else {
-          this.showCostCodeCostType = false;
-          this.importSettingsForm.controls.isDependentImportEnabled.setValue(null);
-          this.importSettingsForm.controls.costCodes.setValue(null);
-          this.importSettingsForm.controls.costTypes.setValue(null);
+        this.showCostCodeCostType = false;
+        this.importSettingsForm.controls.isDependentImportEnabled.setValue(false);
       }
     });
 
@@ -441,9 +441,29 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
   }
 
+  acceptDependentFieldWarning(isWarningAccepted: boolean): void {
+    this.showDependentFieldWarning = false;
+    if (!isWarningAccepted) {
+      this.expenseFieldsGetter.controls.forEach((control) => {
+        if (control.value.source_field === MappingSourceField.PROJECT) {
+          control.patchValue({
+            source_field: MappingSourceField.PROJECT,
+            destination_field: control.value.destination_field,
+            import_to_fyle: true,
+            is_custom: control.value.is_custom,
+            source_placeholder: control.value.source_placeholder
+          });
+
+          this.showCostCodeCostType = true;
+          this.importSettingsForm.controls.isDependentImportEnabled.setValue(true);
+        }
+      });
+    }
+  }
+
   showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
-      // Show warning dialog
+      // TODO - this.showDependentFieldWarning = true;
     }
   }
 
