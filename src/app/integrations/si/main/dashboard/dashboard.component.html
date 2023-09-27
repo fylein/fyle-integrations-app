@@ -75,14 +75,14 @@
                 <div *ngIf="true" class="inside-container tw-p-10 tw-rounded-6-px tw-bg-white">
                     <div class="tw-flex tw-items-center tw-justify-between">
                         <div class="tw-flex">
-                                <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-2">
-                                <p class="tw-text-14-px tw-font-500">Successful Expenses</p>
-                                <span class="tw-w-120-px tw-text-right">
+                                <img src="assets/icons/green-tick.svg" alt="Success Icon" class="tw-mr-16-px">
+                                <p class="tw-text-14-px tw-font-500 tw-mt-2-px tw-text-slightly-normal-text-color">Successful Expenses</p>
+                                <span class="tw-w-120-px tw-text-right tw-mt-2-px tw-text-faded-text-color">
                                     {{ lastExport?.successful_expense_groups_count ? lastExport?.successful_expense_groups_count : 0 }}
                                 </span>  
-                            <a *ngIf="lastExport?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-4 tw-text-pink pointer">View</a>
+                            <a *ngIf="lastExport?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-20-px tw-text-pink pointer">View</a>
                         </div>
-                        <div class="tw-flex tw-flex-col">
+                        <div class="tw-flex tw-flex-col tw-mt-2-px">
                             <span class="tw-w-260-px tw-text-left">
                                 <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Last Export at: </span>
                                 <span class="tw-text-14-px tw-font-500">{{ lastExport ? (lastExport.last_exported_at | date: 'h:mm a,') : 'None' }}
@@ -92,14 +92,14 @@
                     </div>
                     <div class="tw-flex tw-items-center tw-mt-8-px tw-justify-between">
                         <div class="tw-flex">
-                            <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-2">
-                            <p class="tw-text-14-px tw-font-500">Failed Expenses</p>
-                            <span class="tw-w-150-px tw-text-right">
+                            <img src="assets/icons/red-error.svg" alt="Error Icon" class="tw-mr-16-px">
+                            <p class="tw-text-14-px tw-font-500 tw-mt-2-px tw-text-slightly-normal-text-color">Failed Expenses</p>
+                            <span class="tw-w-150-px tw-text-right tw-mt-2-px tw-text-faded-text-color">
                                 {{ lastExport?.failed_expense_groups_count ? lastExport?.failed_expense_groups_count : 0 }}
                             </span>
-                            <a *ngIf="lastExport?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-4 tw-text-pink pointer">View</a>
+                            <a *ngIf="lastExport?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-20-px tw-text-pink pointer tw-mt-2-px">View</a>
                         </div>
-                        <div class="tw-flex tw-flex-col">
+                        <div class="tw-flex tw-flex-col tw-mt-2-px">
                             <span class="tw-w-260-px tw-text-left">
                                 <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Next Export at: </span>
                                 <span class="tw-text-14-px tw-font-500">{{ lastExport?.next_export_at ? (lastExport?.next_export_at | date: 'h:mm a,') : 'None' }}
