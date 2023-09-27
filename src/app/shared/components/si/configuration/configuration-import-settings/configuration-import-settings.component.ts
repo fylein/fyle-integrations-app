@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity, FyleField, MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
@@ -64,8 +64,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   customFieldForDependentField: boolean = false;
 
   private sessionStartTime = new Date();
-
-  dependentFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
 
   costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
 
@@ -132,9 +130,9 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   }
 
   saveCustomField() {
-    if (this.customFieldForDependentField) {
+    if (this.customFieldForDependentField, this.customFieldForm.value) {
       this.customField = {
-        attribute_type: this.customFieldForm.value.attribute_type.replace(/([A-Z])/g, "_$1").toLowerCase(),
+        attribute_type: this.customFieldForm.value.attribute_type,
         display_name: this.customFieldForm.value.attribute_type,
         source_placeholder: this.customFieldForm.value.source_placeholder
       };
@@ -145,7 +143,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           this.costTypeFieldOption.push(this.customField);
         }
         this.customFieldControl.patchValue({
-          attribute_type: this.customFieldForm.value.attribute_type.replace(/([A-Z])/g, "_$1").toLowerCase(),
+          attribute_type: this.customFieldForm.value.attribute_type,
           display_name: this.customFieldForm.value.attribute_type,
           source_placeholder: this.customFieldForm.value.source_placeholder
         });
@@ -191,6 +189,16 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           this.importSettingsForm.controls.costTypes.setValue(null);
       }
     });
+
+    if (this.importSettingsForm.value.costCodes) {
+      this.costCodeFieldOption = [this.importSettingsForm.value.costCodes];
+      this.importSettingsForm.controls.costCodes.disable();
+    }
+
+    if (this.importSettingsForm.value.costTypes) {
+      this.costTypeFieldOption = [this.importSettingsForm.value.costTypes];
+      this.importSettingsForm.controls.costTypes.disable();
+    }
 
     if (this.importSettingsForm.value.isDependentImportEnabled) {
       this.importSettingsForm.controls.costCodes.disable();
@@ -414,10 +422,10 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
           importCategories: [importSettings.configurations.import_categories || null],
           importTaxCodes: [importSettings.configurations.import_tax_codes || null],
-          costCodes: [importSettings.dependent_field_settings?.is_import_enabled ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
+          costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
           dependentFieldImportToggle: [true],
           workspaceId: this.storageService.get('si.workspaceId'),
-          costTypes: [importSettings.dependent_field_settings?.is_import_enabled ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
+          costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
           isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
           sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.id.toString() === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
           expenseFields: this.formBuilder.array(this.constructFormArray())
@@ -433,9 +441,15 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
   }
 
+  showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
+    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
+      // Show warning dialog
+    }
+  }
+
   save(): void {
     this.saveInProgress = true;
-    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.dependentFieldSettings);
+    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
