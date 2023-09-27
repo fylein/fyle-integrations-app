@@ -45,7 +45,7 @@ export type ImportSettingPost = {
     dependent_field_settings: DependentFieldSetting | null
   }
 export class ImportSettings {
-    static constructPayload(importSettingsForm: FormGroup): ImportSettingPost{
+    static constructPayload(importSettingsForm: FormGroup, existingDependentFieldSettings: DependentFieldSetting | null): ImportSettingPost{
         const expenseFieldArray = importSettingsForm.value.expenseFields;
 
         // First filter out objects where import_to_fyle is false
@@ -62,14 +62,18 @@ export class ImportSettings {
           };
         });
 
-        const dependentFieldSetting = {
-            is_import_enabled: importSettingsForm.value.isDependentImportEnabled,
-            cost_code_field_name: importSettingsForm.get('costCodes')?.value?.attribute_type,
-            cost_code_placeholder: importSettingsForm.get('costCodes')?.value?.source_placeholder,
-            cost_type_field_name: importSettingsForm.get('costTypes')?.value?.attribute_type,
-            cost_type_placeholder: importSettingsForm.get('costTypes')?.value?.source_placeholder,
-            workspace: importSettingsForm.value.workspaceId
-        };
+        let dependentFieldSetting = null;
+        if (existingDependentFieldSettings || importSettingsForm.value.isDependentImportEnabled) {
+            dependentFieldSetting = {
+                is_import_enabled: importSettingsForm.value.isDependentImportEnabled,
+                cost_code_field_name: importSettingsForm.get('costCodes')?.value?.attribute_type,
+                cost_code_placeholder: importSettingsForm.get('costCodes')?.value?.source_placeholder,
+                cost_type_field_name: importSettingsForm.get('costTypes')?.value?.attribute_type,
+                cost_type_placeholder: importSettingsForm.get('costTypes')?.value?.source_placeholder,
+                workspace: importSettingsForm.value.workspaceId
+            };
+        }
+
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
                     import_categories: importSettingsForm.value.importCategories ? importSettingsForm.value.importCategories : false,
