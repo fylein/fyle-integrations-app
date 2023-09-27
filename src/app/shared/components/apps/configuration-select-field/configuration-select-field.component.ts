@@ -55,6 +55,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   isExportTableVisible: boolean = false;
 
+  isCCCExportTableVisible: boolean = false;
+
   exportTableData = [
     { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
     { exportModule: 'Bill', employeeMapping: 'Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'Accounts Payable' },
@@ -76,6 +78,10 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   showExportTable() {
     this.isExportTableVisible = true;
+  }
+
+  showCCCExportTable() {
+    this.isCCCExportTableVisible = true;
   }
 
   showExportPreviewDialog(exportType: string) {
