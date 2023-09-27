@@ -25,7 +25,7 @@
                     <div *ngIf="!exportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
                         <h5>{{ exportableExpenseGroupIds.length - failedExpenseGroupCount > 0 ? exportableExpenseGroupIds.length - failedExpenseGroupCount : 0 }} new expense{{(exportableExpenseGroupIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed expense{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
                     </div>
-                    <div *ngIf="!exportInProgress && exportableExpenseGroupIds.length" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
+                    <div *ngIf="!exportInProgress && exportableExpenseGroupIds.length && (failedExpenseGroupCount === null || failedExpenseGroupCount === 0)" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
                         <h5>{{ exportableExpenseGroupIds.length }} new expense{{(exportableExpenseGroupIds.length) > 1 ? 's' : ''}}, {{ 0 }} previously failed expense</h5>
                     </div>
                 </div>
