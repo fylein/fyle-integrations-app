@@ -11,7 +11,7 @@
             <div class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-3/5">
                     <div class="tw-flex">
-                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length" src="tick_dashboard" height="24px" width="24px"></svg-icon-sprite>
+                        <img class="tw-mt-1-px tw-pr-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length" src="assets/icons/tick_dashboard.svg">
                         <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!exportInProgress && exportableExpenseGroupIds.length) || (exportInProgress)" src="arrow_tail" height="24px" width="24px"></svg-icon-sprite>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length"> Sit back and relax!</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="exportInProgress"> Exporting {{ processedCount }} of {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} to your Sage Intacct Account</h3>
