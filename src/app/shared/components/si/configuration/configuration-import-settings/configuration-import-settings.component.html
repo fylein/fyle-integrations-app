@@ -121,7 +121,7 @@
                                 Fyle Fields should be unique
                                 </p>
                             </div>
-                        <p-inputSwitch formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
+                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
                     </div>
                     <div class="tw-pt-26-px" *ngIf="i===0 && showCostCodeCostType" [formGroup]="importSettingsForm">
                         <div class="tw-flex">
@@ -231,4 +231,13 @@
             </div>
         </div>
     </div>
+</p-dialog>
+
+<p-dialog *ngIf="showDependentFieldWarning" [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showDependentFieldWarning" [draggable]="false" [style]="{width: '468px'}">
+    <span (click)="acceptDependentFieldWarning(false)">
+        Cancel
+    </span>
+    <span (click)="acceptDependentFieldWarning(true)">
+        Continue
+    </span>
 </p-dialog>
