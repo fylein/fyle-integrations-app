@@ -1,7 +1,7 @@
 <div *ngIf="isLoading"></div>
 <div *ngIf="!isLoading" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
-    <div *ngIf="totalCount > 0">
-        <div [formGroup]="skipExportLogForm" class="tw-flex tw-items-center tw-mb-4 tw-p-24-px">
+    <div *ngIf="totalCount > 0" class="tw-p-24-px">
+        <div [formGroup]="skipExportLogForm" class="tw-flex tw-items-center tw-mb-4">
 
             <span class="p-input-icon-right custom-search-field">
                 <i class="pi pi-search"></i>
