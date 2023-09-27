@@ -31,11 +31,11 @@
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px" (click)="export()" [ngClass]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress">
-                            <p class="!tw-text-14-px !tw-font-500 tw-pl-24-px tw-pr-24-px tw-py-12-px" *ngIf="!exportInProgress">Export
+                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="export()" [ngClass]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress">
+                            <p class="!tw-text-14-px !tw-font-500" *ngIf="!exportInProgress">Export
                                 <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                             </p>
-                            <p class="!tw-text-14-px !tw-font-500 tw-pl-24-px tw-pr-24-px tw-py-12-px" *ngIf="exportInProgress">Exporting
+                            <p class="!tw-text-14-px !tw-font-500" *ngIf="exportInProgress">Exporting
                                 <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                             </p>
                         </button><br>
