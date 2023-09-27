@@ -49,6 +49,8 @@ export class GenericMappingComponent implements OnInit {
 
   filteredMappingCount: number;
 
+  isInitialSetupComplete: boolean = false;
+
   selectedMappingFilter: MappingState = MappingState.ALL;
 
   PaginatorPage = PaginatorPage;
@@ -182,6 +184,10 @@ export class GenericMappingComponent implements OnInit {
       ]).subscribe(([options, mappingStats, mappings]) => {
         this.mappingStats = mappingStats;
         this.totalCount = mappings.count;
+        if (!this.isInitialSetupComplete) {
+          this.filteredMappingCount = mappings.count;
+        }
+        this.isInitialSetupComplete = true;
         this.mappings = mappings.results;
         this.filteredMappings = this.mappings.concat();
         this.dropdownOptions = options;
