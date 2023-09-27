@@ -22,7 +22,7 @@
                     <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="exportInProgress">This may take a few minutes...</h5>
                     <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && lastExport?.successful_expense_groups_count">No new expenses to export from the payment processing state in Fyle.<br>Once you start processing payment for the expenses, they will be automatically available here to export.</h5>
                     <div *ngIf="!exportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
-                        <h5>{{ exportableExpenseGroupIds.length - failedExpenseGroupCount > 0 ? exportableExpenseGroupIds.length - failedExpenseGroupCount : 0 }} new Expense{{(exportableExpenseGroupIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed Expense{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
+                        <h5>{{ exportableExpenseGroupIds.length - failedExpenseGroupCount > 0 ? exportableExpenseGroupIds.length - failedExpenseGroupCount : 0 }} new expense{{(exportableExpenseGroupIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed expense{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
                         <img class="tw-ml-4-px" *ngIf="!exportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" src="assets/icons/info_filled.svg">
                     </div>
                 </div>
