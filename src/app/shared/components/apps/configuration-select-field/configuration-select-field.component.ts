@@ -86,7 +86,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   showExportTable() {
     this.isExportTableVisible = true;
   }
-  
+
   showCCCExportTable() {
     this.isCCCExportTableVisible = true;
   }
