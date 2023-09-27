@@ -463,7 +463,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
-      // TODO - this.showDependentFieldWarning = true;
+      this.showDependentFieldWarning = true;
     }
   }
 
