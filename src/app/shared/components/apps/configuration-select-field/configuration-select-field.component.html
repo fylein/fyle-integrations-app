@@ -134,27 +134,10 @@
               </ng-template>
         </p-table>
     </p-dialog>
-    <p-dialog header="Export Settings" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isCCCExportTableVisible" [breakpoints]="{ '960px': '80vw' }" [style]="{ width: '75vw' }" [draggable]="false" [resizable]="false">
-        <p-table [value]="cccExportTableData" styleClass="p-datatable-gridlines" [tableStyle]="{ 'min-width': '50rem' }">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Export Module</th>
-                    <th>Chart of Accounts</th>
-                    <th>Sage Intacct Module</th>
-                </tr>
-                <tr class="smaller-th">
-                    <th>Expenses can be exported in one of the modules below.</th>
-                    <th>One of the below mentioned accounts will be imported based on the export module.</th>
-                    <th>Based on the export module, expenses will be posted to one of the below modules in Sage Intacct.</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData>
-                <tr>
-                  <td>{{ rowData.exportModule }}</td>
-                  <td>{{ rowData.chartOfAccounts }}</td>
-                  <td>{{ rowData.sageIntacctModule }}</td>
-                </tr>
-              </ng-template>
-        </p-table>
+    <p-dialog header="Export Settings" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isCCCExportTableVisible" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
+        
+        <div class="tw-flex tw-items-center tw-justify-center tw-px-24-px tw-pb-24-px">
+            <img class="" src="assets/illustrations/sageIntacct/cccExportTypeTable.svg" />
+        </div>
     </p-dialog>
 </div>
