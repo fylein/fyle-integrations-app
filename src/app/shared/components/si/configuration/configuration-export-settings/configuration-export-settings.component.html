@@ -64,7 +64,7 @@
                             [isFieldMandatory]="false"
                             [showClearIcon]="true"
                             [mandatoryErrorListName]="'employee mapping'"
-                            [label]="'How should Employees in Fyle be mapped to ' + getExportType(exportSettingsForm.value.reimbursableExportType) + ' in Sage Intacct?'"
+                            [label]="'How should Employees in Fyle be mapped to ' + getEmployeeFieldMapping(exportSettingsForm.value.employeeFieldMapping, exportSettingsForm.value.reimbursableExportType) + ' in Sage Intacct?'"
                             [subLabel]="'Automatically map the employees in Fyle to their corresponding records in Sage Intacct based on a unique parameter.'"
                             [options]="autoMapEmployeeOptions"
                             [iconPath]="'questionmark'"
