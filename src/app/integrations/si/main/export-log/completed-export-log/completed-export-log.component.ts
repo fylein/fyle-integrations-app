@@ -174,13 +174,21 @@ export class CompletedExportLogComponent implements OnInit {
       }
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
         const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
+        let referenceNumber: string = expenseGroup.description[referenceType];
+
+        if (referenceType === FyleReferenceType.EXPENSE) {
+          referenceNumber = expenseGroup.expenses[0].expense_number;
+        } else if (referenceType === FyleReferenceType.PAYMENT) {
+          referenceNumber = expenseGroup.expenses[0].payment_number;
+        }
+
         expenseGroups.push({
           index: index++,
           exportedAt: expenseGroup.exported_at,
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
           fyleReferenceType: null,
-          referenceNumber: expenseGroup.description.claim_number,
+          referenceNumber: referenceNumber,
           exportedAs: expenseGroup.export_type,
           fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
           intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
