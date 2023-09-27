@@ -31,6 +31,10 @@ export class DashboardService {
     return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
   }
 
+  syncExpensesFromFyle(): Observable<{}> {
+    return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/expense_groups/sync/`, {});
+  }
+
   @Cacheable()
   importExpenseGroups(): Observable<{}> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/expense_groups/sync/`, {});

@@ -234,20 +234,20 @@
 </p-dialog>
 
 <p-dialog *ngIf="showDependentFieldWarning" [showHeader]="false" [modal]="true" [(visible)]="showDependentFieldWarning" [draggable]="false" [style]="{width: '468px'}">
-    <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
+    <div class="tw-px-24-px tw-py-22-px tw-border-b-1-px tw-border-b-box-color">
         <div class="tw-flex tw-justify-between tw-items-center">
             <div class="tw-flex">
                 <img src="assets/icons/alert_dialog.svg" class="tw-pr-12-px"/>
-                <p class="tw-text-20-px tw-font-500">Warning</p>
+                <p class="tw-text-20-px tw-font-500 tw-text-normal-text-color">Warning</p>
             </div>
             <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="acceptDependentFieldWarning(false)"></i>
         </div>
     </div>
-    <div class="tw-px-24-px tw-pt-16-px">
+    <div class="tw-pl-24-px tw-pr-10-px tw-pt-16-px tw-pb-24-px">
         <div class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color">
             You have imported Cost codes and Cost Types from Sage Intacct by mapping them to fields in Fyle. By turning off the import, you would lose the mappings you've established for these fields.
         </div>
-        <div class="tw-pt-26-px tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pb-24-px">
+        <div class="tw-pt-26-px tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color">
             Are you sure you want to continue?
         </div>
     </div>
