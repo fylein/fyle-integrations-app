@@ -160,6 +160,20 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private sanitizer: DomSanitizer
     ) { }
 
+
+    getEmployeeFieldMapping(employeeFieldMapping: FyleField | null, reimbursableExportType: string): string {
+      let employeeFieldMappingLabel = '';
+      if (employeeFieldMapping) {
+        employeeFieldMappingLabel = employeeFieldMapping;
+      } else if (reimbursableExportType === IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
+        employeeFieldMappingLabel = this.exportSettingsForm.controls.employeeFieldMapping.value;
+      } else {
+        employeeFieldMappingLabel = reimbursableExportType === IntacctReimbursableExpensesObject.EXPENSE_REPORT ? FyleField.EMPLOYEE : FyleField.VENDOR;
+      }
+
+      return new TitleCasePipe().transform(employeeFieldMappingLabel);
+    }
+
     private getExportGroup(exportGroups: string[] | null): string {
       if (exportGroups) {
         const exportGroup = exportGroups.find((exportGroup) => {
