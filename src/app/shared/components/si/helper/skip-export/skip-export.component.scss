@@ -20,13 +20,17 @@
   width: 296px !important;
 }
 
-:host ::ng-deep .joinby-field .p-dropdown{
-  width: 72px !important;
+:host ::ng-deep .joinby-field .p-dropdown {
+  width: 98px !important;
   height: 38px !important;
 }
 
 :host ::ng-deep .p-dropdown .p-dropdown-trigger-icon {
-  font-size: 12px;  /* or any size you prefer */
+  @apply tw-text-12-px tw-mr-12-px tw-w-auto;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-trigger {
+  @apply tw-w-auto;
 }
 
 :host ::ng-deep .p-calendar .p-inputtext {
@@ -89,7 +93,7 @@
 
 :host ::ng-deep .p-dropdown {
   transform: scale(0.9);
-  width: 220px !important;
+  width: 180px !important;
 }
 
 :host ::ng-deep input {

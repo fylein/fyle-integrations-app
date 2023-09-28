@@ -4,11 +4,11 @@
     <div class="tw-flex tw-flex-col">
       <form [formGroup]="skipExportForm" class="tw-flex tw-flex-col tw-pl-24-px">
             <div class="tw-flex">
-                <div class="tw-ml-96-px tw-w-220-px tw-mr-24-px fields-header">
+                <div class="tw-ml-120-px tw-w-200-px tw-mr-6-px fields-header">
                     Condition
                     <span class="tw-text-mandatory-field-color">*</span>
                 </div>
-                  <div class="tw-w-220-px tw-mr-24-px fields-header">
+                  <div class="tw-w-180-px tw-mr-24-px fields-header">
                     Operator
                     <span class="tw-text-mandatory-field-color">*</span>
                 </div>
@@ -19,7 +19,7 @@
             </div>
             <div class="tw-flex dropdown-row tw-mt-8-px">
               <p class="tw-text-14-px tw-text-sub-text-color tw-pt-6-px">Where</p>
-              <div class="tw-ml-54-px tw-mr-24-px">
+              <div class="tw-ml-80-px tw-mr-24-px">
                 <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select Condition">
                   <!-- For options -->
                   <ng-template let-option pTemplate="item">
@@ -51,12 +51,12 @@
         </div>
   
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
-          <div class="tw-flex tw-ml-96-px tw-mt-8-px">
-              <div class="tw-w-220-px tw-mr-24-px fields-header">
+          <div class="tw-flex tw-ml-120-px tw-mt-8-px">
+              <div class="tw-w-200-px tw-mr-6-px fields-header">
                   Condition
                   <span class="tw-text-mandatory-field-color">*</span>
               </div>
-                <div class="tw-w-220-px tw-mr-24-px fields-header">
+                <div class="tw-w-180-px fields-header tw-mr-24-px">
                   Operator
                 <span class="tw-text-mandatory-field-color">*</span>
               </div>
@@ -67,7 +67,7 @@
           </div>
           <div class="tw-flex">
             <div class="joinby-field">
-              <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" optionLabel="value" formControlName="join_by" placeholder="Join"></p-dropdown>
+              <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" optionLabel="value" formControlName="join_by" placeholder="Join by"></p-dropdown>
             </div>
             <div class="tw-ml-24-px tw-mr-24-px">
               <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select Condition">
