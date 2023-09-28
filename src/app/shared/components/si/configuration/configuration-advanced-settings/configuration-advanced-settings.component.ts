@@ -81,7 +81,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       value: PaymentSyncDirection.FYLE_TO_INTACCT
     },
     {
-      label: 'Import Sage Intacct Online Payments into Fyle',
+      label: 'Import Sage Intacct Payments into Fyle',
       value: PaymentSyncDirection.INTACCT_TO_FYLE
     }
   ];

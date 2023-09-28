@@ -8,6 +8,7 @@ import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-completed-export-log',
@@ -94,6 +95,11 @@ export class CompletedExportLogComponent implements OnInit {
     this.visible = true;
   }
 
+  openExpenseinFyle(expense_id: string) {
+    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+    window.open(url, '_blank');
+  }
+
   openUrl(event: Event, url: string) {
     window.open(url, '_blank');
     event.stopPropagation();
@@ -174,13 +180,21 @@ export class CompletedExportLogComponent implements OnInit {
       }
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
         const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
+        let referenceNumber: string = expenseGroup.description[referenceType];
+
+        if (referenceType === FyleReferenceType.EXPENSE) {
+          referenceNumber = expenseGroup.expenses[0].expense_number;
+        } else if (referenceType === FyleReferenceType.PAYMENT) {
+          referenceNumber = expenseGroup.expenses[0].payment_number;
+        }
+
         expenseGroups.push({
           index: index++,
           exportedAt: expenseGroup.exported_at,
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
           expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
           fyleReferenceType: null,
-          referenceNumber: expenseGroup.description.claim_number,
+          referenceNumber: referenceNumber,
           exportedAs: expenseGroup.export_type,
           fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
           intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,

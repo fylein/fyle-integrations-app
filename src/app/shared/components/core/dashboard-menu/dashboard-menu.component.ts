@@ -4,6 +4,7 @@ import { MenuItem } from 'primeng/api';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
+import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { environment } from 'src/environments/environment';
 
@@ -26,6 +27,7 @@ export class DashboardMenuComponent implements OnInit {
   moreDropdown: null;
 
   constructor(
+    private dashboardService: DashboardService,
     private router: Router,
     private toastService: IntegrationsToastService,
     private mappingsService: SiMappingsService,
@@ -40,6 +42,7 @@ export class DashboardMenuComponent implements OnInit {
   refreshDimensions() {
     this.mappingsService.refreshSageIntacctDimensions().subscribe();
     this.mappingsService.refreshFyleDimensions().subscribe();
+    this.dashboardService.syncExpensesFromFyle().subscribe();
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct...');
   }
 

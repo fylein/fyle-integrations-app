@@ -62,12 +62,12 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   expenseGroupingFieldOptions: ExportSettingFormOption[] = [
     {
-      label: 'Report',
-      value: ExpenseGroupingFieldOption.CLAIM_NUMBER
-    },
-    {
       label: 'Expense',
       value: ExpenseGroupingFieldOption.EXPENSE_ID
+    },
+    {
+      label: 'Report',
+      value: ExpenseGroupingFieldOption.CLAIM_NUMBER
     }
   ];
 
@@ -116,9 +116,9 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   ];
 
   autoMapEmployeeOptions: ExportSettingFormOption[] = [
-    { label: 'Match emails on Fyle and Sage Intacct', value: 'EMAIL' },
-    { label: 'Match names on Fyle and Sage Intacct', value: 'NAME' },
-    { label: 'Match Fyle Employee Code to Sage Intacct Name', value: 'EMPLOYEE_CODE' }
+    { label: 'Based on Employee E-mail ID', value: 'EMAIL' },
+    { label: 'Based on Employee Name', value: 'NAME' },
+    { label: 'Based on Employee Code', value: 'EMPLOYEE_CODE' }
   ];
 
   reimbursableExportTypes: ExportSettingFormOption[] = [
@@ -159,6 +159,20 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private sanitizer: DomSanitizer
     ) { }
+
+
+    getEmployeeFieldMapping(employeeFieldMapping: FyleField | null, reimbursableExportType: string): string {
+      let employeeFieldMappingLabel = '';
+      if (employeeFieldMapping) {
+        employeeFieldMappingLabel = employeeFieldMapping;
+      } else if (reimbursableExportType === IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {
+        employeeFieldMappingLabel = this.exportSettingsForm.controls.employeeFieldMapping.value;
+      } else {
+        employeeFieldMappingLabel = reimbursableExportType === IntacctReimbursableExpensesObject.EXPENSE_REPORT ? FyleField.EMPLOYEE : FyleField.VENDOR;
+      }
+
+      return new TitleCasePipe().transform(employeeFieldMappingLabel);
+    }
 
     private getExportGroup(exportGroups: string[] | null): string {
       if (exportGroups) {

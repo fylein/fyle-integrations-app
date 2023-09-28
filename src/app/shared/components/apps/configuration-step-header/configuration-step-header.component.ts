@@ -28,7 +28,7 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   refreshDimensions() {
     this.mappingsService.refreshSageIntacctDimensions().subscribe();
     this.mappingsService.refreshFyleDimensions().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct...');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
   }
 
   ngOnInit(): void {

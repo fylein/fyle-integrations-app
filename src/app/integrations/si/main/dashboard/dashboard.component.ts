@@ -142,10 +142,19 @@ export class DashboardComponent implements OnInit {
     return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null, exportedAt).subscribe(expenseGroupResponse => {
       expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
         const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
+
+        let referenceNumber: string = expenseGroup.description[referenceType];
+
+        if (referenceType === FyleReferenceType.EXPENSE) {
+          referenceNumber = expenseGroup.expenses[0].expense_number;
+        } else if (referenceType === FyleReferenceType.PAYMENT) {
+          referenceNumber = expenseGroup.expenses[0].payment_number;
+        }
+
         expenseGroups.push({
           exportedAt: (status===TaskLogState.COMPLETE ? expenseGroup.exported_at : expenseGroup.updated_at),
           employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
-          referenceNumber: expenseGroup.description.claim_number,
+          referenceNumber: referenceNumber,
           exportedAs: expenseGroup.export_type,
           expenses: expenseGroup.expenses,
           fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),

@@ -5,7 +5,8 @@
     padding: 2px 10px;
     display: inline-flex;
     align-items: center;
-    width: 400px;
+    width: 350px;
+    height: 40px;
 }
 
 .custom-search-field i.pi-search {
@@ -78,4 +79,9 @@
 
 .export-btn:disabled {
     @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
+}
+
+:host  ::ng-deep .p-dialog {
+    max-height: 100% !important;
+    margin: 0.1rem !important;
 }

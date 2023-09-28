@@ -132,7 +132,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   }
 
   saveCustomField() {
-    if (this.customFieldForDependentField, this.customFieldForm.value) {
+    if (this.customFieldForDependentField && this.customFieldForm.value) {
       this.customField = {
         attribute_type: this.customFieldForm.value.attribute_type,
         display_name: this.customFieldForm.value.attribute_type,
@@ -254,12 +254,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       display_name: [null],
       source_placeholder: [null, Validators.required]
     });
-    this.showDialog=true;
+    this.showDialog = true;
   }
 
   private importSettingWatcher(): void {
     const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((control, index) => {
+    expenseFieldArray.controls.forEach((control) => {
       control.valueChanges.subscribe(value => {
         if (value.source_field === 'custom_field') {
          this.addCustomField();
@@ -288,7 +288,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   private createFormGroup(data: MappingSetting): FormGroup {
     return this.formBuilder.group({
       source_field: [data.source_field || '', RxwebValidators.unique()],
-      destination_field: [data.destination_field || '', Validators.compose([Validators.required, RxwebValidators.unique()])],
+      destination_field: [data.destination_field || '', RxwebValidators.unique()],
       import_to_fyle: [data.import_to_fyle || false],
       is_custom: [data.is_custom || false],
       source_placeholder: [data.source_placeholder || null]
@@ -463,13 +463,13 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
-      // TODO - this.showDependentFieldWarning = true;
+      this.showDependentFieldWarning = true;
     }
   }
 
   save(): void {
     this.saveInProgress = true;
-    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm);
+    const importSettingPayload = ImportSettings.constructPayload(this.importSettingsForm, this.dependentFieldSettings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((response: ImportSettingPost) => {
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
