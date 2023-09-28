@@ -8,7 +8,7 @@ import { EmbedVideoLink, RedirectLink } from 'src/app/core/models/enum/enum.mode
 })
 export class OnboardingLandingComponent implements OnInit {
 
-  RedirectLink = RedirectLink;
+  redirectLink = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration';
 
   EmbedVideo = EmbedVideoLink;
 

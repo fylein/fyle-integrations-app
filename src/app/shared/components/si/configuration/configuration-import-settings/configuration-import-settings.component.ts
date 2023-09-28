@@ -31,7 +31,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   expenseFields: FormArray;
 
-  RedirectLink = RedirectLink;
+  redirectLink = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c';
 
   saveInProgress: boolean = false;
 
@@ -79,6 +79,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   showDependentFieldWarning: boolean;
 
+  isDialogVisible: boolean = false;
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
@@ -110,6 +112,10 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  showPreviewDialog(visible: boolean) {
+    this.isDialogVisible = visible;
   }
 
   addExpenseField() {

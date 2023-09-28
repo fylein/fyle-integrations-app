@@ -26,7 +26,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   exportSettingsForm: FormGroup;
 
-  RedirectLink = RedirectLink;
+  redirectLink = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d';
 
   isOnboarding: boolean;
 
