@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { EventsService } from 'src/app/core/services/core/events.service';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.service';
@@ -28,6 +29,7 @@ export class DashboardMenuComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
+    private eventsService: EventsService,
     private router: Router,
     private toastService: IntegrationsToastService,
     private mappingsService: SiMappingsService,
@@ -36,7 +38,10 @@ export class DashboardMenuComponent implements OnInit {
 
   redirectToOldApp(): void {
     this.moreDropdown = null;
-    this.windowService.openInNewTab(environment.si_callback_url);
+    this.eventsService.redirectToOldIntacctApp.subscribe((redirectUri: string) => {
+      this.windowService.openInNewTab(redirectUri);
+    });
+    this.eventsService.postEvent(environment.si_callback_url, environment.si_client_id);
   }
 
   refreshDimensions() {

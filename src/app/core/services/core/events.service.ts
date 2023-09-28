@@ -14,6 +14,8 @@ export class EventsService {
 
   @Output() sageIntacctLogin: EventEmitter<string> = new EventEmitter();
 
+  @Output() redirectToOldIntacctApp: EventEmitter<string> = new EventEmitter();
+
   constructor(
     private windowService: WindowService
   ) { }
@@ -23,6 +25,7 @@ export class EventsService {
       if (message.data && message.data.redirectUri && message.origin === environment.fyle_app_url) {
         if (EXPOSE_INTACCT_NEW_APP && message.data.redirectUri.includes('sage-intacct')) {
           this.sageIntacctLogin.emit(message.data.redirectUri);
+          this.redirectToOldIntacctApp.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }
