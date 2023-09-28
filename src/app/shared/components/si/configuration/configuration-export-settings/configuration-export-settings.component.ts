@@ -62,12 +62,12 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   expenseGroupingFieldOptions: ExportSettingFormOption[] = [
     {
-      label: 'Report',
-      value: ExpenseGroupingFieldOption.CLAIM_NUMBER
-    },
-    {
       label: 'Expense',
       value: ExpenseGroupingFieldOption.EXPENSE_ID
+    },
+    {
+      label: 'Report',
+      value: ExpenseGroupingFieldOption.CLAIM_NUMBER
     }
   ];
 
