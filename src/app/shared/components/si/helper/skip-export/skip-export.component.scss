@@ -65,13 +65,12 @@
 
 /* Change text color to black */
 :host ::ng-deep .p-chips-token-label {
-  padding: 4px 8px;  /* Reduced padding */
-  color: black !important;  /* Change text color to black */
+  @apply tw-py-4-px tw-px-8-px tw-text-slightly-normal-text-color #{!important};
 }
 
 
 :host ::ng-deep .p-chips-token-icon {
-  color: black !important;
+  @apply tw-text-slightly-normal-text-color #{!important};
 }
 
 :host ::ng-deep .p-chips-multiple-container::-webkit-scrollbar {
