@@ -80,7 +80,7 @@
             </ng-template>
         </p-table>
 
-        <div *ngIf="filteredExpenseGroups.length > 0" class="tw-p-24-px">
+        <div *ngIf="filteredExpenseGroups.length > 0" class="tw-p-24-px tw-border-t-1-px">
             <app-paginator [dropDownValue]="limit" [page]="currentPage" [totalCount]="totalCount" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageChanges($event)"></app-paginator>
         </div>
 
