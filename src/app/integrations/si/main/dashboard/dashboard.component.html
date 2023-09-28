@@ -9,7 +9,7 @@
     <div *ngIf="!isImportInProgress" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">
-                <div class="tw-w-3/5">
+                <div class="tw-w-4/5">
                     <div class="tw-flex">
                         <img class="tw-mt-1-px tw-pr-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length" src="assets/icons/tick_dashboard.svg">
                         <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!exportInProgress && exportableExpenseGroupIds.length) || (exportInProgress)" src="arrow_tail" height="24px" width="24px"></svg-icon-sprite>
