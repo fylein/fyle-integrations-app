@@ -75,11 +75,11 @@ export class SkipExportComponent implements OnInit {
 
   customSelectOperatorOptions = [
     {
-      label: 'Is',
+      label: 'is',
       value: 'iexact'
     },
     {
-      label: 'Is not',
+      label: 'is not',
       value: 'not_in'
     }
   ];
@@ -378,16 +378,16 @@ export class SkipExportComponent implements OnInit {
     ) {
       operatorList.push({
         value: 'iexact',
-        label: 'Is'
+        label: 'is'
       });
     } else if (conditionField === 'spent_at') {
       operatorList.push({
         value: 'lt',
-        label: 'Is before'
+        label: 'is before'
       });
       operatorList.push({
         value: 'lte',
-        label: 'Is it on or before'
+        label: 'is on or before'
       });
     }
     if (conditionField === 'report_title') {
