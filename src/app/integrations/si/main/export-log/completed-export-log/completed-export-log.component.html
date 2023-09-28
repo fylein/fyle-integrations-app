@@ -6,7 +6,7 @@
     <div *ngIf="totalCount > 0">
         <div [formGroup]="exportLogForm" class="tw-flex tw-items-center tw-p-24-px">
 
-            <span class="p-input-icon-right custom-search-field">
+            <span class="custom-search-field">
                 <i class="pi pi-search"></i>
                 <input class="tw-pb-1 tw-pt-1 tw-text-14-px" type="text" (input)="filterTable($event)" placeholder="Search by Employee Name or Expense ID" />
             </span>
