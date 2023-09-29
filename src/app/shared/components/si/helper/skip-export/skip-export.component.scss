@@ -20,17 +20,21 @@
   width: 296px !important;
 }
 
-:host ::ng-deep .joinby-field .p-dropdown{
-  width: 72px !important;
+:host ::ng-deep .joinby-field .p-dropdown {
+  width: 98px !important;
   height: 38px !important;
 }
 
 :host ::ng-deep .p-dropdown .p-dropdown-trigger-icon {
-  font-size: 12px;  /* or any size you prefer */
+  @apply tw-text-12-px tw-mr-12-px tw-w-auto;
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-trigger {
+  @apply tw-w-auto;
 }
 
 :host ::ng-deep .p-calendar .p-inputtext {
-  @apply tw-cursor-pointer tw-w-360-px tw-h-40-px;
+  @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border-solid tw-py-10-px tw-px-14-px #{!important};
 }
 
 :host ::ng-deep .p-chips-token {
@@ -61,13 +65,12 @@
 
 /* Change text color to black */
 :host ::ng-deep .p-chips-token-label {
-  padding: 4px 8px;  /* Reduced padding */
-  color: black !important;  /* Change text color to black */
+  @apply tw-py-4-px tw-px-8-px tw-text-slightly-normal-text-color #{!important};
 }
 
 
 :host ::ng-deep .p-chips-token-icon {
-  color: black !important;
+  @apply tw-text-slightly-normal-text-color #{!important};
 }
 
 :host ::ng-deep .p-chips-multiple-container::-webkit-scrollbar {
@@ -79,7 +82,7 @@
 }
 
 :host ::ng-deep .p-calendar ::placeholder {
-  @apply tw-text-sub-text-color #{!important};
+  @apply tw-text-placeholder #{!important};
 }
 
 .chip-hint {
@@ -89,9 +92,13 @@
 
 :host ::ng-deep .p-dropdown {
   transform: scale(0.9);
-  width: 220px !important;
+  width: 180px !important;
 }
 
 :host ::ng-deep input {
   @apply tw-text-14-px #{!important};
+}
+
+:host ::ng-deep .p-datepicker table td > span {
+  @apply tw-w-auto tw-h-auto #{!important};
 }

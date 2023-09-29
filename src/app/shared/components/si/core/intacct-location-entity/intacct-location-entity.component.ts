@@ -103,19 +103,25 @@ export class IntacctLocationEntityComponent implements OnInit {
     this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
   }
 
+  private setOnboardingStateAndRedirect(locationEntityMappingPayload: LocationEntityPost): void {
+    if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
+      this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
+    }
+
+    if (this.isOnboarding) {
+      this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
+      this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
+    }
+    this.isLoading = false;
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location Entity Selected Successfully.');
+  }
+
   private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {
     this.isRefreshDimensionInProgress = true;
     this.mappingsService.refreshSageIntacctDimensions().subscribe(() => {
-      if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
-        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
-      }
-
-      if (this.isOnboarding) {
-        this.workspaceService.setIntacctOnboardingState(IntacctOnboardingState.EXPORT_SETTINGS);
-        this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
-      }
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location Entity Selected Successfully.');
+      this.setOnboardingStateAndRedirect(locationEntityMappingPayload);
+    }, () => {
+      this.setOnboardingStateAndRedirect(locationEntityMappingPayload);
     });
   }
 

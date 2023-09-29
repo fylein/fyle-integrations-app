@@ -1,5 +1,5 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { CorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState } from "../../enum/enum.model";
+import { CorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption } from "../../enum/enum.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 
 export type ExportSettingFormOption = {
@@ -51,18 +51,26 @@ export type ExportSettingPost = {
             return control?.value ? control.value : defaultValue;
         };
         const emptyDestinationAttribute = { id: null, name: null };
+
+        const cccExportType = getValueOrDefault(exportSettingsForm.get('cccExportType'));
+        let cccExportGroup = exportSettingsForm.get('cccExportGroup')?.value ? [exportSettingsForm.value.cccExportGroup] : null;
+
+        if (cccExportType === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+            cccExportGroup = [ExpenseGroupingFieldOption.EXPENSE_ID];
+        }
+
         const exportSettingPayload: ExportSettingPost = {
             expense_group_settings: {
                 expense_state: getValueOrDefault(exportSettingsForm.get('reimbursableExpenseState')),
                 ccc_expense_state: getValueOrDefault(exportSettingsForm.get('cccExpenseState')),
                 reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.value.reimbursableExportGroup] : null,
                 reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
-                corporate_credit_card_expense_group_fields: exportSettingsForm.get('cccExportGroup')?.value ? [exportSettingsForm.value.cccExportGroup] : null,
+                corporate_credit_card_expense_group_fields: cccExportGroup,
                 ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend Date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate'))
             },
             configurations: {
                 reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
-                corporate_credit_card_expenses_object: getValueOrDefault(exportSettingsForm.get('cccExportType')),
+                corporate_credit_card_expenses_object: cccExportType,
                 employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase(),
                 auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees'))
             },

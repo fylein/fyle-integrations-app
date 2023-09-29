@@ -102,7 +102,7 @@ export class LandingComponent implements OnInit {
   }
 
   private setupLoginWatcher(): void {
-    this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
+    const intacctLogin$ = this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
       const authCode = redirectUri.split('code=')[1].split('&')[0];
       this.siAuthService.loginWithAuthCode(authCode).subscribe((token: Token) => {
         const user: MinimalUser = {
@@ -115,6 +115,7 @@ export class LandingComponent implements OnInit {
           'org_name': token.user.org_name
         };
         this.storageService.set('si.user', user);
+        intacctLogin$.unsubscribe();
         this.openInAppIntegration(InAppIntegration.INTACCT);
       });
     });
