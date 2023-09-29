@@ -190,6 +190,15 @@
                 <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()"></i>
             </div>
         </div>
+        <div *ngIf="existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1">
+            <div class="tw-px-16-px tw-pt-12-px tw-text-12-px tw-flex">
+            <img src="assets/icons/error.svg"/>
+            <h5 class="tw-ml-2-px">
+                Oops! It looks like another field with the same name already exists in your Fyle account. Would you please
+                give the field a different name?
+            </h5>
+            </div>
+        </div>
         <div class="tw-p-24-px">
             <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
                 Field Name <span class="tw-text-mandatory-field-color">*</span>
@@ -228,7 +237,7 @@
                 <button type="button" class="cancel-btn" (click)="closeModel()">
                     Cancel
                 </button>
-                <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid" (click)="saveCustomField()">
+                <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1" (click)="saveCustomField()">
                     Create and Save
                 </button>
             </div>
