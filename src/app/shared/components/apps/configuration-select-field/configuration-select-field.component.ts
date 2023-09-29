@@ -76,6 +76,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     (formField as FormGroup).reset();
     event?.stopPropagation();
   }
+  
   isOverflowing(element: any): boolean {
     return element.offsetWidth < element.scrollWidth;
   }

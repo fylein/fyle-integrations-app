@@ -102,6 +102,11 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     return new TitleCasePipe().transform(this.employeeFieldMapping);
   }
 
+  removeFilter(formField: AbstractControl) {
+    (formField as FormGroup).reset();
+    event?.stopPropagation();
+  }
+
   private formatMemoPreview(): void {
     const time = Date.now();
     const today = new Date(time);

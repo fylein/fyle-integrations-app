@@ -22,3 +22,7 @@
 p-dropdown .p-dropdown-open {
     width: 360px !important;
 }
+
+:host ::ng-deep .selectedItem  .p-dropdown-trigger {
+    @apply tw-hidden #{!important};
+}
