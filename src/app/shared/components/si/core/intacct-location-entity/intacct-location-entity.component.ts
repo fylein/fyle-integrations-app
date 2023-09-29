@@ -41,7 +41,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   redirectLink: string = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6';
 
-  fyleOrgName: string = this.userService.getUserProfile().org_name;
+  fyleOrgName: string = this.userService.getUserProfile('si.user').org_name;
 
   constructor(
     private formBuilder: FormBuilder,
