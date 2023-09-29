@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit {
 
   ExpenseState = ExpenseState;
 
-  employeeName: string = this.userService.getUserProfile().full_name;
+  employeeName: string = this.userService.getUserProfile('si.user').full_name;
 
   intacctErrorType: IntacctErrorType;
 

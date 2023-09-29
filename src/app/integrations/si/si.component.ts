@@ -3,10 +3,10 @@ import { NavigationEnd, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntacctWorkspace } from 'src/app/core/models/si/db/workspaces.model';
-import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
 import { StorageService } from 'src/app/core/services/core/storage.service';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
+import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class SiComponent implements OnInit {
 
-  user: MinimalUser = this.userService.getUserProfile();
+  user: MinimalUser = this.userService.getUserProfile('si.user');
 
   workspace: IntacctWorkspace;
 
@@ -28,7 +28,7 @@ export class SiComponent implements OnInit {
     private appcuesService: AppcuesService,
     private storageService: StorageService,
     private router: Router,
-    private userService: IntegrationsUserService,
+    private userService: UserService,
     private workspaceService: SiWorkspaceService,
     private windowService: WindowService
   ) {
