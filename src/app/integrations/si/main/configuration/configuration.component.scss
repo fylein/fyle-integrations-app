@@ -20,3 +20,7 @@
     background-color: transparent;
     @apply tw-border-b tw-border-b-box-color #{!important};
 }
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
+    margin-right: -10px;
+}
