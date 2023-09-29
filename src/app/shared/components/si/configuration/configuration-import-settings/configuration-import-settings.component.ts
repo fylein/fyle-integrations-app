@@ -81,6 +81,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   isDialogVisible: boolean = false;
 
+  existingFields: string[] = ['employee id', 'organisation name', 'employee name', 'employee email', 'expense date', 'expense date', 'expense id', 'report id', 'employee id', 'department', 'state', 'reporter', 'report', 'purpose', 'vendor', 'category', 'category code', 'mileage distance', 'mileage unit', 'flight from city', 'flight to city', 'flight from date', 'flight to date', 'flight from class', 'flight to class', 'hotel checkin', 'hotel checkout', 'hotel location', 'hotel breakfast', 'currency', 'amount', 'foreign currency', 'foreign amount', 'tax', 'approver', 'project', 'billable', 'cost center', 'cost center code', 'approved on', 'reimbursable', 'receipts', 'paid date', 'expense created date'];;
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
@@ -95,6 +97,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   get expenseFieldsGetter() {
     return this.importSettingsForm.get('expenseFields') as FormArray;
+  }
+
+  removeFilter(expenseField: AbstractControl) {
+    (expenseField as FormGroup).controls.source_field.patchValue('');
+    (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
+    event?.stopPropagation();
   }
 
   hasDuplicateOption(formGroup: AbstractControl, index: number, controlName: string): boolean {
@@ -364,6 +372,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
+
     const destinationAttributes = ['TAX_DETAIL'];
 
     const sageIntacctFieldsObservable = this.mappingService.getSageIntacctFields();
