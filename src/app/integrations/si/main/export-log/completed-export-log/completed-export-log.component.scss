@@ -1,4 +1,3 @@
-/* Mimic the look of the calendar field */
 .custom-search-field {
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -11,6 +10,7 @@
 
 .custom-search-field i.pi-search {
     margin-right: 10px;
+    color: grey;
 }
 
 .custom-search-field input[type="text"] {
@@ -18,6 +18,11 @@
     outline: none;
     width: 100%;
 }
+
+input.custom-focus:focus {
+    outline: none;
+    border: 1px solid black !important;
+  }
 
 .clickable-row:hover {
     cursor: pointer;

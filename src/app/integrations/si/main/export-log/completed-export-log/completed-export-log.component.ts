@@ -19,6 +19,10 @@ export class CompletedExportLogComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  isSearchFocused: boolean = false;
+
+  isDateFieldFocused: boolean = false;
+
   totalCount: number;
 
   limit: number;
