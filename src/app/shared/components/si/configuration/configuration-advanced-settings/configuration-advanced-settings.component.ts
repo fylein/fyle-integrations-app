@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, FyleField, IntacctLink, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
@@ -29,7 +29,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   skipExportForm: FormGroup;
 
-  redirectLink = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c';
+  redirectLink = IntacctLink.ADVANCED_SETTING;
 
   isOnboarding: boolean;
 

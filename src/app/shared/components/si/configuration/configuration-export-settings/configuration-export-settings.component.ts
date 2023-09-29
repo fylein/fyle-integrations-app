@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, UpdateEvent, ProgressPhase, IntacctUpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, UpdateEvent, ProgressPhase, IntacctUpdateEvent, IntacctLink } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -26,7 +26,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   exportSettingsForm: FormGroup;
 
-  redirectLink = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d';
+  redirectLink = IntacctLink.EXPORT_SETTING;
 
   isOnboarding: boolean;
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity, FyleField, MappingSourceField } from 'src/app/core/models/enum/enum.model';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity, FyleField, MappingSourceField, IntacctLink } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
@@ -31,7 +31,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   expenseFields: FormArray;
 
-  redirectLink = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c';
+  redirectLink = IntacctLink.IMPORT_SETTING;
 
   saveInProgress: boolean = false;
 
