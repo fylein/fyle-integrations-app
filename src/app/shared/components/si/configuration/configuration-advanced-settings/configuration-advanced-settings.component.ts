@@ -31,6 +31,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   redirectLink = IntacctLink.ADVANCED_SETTING;
 
+  IntacctLink = IntacctLink;
+
   isOnboarding: boolean;
 
   saveInProgress: boolean = false;
