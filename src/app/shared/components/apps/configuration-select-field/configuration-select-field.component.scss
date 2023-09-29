@@ -27,12 +27,16 @@
     font-size: 12px;
   }
   
-  .sub-text a {
+.sub-text a {
     color: rgb(0 98 255 / var(--tw-text-opacity));
     cursor: pointer;
   }
 
-  .smaller-th th {
+.smaller-th th {
     font-size: 14px;
     font-weight: 400;
 }
+
+:host ::ng-deep .selectedItem  .p-dropdown-trigger {
+    @apply tw-hidden #{!important};
+  }
