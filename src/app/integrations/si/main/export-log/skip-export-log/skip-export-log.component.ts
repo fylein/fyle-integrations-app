@@ -111,7 +111,6 @@ export class SkipExportLogComponent implements OnInit {
   }
 
   removeFilter(formField: AbstractControl) {
-    console.log(formField);
     (formField as FormGroup).reset();
     event?.stopPropagation();
   }
