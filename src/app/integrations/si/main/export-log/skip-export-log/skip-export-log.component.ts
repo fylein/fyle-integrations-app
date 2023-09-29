@@ -19,6 +19,10 @@ export class SkipExportLogComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  isSearchFocused: boolean = false;
+
+  isDateFieldFocused: boolean = false;
+
   totalCount: number;
 
   limit: number;

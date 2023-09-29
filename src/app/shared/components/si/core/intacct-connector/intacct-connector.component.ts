@@ -23,7 +23,7 @@ export class IntacctConnectorComponent implements OnInit {
 
   saveInProgress: boolean = false;
 
-  redirectLink: string = RedirectLink.INTACCT;
+  redirectLink: string = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6';
 
   windowReference: Window;
 

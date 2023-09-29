@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity, FyleField, MappingSourceField } from 'src/app/core/models/enum/enum.model';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity, FyleField, MappingSourceField, IntacctLink } from 'src/app/core/models/enum/enum.model';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
@@ -31,7 +31,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   expenseFields: FormArray;
 
-  RedirectLink = RedirectLink;
+  redirectLink = IntacctLink.IMPORT_SETTING;
 
   saveInProgress: boolean = false;
 
@@ -79,6 +79,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   showDependentFieldWarning: boolean;
 
+  isDialogVisible: boolean = false;
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
@@ -110,6 +112,10 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       return false;
     }
     return true;
+  }
+
+  showPreviewDialog(visible: boolean) {
+    this.isDialogVisible = visible;
   }
 
   addExpenseField() {

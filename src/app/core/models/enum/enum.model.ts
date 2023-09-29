@@ -347,3 +347,11 @@ export enum QBDOnboardingState {
     ONBOARDING_DONE = 'Onboarding Done',
     EXPORT_DONE = 'Export Done'
   }
+
+  export enum IntacctLink {
+    IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
+    EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
+    ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
+    LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
+    SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+  }

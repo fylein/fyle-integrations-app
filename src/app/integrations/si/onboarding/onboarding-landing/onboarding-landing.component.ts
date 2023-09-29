@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbedVideoLink, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { EmbedVideoLink, IntacctLink, RedirectLink } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-onboarding-landing',
@@ -8,7 +8,7 @@ import { EmbedVideoLink, RedirectLink } from 'src/app/core/models/enum/enum.mode
 })
 export class OnboardingLandingComponent implements OnInit {
 
-  RedirectLink = RedirectLink;
+  redirectLink = IntacctLink.LANDING;
 
   EmbedVideo = EmbedVideoLink;
 

@@ -40,7 +40,13 @@
             </ng-template>
             <ng-template let-user pTemplate="item">
                 <div>
-                    <p class="tw-text-sub-text-color tw-text-14-px">{{ user.name }}</p>
+                    <span class="tw-text-sub-text-color tw-text-14-px">
+                        <span #textElement 
+                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                        [pTooltip]="isOverflowing(textElement) ? user.name : null" tooltipPosition="top">
+                        {{ user.name }}
+                        </span>
+                    </span>
                     <p class="tw-pt-4-px tw-text-faded-text-color tw-text-12-px">{{ user.email }}</p>
                 </div>
             </ng-template>
