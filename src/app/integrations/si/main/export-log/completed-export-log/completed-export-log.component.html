@@ -15,17 +15,24 @@
                 <div>
                     <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
                 </div>
-                <p-dropdown placeholder="Select date range" [showClear]="true" appendTo="body" [options]="dateOptions" formControlName="dateRange" (click)="dropDownWatcher()" (onFocus)="isDateFieldFocused = true" (onBlur)="isDateFieldFocused = false">
+                <p-dropdown placeholder="Select date range" appendTo="body" [options]="dateOptions"
+                formControlName="dateRange" (click)="dropDownWatcher()" (onFocus)="isDateFieldFocused = true" (onBlur)="isDateFieldFocused = false"
+                [ngClass]="{'selectedItem': exportLogForm.controls.dateRange.value, 'filterDropdown': !exportLogForm.controls.dateRange.value}">
                     <ng-template let-item pTemplate="selectedItem">
-                        <div *ngIf="exportLogForm.controls.dateRange.value">
-                            <div class="my-dropdown-selected-item">
-                                {{exportLogForm.controls.dateRange.value.dateRange}}
-                            </div>
-                        </div>
-                        <div *ngIf="!exportLogForm.controls.dateRange.value">
-                            <div class="my-dropdown-selected-item tw-text-placeholder tw-text-14-px">
-                                Select date range
-                            </div>
+                        <div class="tw-flex tw-justify-between tw-items-center">
+                            <span>
+                                <div *ngIf="exportLogForm.controls.dateRange.value">
+                                    <div class="my-dropdown-selected-item">
+                                        {{exportLogForm.controls.dateRange.value.dateRange}}
+                                    </div>
+                                </div>
+                                <div *ngIf="!exportLogForm.controls.dateRange.value">
+                                    <div class="my-dropdown-selected-item tw-text-placeholder tw-text-14-px">
+                                        Select date range
+                                    </div>
+                                </div>
+                            </span>
+                            <i class="pi pi-times" (click)="removeFilter(exportLogForm.controls.dateRange)"></i>
                         </div>
                     </ng-template>
                     <ng-template let-date pTemplate="item">
