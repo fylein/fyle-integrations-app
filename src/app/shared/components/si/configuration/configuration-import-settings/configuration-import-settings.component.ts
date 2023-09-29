@@ -96,10 +96,10 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   get expenseFieldsGetter() {
     return this.importSettingsForm.get('expenseFields') as FormArray;
   }
-  
+
   removeFilter(expenseField: AbstractControl) {
-    (expenseField as FormGroup).controls['source_field'].patchValue('');
-    (expenseField as FormGroup).controls['import_to_fyle'].patchValue(false);
+    (expenseField as FormGroup).controls.source_field.patchValue('');
+    (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     event?.stopPropagation();
   }
 
