@@ -86,7 +86,7 @@ input.custom-focus:focus {
     @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
 }
 
-:host  ::ng-deep .p-dialog {
+:host ::ng-deep .p-dialog {
     max-height: 100% !important;
-    margin: 0.1rem !important;
+    margin: 0rem !important;
 }
