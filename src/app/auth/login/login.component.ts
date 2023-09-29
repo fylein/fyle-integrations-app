@@ -6,6 +6,8 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { EXPOSE_INTACCT_NEW_APP } from 'src/app/core/services/core/events.service';
+import { StorageService } from 'src/app/core/services/core/storage.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +20,7 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
+    private storageService: StorageService,
     private userService: UserService,
     private qbdAuthService: QbdAuthService,
     private siAuthService : SiAuthService
@@ -37,9 +40,20 @@ export class LoginComponent implements OnInit {
       this.userService.storeUserProfile(user);
       this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
 
-      // TODO: Only local dev needs this, read from env and call loginWithRefreshToken
-      if (!EXPOSE_INTACCT_NEW_APP) {
-        this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+      // Only local dev needs this, login happens via postMessage for prod/staging through webapp
+      if (!environment.production) {
+        this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe((token) => {
+          const user: MinimalUser = {
+            'email': token.user.email,
+            'access_token': token.access_token,
+            'refresh_token': token.refresh_token,
+            'full_name': token.user.full_name,
+            'user_id': token.user.user_id,
+            'org_id': token.user.org_id,
+            'org_name': token.user.org_name
+          };
+          this.storageService.set('si.user', user);
+        });
       }
       this.router.navigate(['/integrations']);
     });
