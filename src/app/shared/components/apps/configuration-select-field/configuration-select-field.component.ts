@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExportSettingFormOption } from 'src/app/core/models/si/si-configuration/export-settings.model';
@@ -70,6 +70,11 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
+  }
+
+  removeFilter(formField: AbstractControl) {
+    (formField as FormGroup).reset();
+    event?.stopPropagation();
   }
 
   isOverflowing(element: any): boolean {

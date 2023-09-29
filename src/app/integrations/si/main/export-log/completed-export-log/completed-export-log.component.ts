@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
@@ -107,6 +107,11 @@ export class CompletedExportLogComponent implements OnInit {
   openUrl(event: Event, url: string) {
     window.open(url, '_blank');
     event.stopPropagation();
+  }
+
+  removeFilter(formField: AbstractControl) {
+    (formField as FormGroup).reset();
+    event?.stopPropagation();
   }
 
   public filterTable(event: any) {

@@ -151,7 +151,17 @@
             <div class="tw-pt-28-px tw-pl-6 field-label">
                 <div><label>Default Location</label></div>
                 <div class="tw-pt-2">
-                    <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctLocations" optionLabel="value" formControlName="defaultLocation" placeholder="Select Location"></p-dropdown>
+                    <p-dropdown appendTo="body" [options]="sageIntacctLocations" optionLabel="value" 
+                    formControlName="defaultLocation" placeholder="Select Location" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value}">
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.value }}
+                                </span>
+                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)"></i>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
                     <span class="tw-pl-24-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in Sage Intacct</label>
@@ -162,7 +172,17 @@
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label>Default Department</label></div>
                 <div class="tw-pt-2">
-                  <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctDepartments" optionLabel="value" formControlName="defaultDepartment" placeholder="Select Department"></p-dropdown>
+                  <p-dropdown appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
+                  formControlName="defaultDepartment" placeholder="Select Department" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value}">
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.value }}
+                                </span>
+                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)"></i>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
                     <span class="tw-pl-24-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Sage Intacct</label>
@@ -173,21 +193,51 @@
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label>Default Project</label></div>
                 <div class="tw-pt-2">
-                  <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctProjects" optionLabel="value" formControlName="defaultProject" placeholder="Select Project"></p-dropdown>
+                  <p-dropdown appendTo="body" [options]="sageIntacctProjects" optionLabel="value"
+                  formControlName="defaultProject" placeholder="Select Project" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value}">
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.value }}
+                                </span>
+                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)"></i>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
                 </div>  
               </div> 
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label>Default Class</label></div>
                 <div class="tw-pt-2">
-                  <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctClasses" optionLabel="value" formControlName="defaultClass" placeholder="Select Class"></p-dropdown>
+                  <p-dropdown appendTo="body" [options]="sageIntacctClasses" optionLabel="value"
+                  formControlName="defaultClass" placeholder="Select Class" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value}">
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.value }}
+                                </span>
+                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)"></i>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
                 </div>  
               </div> 
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
                 <div><label>Default Items</label></div>
                 <div class="tw-pt-2">
-                  <p-dropdown appendTo="body" [showClear]="true" [options]="sageIntacctDefaultItem" optionLabel="value" formControlName="defaultItems" placeholder="Select Item"></p-dropdown>
+                  <p-dropdown appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
+                  formControlName="defaultItems" placeholder="Select Item" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value}">
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.value }}
+                                </span>
+                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)"></i>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
                 </div>  
               </div>
         </div>
