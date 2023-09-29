@@ -147,3 +147,10 @@ svg-icon-sprite {
 :host ::ng-deep .selectedItem  .p-dropdown-trigger {
   @apply tw-hidden #{!important};
 }
+
+.error-box {
+  background: rgba(218, 30, 40, 0.02);
+  border: 1px solid rgba(218, 30, 40, 0.04);
+  box-sizing: border-box;
+  border-radius: 4px;
+}

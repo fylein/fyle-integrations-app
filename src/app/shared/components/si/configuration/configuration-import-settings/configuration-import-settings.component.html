@@ -191,12 +191,14 @@
             </div>
         </div>
         <div *ngIf="existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1">
-            <div class="tw-px-16-px tw-pt-12-px tw-text-12-px tw-flex">
-            <img src="assets/icons/error.svg"/>
-            <h5 class="tw-ml-2-px">
-                Oops! It looks like another field with the same name already exists in your Fyle account. Would you please
-                give the field a different name?
-            </h5>
+            <div class="tw-px-16-px tw-text-12-px tw-pt-12-px tw-flex">
+                <span class="error-box tw-flex tw-p-4-px">
+                    <img class="tw-mb-16-px" src="assets/icons/error.svg"/>
+                    <h5 class="tw-ml-6-px">
+                        Oops! It looks like another field with the same name already exists in your Fyle account. Would you please
+                        give the field a different name?
+                    </h5>
+                </span>
             </div>
         </div>
         <div class="tw-p-24-px">
