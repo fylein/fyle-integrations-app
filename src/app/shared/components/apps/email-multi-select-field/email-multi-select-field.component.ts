@@ -54,6 +54,10 @@ export class EmailMultiSelectFieldComponent implements OnInit {
     private toastService: IntegrationsToastService
   ) { }
 
+  isOverflowing(element: any): boolean {
+    return element.offsetWidth < element.scrollWidth;
+  }
+
   clearSearch(options: DropdownFilterOptions): void {
     if (options.reset) {
       options.reset();

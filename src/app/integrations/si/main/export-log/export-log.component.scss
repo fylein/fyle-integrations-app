@@ -107,3 +107,7 @@
 :host ::ng-deep .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
     @apply tw-min-w-fit tw-top-2/3 #{!important};
 }
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
+    margin-right: -10px;
+}

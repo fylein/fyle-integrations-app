@@ -52,7 +52,7 @@ p {
 
 // Tooltip
 .p-tooltip .p-tooltip-text {
-    @apply tw-bg-slightly-normal-text-color tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-500 #{!important}
+    @apply tw-bg-slightly-normal-text-color tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 #{!important}
 }
 
 .p-tooltip.p-tooltip-right .p-tooltip-arrow {

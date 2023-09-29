@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
   selector: 'app-configuration-toggle-field',
@@ -18,7 +19,11 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   @Input() isSectionHeader: boolean;
 
-  constructor() { }
+  @Input() redirectLink: string;
+
+  constructor(
+    public windowService: WindowService
+  ) { }
 
   ngOnInit(): void {
   }
