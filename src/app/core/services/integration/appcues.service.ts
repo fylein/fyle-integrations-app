@@ -21,6 +21,7 @@ export class AppcuesService {
   }
 
   initialiseAppcues(appName: AppName, workspace_created_at: Date): void {
+    workspace_created_at = new Date(workspace_created_at);
     if (this.appcues) {
       const user = this.userService.getUserProfile();
       this.appcues.identify(user.user_id, {
