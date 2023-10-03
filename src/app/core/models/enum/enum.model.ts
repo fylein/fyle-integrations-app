@@ -41,7 +41,7 @@ export enum RedirectLink {
 }
 
 export enum EmbedVideoLink {
-  INTACCT = 'https://www.youtube.com/embed/b63lS2DG5j4'
+  INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk'
 }
 
 export enum ToastSeverity {
