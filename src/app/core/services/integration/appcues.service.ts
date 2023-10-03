@@ -41,7 +41,7 @@ export class AppcuesService {
         'Workspace Name': user.org_name,
         source: 'Fyle Integration Settings',
         'App Name': appName,
-        'Flow Vesion': new Date(this.intacctWorkspace[0].created_at) > new Date('2023-10-03T07:30:00.000Z') ? 'NEW' : 'OLD',
+        'Flow Vesion': new Date(this.intacctWorkspace[0].created_at) > new Date('2023-10-03T07:30:00.000Z') ? 'NEW' : 'OLD'
       });
     }
   }
