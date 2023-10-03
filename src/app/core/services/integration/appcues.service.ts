@@ -23,15 +23,7 @@ export class AppcuesService {
     return (window as any).Appcues;
   }
 
-  private getWorkspaces(): void {
-    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
-      this.intacctWorkspace = workspaces;
-    }
-    );
-  }
-
-  initialiseAppcues(appName: AppName): void {
-    this.getWorkspaces();
+  initialiseAppcues(appName: AppName, workspace_created_at: Date): void {
     if (this.appcues) {
       const user = this.userService.getUserProfile();
       this.appcues.identify(user.user_id, {
@@ -41,7 +33,7 @@ export class AppcuesService {
         'Workspace Name': user.org_name,
         source: 'Fyle Integration Settings',
         'App Name': appName,
-        'Flow Vesion': new Date(this.intacctWorkspace[0].created_at) > new Date('2023-10-03T07:30:00.000Z') ? 'NEW' : 'OLD'
+        'Flow Version': workspace_created_at > new Date('2023-10-03T07:30:00.000Z') ? 'NEW' : 'OLD'
       });
     }
   }
