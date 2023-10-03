@@ -12,11 +12,8 @@ export class AppcuesService {
 
   user: MinimalUser = this.userService.getUserProfile('si.user');
 
-  intacctWorkspace: IntacctWorkspace[];
-
   constructor(
-    private userService: UserService,
-    private workspaceService: SiWorkspaceService
+    private userService: UserService
   ) { }
 
   get appcues() {
