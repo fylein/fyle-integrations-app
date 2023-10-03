@@ -292,8 +292,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
         if (isCCCExportTypeSelected === CorporateCreditCardExpensesObject.BILL) {
           this.exportSettingsForm.controls.creditCardVendor.setValidators(Validators.required);
-          this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
-          this.exportSettingsForm.controls.employeeFieldMapping.disable();
         } else {
           this.exportSettingsForm.controls.creditCardVendor.clearValidators();
           this.exportSettingsForm.controls.creditCardVendor.setValue(null);
@@ -301,8 +299,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
         if (isCCCExportTypeSelected === CorporateCreditCardExpensesObject.EXPENSE_REPORT) {
           this.exportSettingsForm.controls.cccExpensePaymentType.setValidators(Validators.required);
-          this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.EMPLOYEE);
-          this.exportSettingsForm.controls.employeeFieldMapping.disable();
         } else {
           this.exportSettingsForm.controls.cccExpensePaymentType.clearValidators();
           this.exportSettingsForm.controls.cccExpensePaymentType.setValue(null);
