@@ -1,21 +1,37 @@
 import { Injectable } from '@angular/core';
 import { UserService } from '../misc/user.service';
 import { AppName } from '../../models/enum/enum.model';
+import { SiWorkspaceService } from '../si/si-core/si-workspace.service';
+import { MinimalUser } from '../../models/db/user.model';
+import { IntacctWorkspace } from '../../models/si/db/workspaces.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppcuesService {
 
+  user: MinimalUser = this.userService.getUserProfile('si.user');
+
+  intacctWorkspace: IntacctWorkspace[];
+
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private workspaceService: SiWorkspaceService
   ) { }
 
   get appcues() {
     return (window as any).Appcues;
   }
 
+  private getWorkspaces(): void {
+    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
+      this.intacctWorkspace = workspaces;
+    }
+    );
+  }
+
   initialiseAppcues(appName: AppName): void {
+    this.getWorkspaces();
     if (this.appcues) {
       const user = this.userService.getUserProfile();
       this.appcues.identify(user.user_id, {
@@ -24,7 +40,8 @@ export class AppcuesService {
         'Org ID': user.org_id,
         'Workspace Name': user.org_name,
         source: 'Fyle Integration Settings',
-        'App Name': appName
+        'App Name': appName,
+        'Flow Vesion': new Date(this.intacctWorkspace[0].created_at) > new Date('2023-10-03T07:30:00.000Z') ? 'NEW' : 'OLD',
       });
     }
   }
