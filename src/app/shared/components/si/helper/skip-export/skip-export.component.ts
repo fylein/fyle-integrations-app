@@ -539,7 +539,7 @@ export class SkipExportComponent implements OnInit {
       if (!this.valueOption1.length && !(selectedOperator1 === 'is_empty' || selectedOperator1 === 'is_not_empty')) {
         this.skipExportForm.controls.value1.setValidators(Validators.required);
       }
-      if (response.count === 2) {
+      if (response.count === 2 && joinByFC) {
         this.showAdditionalCondition = true;
         this.showAddButton = false;
         this.skipExportForm.controls.condition2.setValidators(Validators.required);
