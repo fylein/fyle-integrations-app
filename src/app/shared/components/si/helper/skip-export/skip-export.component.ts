@@ -297,8 +297,6 @@ export class SkipExportComponent implements OnInit {
 
   saveSkipExportFields() {
 
-    console.log(this.skipExportForm.getRawValue());
-
     const valueField = this.skipExportForm.getRawValue();
     if (this.showAddButton && this.expenseFilters.length > 1) {
       this.advancedSettingsService
@@ -497,15 +495,13 @@ export class SkipExportComponent implements OnInit {
   revertToOriginalFormat(isoString: string) {
     // Step 2: Parse ISO string to Date object
     const dateObj = new Date(isoString);
-  
+
     // Step 3: Adjust for IST timezone (GMT+0530)
     dateObj.setMinutes(dateObj.getMinutes() + 330);
-  
+
     // Step 4: Convert to original format
     const originalFormat = dateObj.toString();
 
-    console.log(originalFormat);
-  
     return originalFormat;
   }
 
@@ -519,8 +515,6 @@ export class SkipExportComponent implements OnInit {
     let [selectedOperator2, valueFC2] = ['', ''];
     let joinByFC = '';
 
-    console.log(response.results[0].condition);
-
     response.results.forEach((result, index) => {
       if (index === 0) {
         selectedOperator1 = this.getSelectedOperator(result.operator, result.values[0], conditionArray[0]);
@@ -531,7 +525,7 @@ export class SkipExportComponent implements OnInit {
         }
          if (response.results[0].condition==='spent_at') {
           valueFC1 = this.revertToOriginalFormat(response.results[0].values[0]);
-        } 
+        }
         customFieldTypeFC1 = result.custom_field_type;
       } else if (index === 1 && response.results[0].join_by !== null) {
         selectedOperator2 = this.getSelectedOperator(result.operator, result.values[0], conditionArray[1]);
