@@ -332,22 +332,31 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     });
 
     // Handle top priority fields
+    const checkAllFieldsExist = (fields: string[], sageFields: { attribute_type: string }[]) => {
+      return fields.every((field: string) => sageFields.some((sageField: { attribute_type: string }) => sageField.attribute_type === field));
+    };
+    
     const topPriorityFields = ['PROJECT', 'DEPARTMENT', 'LOCATION'];
-    topPriorityFields.forEach((field) => {
-      const fieldData = fieldMap.get(field) || {
-        destination_field: '',
-        import_to_fyle: false,
-        is_custom: false,
-        source_field: '',
-        source_placeholder: null
-      };
-      expenseFieldFormArray.push(this.createFormGroup(fieldData));
-    });
+    
+    if (checkAllFieldsExist(topPriorityFields, this.sageIntacctFields)) {
+      topPriorityFields.forEach((field) => {
+        const fieldData = fieldMap.get(field) || {
+          destination_field: '',
+          import_to_fyle: false,
+          is_custom: false,
+          source_field: '',
+          source_placeholder: null
+        };
+        expenseFieldFormArray.push(this.createFormGroup(fieldData));
+      });
+    }
+
+    const mappingSettingLength = (this.importSettings.mapping_settings.filter(setting => !topPriorityFields.includes(setting.destination_field)).length) - 1;
 
     // Handle remaining fields
-    if (expenseFieldFormArray.length < 3) {
+    if (expenseFieldFormArray.length < (mappingSettingLength + topPriorityFields.length)) {
       this.sageIntacctFields.forEach((sageIntacctField) => {
-        if (expenseFieldFormArray.length < 3) {
+        if (expenseFieldFormArray.length < (mappingSettingLength + topPriorityFields.length)) {
           const fieldData = fieldMap.get(sageIntacctField.attribute_type);
           expenseFieldFormArray.push(this.createFormGroup(fieldData));
         }
