@@ -331,11 +331,17 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       fieldMap.set(sageIntacctField.attribute_type, fieldData);
     });
 
+    // Function to check if a field is already in the form array
+    const isFieldAlreadyAdded = (field: string, expenseFieldFormArray: FormGroup[]): boolean => {
+      return expenseFieldFormArray.some((formGroup: FormGroup) => formGroup.get('destination_field')?.value === field);
+    };
+
     // Handle top priority fields
     const checkAllFieldsExist = (fields: string[], sageFields: { attribute_type: string }[]) => {
       return fields.every((field: string) => sageFields.some((sageField: { attribute_type: string }) => sageField.attribute_type === field));
     };
 
+    
     const topPriorityFields = ['PROJECT', 'DEPARTMENT', 'LOCATION'];
 
     if (checkAllFieldsExist(topPriorityFields, this.sageIntacctFields)) {
@@ -351,14 +357,17 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       });
     }
 
-    const mappingSettingLength = (this.importSettings.mapping_settings.filter(setting => !topPriorityFields.includes(setting.destination_field)).length) - 1;
+    const mappingSettingLength = this.importSettings.mapping_settings.filter(setting => !topPriorityFields.includes(setting.destination_field)).length - 1;
 
     // Handle remaining fields
     if (expenseFieldFormArray.length < (mappingSettingLength + topPriorityFields.length)) {
       this.sageIntacctFields.forEach((sageIntacctField) => {
         if (expenseFieldFormArray.length < (mappingSettingLength + topPriorityFields.length)) {
-          const fieldData = fieldMap.get(sageIntacctField.attribute_type);
-          expenseFieldFormArray.push(this.createFormGroup(fieldData));
+          // Check if the field is already added
+          if (!isFieldAlreadyAdded(sageIntacctField.attribute_type, expenseFieldFormArray)) {
+            const fieldData = fieldMap.get(sageIntacctField.attribute_type);
+            expenseFieldFormArray.push(this.createFormGroup(fieldData));
+          }
         }
       });
     }
