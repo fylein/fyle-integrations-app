@@ -403,7 +403,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private initializeExportSettingsFormWithData(): void {
       const configurations = this.exportSettings?.configurations;
       const generalMappings = this.exportSettings?.general_mappings;
-      const findObjectById = (array: DestinationAttribute[], id: string) => array?.find(item => item.id.toString() === id) || null;
+      const findObjectById = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
 
       this.exportSettingsForm = this.formBuilder.group({
         reimbursableExpense: [Boolean(configurations?.reimbursable_expenses_object) || null, this.exportSelectionValidator()],
