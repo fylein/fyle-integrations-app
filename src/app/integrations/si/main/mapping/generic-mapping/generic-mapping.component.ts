@@ -59,7 +59,7 @@ export class GenericMappingComponent implements OnInit {
 
   searchValue: string;
 
-  destinationFieldType = FieldType;
+  destinationFieldType: string;
 
   operationgSystem: string;
 
@@ -175,6 +175,7 @@ export class GenericMappingComponent implements OnInit {
     ]).subscribe((response) => {
       const mappingSetting = response[1].results.filter((mappingSetting) => mappingSetting.source_field === this.sourceType.toUpperCase());
       this.mappingSetting = mappingSetting[0];
+      this.destinationFieldType = this.mappingSetting.destination_field;
       this.page = `${new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.mappingSetting.source_field))} Mapping`;
       this.configuration = response[0];
       forkJoin([
