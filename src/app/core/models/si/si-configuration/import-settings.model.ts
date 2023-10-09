@@ -83,7 +83,7 @@ export class ImportSettings {
                 general_mappings: {
                     default_tax_code: importSettingsForm.value.importTaxCodes ? {
                         name: importSettingsForm.value.sageIntacctTaxCodes.value,
-                        id: importSettingsForm.value.sageIntacctTaxCodes.id
+                        id: importSettingsForm.value.sageIntacctTaxCodes.destination_id
                     } : emptyDestinationAttribute
                 },
                 mapping_settings: mappingSettings,
