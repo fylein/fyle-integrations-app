@@ -335,9 +335,9 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     const checkAllFieldsExist = (fields: string[], sageFields: { attribute_type: string }[]) => {
       return fields.every((field: string) => sageFields.some((sageField: { attribute_type: string }) => sageField.attribute_type === field));
     };
-    
+
     const topPriorityFields = ['PROJECT', 'DEPARTMENT', 'LOCATION'];
-    
+
     if (checkAllFieldsExist(topPriorityFields, this.sageIntacctFields)) {
       topPriorityFields.forEach((field) => {
         const fieldData = fieldMap.get(field) || {
