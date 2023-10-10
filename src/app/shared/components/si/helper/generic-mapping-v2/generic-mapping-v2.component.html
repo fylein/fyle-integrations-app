@@ -37,7 +37,8 @@
         <div class="tw-p-24-px tw-border-b-separator">
             <app-mapping-filter [selectedAlphabeticalFilter]="alphabetFilter" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)" (mappingFilterUpdateHandler)="mappingFilterUpdate($event)" [isAlphabetFilterHidden]="false"></app-mapping-filter>
         </div>
-        <div *ngIf="filteredMappingCount" >
+        <!-- add a flag/dashboard mapping tab -->
+        <div *ngIf="filteredMappingCount">
             <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
                 <ng-template pTemplate="header">
                     <tr>
