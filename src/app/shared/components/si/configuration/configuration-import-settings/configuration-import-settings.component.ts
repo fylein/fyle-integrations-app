@@ -193,8 +193,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   }
 
   setDependendFieldFalsy(isProjectMappingEnabled: boolean) {
-    console.log(isProjectMappingEnabled);
-    if(!isProjectMappingEnabled) {
+    if (!isProjectMappingEnabled) {
       this.importSettingsForm.controls.isDependentImportEnabled.setValue(false);
     }
   }
