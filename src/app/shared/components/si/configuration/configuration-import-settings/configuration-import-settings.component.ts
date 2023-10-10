@@ -131,7 +131,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     const defaultFieldData: MappingSetting = {
       source_field: '',
       destination_field: '',
-      import_to_fyle: false,
+      import_to_fyle: true,
       is_custom: false,
       source_placeholder: null
     };
@@ -313,6 +313,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   private constructFormArray(): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const fieldMap = new Map<string, any>();
+    const unmappedFieldMap = new Map<string, any>();
 
     // First loop to populate fieldMap
     this.sageIntacctFields.forEach((sageIntacctField) => {
@@ -327,29 +328,45 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         source_field: '',
         source_placeholder: null
       };
+      if (fieldData.import_to_fyle) {
+        fieldMap.set(sageIntacctField.attribute_type, fieldData);
+      } else {
+        unmappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
+      }
 
-      fieldMap.set(sageIntacctField.attribute_type, fieldData);
     });
 
-    // Handle top priority fields
     const topPriorityFields = ['PROJECT', 'DEPARTMENT', 'LOCATION'];
-    topPriorityFields.forEach((field) => {
-      const fieldData = fieldMap.get(field) || {
-        destination_field: '',
-        import_to_fyle: false,
-        is_custom: false,
-        source_field: '',
-        source_placeholder: null
-      };
-      expenseFieldFormArray.push(this.createFormGroup(fieldData));
+
+    // Sort sageIntacctFields so that topPriorityFields come first
+    this.sageIntacctFields.sort((a, b) => {
+      return (topPriorityFields.includes(b.attribute_type) ? 1 : 0) - (topPriorityFields.includes(a.attribute_type) ? 1 : 0);
     });
 
-    // Handle remaining fields
+    // Handle only mapped fields
+    this.sageIntacctFields.forEach((sageIntacctField) => {
+      const fieldData = fieldMap.get(sageIntacctField.attribute_type);
+      if (fieldData) {
+        expenseFieldFormArray.push(this.createFormGroup(fieldData));
+      }
+    });
+
+    // Handle Unmapped top priority fields
+    topPriorityFields.forEach((field) => {
+      const topPriorityFieldData = unmappedFieldMap.get(field);
+      if (topPriorityFieldData) {
+        expenseFieldFormArray.push(this.createFormGroup(topPriorityFieldData));
+      }
+    });
+
+    // Handle Unmapped remaining fields
     if (expenseFieldFormArray.length < 3) {
       this.sageIntacctFields.forEach((sageIntacctField) => {
         if (expenseFieldFormArray.length < 3) {
-          const fieldData = fieldMap.get(sageIntacctField.attribute_type);
-          expenseFieldFormArray.push(this.createFormGroup(fieldData));
+          const fieldData = unmappedFieldMap.get(sageIntacctField.attribute_type);
+          if (fieldData) {
+            expenseFieldFormArray.push(this.createFormGroup(fieldData));
+          }
         }
       });
     }
