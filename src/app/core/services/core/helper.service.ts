@@ -26,4 +26,9 @@ export class HelperService {
 
     this.apiService.setBaseApiURL(api_urls[api_url]);
   }
+
+  getAppName() {
+    const appName = this.router.url.split('/')[2];
+    return appName;
+  }
 }
