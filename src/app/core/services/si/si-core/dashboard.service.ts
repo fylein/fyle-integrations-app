@@ -8,6 +8,8 @@ import { TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { TaskGetParams, TaskResponse } from 'src/app/core/models/si/db/task-log.model';
 import { Error } from 'src/app/core/models/si/db/error.model';
 import { ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
+import { HelperService } from '../../core/helper.service';
+import { ApiService } from '../../core/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +19,12 @@ export class DashboardService {
   workspaceId: string = this.workspaceService.getWorkspaceId();
 
   constructor(
-    private apiService: SiApiService,
-    private workspaceService: SiWorkspaceService
-  ) { }
+    private apiService: ApiService,
+    private workspaceService: SiWorkspaceService,
+    private helper: HelperService
+  ) { 
+    helper.callSetBaseApiURL();
+  }
 
   // TODO: cleanup all methods once dashboard impl is done
 

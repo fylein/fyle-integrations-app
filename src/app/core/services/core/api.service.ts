@@ -4,7 +4,7 @@ import { catchError, Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const API_BASE_URL = environment.api_url;
+let API_BASE_URL = environment.api_url;
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,6 +20,11 @@ export class ApiService {
   constructor(
     private http: HttpClient
   ) { }
+
+  setBaseApiURL(url: string) {
+    API_BASE_URL = url
+    console.log(API_BASE_URL)
+  }
 
   private handleError(error: HttpErrorResponse, httpMethod: string) {
     if (error.error instanceof ErrorEvent) {
@@ -55,6 +60,12 @@ export class ApiService {
   patch(endpoint: string, body: {}): Observable<any> {
     return this.http.patch(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'PATCH');
+    }));
+  }
+
+  put(endpoint: string, body: {}): Observable<any> {
+    return this.http.put(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
+      return this.handleError(error, 'PUT');
     }));
   }
 }

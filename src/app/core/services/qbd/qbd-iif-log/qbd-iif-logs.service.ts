@@ -4,6 +4,8 @@ import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTrigger
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdApiService } from '../qbd-core/qbd-api.service';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
+import { HelperService } from '../../core/helper.service';
+import { ApiService } from '../../core/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +13,12 @@ import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
 export class QbdIifLogsService {
 
   constructor(
-    private apiService: QbdApiService,
-    private workspaceService: QbdWorkspaceService
-  ) { }
+    private apiService: ApiService,
+    private workspaceService: QbdWorkspaceService,
+    private helper: HelperService
+  ) { 
+    helper.callSetBaseApiURL();
+  }
 
   getQbdAccountingExports(status: string | String[], limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, type: string[] | null): Observable<QbdExportTriggerResponse> {
     const params: any = {

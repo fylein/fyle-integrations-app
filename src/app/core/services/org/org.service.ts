@@ -7,6 +7,7 @@ import { AppName } from '../../models/enum/enum.model';
 import { GeneratedToken, Org } from '../../models/org/org.model';
 import { ApiService } from '../core/api.service';
 import { StorageService } from '../core/storage.service';
+import { HelperService } from '../core/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +17,11 @@ export class OrgService {
   constructor(
     private sanitizer: DomSanitizer,
     private apiService: ApiService,
-    private storageService: StorageService
-  ) { }
+    private storageService: StorageService,
+    private helper: HelperService
+  ) { 
+    helper.callSetBaseApiURL();
+  }
 
   getOrgId(): string {
     return this.storageService.get('orgId');
