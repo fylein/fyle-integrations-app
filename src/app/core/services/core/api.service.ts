@@ -32,14 +32,12 @@ export class ApiService {
     return throwError(error);
   }
 
-  // Having any here is ok
   post(endpoint: string, body: {}): Observable<any> {
     return this.http.post(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'POST');
     }));
   }
 
-  // Having any here is ok
   get(endpoint: string, apiParams: any): Observable<any> {
     let params = new HttpParams();
     Object.keys(apiParams).forEach(key => {
@@ -51,7 +49,6 @@ export class ApiService {
     }));
   }
 
-  // Having any here is ok
   patch(endpoint: string, body: {}): Observable<any> {
     return this.http.patch(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'PATCH');
