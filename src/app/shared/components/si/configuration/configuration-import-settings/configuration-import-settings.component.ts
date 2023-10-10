@@ -51,8 +51,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   toggleSwitchTrue: boolean = true;
 
-  showCostCodeCostType: boolean = false;
-
   intacctCategoryDestination: IntacctCategoryDestination;
 
   showDialog: boolean;
@@ -194,16 +192,14 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     }
   }
 
-  private costCodesCostTypesWatcher(): void {
-    this.importSettingsForm.controls.expenseFields.valueChanges.subscribe((expenseField) => {
-      if (expenseField[0].destination_field==='PROJECT' && expenseField[0].source_field==='PROJECT' && expenseField[0].import_to_fyle) {
-        this.showCostCodeCostType = true;
-      } else {
-        this.showCostCodeCostType = false;
-        this.importSettingsForm.controls.isDependentImportEnabled.setValue(false);
-      }
-    });
+  setDependendFieldFalsy(isProjectMappingEnabled: boolean) {
+    console.log(isProjectMappingEnabled);
+    if(!isProjectMappingEnabled) {
+      this.importSettingsForm.controls.isDependentImportEnabled.setValue(false);
+    }
+  }
 
+  private costCodesCostTypesWatcher(): void {
     if (this.importSettingsForm.value.costCodes) {
       this.costCodeFieldOption = [this.importSettingsForm.value.costCodes];
       this.importSettingsForm.controls.costCodes.disable();
@@ -426,7 +422,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         for (const setting of mappingSettings) {
           const { source_field, destination_field, import_to_fyle } = setting;
           if (source_field === 'PROJECT' && destination_field === 'PROJECT' && import_to_fyle === true) {
-            this.showCostCodeCostType = true;
             if (importSettings.dependent_field_settings?.is_import_enabled) {
               this.customField = {
                 attribute_type: importSettings.dependent_field_settings.cost_code_field_name,
@@ -485,8 +480,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
             is_custom: control.value.is_custom,
             source_placeholder: control.value.source_placeholder
           });
-
-          this.showCostCodeCostType = true;
           this.importSettingsForm.controls.isDependentImportEnabled.setValue(true);
         }
       });

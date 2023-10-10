@@ -124,12 +124,12 @@
                                 Fyle Fields should be unique
                                 </p>
                             </div>
-                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
+                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" (click)="setDependendFieldFalsy(expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
                     </div>
-                    <div class="tw-pt-26-px" *ngIf="i===0 && showCostCodeCostType" [formGroup]="importSettingsForm">
+                    <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle" [formGroup]="importSettingsForm">
                         <div class="tw-flex">
                             <div>
-                                <input formControlName="isDependentImportEnabled" type="checkbox" />
+                                <input formControlName="isDependentImportEnabled" type="checkbox"/>
                             </div>
                             <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields</label>
                         </div>
