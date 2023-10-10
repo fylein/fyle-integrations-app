@@ -14,7 +14,7 @@ export class HelperService {
   ) {}
 
   callSetBaseApiURL() {
-    const urlarray = this.router.url.split('/')
+    const urlarray = this.router.url.split('/');
     const api_url = urlarray.length > 2 ? urlarray[2] : urlarray[1];
     const api_urls: { [key: string]: string } = {
       'intacct': environment.si_api_url,
@@ -24,6 +24,6 @@ export class HelperService {
       'integration': environment.api_url
     };
 
-    this.apiService.setBaseApiURL(api_urls[api_url])
+    this.apiService.setBaseApiURL(api_urls[api_url]);
   }
 }

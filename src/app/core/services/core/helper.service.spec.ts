@@ -23,6 +23,6 @@ describe('HelperService', () => {
   });
 
   it('callSetBaseApiURL function check', () => {
-    expect(service.callSetBaseApiURL()).toBeUndefined()
+    expect(service.callSetBaseApiURL()).toBeUndefined();
   });
 });
