@@ -40,10 +40,7 @@
 }
 
 .truncate {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 75px;
+    @apply tw-w-100-px tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis;
 }
 
 :host ::ng-deep .drop-down .p-dropdown {
