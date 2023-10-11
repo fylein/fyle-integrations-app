@@ -323,7 +323,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         source_field: '',
         source_placeholder: null
       };
-      if (fieldData.import_to_fyle) {
+      if (mappingSetting) {
         mappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
       } else {
         unmappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
@@ -346,26 +346,15 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       }
     });
 
-    if (mappedFieldMap.size===0){
-      // Handle Unmapped top priority fields
-      topPriorityFields.forEach((field) => {
-        const topPriorityFieldData = unmappedFieldMap.get(field);
-        if (topPriorityFieldData) {
-          expenseFieldFormArray.push(this.createFormGroup(topPriorityFieldData));
+    if (mappedFieldMap.size === 0){
+      this.sageIntacctFields.forEach((sageIntacctField) => {
+        if (expenseFieldFormArray.length < 3) {
+          const fieldData = unmappedFieldMap.get(sageIntacctField.attribute_type);
+          if (fieldData) {
+            expenseFieldFormArray.push(this.createFormGroup(fieldData));
+          }
         }
       });
-
-      // Handle Unmapped remaining fields
-      if (expenseFieldFormArray.length < 3) {
-        this.sageIntacctFields.forEach((sageIntacctField) => {
-          if (expenseFieldFormArray.length < 3) {
-            const fieldData = unmappedFieldMap.get(sageIntacctField.attribute_type);
-            if (fieldData) {
-              expenseFieldFormArray.push(this.createFormGroup(fieldData));
-            }
-          }
-        });
-      }
     }
 
     return expenseFieldFormArray;
