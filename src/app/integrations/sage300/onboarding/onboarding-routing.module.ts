@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OnboardingComponent } from './onboarding.component';
-import { OnboardingLandingComponent } from './onboarding-landing/onboarding-landing.component';
+import { Sage300OnboardingLandingComponent } from './sage300-onboarding-landing/sage300-onboarding-landing.component';
+
 
 const routes: Routes = [
   {
@@ -10,11 +11,11 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: OnboardingLandingComponent
-      },
+        component: Sage300OnboardingLandingComponent
+      }
     ]
   }
-]
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
