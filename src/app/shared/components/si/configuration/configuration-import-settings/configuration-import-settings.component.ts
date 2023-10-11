@@ -192,8 +192,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     }
   }
 
-  setDependendFieldFalsy(isProjectMappingEnabled: boolean) {
-    if (!isProjectMappingEnabled) {
+  updateDependentField(sourceField: string, importToFyle: boolean) {
+    if (!(sourceField==='PROJECT' && importToFyle)) {
       this.importSettingsForm.controls.isDependentImportEnabled.setValue(false);
     }
   }
@@ -307,10 +307,10 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   // Main function to construct form array
   private constructFormArray(): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
-    const fieldMap = new Map<string, any>();
+    const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();
 
-    // First loop to populate fieldMap
+    // First loop to populate mappedFieldMap
     this.sageIntacctFields.forEach((sageIntacctField) => {
       const mappingSetting = this.importSettings.mapping_settings.find(
         (setting) => setting.destination_field === sageIntacctField.attribute_type
@@ -324,7 +324,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         source_placeholder: null
       };
       if (fieldData.import_to_fyle) {
-        fieldMap.set(sageIntacctField.attribute_type, fieldData);
+        mappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
       } else {
         unmappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
       }
@@ -340,7 +340,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
     // Handle only mapped fields
     this.sageIntacctFields.forEach((sageIntacctField) => {
-      const fieldData = fieldMap.get(sageIntacctField.attribute_type);
+      const fieldData = mappedFieldMap.get(sageIntacctField.attribute_type);
       if (fieldData) {
         expenseFieldFormArray.push(this.createFormGroup(fieldData));
       }
