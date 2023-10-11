@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OnboardingLandingComponent } from './onboarding-landing/onboarding-landing.component';
 import { Sage300OnboardingLandingComponent } from './sage300-onboarding-landing/sage300-onboarding-landing.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { OnboardingRoutingModule } from './onboarding-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    OnboardingLandingComponent,
     Sage300OnboardingLandingComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule,
+    OnboardingRoutingModule
   ]
 })
 export class OnboardingModule { }

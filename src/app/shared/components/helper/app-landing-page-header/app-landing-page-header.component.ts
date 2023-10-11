@@ -77,6 +77,7 @@ export class AppHeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.appName === 'Sage 300');
   }
 
 }
