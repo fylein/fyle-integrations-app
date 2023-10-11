@@ -39,6 +39,10 @@
     color: grey;
 }
 
+.truncate {
+    @apply tw-w-100-px tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis;
+}
+
 :host ::ng-deep .drop-down .p-dropdown {
     @apply tw-w-200-px tw-border-0 #{!important};
 }

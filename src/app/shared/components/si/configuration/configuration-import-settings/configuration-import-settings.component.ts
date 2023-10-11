@@ -51,8 +51,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   toggleSwitchTrue: boolean = true;
 
-  showCostCodeCostType: boolean = false;
-
   intacctCategoryDestination: IntacctCategoryDestination;
 
   showDialog: boolean;
@@ -131,7 +129,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     const defaultFieldData: MappingSetting = {
       source_field: '',
       destination_field: '',
-      import_to_fyle: false,
+      import_to_fyle: true,
       is_custom: false,
       source_placeholder: null
     };
@@ -194,16 +192,13 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     }
   }
 
-  private costCodesCostTypesWatcher(): void {
-    this.importSettingsForm.controls.expenseFields.valueChanges.subscribe((expenseField) => {
-      if (expenseField[0].destination_field==='PROJECT' && expenseField[0].source_field==='PROJECT' && expenseField[0].import_to_fyle) {
-        this.showCostCodeCostType = true;
-      } else {
-        this.showCostCodeCostType = false;
-        this.importSettingsForm.controls.isDependentImportEnabled.setValue(false);
-      }
-    });
+  updateDependentField(sourceField: string, importToFyle: boolean) {
+    if (!(sourceField==='PROJECT' && importToFyle)) {
+      this.importSettingsForm.controls.isDependentImportEnabled.setValue(false);
+    }
+  }
 
+  private costCodesCostTypesWatcher(): void {
     if (this.importSettingsForm.value.costCodes) {
       this.costCodeFieldOption = [this.importSettingsForm.value.costCodes];
       this.importSettingsForm.controls.costCodes.disable();
@@ -312,9 +307,10 @@ export class ConfigurationImportSettingsComponent implements OnInit {
   // Main function to construct form array
   private constructFormArray(): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
-    const fieldMap = new Map<string, any>();
+    const mappedFieldMap = new Map<string, any>();
+    const unmappedFieldMap = new Map<string, any>();
 
-    // First loop to populate fieldMap
+    // First loop to populate mappedFieldMap
     this.sageIntacctFields.forEach((sageIntacctField) => {
       const mappingSetting = this.importSettings.mapping_settings.find(
         (setting) => setting.destination_field === sageIntacctField.attribute_type
@@ -327,29 +323,36 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         source_field: '',
         source_placeholder: null
       };
+      if (mappingSetting) {
+        mappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
+      } else {
+        unmappedFieldMap.set(sageIntacctField.attribute_type, fieldData);
+      }
 
-      fieldMap.set(sageIntacctField.attribute_type, fieldData);
     });
 
-    // Handle top priority fields
     const topPriorityFields = ['PROJECT', 'DEPARTMENT', 'LOCATION'];
-    topPriorityFields.forEach((field) => {
-      const fieldData = fieldMap.get(field) || {
-        destination_field: '',
-        import_to_fyle: false,
-        is_custom: false,
-        source_field: '',
-        source_placeholder: null
-      };
-      expenseFieldFormArray.push(this.createFormGroup(fieldData));
+
+    // Sort sageIntacctFields so that topPriorityFields come first
+    this.sageIntacctFields.sort((a, b) => {
+      return (topPriorityFields.includes(b.attribute_type) ? 1 : 0) - (topPriorityFields.includes(a.attribute_type) ? 1 : 0);
     });
 
-    // Handle remaining fields
-    if (expenseFieldFormArray.length < 3) {
+    // Handle only mapped fields
+    this.sageIntacctFields.forEach((sageIntacctField) => {
+      const fieldData = mappedFieldMap.get(sageIntacctField.attribute_type);
+      if (fieldData) {
+        expenseFieldFormArray.push(this.createFormGroup(fieldData));
+      }
+    });
+
+    if (mappedFieldMap.size === 0){
       this.sageIntacctFields.forEach((sageIntacctField) => {
         if (expenseFieldFormArray.length < 3) {
-          const fieldData = fieldMap.get(sageIntacctField.attribute_type);
-          expenseFieldFormArray.push(this.createFormGroup(fieldData));
+          const fieldData = unmappedFieldMap.get(sageIntacctField.attribute_type);
+          if (fieldData) {
+            expenseFieldFormArray.push(this.createFormGroup(fieldData));
+          }
         }
       });
     }
@@ -409,7 +412,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         for (const setting of mappingSettings) {
           const { source_field, destination_field, import_to_fyle } = setting;
           if (source_field === 'PROJECT' && destination_field === 'PROJECT' && import_to_fyle === true) {
-            this.showCostCodeCostType = true;
             if (importSettings.dependent_field_settings?.is_import_enabled) {
               this.customField = {
                 attribute_type: importSettings.dependent_field_settings.cost_code_field_name,
@@ -468,8 +470,6 @@ export class ConfigurationImportSettingsComponent implements OnInit {
             is_custom: control.value.is_custom,
             source_placeholder: control.value.source_placeholder
           });
-
-          this.showCostCodeCostType = true;
           this.importSettingsForm.controls.isDependentImportEnabled.setValue(true);
         }
       });
