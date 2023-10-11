@@ -39,6 +39,14 @@
     color: grey;
 }
 
+.truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75px;
+}
+
+
 :host ::ng-deep .drop-down .p-dropdown {
     @apply tw-w-200-px tw-border-0 #{!important};
 }
