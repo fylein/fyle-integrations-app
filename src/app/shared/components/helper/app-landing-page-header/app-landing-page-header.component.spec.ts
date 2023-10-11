@@ -4,7 +4,7 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AppHeaderComponent } from './app-header.component';
+import { AppHeaderComponent } from './app-landing-page-header.component';
 
 describe('AppHeaderComponent', () => {
   let component: AppHeaderComponent;

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppIntegrationLandingComponent } from './app-integration-landing.component';
+import { AppIntegrationLandingComponent } from './app-landing-page-body.component';
 
 describe('AppIntegrationLandingComponent', () => {
   let component: AppIntegrationLandingComponent;

@@ -8,8 +8,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 
 @Component({
   selector: 'app-app-header',
-  templateUrl: './app-header.component.html',
-  styleUrls: ['./app-header.component.scss']
+  templateUrl: './app-landing-page-header.component.html',
+  styleUrls: ['./app-landing-page-header.component.scss']
 })
 export class AppHeaderComponent implements OnInit {
 
