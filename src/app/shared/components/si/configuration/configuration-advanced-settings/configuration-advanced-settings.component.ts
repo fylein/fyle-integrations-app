@@ -267,6 +267,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     this.advancedSettingsService.postAdvancedSettings(advancedSettingsPayload).subscribe((response: AdvancedSettingsPost) => {
       if (this.advancedSettingsForm.value.skipSelectiveExpenses) {
         this.skipExportChild.saveSkipExportFields();
+      } else {
+        this.advancedSettingsService.deleteExpenseFilter(1).subscribe();
+        this.advancedSettingsService.deleteExpenseFilter(2).subscribe();
       }
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
