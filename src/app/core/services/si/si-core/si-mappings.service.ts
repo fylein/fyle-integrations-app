@@ -160,7 +160,7 @@ export class SiMappingsService {
     );
   }
 
-  getEmployeeMappingsV2(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string): Observable<GenericMappingV2Response> {
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string, mappingPage: string): Observable<GenericMappingV2Response> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = mappingState==='UNMAPPED' ? false : true;
     const params: { limit: number, offset: number, mapped: boolean | MappingState, destination_type: string, mapping_source_alphabets?: string } = {
@@ -174,9 +174,7 @@ export class SiMappingsService {
       params.mapping_source_alphabets = alphabetsFilter;
     }
 
-    return this.apiService.get(
-      `/workspaces/${workspaceId}/mappings/employee_attributes/`, params
-    );
+    return mappingPage==='EMPLOYEE' ? this.apiService.get(`/workspaces/${workspaceId}/mappings/employee_attributes/`, params) : this.apiService.get(`/workspaces/${workspaceId}/mappings/category_attributes/`, params);
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {

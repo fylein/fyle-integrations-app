@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -22,7 +22,7 @@ export class GenericMappingV2Component implements OnInit {
 
   isLoading: boolean = true;
 
-  mappingPageName: string = 'EMPLOYEE';
+  @Input() mappingPageName: string;
 
   isInitialSetupComplete: boolean = false;
 
@@ -100,7 +100,7 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   private getFilteredMappings() {
-    this.mappingService.getEmployeeMappingsV2(this.limit, this.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter).subscribe((intacctMappingResult: GenericMappingV2Response) => {
+    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter, this.mappingPageName).subscribe((intacctMappingResult: GenericMappingV2Response) => {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = intacctMappingResult.count;
@@ -221,7 +221,7 @@ export class GenericMappingV2Component implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getEmployeeMappingsV2(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
+      this.mappingService.getGenericMappingsV2(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter, this.mappingPageName),
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {

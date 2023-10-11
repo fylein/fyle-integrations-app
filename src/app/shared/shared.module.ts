@@ -166,7 +166,8 @@ import { GenericMappingV2Component } from './components/si/helper/generic-mappin
     ConfigurationAdvancedSettingsComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
-    DashboardMenuComponent
+    DashboardMenuComponent,
+    GenericMappingV2Component
   ]
 })
 export class SharedModule { }
