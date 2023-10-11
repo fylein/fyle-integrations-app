@@ -37,6 +37,6 @@ export type TaskGetParams = {
   limit?: number;
   offset?: number;
   status?: string[];
-  expense_group_id?: number[];
-  type?: string[];
+  expense_group_ids?: number[];
+  task_type?: string[];
 };
