@@ -346,24 +346,26 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       }
     });
 
-    // Handle Unmapped top priority fields
-    topPriorityFields.forEach((field) => {
-      const topPriorityFieldData = unmappedFieldMap.get(field);
-      if (topPriorityFieldData) {
-        expenseFieldFormArray.push(this.createFormGroup(topPriorityFieldData));
-      }
-    });
-
-    // Handle Unmapped remaining fields
-    if (expenseFieldFormArray.length < 3) {
-      this.sageIntacctFields.forEach((sageIntacctField) => {
-        if (expenseFieldFormArray.length < 3) {
-          const fieldData = unmappedFieldMap.get(sageIntacctField.attribute_type);
-          if (fieldData) {
-            expenseFieldFormArray.push(this.createFormGroup(fieldData));
-          }
+    if (mappedFieldMap.size===0){
+      // Handle Unmapped top priority fields
+      topPriorityFields.forEach((field) => {
+        const topPriorityFieldData = unmappedFieldMap.get(field);
+        if (topPriorityFieldData) {
+          expenseFieldFormArray.push(this.createFormGroup(topPriorityFieldData));
         }
       });
+
+      // Handle Unmapped remaining fields
+      if (expenseFieldFormArray.length < 3) {
+        this.sageIntacctFields.forEach((sageIntacctField) => {
+          if (expenseFieldFormArray.length < 3) {
+            const fieldData = unmappedFieldMap.get(sageIntacctField.attribute_type);
+            if (fieldData) {
+              expenseFieldFormArray.push(this.createFormGroup(fieldData));
+            }
+          }
+        });
+      }
     }
 
     return expenseFieldFormArray;
