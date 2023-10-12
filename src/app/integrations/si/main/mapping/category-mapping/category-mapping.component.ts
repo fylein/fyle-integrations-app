@@ -25,8 +25,6 @@ export class CategoryMappingComponent implements OnInit {
 
   mappingStats: MappingStats;
 
-  employeeFieldMapping: FyleField;
-
   reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
 
   cccExpenseObject?: CorporateCreditCardExpensesObject;
@@ -81,7 +79,7 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   getCategoryMappingOptions() {
-    if (this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+    if (this.isExpenseTypeRequired()) {
       return this.sageIntacctExpenseTypes;
     }
     return this.sageIntacctAccounts;
@@ -145,7 +143,7 @@ export class CategoryMappingComponent implements OnInit {
   getAttributesFilteredByConfig() {
     const attributes = [];
 
-    if (this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+    if (this.isExpenseTypeRequired()) {
       attributes.push('EXPENSE_TYPE');
     } else {
       attributes.push('ACCOUNT');
@@ -156,13 +154,17 @@ export class CategoryMappingComponent implements OnInit {
 
   getDropdownValue(categoryMapping: CategoryMapping[]) {
     if (categoryMapping?.length) {
-      if (this.employeeFieldMapping === FyleField.VENDOR) {
+      if (!this.isExpenseTypeRequired()) {
         return categoryMapping[0].destination_account;
-      } else if (this.employeeFieldMapping === FyleField.EMPLOYEE) {
+      } else {
         return categoryMapping[0].destination_expense_head;
       }
     }
     return null;
+  }
+
+  private isExpenseTypeRequired(): boolean {
+    return this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT;
   }
 
   save(selectedRow: CategoryMappingResult, event: any) {
@@ -173,10 +175,10 @@ export class CategoryMappingComponent implements OnInit {
         id: sourceId
       },
       destination_account: {
-        id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.categorymapping.length && selectedRow.categorymapping[0].destination_account ? selectedRow.categorymapping[0].destination_account?.id : null)
+        id: !this.isExpenseTypeRequired() ? event.value.id : null
       },
       destination_expense_head: {
-        id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.categorymapping.length && selectedRow.categorymapping[0].destination_expense_head ? selectedRow.categorymapping[0].destination_expense_head?.id : null)
+        id: this.isExpenseTypeRequired() ? event.value.id : null
       },
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
@@ -225,7 +227,6 @@ export class CategoryMappingComponent implements OnInit {
 
   ngOnInit(): void {
     this.mappingService.getConfiguration().subscribe((response) => {
-      this.employeeFieldMapping = response.employee_field_mapping;
       this.reimbursableExpenseObject = response.reimbursable_expenses_object;
       this.cccExpenseObject = response.corporate_credit_card_expenses_object;
       this.setupPage();
