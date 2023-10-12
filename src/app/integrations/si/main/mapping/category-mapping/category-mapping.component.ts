@@ -81,7 +81,7 @@ export class CategoryMappingComponent implements OnInit {
   }
 
   getCategoryMappingOptions() {
-    if (this.employeeFieldMapping === FyleField.EMPLOYEE){
+    if (this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT) {
       return this.sageIntacctExpenseTypes;
     }
     return this.sageIntacctAccounts;
