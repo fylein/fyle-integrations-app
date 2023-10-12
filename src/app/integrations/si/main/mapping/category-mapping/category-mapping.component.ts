@@ -145,7 +145,7 @@ export class CategoryMappingComponent implements OnInit {
   getAttributesFilteredByConfig() {
     const attributes = [];
 
-    if (this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
+    if (this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT) {
       attributes.push('EXPENSE_TYPE');
     } else {
       attributes.push('ACCOUNT');
