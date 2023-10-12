@@ -91,12 +91,12 @@ export class DashboardService {
     }
 
     if (expenseGroupIds.length) {
-      const expenseKey = 'expense_group_id';
+      const expenseKey = 'expense_group_ids';
       apiParams[expenseKey] = expenseGroupIds;
     }
 
     if (taskType) {
-      const typeKey = 'type';
+      const typeKey = 'task_type';
       apiParams[typeKey] = taskType;
     }
 
