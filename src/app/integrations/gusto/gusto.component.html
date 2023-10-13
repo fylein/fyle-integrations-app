@@ -1,5 +1,5 @@
 <div>
-    <app-app-header 
+    <app-landing-page-header 
         [iconPath]="'assets/logos/gusto-logo.svg'" 
         [appName]="appName" 
         [appDescription]="'Auto sync employee details between Fyle and Gusto.'" 
@@ -12,9 +12,9 @@
         [redirectLink]="RedirectLink.GUSTO"
         [iframeSourceUrl]="iframeSourceUrl"
         (syncEmployees)="syncEmployees()"
-    ></app-app-header>
+    ></app-landing-page-header>
     
-    <app-app-integration-landing  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></app-app-integration-landing>
+    <app-landing-page-body  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></app-landing-page-body>
 
     <div *ngIf="showErrorScreen" class="tw-pt-100-px">
         <app-error></app-error>
