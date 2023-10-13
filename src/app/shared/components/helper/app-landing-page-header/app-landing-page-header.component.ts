@@ -1,17 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { BambooHRConfiguration } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/core/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
-  selector: 'app-app-header',
-  templateUrl: './app-header.component.html',
-  styleUrls: ['./app-header.component.scss']
+  selector: 'app-landing-page-header',
+  templateUrl: './app-landing-page-header.component.html',
+  styleUrls: ['./app-landing-page-header.component.scss']
 })
-export class AppHeaderComponent implements OnInit {
+export class AppLandingPageHeaderComponent implements OnInit {
 
   AppName = AppName;
 
