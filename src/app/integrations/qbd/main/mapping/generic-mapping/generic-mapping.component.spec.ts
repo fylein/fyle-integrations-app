@@ -4,13 +4,13 @@ import { GenericMappingComponent } from './generic-mapping.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from 'primeng/api';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 import { of, throwError } from 'rxjs';
 import { MappingState, OperatingSystem } from 'src/app/core/models/enum/enum.model';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
 import { getMappingResponse, getMappingStatsResponse, postMappingPayload, postMappingResponse } from './generic-mapping.fixture';
 
 describe('GenericMappingComponent', () => {

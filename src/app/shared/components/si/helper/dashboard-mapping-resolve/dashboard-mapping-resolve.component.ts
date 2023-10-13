@@ -6,7 +6,7 @@ import { CategoryMapping, CategoryMappingPost, CategoryMappingResult } from 'src
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { Error } from 'src/app/core/models/si/db/error.model';
 import { ExpenseAttribute } from 'src/app/core/models/si/db/expense-attribute.model';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 

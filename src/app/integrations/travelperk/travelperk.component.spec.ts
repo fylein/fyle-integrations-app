@@ -7,7 +7,7 @@ import { TravelperkComponent } from './travelperk.component';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { generateTokenData, orgMockData } from 'src/app/core/services/org/org.fixture';
 import { connectAwsS3MockData, connectTravelperkMockData, travelperkErrorMockData, travelperkMockData, workatoConnectionStatusMockData } from 'src/app/core/services/travelperk/travelperk.fixture';
-import { EventsService } from 'src/app/core/services/core/events.service';
+import { EventsService } from 'src/app/core/services/common/events.service';
 import { MessageService } from 'primeng/api';
 
 describe('TravelperkComponent', () => {

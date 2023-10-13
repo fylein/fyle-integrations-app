@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 
 @Component({

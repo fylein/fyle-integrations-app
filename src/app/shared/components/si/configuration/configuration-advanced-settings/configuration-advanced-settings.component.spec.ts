@@ -4,7 +4,7 @@ import { ConfigurationAdvancedSettingsComponent } from './configuration-advanced
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MessageService } from 'primeng/api';
 
 describe('ConfigurationAdvancedSettingsComponent', () => {

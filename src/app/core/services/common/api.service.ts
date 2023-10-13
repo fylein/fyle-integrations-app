@@ -4,7 +4,7 @@ import { catchError, Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-const API_BASE_URL = environment.api_url;
+let API_BASE_URL = environment.api_url;
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -21,6 +21,10 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
+  setBaseApiURL(url: string): void {
+    API_BASE_URL = url;
+  }
+
   private handleError(error: HttpErrorResponse, httpMethod: string) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
@@ -32,14 +36,12 @@ export class ApiService {
     return throwError(error);
   }
 
-  // Having any here is ok
   post(endpoint: string, body: {}): Observable<any> {
     return this.http.post(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'POST');
     }));
   }
 
-  // Having any here is ok
   get(endpoint: string, apiParams: any): Observable<any> {
     let params = new HttpParams();
     Object.keys(apiParams).forEach(key => {
@@ -51,10 +53,15 @@ export class ApiService {
     }));
   }
 
-  // Having any here is ok
   patch(endpoint: string, body: {}): Observable<any> {
     return this.http.patch(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'PATCH');
+    }));
+  }
+
+  put(endpoint: string, body: {}): Observable<any> {
+    return this.http.put(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
+      return this.handleError(error, 'PUT');
     }));
   }
 }

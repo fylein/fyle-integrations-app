@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { AuthService } from 'src/app/core/services/core/auth.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
-import { EXPOSE_INTACCT_NEW_APP } from 'src/app/core/services/core/events.service';
-import { StorageService } from 'src/app/core/services/core/storage.service';
+import { EXPOSE_INTACCT_NEW_APP } from 'src/app/core/services/common/events.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

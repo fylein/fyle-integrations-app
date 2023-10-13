@@ -8,8 +8,8 @@ import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, I
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
-import { StorageService } from 'src/app/core/services/core/storage.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';

@@ -358,6 +358,16 @@ export enum QBDOnboardingState {
     SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
   }
 
+  export enum AppUrl {
+    BAMBOO_HR = 'bamboo_hr',
+    QBD = 'qbd',
+    TRAVELPERK = 'travelperk',
+    GUSTO = 'gusto',
+    INTACCT = 'intacct',
+    SAGE300 = 'sage300',
+    INTEGRATION = 'integration'
+  }
+
   export enum Sage300Link {
     IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
     EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',

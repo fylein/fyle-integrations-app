@@ -4,7 +4,7 @@ import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
-import { StorageService } from '../../core/storage.service';
+import { StorageService } from '../../common/storage.service';
 import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
 import { SageIntacctCredential } from 'src/app/core/models/si/db/sage-credentials.model';
 
