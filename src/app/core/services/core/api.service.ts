@@ -21,7 +21,7 @@ export class ApiService {
     private http: HttpClient
   ) { }
 
-  setBaseApiURL(url: string) {
+  setBaseApiURL(url: string): void {
     API_BASE_URL = url;
   }
 

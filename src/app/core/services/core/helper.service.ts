@@ -15,10 +15,10 @@ export class HelperService {
     private apiService: ApiService
   ) {}
 
-  callSetBaseApiURL() {
-    const urlarray = this.router.url.split('/');
-    const api_url = urlarray.length > 2 ? urlarray[2] : urlarray[1];
-    const api_urls: AppUrlMap = {
+  setBaseApiURL(): void {
+    const urlSplit = this.router.url.split('/');
+    const module = urlSplit.length > 2 ? urlSplit[2] : urlSplit[1];
+    const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
       [AppUrl.TRAVELPERK]: environment.api_url,
@@ -26,7 +26,7 @@ export class HelperService {
       [AppUrl.INTEGRATION]: environment.api_url
     };
 
-    this.apiService.setBaseApiURL(api_urls[api_url]);
+    this.apiService.setBaseApiURL(apiUrlMap[module]);
   }
 
   getAppName(): string {

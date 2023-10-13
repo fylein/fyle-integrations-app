@@ -20,7 +20,7 @@ export class WorkspaceService {
     private apiService: ApiService,
     private helper: HelperService
   ) {
-    helper.callSetBaseApiURL();
+    helper.setBaseApiURL();
    }
 
   importFyleAttributes(refresh: boolean): Observable<{}> {

@@ -22,7 +22,7 @@ describe('HelperService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('callSetBaseApiURL function check', () => {
-    expect(service.callSetBaseApiURL()).toBeUndefined();
+  it('setBaseApiURL function check', () => {
+    expect(service.setBaseApiURL()).toBeUndefined();
   });
 });
