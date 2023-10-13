@@ -49,10 +49,14 @@ export class WorkspaceService {
     const appInitialOnboardingState: AppUrlMap = {
       [AppUrl.INTACCT]: IntacctOnboardingState.CONNECTION,
       [AppUrl.GUSTO]: QBDOnboardingState.EXPORT_SETTINGS,
-      [AppUrl.SAGE300]: IntacctOnboardingState.CONNECTION
+      [AppUrl.SAGE300]: IntacctOnboardingState.CONNECTION,
+      [AppUrl.BAMBOO_HR]: IntacctOnboardingState.CONNECTION,
+      [AppUrl.QBD]: IntacctOnboardingState.CONNECTION,
+      [AppUrl.TRAVELPERK]: IntacctOnboardingState.CONNECTION,
+      [AppUrl.INTEGRATION]: IntacctOnboardingState.CONNECTION
     };
     const onboardingState = this.storageService.get('onboarding-state');
-    return onboardingState ? onboardingState : appInitialOnboardingState[this.helper.getAppName()];
+    return onboardingState ? onboardingState : appInitialOnboardingState[(this.helper.getAppName()) as AppUrl];
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app

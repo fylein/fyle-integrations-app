@@ -1,4 +1,4 @@
-import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView } from "../enum/enum.model";
+import { AccountingIntegrationApp, AppUrl, ClickEvent, InAppIntegration, IntegrationView } from "../enum/enum.model";
 
 export type IntegrationsView = {
     [IntegrationView.ACCOUNTING]: boolean,
@@ -30,5 +30,11 @@ export type InAppIntegrationUrlMap = {
 }
 
 export type AppUrlMap = {
-    [key: string]: string;
-  };
+    [AppUrl.BAMBOO_HR]: string,
+    [AppUrl.QBD]: string,
+    [AppUrl.TRAVELPERK]: string,
+    [AppUrl.GUSTO]: string,
+    [AppUrl.INTACCT]: string,
+    [AppUrl.SAGE300]: string,
+    [AppUrl.INTEGRATION]: string
+}
