@@ -3,7 +3,7 @@ import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { Configuration } from '../../models/db/configuration.model';
-import { IntacctOnboardingState, QBDOnboardingState } from '../../models/enum/enum.model';
+import { AppUrl, IntacctOnboardingState, QBDOnboardingState } from '../../models/enum/enum.model';
 import { IntacctWorkspace } from '../../models/si/db/workspaces.model';
 import { ApiService } from './api.service';
 import { QBDWorkspace } from '../../models/qbd/db/workspaces.model';
@@ -23,8 +23,8 @@ export class WorkspaceService {
    }
 
   @Cacheable()
-  syncFyleDimensions() {
-    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/sync_dimensions/`, {});
+  importFyleAttributes(refresh: boolean) {
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/import_attributes/`, {refresh: refresh});
   }
 
   @Cacheable()
@@ -32,7 +32,7 @@ export class WorkspaceService {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
 
-  postWorkspace(): Observable<IntacctWorkspace | QBDWorkspace> {
+  postWorkspace(): any {
     return this.apiService.post('/workspaces/', {});
   }
 
@@ -41,19 +41,20 @@ export class WorkspaceService {
   }
 
   setOnboardingState(onboardingState: IntacctOnboardingState | QBDOnboardingState): void {
-    return this.storageService.set('onboardingState', onboardingState);
+    return this.storageService.set('onboarding-state', onboardingState);
   }
 
   getOnboardingState(): QBDOnboardingState | IntacctOnboardingState {
     const appInitialOnboardingState: { [key: string]: string } = {
-      'intacct': IntacctOnboardingState.CONNECTION,
-      'qbd': QBDOnboardingState.EXPORT_SETTINGS
+      [AppUrl.INTACCT]: IntacctOnboardingState.CONNECTION,
+      [AppUrl.GUSTO]: QBDOnboardingState.EXPORT_SETTINGS,
+      [AppUrl.SAGE300]: IntacctOnboardingState.CONNECTION
     };
-    const onboardingState = this.storageService.get('OnboardingState');
+    const onboardingState = this.storageService.get('onboarding-state');
     return onboardingState ? onboardingState : appInitialOnboardingState[this.helper.getAppName()];
   }
 
-  getConfiguration(): Observable<Configuration> {
+  getConfiguration(): any {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }
 }

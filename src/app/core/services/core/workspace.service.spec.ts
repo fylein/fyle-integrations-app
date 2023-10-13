@@ -38,7 +38,7 @@ describe('WorkspaceService', () => {
       "updated_at": "2023-01-23T05:37:56.908051Z",
       "user": [1]
     };
-    service.postWorkspace().subscribe((value) => {
+    service.postWorkspace().subscribe((value: {}) => {
       const responseKeys = Object.keys(workspaceResponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);
@@ -96,8 +96,8 @@ describe('WorkspaceService', () => {
     expect(state).toEqual(response);
   });
 
-  it('syncFyleDimensions function check', () => {
-    service.syncFyleDimensions().subscribe((value) => {
+  it('importFyleAttributes function check', () => {
+    service.importFyleAttributes(true).subscribe((value) => {
       expect(value).toEqual({});
     });
 
