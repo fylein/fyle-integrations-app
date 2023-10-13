@@ -29,8 +29,8 @@ export class SiAdvancedSettingService {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, {});
   }
 
-  deleteExpenseFilter(expenseFilterId?: number): Observable<SkipExport> {
-    return this.apiService.delete(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/${expenseFilterId}/`);
+  deleteExpenseFilter(rank: number): Observable<SkipExport> {
+    return this.apiService.delete(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, { rank });
   }
 
   getAdvancedSettings(): Observable<AdvancedSettingsGet>{

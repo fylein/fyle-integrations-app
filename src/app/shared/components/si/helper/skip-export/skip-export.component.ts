@@ -48,7 +48,7 @@ export class SkipExportComponent implements OnInit {
 
   operatorFieldOptions2: { label: string; value: string }[];
 
-  joinByOptions = [JoinOptions.AND, JoinOptions.OR];
+  joinByOptions = [{value: JoinOptions.AND}, {value: JoinOptions.OR}];
 
   getSkipExportSubLabel(): string {
     const subLabel = 'You could choose to skip the export of certain expenses from Fyle to Sage Intacct by setting up a conditional rule.';
@@ -296,16 +296,20 @@ export class SkipExportComponent implements OnInit {
   }
 
   saveSkipExportFields() {
+    if (!this.skipExportForm.valid) {
+      return;
+    }
+
     const valueField = this.skipExportForm.getRawValue();
     if (this.showAddButton && this.expenseFilters.length > 1) {
       this.advancedSettingsService
-      .deleteExpenseFilter(this.expenseFilters[1].id)
+      .deleteExpenseFilter(this.expenseFilters[1].rank)
       .subscribe((skipExport1: SkipExport) => {
       });
     }
     if (!this.enableSkipExport) {
       this.advancedSettingsService
-      .deleteExpenseFilter(this.expenseFilters[0].id)
+      .deleteExpenseFilter(this.expenseFilters[0].rank)
       .subscribe((skipExport1: SkipExport) => {
       });
     } else {
@@ -440,21 +444,16 @@ export class SkipExportComponent implements OnInit {
   }
 
   operatorFieldWatcher() {
-    this.skipExportForm.controls.operator1.valueChanges.subscribe(
-      (operatorSelected) => {
+    this.skipExportForm.controls.operator1.valueChanges.subscribe((operatorSelected) => {
         this.valueOption1 = [];
-        if (
-          operatorSelected === 'is_empty' ||
-          operatorSelected === 'is_not_empty'
-        ) {
+        if (operatorSelected === 'is_empty' || operatorSelected === 'is_not_empty') {
           this.isDisabledChip1 = true;
           this.skipExportForm.controls.value1.clearValidators();
           this.skipExportForm.controls.value1.setValue(null);
         } else {
           this.isDisabledChip1 = false;
-          this.skipExportForm.controls.value1.setValidators([Validators.required]);
+          this.skipExportForm.controls.value1.setValidators(Validators.required);
           this.skipExportForm.controls.value1.setValue(null, {emitEvent: false});
-
         }
       }
     );
@@ -526,7 +525,7 @@ export class SkipExportComponent implements OnInit {
       operator1: [selectedOperator1],
       value1: [valueFC1],
       customFieldType1: [customFieldTypeFC1],
-      join_by: [joinByFC],
+      join_by: [{value: joinByFC}],
       condition2: [joinByFC ? conditionArray[1] : ''],
       operator2: [joinByFC && selectedOperator2 ? selectedOperator2 : ''],
       value2: [valueFC2],

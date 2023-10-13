@@ -184,7 +184,7 @@ export class SkipExportLogComponent implements OnInit {
           updated_at: skippedExpenses.updated_at,
           claim_number: skippedExpenses.claim_number,
           employee: [skippedExpenses.employee_name, skippedExpenses.employee_email],
-          expenseType: skippedExpenses.fund_source === 'Personal' ? 'Reimbursable' : 'Corporate Card',
+          expenseType: skippedExpenses.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
           fyleUrl: `${environment.fyle_app_url}/app/main/#/view_expense/${skippedExpenses.expense_id}`
         });
       });

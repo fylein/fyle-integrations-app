@@ -45,7 +45,7 @@
                 <p-calendar [(ngModel)]="date1" formControlName="value1" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField1()">
-                <p-chips styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
+                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
                 <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
               </div>
         </div>
@@ -67,7 +67,14 @@
           </div>
           <div class="tw-flex">
             <div class="joinby-field">
-              <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" optionLabel="value" formControlName="join_by" placeholder="Join by"></p-dropdown>
+              <p-dropdown optionLabel="value" appendTo="body" class="joinby-field" [options]="joinByOptions" formControlName="join_by" placeholder="Join by">
+                <ng-template let-value pTemplate="selectedItem" >
+                  {{ value.value }}
+                </ng-template>
+                <ng-template let-value pTemplate="item">
+                  {{ value.value }}
+                </ng-template>
+              </p-dropdown>
             </div>
             <div class="tw-ml-24-px tw-mr-24-px">
               <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select Condition">
@@ -92,7 +99,7 @@
               <input type="text" formControlName="value2" placeholder="Enter a value" class="border p-2 rounded value-input-field" placeholder="Enter Value">
             </div>
             <div *ngIf="showChipField2()" class="tw-w-296-px">
-              <p-chips styleClass="tw-w-[296px]" [(ngModel)]="valueOption2" formControlName="value2" placeholder="Enter Value"></p-chips>
+              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption2" formControlName="value2" placeholder="Enter Value"></p-chips>
               <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
             </div>
             <div *ngIf="showDateField2()" class="tw-w-296-px">

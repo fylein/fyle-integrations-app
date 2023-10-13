@@ -9,7 +9,8 @@ const API_BASE_URL = environment.si_api_url;
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
-  })
+  }),
+  body: {}
 };
 
 @Injectable({
@@ -82,7 +83,8 @@ export class SiApiService {
   }
 
   // Having any here is ok
-  delete(endpoint: string): Observable<any> {
+  delete(endpoint: string, body: {}): Observable<any> {
+    httpOptions.body = body;
     return this.http.delete(API_BASE_URL + endpoint, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'DELETE');
     }));

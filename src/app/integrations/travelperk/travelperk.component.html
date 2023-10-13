@@ -1,4 +1,4 @@
-<app-app-header 
+<app-landing-page-header 
     [iconPath]="'assets/logos/travelperk-logo.svg'"
     [appName]="AppName.TRAVELPERK"
     [appDescription]="'Autosync employee details between Fyle and TravelPerk.'"
@@ -9,14 +9,14 @@
     [isConnectionInProgress]="isConnectionInProgress"
     (disconnectIntegration)="disconnect()"
     (openDialog)="connectTravelperk()"
-></app-app-header>
+></app-landing-page-header>
 
-<app-app-integration-landing
+<app-landing-page-body
     *ngIf="!isLoading && !showErrorScreen"
     [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" 
     [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
     [redirectLink]="RedirectLink.TRAVELPERK"
-></app-app-integration-landing>
+></app-landing-page-body>
 
 <app-error *ngIf="showErrorScreen"></app-error>
 
