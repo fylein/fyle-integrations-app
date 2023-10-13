@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { IntacctConnectorService } from './intacct-connector.service';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
-import { StorageService } from '../../core/storage.service';
+import { StorageService } from '../../common/storage.service';
 import { of } from 'rxjs';
 
 describe('IntacctConnectorService', () => {

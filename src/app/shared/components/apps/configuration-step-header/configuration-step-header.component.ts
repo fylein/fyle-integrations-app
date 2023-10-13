@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { EmbedVideoLink } from 'src/app/core/models/enum/enum.model';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-app-integration-landing',

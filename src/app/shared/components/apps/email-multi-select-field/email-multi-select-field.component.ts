@@ -5,7 +5,7 @@ import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-
 import { ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { EmailOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 
 @Component({

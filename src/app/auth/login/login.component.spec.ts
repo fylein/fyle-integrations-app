@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { loginResponse } from 'src/app/core/interceptor/jwt.fixture';
-import { AuthService } from 'src/app/core/services/core/auth.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 
 import { LoginComponent } from './login.component';
 

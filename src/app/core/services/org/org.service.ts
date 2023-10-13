@@ -5,8 +5,8 @@ import { Cacheable } from 'ts-cacheable';
 import { EmailOption } from '../../models/bamboo-hr/bamboo-hr.model';
 import { AppName } from '../../models/enum/enum.model';
 import { GeneratedToken, Org } from '../../models/org/org.model';
-import { ApiService } from '../core/api.service';
-import { StorageService } from '../core/storage.service';
+import { ApiService } from '../common/api.service';
+import { StorageService } from '../common/storage.service';
 
 @Injectable({
   providedIn: 'root'

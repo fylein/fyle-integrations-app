@@ -10,7 +10,7 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
 import { Router } from '@angular/router';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 
 describe('ConfigurationExportSettingsComponent', () => {
   let component: ConfigurationExportSettingsComponent;

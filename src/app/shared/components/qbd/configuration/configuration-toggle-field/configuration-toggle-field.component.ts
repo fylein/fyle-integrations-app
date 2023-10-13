@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-configuration-toggle-field',
