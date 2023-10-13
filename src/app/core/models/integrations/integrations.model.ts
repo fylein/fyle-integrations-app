@@ -28,3 +28,7 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.GUSTO]: string,
     [InAppIntegration.INTACCT]: string
 }
+
+export type AppUrlMap = {
+    [key: string]: string;
+  };

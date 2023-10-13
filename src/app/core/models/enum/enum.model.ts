@@ -362,5 +362,6 @@ export enum QBDOnboardingState {
     TRAVELPERK = 'travelperk',
     GUSTO = 'gusto',
     INTACCT = 'intacct',
-    SAGE300 = 'sage300'
+    SAGE300 = 'sage300',
+    INTEGRATION = 'integration'
   }

@@ -8,6 +8,7 @@ import { IntacctWorkspace } from '../../models/si/db/workspaces.model';
 import { ApiService } from './api.service';
 import { QBDWorkspace } from '../../models/qbd/db/workspaces.model';
 import { HelperService } from './helper.service';
+import { AppUrlMap } from '../../models/integrations/integrations.model';
 
 @Injectable({
   providedIn: 'root'
@@ -22,18 +23,16 @@ export class WorkspaceService {
     helper.callSetBaseApiURL();
    }
 
-  @Cacheable()
-  importFyleAttributes(refresh: boolean) {
-    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/import_attributes/`, {refresh: refresh});
+  importFyleAttributes(refresh: boolean): Observable<{}> {
+    return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/import_attributes/`, {refresh});
   }
 
-  // The return type is made any intentionally
-  @Cacheable()
+  // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getWorkspace(orgId: string): any {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
 
-  // The return type is made any intentionally
+  // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   postWorkspace(): any {
     return this.apiService.post('/workspaces/', {});
   }
@@ -47,7 +46,7 @@ export class WorkspaceService {
   }
 
   getOnboardingState(): QBDOnboardingState | IntacctOnboardingState {
-    const appInitialOnboardingState: { [key: string]: string } = {
+    const appInitialOnboardingState: AppUrlMap = {
       [AppUrl.INTACCT]: IntacctOnboardingState.CONNECTION,
       [AppUrl.GUSTO]: QBDOnboardingState.EXPORT_SETTINGS,
       [AppUrl.SAGE300]: IntacctOnboardingState.CONNECTION
@@ -56,7 +55,7 @@ export class WorkspaceService {
     return onboardingState ? onboardingState : appInitialOnboardingState[this.helper.getAppName()];
   }
 
-  // The return type is made any intentionally
+  // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getConfiguration(): any {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }
