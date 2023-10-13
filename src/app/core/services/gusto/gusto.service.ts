@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { Gusto, GustoConfiguration, GustoConfigurationPost } from '../../models/gusto/gusto.model';
-import { ApiService } from '../core/api.service';
+import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
 
 const gustoConfigurationCache$ = new Subject<void>();

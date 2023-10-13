@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { IntacctConnectorComponent } from './intacct-connector.component';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { SageIntacctCredential } from 'src/app/core/models/si/db/sage-credentials.model';

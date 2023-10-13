@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page } from 'src/app/core/models/enum/enum.model';
 import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
-import { EXPOSE_INTACCT_NEW_APP, EventsService } from 'src/app/core/services/core/events.service';
+import { EXPOSE_INTACCT_NEW_APP, EventsService } from 'src/app/core/services/common/events.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
 import { Org } from 'src/app/core/models/org/org.model';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
-import { StorageService } from 'src/app/core/services/core/storage.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 import { Token } from 'src/app/core/models/misc/token.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 

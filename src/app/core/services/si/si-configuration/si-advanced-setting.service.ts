@@ -4,7 +4,7 @@ import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { Observable } from 'rxjs';
 import { AdvancedSettingsGet, AdvancedSettingsPost, ConditionField, ExpenseFilterResponse, SkipExport } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { StorageService } from '../../core/storage.service';
+import { StorageService } from '../../common/storage.service';
 
 @Injectable({
   providedIn: 'root'
