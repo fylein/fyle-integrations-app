@@ -19,7 +19,7 @@ export class OnboardingStepperComponent implements OnInit {
 
   @Input() onboardingStateStepMap: any;
 
-  @Output() onStepClick = new EventEmitter<string>();
+  @Output() stepClick = new EventEmitter<string>();
 
   constructor() { }
 
@@ -37,7 +37,7 @@ export class OnboardingStepperComponent implements OnInit {
 
   navigate(canNavigate: boolean, route: string): void {
     if (canNavigate) {
-      this.onStepClick.emit(route)
+      this.stepClick.emit(route);
     }
   }
 
