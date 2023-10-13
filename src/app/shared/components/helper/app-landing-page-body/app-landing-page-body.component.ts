@@ -8,7 +8,7 @@ import { WindowService } from 'src/app/core/services/core/window.service';
   templateUrl: './app-landing-page-body.component.html',
   styleUrls: ['./app-landing-page-body.component.scss']
 })
-export class AppIntegrationLandingComponent implements OnInit {
+export class AppLandingPageBodyComponent implements OnInit {
 
   @Input() headlineText: string;
 

@@ -11,7 +11,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
   templateUrl: './app-landing-page-header.component.html',
   styleUrls: ['./app-landing-page-header.component.scss']
 })
-export class AppHeaderComponent implements OnInit {
+export class AppLandingPageHeaderComponent implements OnInit {
 
   AppName = AppName;
 

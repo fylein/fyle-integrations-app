@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './components/core/loader/loader.component';
-import { AppHeaderComponent } from './components/helper/app-landing-page-header/app-landing-page-header.component';
+import { AppLandingPageHeaderComponent } from './components/helper/app-landing-page-header/app-landing-page-header.component';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
@@ -41,7 +41,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/qbd/configuration/configuration-multi-select/configuration-multi-select.component';
 import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
 import { CalendarModule } from 'primeng/calendar';
-import { AppIntegrationLandingComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
+import { AppLandingPageBodyComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
 import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
 import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
 import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
@@ -62,7 +62,7 @@ import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboa
 @NgModule({
   declarations: [
     LoaderComponent,
-    AppHeaderComponent,
+    AppLandingPageHeaderComponent,
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
@@ -84,7 +84,7 @@ import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboa
     EmailMultiSelectFieldComponent,
     ConfigurationMultiSelectComponent,
     ConfigurationLabelComponent,
-    AppIntegrationLandingComponent,
+    AppLandingPageBodyComponent,
     IntacctStepperComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
@@ -124,8 +124,8 @@ import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboa
   ],
   exports: [
     LoaderComponent,
-    AppIntegrationLandingComponent,
-    AppHeaderComponent,
+    AppLandingPageBodyComponent,
+    AppLandingPageHeaderComponent,
     ErrorComponent,
     TrimCharacterPipe,
     SnakeCaseToSpaceCasePipe,
