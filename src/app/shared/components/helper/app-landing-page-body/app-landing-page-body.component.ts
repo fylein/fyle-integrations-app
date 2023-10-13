@@ -4,7 +4,7 @@ import { EmbedVideoLink } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/core/window.service';
 
 @Component({
-  selector: 'app-app-integration-landing',
+  selector: 'app-landing-page-body',
   templateUrl: './app-landing-page-body.component.html',
   styleUrls: ['./app-landing-page-body.component.scss']
 })
