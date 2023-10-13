@@ -4,17 +4,17 @@ import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testin
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { AppHeaderComponent } from './app-header.component';
+import { AppLandingPageHeaderComponent } from './app-landing-page-header.component';
 
-describe('AppHeaderComponent', () => {
-  let component: AppHeaderComponent;
-  let fixture: ComponentFixture<AppHeaderComponent>;
+describe('AppLandingPageHeaderComponent', () => {
+  let component: AppLandingPageHeaderComponent;
+  let fixture: ComponentFixture<AppLandingPageHeaderComponent>;
   let router: Router;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppHeaderComponent],
+      declarations: [AppLandingPageHeaderComponent],
       imports: [
         HttpClientModule,
         HttpClientTestingModule,
@@ -27,7 +27,7 @@ describe('AppHeaderComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppHeaderComponent);
+    fixture = TestBed.createComponent(AppLandingPageHeaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
     router = TestBed.inject(Router);

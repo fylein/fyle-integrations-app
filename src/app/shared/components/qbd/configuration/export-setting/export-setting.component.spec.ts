@@ -8,7 +8,7 @@ import { of, throwError } from 'rxjs';
 import { QBDCorporateCreditCardExpensesObject, ExpenseState, QBDExportDateType, QBDOnboardingState, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 

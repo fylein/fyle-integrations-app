@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService, PrimeNGConfig } from 'primeng/api';
-import { EventsService } from './core/services/core/events.service';
+import { EventsService } from './core/services/common/events.service';
 
 @Component({
   selector: 'app-root',

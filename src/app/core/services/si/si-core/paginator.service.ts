@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { StorageService } from "../../core/storage.service";
+import { StorageService } from "../../common/storage.service";
 import { Paginator } from "src/app/core/models/si/misc/paginator.model";
 import { PaginatorPage } from "src/app/core/models/enum/enum.model";
 

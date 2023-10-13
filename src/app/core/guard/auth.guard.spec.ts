@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthGuard } from './auth.guard';
-import { AuthService } from '../services/core/auth.service';
+import { AuthService } from '../services/common/auth.service';
 import { Router } from '@angular/router';
 
 describe('AuthGuard', () => {

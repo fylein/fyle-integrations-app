@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QBDWorkspace } from 'src/app/core/models/qbd/db/workspaces.model';
-import { StorageService } from 'src/app/core/services/core/storage.service';
-import { WindowService } from 'src/app/core/services/core/window.service';
-import { IntegrationsUserService } from 'src/app/core/services/core/integrations-user.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
+import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
