@@ -27,11 +27,13 @@ export class WorkspaceService {
     return this.apiService.post(`/workspaces/${this.getWorkspaceId()}/fyle/import_attributes/`, {refresh: refresh});
   }
 
+  // The return type is made any intentionally
   @Cacheable()
-  getWorkspace(orgId: string): Observable<IntacctWorkspace[] | QBDWorkspace[]> {
+  getWorkspace(orgId: string): any {
     return this.apiService.get('/workspaces/', {org_id: orgId});
   }
 
+  // The return type is made any intentionally
   postWorkspace(): any {
     return this.apiService.post('/workspaces/', {});
   }
@@ -54,6 +56,7 @@ export class WorkspaceService {
     return onboardingState ? onboardingState : appInitialOnboardingState[this.helper.getAppName()];
   }
 
+  // The return type is made any intentionally
   getConfiguration(): any {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }

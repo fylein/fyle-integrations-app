@@ -62,7 +62,7 @@ describe('WorkspaceService', () => {
       "updated_at": "2023-01-23T05:37:56.908051Z",
       "user": [1]
     };
-    service.getWorkspace("orHVw3ikkCxJ").subscribe((value) => {
+    service.getWorkspace("orHVw3ikkCxJ").subscribe((value: {}) => {
       const responseKeys = Object.keys(workspaceResponse).sort();
       const actualResponseKeys = Object.keys(value).sort();
       expect(actualResponseKeys).toEqual(responseKeys);
