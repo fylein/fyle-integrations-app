@@ -41,7 +41,8 @@ export enum RedirectLink {
 }
 
 export enum EmbedVideoLink {
-  INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk'
+  INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk',
+  SAGE300 = 'https://www.youtube.com/embed/2oYdc8KcQnk'
 }
 
 export enum ToastSeverity {
@@ -68,7 +69,8 @@ export enum AppName {
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'Travelperk',
   GUSTO = 'Gusto',
-  INTACCT = 'Sage Intacct'
+  INTACCT = 'Sage Intacct',
+  SAGE300 = 'Sage 300'
 }
 
 export enum Page {
@@ -349,6 +351,14 @@ export enum QBDOnboardingState {
   }
 
   export enum IntacctLink {
+    IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
+    EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
+    ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
+    LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
+    SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+  }
+
+  export enum Sage300Link {
     IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
     EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
     ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',

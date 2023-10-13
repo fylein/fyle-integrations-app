@@ -1,1 +1,8 @@
-<p>sage300-onboarding-landing works!</p>
+<div>
+    <div>
+        <app-app-header [iconPath]="'assets/logos/sage-intacct-logo.svg'" [appName]="'Sage 300'" [appDescription]="'Import data from Sage 300 to Fyle and Export expenses from Fyle to Sage 300 CRE. '" [isLoading]="false" [isIntegrationSetupInProgress]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" [buttonText]="'Connect'" [postConnectionRoute]="'sage300/onboarding/connector'"></app-app-header>
+    </div>
+    <div>
+        <app-app-integration-landing [headlineText]="'Guide to setup your Integrations'" [headerText]="'A quick guide to help you set up the integration quick and easy.'" [embedVideo]="EmbedVideo.SAGE300" [svgPath]="'assets/flow-charts/sage-flow-chart.svg'"></app-app-integration-landing>
+    </div>
+</div>
