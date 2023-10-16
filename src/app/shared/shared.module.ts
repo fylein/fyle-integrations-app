@@ -59,6 +59,7 @@ import { DashboardMappingResolveComponent } from './components/si/helper/dashboa
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
 import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboard-menu.component';
 import { GenericMappingV2Component } from './components/si/helper/generic-mapping-v2/generic-mapping-v2.component';
+import { GenericMappingTableComponent } from './components/si/generic-mapping-table/generic-mapping-table.component';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { GenericMappingV2Component } from './components/si/helper/generic-mappin
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
     DashboardMenuComponent,
-    GenericMappingV2Component
+    GenericMappingV2Component,
+    GenericMappingTableComponent
   ],
   imports: [
     CommonModule,

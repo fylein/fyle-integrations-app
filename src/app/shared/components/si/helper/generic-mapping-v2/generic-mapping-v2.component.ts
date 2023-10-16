@@ -2,7 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AutoMapEmployeeOptions, FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AutoMapEmployeeOptions, CorporateCreditCardExpensesObject, FieldType, FyleField, IntacctReimbursableExpensesObject, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { ExtendedGenericMappingV2, GenericMappingV2, GenericMappingV2Response } from 'src/app/core/models/si/db/generic-mapping-v2.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
@@ -42,6 +43,10 @@ export class GenericMappingV2Component implements OnInit {
 
   fyleEmployeeOptions: DestinationAttribute[];
 
+  sageIntacctAccounts: DestinationAttribute[];
+
+  sageIntacctExpenseTypes: DestinationAttribute[];
+
   filteredfyleEmployeeOptions: DestinationAttribute[] = [];
 
   sageIntacctEmployee: MappingDestination[];
@@ -72,6 +77,10 @@ export class GenericMappingV2Component implements OnInit {
 
   alphabetFilter: string = 'All';
 
+  reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
+
+  cccExpenseObject?: CorporateCreditCardExpensesObject;
+
   constructor(
     private mappingService: SiMappingsService,
     private paginatorService: PaginatorService,
@@ -80,11 +89,37 @@ export class GenericMappingV2Component implements OnInit {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  tableDropdownWidth() {
-    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
-    if (element) {
-      element.style.width = '300px';
+  private isExpenseTypeRequired(): boolean {
+    return this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT;
+  }
+
+  getColumnName() {
+    if(this.mappingPageName==='EMPLOYEE') {
+      if(this.employeeFieldMapping==='EMPLOYEE'){
+        return 'Employee';
+      } else {
+        return 'Vendor';
+      }
+    } else if(this.mappingPageName==='CATEGORY') {
+      if(this.isExpenseTypeRequired()) {
+        return 'Expense Type';
+      } else {
+        return 'Account';
+      }
     }
+    return 'Mapping';
+  }
+
+  getOptions() {
+    if (this.mappingPageName==='EMPLOYEE') {
+      return this.fyleEmployeeOptions;
+    } else if (this.mappingPageName==='CATEGORY') {
+      if (this.isExpenseTypeRequired()) {
+        return this.sageIntacctExpenseTypes;
+      }
+      return this.sageIntacctAccounts;
+    }
+    return [];
   }
 
   triggerAutoMapEmployees() {
@@ -116,9 +151,9 @@ export class GenericMappingV2Component implements OnInit {
         return genericMapping?.employeemapping[0].destination_employee;
       }
     } else if (genericMapping.categorymapping?.length) {
-      if (this.employeeFieldMapping === FyleField.VENDOR) {
+      if (!this.isExpenseTypeRequired()) {
         return genericMapping.categorymapping[0].destination_account;
-      } else if (this.employeeFieldMapping === FyleField.EMPLOYEE) {
+      } else if (this.isExpenseTypeRequired()) {
         return genericMapping.categorymapping[0].destination_expense_head;
       }
     } else if (genericMapping.mapping?.length) {
@@ -128,32 +163,63 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   save(selectedRow: ExtendedGenericMappingV2, event: any): void {
-    const employeeMapping: EmployeeMappingPost = {
-      source_employee: {
-        id: selectedRow.id
-      },
-      destination_vendor: {
-        id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_vendor ? selectedRow.employeemapping[0].destination_vendor?.id : null)
-      },
-      destination_employee: {
-        id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_employee ? selectedRow.employeemapping[0].destination_employee?.id : null)
-      },
-      destination_card_account: {
-        id: (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_card_account ? selectedRow.employeemapping[0].destination_card_account?.id : null)
-      },
-      workspace: parseInt(this.workspaceService.getWorkspaceId())
-    };
-    this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
-      // Decrement unmapped count only for new mappings, ignore updates
-      if (!selectedRow.employeemapping?.length) {
-        this.mappingStats.unmapped_attributes_count -= 1;
-      }
+    if (selectedRow.employeemapping) {
+      const employeeMapping: EmployeeMappingPost = {
+        source_employee: {
+          id: selectedRow.id
+        },
+        destination_vendor: {
+          id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_vendor ? selectedRow.employeemapping[0].destination_vendor?.id : null)
+        },
+        destination_employee: {
+          id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_employee ? selectedRow.employeemapping[0].destination_employee?.id : null)
+        },
+        destination_card_account: {
+          id: (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_card_account ? selectedRow.employeemapping[0].destination_card_account?.id : null)
+        },
+        workspace: parseInt(this.workspaceService.getWorkspaceId())
+      };
+      this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
+        // Decrement unmapped count only for new mappings, ignore updates
+        if (!selectedRow.employeemapping?.length) {
+          this.mappingStats.unmapped_attributes_count -= 1;
+        }
+  
+        selectedRow.employeemapping = [response];
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
+      }, () => {
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+      });
+    } else if (selectedRow.categorymapping) {
+      const sourceId = selectedRow.id;
 
-      selectedRow.employeemapping = [response];
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
-    }, () => {
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
-    });
+      const categoryMappingsPayload: CategoryMappingPost = {
+        source_category: {
+          id: sourceId
+        },
+        destination_account: {
+          id: !this.isExpenseTypeRequired() ? event.value.id : null
+        },
+        destination_expense_head: {
+          id: this.isExpenseTypeRequired() ? event.value.id : null
+        },
+        workspace: parseInt(this.workspaceService.getWorkspaceId())
+      };
+  
+      this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
+        // Decrement unmapped count only for new mappings, ignore updates
+        if (!selectedRow.categorymapping?.length) {
+          this.mappingStats.unmapped_attributes_count -= 1;
+        }
+  
+        selectedRow.categorymapping = [response];
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
+        this.isLoading = false;
+      }, () => {
+        this.isLoading = false;
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+      });
+    }
   }
 
   pageSizeChanges(limit: number): void {
@@ -205,12 +271,21 @@ export class GenericMappingV2Component implements OnInit {
   getAttributesFilteredByConfig() {
     const attributes = [];
 
-    if (this.employeeFieldMapping === 'VENDOR') {
-      attributes.push('VENDOR');
-    } else if (this.employeeFieldMapping === 'EMPLOYEE') {
-      attributes.push('EMPLOYEE');
+    if(this.mappingPageName==='EMPLOYEE') {
+      if (this.employeeFieldMapping === 'VENDOR') {
+        attributes.push('VENDOR');
+      } else if (this.employeeFieldMapping === 'EMPLOYEE') {
+        attributes.push('EMPLOYEE');
+      }
     }
 
+    if(this.mappingPageName==='CATEGORY') {
+      if (this.isExpenseTypeRequired()) {
+        attributes.push('EXPENSE_TYPE');
+      } else {
+        attributes.push('ACCOUNT');
+      }
+    }
     return attributes;
   }
 
@@ -226,7 +301,13 @@ export class GenericMappingV2Component implements OnInit {
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
         this.totalCount = employeeMappingResponse.count;
-        this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
+        if(this.mappingPageName==='EMPLOYEE') {
+          this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
+        }
+        if(this.mappingPageName==='CATEGORY') {
+          this.sageIntacctExpenseTypes = groupedDestResponse.EXPENSE_TYPE;
+          this.sageIntacctAccounts = groupedDestResponse.ACCOUNT;
+        }
         this.employeeMapping = employeeMappingResponse;
         if (!this.isInitialSetupComplete) {
           this.filteredMappingCount = employeeMappingResponse.count;

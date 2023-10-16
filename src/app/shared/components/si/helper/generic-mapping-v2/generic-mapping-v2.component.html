@@ -39,40 +39,7 @@
         </div>
         <!-- add a flag/dashboard mapping tab -->
         <div *ngIf="filteredMappingCount">
-            <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
-                <ng-template pTemplate="header">
-                    <tr>
-                    <th class="!tw-pl-40-px">{{mappingPageName | titlecase}} in Fyle</th>
-                    <th>{{mappingPageName | titlecase}} in Sage Intacct</th>
-                    <th>Status</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-mapping>
-                    <tr>
-                        <td>
-                            <div class="tw-flex tw-items-center">
-                                <svg-icon-sprite *ngIf="mapping.auto_mapped" pTooltip="Auto-mapped" tooltipPosition="top" src="flash" width="12px" height="12px" class="tw-mr-12-px tw-text-placeholder"></svg-icon-sprite>
-                                <span [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped}">{{ mapping.value }}</span>
-                            </div>
-                        </td>
-                        <td>
-                            <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                            [ngModel]="getDropdownValue(mapping)" 
-                            [options]="fyleEmployeeOptions" 
-                            optionLabel="value" 
-                            placeholder="Select an Option" 
-                            (onChange)="save(mapping, $event); getDropdownValue(mapping)"
-                            [filter]="true"
-                            filterBy="value">
-                            </p-dropdown>                
-                        </td>
-                        <td>
-                            <p *ngIf="getDropdownValue(mapping)" class="mapped">MAPPED</p>
-                            <p *ngIf="!getDropdownValue(mapping)" class="unmapped">UNMAPPED</p>
-                        </td>
-                    </tr>
-                </ng-template>
-                </p-table>
+            <app-generic-mapping-table [filteredMappings]="filteredMappings" [mappingPageName]="mappingPageName" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [reimbursableExpenseObject]="reimbursableExpenseObject" [cccExpenseObject]="cccExpenseObject" [fyleEmployeeOptions]="fyleEmployeeOptions" [sageIntacctAccounts]="sageIntacctAccounts"></app-generic-mapping-table>
         </div>
         <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount" >
             <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
