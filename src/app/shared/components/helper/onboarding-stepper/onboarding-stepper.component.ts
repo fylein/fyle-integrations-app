@@ -10,8 +10,6 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 })
 export class OnboardingSteppersComponent implements OnInit {
 
-  @Input() appName: AppName;
-
   @Input() onboardingSteps: OnboardingStepper[];
 
   constructor(
@@ -22,17 +20,6 @@ export class OnboardingSteppersComponent implements OnInit {
     if (canNavigate) {
       this.router.navigate([route]);
     }
-  }
-
-  stepperStyle(onboardingstep: string): string {
-    if (onboardingstep === 'Connect to ' + this.appName) {
-      return 'step-name-connector';
-    } else if (onboardingstep === 'Export Settings') {
-      return 'step-name-export';
-    } else if (onboardingstep === 'Import Settings' || onboardingstep === 'Field Mapping') {
-      return 'step-name-import';
-    }
-    return 'step-name-advanced';
   }
 
   ngOnInit(): void {

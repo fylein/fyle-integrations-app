@@ -27,7 +27,8 @@ export class Sage300OnboardingService {
       size: {
         height: '18px',
         width: '15px'
-      }
+      },
+      styleClasses: 'step-name-connector'
     },
     {
       active: false,
@@ -39,7 +40,8 @@ export class Sage300OnboardingService {
       size: {
         height: '18px',
         width: '15px'
-      }
+      },
+      styleClasses: 'step-name-export'
     },
     {
       active: false,
@@ -51,7 +53,8 @@ export class Sage300OnboardingService {
       size: {
         height: '18px',
         width: '15px'
-      }
+      },
+      styleClasses: 'step-name-import'
     },
     {
       active: false,
@@ -63,7 +66,8 @@ export class Sage300OnboardingService {
       size: {
         height: '20px',
         width: '20px'
-      }
+      },
+      styleClasses: 'step-name-advanced'
     }
   ];
 
