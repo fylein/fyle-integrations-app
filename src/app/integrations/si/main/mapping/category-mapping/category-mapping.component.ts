@@ -156,9 +156,9 @@ export class CategoryMappingComponent implements OnInit {
     if (categoryMapping?.length) {
       if (!this.isExpenseTypeRequired()) {
         return categoryMapping[0].destination_account;
-      } else {
-        return categoryMapping[0].destination_expense_head;
       }
+        return categoryMapping[0].destination_expense_head;
+
     }
     return null;
   }
