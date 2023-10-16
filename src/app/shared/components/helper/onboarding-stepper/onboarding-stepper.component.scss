@@ -19,22 +19,18 @@
   }
 
   .step-name-connector {
-    position: relative;
-    left: -50px;
+    @apply tw-relative tw-left-[-50px] ;
   }
   
   .step-name-export {
-    position: relative;
-    left: -20px;
+    @apply tw-relative tw-left-[-20px] ;
   }
   
   .step-name-import {
-    position: relative;
-    left: -18px;
+    @apply tw-relative tw-left-[-18px] ;
   }
   
   .step-name-advanced {
-    position: relative;
-    left: -30px;
+    @apply tw-relative tw-left-[-30px] ;
   }
   

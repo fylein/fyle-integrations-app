@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="[onboardingStep.step === 'Connect to '+appName ? 'step-name-connector' : '', onboardingStep.step === 'Export Settings' ? 'step-name-export' : '', onboardingStep.step === 'Field Mapping' ? 'step-name-field' : '', onboardingStep.step === 'Import Settings' ? 'step-name-import' : '', onboardingStep.step === 'Advanced Settings' ? 'step-name-advanced' : '']">
+                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="stepperStyle(onboardingStep.step)">
                         {{ onboardingStep.step }}
                     </div>
                 </div>
