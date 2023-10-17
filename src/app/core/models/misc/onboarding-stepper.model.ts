@@ -8,5 +8,6 @@ export type OnboardingStepper = {
     size: {
       height: string,
       width: string
-    }
+    },
+    styleClasses?: string[]
   }

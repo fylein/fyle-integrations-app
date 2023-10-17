@@ -28,6 +28,7 @@ import { MandatoryErrorMessageComponent } from './components/helper/mandatory-er
 import { ZeroStateWithIllustrationComponent } from './components/qbd/core/zero-state-with-illustration/zero-state-with-illustration.component';
 import { DateFilterComponent } from './components/qbd/helper/date-filter/date-filter.component';
 import { OnboardingStepperComponent } from './components/qbd/helper/onboarding-stepper/onboarding-stepper.component';
+import { OnboardingSteppersComponent } from './components/helper/onboarding-stepper/onboarding-stepper.component';
 import { ExportSettingComponent } from './components/qbd/configuration/export-setting/export-setting.component';
 import { AdvancedSettingComponent } from './components/qbd/configuration/advanced-setting/advanced-setting.component';
 import { FieldMappingComponent } from './components/qbd/configuration/field-mapping/field-mapping.component';
@@ -79,6 +80,7 @@ import { ConfigurationTextFieldComponent } from './components/configuration/conf
     ZeroStateWithIllustrationComponent,
     DateFilterComponent,
     OnboardingStepperComponent,
+    OnboardingSteppersComponent,
     ExportSettingComponent,
     AdvancedSettingComponent,
     FieldMappingComponent,
@@ -148,6 +150,7 @@ import { ConfigurationTextFieldComponent } from './components/configuration/conf
     ZeroStateWithIllustrationComponent,
     DateFilterComponent,
     OnboardingStepperComponent,
+    OnboardingSteppersComponent,
     ExportSettingComponent,
     AdvancedSettingComponent,
     FieldMappingComponent,

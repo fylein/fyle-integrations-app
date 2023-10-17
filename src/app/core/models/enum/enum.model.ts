@@ -28,7 +28,8 @@ export enum InAppIntegration {
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'TravelPerk',
   GUSTO = 'Gusto',
-  INTACCT = 'Sage Intacct'
+  INTACCT = 'Sage Intacct',
+  SAGE300 = 'Sage 300 CRE'
 }
 
 export enum RedirectLink {
@@ -70,7 +71,7 @@ export enum AppName {
   TRAVELPERK = 'Travelperk',
   GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
-  SAGE300 = 'Sage 300'
+  SAGE300 = 'Sage 300 CRE'
 }
 
 export enum Page {
@@ -127,6 +128,14 @@ export enum ProgressPhase {
 export enum IntacctOnboardingState {
   CONNECTION = 'CONNECTION',
   LOCATION_ENTITY = 'LOCATION_ENTITY_MAPPINGS',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  COMPLETE = 'COMPLETE'
+}
+
+export enum Sage300OnboardingState {
+  CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
