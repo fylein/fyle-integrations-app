@@ -14,18 +14,9 @@ export class Sage300OnboardingLandingComponent implements OnInit {
 
   EmbedVideo = EmbedVideoLink;
 
-  AppName: AppName.INTACCT;
-
-  onboardingstep: Sage300OnboardingState = Sage300OnboardingState.EXPORT_SETTINGS;
-
-  onboardingSteps: OnboardingStepper[] = this.onboarding.getOnboardingSteps(Sage300OnboardingState.IMPORT_SETTINGS.replace('_', ' '), this.onboardingstep);
-
-  constructor(
-    private onboarding: Sage300OnboardingService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    console.log(this.onboardingSteps)
   }
 
 }

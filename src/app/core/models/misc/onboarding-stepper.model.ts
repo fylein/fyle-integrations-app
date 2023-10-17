@@ -9,5 +9,5 @@ export type OnboardingStepper = {
       height: string,
       width: string
     },
-    styleClasses?: string
+    styleClasses?: string[]
   }

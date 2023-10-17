@@ -6,8 +6,8 @@
     @apply tw-bg-white tw-border ;
   }
   
-  .icon {
-    @apply tw-w-20-px tw-h-20-px ;
+  .tick-icon {
+    @apply tw-w-14-px tw-h-20-px ;
   }
   
   .line-active {
@@ -19,18 +19,52 @@
   }
 
   .step-name-connector {
-    @apply tw-relative tw-left-[-50px] ;
+    &--text {
+      @apply tw-relative tw-left-[-50px] ;
+    }
+
+    &--icon {
+      @apply tw-w-24-px tw-h-24-px ;
+    }
   }
   
   .step-name-export {
-    @apply tw-relative tw-left-[-20px] ;
+    &--text {
+      @apply tw-relative tw-left-[-20px] ;
+    }
+
+    &--icon {
+      @apply tw-w-16-px tw-h-20-px ;
+    }
   }
   
   .step-name-import {
-    @apply tw-relative tw-left-[-18px] ;
+    &--text {
+      @apply tw-relative tw-left-[-18px] ;
+    }
+
+    &--icon {
+      @apply tw-w-24-px tw-h-24-px ;
+    }
+  }
+
+  .step-name-field {
+    &--text {
+      @apply tw-relative tw-left-[-18px] ;
+    }
+
+    &--icon {
+      @apply tw-w-20-px tw-h-20-px ;
+    }
   }
   
   .step-name-advanced {
-    @apply tw-relative tw-left-[-30px] ;
+    &--text {
+      @apply tw-relative tw-left-[-30px] ;
+    }
+
+    &--icon {
+      @apply tw-w-20-px tw-h-20-px ;
+    }
   }
   

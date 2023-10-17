@@ -28,7 +28,8 @@ export enum InAppIntegration {
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'TravelPerk',
   GUSTO = 'Gusto',
-  INTACCT = 'Sage Intacct'
+  INTACCT = 'Sage Intacct',
+  SAGE300 = 'Sage 300 CRE'
 }
 
 export enum RedirectLink {
@@ -70,7 +71,7 @@ export enum AppName {
   TRAVELPERK = 'Travelperk',
   GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
-  SAGE300 = 'Sage 300'
+  SAGE300 = 'Sage 300 CRE'
 }
 
 export enum Page {

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import { Sage300OnboardingStepperMap } from 'src/app/core/models/sage300/sage300-configuration/sage300-onboarding-stepper/sage300-onboarding-stepper.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Sage300OnboardingService {
 
-  onboardingStateStepMap: any = {
+  onboardingStateStepMap: Sage300OnboardingStepperMap = {
     [Sage300OnboardingState.CONNECTION]: 1,
     [Sage300OnboardingState.EXPORT_SETTINGS]: 2,
     [Sage300OnboardingState.IMPORT_SETTINGS]: 3,
@@ -27,7 +28,7 @@ export class Sage300OnboardingService {
         height: '18px',
         width: '15px'
       },
-      styleClasses: 'step-name-connector'
+      styleClasses: ['step-name-connector--text', 'step-name-connector--icon']
     },
     {
       active: false,
@@ -40,7 +41,7 @@ export class Sage300OnboardingService {
         height: '18px',
         width: '15px'
       },
-      styleClasses: 'step-name-export'
+      styleClasses: ['step-name-export--text', 'step-name-export--icon']
     },
     {
       active: false,
@@ -53,7 +54,7 @@ export class Sage300OnboardingService {
         height: '18px',
         width: '15px'
       },
-      styleClasses: 'step-name-import'
+      styleClasses: ['step-name-import--text', 'step-name-import--icon']
     },
     {
       active: false,
@@ -66,7 +67,7 @@ export class Sage300OnboardingService {
         height: '20px',
         width: '20px'
       },
-      styleClasses: 'step-name-advanced'
+      styleClasses: ['step-name-advanced--text', 'step-name-advanced--icon']
     }
   ];
 

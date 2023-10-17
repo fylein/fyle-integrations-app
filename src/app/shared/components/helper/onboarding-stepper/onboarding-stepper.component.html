@@ -10,10 +10,10 @@
             <div *ngFor="let onboardingStep of onboardingSteps">
                 <div class="tw-grip tw-grid-cols-1">
                     <div class="tw-flex tw-items-center">
-                        <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
-                            <svg-icon-sprite *ngIf="onboardingStep.active" src='import-setting' class="icon" ></svg-icon-sprite>
-                            <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="../../../../../assets/icons/tick.svg" class="icon">
-                            <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "../../../../../assets/icons/integrations-stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
+                        <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-text-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-text-white tw-border-success-toast !tw-cursor-pointer':'',]">
+                            <svg-icon-sprite *ngIf="onboardingStep.active" src='{{ onboardingStep.icon }}' [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[1] : ''" ></svg-icon-sprite>
+                            <svg-icon-sprite *ngIf="!onboardingStep.active && onboardingStep.completed" src="tick" class="tick-icon"></svg-icon-sprite>
+                            <svg-icon-sprite *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ onboardingStep.icon }}' class="tw-text-placeholder" [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[1] : ''"></svg-icon-sprite>
                         </div>
                         <div *ngIf="onboardingStep.number !== 4" >
                             <div *ngIf="!onboardingStep.completed">
@@ -24,7 +24,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="onboardingStep.styleClasses">
+                    <div class="tw-text-14-px tw-pt-10-px tw-font-500" [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[0] : ''">
                         {{ onboardingStep.step }}
                     </div>
                 </div>
