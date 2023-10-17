@@ -11,7 +11,7 @@
                 <div class="tw-grip tw-grid-cols-1">
                     <div class="tw-flex tw-items-center">
                         <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
-                            <img *ngIf="onboardingStep.active" src='{{ "../../../../../assets/icons/integrations-stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
+                            <svg-icon-sprite *ngIf="onboardingStep.active" src='import-setting' class="icon" ></svg-icon-sprite>
                             <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="../../../../../assets/icons/tick.svg" class="icon">
                             <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "../../../../../assets/icons/integrations-stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
                         </div>

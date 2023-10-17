@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IntacctOnboardingState, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
 @Injectable({
@@ -8,22 +8,21 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 export class Sage300OnboardingService {
 
   onboardingStateStepMap: any = {
-    [IntacctOnboardingState.CONNECTION]: 1,
-    [IntacctOnboardingState.LOCATION_ENTITY]: 2,
-    [IntacctOnboardingState.EXPORT_SETTINGS]: 3,
-    [IntacctOnboardingState.IMPORT_SETTINGS]: 4,
-    [IntacctOnboardingState.ADVANCED_CONFIGURATION]: 5,
-    [IntacctOnboardingState.COMPLETE]: 6
+    [Sage300OnboardingState.CONNECTION]: 1,
+    [Sage300OnboardingState.EXPORT_SETTINGS]: 2,
+    [Sage300OnboardingState.IMPORT_SETTINGS]: 3,
+    [Sage300OnboardingState.ADVANCED_CONFIGURATION]: 4,
+    [Sage300OnboardingState.COMPLETE]: 5
   };
 
-  onboardingSteps: OnboardingStepper[] = [
+  private readonly onboardingSteps: OnboardingStepper[] = [
     {
       active: false,
       completed: false,
       number: 1,
-      step: 'Connect to Sage Intacct',
+      step: 'Connect to Sage 300 CRE',
       icon: 'connector',
-      route: '/integrations/qbd/onboarding/connector',
+      route: '/integrations/sage300/onboarding/connector',
       size: {
         height: '18px',
         width: '15px'
@@ -36,7 +35,7 @@ export class Sage300OnboardingService {
       number: 2,
       step: 'Export Settings',
       icon: 'export-setting',
-      route: '/integrations/qbd/onboarding/export_settings',
+      route: '/integrations/sage300/onboarding/export_settings',
       size: {
         height: '18px',
         width: '15px'
@@ -49,7 +48,7 @@ export class Sage300OnboardingService {
       number: 3,
       step: 'Import Settings',
       icon: 'import-setting',
-      route: '/integrations/qbd/onboarding/import_settings',
+      route: '/integrations/sage300/onboarding/import_settings',
       size: {
         height: '18px',
         width: '15px'
@@ -62,7 +61,7 @@ export class Sage300OnboardingService {
       number: 4,
       step: 'Advanced Settings',
       icon: 'advanced-setting',
-      route: '/integrations/qbd/onboarding/advanced_settings',
+      route: '/integrations/sage300/onboarding/advanced_settings',
       size: {
         height: '20px',
         width: '20px'
@@ -73,14 +72,14 @@ export class Sage300OnboardingService {
 
   constructor() { }
 
-  updateActiveAndCompletedSteps(currentStep: string, onboardingState: IntacctOnboardingState): OnboardingStepper[] {
+  getOnboardingSteps(currentStep: string, onboardingState: Sage300OnboardingState): OnboardingStepper[] {
     this.onboardingSteps.forEach(step => {
-      if (step.route === currentStep) {
+      if (step.step.toLocaleLowerCase() === currentStep.toLocaleLowerCase()) {
         step.active = true;
       }
     });
 
-    for (let index = this.onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {
+    for (let index = this.onboardingStateStepMap[onboardingState]; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
     }
 

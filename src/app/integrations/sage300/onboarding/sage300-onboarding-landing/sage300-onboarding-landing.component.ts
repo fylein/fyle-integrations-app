@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Sage300Link, EmbedVideoLink } from 'src/app/core/models/enum/enum.model';
+import { Sage300Link, EmbedVideoLink, AppName, QBDOnboardingState, Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
+import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 
 @Component({
   selector: 'app-sage300-onboarding-landing',
@@ -12,9 +14,18 @@ export class Sage300OnboardingLandingComponent implements OnInit {
 
   EmbedVideo = EmbedVideoLink;
 
-  constructor() { }
+  AppName: AppName.INTACCT;
+
+  onboardingstep: Sage300OnboardingState = Sage300OnboardingState.EXPORT_SETTINGS;
+
+  onboardingSteps: OnboardingStepper[] = this.onboarding.getOnboardingSteps(Sage300OnboardingState.IMPORT_SETTINGS.replace('_', ' '), this.onboardingstep);
+
+  constructor(
+    private onboarding: Sage300OnboardingService
+  ) { }
 
   ngOnInit(): void {
+    console.log(this.onboardingSteps)
   }
 
 }
