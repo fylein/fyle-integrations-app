@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./onboarding/onboarding.module').then(m => m.OnboardingModule)
+        loadChildren: () => import('./sage300-onboarding/sage300-onboarding.module').then(m => m.Sage300OnboardingModule)
       }
     ]
   }

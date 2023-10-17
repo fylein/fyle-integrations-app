@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnboardingComponent } from './onboarding.component';
+import { Sage300MainComponent } from './sage300-main.component';
 
-describe('OnboardingComponent', () => {
-  let component: OnboardingComponent;
-  let fixture: ComponentFixture<OnboardingComponent>;
+describe('Sage300MainComponent', () => {
+  let component: Sage300MainComponent;
+  let fixture: ComponentFixture<Sage300MainComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OnboardingComponent ]
+      declarations: [ Sage300MainComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OnboardingComponent);
+    fixture = TestBed.createComponent(Sage300MainComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

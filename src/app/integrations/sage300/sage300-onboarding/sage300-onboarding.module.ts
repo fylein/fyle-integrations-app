@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Sage300OnboardingLandingComponent } from './sage300-onboarding-landing/sage300-onboarding-landing.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { OnboardingRoutingModule } from './onboarding-routing.module';
+import { Sage300OnboardingRoutingModule } from './sage300-onboarding-routing.module';
 
 
 
@@ -13,7 +13,7 @@ import { OnboardingRoutingModule } from './onboarding-routing.module';
   imports: [
     CommonModule,
     SharedModule,
-    OnboardingRoutingModule
+    Sage300OnboardingRoutingModule
   ]
 })
-export class OnboardingModule { }
+export class Sage300OnboardingModule { }
