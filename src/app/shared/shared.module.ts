@@ -60,9 +60,9 @@ import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboar
 import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboard-menu.component';
 import { DashboardExportSectionComponent } from './components/dashboard/dashboard-export-section/dashboard-export-section.component';
 import { DashboardErrorSectionComponent } from './components/dashboard/dashboard-error-section/dashboard-error-section.component';
-import { DashboardLastExportSectionComponent } from './components/dashboard/dashboard-last-export-section/dashboard-last-export-section.component';
 import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
 import { DashboardAccountingErrorDialogComponent } from './components/dashboard/dashboard-accounting-error-dialog/dashboard-accounting-error-dialog.component';
+import { DashboardExportSummarySectionComponent } from './components/dashboard/dashboard-export-summary-section/dashboard-export-summary-section.component';
 
 @NgModule({
   declarations: [
@@ -105,9 +105,9 @@ import { DashboardAccountingErrorDialogComponent } from './components/dashboard/
     DashboardMenuComponent,
     DashboardExportSectionComponent,
     DashboardErrorSectionComponent,
-    DashboardLastExportSectionComponent,
     DashboardExportLogDialogComponent,
-    DashboardAccountingErrorDialogComponent
+    DashboardAccountingErrorDialogComponent,
+    DashboardExportSummarySectionComponent
   ],
   imports: [
     CommonModule,
@@ -177,7 +177,6 @@ import { DashboardAccountingErrorDialogComponent } from './components/dashboard/
     DashboardMenuComponent,
     DashboardExportSectionComponent,
     DashboardErrorSectionComponent,
-    DashboardLastExportSectionComponent,
     DashboardExportLogDialogComponent,
     DashboardAccountingErrorDialogComponent
 
