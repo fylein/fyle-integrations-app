@@ -58,6 +58,11 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
 import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboard-menu.component';
+import { DashboardExportSectionComponent } from './components/dashboard/dashboard-export-section/dashboard-export-section.component';
+import { DashboardErrorSectionComponent } from './components/dashboard/dashboard-error-section/dashboard-error-section.component';
+import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
+import { DashboardAccountingErrorDialogComponent } from './components/dashboard/dashboard-accounting-error-dialog/dashboard-accounting-error-dialog.component';
+import { DashboardExportSummarySectionComponent } from './components/dashboard/dashboard-export-summary-section/dashboard-export-summary-section.component';
 
 @NgModule({
   declarations: [
@@ -97,7 +102,12 @@ import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboa
     SkipExportComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
-    DashboardMenuComponent
+    DashboardMenuComponent,
+    DashboardExportSectionComponent,
+    DashboardErrorSectionComponent,
+    DashboardExportLogDialogComponent,
+    DashboardAccountingErrorDialogComponent,
+    DashboardExportSummarySectionComponent
   ],
   imports: [
     CommonModule,
@@ -164,7 +174,12 @@ import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboa
     ConfigurationAdvancedSettingsComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
-    DashboardMenuComponent
+    DashboardMenuComponent,
+    DashboardExportSectionComponent,
+    DashboardErrorSectionComponent,
+    DashboardExportLogDialogComponent,
+    DashboardAccountingErrorDialogComponent
+
   ]
 })
 export class SharedModule { }
