@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { OnboardingComponent } from './onboarding.component';
+import { Sage300OnboardingComponent } from './sage300-onboarding.component';
 import { Sage300OnboardingLandingComponent } from './sage300-onboarding-landing/sage300-onboarding-landing.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: OnboardingComponent,
+    component: Sage300OnboardingComponent,
     children: [
       {
         path: 'landing',
@@ -21,4 +21,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class OnboardingRoutingModule { }
+export class Sage300OnboardingRoutingModule { }
