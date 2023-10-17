@@ -19,7 +19,7 @@ export class ConfigurationTextFieldComponent implements OnInit {
   @Input() isFieldMandatory: boolean;
 
   @Input() customErrorMessage: string;
-  
+
   constructor() { }
 
   ngOnInit(): void {
