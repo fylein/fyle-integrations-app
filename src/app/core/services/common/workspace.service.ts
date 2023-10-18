@@ -45,7 +45,7 @@ export class WorkspaceService {
     return this.storageService.set('onboarding-state', onboardingState);
   }
 
-  getOnboardingState(): QBDOnboardingState | IntacctOnboardingState {
+  getOnboardingState(): any {
     const appInitialOnboardingState: AppUrlMap = {
       [AppUrl.INTACCT]: IntacctOnboardingState.CONNECTION,
       [AppUrl.GUSTO]: QBDOnboardingState.EXPORT_SETTINGS,
