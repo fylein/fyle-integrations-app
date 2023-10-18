@@ -38,7 +38,8 @@ export enum RedirectLink {
   // TODO: Change the link to the actual help article
   INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
   TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+  GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+  SAGE300 = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
 
 export enum EmbedVideoLink {
@@ -117,7 +118,8 @@ export enum ClickEvent {
   QBD_EXPORT = 'Export IIF files',
   CONNECT_INTACCT  = 'Connect Sage Intacct',
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
-  INTACCT_EXPORT = 'Export Sage Intacct'
+  INTACCT_EXPORT = 'Export Sage Intacct',
+  CONNECT_SAGE300 = 'Connect sage 300 CRE'
 }
 
 export enum ProgressPhase {

@@ -75,12 +75,12 @@ export class Sage300OnboardingService {
 
   getOnboardingSteps(currentStep: string, onboardingState: Sage300OnboardingState): OnboardingStepper[] {
     this.onboardingSteps.forEach(step => {
-      if (step.step.toLocaleLowerCase() === currentStep.toLocaleLowerCase()) {
+      if (step.step.toLowerCase() === currentStep.toLowerCase()) {
         step.active = true;
       }
     });
 
-    for (let index = this.onboardingStateStepMap[onboardingState]; index > 0; index--) {
+    for (let index = this.onboardingStateStepMap[onboardingState]-1; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
     }
 

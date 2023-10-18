@@ -71,6 +71,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
     } else if (this.postConnectionRoute==='intacct/onboarding/connector') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_INTACCT);
+    } else if (this.postConnectionRoute==='sage300/onboarding/connector') {
+      this.trackingService.onClickEvent(ClickEvent.CONNECT_SAGE300);
     }
     this.router.navigate([`/integrations/${this.postConnectionRoute}`]);
   }
