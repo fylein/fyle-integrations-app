@@ -63,6 +63,7 @@ import { DashboardErrorSectionComponent } from './components/dashboard/dashboard
 import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
 import { DashboardAccountingErrorDialogComponent } from './components/dashboard/dashboard-accounting-error-dialog/dashboard-accounting-error-dialog.component';
 import { DashboardExportSummarySectionComponent } from './components/dashboard/dashboard-export-summary-section/dashboard-export-summary-section.component';
+import { ConfigurationTextFieldComponent } from './components/configuration/configuration-text-field/configuration-text-field.component';
 
 @NgModule({
   declarations: [
@@ -107,7 +108,8 @@ import { DashboardExportSummarySectionComponent } from './components/dashboard/d
     DashboardErrorSectionComponent,
     DashboardExportLogDialogComponent,
     DashboardAccountingErrorDialogComponent,
-    DashboardExportSummarySectionComponent
+    DashboardExportSummarySectionComponent,
+    ConfigurationTextFieldComponent
   ],
   imports: [
     CommonModule,
@@ -178,7 +180,8 @@ import { DashboardExportSummarySectionComponent } from './components/dashboard/d
     DashboardExportSectionComponent,
     DashboardErrorSectionComponent,
     DashboardExportLogDialogComponent,
-    DashboardAccountingErrorDialogComponent
+    DashboardAccountingErrorDialogComponent,
+    ConfigurationTextFieldComponent
 
   ]
 })
