@@ -1,13 +1,13 @@
-<div [formGroup]="form">
+<div [formGroup]="form" class="tw-pb-20-px">
     <div>
-        <p class="tw-text-14-px tw-text-faded-text-color">
+        <span class="tw-text-14-px tw-text-faded-text-color">
             {{label}}
-            <app-mandatory-field [noSpacing]="true"></app-mandatory-field> 
-        </p>
+        </span>
+        <app-mandatory-field [noSpacing]="true"></app-mandatory-field> 
     </div>
 
     <div class="tw-mt-8-px">
-        <input type="text" class="tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px"[ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"  pInputText [formControlName]="formControllerName" [placeholder]="placeholder" [required]="isFieldMandatory">
+        <input type="text" class="tw-border-box-color" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"  pInputText [formControlName]="formControllerName" [placeholder]="placeholder" [required]="isFieldMandatory">
         <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
     </div>
 </div>
