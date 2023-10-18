@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfigurationCta, RedirectLink, Sage300OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 
@@ -19,11 +18,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   redirectLink = RedirectLink.SAGE300;
 
-  onboardingstep: Sage300OnboardingState = this.workspaceService.getOnboardingState();
-
-  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Sage 300 CRE', this.onboardingstep);
-
-  isOnboarding: boolean;
+  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Sage 300 CRE');
 
   connectSage300Form: FormGroup;
 
@@ -33,18 +28,11 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   constructor(
     private onboardingService: Sage300OnboardingService,
-    private workspaceService: WorkspaceService,
     private router: Router,
     private formBuilder: FormBuilder,
     private connectorService: Sage300ConnectorService,
     private toastService: IntegrationsToastService
   ) { }
-
-  clearField() {
-    this.connectSage300Form.get("userID")?.setValue('');
-    this.connectSage300Form.get("companyID")?.setValue('');
-    this.connectSage300Form.get("userPassword")?.setValue('');
-  }
 
   save() {
     const userID = this.connectSage300Form.value.userID;
@@ -57,10 +45,10 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
       indentifier: companyID,
       password: userPassword
     }).subscribe((response) => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
       this.isLoading = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
+      this.router.navigate([this.onboardingSteps[1].route]);
     }, () => {
-      this.clearField();
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
     });
@@ -68,7 +56,6 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   private setupPage(): void {
     this.isLoading = true;
-    this.isOnboarding = this.router.url.includes('onboarding');
     this.connectSage300Form = this.formBuilder.group({
       userID: ['', Validators.required],
       companyID: ['', Validators.required],

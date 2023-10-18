@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Sage300OnboardingStepperMap } from 'src/app/core/models/sage300/sage300-configuration/sage300-onboarding-stepper/sage300-onboarding-stepper.model';
+import { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
   providedIn: 'root'
@@ -71,16 +72,20 @@ export class Sage300OnboardingService {
     }
   ];
 
-  constructor() { }
+  onboardingState: Sage300OnboardingState = this.workspaceService.getOnboardingState();
 
-  getOnboardingSteps(currentStep: string, onboardingState: Sage300OnboardingState): OnboardingStepper[] {
+  constructor(
+    private workspaceService: WorkspaceService
+  ) { }
+
+  getOnboardingSteps(currentStep: string): OnboardingStepper[] {
     this.onboardingSteps.forEach(step => {
       if (step.step.toLowerCase() === currentStep.toLowerCase()) {
         step.active = true;
       }
     });
 
-    for (let index = this.onboardingStateStepMap[onboardingState]-1; index > 0; index--) {
+    for (let index = this.onboardingStateStepMap[this.onboardingState] - 1; index > 0; index--) {
       this.onboardingSteps[index - 1].completed = true;
     }
 

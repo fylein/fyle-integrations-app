@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { ApiService } from '../../common/api.service';
 import { StorageService } from '../../common/storage.service';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
-import { Sage300Credential } from 'src/app/core/models/sage300/sage300-db/sage300-credentials.model';
+import { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
 
 const sage300CredentialCache = new Subject<void>();
 

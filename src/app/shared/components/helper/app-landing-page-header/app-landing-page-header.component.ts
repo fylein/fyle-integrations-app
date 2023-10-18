@@ -69,9 +69,9 @@ export class AppLandingPageHeaderComponent implements OnInit {
   connectIntegration(): void {
     if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
-    } else if (this.postConnectionRoute==='intacct/onboarding/connector') {
+    } else if (this.postConnectionRoute === 'intacct/onboarding/connector') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_INTACCT);
-    } else if (this.postConnectionRoute==='sage300/onboarding/connector') {
+    } else if (this.postConnectionRoute === 'sage300/onboarding/connector') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_SAGE300);
     }
     this.router.navigate([`/integrations/${this.postConnectionRoute}`]);
