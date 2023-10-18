@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
-import { Cacheable } from 'ts-cacheable';
-import { Configuration } from '../../models/db/configuration.model';
-import { AppUrl, IntacctOnboardingState, QBDOnboardingState } from '../../models/enum/enum.model';
-import { IntacctWorkspace } from '../../models/si/db/workspaces.model';
+import { AppUrl, IntacctOnboardingState, QBDOnboardingState, Sage300OnboardingState } from '../../models/enum/enum.model';
 import { ApiService } from './api.service';
-import { QBDWorkspace } from '../../models/qbd/db/workspaces.model';
 import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 
@@ -45,11 +41,12 @@ export class WorkspaceService {
     return this.storageService.set('onboarding-state', onboardingState);
   }
 
+// The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getOnboardingState(): any {
     const appInitialOnboardingState: AppUrlMap = {
       [AppUrl.INTACCT]: IntacctOnboardingState.CONNECTION,
       [AppUrl.GUSTO]: QBDOnboardingState.EXPORT_SETTINGS,
-      [AppUrl.SAGE300]: IntacctOnboardingState.CONNECTION,
+      [AppUrl.SAGE300]: Sage300OnboardingState.CONNECTION,
       [AppUrl.BAMBOO_HR]: IntacctOnboardingState.CONNECTION,
       [AppUrl.QBD]: IntacctOnboardingState.CONNECTION,
       [AppUrl.TRAVELPERK]: IntacctOnboardingState.CONNECTION,
