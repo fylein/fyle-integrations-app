@@ -72,7 +72,7 @@ export class Sage300OnboardingService {
     }
   ];
 
-  onboardingState: Sage300OnboardingState = this.workspaceService.getOnboardingState();
+  private readonly onboardingState: Sage300OnboardingState = this.workspaceService.getOnboardingState();
 
   constructor(
     private workspaceService: WorkspaceService
