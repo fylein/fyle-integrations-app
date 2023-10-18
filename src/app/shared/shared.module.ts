@@ -183,7 +183,8 @@ import { ConfigurationTextFieldComponent } from './components/configuration/conf
     DashboardExportSectionComponent,
     DashboardErrorSectionComponent,
     DashboardExportLogDialogComponent,
-    DashboardAccountingErrorDialogComponent
+    DashboardAccountingErrorDialogComponent,
+    ConfigurationTextFieldComponent
 
   ]
 })
