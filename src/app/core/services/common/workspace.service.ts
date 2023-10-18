@@ -40,7 +40,7 @@ export class WorkspaceService {
   setOnboardingState(onboardingState: IntacctOnboardingState | QBDOnboardingState): void {
     return this.storageService.set('onboarding-state', onboardingState);
   }
-  
+
 // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
   getOnboardingState(): any {
     const appInitialOnboardingState: AppUrlMap = {
