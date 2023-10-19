@@ -6,9 +6,7 @@ import { Sage300DashboardComponent } from './sage300-dashboard/sage300-dashboard
 
 
 @NgModule({
-  declarations: [
-    Sage300DashboardComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     Sage300MainRoutingModule
