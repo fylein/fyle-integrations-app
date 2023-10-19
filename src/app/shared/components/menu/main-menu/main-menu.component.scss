@@ -9,3 +9,27 @@
 :host ::ng-deep .main-tab .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
     @apply tw-text-slightly-normal-text-color tw-border-b-2 tw-border-b-slightly-normal-text-color tw-font-500 tw-bg-white #{!important};
 }
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav {
+    @apply tw-border-b-white #{!important};
+}
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+    @apply tw-border-white;
+}
+
+:host ::ng-deep .p-dropdown {
+    @apply tw-w-80-px tw-h-32-px #{!important};
+}
+
+:host ::ng-deep .p-dropdown-label {
+    @apply tw-flex tw-flex-none tw-w-auto #{!important};
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-trigger {
+    @apply tw-w-28-px tw-text-sub-text-color #{!important};
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-label.p-inputtext {
+    @apply tw-pt-4-px tw-pl-12-px tw-pr-0 tw-pb-0 tw-text-slightly-normal-text-color #{!important};
+}

@@ -1,3 +1,23 @@
-<div class="main-tab">
-    <p-tabMenu [model]="activeModules" [activeItem]="activeModule"></p-tabMenu>
+<div class="tw-border-gray-300 tw-rounded tw-flex tw-items-center tw-justify-between">
+    <p-tabMenu [model]="modules" [activeItem]="activeModule" ></p-tabMenu>
+
+    <div class="tw-flex tw-items-center">
+        <button [pTooltip]="'The integration will import all the newly updated Sage Intacct dimensions and Fyle expenses in the configured state of export'"
+            (click)="null"
+            class="tw-h-32-px tw-w-80-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
+            <img src="assets/icons/stepper/sync.svg">
+            <span class="tw-text-14-px tw-pl-8-px">
+                Sync
+            </span>
+        </button>
+
+        <p-dropdown [(ngModel)]="moreDropdown" (onChange)="null" appendTo="body" class="tw-mr-26-px" [options]="['Submit Feedback']" placeholder="More">
+            <ng-template let-option pTemplate="item">
+                <div class="tw-flex tw-justify-center">
+                    <svg-icon-sprite src="open-in-new-tab" width="20px" height="20px" class="tw-pt-4-px tw-pr-8-px tw-text-mandatory-field-color"></svg-icon-sprite>
+                    <span>{{option}}</span>
+                </div>
+              </ng-template>
+        </p-dropdown>
+    </div>
 </div>

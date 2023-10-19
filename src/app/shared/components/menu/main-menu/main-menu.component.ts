@@ -8,9 +8,11 @@ import { MenuItem } from 'primeng/api';
 })
 export class MainMenuComponent implements OnInit {
 
-  @Input() activeModules: MenuItem[];
-
   @Input() activeModule: MenuItem;
+
+  @Input() modules: MenuItem[];
+
+  moreDropdown: null;
 
   constructor() { }
 
