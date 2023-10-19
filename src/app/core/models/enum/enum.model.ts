@@ -386,3 +386,14 @@ export enum QBDOnboardingState {
     LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
     SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
   }
+
+  export enum Sage300ExportTypes {
+    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+    DIRECT_COST = 'DIRECT_COST'
+  }
+
+  export enum Sage300ExpenseDate {
+    LAST_SPENT_AT = 'LAST_SPENT_AT',
+    CURRENT_DATE = 'CURRENT_DATE',
+    APPROVED_AT = 'APPROVED_AT'
+  }
