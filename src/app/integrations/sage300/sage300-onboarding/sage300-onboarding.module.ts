@@ -4,13 +4,15 @@ import { Sage300OnboardingLandingComponent } from './sage300-onboarding-landing/
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage300OnboardingRoutingModule } from './sage300-onboarding-routing.module';
 import { Sage300OnboardingConnectorComponent } from './sage300-onboarding-connector/sage300-onboarding-connector.component';
+import { Sage300OnboardingDoneComponent } from './sage300-onboarding-done/sage300-onboarding-done.component';
 
 
 
 @NgModule({
   declarations: [
     Sage300OnboardingLandingComponent,
-    Sage300OnboardingConnectorComponent
+    Sage300OnboardingConnectorComponent,
+    Sage300OnboardingDoneComponent
   ],
   imports: [
     CommonModule,
