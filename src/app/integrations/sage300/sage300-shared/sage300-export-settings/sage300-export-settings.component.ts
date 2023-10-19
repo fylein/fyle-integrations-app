@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AutoMapEmployeeOptions, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField, Sage300ExpenseDate, Sage300ExportTypes } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, CCCExpenseState, ConfigurationCta, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField, Sage300ExpenseDate, Sage300ExportTypes } from 'src/app/core/models/enum/enum.model';
 import { Sage300ExportSettingFormOption, sage300ExportSettingGet } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 
@@ -12,15 +12,23 @@ import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage3
 })
 export class Sage300ExportSettingsComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = false;
 
   isOnboarding: boolean;
 
-  exportSettings: sage300ExportSettingGet;
+  exportSettings: any;
 
   exportSettingForm: FormGroup;
 
-  expenseGroupBy: Sage300ExportSettingFormOption[] = [
+  redirectLink: string = '';
+
+  appName: string = AppName.SAGE300;
+
+  saveInProgress: boolean;
+
+  ConfigurationCtaText = ConfigurationCta;
+
+  expenseGroupByOptions: Sage300ExportSettingFormOption[] = [
     {
       label: 'Expense',
       value: ExpenseGroupedBy.EXPENSE
@@ -90,7 +98,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     }
   ];
 
-  AutoMapEmployeeOptionsOptions: Sage300ExportSettingFormOption[] = [
+  autoMapEmployeeOptionsOptions: Sage300ExportSettingFormOption[] = [
     {
       value: null,
       label: 'None'
@@ -114,6 +122,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder
   ) { }
+
+  getEmployeeFieldMapping(exportType: ExpenseGroupedBy): string {
+    return exportType[0].toUpperCase() + exportType.substr(1);
+  }
 
   private exportSelectionValidator(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: object} | null => {
@@ -195,23 +207,23 @@ export class Sage300ExportSettingsComponent implements OnInit {
   }
 
   private setupForm(): void {
-    this.isLoading = true;
+    this.isLoading = false;
     this.isOnboarding = this.router.url.includes('onboarding');
     this.exportSettingService.getSage300ExportSettings().subscribe((exportSettingsResponse: sage300ExportSettingGet) => {
       this.exportSettings = exportSettingsResponse;
       this.exportSettingForm = this.formBuilder.group({
         reimbursableExpenses: [this.exportSettings?.reimbursable_expenses_export_type ? true : false, this.exportSelectionValidator()],
         reimbursableExportType: [this.exportSettings?.reimbursable_expenses_export_type ? this.exportSettings.reimbursable_expenses_export_type : null],
-        reimbursableState: [this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null],
-        reimbursableDate: [this.exportSettings?.reimbursable_expense_date ? this.exportSettings?.reimbursable_expense_date : null],
-        reimbursableGroupBy: [this.exportSettings?.reimbursable_expense_grouped_by ? this.exportSettings?.reimbursable_expense_grouped_by: null],
+        reimbursableExpenseState: [this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null],
+        reimbursableExportDate: [this.exportSettings?.reimbursable_expense_date ? this.exportSettings?.reimbursable_expense_date : null],
+        reimbursableExportGroup: [this.exportSettings?.reimbursable_expense_grouped_by ? this.exportSettings?.reimbursable_expense_grouped_by: null],
         reimbursableEmployeeType: [null],
-        reimbursableEmployeeSaveType: [null],
+        reimbursableEmployeeMappingType: [null],
         cccExpenses: [this.exportSettings?.credit_card_expense_export_type ? true : false, this.exportSelectionValidator()],
         cccExportType: [this.exportSettings?.credit_card_expense_export_type ? this.exportSettings.credit_card_expense_export_type : null],
-        cccState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null],
-        cccDate: [this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : null],
-        cccGroupBy: [this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by: null],
+        cccExpenseState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null],
+        cccExpenseDate: [this.exportSettings?.credit_card_expense_date ? this.exportSettings?.credit_card_expense_date : null],
+        cccExportGroup: [this.exportSettings?.credit_card_expense_grouped_by ? this.exportSettings?.credit_card_expense_grouped_by: null],
         defaultCCCAccountName: [this.exportSettings?.default_ccc_account_name ? this.exportSettings?.default_ccc_account_name : null],
         defaultCCCAccountId: [this.exportSettings?.default_ccc_account_id ? this.exportSettings?.default_ccc_account_id : null],
         defaultVendorName: [this.exportSettings?.default_vendor_name ? this.exportSettings?.default_vendor_name : null],
@@ -220,6 +232,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.setCustomValidatorsAndWatchers();
       this.isLoading = false;
     });
+  }
+
+  save() {
+    // Will be added here soon
   }
 
   ngOnInit(): void {
