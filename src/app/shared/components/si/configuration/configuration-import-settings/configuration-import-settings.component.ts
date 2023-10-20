@@ -371,14 +371,9 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
     // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
     if (selectedField?.is_dependent) {
-      // Get the FormArray 'expenseFields' from the 'importSettingsForm'
-      const expenseFieldsFormArray = this.importSettingsForm.get('expenseFields') as FormArray;
 
       // Get the 'import_to_fyle' control at the specified index and disable it
-      const importToFyleControl = expenseFieldsFormArray.at(index)?.get('import_to_fyle');
-      if (importToFyleControl) {
-        importToFyleControl.disable();
-      }
+      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     }
   }
 
