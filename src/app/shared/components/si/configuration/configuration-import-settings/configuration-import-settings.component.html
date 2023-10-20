@@ -103,7 +103,7 @@
                         </div>
                             <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
                             <div class="tw-w-28-vw">
-                                <p-dropdown appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
+                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">

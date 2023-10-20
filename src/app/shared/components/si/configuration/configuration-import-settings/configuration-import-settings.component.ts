@@ -63,13 +63,13 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
+  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
 
   private isCostCodeFieldSelected: boolean = false;
 
-  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
+  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
 
   dependentFieldSettings: DependentFieldSetting | null;
 
@@ -148,7 +148,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       this.customField = {
         attribute_type: this.customFieldForm.value.attribute_type,
         display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder
+        source_placeholder: this.customFieldForm.value.source_placeholder,
+        is_dependent: true
       };
       if (this.customFieldControl) {
         if (this.isCostCodeFieldSelected) {
@@ -171,7 +172,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       this.customField = {
         attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
         display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder
+        source_placeholder: this.customFieldForm.value.source_placeholder,
+        is_dependent: false
       };
 
       if (this.customFieldControl) {
@@ -360,11 +362,32 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     return expenseFieldFormArray;
   }
 
+  onDropdownChange(event: any, index: number) {
+    // Get the selected value from the <p-dropdown>
+    const selectedValue = event.value;
+
+    // Find the selected field in 'fyleFields' based on the selected value
+    const selectedField = this.fyleFields.find(field => field.attribute_type === selectedValue);
+
+    // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
+    if (selectedField?.is_dependent) {
+      // Get the FormArray 'expenseFields' from the 'importSettingsForm'
+      const expenseFieldsFormArray = this.importSettingsForm.get('expenseFields') as FormArray;
+
+      // Get the 'import_to_fyle' control at the specified index and disable it
+      const importToFyleControl = expenseFieldsFormArray.at(index)?.get('import_to_fyle');
+      if (importToFyleControl) {
+        importToFyleControl.disable();
+      }
+    }
+  }
+
   private generateDependentFieldValue(attribute_type: string, source_placeholder: string): ExpenseField {
     return {
       attribute_type: attribute_type,
       display_name: attribute_type,
-      source_placeholder: source_placeholder
+      source_placeholder: source_placeholder,
+      is_dependent: true
     };
   }
 
@@ -416,13 +439,15 @@ export class ConfigurationImportSettingsComponent implements OnInit {
               this.customField = {
                 attribute_type: importSettings.dependent_field_settings.cost_code_field_name,
                 display_name: importSettings.dependent_field_settings.cost_code_field_name,
-                source_placeholder: importSettings.dependent_field_settings.cost_code_placeholder
+                source_placeholder: importSettings.dependent_field_settings.cost_code_placeholder,
+                is_dependent: true
               };
               this.costCodeFieldOption.push(this.customField);
               this.customField = {
                 attribute_type: importSettings.dependent_field_settings.cost_type_field_name,
                 display_name: importSettings.dependent_field_settings.cost_type_field_name,
-                source_placeholder: importSettings.dependent_field_settings.cost_type_placeholder
+                source_placeholder: importSettings.dependent_field_settings.cost_type_placeholder,
+                is_dependent: true
               };
               this.costTypeFieldOption.push(this.customField);
             }
