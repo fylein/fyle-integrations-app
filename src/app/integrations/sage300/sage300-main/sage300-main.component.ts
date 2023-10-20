@@ -9,10 +9,10 @@ import { MenuItem } from 'primeng/api';
 export class Sage300MainComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/sage300/sage300-main/sage300-dashboard'},
-    {label: 'Export Log', routerLink: '/integrations/sage300/sage300-main/sage300-export_log'},
-    {label: 'Mapping', routerLink: '/integrations/sage300/sage300-main/sage300-mapping'},
-    {label: 'Configuration', routerLink: '/integrations/sage300/sage300-main/sage300-configuration'}
+    {label: 'Dashboard', routerLink: '/integrations/sage300/main/dashboard'},
+    {label: 'Export Log', routerLink: '/integrations/sage300/main/export_log'},
+    {label: 'Mapping', routerLink: '/integrations/sage300/main/mapping'},
+    {label: 'Configuration', routerLink: '/integrations/sage300/main/configuration'}
   ];
 
   constructor() { }
