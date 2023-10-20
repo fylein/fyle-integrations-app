@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { appName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-sage300-main',
@@ -8,14 +9,22 @@ import { MenuItem } from 'primeng/api';
 })
 export class Sage300MainComponent implements OnInit {
 
+  appName: appName = appName.SAGE_300_CRE;
+
   modules: MenuItem[] = [
-    {label: 'Dashboard', routerLink: '/integrations/sage300/sage300-main/sage300-dashboard'},
-    {label: 'Export Log', routerLink: '/integrations/sage300/sage300-main/sage300-export_log'},
-    {label: 'Mapping', routerLink: '/integrations/sage300/sage300-main/sage300-mapping'},
-    {label: 'Configuration', routerLink: '/integrations/sage300/sage300-main/sage300-configuration'}
+    {label: 'Dashboard', routerLink: '/integrations/sage300/main/dashboard'},
+    {label: 'Export Log', routerLink: '/integrations/sage300/main/export_log'},
+    {label: 'Mapping', routerLink: '/integrations/sage300/main/mapping'},
+    {label: 'Configuration', routerLink: '/integrations/sage300/main/configuration'}
   ];
 
   constructor() { }
+
+  refreshDimensions(eventData: boolean) {
+    if (eventData){
+      // RefreshDimension
+    }
+  }
 
   ngOnInit(): void {
   }

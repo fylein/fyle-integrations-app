@@ -46,7 +46,7 @@
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
-                                [isFieldMandatory]="true"
+                                [isFieldMandatory]="false"
                                 [mandatoryErrorListName]="'expense payment type'"
                                 [label]="'Set the Default Expense Payment Type as?'"
                                 [subLabel]="'The selected Expense Payment Type will be added to the reimbursable expenses exported from Fyle to Sage Intacct.'"
