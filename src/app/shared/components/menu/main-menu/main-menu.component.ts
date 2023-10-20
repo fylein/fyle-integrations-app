@@ -17,12 +17,12 @@ export class MainMenuComponent implements OnInit {
 
   @Input() isDropdrownRequired: boolean;
 
-  @Output() onRefreshDimensionClick = new EventEmitter<boolean>();
+  @Output() refreshDimensionClick = new EventEmitter<boolean>();
 
   constructor() { }
 
   refreshDimensions() {
-    this.onRefreshDimensionClick.emit(true);
+    this.refreshDimensionClick.emit(true);
   }
 
   ngOnInit(): void {
