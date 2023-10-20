@@ -8,13 +8,19 @@ import { MenuItem } from 'primeng/api';
 })
 export class MainMenuComponent implements OnInit {
 
-  @Input() activeModule: MenuItem;
-
   @Input() modules: MenuItem[];
 
   @Input() moreDropdown = null;
 
+  @Input() appName: string;
+
+  @Input() isDropdrownRequired: boolean;
+
   constructor() { }
+
+  refreshDimensions() {
+    
+  }
 
   ngOnInit(): void {
   }
