@@ -17,6 +17,12 @@ export class Sage300MainComponent implements OnInit {
 
   constructor() { }
 
+  refreshDimensions(eventData: boolean) {
+    if(eventData){
+      //refreshDimension
+    }
+  }
+
   ngOnInit(): void {
   }
 

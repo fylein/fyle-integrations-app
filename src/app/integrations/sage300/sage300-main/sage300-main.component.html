@@ -1,5 +1,5 @@
 <div>
-    <app-main-menu [modules]="modules" [appName]="'Sage Intacct'" [isDropdrownRequired]="true"></app-main-menu>
+    <app-main-menu [modules]="modules" [appName]="'Sage Intacct'" [isDropdrownRequired]="true" (refreshDimension)="refreshDimensions($event)"></app-main-menu>
 </div>
 <div>
     <router-outlet></router-outlet>

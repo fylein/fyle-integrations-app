@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 
 @Component({
@@ -16,10 +16,12 @@ export class MainMenuComponent implements OnInit {
 
   @Input() isDropdrownRequired: boolean;
 
+  @Output() refreshDimension = new EventEmitter<boolean>();
+
   constructor() { }
 
   refreshDimensions() {
-    
+    this.refreshDimension.emit(true);
   }
 
   ngOnInit(): void {
