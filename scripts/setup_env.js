@@ -6,6 +6,7 @@ const environment = {
   callback_uri: `${process.env.CALLBACK_URI ? process.env.CALLBACK_URI : '{{CALLBACK_URI}}'}`,
   qbd_api_url: `${process.env.QBD_API_URL ? process.env.QBD_API_URL : '{{QBD_API_URL}}'}`,
   si_api_url: `${process.env.SI_API_URL ? process.env.SI_API_URL : '{{SI_API_URL}}'}`,
+  sage300_api_url: `${process.env.SAGE300_API_URL ? process.env.SAGE300_API_URL : '{{SAGE300_API_URL}}'}`,
   api_url: `${process.env.API_URL ? process.env.API_URL : '{{API_URL}}'}`,
   fyle_app_url: `${process.env.FYLE_APP_URL ? process.env.FYLE_APP_URL : '{{FYLE_APP_URL}}'}`,
   sentry_dsn: `${process.env.SENTRY_DSN ? process.env.SENTRY_DSN : '{{SENTRY_DSN}}'}`,
