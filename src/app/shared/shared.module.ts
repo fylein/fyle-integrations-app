@@ -65,6 +65,7 @@ import { DashboardExportLogDialogComponent } from './components/dashboard/dashbo
 import { DashboardAccountingErrorDialogComponent } from './components/dashboard/dashboard-accounting-error-dialog/dashboard-accounting-error-dialog.component';
 import { DashboardExportSummarySectionComponent } from './components/dashboard/dashboard-export-summary-section/dashboard-export-summary-section.component';
 import { ConfigurationTextFieldComponent } from './components/configuration/configuration-text-field/configuration-text-field.component';
+import { MainMenuComponent } from './components/menu/main-menu/main-menu.component';
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
 
 @NgModule({
@@ -113,6 +114,7 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     DashboardAccountingErrorDialogComponent,
     DashboardExportSummarySectionComponent,
     ConfigurationTextFieldComponent,
+    MainMenuComponent,
     ZeroStateComponent
   ],
   imports: [
@@ -187,6 +189,7 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     DashboardExportLogDialogComponent,
     DashboardAccountingErrorDialogComponent,
     ConfigurationTextFieldComponent,
+    MainMenuComponent,
     ZeroStateComponent
   ]
 })

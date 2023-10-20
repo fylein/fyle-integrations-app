@@ -246,12 +246,10 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         }
 
         if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.EXPENSE_REPORT) {
-          this.exportSettingsForm.controls.reimbursableExpensePaymentType.setValidators(Validators.required);
           this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.EMPLOYEE);
           this.exportSettingsForm.controls.employeeFieldMapping.disable();
         } else {
           this.exportSettingsForm.controls.reimbursableExpensePaymentType.setValue(null);
-          this.exportSettingsForm.controls.reimbursableExpensePaymentType.clearValidators();
         }
 
         if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.BILL) {
