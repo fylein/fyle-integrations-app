@@ -10,6 +10,10 @@ const routes: Routes = [
       {
         path: 'onboarding',
         loadChildren: () => import('./sage300-onboarding/sage300-onboarding.module').then(m => m.Sage300OnboardingModule)
+      },
+      {
+        path: 'main',
+        loadChildren: () => import('./sage300-main/sage300-main.module').then(m => m.Sage300MainModule)
       }
     ]
   }

@@ -386,3 +386,7 @@ export enum QBDOnboardingState {
     LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
     SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
   }
+
+  export enum appName{
+    SAGE_300_CRE = 'Sage 300 CRE',
+  }
