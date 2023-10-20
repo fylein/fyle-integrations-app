@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { appName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-main-menu',
@@ -12,16 +13,16 @@ export class MainMenuComponent implements OnInit {
 
   @Input() moreDropdown = null;
 
-  @Input() appName: string;
+  @Input() appName: appName;
 
   @Input() isDropdrownRequired: boolean;
 
-  @Output() refreshDimension = new EventEmitter<boolean>();
+  @Output() onRefreshDimensionClick = new EventEmitter<boolean>();
 
   constructor() { }
 
   refreshDimensions() {
-    this.refreshDimension.emit(true);
+    this.onRefreshDimensionClick.emit(true);
   }
 
   ngOnInit(): void {

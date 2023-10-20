@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { appName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-sage300-main',
@@ -7,6 +8,8 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./sage300-main.component.scss']
 })
 export class Sage300MainComponent implements OnInit {
+
+  appName: appName = appName.SAGE_300_CRE;
 
   modules: MenuItem[] = [
     {label: 'Dashboard', routerLink: '/integrations/sage300/main/dashboard'},
