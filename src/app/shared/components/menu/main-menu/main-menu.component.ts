@@ -12,7 +12,7 @@ export class MainMenuComponent implements OnInit {
 
   @Input() modules: MenuItem[];
 
-  moreDropdown: null;
+  @Input() moreDropdown = null;
 
   constructor() { }
 
