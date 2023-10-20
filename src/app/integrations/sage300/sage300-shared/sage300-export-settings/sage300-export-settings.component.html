@@ -7,7 +7,9 @@
             [headerText]="'Export Settings'"
             [contentText]="'In this section, you can configure how and when expenses from Fyle should be exported to Sage 300 CRE. '"
             [redirectLink]="redirectLink"
-            [showSyncButton]="isOnboarding">
+            [showSyncButton]="isOnboarding"
+            [appName]="appName"
+            (refreshDimension)="refreshDimensions($event)">
         </app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingForm">
@@ -18,11 +20,11 @@
                         [form]="exportSettingForm"
                         [label]="'Export Reimbursable Expenses'" 
                         [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage 300 CRE.'" 
-                        [formControllerName]="'reimbursableExpenses'"
+                        [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
                 </div>
-                <div *ngIf="exportSettingForm.value?.reimbursableExpenses">
+                <div *ngIf="exportSettingForm.value?.reimbursableExpense">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
@@ -93,11 +95,11 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getEmployeeFieldMapping(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date as'"
+                        [label]="'Set the ' + getFieldMapping(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date as'"
                         [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage 300 CRE. Click here for more details.'"
                         [options]="expenseGroupingDateOptions"
                         [iconPath]="'calender'"
-                        [placeholder]="'Select ' + getEmployeeFieldMapping(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date'"
+                        [placeholder]="'Select ' + getFieldMapping(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -114,7 +116,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div>
+            <div>
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field 
                     [form]="exportSettingForm"
@@ -126,75 +128,39 @@
                 <div *ngIf="exportSettingForm.value?.creditCardExpense">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export module'"
-                        [label]="'How should the expenses be exported?'"
-                        [options]="creditCardExportTypes"
-                        [iconPath]="'expense'"
-                        [placeholder]="'Select expense export module'"
-                        [formControllerName]="'cccExportType'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingForm.value.cccExportType===CorporateCreditCardExpensesObject.EXPENSE_REPORT">
-                            <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense payment type'"
-                            [label]="'Set the Default Expense Payment Type as?'"
-                            [subLabel]="'The selected Expense Payment Type will be added to the Corporate credit card expenses exported from Fyle to Sage Intacct.'"
-                            [destinationAttributes]="sageIntacctCCCExpensePaymentType"
+                            [mandatoryErrorListName]="'export module'"
+                            [label]="'How should the expenses be exported?'"
+                            [options]="expensesExportTypes"
                             [iconPath]="'expense'"
-                            [placeholder]="'Select expense payment type'"
-                            [formControllerName]="'cccExpensePaymentType'"></app-configuration-select-field>
-                        </div>
-                        <div *ngIf="exportSettingForm.value.cccExportType===CorporateCreditCardExpensesObject.BILL">
+                            [placeholder]="'Select expense export module'"
+                            [formControllerName]="'cccExportType'"
+                            [appName]="appName">
+                        </app-configuration-select-field>
+                        <div *ngIf="exportSettingForm.value.cccExportType===expensesExportTypes[1].value">
                             <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'credit card vendor'"
-                            [label]="'Set the Default Credit Card Vendor as'"
-                            [subLabel]="'The vendor configured here will be added to all the Credit Card expenses exported as Bills.'"
-                            [destinationAttributes]="sageIntacctDefaultVendor"
-                            [iconPath]="'expense'"
-                            [placeholder]="'Select credit card vendor'"
-                            [formControllerName]="'creditCardVendor'"></app-configuration-select-field>
-                        </div>
-                        <div *ngIf="exportSettingForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-                            <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'GL account'"
-                            [label]="'To which GL Account should the expenses be credited to?'"
-                            [subLabel]="'The integration will credit the account selected here for Corporate Credit Card Expenses exported as Journal Entries.'"
-                            [destinationAttributes]="sageIntacctDefaultGLAccounts"
-                            [iconPath]="'expense'"
-                            [placeholder]="'Select GL account'"
-                            [formControllerName]="'creditCard'"></app-configuration-select-field>
-                        </div>
-                        <div *ngIf="exportSettingForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
-                            <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'charge card'"
-                            [label]="'Set the Default Charge Card'"
-                            [subLabel]="'Expenses of Corporate Cards in Fyle that are not mapped to their respective cards in Sage Intacct will be posted to the Card configured here. You can map your cards in the Mapping section after configuring the integration.'"
-                            [destinationAttributes]="sageIntacctDefaultChargeCard"
-                            [iconPath]="'expense'"
-                            [placeholder]="'Select Charge Corporate Card'"
-                            [formControllerName]="'chargeCard'"></app-configuration-select-field>
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Default Credit Account Name'"
+                                [label]="'Set the Default Credit Account as?'"
+                                [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Direct Cost.'"
+                                [options]="expensesExportTypes"
+                                [iconPath]="'expense'"
+                                [placeholder]="'Select default credit account'"
+                                [formControllerName]="'defaultCCCAccountName'">
+                            </app-configuration-select-field>
                         </div>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <div *ngIf="!exportSettingForm.value.reimbursableExportType && exportSettingForm.value.cccExportType === CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-                            <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
-                        </div>
-                        <app-configuration-select-field *ngIf="exportSettingForm.value.cccExportType"
+                        <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
                         [label]="'At which state should the expenses be ready to export from Fyle?'"
-                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (Approved) or when the transaction has been settled (Closed)'"
-                        [options]="cccExpenseStateOptions"
-                        [iconPath]="'questionmark'"
+                        [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
+                        [options]="cccExpenseState"
+                        [iconPath]="'expense'"
                         [placeholder]="'Select export state'"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
@@ -203,39 +169,27 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingForm.value.cccExportType) + ' date as'"
+                        [label]="'Set the ' + getFieldMapping(exportSettingForm.value.cccExportType) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from Fyle to Sage Intacct. Click here for more details.'"
-                        [options]="cccExpenseGroupingDateOptions"
+                        [options]="expenseGroupingDateOptions"
                         [iconPath]="'calender'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field *ngIf="exportSettingForm.value.cccExportType!==CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
+                        <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'how expenses to be grouped'"
                         [label]="'How should the expenses be grouped?'"
-                        [subLabel]="'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)'"
-                        [options]="expenseGroupingFieldOptions"
+                        [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                        [options]="expenseGroupByOptions"
                         [iconPath]="'questionmark'"
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
-                            <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
-                                <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
-                                    <h4 class="!tw-text-14-px !tw-font-500">How should the expenses be grouped?<app-mandatory-field></app-mandatory-field></h4>
-                                    <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)</h5>
-                                </div>
-                                <div class="tw-pl-18-px tw-pt-18-px">
-                                    <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="cccExportGroup">
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div>
             <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingForm.valid"></app-configuration-step-footer>
