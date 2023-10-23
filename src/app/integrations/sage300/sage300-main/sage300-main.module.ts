@@ -7,9 +7,7 @@ import { SharedModule } from 'primeng/api';
 
 
 @NgModule({
-  declarations: [
-
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     SharedModule,
