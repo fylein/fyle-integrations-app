@@ -25,7 +25,7 @@ export class DashboardExportSectionComponent implements OnInit {
 
   export() {
     // For Export
-    // emit output
+    // Emit output
   }
 
   ngOnInit(): void {
