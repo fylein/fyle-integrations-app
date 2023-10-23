@@ -187,7 +187,8 @@ import { MainMenuComponent } from './components/menu/main-menu/main-menu.compone
     DashboardExportLogDialogComponent,
     DashboardAccountingErrorDialogComponent,
     ConfigurationTextFieldComponent,
-    MainMenuComponent
+    MainMenuComponent,
+    DashboardExportSectionComponent
   ]
 })
 export class SharedModule { }
