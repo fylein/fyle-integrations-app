@@ -12,15 +12,15 @@ export class DashboardExportSectionComponent implements OnInit {
 
   @Input() exportInProgress: boolean;
 
-  @Input() exportableExpenseGroupIds: number[] = [];
+  @Input() exportableExpenseGroupIds: number[];
 
   @Input() failedExpenseGroupCount: number;
 
-  @Input() exportProgressPercentage: number = 0;
+  @Input() exportProgressPercentage: number;
 
   @Input() accountingExportSummary: AccountingExportSummary;
 
-  @Input() processedCount: any;
+  @Input() processedCount: number;
 
   @Output() export = new EventEmitter<boolean>();
 
