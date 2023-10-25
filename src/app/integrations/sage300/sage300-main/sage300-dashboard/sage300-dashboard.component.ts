@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 
@@ -9,11 +10,13 @@ import { DashboardService } from 'src/app/core/services/common/dashboard.service
 })
 export class Sage300DashboardComponent implements OnInit {
 
+  isLoading: boolean = true;
+
   isImportInProgress: boolean;
 
   exportInProgress: boolean;
 
-  exportableExpenseGroupIds: number[];
+  exportableExpenseGroupIds: number[] = [];
 
   failedExpenseGroupCount: number;
 
@@ -32,7 +35,13 @@ export class Sage300DashboardComponent implements OnInit {
   }
 
   private setupPage(): void {
-    // GET: Dashboard Service
+    console.log('anish');
+    forkJoin([
+      this.dashboardService.getAccountingExportSummary()
+    ]).subscribe((responses) => {
+      this.accountingExportSummary = responses[0];
+      this.isLoading = false;
+    });
   }
 
   ngOnInit(): void {
