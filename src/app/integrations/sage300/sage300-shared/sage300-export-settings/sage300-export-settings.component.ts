@@ -26,13 +26,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   expensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpensesExportTypeOptions();
 
-  reimbursableEmployeeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableEmployeeOptions();
-
   reimbursableExpenseState: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseState();
 
   cccExpenseState: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseState();
-
-  mapEmployeeOptionsOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getMapEmployeeOptionsOptions();
 
   constructor(
     private exportSettingService: Sage300ExportSettingService,
@@ -40,45 +36,85 @@ export class Sage300ExportSettingsComponent implements OnInit {
     private helper: HelperService
   ) { }
 
-  private createReimbursableExpenseWatcher(): void {
-    this.exportSettingForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
-      if (isReimbursableExpenseSelected) {
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportType');
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportGroup');
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportDate');
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExpenseState');
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableEmployeeType');
-      } else {
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportType');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportGroup');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportDate');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExpenseState');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableEmployeeType');
-      }
+  validatorRule = {
+    'reimbursableExpense': {
+      formController: 'reimbursableExpense',
+      true: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'defaultReimbursableCCCAccountName', 'defaultReimbursableCCCAccountId'],
+      false: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'defaultReimbursableCCCAccountName', 'defaultReimbursableCCCAccountId']
+    },
+    'creditCardExpense': {
+      formController: 'creditCardExpense',
+      true: ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'defaultCreditCardCCCAccountName', 'defaultCreditCardCCCAccountId', 'defaultVendorName', 'defaultVendorId'],
+      false: ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'defaultCreditCardCCCAccountName', 'defaultCreditCardCCCAccountId', 'defaultVendorName', 'defaultVendorId']
+    }
+  };
+
+  private setCustomValidatorsAndWatchers() {
+    const keys = Object.keys(this.validatorRule);
+    Object.values(this.validatorRule).forEach((value, index) => {
+      this.exportSettingForm.controls[keys[index]].valueChanges.subscribe((isSelected) => {
+        if (isSelected) {
+          value.true.forEach((element: string) => {
+            this.helper.markControllerAsRequired(this.exportSettingForm, element);
+          });
+        } else {
+          value.false.forEach((element: string) => {
+            this.helper.clearValidatorAndResetValue(this.exportSettingForm, element);
+          });
+        }
+      });
     });
   }
 
-  private createCreditCardExpenseWatcher(): void {
-    this.exportSettingForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
-      if (isCreditCardExpenseSelected) {
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportType');
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportGroup');
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportDate');
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'cccExpenseState');
-      } else {
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportType');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportGroup');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportDate');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExpenseState');
-      }
-    });
-  }
+  // Private createReimbursableExpenseWatcher(): void {
+  //   This.exportSettingForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
+  //     If (isReimbursableExpenseSelected) {
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportType');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportGroup');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportDate');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExpenseState');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultReimbursableCCCAccountId');
+  //     } else {
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportType');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportGroup');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportDate');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExpenseState');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultReimbursableCCCAccountId');
+  //     }
+  //   });
+  // }
 
-  setCustomValidatorsAndWatchers() {
-    // Toggles
-    this.createReimbursableExpenseWatcher();
-    this.createCreditCardExpenseWatcher();
-  }
+  // Private createCreditCardExpenseWatcher(): void {
+  //   This.exportSettingForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
+  //     If (isCreditCardExpenseSelected) {
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportType');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportGroup');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportDate');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'cccExpenseState');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardCCCAccountId');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultVendorName');
+  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultVendorId');
+  //     } else {
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportType');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportGroup');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportDate');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExpenseState');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountId');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorName');
+  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorId');
+  //     }
+  //   });
+  // }
+
+  // SetCustomValidatorsAndWatchers() {
+  //   // Toggles
+  //   This.createReimbursableExpenseWatcher();
+  //   This.createCreditCardExpenseWatcher();
+  // }
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -86,6 +122,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.exportSettings = exportSettingsResponse;
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.setCustomValidatorsAndWatchers();
+      this.isLoading = false;
+    }, (error) => {
+      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup();
       this.isLoading = false;
     });
   }

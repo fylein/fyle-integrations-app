@@ -39,7 +39,7 @@ export class Sage300ExportSettingService {
   }
 
   getExpenseGroupByOptions(): Sage300ExportSettingFormOption[] {
-    const data: Sage300ExportSettingFormOption[] = [
+    return [
       {
         label: 'Expense',
         value: ExpenseGroupedBy.EXPENSE
@@ -49,11 +49,10 @@ export class Sage300ExportSettingService {
         value: ExpenseGroupedBy.REPORT
       }
     ];
-    return data;
   }
 
   getExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
-    const data: Sage300ExportSettingFormOption[] = [
+    return [
       {
         label: 'Current Date',
         value: Sage300ExpenseDate.CURRENT_DATE
@@ -67,11 +66,10 @@ export class Sage300ExportSettingService {
         value: Sage300ExpenseDate.LAST_SPENT_AT
       }
     ];
-    return data;
   }
 
   getExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
-    const data: Sage300ExportSettingFormOption[] = [
+    return [
       {
         label: 'Accounts Payable Invoice',
         value: Sage300ExportType.PURCHASE_INVOICE
@@ -81,25 +79,10 @@ export class Sage300ExportSettingService {
         value: Sage300ExportType.DIRECT_COST
       }
     ];
-    return data;
-  }
-
-  getReimbursableEmployeeOptions(): Sage300ExportSettingFormOption[] {
-    const data: Sage300ExportSettingFormOption[] = [
-      {
-        label: 'Employee',
-        value: FyleField.EMPLOYEE
-      },
-      {
-        label: 'Vendor',
-        value: FyleField.VENDOR
-      }
-    ];
-    return data;
   }
 
   getReimbursableExpenseState(): Sage300ExportSettingFormOption[] {
-    const data: Sage300ExportSettingFormOption[] = [
+    return [
       {
         label: 'Processing',
         value: ExpenseState.PAYMENT_PROCESSING
@@ -109,11 +92,10 @@ export class Sage300ExportSettingService {
         value: ExpenseState.PAID
       }
     ];
-    return data;
   }
 
   getCCCExpenseState(): Sage300ExportSettingFormOption[] {
-    const data: Sage300ExportSettingFormOption[] = [
+    return [
       {
         label: 'Approved',
         value: CCCExpenseState.APPROVED
@@ -123,28 +105,5 @@ export class Sage300ExportSettingService {
         value: CCCExpenseState.PAID
       }
     ];
-    return data;
-  }
-
-  getMapEmployeeOptionsOptions(): Sage300ExportSettingFormOption[] {
-    const data: Sage300ExportSettingFormOption[] = [
-      {
-        value: null,
-        label: 'None'
-      },
-      {
-        value: AutoMapEmployeeOptions.NAME,
-        label: 'Match Names on Fyle and Sage 300 CRE'
-      },
-      {
-        value: AutoMapEmployeeOptions.EMAIL,
-        label: 'Match E-mails on Fyle and Sage 300 CRE'
-      },
-      {
-        value: AutoMapEmployeeOptions.EMPLOYEE_CODE,
-        label: 'Match Fyle Employee Code to Sage Name'
-      }
-    ];
-    return data;
   }
 }
