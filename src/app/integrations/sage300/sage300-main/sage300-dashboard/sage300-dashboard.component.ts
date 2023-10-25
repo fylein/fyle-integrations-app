@@ -34,7 +34,7 @@ export class Sage300DashboardComponent implements OnInit {
   ) { }
 
   export(eventData: boolean) {
-    if(eventData) {
+    if (eventData) {
       this.exportInProgress = true;
     } else {
       this.exportInProgress = false;

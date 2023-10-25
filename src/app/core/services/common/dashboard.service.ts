@@ -10,7 +10,7 @@ import { AccountingExportStatus, AccountingExportType } from '../../models/enum/
 })
 export class DashboardService {
 
-  // workspaceId: string = this.workspaceService.getWorkspaceId();
+  // WorkspaceId: string = this.workspaceService.getWorkspaceId();
   workspaceId: string = '1';
 
   constructor(
@@ -25,7 +25,7 @@ export class DashboardService {
   getAccountingExportCount(): Observable<AccountingExportCount> {
     const apiParams = {
       status__in: [AccountingExportStatus.READY, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL]
-    }
+    };
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count`, apiParams);
   }
 
@@ -34,7 +34,7 @@ export class DashboardService {
       type__in: [AccountingExportType.PURCHASE_INVOICE, AccountingExportType.DIRECT_COSTS],
       status__in: [status],
       id_in: [123]
-    }
+    };
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_exports/`, apiParams);
   }
 }
