@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 
 @Component({
   selector: 'app-dashboard-export-section',
@@ -7,25 +8,26 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DashboardExportSectionComponent implements OnInit {
 
-  @Input() isImportInProgress: any;
+  @Input() isImportInProgress: boolean;
 
-  @Input() exportInProgress: any;
+  @Input() exportInProgress: boolean;
 
-  @Input() exportableExpenseGroupIds: any;
+  @Input() exportableExpenseGroupIds: number[] = [];
 
-  @Input() failedExpenseGroupCount: any;
+  @Input() failedExpenseGroupCount: number;
 
-  @Input() exportProgressPercentage: any;
+  @Input() exportProgressPercentage: number = 0;
 
-  @Input() lastExport: any;
+  @Input() accountingExportSummary: AccountingExportSummary;
 
   @Input() processedCount: any;
 
+  @Output() export = new EventEmitter<boolean>();
+
   constructor() { }
 
-  export() {
-    // For Export
-    // Emit output
+  emitExport() {
+    this.export.emit(true);
   }
 
   ngOnInit(): void {

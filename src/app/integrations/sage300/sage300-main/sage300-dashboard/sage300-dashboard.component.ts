@@ -9,6 +9,10 @@ export class Sage300DashboardComponent implements OnInit {
 
   constructor() { }
 
+  export(eventData: boolean) {
+
+  }
+
   ngOnInit(): void {
   }
 
