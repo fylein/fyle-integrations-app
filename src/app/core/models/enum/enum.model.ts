@@ -387,6 +387,20 @@ export enum QBDOnboardingState {
     SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
   }
 
-  export enum appName{
+  export enum appName {
     SAGE_300_CRE = 'Sage 300 CRE',
+  }
+
+  export enum AccountingExportStatus {
+    READY = 'READY',
+    FAILED = 'FAILED',
+    FATAL = 'FATAL',
+    COMPLETE = 'COMPLETE',
+    IN_PROGRESS = 'IN_PROGRESS',
+    ENQUEUED = 'ENQUEUED'
+  }
+
+  export enum AccountingExportType {
+    PURCHASE_INVOICE = "PURCHASE_INVOICE",
+    DIRECT_COSTS = "DIRECT_COSTS"
   }
