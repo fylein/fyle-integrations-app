@@ -3,7 +3,7 @@ import { ApiService } from '../../common/api.service';
 import { HelperService } from '../../common/helper.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { Observable } from 'rxjs/internal/Observable';
-import { Sage300ExportSettingFormOption, Sage300ExportSettingGet, sage300ExportSettingPost } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import { Sage300ExportSettingFormOption, Sage300ExportSettingGet, Sage300ExportSettingPost } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { AutoMapEmployeeOptions, CCCExpenseState, ExpenseGroupedBy, ExpenseState, FyleField, Sage300ExpenseDate, Sage300ExportType } from 'src/app/core/models/enum/enum.model';
@@ -34,7 +34,7 @@ export class Sage300ExportSettingService {
   @CacheBuster({
     cacheBusterNotifier: sage300ExportSettingGetCache
   })
-  postExportSettings(exportSettingsPayload: sage300ExportSettingPost): Observable<Sage300ExportSettingGet> {
+  postExportSettings(exportSettingsPayload: Sage300ExportSettingPost): Observable<Sage300ExportSettingGet> {
     return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 

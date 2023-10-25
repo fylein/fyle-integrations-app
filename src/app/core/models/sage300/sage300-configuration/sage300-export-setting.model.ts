@@ -6,39 +6,29 @@ export type Sage300ExportSettingFormOption = {
     value: ExpenseState | CCCExpenseState | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupedBy | FyleField | AutoMapEmployeeOptions | null
 }
 
-export type Sage300ExportSettingGet = {
+type Sage300ExportSetting = {
+  reimbursable_expenses_export_type: Sage300ExportType,
+  reimbursable_expense_state: ExpenseState,
+  reimbursable_expense_date: Sage300ExpenseDate,
+  reimbursable_expense_grouped_by: ExpenseGroupedBy
+  credit_card_expense_export_type: Sage300ExportType,
+  credit_card_expense_state:  CCCExpenseState,
+  credit_card_expense_grouped_by: ExpenseGroupedBy
+  credit_card_expense_date: Sage300ExpenseDate,
+  default_ccc_account_name: string,
+  default_ccc_account_id: string,
+  default_vendor_name: string,
+  default_vendor_id: string
+};
+
+export interface Sage300ExportSettingGet extends Sage300ExportSetting {
     id: number,
-    reimbursable_expenses_export_type: Sage300ExportType,
-    reimbursable_expense_state: ExpenseState,
-    reimbursable_expense_date: Sage300ExpenseDate,
-    reimbursable_expense_grouped_by: ExpenseGroupedBy
-    credit_card_expense_export_type: Sage300ExportType,
-    credit_card_expense_state:  CCCExpenseState,
-    credit_card_expense_grouped_by: ExpenseGroupedBy
-    credit_card_expense_date: Sage300ExpenseDate,
-    default_ccc_account_name: string,
-    default_ccc_account_id: string,
-    default_vendor_name: string,
-    default_vendor_id: string,
     created_at: Date,
     update_at: Date,
     workspace: number
 }
 
-export type sage300ExportSettingPost = {
-    reimbursable_expenses_export_type: Sage300ExportType,
-    reimbursable_expense_state: ExpenseState,
-    reimbursable_expense_date: Sage300ExpenseDate,
-    reimbursable_expense_grouped_by: ExpenseGroupedBy
-    credit_card_expense_export_type: Sage300ExportType,
-    credit_card_expense_state:  CCCExpenseState,
-    credit_card_expense_grouped_by: ExpenseGroupedBy
-    credit_card_expense_date: Sage300ExpenseDate,
-    default_ccc_account_name: string,
-    default_ccc_account_id: number,
-    default_vendor_name: string,
-    default_vendor_id: number
-}
+export interface Sage300ExportSettingPost extends Sage300ExportSetting {}
 
 export class ExportSettingModel {
     static exportSelectionValidator(): ValidatorFn {
