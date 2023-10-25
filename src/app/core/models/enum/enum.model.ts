@@ -387,7 +387,7 @@ export enum QBDOnboardingState {
     SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
   }
 
-  export enum Sage300ExportTypes {
+  export enum Sage300ExportType {
     PURCHASE_INVOICE = 'PURCHASE_INVOICE',
     DIRECT_COST = 'DIRECT_COST'
   }

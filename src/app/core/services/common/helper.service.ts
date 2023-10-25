@@ -4,6 +4,7 @@ import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { AppUrl } from '../../models/enum/enum.model';
+import { FormGroup, Validators } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,14 @@ export class HelperService {
   getAppName(): string {
     const appName = this.router.url.split('/')[2];
     return appName;
+  }
+
+  markControllerAsRequired(form: FormGroup, controllerName: string): void {
+    form.controls[controllerName].setValidators(Validators.required);
+  }
+
+  clearValidatorAndResetValue(form: FormGroup, controllerName: string): void {
+    form.controls[controllerName].clearValidators();
+    form.controls[controllerName].setValue(null);
   }
 }
