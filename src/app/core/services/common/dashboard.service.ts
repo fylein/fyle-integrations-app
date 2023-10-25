@@ -29,11 +29,14 @@ export class DashboardService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count`, apiParams);
   }
 
-  getAccountingExports(status: AccountingExportStatus): Observable<AccountingExportResponse> {
+  getAccountingExports(status: AccountingExportStatus, type?: AccountingExportType, id?: number): Observable<AccountingExportResponse> {
+    id=123;
+    type=AccountingExportType.PURCHASE_INVOICE;
+
     const apiParams = {
-      type__in: [AccountingExportType.PURCHASE_INVOICE, AccountingExportType.DIRECT_COSTS],
+      type__in: [type],
       status__in: [status],
-      id_in: [123]
+      id__in: [id]
     };
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_exports/`, apiParams);
   }
