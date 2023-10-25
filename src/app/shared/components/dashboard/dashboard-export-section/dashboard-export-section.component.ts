@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { AccountingExportSummary } from 'src/app/core/models/db/accounting-exports.model';
 
 @Component({
   selector: 'app-dashboard-export-section',
@@ -8,11 +8,15 @@ import { AccountingExportSummary } from 'src/app/core/models/db/accounting-expor
 })
 export class DashboardExportSectionComponent implements OnInit {
 
+  @Input() isLoading: boolean;
+
   @Input() isImportInProgress: boolean;
 
   @Input() exportInProgress: boolean;
 
-  @Input() exportableExpenseGroupIds: number[];
+  @Input() exportableExpenseGroupIds: number;
+
+  @Input() readyToExportExpenseCount: number;
 
   @Input() failedExpenseGroupCount: number;
 

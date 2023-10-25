@@ -1,30 +1,33 @@
-<div class="tw-py-32-px tw-px-120-px">
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!isLoading" class="tw-py-32-px tw-px-120-px">
     <div *ngIf="!isImportInProgress" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-4/5">
                     <div class="tw-flex">
-                        <img class="tw-mt-1-px tw-pr-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length" src="assets/icons/tick_dashboard.svg">
-                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!exportInProgress && exportableExpenseGroupIds.length) || (exportInProgress)" src="arrow_tail" height="24px" width="24px"></svg-icon-sprite>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && !accountingExportSummary"> Sit back and relax!</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="exportInProgress"> Exporting {{ processedCount }} of {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} to your Sage Intacct Account</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && exportableExpenseGroupIds.length"> {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} ready to export</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && accountingExportSummary?.successful_expense_groups_count">You are all caught up!</h3>
+                        <img class="tw-mt-1-px tw-pr-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds" src="assets/icons/tick_dashboard.svg">
+                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!exportInProgress && exportableExpenseGroupIds) || (exportInProgress)" src="arrow_tail" height="24px" width="24px"></svg-icon-sprite>
+                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds && !accountingExportSummary"> Sit back and relax!</h3>
+                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="exportInProgress"> Exporting {{ processedCount }} of {{ exportableExpenseGroupIds }} expense{{exportableExpenseGroupIds > 1 ? 's' : ''}} to your Sage 300 CRE Account</h3>
+                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && readyToExportExpenseCount"> {{ readyToExportExpenseCount }} expense{{readyToExportExpenseCount > 1 ? 's' : ''}} ready to export</h3>
+                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds && accountingExportSummary?.successful_expense_groups_count">You are all caught up!</h3>
                         <img class="tw-ml-4-px" src="assets/icons/info_filled.svg" pTooltip="All expenses that have reached your export state in Fyle will be automatically imported and kept ready for export.">
                     </div>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && !accountingExportSummary">No new expenses to export in the configured state of export in Fyle. Once you start processing payments or closing your expenses, they will be automatically available here.</h5>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds && !accountingExportSummary">No new expenses to export in the configured state of export in Fyle. Once you start processing payments or closing your expenses, they will be automatically available here.</h5>
                     <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="exportInProgress">This may take a few minutes...</h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && accountingExportSummary?.successful_expense_groups_count">No new expenses to export from the payment processing state in Fyle.<br>Once you start processing payment for the expenses, they will be automatically available here to export.</h5>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds && accountingExportSummary?.successful_expense_groups_count">No new expenses to export from the payment processing state in Fyle.<br>Once you start processing payment for the expenses, they will be automatically available here to export.</h5>
                     <div *ngIf="!exportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
-                        <h5>{{ exportableExpenseGroupIds.length - failedExpenseGroupCount > 0 ? exportableExpenseGroupIds.length - failedExpenseGroupCount : 0 }} new expense{{(exportableExpenseGroupIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed expense{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
+                        <h5>{{ exportableExpenseGroupIds - failedExpenseGroupCount > 0 ? exportableExpenseGroupIds - failedExpenseGroupCount : 0 }} new expense{{(exportableExpenseGroupIds - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed expense{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
                     </div>
-                    <div *ngIf="!exportInProgress && exportableExpenseGroupIds.length && (failedExpenseGroupCount === null || failedExpenseGroupCount === 0)" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
-                        <h5>{{ exportableExpenseGroupIds.length }} new expense{{(exportableExpenseGroupIds.length) > 1 ? 's' : ''}}, {{ 0 }} previously failed expense</h5>
+                    <div *ngIf="!exportInProgress && exportableExpenseGroupIds && (failedExpenseGroupCount === null || failedExpenseGroupCount === 0)" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
+                        <h5>{{ exportableExpenseGroupIds }} new expense{{(exportableExpenseGroupIds) > 1 ? 's' : ''}}, {{ 0 }} previously failed expense</h5>
                     </div>
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="emitExport()" [ngClass]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress || !exportableExpenseGroupIds.length">
+                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="emitExport()" [ngClass]="!exportableExpenseGroupIds || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress || !exportableExpenseGroupIds">
                             <p class="!tw-text-14-px !tw-font-500" *ngIf="!exportInProgress">Export
                                 <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                             </p>
