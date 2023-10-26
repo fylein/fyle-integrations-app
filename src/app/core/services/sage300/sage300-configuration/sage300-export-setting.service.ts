@@ -7,6 +7,7 @@ import { Sage300ExportSettingFormOption, Sage300ExportSettingGet, Sage300ExportS
 import { Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { CCCExpenseState, ExpenseGroupingFieldOption, ExpenseState, Sage300ExpenseDate, Sage300ExportType } from 'src/app/core/models/enum/enum.model';
+import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 
 const sage300ExportSettingGetCache = new Subject<void>();
 
@@ -36,6 +37,13 @@ export class Sage300ExportSettingService {
   })
   postExportSettings(exportSettingsPayload: Sage300ExportSettingPost): Observable<Sage300ExportSettingGet> {
     return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+  }
+
+  getDestinationAttributes(attributeType: string[] | string): Observable<Sage300DestinationAttributes> {
+    const params: any = {
+      attribute_type__in: attributeType
+    };
+    return this.apiService.get(`workspaces/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes/`, params);
   }
 
   getExpenseGroupByOptions(): Sage300ExportSettingFormOption[] {

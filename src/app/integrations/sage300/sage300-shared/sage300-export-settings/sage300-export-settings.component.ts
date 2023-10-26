@@ -2,7 +2,9 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { AppName, ConfigurationCta, ExpenseGroupedBy, Sage300ExportType, Sage300Link } from 'src/app/core/models/enum/enum.model';
+import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { ExportSettingModel, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
@@ -44,6 +46,15 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   cccExpenseState: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseState();
 
+  validatorRule: ValidatorRule = {
+    'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
+    'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
+  };
+
+  defaultVendor: Sage300DestinationAttributes;
+
+  defaultCreditCardAccounts: Sage300DestinationAttributes;
+
   constructor(
     private exportSettingService: Sage300ExportSettingService,
     private router: Router,
@@ -55,33 +66,34 @@ export class Sage300ExportSettingsComponent implements OnInit {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
 
-  validatorRule: ValidatorRule = {
-    'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
-    'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
-  };
-
-  private setupPage(): void {
-    this.isOnboarding = this.router.url.includes('onboarding');
-    this.exportSettingService.getSage300ExportSettings().subscribe((exportSettingsResponse: Sage300ExportSettingGet) => {
-      this.exportSettings = exportSettingsResponse;
-      this.exportSettings.credit_card_expense_grouped_by = ['expense_id'];
-      this.exportSettings.reimbursable_expense_grouped_by = ['expense_id'];
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
-      this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
-      this.helper.setCustomValidatorsAndWatchers(this.validatorRule, this.exportSettingForm);
-      this.isLoading = false;
-    }, (error) => {
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup();
-      this.isLoading = false;
-    });
+  refreshDimensions(isRefresh: boolean) {
+    this.helperService.importAttributes(isRefresh);
   }
 
   save() {
     // Will be added here soon
   }
 
-  refreshDimensions(isRefresh: boolean) {
-    this.helperService.importAttributes(isRefresh);
+  private setupPage(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
+    forkJoin([
+      this.exportSettingService.getSage300ExportSettings(),
+      this.exportSettingService.getDestinationAttributes('VENDOR'),
+      this.exportSettingService.getDestinationAttributes('ACCOUNT')
+    ]).subscribe((response) => {
+      this.exportSettings = response[0];
+      this.exportSettings.credit_card_expense_grouped_by = ['expense_id'];
+      this.exportSettings.reimbursable_expense_grouped_by = ['expense_id'];
+      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
+      this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
+      this.helper.setCustomValidatorsAndWatchers(this.validatorRule, this.exportSettingForm);
+      this.defaultVendor = response[1];
+      this.defaultCreditCardAccounts = response[2];
+      this.isLoading = false;
+    }, (error) => {
+      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup();
+      this.isLoading = false;
+    });
   }
 
   ngOnInit(): void {
