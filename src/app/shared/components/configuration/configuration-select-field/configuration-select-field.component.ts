@@ -65,6 +65,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     { exportModule: 'Journal Entry', employeeMapping: 'Employee/Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'General Ledger' }
   ];
 
+isDialogVisible: any;
+
   constructor(
     private trackingService: TrackingService,
     private router: Router
@@ -83,8 +85,9 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     return element.offsetWidth < element.scrollWidth;
   }
 
-  showExportTable() {
+  showExportTable(formControllerName: string) {
     this.isExportTableVisible = true;
+    this.iconPath = formControllerName === 'reimbursableExportType' ? 'intacct-export-module' : 'cccExportTypeTable';
   }
 
   showCCCExportTable() {
@@ -103,5 +106,10 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     };
 
     this.trackingService.onClickEvent(ClickEvent.PREVIEW_INTACCT_EXPORT);
+  }
+
+  closeDialog() {
+    this.isExportTableVisible = false;
+    this.isExportTypeDialogVisible = false;
   }
 }

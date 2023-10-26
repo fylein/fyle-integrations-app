@@ -1,0 +1,21 @@
+<div *ngIf="isExportTypeDialogVisible">
+    <div>
+        <p-dialog [header]="header" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isExportTypeDialogVisible" (onHide)="close()" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
+            <div class="tw-flex tw-items-center tw-justify-center tw-px-24-px tw-pb-24-px">
+                <img height="300px" width="700px" *ngIf="exportType === 'EXPENSE_REPORT'" src="{{iconPath}}">
+                <img height="300px" width="700px" *ngIf="exportType === 'BILL'" src="{{iconPath}}">
+                <img height="300px" width="700px" *ngIf="exportType === 'JOURNAL_ENTRY'" src="{{iconPath}}">
+                <img height="300px" width="700px" *ngIf="exportType === 'PURCHASE_INVOICE'" src="{{iconPath}}">
+                <img height="300px" width="700px" *ngIf="exportType === 'DIRECT_COST'" src="{{iconPath}}">
+            </div>
+        </p-dialog>
+    </div>
+</div>
+
+<div>
+    <p-dialog header="Export Modules" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isExportTableVisible" (onHide)="close()" [breakpoints]="{ '960px': '80vw' }"  [draggable]="false" [resizable]="false">
+        <div class="tw-flex tw-items-center tw-justify-center tw-px-24-px tw-pb-24-px">
+            <svg-icon-sprite src="{{iconPath}}" ></svg-icon-sprite>
+        </div>
+    </p-dialog>
+</div>
