@@ -163,9 +163,11 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           source_placeholder: this.customFieldForm.value.source_placeholder,
           is_dependent: true
         });
-      this.customFieldControl.value.is_custom = true;
-      this.customFieldForm.reset();
-      this.showDialog = false;
+
+        this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
+        this.customFieldControl.value.is_custom = true;
+        this.customFieldForm.reset();
+        this.showDialog = false;
       }
       this.customFieldControl.disable();
       this.customFieldForDependentField = false;
@@ -468,6 +470,9 @@ export class ConfigurationImportSettingsComponent implements OnInit {
           sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
           expenseFields: this.formBuilder.array(this.constructFormArray())
         });
+        if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value) {
+          this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
+        }
         this.importSettingWatcher();
         this.costCodesCostTypesWatcher();
         this.isLoading = false;
