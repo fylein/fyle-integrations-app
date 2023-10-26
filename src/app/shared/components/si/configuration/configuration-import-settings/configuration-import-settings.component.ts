@@ -393,6 +393,27 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     return (locationEntity.country_name && locationEntity.country_name !== 'United States' && locationEntity.destination_id !== 'top_level') ? true : false;
   }
 
+  private initializeForm(importSettings: ImportSettingGet): void {
+    this.importSettingsForm = this.formBuilder.group({
+      importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
+      importCategories: [importSettings.configurations.import_categories || null],
+      importTaxCodes: [importSettings.configurations.import_tax_codes || null],
+      costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
+      dependentFieldImportToggle: [true],
+      workspaceId: this.storageService.get('si.workspaceId'),
+      costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
+      isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
+      sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
+      expenseFields: this.formBuilder.array(this.constructFormArray())
+    });
+    if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value) {
+      this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
+    }
+    this.importSettingWatcher();
+    this.costCodesCostTypesWatcher();
+    this.isLoading = false;
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
@@ -458,24 +479,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         } else {
           this.intacctCategoryDestination = IntacctCategoryDestination.ACCOUNT;
         }
-        this.importSettingsForm = this.formBuilder.group({
-          importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
-          importCategories: [importSettings.configurations.import_categories || null],
-          importTaxCodes: [importSettings.configurations.import_tax_codes || null],
-          costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
-          dependentFieldImportToggle: [true],
-          workspaceId: this.storageService.get('si.workspaceId'),
-          costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
-          isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
-          sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
-          expenseFields: this.formBuilder.array(this.constructFormArray())
-        });
-        if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value) {
-          this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
-        }
-        this.importSettingWatcher();
-        this.costCodesCostTypesWatcher();
-        this.isLoading = false;
+        this.initializeForm(importSettings);
       }
     );
   }
