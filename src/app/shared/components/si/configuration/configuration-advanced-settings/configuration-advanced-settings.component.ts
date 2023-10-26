@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, FyleField, IntacctLink, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, FyleField, IntacctLink, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -69,6 +69,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   IntacctReimbursableExpensesObjectBILL: IntacctReimbursableExpensesObject.BILL;
 
+  appName = AppName.INTACCT;
+
   private sessionStartTime = new Date();
 
   defaultMemoFields: string[] = ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
@@ -97,6 +99,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService
   ) { }
+
+  refreshDimensions(isRefresh: boolean) {
+    this.mappingService.refreshSageIntacctDimensions().subscribe();
+    this.mappingService.refreshFyleDimensions().subscribe();
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
+  }
 
   getEmployeeField() {
     return new TitleCasePipe().transform(this.employeeFieldMapping);

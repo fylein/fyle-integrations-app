@@ -7,7 +7,9 @@
     [headerText]="'Export Settings'"
     [contentText]="'In this section, you can configure how and when expenses from Fyle should be exported to Sage Intacct.'"
     [redirectLink]="redirectLink"
-    [showSyncButton]="isOnboarding"></app-configuration-step-header>
+    [showSyncButton]="isOnboarding"
+    [appName]="appName"
+    (refreshDimension)="refreshDimensions($event)"></app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingsForm">
         <div class="tw-p-24-px">

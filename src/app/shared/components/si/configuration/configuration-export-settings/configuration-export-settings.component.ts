@@ -162,6 +162,11 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private sanitizer: DomSanitizer
     ) { }
 
+    refreshDimensions(isRefresh: boolean) {
+      this.mappingService.refreshSageIntacctDimensions().subscribe();
+      this.mappingService.refreshFyleDimensions().subscribe();
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
+    }
 
     getEmployeeFieldMapping(employeeFieldMapping: FyleField | null, reimbursableExportType: string): string {
       let employeeFieldMappingLabel = '';

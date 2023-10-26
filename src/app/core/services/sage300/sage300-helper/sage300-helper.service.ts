@@ -15,7 +15,7 @@ export class Sage300HelperService {
     private toastService: IntegrationsToastService
   ) { }
 
-  importAttributes(isRefresh: boolean) {
+  importAttributes(isRefresh: boolean): void {
     this.workspaceService.importFyleAttributes(isRefresh).subscribe();
     this.mappingService.importSage300Attributes(isRefresh).subscribe();
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage 300 CRE');
