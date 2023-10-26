@@ -190,7 +190,8 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     DashboardAccountingErrorDialogComponent,
     ConfigurationTextFieldComponent,
     MainMenuComponent,
-    ZeroStateComponent
+    ZeroStateComponent,
+    DashboardExportSummarySectionComponent
   ]
 })
 export class SharedModule { }
