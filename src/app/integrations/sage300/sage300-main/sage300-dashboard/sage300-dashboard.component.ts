@@ -44,17 +44,16 @@ export class Sage300DashboardComponent implements OnInit {
   private setupPage(): void {
     forkJoin([
       this.dashboardService.getAccountingExportSummary(),
-      this.dashboardService.getAccountingExportCount()
+      this.dashboardService.getAccountingExportCount(),
+      this.dashboardService.getAccountingExports(AccountingExportStatus.READY)
     ]).subscribe((responses) => {
       this.accountingExportSummary = responses[0];
       this.exportableExpenseGroupIds = responses[1].count;
-      this.dashboardService.getAccountingExports(AccountingExportStatus.READY).subscribe((response) => {
-        this.readyToExportExpenseCount = response.count;
-      });
+      this.readyToExportExpenseCount = responses[2].count;
       this.isLoading = false;
       this.isImportInProgress = false;
     });
-  }
+  }  
 
   ngOnInit(): void {
     this.setupPage();
