@@ -160,7 +160,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         this.customFieldControl.patchValue({
           attribute_type: this.customFieldForm.value.attribute_type,
           display_name: this.customFieldForm.value.attribute_type,
-          source_placeholder: this.customFieldForm.value.source_placeholder
+          source_placeholder: this.customFieldForm.value.source_placeholder,
+          is_dependent: true
         });
       this.customFieldControl.value.is_custom = true;
       this.customFieldForm.reset();
