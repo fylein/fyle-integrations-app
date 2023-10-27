@@ -374,10 +374,17 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
     // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
     if (selectedField?.is_dependent) {
+      // Set the toggle to false
+      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(false);
 
       // Get the 'import_to_fyle' control at the specified index and disable it
       (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     }
+  }
+
+  isExpenseFieldDependent(expenseField: MappingSetting): boolean {
+    const isDependent = this.fyleFields.find(field => field.attribute_type === expenseField.source_field)?.is_dependent;
+    return isDependent ? true : false;
   }
 
   private generateDependentFieldValue(attribute_type: string, source_placeholder: string): ExpenseField {
