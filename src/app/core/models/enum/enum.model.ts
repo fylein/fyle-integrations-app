@@ -172,7 +172,8 @@ export enum ExpenseState {
 export enum CCCExpenseState {
   PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
   PAID = 'PAID',
-  APPROVED = 'APPROVED'
+  APPROVED = 'APPROVED',
+  CLOSED = 'CLOSED'
 }
 
 export enum ExpenseGroupedBy {
@@ -289,6 +290,14 @@ export enum QBDOnboardingState {
     MAPPED = 'MAPPED',
     UNMAPPED = 'UNMAPPED',
     ALL = 'ALL'
+  }
+
+  export enum Sage300Field {
+    ACCOUNT = 'ACCOUNT',
+    CUSTOMER = 'CUSTOMER',
+    DEPARTMENT = 'DEPARTMENT',
+    CLASS = 'CLASS',
+    TAX_CODE = 'TAX_CODE'
   }
 
   export enum SageIntacctField {
