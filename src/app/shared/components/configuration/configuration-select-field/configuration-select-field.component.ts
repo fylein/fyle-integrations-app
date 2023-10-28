@@ -9,6 +9,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -45,6 +47,10 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() appName: string;
 
+  @Input() exportModuleIconPath: string;
+
+  @Input() exportTypeIconPath: string;
+
   meridiemOption: string[] = ['AM', 'PM'];
 
   timeOption: string[] = ['01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'];
@@ -67,6 +73,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
 isDialogVisible: any;
 
+  header: string;
+
   constructor(
     private trackingService: TrackingService,
     private router: Router
@@ -85,18 +93,14 @@ isDialogVisible: any;
     return element.offsetWidth < element.scrollWidth;
   }
 
-  showExportTable(formControllerName: string) {
+  showExportTable() {
     this.isExportTableVisible = true;
-    this.iconPath = formControllerName === 'reimbursableExportType' ? 'intacct-export-module' : 'cccExportTypeTable';
-  }
-
-  showCCCExportTable() {
-    this.isCCCExportTableVisible = true;
   }
 
   showExportPreviewDialog(exportType: string) {
     this.isExportTypeDialogVisible = true;
     this.exportType = exportType;
+    this.header = 'Preview how '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' is made in '+ this.appName;
   }
 
   showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {

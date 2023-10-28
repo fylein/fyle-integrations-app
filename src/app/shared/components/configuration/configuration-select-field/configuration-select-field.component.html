@@ -8,10 +8,10 @@
             <h5 class="tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
             <h5 *ngIf="formControllerName!=='reimbursableExportType' && formControllerName!=='cccExportType'" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel"></h5>
             <h5 *ngIf="formControllerName==='reimbursableExportType'" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
-                Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from Fyle. Click<a (click)="showExportTable(formControllerName)" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more details.
+                Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from Fyle. Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more details.
             </h5>
             <h5 *ngIf="formControllerName==='cccExportType'" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
-                Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from Fyle. Click<a (click)="showExportTable(formControllerName)" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more details.
+                Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from Fyle. Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more details.
             </h5>
         </div>
     </div>
@@ -108,9 +108,9 @@
 </div>
 
 <div *ngIf="isExportTypeDialogVisible">
-    <app-preview-dialog [isExportTypeDialogVisible]="true" [exportType]="exportType" (closeDialog)="closeDialog()"></app-preview-dialog>
+    <app-preview-dialog [isExportTypeDialogVisible]="true" [exportType]="exportType" [iconPath]="exportTypeIconPath" (closeDialog)="closeDialog()" [header]="header"></app-preview-dialog>
 </div>
 
 <div *ngIf="isExportTableVisible">
-    <app-preview-dialog [isExportTableVisible]="true" [iconPath]="iconPath" (closeDialog)="closeDialog()"></app-preview-dialog>
+    <app-preview-dialog [isExportTableVisible]="true" [iconPath]="exportModuleIconPath" (closeDialog)="closeDialog()"></app-preview-dialog>
 </div>
