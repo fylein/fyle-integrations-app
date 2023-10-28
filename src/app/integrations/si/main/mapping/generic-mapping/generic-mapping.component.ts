@@ -1,20 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
 import { MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
-import { MappingPost, MappingResponse } from 'src/app/core/models/si/db/mapping.model';
+import { MappingPost } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { WindowService } from 'src/app/core/services/common/window.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 
 @Component({
   selector: 'app-generic-mapping',
@@ -35,7 +34,7 @@ export class GenericMappingComponent implements OnInit {
 
   filteredMappings: ExtendedExpenseAttribute[];
 
-  dropdownOptions: DestinationAttribute[];
+  dropdownOptions: IntacctDestinationAttribute[];
 
   page: string;
 

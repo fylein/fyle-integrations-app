@@ -2,8 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { AppName, ConfigurationCta, ExpenseGroupedBy, Sage300ExportType, Sage300Link } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, FyleField, Sage300ExportType, Sage300Field, Sage300Link } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { ExportSettingModel, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -51,9 +50,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
     'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
   };
 
-  defaultVendor: Sage300DestinationAttributes;
+  vendorOptions: Sage300DestinationAttributes[];
 
-  defaultCreditCardAccounts: Sage300DestinationAttributes;
+  creditCardAccountOptions: Sage300DestinationAttributes[];
 
   constructor(
     private exportSettingService: Sage300ExportSettingService,
@@ -76,20 +75,18 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    forkJoin([
-      this.exportSettingService.getSage300ExportSettings(),
-      this.exportSettingService.getDestinationAttributes('VENDOR'),
-      this.exportSettingService.getDestinationAttributes('ACCOUNT')
-    ]).subscribe((response) => {
-      this.exportSettings = response[0];
-      this.exportSettings.credit_card_expense_grouped_by = ['expense_id'];
-      this.exportSettings.reimbursable_expense_grouped_by = ['expense_id'];
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
-      this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
-      this.helper.setCustomValidatorsAndWatchers(this.validatorRule, this.exportSettingForm);
-      this.defaultVendor = response[1];
-      this.defaultCreditCardAccounts = response[2];
-      this.isLoading = false;
+    this.exportSettingService.getSage300ExportSettings().subscribe((Sage300ExportSettingResponse: Sage300ExportSettingGet) => {
+      this.exportSettingService.getDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT]).subscribe((response: Sage300DestinationAttributes[]) => {
+        this.exportSettings = Sage300ExportSettingResponse;
+        this.exportSettings.credit_card_expense_grouped_by = ['expense_id'];
+        this.exportSettings.reimbursable_expense_grouped_by = ['expense_id'];
+        this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
+        this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
+        this.helper.setCustomValidatorsAndWatchers(this.validatorRule, this.exportSettingForm);
+        this.vendorOptions = response;
+        this.creditCardAccountOptions = response;
+        this.isLoading = false;
+      });
     }, (error) => {
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup();
       this.isLoading = false;

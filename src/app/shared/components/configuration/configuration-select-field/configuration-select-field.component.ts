@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExportSettingFormOption } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { ClickEvent, CorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
@@ -9,6 +8,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -19,7 +20,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | HourOption[];
 
-  @Input() destinationAttributes: DestinationAttribute[];
+  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[];
 
   @Input() form: FormGroup;
 

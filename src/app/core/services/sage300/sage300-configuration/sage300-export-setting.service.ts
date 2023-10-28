@@ -39,8 +39,8 @@ export class Sage300ExportSettingService {
     return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 
-  getDestinationAttributes(attributeType: string[] | string): Observable<Sage300DestinationAttributes> {
-    const params: any = {
+  getDestinationAttributes(attributeType: string[] | string): Observable<Sage300DestinationAttributes[]> {
+    const params = {
       attribute_type__in: attributeType
     };
     return this.apiService.get(`workspaces/${this.workspaceService.getWorkspaceId()}/mappings/destination_attributes/`, params);
