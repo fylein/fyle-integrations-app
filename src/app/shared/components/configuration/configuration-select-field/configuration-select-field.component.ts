@@ -72,8 +72,6 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     { exportModule: 'Journal Entry', employeeMapping: 'Employee/Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'General Ledger' }
   ];
 
-isDialogVisible: any;
-
   header: string;
 
   constructor(
@@ -100,7 +98,6 @@ isDialogVisible: any;
 
   showExportPreviewDialog(exportType: string) {
     this.isExportTypeDialogVisible = true;
-    this.exportType = exportType;
     this.header = 'Preview how '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' is made in '+ this.appName;
   }
 
