@@ -66,6 +66,13 @@ export enum IntacctUpdateEvent {
   ADVANCED_SETTINGS_INTACCT= 'Advanced Settings Intacct',
 }
 
+export enum Sage300UpdateEvent {
+  CONNECT_SAGE300 = 'Connect Sage300',
+  EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
+  IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
+  ADVANCED_SETTINGS_SAGE300= 'Advanced Settings Sage300',
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
@@ -91,6 +98,9 @@ export enum Page {
   IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct',
   FIELD_MAPPING_QBD = 'Field Mappings QBD',
   ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD',
+  EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
+  IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
+  ADVANCED_SETTINGS_SAGE300 = 'Advanced Settings Sage300',
 }
 
 export enum ClickEvent {
