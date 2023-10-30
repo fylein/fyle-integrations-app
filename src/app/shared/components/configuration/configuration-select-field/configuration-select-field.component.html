@@ -107,10 +107,6 @@
     </div>
 </div>
 
-<div *ngIf="isExportTypeDialogVisible">
-    <app-preview-dialog [isExportTypeDialogVisible]="true" [iconPath]="exportTypeIconPath" (closeDialog)="closeDialog()" [header]="header"></app-preview-dialog>
-</div>
-
-<div *ngIf="isExportTableVisible">
-    <app-preview-dialog [isExportTableVisible]="true" [iconPath]="exportModuleIconPath" (closeDialog)="closeDialog()"></app-preview-dialog>
+<div *ngIf="isPreviewDialogVisible">
+    <app-preview-dialog [isPreviewDialogVisible]="true" [iconPath]="exportTypeIconPath" (closeDialog)="closeDialog()" [header]="dialogHeader"></app-preview-dialog>
 </div>

@@ -7,9 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class PreviewDialogComponent implements OnInit {
 
-  @Input() isExportTypeDialogVisible: boolean;
-
-  @Input() isExportTableVisible: boolean;
+  @Input() isPreviewDialogVisible: boolean;
 
   @Input() iconPath: string;
 
