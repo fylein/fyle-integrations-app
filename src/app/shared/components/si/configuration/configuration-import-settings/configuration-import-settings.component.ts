@@ -416,6 +416,16 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value) {
       this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
     }
+
+    // Disable toggle for expense fields that are dependent
+    const expenseFields = this.importSettingsForm.get('expenseFields') as FormArray;
+
+    expenseFields.controls.forEach((control, index) => {
+      if (this.isExpenseFieldDependent(control.value)) {
+        control.get('import_to_fyle')?.disable();
+      }
+    });
+
     this.importSettingWatcher();
     this.costCodesCostTypesWatcher();
     this.isLoading = false;
