@@ -2,11 +2,13 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, ConfigurationCta, FyleField, Page, ProgressPhase, Sage300ExportType, Sage300Field, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
-import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
-import { ExportSettingModel, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import { catchError, forkJoin, of } from 'rxjs';
+import { AppName, AppNameInService, ConfigurationCta, FyleField, Page, ProgressPhase, Sage300ExportType, Sage300Field, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { Sage300DestinationAttributes, Sage300GroupedDestinationAttribute } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import { ExportSettingModel, ExportSettingValidatorRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
@@ -54,11 +56,27 @@ export class Sage300ExportSettingsComponent implements OnInit {
     'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
   };
 
+  exportSettingValidatorRule: ExportSettingValidatorRule[] = [
+    {
+      'formController': 'reimbursableExportType',
+      'expectedValue': {
+        'DIRECT_COST': ['defaultReimbursableCCCAccountName']
+      }
+    },
+    {
+      'formController': 'cccExportType',
+      'expectedValue': {
+        'DIRECT_COST': ['defaultCreditCardCCCAccountName'],
+        'PURCHASE_INVOICE': ['defaultVendorName']
+      }
+    }
+  ];
+
+  sessionStartTime = new Date();
+
   vendorOptions: Sage300DestinationAttributes[];
 
   creditCardAccountOptions: Sage300DestinationAttributes[];
-
-  sessionStartTime = new Date();
 
   constructor(
     private exportSettingService: Sage300ExportSettingService,
@@ -67,7 +85,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private helper: HelperService
+    private helper: HelperService,
+    private mappingService: MappingService
   ) { }
 
   getExportType(exportType: string | null): string {
@@ -76,6 +95,11 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   refreshDimensions(isRefresh: boolean) {
     this.helperService.importAttributes(isRefresh);
+  }
+
+  addFormValidator(): void {
+    this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
+    this.exportSettingForm.controls.creditCardExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
   }
 
   exportTypeWatcher() {
@@ -108,7 +132,6 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
       this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_SAGE300, this.sessionStartTime);
-      this.isSaveInProgress = false;
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.EXPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(Sage300OnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
       } else {
@@ -142,22 +165,21 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.exportSettingService.getSage300ExportSettings().subscribe((Sage300ExportSettingResponse: Sage300ExportSettingGet) => {
-      this.exportSettingService.getDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT]).subscribe((response: Sage300DestinationAttributes[]) => {
-        this.exportSettings = Sage300ExportSettingResponse;
-        this.exportSettings.credit_card_expense_grouped_by = ['expense_id'];
-        this.exportSettings.reimbursable_expense_grouped_by = ['expense_id'];
+    forkJoin([
+      this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
+      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT], AppNameInService.SAGE300)
+    ]).subscribe(([response]) => {
+      if (response[0] !== null){
+        this.exportSettings = response[0];
         this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
-        this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
-        this.exportSettingForm.controls.creditCardExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
-        this.helper.setCustomValidatorsAndWatchers(this.validatorRule, this.exportSettingForm);
-        this.exportTypeWatcher();
-        this.vendorOptions = response;
-        this.creditCardAccountOptions = response;
-        this.isLoading = false;
-      });
-    }, (error) => {
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup();
+      } else {
+        this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup();
+      }
+      this.addFormValidator();
+      this.helper.setCustomValidatorsAndWatchers(this.validatorRule, this.exportSettingForm);
+      this.helper.setCustomExportTypeValidatoresAndWatchers(this.exportSettingValidatorRule, this.exportSettingForm);
+      this.vendorOptions = response[1].VENDOR;
+      this.creditCardAccountOptions = response[1].ACCOUNT;
       this.isLoading = false;
     });
   }

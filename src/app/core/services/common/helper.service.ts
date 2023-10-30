@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { AppUrl, ExpenseState, ProgressPhase } from '../../models/enum/enum.model';
 import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
+import { ExportSettingValidatorRule, ValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +60,24 @@ export class HelperService {
             this.clearValidatorAndResetValue(form, element);
           });
         }
+      });
+    });
+  }
+
+  setCustomExportTypeValidatoresAndWatchers(exportTypeValidatorRule: ExportSettingValidatorRule[], form: FormGroup): void {
+    Object.values(exportTypeValidatorRule).forEach((values) => {
+      form.controls[values.formController].valueChanges.subscribe((isSelected) => {
+        Object.entries(values.expectedValue).forEach(([key, value]) => {
+          if (key === isSelected) {
+            value.forEach((element: any) => {
+              this.markControllerAsRequired(form, element);
+            });
+          } else {
+            value.forEach((element: any) => {
+              this.clearValidatorAndResetValue(form, element);
+            });
+          }
+        });
       });
     });
   }

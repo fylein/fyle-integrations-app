@@ -82,6 +82,15 @@ export enum AppName {
   SAGE300 = 'Sage 300 CRE'
 }
 
+export enum AppNameInService {
+  BAMBOO_HR = 'bambooHR',
+  QBD = 'qbd',
+  TRAVELPERK = 'travelperk',
+  GUSTO = 'gusto',
+  INTACCT = 'sage_intacct',
+  SAGE300 = 'sage300'
+}
+
 export enum Page {
   LANDING = 'Landing',
   BAMBOO_HR_LANDING = 'Bamboo HR Landing',

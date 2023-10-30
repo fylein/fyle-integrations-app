@@ -10,6 +10,11 @@ export type ValidatorRule = {
   [expenseType: string]: string[];
 };
 
+export type ExportSettingValidatorRule = {
+  formController: string,
+  expectedValue: Record<string, string[]>
+};
+
 type Sage300ExportSetting = {
   reimbursable_expenses_export_type: Sage300ExportType,
   reimbursable_expense_state: ExpenseState,
