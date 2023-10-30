@@ -27,7 +27,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   isSaveInProgress: boolean;
 
-  exportSettings: Sage300ExportSettingGet | any;
+  exportSettings: Sage300ExportSettingGet;
 
   exportSettingForm: FormGroup;
 
@@ -70,10 +70,6 @@ export class Sage300ExportSettingsComponent implements OnInit {
     private helper: HelperService
   ) { }
 
-  private getPhase(): ProgressPhase {
-    return this.isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
-  }
-
   getExportType(exportType: string | null): string {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
@@ -112,13 +108,14 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
       this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_SAGE300, this.sessionStartTime);
+      this.isSaveInProgress = false;
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.EXPORT_SETTINGS) {
         this.trackingService.onOnboardingStepCompletion(Sage300OnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
       } else {
         this.trackingService.onUpdateEvent(
           Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
           {
-            phase: this.getPhase(),
+            phase: this.helper.getPhase(this.isOnboarding),
             oldState: this.exportSettings,
             newState: exportSettingResponse
           }
@@ -127,7 +124,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(Sage300OnboardingState.IMPORT_SETTINGS);
-        this.router.navigate([`/integrations/qbd/onboarding/field_mappings`]);
+        this.router.navigate([`/integrations/sage300/onboarding/import_settings`]);
       }
 
 

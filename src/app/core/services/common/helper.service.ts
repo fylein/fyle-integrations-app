@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
-import { AppUrl, ExpenseState } from '../../models/enum/enum.model';
+import { AppUrl, ExpenseState, ProgressPhase } from '../../models/enum/enum.model';
 import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 
@@ -91,5 +91,10 @@ export class HelperService {
         }
       };
     };
+  }
+
+  getPhase(isOnboarding: boolean): ProgressPhase {
+    return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
 }
-}
+
