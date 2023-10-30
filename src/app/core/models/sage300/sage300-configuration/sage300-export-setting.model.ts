@@ -6,11 +6,12 @@ export type Sage300ExportSettingFormOption = {
     value: ExpenseState | CCCExpenseState | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
 }
 
-export type ValidatorRule = {
-  [expenseType: string]: string[];
+export type ExportSettingValidatorRule = {
+  reimbursableExpense: string[];
+  creditCardExpense: string[];
 };
 
-export type ExportSettingValidatorRule = {
+export type ExportSettingExportTyleValidatorRule = {
   formController: string,
   expectedValue: Record<string, string[]>
 };

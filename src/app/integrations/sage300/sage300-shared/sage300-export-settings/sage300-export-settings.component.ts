@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { AppName, AppNameInService, ConfigurationCta, FyleField, Page, ProgressPhase, Sage300ExportType, Sage300Field, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes, Sage300GroupedDestinationAttribute } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
-import { ExportSettingModel, ExportSettingValidatorRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import { ExportSettingModel, ExportSettingExportTyleValidatorRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -51,27 +51,6 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   cccExpenseState: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseState();
 
-  validatorRule: ValidatorRule = {
-    'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
-    'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
-  };
-
-  exportSettingValidatorRule: ExportSettingValidatorRule[] = [
-    {
-      'formController': 'reimbursableExportType',
-      'expectedValue': {
-        'DIRECT_COST': ['defaultReimbursableCCCAccountName']
-      }
-    },
-    {
-      'formController': 'cccExportType',
-      'expectedValue': {
-        'DIRECT_COST': ['defaultCreditCardCCCAccountName'],
-        'PURCHASE_INVOICE': ['defaultVendorName']
-      }
-    }
-  ];
-
   sessionStartTime = new Date();
 
   vendorOptions: Sage300DestinationAttributes[];
@@ -85,13 +64,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    private helper: HelperService,
+    public helper: HelperService,
     private mappingService: MappingService
   ) { }
-
-  getExportType(exportType: string | null): string {
-    return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
-  }
 
   refreshDimensions(isRefresh: boolean) {
     this.helperService.importAttributes(isRefresh);
@@ -165,6 +140,26 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
+    const validatorRule: ExportSettingValidatorRule = {
+      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
+      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
+    };
+
+    const exportSettingValidatorRule: ExportSettingExportTyleValidatorRule[] = [
+      {
+        'formController': 'reimbursableExportType',
+        'expectedValue': {
+          'DIRECT_COST': ['defaultReimbursableCCCAccountName']
+        }
+      },
+      {
+        'formController': 'cccExportType',
+        'expectedValue': {
+          'DIRECT_COST': ['defaultCreditCardCCCAccountName'],
+          'PURCHASE_INVOICE': ['defaultVendorName']
+        }
+      }
+    ];
     forkJoin([
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
       this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT], AppNameInService.SAGE300)
@@ -176,8 +171,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
         this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup();
       }
       this.addFormValidator();
-      this.helper.setCustomValidatorsAndWatchers(this.validatorRule, this.exportSettingForm);
-      this.helper.setCustomExportTypeValidatoresAndWatchers(this.exportSettingValidatorRule, this.exportSettingForm);
+      this.helper.setCustomValidatorsAndWatchers(validatorRule, this.exportSettingForm);
+      this.helper.setCustomExportTypeValidatoresAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.vendorOptions = response[1].VENDOR;
       this.creditCardAccountOptions = response[1].ACCOUNT;
       this.isLoading = false;
