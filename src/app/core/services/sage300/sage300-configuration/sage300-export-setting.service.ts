@@ -110,7 +110,7 @@ export class Sage300ExportSettingService {
       },
       {
         label: 'Closed',
-        value: CCCExpenseState.CLOSED
+        value: CCCExpenseState.PAID
       }
     ];
   }

@@ -36,7 +36,7 @@
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
-                            [exportModuleIconPath]="'intacct-export-module'"
+                            [exportConfiguration]="'intacct-export-module'"
                             [exportTypeIconPath]="'../../../../../assets/illustrations/sageIntacct/CCC Bill.jpg'">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
@@ -112,7 +112,7 @@
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
-                            [exportModuleIconPath]="'intacct-export-module'"
+                            [exportConfiguration]="'intacct-export-module'"
                             [exportTypeIconPath]="'../../../../../assets/illustrations/sageIntacct/CCC Bill.jpg'">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.DIRECT_COST">
