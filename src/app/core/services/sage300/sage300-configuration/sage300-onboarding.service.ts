@@ -72,16 +72,19 @@ export class Sage300OnboardingService {
     }
   ];
 
-  private readonly onboardingState: Sage300OnboardingState = this.workspaceService.getOnboardingState();
+  private onboardingState: Sage300OnboardingState;
 
   constructor(
     private workspaceService: WorkspaceService
   ) { }
 
   getOnboardingSteps(currentStep: string): OnboardingStepper[] {
+    this.onboardingState = this.workspaceService.getOnboardingState();
     this.onboardingSteps.forEach(step => {
       if (step.step.toLowerCase() === currentStep.toLowerCase()) {
         step.active = true;
+      } else {
+        step.active = false;
       }
     });
 

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfigurationCta, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, RedirectLink, Sage300OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
 
@@ -29,6 +30,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
   constructor(
     private onboardingService: Sage300OnboardingService,
     private router: Router,
+    private workspaceService: WorkspaceService,
     private formBuilder: FormBuilder,
     private connectorService: Sage300ConnectorService,
     private toastService: IntegrationsToastService
@@ -47,6 +49,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     }).subscribe((response) => {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
+      this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
       this.router.navigate([this.onboardingSteps[1].route]);
     }, () => {
       this.isLoading = false;

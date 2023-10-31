@@ -7,7 +7,9 @@
     [headerText]="'Export Settings'"
     [contentText]="'In this section, you can configure how and when expenses from Fyle should be exported to Sage Intacct.'"
     [redirectLink]="redirectLink"
-    [showSyncButton]="isOnboarding"></app-configuration-step-header>
+    [showSyncButton]="isOnboarding"
+    [appName]="appName"
+    (refreshDimension)="refreshDimensions($event)"></app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingsForm">
         <div class="tw-p-24-px">
@@ -23,14 +25,16 @@
                 <div *ngIf="exportSettingsForm.value?.reimbursableExpense">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export module'"
-                        [label]="'How should the expenses be exported?'"
-                        [options]="reimbursableExportTypes"
-                        [iconPath]="'expense'"
-                        [placeholder]="'Select expense export module'"
-                        [formControllerName]="'reimbursableExportType'"></app-configuration-select-field>
+                            [form]="exportSettingsForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'export module'"
+                            [label]="'How should the expenses be exported?'"
+                            [options]="reimbursableExportTypes"
+                            [iconPath]="'expense'"
+                            [placeholder]="'Select expense export module'"
+                            [formControllerName]="'reimbursableExportType'"
+                            [appName]="appName">
+                        </app-configuration-select-field>
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.JOURNAL_ENTRY">
                                 <app-configuration-select-field
                                 [form]="exportSettingsForm"
