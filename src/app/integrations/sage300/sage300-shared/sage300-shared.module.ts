@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Sage300ExportSettingsComponent } from './sage300-export-settings/sage300-export-settings.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -9,7 +10,8 @@ import { Sage300ExportSettingsComponent } from './sage300-export-settings/sage30
     Sage300ExportSettingsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     Sage300ExportSettingsComponent

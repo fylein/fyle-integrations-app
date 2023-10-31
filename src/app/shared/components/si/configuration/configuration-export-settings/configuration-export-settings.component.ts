@@ -1,11 +1,11 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, RedirectLink, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, UpdateEvent, ProgressPhase, IntacctUpdateEvent, IntacctLink } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, IntacctLink, AppName } from 'src/app/core/models/enum/enum.model';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -48,15 +48,17 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   customMessage: string;
 
-  sageIntacctDefaultGLAccounts: DestinationAttribute[];
+  sageIntacctDefaultGLAccounts: IntacctDestinationAttribute[];
 
-  sageIntacctExpensePaymentType: DestinationAttribute[];
+  sageIntacctExpensePaymentType: IntacctDestinationAttribute[];
 
-  sageIntacctCCCExpensePaymentType: DestinationAttribute[];
+  sageIntacctCCCExpensePaymentType: IntacctDestinationAttribute[];
 
-  sageIntacctDefaultVendor: DestinationAttribute[];
+  sageIntacctDefaultVendor: IntacctDestinationAttribute[];
 
-  sageIntacctDefaultChargeCard: DestinationAttribute[];
+  sageIntacctDefaultChargeCard: IntacctDestinationAttribute[];
+
+  appName: string = AppName.INTACCT;
 
   private sessionStartTime = new Date();
 
@@ -160,6 +162,11 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private sanitizer: DomSanitizer
     ) { }
 
+    refreshDimensions(isRefresh: boolean) {
+      this.mappingService.refreshSageIntacctDimensions().subscribe();
+      this.mappingService.refreshFyleDimensions().subscribe();
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
+    }
 
     getEmployeeFieldMapping(employeeFieldMapping: FyleField | null, reimbursableExportType: string): string {
       let employeeFieldMappingLabel = '';
@@ -403,7 +410,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private initializeExportSettingsFormWithData(): void {
       const configurations = this.exportSettings?.configurations;
       const generalMappings = this.exportSettings?.general_mappings;
-      const findObjectById = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
+      const findObjectById = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
 
       this.exportSettingsForm = this.formBuilder.group({
         reimbursableExpense: [Boolean(configurations?.reimbursable_expenses_object) || null, this.exportSelectionValidator()],

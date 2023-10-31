@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity, FyleField, MappingSourceField, IntacctLink } from 'src/app/core/models/enum/enum.model';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, IntacctLink, AppName } from 'src/app/core/models/enum/enum.model';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
@@ -25,6 +25,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  appName = AppName.INTACCT;
+
   importSettingsForm: FormGroup;
 
   customFieldForm: FormGroup;
@@ -41,7 +43,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   importSettings: ImportSettingGet;
 
-  sageIntacctTaxGroup: DestinationAttribute[];
+  sageIntacctTaxGroup: IntacctDestinationAttribute[];
 
   sageIntacctFields: ExpenseField[];
 
@@ -95,6 +97,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   get expenseFieldsGetter() {
     return this.importSettingsForm.get('expenseFields') as FormArray;
+  }
+
+  refreshDimensions(isRefresh: boolean) {
+    this.mappingService.refreshSageIntacctDimensions().subscribe();
+    this.mappingService.refreshFyleDimensions().subscribe();
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
   }
 
   removeFilter(expenseField: AbstractControl) {

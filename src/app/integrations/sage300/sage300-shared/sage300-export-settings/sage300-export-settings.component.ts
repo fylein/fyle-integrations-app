@@ -1,9 +1,20 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ExportSettingModel, Sage300ExportSettingFormOption, Sage300ExportSettingGet } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import { catchError, forkJoin, of } from 'rxjs';
+import { AppName, AppNameInService, ConfigurationCta, FyleField, Page, ProgressPhase, Sage300ExportType, Sage300Field, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { Sage300DestinationAttributes, Sage300GroupedDestinationAttribute } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
+import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
   selector: 'app-sage300-export-settings',
@@ -16,9 +27,19 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   isOnboarding: boolean;
 
+  isSaveInProgress: boolean;
+
   exportSettings: Sage300ExportSettingGet;
 
   exportSettingForm: FormGroup;
+
+  redirectLink: string = Sage300Link.EXPORT_SETTING;
+
+  appName: string = AppName.SAGE300;
+
+  Sage300ExportType = Sage300ExportType;
+
+  ConfigurationCtaText = ConfigurationCta;
 
   expenseGroupByOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpenseGroupByOptions();
 
@@ -30,101 +51,126 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   cccExpenseState: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseState();
 
+  sessionStartTime = new Date();
+
+  vendorOptions: Sage300DestinationAttributes[];
+
+  creditCardAccountOptions: Sage300DestinationAttributes[];
+
   constructor(
     private exportSettingService: Sage300ExportSettingService,
     private router: Router,
-    private helper: HelperService
+    private helperService: Sage300HelperService,
+    private toastService: IntegrationsToastService,
+    private trackingService: TrackingService,
+    private workspaceService: WorkspaceService,
+    public helper: HelperService,
+    private mappingService: MappingService
   ) { }
 
-  validatorRule = {
-    'reimbursableExpense': {
-      formController: 'reimbursableExpense',
-      true: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'defaultReimbursableCCCAccountName', 'defaultReimbursableCCCAccountId'],
-      false: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'defaultReimbursableCCCAccountName', 'defaultReimbursableCCCAccountId']
-    },
-    'creditCardExpense': {
-      formController: 'creditCardExpense',
-      true: ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'defaultCreditCardCCCAccountName', 'defaultCreditCardCCCAccountId', 'defaultVendorName', 'defaultVendorId'],
-      false: ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'defaultCreditCardCCCAccountName', 'defaultCreditCardCCCAccountId', 'defaultVendorName', 'defaultVendorId']
-    }
-  };
+  refreshDimensions(isRefresh: boolean) {
+    this.helperService.importAttributes(isRefresh);
+  }
 
-  private setCustomValidatorsAndWatchers() {
-    const keys = Object.keys(this.validatorRule);
-    Object.values(this.validatorRule).forEach((value, index) => {
-      this.exportSettingForm.controls[keys[index]].valueChanges.subscribe((isSelected) => {
-        if (isSelected) {
-          value.true.forEach((element: string) => {
-            this.helper.markControllerAsRequired(this.exportSettingForm, element);
-          });
-        } else {
-          value.false.forEach((element: string) => {
-            this.helper.clearValidatorAndResetValue(this.exportSettingForm, element);
-          });
-        }
-      });
+  addFormValidator(): void {
+    this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
+    this.exportSettingForm.controls.creditCardExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
+  }
+
+  exportTypeWatcher() {
+    this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe((value) => {
+      if (value === Sage300ExportType.DIRECT_COST) {
+        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
+      } else {
+        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
+      }
+    });
+
+    this.exportSettingForm.controls.cccExportType.valueChanges.subscribe((value) => {
+      if (value === Sage300ExportType.DIRECT_COST) {
+        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
+        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorName');
+      } else if (value === Sage300ExportType.PURCHASE_INVOICE) {
+        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultVendorName');
+        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
+      } else {
+        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
+        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorName');
+      }
     });
   }
 
-  // Private createReimbursableExpenseWatcher(): void {
-  //   This.exportSettingForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
-  //     If (isReimbursableExpenseSelected) {
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportType');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportGroup');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExportDate');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'reimbursableExpenseState');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultReimbursableCCCAccountId');
-  //     } else {
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportType');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportGroup');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExportDate');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'reimbursableExpenseState');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultReimbursableCCCAccountId');
-  //     }
-  //   });
-  // }
+  private constructPayloadAndSave(): void {
+    this.isSaveInProgress = true;
+    const exportSettingPayload = ExportSettingModel.createExportSettingPayload(this.exportSettingForm);
+    this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((exportSettingResponse: Sage300ExportSettingGet) => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_SAGE300, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.EXPORT_SETTINGS) {
+        this.trackingService.onOnboardingStepCompletion(Sage300OnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
+          {
+            phase: this.helper.getPhase(this.isOnboarding),
+            oldState: this.exportSettings,
+            newState: exportSettingResponse
+          }
+        );
+      }
 
-  // Private createCreditCardExpenseWatcher(): void {
-  //   This.exportSettingForm.controls.creditCardExpense.valueChanges.subscribe((isCreditCardExpenseSelected) => {
-  //     If (isCreditCardExpenseSelected) {
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportType');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportGroup');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'cccExportDate');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'cccExpenseState');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardCCCAccountId');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultVendorName');
-  //       This.helper.markControllerAsRequired(this.exportSettingForm, 'defaultVendorId');
-  //     } else {
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportType');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportGroup');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExportDate');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'cccExpenseState');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountId');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorName');
-  //       This.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorId');
-  //     }
-  //   });
-  // }
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(Sage300OnboardingState.IMPORT_SETTINGS);
+        this.router.navigate([`/integrations/sage300/onboarding/import_settings`]);
+      }
 
-  // SetCustomValidatorsAndWatchers() {
-  //   // Toggles
-  //   This.createReimbursableExpenseWatcher();
-  //   This.createCreditCardExpenseWatcher();
-  // }
+
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      });
+  }
+
+  save(): void {
+    if (this.exportSettingForm.valid) {
+      this.constructPayloadAndSave();
+    }
+  }
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.exportSettingService.getSage300ExportSettings().subscribe((exportSettingsResponse: Sage300ExportSettingGet) => {
-      this.exportSettings = exportSettingsResponse;
+    const exportSettingValidatorRule: ExportSettingValidatorRule = {
+      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
+      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
+    };
+
+    const exportModuleRule: ExportModuleRule[] = [
+      {
+        'formController': 'reimbursableExportType',
+        'requiredValue': {
+          'DIRECT_COST': ['defaultReimbursableCCCAccountName']
+        }
+      },
+      {
+        'formController': 'cccExportType',
+        'requiredValue': {
+          'DIRECT_COST': ['defaultCreditCardCCCAccountName'],
+          'PURCHASE_INVOICE': ['defaultVendorName']
+        }
+      }
+    ];
+    forkJoin([
+      this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
+      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT], AppNameInService.SAGE300)
+    ]).subscribe(([response]) => {
+      this.exportSettings = response[0];
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
-      this.setCustomValidatorsAndWatchers();
-      this.isLoading = false;
-    }, (error) => {
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup();
+      this.addFormValidator();
+      this.helper.setExportSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
+      this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
+      this.vendorOptions = response[1].VENDOR;
+      this.creditCardAccountOptions = response[1].ACCOUNT;
       this.isLoading = false;
     });
   }

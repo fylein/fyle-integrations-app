@@ -7,7 +7,9 @@
     [headerText]="'Advanced Settings'"
     [contentText]="'In this section, you can customize the integration based on your accounting requirements.'"
     [redirectLink]="redirectLink"
-    [showSyncButton]="isOnboarding"></app-configuration-step-header>
+    [showSyncButton]="isOnboarding"
+    [appName]="appName"
+    (refreshDimension)="refreshDimensions($event)"></app-configuration-step-header>
     </div>
 
     <form [formGroup]="advancedSettingsForm">

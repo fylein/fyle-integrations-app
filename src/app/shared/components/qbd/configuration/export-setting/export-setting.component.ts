@@ -218,7 +218,7 @@ export class ExportSettingComponent implements OnInit {
     });
   }
 
-  private setCustomValidatorsAndWatchers(): void {
+  private setExportSettingValidatorsAndWatchers(): void {
 
     // Toggles
     this.createReimbursableExpenseWatcher();
@@ -316,7 +316,7 @@ export class ExportSettingComponent implements OnInit {
         reimbursableExpenseState: [this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null],
         cccExpenseState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null]
       });
-      this.setCustomValidatorsAndWatchers();
+      this.setExportSettingValidatorsAndWatchers();
       this.isLoading = false;
     }, () => {
         this.setUpExpenseStates();
@@ -337,7 +337,7 @@ export class ExportSettingComponent implements OnInit {
           reimbursableExpenseState: [null],
           cccExpenseState: [null]
         });
-        this.setCustomValidatorsAndWatchers();
+        this.setExportSettingValidatorsAndWatchers();
         this.isLoading = false;
       }
     );

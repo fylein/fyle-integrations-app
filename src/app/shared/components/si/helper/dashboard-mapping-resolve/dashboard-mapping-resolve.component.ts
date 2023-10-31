@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { CorporateCreditCardExpensesObject, FyleField, IntacctCategoryDestination, IntacctErrorType, IntacctField, IntacctReimbursableExpensesObject, MappingState, SageIntacctField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { CategoryMapping, CategoryMappingPost, CategoryMappingResult } from 'src/app/core/models/si/db/category-mapping.model';
-import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
+import { FyleField, IntacctCategoryDestination, IntacctErrorType, SageIntacctField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { EmployeeMappingPost } from 'src/app/core/models/si/db/employee-mapping.model';
 import { Error } from 'src/app/core/models/si/db/error.model';
 import { ExpenseAttribute } from 'src/app/core/models/si/db/expense-attribute.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -30,12 +29,12 @@ export class DashboardMappingResolveComponent implements OnInit {
   intacctErrorType: IntacctErrorType;
 
   // Employee Mapping
-  fyleEmployeeOptions: DestinationAttribute[];
+  fyleEmployeeOptions: IntacctDestinationAttribute[];
 
   // Category Mapping
-  sageIntacctAccounts: DestinationAttribute[];
+  sageIntacctAccounts: IntacctDestinationAttribute[];
 
-  sageIntacctExpenseTypes: DestinationAttribute[];
+  sageIntacctExpenseTypes: IntacctDestinationAttribute[];
 
   constructor(
     private mappingService: SiMappingsService,
