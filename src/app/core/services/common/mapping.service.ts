@@ -3,6 +3,7 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
+import { IntegrationFields } from '../../models/db/mapping.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class MappingService {
     helper.setBaseApiURL();
   }
 
+  workspaceId = this.workspaceService.getWorkspaceId();
+
   getDestinationAttributes(attributeTypes: string | string[], app_name: string, accountType?: string, active?: boolean): Observable<any> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
     const params: {attribute_types: string | string[], account_type?: string, active?: boolean} = {
       attribute_types: attributeTypes
     };
@@ -30,7 +32,7 @@ export class MappingService {
       params.active = active;
     }
 
-    return this.apiService.get(`/workspaces/${workspaceId}/${app_name}/destination_attributes/`, params);
+    return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/destination_attributes/`, params);
   }
 
   getGroupedDestinationAttributes(attributeTypes: string[], app_name: string): any {
@@ -50,6 +52,14 @@ export class MappingService {
         TAX_DETAIL: []
       });
     }));
+  }
+
+  getIntegrationsFields(app_name: string): Observable<IntegrationFields[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/${app_name}/fields/`, {});
+  }
+
+  getFyleFields(): Observable<IntegrationFields[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/fyle/fields/`, {});
   }
 
 }

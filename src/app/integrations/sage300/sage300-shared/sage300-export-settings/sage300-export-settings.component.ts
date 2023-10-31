@@ -77,29 +77,6 @@ export class Sage300ExportSettingsComponent implements OnInit {
     this.exportSettingForm.controls.creditCardExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
   }
 
-  exportTypeWatcher() {
-    this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe((value) => {
-      if (value === Sage300ExportType.DIRECT_COST) {
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
-      } else {
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
-      }
-    });
-
-    this.exportSettingForm.controls.cccExportType.valueChanges.subscribe((value) => {
-      if (value === Sage300ExportType.DIRECT_COST) {
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorName');
-      } else if (value === Sage300ExportType.PURCHASE_INVOICE) {
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultVendorName');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
-      } else {
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorName');
-      }
-    });
-  }
-
   private constructPayloadAndSave(): void {
     this.isSaveInProgress = true;
     const exportSettingPayload = ExportSettingModel.createExportSettingPayload(this.exportSettingForm);
