@@ -6,8 +6,14 @@ export type Sage300ExportSettingFormOption = {
     value: ExpenseState | CCCExpenseState | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
 }
 
-export type ValidatorRule = {
-  [expenseType: string]: string[];
+export type ExportSettingValidatorRule = {
+  reimbursableExpense: string[];
+  creditCardExpense: string[];
+};
+
+export type ExportModuleRule = {
+  formController: string,
+  requiredValue: Record<string, string[]>
 };
 
 type Sage300ExportSetting = {
@@ -55,16 +61,33 @@ export class ExportSettingModel {
       reimbursableExportDate: new FormControl(exportSettings?.reimbursable_expense_date ? exportSettings?.reimbursable_expense_date : null),
       reimbursableExportGroup: new FormControl(this.getExportGroup(exportSettings?.reimbursable_expense_grouped_by ? exportSettings?.reimbursable_expense_grouped_by: null)),
       defaultReimbursableCCCAccountName: new FormControl(exportSettings?.default_reimbursable_credit_card_account_name? exportSettings?.default_reimbursable_credit_card_account_name : null),
-      defaultReimbursablCCCAccountId: new FormControl(exportSettings?.default_reimbursable_credit_card_account_id ? exportSettings?.default_reimbursable_credit_card_account_id : null),
       creditCardExpense: new FormControl(exportSettings?.credit_card_expense_export_type ? true : false),
       cccExportType: new FormControl(exportSettings?.credit_card_expense_export_type ? exportSettings.credit_card_expense_export_type : null),
-      cccState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
-      cccDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : null),
+      cccExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
+      cccExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : null),
       cccExportGroup: new FormControl(this.getExportGroup(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by: null)),
       defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_credit_card_account_name ? exportSettings?.default_ccc_credit_card_account_name : null),
-      defaultCreditCardCCCAccountId: new FormControl(exportSettings?.default_ccc_credit_card_account_id ? exportSettings?.default_ccc_credit_card_account_id : null),
       defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? exportSettings?.default_vendor_name : null),
       defaultVendorId: new FormControl(exportSettings?.default_vendor_id ? exportSettings?.default_vendor_id : null)
     });
+  }
+
+  static createExportSettingPayload(exportSettingsForm: FormGroup): Sage300ExportSettingPost {
+    return {
+      reimbursable_expenses_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
+      reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
+      reimbursable_expense_date: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
+      reimbursable_expense_grouped_by: exportSettingsForm.get('reimbursableExportGroup')?.value ? exportSettingsForm.get('reimbursableExportGroup')?.value : null,
+      credit_card_expense_export_type: exportSettingsForm.get('cccExportType')?.value ? exportSettingsForm.get('cccExportType')?.value : null,
+      credit_card_expense_state: exportSettingsForm.get('cccExpenseState')?.value ? exportSettingsForm.get('cccExpenseState')?.value : null,
+      credit_card_expense_grouped_by: exportSettingsForm.get('cccExportGroup')?.value ? exportSettingsForm.get('cccExportGroup')?.value : null,
+      credit_card_expense_date: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null,
+      default_ccc_credit_card_account_name: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.value : null,
+      default_ccc_credit_card_account_id: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.id : null,
+      default_reimbursable_credit_card_account_name: exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value ? exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value.value : null,
+      default_reimbursable_credit_card_account_id: exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value ? exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value.id : null,
+      default_vendor_name: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.value : null,
+      default_vendor_id: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.id : null
+    };
   }
 }
