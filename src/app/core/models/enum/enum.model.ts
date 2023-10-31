@@ -66,6 +66,13 @@ export enum IntacctUpdateEvent {
   ADVANCED_SETTINGS_INTACCT= 'Advanced Settings Intacct',
 }
 
+export enum Sage300UpdateEvent {
+  CONNECT_SAGE300 = 'Connect Sage300',
+  EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
+  IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
+  ADVANCED_SETTINGS_SAGE300= 'Advanced Settings Sage300',
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
@@ -73,6 +80,15 @@ export enum AppName {
   GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE'
+}
+
+export enum AppNameInService {
+  BAMBOO_HR = 'bambooHR',
+  QBD = 'qbd',
+  TRAVELPERK = 'travelperk',
+  GUSTO = 'gusto',
+  INTACCT = 'sage_intacct',
+  SAGE300 = 'sage300'
 }
 
 export enum Page {
@@ -91,6 +107,9 @@ export enum Page {
   IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct',
   FIELD_MAPPING_QBD = 'Field Mappings QBD',
   ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD',
+  EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
+  IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
+  ADVANCED_SETTINGS_SAGE300 = 'Advanced Settings Sage300',
 }
 
 export enum ClickEvent {
@@ -291,6 +310,14 @@ export enum QBDOnboardingState {
     ALL = 'ALL'
   }
 
+  export enum Sage300Field {
+    ACCOUNT = 'ACCOUNT',
+    CUSTOMER = 'CUSTOMER',
+    DEPARTMENT = 'DEPARTMENT',
+    CLASS = 'CLASS',
+    TAX_CODE = 'TAX_CODE'
+  }
+
   export enum SageIntacctField {
     ACCOUNT = 'ACCOUNT',
     CUSTOMER = 'CUSTOMER',
@@ -385,4 +412,15 @@ export enum QBDOnboardingState {
     ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
     LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
     SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+  }
+
+  export enum Sage300ExportType {
+    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+    DIRECT_COST = 'DIRECT_COST'
+  }
+
+  export enum Sage300ExpenseDate {
+    LAST_SPEND_AT = 'last_spend_at',
+    CURRENT_DATE = 'current_date',
+    APPROVED_AT = 'approved_at'
   }

@@ -37,8 +37,12 @@ export class WorkspaceService {
     return this.storageService.get('workspaceId');
   }
 
-  setOnboardingState(onboardingState: IntacctOnboardingState | QBDOnboardingState): void {
-    return this.storageService.set('onboarding-state', onboardingState);
+  setWorkspaceId(workspaceId: number): void {
+    this.storageService.set('workspaceId', workspaceId);
+  }
+
+  setOnboardingState(onboardingState: IntacctOnboardingState | QBDOnboardingState | Sage300OnboardingState): void {
+    this.storageService.set('onboarding-state', onboardingState);
   }
 
 // The return type is made any intentionally, the caller can specify the return type to be aligned with the app

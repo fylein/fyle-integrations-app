@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateFilterComponent } from './date-filter.component';
+import { MainMenuComponent } from './main-menu.component';
 
-describe('DateFilterComponent', () => {
-  let component: DateFilterComponent;
-  let fixture: ComponentFixture<DateFilterComponent>;
+describe('MainMenuComponent', () => {
+  let component: MainMenuComponent;
+  let fixture: ComponentFixture<MainMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DateFilterComponent ]
+      declarations: [ MainMenuComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DateFilterComponent);
+    fixture = TestBed.createComponent(MainMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

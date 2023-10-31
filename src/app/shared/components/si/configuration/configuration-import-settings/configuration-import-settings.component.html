@@ -7,7 +7,9 @@
         [headerText]="'Import Settings'"
         [contentText]="'In this section, you can choose the fields required to be imported from Sage Intacct to Fyle.'"
         [redirectLink]="redirectLink"
-        [showSyncButton]="isOnboarding"></app-configuration-step-header>
+        [showSyncButton]="isOnboarding"
+        [appName]="appName"
+        (refreshDimension)="refreshDimensions($event)"></app-configuration-step-header>
     </div>
     <form [formGroup]="importSettingsForm">
         <div class="tw-p-24-px">
@@ -103,7 +105,7 @@
                         </div>
                             <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
                             <div class="tw-w-28-vw">
-                                <p-dropdown appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
+                                <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
@@ -124,7 +126,7 @@
                                 Fyle Fields should be unique
                                 </p>
                             </div>
-                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
+                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
                     </div>
                     <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle" [formGroup]="importSettingsForm">
                         <div class="tw-flex">
