@@ -35,7 +35,9 @@
                             [iconPath]="'expense'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'reimbursableExportType'"
-                            [appName]="appName">
+                            [appName]="appName"
+                            [exportConfiguration]="'assets/flow-charts/intacct-export-module.svg'"
+                            [exportTypeIconPath]="'assets/illustrations/sageIntacct/CCC Bill.jpg'">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
@@ -68,11 +70,11 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date as'"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date as'"
                         [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage 300 CRE. Click here for more details.'"
                         [options]="expenseGroupingDateOptions"
                         [iconPath]="'calender'"
-                        [placeholder]="'Select ' + getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date'"
+                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -109,7 +111,9 @@
                             [iconPath]="'expense'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'cccExportType'"
-                            [appName]="appName">
+                            [appName]="appName"
+                            [exportConfiguration]="'assets/flow-charts/intacct-export-module.svg'"
+                            [exportTypeIconPath]="'assets/illustrations/sageIntacct/CCC Bill.jpg'">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
@@ -155,7 +159,7 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingForm.value.cccExportType) + ' date as'"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from Fyle to Sage Intacct. Click here for more details.'"
                         [options]="expenseGroupingDateOptions"
                         [iconPath]="'calender'"

@@ -8,6 +8,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 
@@ -46,17 +48,19 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() appName: string;
 
+  @Input() exportConfiguration: string;
+
+  @Input() exportTypeIconPath: string;
+
   meridiemOption: string[] = ['AM', 'PM'];
 
   timeOption: string[] = ['01:00', '01:30', '02:00', '02:30', '03:00', '03:30', '04:00', '04:30', '05:00', '05:30', '06:00', '06:30', '07:00', '07:30', '08:00', '08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '12:30'];
 
-  isExportTypeDialogVisible: boolean = false;
+  isPreviewDialogVisible: boolean = false;
 
   exportType: string;
 
   isOnboarding: boolean = false;
-
-  isExportTableVisible: boolean = false;
 
   isCCCExportTableVisible: boolean = false;
 
@@ -65,6 +69,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     { exportModule: 'Bill', employeeMapping: 'Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'Accounts Payable' },
     { exportModule: 'Journal Entry', employeeMapping: 'Employee/Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'General Ledger' }
   ];
+
+  dialogHeader: string;
 
   constructor(
     private trackingService: TrackingService,
@@ -85,16 +91,13 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   showExportTable() {
-    this.isExportTableVisible = true;
-  }
-
-  showCCCExportTable() {
-    this.isCCCExportTableVisible = true;
+    this.isPreviewDialogVisible = true;
+    this.dialogHeader = 'Export Module';
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.isExportTypeDialogVisible = true;
-    this.exportType = exportType;
+    this.isPreviewDialogVisible = true;
+    this.dialogHeader = 'Preview how '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' is made in '+ this.appName;
   }
 
   showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
@@ -104,5 +107,10 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     };
 
     this.trackingService.onClickEvent(ClickEvent.PREVIEW_INTACCT_EXPORT);
+  }
+
+  closeDialog() {
+    this.isPreviewDialogVisible = false;
+    this.isPreviewDialogVisible = false;
   }
 }

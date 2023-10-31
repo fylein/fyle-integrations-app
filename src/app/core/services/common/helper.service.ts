@@ -3,9 +3,11 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
-import { AppUrl, ExpenseState } from '../../models/enum/enum.model';
+import { AppUrl, ExpenseState, ProgressPhase } from '../../models/enum/enum.model';
 import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
+import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
+import { TitleCasePipe } from '@angular/common';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +49,11 @@ export class HelperService {
     form.controls[controllerName].setValue(null);
   }
 
-  setCustomValidatorsAndWatchers(validatorRule: ValidatorRule, form: FormGroup) {
+  getExportType(exportType: string | null): string {
+    return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
+  }
+
+  setExportSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule, form: FormGroup) {
     const keys = Object.keys(validatorRule);
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((isSelected) => {
@@ -60,6 +66,24 @@ export class HelperService {
             this.clearValidatorAndResetValue(form, element);
           });
         }
+      });
+    });
+  }
+
+  setExportTypeValidatoresAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
+    Object.values(exportTypeValidatorRule).forEach((values) => {
+      form.controls[values.formController].valueChanges.subscribe((isSelected) => {
+        Object.entries(values.requiredValue).forEach(([key, value]) => {
+          if (key === isSelected) {
+            value.forEach((element: any) => {
+              this.markControllerAsRequired(form, element);
+            });
+          } else {
+            value.forEach((element: any) => {
+              this.clearValidatorAndResetValue(form, element);
+            });
+          }
+        });
       });
     });
   }
@@ -91,5 +115,10 @@ export class HelperService {
         }
       };
     };
+  }
+
+  getPhase(isOnboarding: boolean): ProgressPhase {
+    return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
 }
-}
+
