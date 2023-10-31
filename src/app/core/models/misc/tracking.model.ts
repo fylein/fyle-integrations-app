@@ -1,4 +1,4 @@
-import { ProgressPhase } from "../enum/enum.model";
+import { IntacctErrorType, ProgressPhase } from "../enum/enum.model";
 import { QBDAdvancedSettingsGet } from "../qbd/qbd-configuration/advanced-setting.model";
 import { QBDExportSettingGet } from "../qbd/qbd-configuration/export-setting.model";
 import { QBDFieldMappingGet } from "../qbd/qbd-configuration/field-mapping.model";
@@ -13,14 +13,25 @@ export type UpdateEventAdditionalProperty = {
     newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet
   };
 
-  export type UpdateIntacctEventAdditionalProperty = {
+export type UpdateIntacctEventAdditionalProperty = {
     phase: ProgressPhase,
     oldState: ExportSettingGet | ImportSettingGet | AdvancedSettingsGet,
     newState: ImportSettings
   };
 
-  export type MappingAlphabeticalFilterAdditionalProperty = {
+export type MappingAlphabeticalFilterAdditionalProperty = {
     alphabetList: string[],
     allSelected: boolean,
     page: string
   };
+
+export type ResolveMappingErrorProperty = {
+  resolvedCount: number,
+  unresolvedCount: number,
+  totalCount: number,
+  resolvedAllErrors: boolean,
+  startTime: Date,
+  endTime: Date,
+  durationInSeconds: number,
+  errorType: IntacctErrorType
+};

@@ -65,6 +65,7 @@ import { DashboardAccountingErrorDialogComponent } from './components/dashboard/
 import { DashboardExportSummarySectionComponent } from './components/dashboard/dashboard-export-summary-section/dashboard-export-summary-section.component';
 import { ConfigurationTextFieldComponent } from './components/configuration/configuration-text-field/configuration-text-field.component';
 import { PreviewDialogComponent } from './components/configuration/preview-dialog/preview-dialog.component';
+import { MainMenuComponent } from './components/menu/main-menu/main-menu.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +112,8 @@ import { PreviewDialogComponent } from './components/configuration/preview-dialo
     DashboardAccountingErrorDialogComponent,
     DashboardExportSummarySectionComponent,
     ConfigurationTextFieldComponent,
-    PreviewDialogComponent
+    PreviewDialogComponent,
+    MainMenuComponent
   ],
   imports: [
     CommonModule,
@@ -183,7 +185,8 @@ import { PreviewDialogComponent } from './components/configuration/preview-dialo
     DashboardErrorSectionComponent,
     DashboardExportLogDialogComponent,
     DashboardAccountingErrorDialogComponent,
-    ConfigurationTextFieldComponent
+    ConfigurationTextFieldComponent,
+    MainMenuComponent
   ]
 })
 export class SharedModule { }
