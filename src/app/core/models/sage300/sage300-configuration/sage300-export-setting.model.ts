@@ -11,9 +11,9 @@ export type ExportSettingValidatorRule = {
   creditCardExpense: string[];
 };
 
-export type ExportSettingExportTyleValidatorRule = {
+export type ExportModuleRule = {
   formController: string,
-  expectedValue: Record<string, string[]>
+  requiredValue: Record<string, string[]>
 };
 
 type Sage300ExportSetting = {

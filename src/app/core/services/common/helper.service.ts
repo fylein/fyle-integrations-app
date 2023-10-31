@@ -5,7 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { AppUrl, ExpenseState, ProgressPhase } from '../../models/enum/enum.model';
 import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
-import { ExportSettingExportTyleValidatorRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
+import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
@@ -53,7 +53,7 @@ export class HelperService {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
 
-  setCustomValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule, form: FormGroup) {
+  setExportSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule, form: FormGroup) {
     const keys = Object.keys(validatorRule);
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((isSelected) => {
@@ -70,10 +70,10 @@ export class HelperService {
     });
   }
 
-  setCustomExportTypeValidatoresAndWatchers(exportTypeValidatorRule: ExportSettingExportTyleValidatorRule[], form: FormGroup): void {
+  setExportTypeValidatoresAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
       form.controls[values.formController].valueChanges.subscribe((isSelected) => {
-        Object.entries(values.expectedValue).forEach(([key, value]) => {
+        Object.entries(values.requiredValue).forEach(([key, value]) => {
           if (key === isSelected) {
             value.forEach((element: any) => {
               this.markControllerAsRequired(form, element);
