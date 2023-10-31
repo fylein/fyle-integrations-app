@@ -4,4 +4,5 @@
     <app-dashboard-export-section (export)="export($event)" [isLoading]="isLoading" [isImportInProgress]="isImportInProgress" [exportInProgress]="exportInProgress" [exportableExpenseGroupIds]="exportableExpenseGroupIds" [readyToExportExpenseCount]="readyToExportExpenseCount" [failedExpenseGroupCount]="failedExpenseGroupCount" [exportProgressPercentage]="exportProgressPercentage" [accountingExportSummary]="accountingExportSummary" [processedCount]="processedCount"></app-dashboard-export-section>
     <app-zero-state *ngIf="!exportableExpenseGroupIds" [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'"></app-zero-state>
     <app-dashboard-export-summary-section *ngIf="exportableExpenseGroupIds" [accountingExportSummary]="accountingExportSummary"></app-dashboard-export-summary-section>
+    <app-dashboard-error-section></app-dashboard-error-section>
 </div>

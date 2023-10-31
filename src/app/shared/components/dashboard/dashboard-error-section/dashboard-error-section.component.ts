@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-error-section',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-error-section.component.scss']
 })
 export class DashboardErrorSectionComponent implements OnInit {
+
+  @Input() isLoading: boolean;
 
   constructor() { }
 
