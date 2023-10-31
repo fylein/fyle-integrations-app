@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateFilterComponent } from './date-filter.component';
+import { PreviewDialogComponent } from './preview-dialog.component';
 
-describe('DateFilterComponent', () => {
-  let component: DateFilterComponent;
-  let fixture: ComponentFixture<DateFilterComponent>;
+describe('PreviewDialogComponent', () => {
+  let component: PreviewDialogComponent;
+  let fixture: ComponentFixture<PreviewDialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DateFilterComponent ]
+      declarations: [ PreviewDialogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DateFilterComponent);
+    fixture = TestBed.createComponent(PreviewDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
