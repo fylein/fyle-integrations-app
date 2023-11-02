@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Sage300OnboardingComponent } from './sage300-onboarding/sage300-onboarding.component';
 import { Sage300RoutingModule } from './sage300-routing.module';
 import { Sage300MainComponent } from './sage300-main/sage300-main.component';
+import { Sage300SharedModule } from './sage300-shared/sage300-shared.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
@@ -13,6 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   imports: [
     CommonModule,
+    Sage300SharedModule,
     SharedModule,
     Sage300RoutingModule
   ]
