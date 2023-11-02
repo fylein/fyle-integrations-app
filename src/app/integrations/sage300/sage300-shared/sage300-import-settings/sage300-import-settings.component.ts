@@ -3,9 +3,9 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { IntegrationFields } from 'src/app/core/models/db/mapping.model';
-import { AccountingIntegrationApp, AppNameInService, FyleField, Sage300Field } from 'src/app/core/models/enum/enum.model';
+import { AccountingIntegrationApp, AppName, AppNameInService, FyleField, Sage300Field } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
-import { ImportSettingModel, Sage300ImportSettingGet, Sage300MappingSettings } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { ImportSettingModel, Sage300ImportSettingGet, Sage300MappingSettings, sage300DefaultFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
@@ -39,6 +39,21 @@ export class Sage300ImportSettingsComponent implements OnInit {
   customFieldControl: AbstractControl;
 
   isShowDependentField: boolean;
+
+  appName: string = AppName.SAGE300;
+
+  defaultFields: sage300DefaultFields[] = [
+    {
+      source_field: 'CATEGORY',
+      destination_field: 'ACCOUNTS',
+      formController: 'importCategories'
+    },
+    {
+      source_field: 'MERCHANTS',
+      destination_field: 'VENDOR',
+      formController: 'importVendorAsMerchant'
+    }
+  ];
 
   constructor(
     private router: Router,
