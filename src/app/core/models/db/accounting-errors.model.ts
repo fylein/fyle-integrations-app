@@ -1,5 +1,15 @@
 import { AccountingErrorType } from "../enum/enum.model";
 
+export interface Detail {
+  user_id?: string;
+  location?: string | null;
+  full_name?: string;
+  department?: string | null;
+  department_id?: string | null;
+  employee_code?: string | null;
+  department_code?: string | null;
+}
+
 export interface ExpenseAttribute {
     id: number;
     attribute_type: string; // Enum could be used if types are known and finite
@@ -41,14 +51,4 @@ export type AccountingGroupedErrors = {
 export type AccountingGroupedErrorStat = {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null | ErrorStat;
     [AccountingErrorType.CATEGORY_MAPPING]: null | ErrorStat;
-  }
-
-  export interface Detail {
-    user_id?: string;
-    location?: string | null;
-    full_name?: string;
-    department?: string | null;
-    department_id?: string | null;
-    employee_code?: string | null;
-    department_code?: string | null;
   }
