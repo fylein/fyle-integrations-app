@@ -331,8 +331,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
       const fieldData = mappingSetting || {
         destination_field: sageIntacctField.attribute_type,
-        import_to_fyle: false,
-        is_custom: false,
+        import_to_fyle: false, //true
+        is_custom: false, //true
         source_field: '',
         source_placeholder: null
       };

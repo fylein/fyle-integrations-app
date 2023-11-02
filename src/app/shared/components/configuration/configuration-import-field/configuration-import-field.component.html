@@ -1,0 +1,34 @@
+<div>
+    <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{appName}} Dimensions</div>
+        <div class="fields-header-text tw-w-30-vw">Fyle Fields</div>
+        <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
+            Import to Fyle
+            <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-faded-text-color" pTooltip="Importing a dimension syncs active values from Sage Intacct every 24 hours. Deactivated values in Sage will also be disabled in Fyle"></svg-icon-sprite>
+        </div>
+    </div>
+    <div *ngFor="let _ of [0,1,2,3]">
+        <div class="tw-flex tw-pt-18-px">
+            <div class="tw-pl-48-px">
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Category" disabled>
+            </div>
+            <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
+            <div class="tw-w-30-vw">
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Category" disabled>
+            </div>
+            <div class="input-toggle-section tw-w-10-vw">
+                <p-inputSwitch></p-inputSwitch>
+            </div>
+        </div>
+    </div>
+    <div class="add-button-container tw-pl-40-px tw-mt-20-px">
+        <svg-icon-sprite src="add" width="20px" height="20px" class="add-row-text"></svg-icon-sprite>
+        <a class="add-row-text tw-pl-2" (click)="addExpenseField()">
+            Add more fields
+        </a>
+    </div>  
+    <div class="tw-flex tw-pl-48-px tw-pt-18-px">
+        <p-dropdown appendTo="body" class="tw-w-600-px" placeholder="Select Tax Group">
+        </p-dropdown>
+    </div>
+</div>
