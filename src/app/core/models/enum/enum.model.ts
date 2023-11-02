@@ -404,3 +404,8 @@ export enum QBDOnboardingState {
     PURCHASE_INVOICE = "PURCHASE_INVOICE",
     DIRECT_COSTS = "DIRECT_COSTS"
   }
+
+  export enum AccountingErrorType {
+    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+  }
