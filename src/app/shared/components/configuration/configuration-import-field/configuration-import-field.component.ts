@@ -17,7 +17,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   @Input() form: FormGroup;
 
   @Input() accountingFieldOptions: IntegrationFields[];
-  
+
   @Input() fyleFieldOptions: IntegrationFields[];
 
   @Input() showAddmore: boolean;
@@ -35,17 +35,23 @@ export class ConfigurationImportFieldComponent implements OnInit {
   importSettingsForm: any;
 
   showAddButton: any;
+
   customFieldControl: AbstractControl<any, any>;
-  
+
   customFieldForm: any;
+
   showDialog: boolean;
+
   costCodeFieldOption: any[];
+
   costTypeFieldOption: any[];
+
   isCostCodeFieldSelected: boolean;
+
   customFieldForDependentField: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder
   ) { }
 
   addExpenseField() {
@@ -61,6 +67,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
     this.importSettingWatcher();
     this.showAddButton = this.showOrHideAddButton();
   }
+
   private createFormGroup(data: MappingSetting): FormGroup {
     return this.formBuilder.group({
       source_field: [data.source_field || '', RxwebValidators.unique()],
@@ -70,6 +77,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       source_placeholder: [data.source_placeholder || null]
     });
   }
+
   private importSettingWatcher(): void {
     const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control) => {
@@ -97,6 +105,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
     });
     this.costCodesCostTypesWatcher();
   }
+
   private addCustomField() {
     this.customFieldForm = this.formBuilder.group({
       attribute_type: [null, Validators.required],
@@ -105,6 +114,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
     });
     this.showDialog = true;
   }
+
   private costCodesCostTypesWatcher(): void {
     if (this.importSettingsForm.value.costCodes) {
       this.costCodeFieldOption = [this.importSettingsForm.value.costCodes];
