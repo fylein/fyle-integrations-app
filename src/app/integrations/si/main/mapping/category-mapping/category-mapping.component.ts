@@ -5,6 +5,7 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { CorporateCreditCardExpensesObject, FieldType, FyleField, IntacctReimbursableExpensesObject, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-mapping-response.model';
 import { CategoryMapping, CategoryMappingPost, CategoryMappingResult } from 'src/app/core/models/si/db/category-mapping.model';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -29,9 +30,9 @@ export class CategoryMappingComponent implements OnInit {
 
   cccExpenseObject?: CorporateCreditCardExpensesObject;
 
-  sageIntacctAccounts: DestinationAttribute[];
+  sageIntacctAccounts: IntacctDestinationAttribute[];
 
-  sageIntacctExpenseTypes: DestinationAttribute[];
+  sageIntacctExpenseTypes: IntacctDestinationAttribute[];
 
   mappings: CategoryMappingResult[];
 
