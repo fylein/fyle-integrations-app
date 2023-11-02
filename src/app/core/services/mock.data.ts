@@ -10,12 +10,12 @@ export const mockDataFailed = {
         mapping_errors: [
           {
             type: "Employee Mapping",
-            value: "nilesh.p@fyle.in",
+            value: "nilesh.p@fyle.in"
           },
           {
             type: "Category Mapping",
-            value: "Unspecified",
-          },
+            value: "Unspecified"
+          }
         ],
         sage_300_errors: {
           created_on: "2023-08-17T09:46:30Z",
@@ -24,7 +24,7 @@ export const mockDataFailed = {
             "Exception of type 'DBI.Synchronization.Processing.TimberlineOffice.KeyAlreadyInUseException' was thrown.",
           id: "6615abdf-733f-4190-a4ed-b06100a1166f",
           type_id: "4de325f1-a380-41cc-90ce-be1e02fef167",
-          version: 12967,
+          version: 12967
         },
         response: {},
         created_at: "2023-10-09T09:48:30.764031Z",
@@ -34,11 +34,11 @@ export const mockDataFailed = {
         purchase_invoice_id: null,
         export_url: "odsifodkmf.com",
         direct_costs_id: null,
-        sage_300_reimbursement: null,
-      },
-    ],
+        sage_300_reimbursement: null
+      }
+    ]
   };
-  
+
   export const mockDataComplete = {
     count: 1,
     next: null,
@@ -58,7 +58,7 @@ export const mockDataFailed = {
         purchase_invoice_id: 12,
         export_url: "odsifodkmf.com",
         direct_costs_id: null,
-        sage_300_reimbursement: null,
-      },
-    ],
-  };  
+        sage_300_reimbursement: null
+      }
+    ]
+  };

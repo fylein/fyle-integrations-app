@@ -62,13 +62,13 @@ export class Sage300DashboardComponent implements OnInit {
   private pollExportStatus(): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAccountingExports([]))),
-      takeWhile((response: AccountingExportResponse) => 
-        response.results.filter(task => 
+      takeWhile((response: AccountingExportResponse) =>
+        response.results.filter(task =>
           (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED)
         ).length > 0, true
       )
     ).subscribe((res: AccountingExportResponse) => {
-      // processed count value PR review
+      // Processed count value PR review
       this.processedCount = res.results.filter(task => (task.status !== AccountingExportStatus.IN_PROGRESS && task.status !== AccountingExportStatus.ENQUEUED) && (task.type !== AccountingExportType.PURCHASE_INVOICE && task.type !== AccountingExportType.DIRECT_COSTS)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / this.readyToExportExpenseCount) * 100);
 
@@ -138,7 +138,7 @@ export class Sage300DashboardComponent implements OnInit {
       this.isLoading = false;
       this.isImportInProgress = false;
     });
-  }  
+  }
 
   ngOnInit(): void {
     this.setupPage();
