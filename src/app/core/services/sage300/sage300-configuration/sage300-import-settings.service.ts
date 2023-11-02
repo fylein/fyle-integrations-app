@@ -25,7 +25,7 @@ export class Sage300ImportSettingsService {
   @Cacheable({
     cacheBusterObserver: sage300ImportSettingGetCache
   })
-  getSage300ImportSettings(): Observable<{}> {
+  getSage300ImportSettings(): Observable<Sage300ImportSettingGet> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, {});
   }
 

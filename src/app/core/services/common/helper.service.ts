@@ -4,7 +4,7 @@ import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { AppUrl, ExpenseState, ProgressPhase } from '../../models/enum/enum.model';
-import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
@@ -47,6 +47,14 @@ export class HelperService {
   clearValidatorAndResetValue(form: FormGroup, controllerName: string): void {
     form.controls[controllerName].clearValidators();
     form.controls[controllerName].setValue(null);
+  }
+
+  enableFormFields(form: FormGroup, controllerName: string): void {
+    form.controls[controllerName].enable();
+  }
+
+  disableFormFields(form: FormGroup, controllerName: string): void {
+    form.controls[controllerName].disable();
   }
 
   getExportType(exportType: string | null): string {
