@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { appName } from 'src/app/core/models/enum/enum.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-main-menu',
@@ -13,7 +13,7 @@ export class MainMenuComponent implements OnInit {
 
   @Input() moreDropdown = null;
 
-  @Input() appName: appName;
+  @Input() appName: AppName;
 
   @Input() isDropdrownRequired: boolean;
 

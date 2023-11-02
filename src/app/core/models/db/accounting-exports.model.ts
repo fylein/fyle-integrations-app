@@ -1,3 +1,5 @@
+import { AccountingExportStatus } from "../enum/enum.model";
+
 export interface AccountingExportSummary {
     id: number;
     last_exported_at: string;
@@ -18,11 +20,11 @@ export interface AccountingExportCount {
 export interface AccountingExportResult {
     id: number;
     type: string;
-    status: string;
+    status: AccountingExportStatus;
     mapping_errors: {
         type: string;
         value: string;
-    }[];
+    }[] | null;
     sage_300_errors: {
         created_on: string;
         entity_id: string;
@@ -30,7 +32,7 @@ export interface AccountingExportResult {
         id: string;
         type_id: string;
         version: number;
-    };
+    } | null;
     response: Record<string, unknown>;
     created_at: string;
     updated_at: string;

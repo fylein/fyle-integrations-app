@@ -57,7 +57,7 @@ export class ImportSettings {
             source_field: field.source_field.toUpperCase(),
             destination_field: field.destination_field,
             import_to_fyle: field.import_to_fyle,
-            is_custom: field.is_custom,
+            is_custom: (field.source_field.toUpperCase() === 'PROJECT' || field.source_field.toUpperCase() === 'COST_CENTER') ? false : true,
             source_placeholder: field.source_placeholder
           };
         });
