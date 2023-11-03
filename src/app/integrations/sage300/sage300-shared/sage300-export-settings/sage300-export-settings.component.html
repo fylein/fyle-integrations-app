@@ -37,7 +37,7 @@
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [exportTypeIconPathArray]="exportTypeIconPathArray">
+                            [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
@@ -113,7 +113,7 @@
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [exportTypeIconPathArray]="exportTypeIconPathArray">
+                            [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field

@@ -57,7 +57,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   creditCardAccountOptions: Sage300DestinationAttributes[];
 
-  exportTypeIconPathArray = [
+  previewImagePaths =[
     {
       'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
       'DIRECT_COST': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg'

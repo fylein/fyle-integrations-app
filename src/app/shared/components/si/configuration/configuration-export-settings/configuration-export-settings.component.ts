@@ -62,7 +62,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  exportTypeIconPathArray = [
+  previewImagePaths =[
     {
       'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
       'BILL': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg',
