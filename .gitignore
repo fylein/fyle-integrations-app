@@ -59,6 +59,7 @@ docker-compose.yml
 setup.sh
 secrets.sh
 src/environments/environment.json
+src/app/branding/config.json
 
 # Tests
 cypress/videos
