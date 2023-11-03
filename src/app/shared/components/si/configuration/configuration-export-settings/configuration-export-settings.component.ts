@@ -62,6 +62,20 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
+  exportTypeIconPathArray = [
+    {
+      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'BILL': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable Journal Entry.jpg'
+    },
+    {
+      'EXPENSE_REPORT': 'assets/illustrations/sageIntacct/CCC Expense Report.jpg',
+      'BILL': 'assets/illustrations/sageIntacct/CCC Bill.jpg',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC Journal Entry.jpg',
+      'CHARGE_CARD_TRANSACTION': 'assets/illustrations/sageIntacct/CCC Credit Card Purchase.jpg'
+    }
+  ];
+
   expenseGroupingFieldOptions: ExportSettingFormOption[] = [
     {
       label: 'Expense',
