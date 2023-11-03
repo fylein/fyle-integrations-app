@@ -3,9 +3,9 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { IntegrationFields } from 'src/app/core/models/db/mapping.model';
-import { AccountingIntegrationApp, AppName, AppNameInService, FyleField, Sage300Field } from 'src/app/core/models/enum/enum.model';
+import { AccountingIntegrationApp, AppName, AppNameInService, DefaultImportFields, FyleField, Sage300Field } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
-import { ImportSettingModel, Sage300ImportSettingGet, Sage300MappingSettings, sage300DefaultFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { ImportSettingModel, Sage300ImportSettingGet, Sage300MappingSettings, Sage300DefaultFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
@@ -42,15 +42,21 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   appName: string = AppName.SAGE300;
 
-  defaultFields: sage300DefaultFields[] = [
+  customField: any;
+
+  costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+
+  costCategoryOption = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+
+  readonly defaultImportFields: Sage300DefaultFields[] = [
     {
-      source_field: 'CATEGORY',
-      destination_field: 'ACCOUNTS',
+      source_field: DefaultImportFields.CATEGORY,
+      destination_field: DefaultImportFields.ACCOUNT,
       formController: 'importCategories'
     },
     {
-      source_field: 'MERCHANTS',
-      destination_field: 'VENDOR',
+      source_field: DefaultImportFields.MERCHANTS,
+      destination_field: DefaultImportFields.VENDOR,
       formController: 'importVendorAsMerchant'
     }
   ];
@@ -176,6 +182,33 @@ export class Sage300ImportSettingsComponent implements OnInit {
     return isDependent ? true : false;
   }
 
+  dependentFieldFormCreation(){
+    const mappingSettings: Sage300MappingSettings[] = this.importSettings.mapping_settings;
+
+        for (const setting of mappingSettings) {
+          const { source_field, destination_field, import_to_fyle } = setting;
+          if (source_field === 'PROJECT' && destination_field === 'PROJECT' && import_to_fyle === true) {
+            if (this.importSettings.dependent_field_settings?.is_import_enabled) {
+              this.customField = {
+                attribute_type: this.importSettings.dependent_field_settings.cost_code_field_name,
+                display_name: this.importSettings.dependent_field_settings.cost_code_field_name,
+                source_placeholder: this.importSettings.dependent_field_settings.cost_code_placeholder,
+                is_dependent: true
+              };
+              this.costCodeFieldOption.push(this.customField);
+              this.customField = {
+                attribute_type: this.importSettings.dependent_field_settings.cost_category_field_name,
+                display_name: this.importSettings.dependent_field_settings.cost_category_field_name,
+                source_placeholder: this.importSettings.dependent_field_settings.cost_category_placeholder,
+                is_dependent: true
+              };
+              this.costCategoryOption.push(this.customField);
+            }
+            break;
+          }
+        }
+  }
+
   private importSettingFormWatcher() {
     this.importSettingWatcher();
     this.costCodescostCategoryWatcher();
@@ -195,6 +228,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.sage300Fields = response[2];
       this.importSettingFormWatcher();
       this.showDependentField();
+      this.dependentFieldFormCreation();
       this.isLoading = false;
     });
   }

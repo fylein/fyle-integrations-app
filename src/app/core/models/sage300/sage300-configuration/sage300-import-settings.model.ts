@@ -10,7 +10,7 @@ export type Sage300ImportSettingPost = {
     dependent_field_settings: null
 }
 
-export type sage300DefaultFields = {
+export type Sage300DefaultFields = {
     destination_field: string,
     source_field: string,
     formController: string
