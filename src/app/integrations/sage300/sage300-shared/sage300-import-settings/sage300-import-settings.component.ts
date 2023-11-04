@@ -179,7 +179,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
   dependentFieldFormCreation(){
     const mappingSettings = this.importSettings?.mapping_settings;
 
-    if(mappingSettings) {
+    if (mappingSettings) {
       for (const setting of mappingSettings) {
         const { source_field, destination_field, import_to_fyle } = setting;
         if (source_field === 'PROJECT' && destination_field === 'PROJECT' && import_to_fyle === true) {
