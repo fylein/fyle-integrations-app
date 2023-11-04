@@ -49,11 +49,11 @@ export class HelperService {
     form.controls[controllerName].setValue(null);
   }
 
-  enableFormFields(form: FormGroup, controllerName: string): void {
+  enableFormField(form: FormGroup, controllerName: string): void {
     form.controls[controllerName].enable();
   }
 
-  disableFormFields(form: FormGroup, controllerName: string): void {
+  disableFormField(form: FormGroup, controllerName: string): void {
     form.controls[controllerName].disable();
   }
 

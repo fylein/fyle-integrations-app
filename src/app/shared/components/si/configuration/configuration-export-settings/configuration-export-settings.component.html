@@ -33,7 +33,9 @@
                             [iconPath]="'expense'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'reimbursableExportType'"
-                            [appName]="appName">
+                            [appName]="appName"
+                            [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
+                            [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.JOURNAL_ENTRY">
                                 <app-configuration-select-field
@@ -133,7 +135,9 @@
                         [options]="creditCardExportTypes"
                         [iconPath]="'expense'"
                         [placeholder]="'Select expense export module'"
-                        [formControllerName]="'cccExportType'"></app-configuration-select-field>
+                        [formControllerName]="'cccExportType'"
+                        [exportConfigurationIconPath]="'assets/illustrations/sageIntacct/cccExportTypeTable.svg'"
+                        [exportTypeIconPathArray]="previewImagePaths"></app-configuration-select-field>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.EXPENSE_REPORT">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"

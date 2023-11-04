@@ -48,9 +48,11 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() appName: string;
 
-  @Input() exportConfiguration: string;
+  @Input() exportConfigurationIconPath: string;
 
-  @Input() exportTypeIconPath: string;
+  @Input() exportTypeIconPathArray: any;
+
+  exportTypeIconPath: string;
 
   meridiemOption: string[] = ['AM', 'PM'];
 
@@ -91,13 +93,16 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   showExportTable() {
-    this.isPreviewDialogVisible = true;
     this.dialogHeader = 'Export Module';
+    this.exportTypeIconPath = this.exportConfigurationIconPath;
+    this.isPreviewDialogVisible = true;
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.isPreviewDialogVisible = true;
     this.dialogHeader = 'Preview how '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' is made in '+ this.appName;
+    const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
+    this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
+    this.isPreviewDialogVisible = true;
   }
 
   showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {

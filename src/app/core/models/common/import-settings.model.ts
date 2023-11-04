@@ -12,3 +12,11 @@ export type ExpenseField = {
     is_custom: boolean;
     source_placeholder: string;
 };
+
+export type ImportSettingMappingRow = {
+  destination_field: string,
+  import_to_fyle: boolean,
+  is_custom: boolean,
+  source_field: string,
+  source_placeholder: string | null
+}
