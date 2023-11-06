@@ -16,6 +16,8 @@ export class Sage300DashboardComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  appName: AppName = AppName.SAGE300;
+
   isImportInProgress: boolean = true;
 
   exportInProgress: boolean = false;
