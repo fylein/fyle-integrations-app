@@ -9,6 +9,8 @@ export class ZeroStateComponent implements OnInit {
 
   @Input() zeroStateImageURL: string;
 
+  @Input() zeroStateCaption: string;
+
   constructor() { }
 
   ngOnInit(): void {
