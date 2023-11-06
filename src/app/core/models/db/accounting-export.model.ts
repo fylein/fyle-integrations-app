@@ -9,6 +9,7 @@ export interface AccountingExport {
     id: number;
     type: string;
     status: AccountingExportStatus;
+    expense_group: number;
     mapping_errors: {
         type: string;
         value: string;

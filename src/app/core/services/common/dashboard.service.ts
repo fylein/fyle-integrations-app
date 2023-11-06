@@ -31,7 +31,7 @@ export class DashboardService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count`, apiParams);
   }
 
-  getAccountingExports(status: AccountingExportStatus[]): Observable<AccountingExportResponse> {
+  getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[]): Observable<AccountingExportResponse> {
     const apiParams = {
       type__in: [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
       status__in: [status]
