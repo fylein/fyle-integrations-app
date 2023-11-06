@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, DefaultImportFields } from 'src/app/core/models/enum/enum.model';
+import { AppName, DefaultImportFields, MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { ExpenseField, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
@@ -82,6 +82,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
     }
   ];
 
+  showDependentFieldWarning: boolean;
+
   constructor(
     private router: Router,
     private importSettingService: Sage300ImportSettingsService,
@@ -91,9 +93,35 @@ export class Sage300ImportSettingsComponent implements OnInit {
     private helper: HelperService
   ) { }
 
+  get expenseFieldsGetter() {
+    return this.importSettingForm.get('expenseFields') as FormArray;
+  }
+
   closeModel() {
     this.customFieldForm.reset();
     this.showCustomFieldDialog = false;
+  }
+
+  acceptDependentFieldWarning(isWarningAccepted: boolean): void {
+    this.showDependentFieldWarning = false;
+    if (!isWarningAccepted) {
+      this.expenseFieldsGetter.controls.forEach((control) => {
+        if (control.value.source_field === MappingSourceField.PROJECT) {
+          control.patchValue({
+            source_field: MappingSourceField.PROJECT,
+            destination_field: control.value.destination_field,
+            import_to_fyle: true,
+            is_custom: control.value.is_custom,
+            source_placeholder: control.value.source_placeholder
+          });
+          this.importSettingForm.controls.isDependentImportEnabled.setValue(true);
+        }
+      });
+    }
+  }
+
+  showWarningForDependentFields(): void {
+    this.showDependentFieldWarning = true;
   }
 
   saveCustomField() {

@@ -56,7 +56,7 @@
                         Fyle Fields should be unique
                         </p>
                     </div>
-                <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section tw-pt-10-px"></p-inputSwitch>
+                <p-inputSwitch (onChange)="onShowWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section tw-pt-10-px"></p-inputSwitch>
             </div>
             <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle" [formGroup]="form">
                 <div class="tw-flex">

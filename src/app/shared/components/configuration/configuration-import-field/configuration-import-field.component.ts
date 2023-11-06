@@ -29,6 +29,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() dependentImportFields: Sage300DependentImportFields[];
 
+  @Output() showWarningForDependentFields = new EventEmitter();
+
   showDependentFieldWarning: boolean;
 
 
@@ -67,9 +69,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
     event?.stopPropagation();
   }
 
-  showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
+  onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
-      this.showDependentFieldWarning = true;
+      this.showWarningForDependentFields.emit();
     }
   }
 
