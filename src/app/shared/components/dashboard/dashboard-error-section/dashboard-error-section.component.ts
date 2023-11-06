@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/accounting-errors.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-dashboard-error-section',
@@ -6,6 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard-error-section.component.scss']
 })
 export class DashboardErrorSectionComponent implements OnInit {
+
+  @Input() appName: AppName;
+
+  @Input() errors: AccountingGroupedErrors;
+
+  @Input() groupedErrorStat: AccountingGroupedErrorStat;
 
   constructor() { }
 
