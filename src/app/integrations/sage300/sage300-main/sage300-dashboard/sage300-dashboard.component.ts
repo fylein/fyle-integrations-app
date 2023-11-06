@@ -71,7 +71,7 @@ export class Sage300DashboardComponent implements OnInit {
         ).length > 0, true
       )
     ).subscribe((res: AccountingExportResponse) => {
-      this.processedCount = res.results.filter(task => (task.status !== AccountingExportStatus.IN_PROGRESS && task.status !== AccountingExportStatus.ENQUEUED) && (task.type !== AccountingExportType.PURCHASE_INVOICE && task.type !== AccountingExportType.DIRECT_COSTS)).length;
+      this.processedCount = res.results.filter(task => (task.status !== AccountingExportStatus.IN_PROGRESS && task.status !== AccountingExportStatus.ENQUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
       if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED)).length === 0) {
