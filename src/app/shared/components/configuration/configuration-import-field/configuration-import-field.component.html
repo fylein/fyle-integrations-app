@@ -21,10 +21,9 @@
             </div>
         </div>
     </div>
-    <!-- <div formArrayName="expenseFields">
-        {{expenseFieldsGetter}} -->
-        <!-- <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i"> -->
-            <!-- <div class="tw-flex">
+    <div formArrayName="expenseFields" class="tw-pl-48-px tw-mt-18px">
+        <div *ngFor="let expenseField of expenseFieldsGetter.value[0]; let i = index" [formGroupName]="i">
+            <div class="tw-flex tw-mt-18-px">
                 <div>
                     <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose Sage Intacct field" formControlName="destination_field"
                     optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
@@ -94,10 +93,10 @@
                     </p-dropdown>
                     <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                 </div>
-            </div>                       -->
-        <!-- </div> -->
-        <!-- <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') || form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')">
+            </div>                      
+        </div>
+        <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') || form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')">
             *Fyle and Sage Intacct Fields should be unique.
-          </div>                  
-    </div> -->
+        </div>                  
+    </div>
 </div>

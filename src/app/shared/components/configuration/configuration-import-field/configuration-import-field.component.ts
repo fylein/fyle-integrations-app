@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { InputSwitchOnChangeEvent } from 'primeng/inputswitch';
-import { IntegrationFields } from 'src/app/core/models/db/mapping.model';
+import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
@@ -18,9 +18,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() form: FormGroup;
 
-  @Input() accountingFieldOptions: IntegrationFields[];
+  @Input() accountingFieldOptions: IntegrationField[];
 
-  @Input() fyleFieldOptions: IntegrationFields[];
+  @Input() fyleFieldOptions: FyleField[];
 
   @Input() defaultImportFields: Sage300DefaultFields[];
 
@@ -51,18 +51,18 @@ export class ConfigurationImportFieldComponent implements OnInit {
     const selectedField = this.fyleFieldOptions.find(field => field.attribute_type === selectedValue);
 
     // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
-    // If (selectedField?.is_dependent) {
-    //   // Set the toggle to false
-    //   (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(false);
+    if (selectedField?.is_dependent) {
+      // Set the toggle to false
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(false);
 
-    //   // Get the 'import_to_fyle' control at the specified index and disable it
-    //   (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
-    // }
+      // Get the 'import_to_fyle' control at the specified index and disable it
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
+    }
   }
 
   removeFilter(expenseField: AbstractControl) {
-    (expenseField as FormGroup).controls.source_field.patchValue('');
-    (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
+    (expenseField as FormGroup).value[0].source_field.patchValue('');
+    (expenseField as FormGroup).value[0].import_to_fyle.patchValue(false);
     event?.stopPropagation();
   }
 
@@ -73,9 +73,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   isExpenseFieldDependent(expenseField: MappingSetting): boolean {
-    // Const isDependent = this.fyleFieldOptions.find(field => field.attribute_type === expenseField.source_field)?.is_dependent;
-    // Return isDependent ? true : false;
-    return true;
+    const isDependent = this.fyleFieldOptions.find(field => field.attribute_type === expenseField.source_field)?.is_dependent;
+    return isDependent ? true : false;
   }
 
   updateDependentField(sourceField: string, importToFyle: boolean) {
