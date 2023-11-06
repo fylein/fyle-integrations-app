@@ -15,7 +15,7 @@ export const importSettings: Sage300ImportSettingGet = {
         {
             "source_field": "PROJECT",
             "destination_field": "PROJECT",
-            "import_to_fyle": false,
+            "import_to_fyle": true,
             "is_custom": false,
             "source_placeholder": null
         }

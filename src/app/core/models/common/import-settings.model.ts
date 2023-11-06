@@ -20,3 +20,10 @@ export type ImportSettingMappingRow = {
   source_field: string,
   source_placeholder: string | null
 }
+
+export type customField = {
+  attribute_type: string,
+  display_name: string,
+  source_placeholder: string | null,
+  is_dependent: boolean
+}

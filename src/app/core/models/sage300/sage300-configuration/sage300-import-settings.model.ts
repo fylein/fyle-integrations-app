@@ -1,5 +1,5 @@
-import { FormControl, FormGroup } from "@angular/forms";
-import { ExpenseField, ImportSettingMappingRow } from "../../common/import-settings.model";
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { ExpenseField, ImportSettingMappingRow, customField } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
 
@@ -14,6 +14,13 @@ export type Sage300DefaultFields = {
     destination_field: string,
     source_field: string,
     formController: string
+}
+
+export type Sage300DependentImportFields = {
+    options: customField[],
+    source_field: string,
+    formController: string,
+    isDisabled: boolean
 }
 
 export type Sage300ImportSettingsDependentFieldSetting = {
@@ -102,13 +109,17 @@ export class Sage300ImportSettingModel {
       }
 
     static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[]): FormGroup {
+        const importsettings = importSettings ? importSettings : undefined;
+        const expenseFieldsArray = this.constructFormArray(importsettings, sage300Fields);
+
         return new FormGroup({
             importCategories: new FormControl(importSettings?.import_categories ? importSettings.import_categories : false),
             importVendorAsMerchant: new FormControl(importSettings?.import_vendors_as_merchants ? importSettings.import_vendors_as_merchants : false),
-            expenseFields: new FormControl(importSettings ? [this.constructFormArray(importSettings, sage300Fields)] : []),
+            expenseFields: new FormArray(expenseFieldsArray),
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),
-            costCategory: new FormControl(importSettings?.dependent_field_settings?.cost_category_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_category_field_name, importSettings.dependent_field_settings.cost_category_placeholder) : null)
+            costCategory: new FormControl(importSettings?.dependent_field_settings?.cost_category_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_category_field_name, importSettings.dependent_field_settings.cost_category_placeholder) : null),
+            dependentFieldImportToggle: new FormControl(true)
         });
     }
 
