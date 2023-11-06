@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/accounting-errors.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-dashboard-error-section',
@@ -9,6 +10,8 @@ import { AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/cor
 export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() isLoading: boolean;
+
+  @Input() appName: AppName;
 
   @Input() errors: AccountingGroupedErrors;
 
