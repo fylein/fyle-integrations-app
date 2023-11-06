@@ -315,7 +315,7 @@ export enum QBDOnboardingState {
     CUSTOMER = 'CUSTOMER',
     DEPARTMENT = 'DEPARTMENT',
     CLASS = 'CLASS',
-    TAX_CODE = 'TAX_CODE'
+    TAX_DETAIL = 'TAX_DETAIL'
   }
 
   export enum SageIntacctField {
@@ -423,6 +423,13 @@ export enum QBDOnboardingState {
     LAST_SPEND_AT = 'last_spend_at',
     CURRENT_DATE = 'current_date',
     APPROVED_AT = 'approved_at'
+  }
+
+  export enum DefaultImportFields {
+    CATEGORY = 'CATEGORY',
+    ACCOUNT = 'ACCOUNT',
+    VENDOR = 'VENDOR',
+    MERCHANTS = 'MERCHANTS'
   }
 
   export enum AccountingExportStatus {
