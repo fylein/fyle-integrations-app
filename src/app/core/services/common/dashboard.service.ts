@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
-import { AccountingExportCount, AccountingExportResponse, AccountingExportSummary } from '../../models/db/accounting-exports.model';
+import { AccountingExportCount, AccountingExportResponse } from '../../models/db/accounting-export.model';
 import { Observable } from 'rxjs';
 import { AccountingExportStatus, AccountingExportType } from '../../models/enum/enum.model';
-import { AccountingError } from '../../models/db/accounting-errors.model';
+import { Error } from '../../models/db/error.model';
+import { AccountingExportSummary } from '../../models/db/accounting-export-summary.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-
+  // TODO
   // WorkspaceId: string = this.workspaceService.getWorkspaceId();
   workspaceId: string = '1';
 
@@ -38,15 +39,15 @@ export class DashboardService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_exports/`, apiParams);
   }
 
-  exportAccountingExports(): Observable<{}> {
+  triggerAccountingExport(): Observable<{}> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/exports/trigger/`, {});
   }
 
-  getExportErrors(): Observable<AccountingError[]> {
+  getExportErrors(): Observable<Error[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
   }
 
-  importAccountingExport(): Observable<{}> {
+  importExpensesFromFyle(): Observable<{}> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/accounting_exports/sync/`, {});
   }
 }

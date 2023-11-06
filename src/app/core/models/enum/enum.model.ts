@@ -435,11 +435,16 @@ export enum QBDOnboardingState {
   }
 
   export enum AccountingExportType {
-    PURCHASE_INVOICE = "PURCHASE_INVOICE",
-    DIRECT_COSTS = "DIRECT_COSTS"
+    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+    DIRECT_COSTS = 'DIRECT_COSTS'
   }
 
   export enum AccountingErrorType {
     EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
     CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+  }
+
+  export enum AccountingExportCreationType{
+    CREATING_DIRECT_COST = 'CREATING_DIRECT_COST',
+    CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
   }
