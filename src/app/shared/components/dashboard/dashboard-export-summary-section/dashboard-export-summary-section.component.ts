@@ -8,8 +8,6 @@ import { AccountingExportSummary } from 'src/app/core/models/db/accounting-expor
 })
 export class DashboardExportSummarySectionComponent implements OnInit {
 
-  @Input() isLoading: Boolean;
-
   @Input() accountingExportSummary: AccountingExportSummary;
 
   constructor() { }
