@@ -25,10 +25,10 @@
         <div *ngFor="let expenseField of expenseFieldsGetter.value[0]; let i = index" [formGroupName]="i">
             <div class="tw-flex tw-mt-18-px">
                 <div>
-                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose Sage Intacct field" formControlName="destination_field"
+                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field"
                     optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
                     <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
-                        Sage Intacct Fields should be unique
+                        {{appName}} Fields should be unique
                     </p>
                 </div>
                     <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
@@ -61,7 +61,7 @@
                     <div>
                         <input formControlName="isDependentImportEnabled" type="checkbox"/>
                     </div>
-                    <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import Cost Code and Cost Type from Sage Intacct as dependent fields</label>
+                    <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import Cost Code and Cost Type from {{appName}} as dependent fields</label>
                 </div>
                 <div class="tw-flex tw-pt-4" *ngIf="form.value.isDependentImportEnabled">
                     <div>
@@ -96,7 +96,7 @@
             </div>                      
         </div>
         <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') || form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')">
-            *Fyle and Sage Intacct Fields should be unique.
+            *Fyle and {{appName}} Fields should be unique.
         </div>                  
     </div>
 </div>
