@@ -32,7 +32,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   customFieldForm: FormGroup;
 
-  showCustomFieldDialog: boolean;
+  showCustomFieldDialog: boolean = false;
 
   isPreviewDialogVisible: boolean;
 
@@ -51,6 +51,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
   customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
 
   customFieldForDependentField: boolean = false;
+
+  customFieldType: string = '';
 
   readonly defaultImportFields: Sage300DefaultFields[] = [
     {
@@ -89,9 +91,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
     private helper: HelperService
   ) { }
 
-  saveCustomField(customFieldForms: FormGroup, type: string) {
-    this.customFieldForm = customFieldForms;
-    if (type && this.customFieldForm.value) {
+  closeModel() {
+    this.customFieldForm.reset();
+    this.showCustomFieldDialog = false;
+  }
+
+  saveCustomField() {
+    if (this.customFieldType.length > 0 && this.customFieldForm.value) {
       this.customField = {
         attribute_type: this.customFieldForm.value.attribute_type,
         display_name: this.customFieldForm.value.attribute_type,
@@ -99,10 +105,10 @@ export class Sage300ImportSettingsComponent implements OnInit {
         is_dependent: true
       };
       if (this.customFieldControl) {
-        if (type === 'costCode') {
+        if (this.customFieldType === 'costCodes') {
           this.costCodeFieldOption.push(this.customField);
         } else {
-          this.costCodeFieldOption.push(this.customField);
+          this.costCategoryOption.push(this.customField);
         }
         this.customFieldControl.patchValue({
           attribute_type: this.customFieldForm.value.attribute_type,
@@ -147,7 +153,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
   private dependentCostFieldsWatchers(formControllerName: string): void {
     this.importSettingForm.controls[formControllerName].valueChanges.subscribe((value) => {
       if (value?.attribute_type === 'custom_field') {
-        this.addCustomField();
+        this.addCustomField(true);
+        this.customFieldType = formControllerName;
         this.customFieldControl = this.importSettingForm.controls.costCodes;
         if (value.source_field === 'custom_field') {
           this.importSettingForm.controls.costCodes.patchValue({
@@ -162,7 +169,6 @@ export class Sage300ImportSettingsComponent implements OnInit {
         });
       }
     });
-
   }
 
   private dependentFieldWatchers(): void {
@@ -193,22 +199,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.dependentCostFieldsWatchers('costCategory');
   }
 
-  private addCustomField() {
+  private addCustomField(dialogValue: boolean) {
     this.customFieldForm = this.formBuilder.group({
       attribute_type: [null, Validators.required],
       display_name: [null],
       source_placeholder: [null, Validators.required]
     });
-    this.showCustomFieldDialog = true;
-  }
-
-  showDependentField() {
-    const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((val: any) => {
-      if (val.value.source_field === 'PROJECT' && val.value.destination_field === 'PROJECT') {
-        this.isDependentFieldAllowed = true;
-      }
-    });
+    this.showCustomFieldDialog = dialogValue;
   }
 
   private importSettingWatcher(): void {
@@ -216,9 +213,10 @@ export class Sage300ImportSettingsComponent implements OnInit {
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
         if (value.source_field === 'custom_field') {
-         this.addCustomField();
-         this.customFieldControl = control;
-         this.customFieldControl.patchValue({
+          this.addCustomField(true);
+          this.customFieldType = '';
+          this.customFieldControl = control;
+          this.customFieldControl.patchValue({
             source_field: '',
             destination_field: control.value.destination_field,
             import_to_fyle: control.value.import_to_fyle,
@@ -302,8 +300,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.sage300Fields = IntegrationFields;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
-      this.showDependentField();
       this.dependentFieldFormCreation();
+      this.addCustomField(false);
       this.isLoading = false;
     // });
   }
