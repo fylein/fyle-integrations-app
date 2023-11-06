@@ -1,48 +1,53 @@
-const importSettings = {
+import { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
+import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
 
+export const importSettings: Sage300ImportSettingGet = {
     "import_categories": false,
     "import_vendors_as_merchants": false,
     "mapping_settings": [
-      {
-          "source_field": "COST_CENTER",
-          "destination_field": "CLASS",
-          "import_to_fyle": false,
-          "is_custom": false,
-          "source_placeholder": null
-      },
-      {
-          "source_field": "PROJECT",
-          "destination_field": "PROJECT",
-          "import_to_fyle": false,
-          "is_custom": false,
-          "source_placeholder": null
-      }
-  ],
-    "dependent_field_settings": {
-          "cost_code_field_name": "Sage Cost COde",
-          "cost_code_placeholder": null,
-          "cost_category_field_name": "Sage Cost Type",
-          "cost_category_placeholder": null,
-          "is_import_enabled": true
-      },
-    "workspace_id": 313
-  };
-export const importSettingsResponse = [
-    importSettings,
-    [
         {
-            "attribute_type": "COST_CENTER",
-            "display_name": "Cost Center"
+            "source_field": "COST_CENTER",
+            "destination_field": "CLASS",
+            "import_to_fyle": false,
+            "is_custom": false,
+            "source_placeholder": null
         },
         {
-            "attribute_type": "PROJECT",
-            "display_name": "Project"
-        },
-        {
-            "attribute_type": "CLASS",
-            "display_name": "Class"
+            "source_field": "PROJECT",
+            "destination_field": "PROJECT",
+            "import_to_fyle": false,
+            "is_custom": false,
+            "source_placeholder": null
         }
     ],
+    "dependent_field_settings": {
+        "cost_code_field_name": "Sage Cost COde",
+        "cost_code_placeholder": "null",
+        "cost_category_field_name": "Sage Cost Type",
+        "cost_category_placeholder": "null",
+        "is_import_enabled": true
+    },
+    workspaceId: 312
+};
+
+export const FyleFields: FyleField[] = [
+    {
+        "attribute_type": "COST_CENTER",
+        "display_name": "Cost Center",
+        "is_dependent": false
+    },
+    {
+        "attribute_type": "PROJECT",
+        "display_name": "Project",
+        "is_dependent": false
+    },
+    {
+        "attribute_type": "CLASS",
+        "display_name": "Class",
+        "is_dependent": false
+    }
+];
+export const IntegrationFields: IntegrationField[] =
     [
         {
             "attribute_type": "COST_CENTER",
@@ -56,5 +61,4 @@ export const importSettingsResponse = [
             "attribute_type": "CLASS",
             "display_name": "Class"
         }
-    ]
-];
+    ];

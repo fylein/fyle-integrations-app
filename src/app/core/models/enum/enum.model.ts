@@ -424,3 +424,10 @@ export enum QBDOnboardingState {
     CURRENT_DATE = 'current_date',
     APPROVED_AT = 'approved_at'
   }
+
+  export enum DefaultImportFields {
+    CATEGORY = 'CATEGORY',
+    ACCOUNT = 'ACCOUNT',
+    VENDOR = 'VENDOR',
+    MERCHANTS = 'MERCHANTS'
+  }
