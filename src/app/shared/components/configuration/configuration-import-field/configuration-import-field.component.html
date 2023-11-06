@@ -1,0 +1,102 @@
+<div [formGroup]="form">
+    <div class="fields-header" fxLayout="row" fxLayoutAlign="start center">
+        <div class="fields-header-text tw-pl-48-px tw-w-450-px">{{appName}} Dimensions</div>
+        <div class="fields-header-text tw-w-30-vw">Fyle Fields</div>
+        <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
+            Import to Fyle
+            <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-faded-text-color" [pTooltip]="'Importing a dimension syncs active values from ' + appName + ' every 24 hours. Deactivated values in ' + appName + ' will also be disabled in Fyle'"></svg-icon-sprite>
+        </div>
+    </div>
+    <div *ngFor="let defaultField of defaultImportFields">
+        <div class="tw-flex tw-pt-18-px">
+            <div class="tw-pl-48-px">
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{defaultField.destination_field| snakeCaseToSpaceCase | titlecase}}" disabled>
+            </div>
+            <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
+            <div class="tw-w-30-vw">
+                <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{defaultField.source_field| snakeCaseToSpaceCase | titlecase}}" disabled>
+            </div>
+            <div class="input-toggle-section tw-w-10-vw tw-pt-10-px">
+                <p-inputSwitch [formControlName]="defaultField.formController"></p-inputSwitch>
+            </div>
+        </div>
+    </div>
+    <div formArrayName="expenseFields" class="tw-pl-48-px tw-mt-18px">
+        <div *ngFor="let expenseField of expenseFieldsGetter.value[0]; let i = index" [formGroupName]="i">
+            <div class="tw-flex tw-mt-18-px">
+                <div>
+                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field"
+                    optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
+                    <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                        {{appName}} Fields should be unique
+                    </p>
+                </div>
+                    <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
+                    <div class="tw-w-28-vw">
+                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFieldOptions" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
+                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
+                            <ng-template let-option pTemplate="item">
+                            <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
+                                <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
+                                {{ option.display_name }}
+                            </div>
+                            </ng-template>
+                            <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.display_name }}
+                                </span>
+                                <i class="pi pi-times" (click)="removeFilter(expenseField)"></i>
+                            </div>
+                            </ng-template>
+                      </p-dropdown>
+                      <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                        Fyle Fields should be unique
+                        </p>
+                    </div>
+                <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
+            </div>
+            <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle" [formGroup]="form">
+                <div class="tw-flex">
+                    <div>
+                        <input formControlName="isDependentImportEnabled" type="checkbox"/>
+                    </div>
+                    <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import Cost Code and Cost Type from {{appName}} as dependent fields</label>
+                </div>
+                <div class="tw-flex tw-pt-4" *ngIf="form.value.isDependentImportEnabled">
+                    <div>
+                        <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Code" disabled>
+                    </div>
+                    <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
+                    <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                        <ng-template let-option pTemplate="item">
+                            <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
+                              <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
+                              {{ option.display_name }}
+                            </div>
+                          </ng-template>
+                    </p-dropdown>
+                    <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                </div>
+                <div class="tw-flex tw-pt-4" *ngIf="form.value.isDependentImportEnabled">
+                    <div>
+                        <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
+                    </div>
+                    <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
+                    <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costCategoryOption" optionLabel="attribute_type" placeholder="Select Expense Field">
+                        <ng-template let-option pTemplate="item">
+                            <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
+                              <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
+                              {{ option.display_name }}
+                            </div>
+                          </ng-template>
+                    </p-dropdown>
+                    <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                </div>
+            </div>                      
+        </div>
+        <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') || form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')">
+            *Fyle and {{appName}} Fields should be unique.
+        </div>                  
+    </div>
+</div>

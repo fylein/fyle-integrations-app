@@ -1,12 +1,17 @@
 import { DestinationAttribute } from "../../db/destination-attribute.model";
 
-export type EmployeeMappingDetail = {
+type EmployeeMappingDetail = {
     email: string | null;
+}
+
+type TaxMappingDetails = {
+    customer_id: string | null,
+    customer_name: string | null
 }
 
 export interface Sage300DestinationAttributes extends DestinationAttribute {
     auto_created: boolean;
-    detail: EmployeeMappingDetail | null;
+    detail: EmployeeMappingDetail | TaxMappingDetails | null;
 }
 
 export type Sage300GroupedDestinationAttribute = {

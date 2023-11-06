@@ -57,6 +57,17 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   creditCardAccountOptions: Sage300DestinationAttributes[];
 
+  previewImagePaths =[
+    {
+      'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'DIRECT_COST': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg'
+    },
+    {
+      'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/CCC Expense Report.jpg',
+      'DIRECT_COST': 'assets/illustrations/sageIntacct/CCC Bill.jpg'
+    }
+  ];
+
   constructor(
     private exportSettingService: Sage300ExportSettingService,
     private router: Router,
@@ -75,29 +86,6 @@ export class Sage300ExportSettingsComponent implements OnInit {
   addFormValidator(): void {
     this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
     this.exportSettingForm.controls.creditCardExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
-  }
-
-  exportTypeWatcher() {
-    this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe((value) => {
-      if (value === Sage300ExportType.DIRECT_COST) {
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
-      } else {
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultReimbursableCCCAccountName');
-      }
-    });
-
-    this.exportSettingForm.controls.cccExportType.valueChanges.subscribe((value) => {
-      if (value === Sage300ExportType.DIRECT_COST) {
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorName');
-      } else if (value === Sage300ExportType.PURCHASE_INVOICE) {
-        this.helper.markControllerAsRequired(this.exportSettingForm, 'defaultVendorName');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
-      } else {
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultCreditCardCCCAccountName');
-        this.helper.clearValidatorAndResetValue(this.exportSettingForm, 'defaultVendorName');
-      }
-    });
   }
 
   private constructPayloadAndSave(): void {
