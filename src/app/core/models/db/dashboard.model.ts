@@ -7,7 +7,7 @@ export class DashboardModel {
           const group: Error[] = groupedErrors[error.type] || [];
           group.push(error);
           groupedErrors[error.type] = group;
-    
+
           return groupedErrors;
         }, {
           [AccountingErrorType.EMPLOYEE_MAPPING]: [],
