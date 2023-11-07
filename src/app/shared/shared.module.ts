@@ -202,7 +202,8 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     ConfigurationCustomFieldCreationDialogComponent,
     ConfigurationConfirmationDialogComponent,
     ZeroStateComponent,
-    DashboardExportSummarySectionComponent
+    DashboardExportSummarySectionComponent,
+    PreviewDialogComponent
   ]
 })
 export class SharedModule { }

@@ -1,7 +1,7 @@
 import { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
 import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
 
-export const importSettings: Sage300ImportSettingGet = {
+export const importSettingsResponse: Sage300ImportSettingGet = {
     "import_categories": false,
     "import_vendors_as_merchants": false,
     "mapping_settings": [
@@ -30,7 +30,7 @@ export const importSettings: Sage300ImportSettingGet = {
     workspaceId: 312
 };
 
-export const FyleFields: FyleField[] = [
+export const fyleFieldsResponse: FyleField[] = [
     {
         "attribute_type": "COST_CENTER",
         "display_name": "Cost Center",
@@ -47,7 +47,7 @@ export const FyleFields: FyleField[] = [
         "is_dependent": false
     }
 ];
-export const IntegrationFields: IntegrationField[] =
+export const sage300FieldsResponse: IntegrationField[] =
     [
         {
             "attribute_type": "COST_CENTER",

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, AppNameInService, DefaultImportFields, MappingSourceField } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Sage300Link } from 'src/app/core/models/enum/enum.model';
 import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { ExpenseField, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
@@ -9,7 +9,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
-import { FyleFields, IntegrationFields, importSettings } from '../fixture';
+import { fyleFieldsResponse, importSettingsResponse, sage300FieldsResponse } from '../fixture';
 import { catchError, forkJoin, of } from 'rxjs';
 
 @Component({
@@ -84,6 +84,12 @@ export class Sage300ImportSettingsComponent implements OnInit {
   ];
 
   showDependentFieldWarning: boolean;
+
+  redirectLink: string = Sage300Link.IMPORT_SETTING;
+
+  isSaveInProgress: boolean;
+
+  ConfigurationCtaText = ConfigurationCta;
 
   constructor(
     private router: Router,
@@ -271,6 +277,10 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.isPreviewDialogVisible = visible;
   }
 
+  closeDialog() {
+    this.isPreviewDialogVisible = false;
+  }
+
   showOrHideAddButton() {
     if (this.importSettingForm.controls.expenseFields.value.length === this.sage300Fields.length) {
       return false;
@@ -341,6 +351,10 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.addCustomField(false);
       this.isLoading = false;
     });
+  }
+
+  save() {
+    console.log(this.importSettingForm)
   }
 
   ngOnInit(): void {
