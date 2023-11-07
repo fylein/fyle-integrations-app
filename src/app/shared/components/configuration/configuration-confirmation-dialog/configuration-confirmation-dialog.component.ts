@@ -17,12 +17,12 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   @Input() confirmBtnText: string;
 
-  @Output() confirmationClick = new EventEmitter<boolean>();
+  @Output() warningAccepted = new EventEmitter<boolean>();
 
   constructor() { }
 
-  acceptDependentFieldWarning(arg0: boolean) {
-    this.confirmationClick.emit(arg0);
+  acceptDependentFieldWarning(isWarningAccepted: boolean) {
+    this.warningAccepted.emit(isWarningAccepted);
   }
 
 

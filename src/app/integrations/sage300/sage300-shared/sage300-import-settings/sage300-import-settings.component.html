@@ -20,7 +20,7 @@
 </div>
 <div>
     <app-configuration-confirmation-dialog 
-        (confirmationClick)="acceptDependentFieldWarning($event)" 
+        (warningAccepted)="acceptDependentFieldWarning($event)" 
         [showDependentFieldWarning]="showDependentFieldWarning" 
         [headerText]="'Warning'" 
         [contextText]="'You have imported Cost codes and Cost Types from Sage Intacct by mapping them to fields in Fyle. By turning off the import, you would lose the mappings you\'ve established for these fields.'" 
