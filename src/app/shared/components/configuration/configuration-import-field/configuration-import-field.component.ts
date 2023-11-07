@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { customField } from 'src/app/core/models/common/import-settings.model';
+import { ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
@@ -23,9 +23,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() defaultImportFields: Sage300DefaultFields[];
 
-  @Input() costCategoryOption: customField[];
+  @Input() costCategoryOption: ImportSettingsCustomFieldRow[];
 
-  @Input() costCodeFieldOption: customField[];
+  @Input() costCodeFieldOption: ImportSettingsCustomFieldRow[];
 
   @Input() dependentImportFields: Sage300DependentImportFields[];
 
