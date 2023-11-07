@@ -60,7 +60,7 @@ export class Sage300ImportSettingModel {
         });
       }
 
-    static constructFormArray(importSettings: void | Sage300ImportSettingGet, sage300Fields: IntegrationField[]): FormGroup[] {
+    static constructFormArray(importSettings: null | Sage300ImportSettingGet, sage300Fields: IntegrationField[]): FormGroup[] {
         const expenseFieldFormArray: FormGroup[] = [];
         const mappedFieldMap = new Map<string, any>();
         const unmappedFieldMap = new Map<string, any>();
@@ -109,9 +109,7 @@ export class Sage300ImportSettingModel {
       }
 
     static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[]): FormGroup {
-        const importsettings = importSettings ? importSettings : undefined;
-        const expenseFieldsArray = this.constructFormArray(importsettings, sage300Fields);
-
+        const expenseFieldsArray = this.constructFormArray(importSettings, sage300Fields);
         return new FormGroup({
             importCategories: new FormControl(importSettings?.import_categories ? importSettings.import_categories : false),
             importVendorAsMerchant: new FormControl(importSettings?.import_vendors_as_merchants ? importSettings.import_vendors_as_merchants : false),
