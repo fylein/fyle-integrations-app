@@ -10,8 +10,17 @@
     [exportProgressPercentage]="exportProgressPercentage" 
     [accountingExportSummary]="accountingExportSummary" 
     [processedCount]="processedCount"></app-dashboard-export-section>
-    <app-dashboard-export-section (export)="export($event)" [isLoading]="isLoading" [isImportInProgress]="isImportInProgress" [exportInProgress]="exportInProgress" [readyToExportExpenseCount]="readyToExportExpenseCount" [failedExpenseGroupCount]="failedExpenseGroupCount" [exportProgressPercentage]="exportProgressPercentage" [accountingExportSummary]="accountingExportSummary" [processedCount]="processedCount"></app-dashboard-export-section>
-    <app-zero-state *ngIf="!accountingExportSummary" [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'"></app-zero-state>
-    <app-dashboard-export-summary-section *ngIf="accountingExportSummary" [accountingExportSummary]="accountingExportSummary"></app-dashboard-export-summary-section>
-    <app-dashboard-error-section [appName]="appName" [errors]="errors" [groupedErrorStat]="groupedErrorStat"></app-dashboard-error-section>
+    
+    <app-zero-state 
+    *ngIf="!accountingExportSummary" 
+    [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'"></app-zero-state>
+    
+    <app-dashboard-export-summary-section 
+    *ngIf="accountingExportSummary" 
+    [accountingExportSummary]="accountingExportSummary"></app-dashboard-export-summary-section>
+    
+    <app-dashboard-error-section 
+    [appName]="appName" 
+    [errors]="errors" 
+    [groupedErrorStat]="groupedErrorStat"></app-dashboard-error-section>
 </div>
