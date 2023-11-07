@@ -7,4 +7,3 @@ export type DestinationAttributeDetail = {
     is_reimbursable: boolean;
     country: string;
   };
-  
