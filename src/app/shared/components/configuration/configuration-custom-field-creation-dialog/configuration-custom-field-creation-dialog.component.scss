@@ -11,16 +11,11 @@
 }
 
 .form-field {
-    padding: 8px 16px 22px;
+    @apply tw-pt-8-px tw-pr-16-px tw-pl-16-px tw-pb-22-px ;
 }
 
 .form-input {
-    padding: 11px 0px 11px 14px;
-    height: 40px;
-    background: #FFFFFF;
-    border: 1px solid #DFDFE2;
-    box-sizing: border-box;
-    border-radius: 8px;
+    @apply tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-h-40-px tw-bg-white tw-border tw-border-box-color tw-box-border tw-rounded-8-px ;
 }
 
 .save-btn {
@@ -36,9 +31,5 @@
 }
 
 .form-input-disabled {
-    padding: 11px 0px 11px 14px;
-    background: #F5F5F5;
-    border: 1px solid #DFDFE2;
-    box-sizing: border-box;
-    border-radius: 8px;
+    @apply tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-bg-white tw-border tw-border-box-color tw-box-border tw-rounded-8-px ;
   }

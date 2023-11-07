@@ -21,7 +21,7 @@ export type ImportSettingMappingRow = {
   source_placeholder: string | null
 }
 
-export type customField = {
+export type ImportSettingsCustomFieldRow = {
   attribute_type: string,
   display_name: string,
   source_placeholder: string | null,
