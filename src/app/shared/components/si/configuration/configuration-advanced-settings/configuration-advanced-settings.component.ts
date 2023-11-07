@@ -188,7 +188,6 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
       search: [],
-      // this.advancedSettings.configurations.sync_fyle_to_sage_intacct_payments ? PaymentSyncDirection.FYLE_TO_INTACCT : PaymentSyncDirection.INTACCT_TO_FYLE
       autoSyncPayments: [this.getPaymentSyncConfiguration(this.advancedSettings.configurations)],
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
       postEntriesCurrentPeriod: [this.advancedSettings.configurations.change_accounting_period ? true : false],
