@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, DefaultImportFields, MappingSourceField } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppNameInService, DefaultImportFields, MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { ExpenseField, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
@@ -10,6 +10,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { FyleFields, IntegrationFields, importSettings } from '../fixture';
+import { catchError, forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-sage300-import-settings',
@@ -324,22 +325,22 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    // ForkJoin([
-    //   This.importSettingService.getSage300ImportSettings().pipe(catchError(() => of(null))),
-    //   This.mappingService.getFyleFields(),
-    //   This.mappingService.getIntegrationsFields(AppNameInService.SAGE300)
-    //   // This.mappingService.getGroupedDestinationAttributes([Sage300Field.TAX_DETAIL], AppNameInService.SAGE300)
-    // ]).subscribe(([importSettingsResponse, fyleFieldsResponse, sage300FieldsResponse]) => {
-      this.importSettings = importSettings;
-      this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, IntegrationFields);
-      this.fyleFields = FyleFields;
-      this.sage300Fields = IntegrationFields;
+    forkJoin([
+      this.importSettingService.getSage300ImportSettings().pipe(catchError(() => of(null))),
+      this.mappingService.getFyleFields(),
+      this.mappingService.getIntegrationsFields(AppNameInService.SAGE300)
+      // This.mappingService.getGroupedDestinationAttributes([Sage300Field.TAX_DETAIL], AppNameInService.SAGE300)
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, sage300FieldsResponse]) => {
+      this.importSettings = importSettingsResponse;
+      this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse);
+      this.fyleFields = fyleFieldsResponse;
+      this.sage300Fields = sage300FieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
       this.dependentFieldFormCreation();
       this.addCustomField(false);
       this.isLoading = false;
-    // });
+    });
   }
 
   ngOnInit(): void {
