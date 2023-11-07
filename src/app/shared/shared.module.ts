@@ -68,6 +68,8 @@ import { PreviewDialogComponent } from './components/configuration/preview-dialo
 import { MainMenuComponent } from './components/menu/main-menu/main-menu.component';
 import { ConfigurationImportFieldComponent } from './components/configuration/configuration-import-field/configuration-import-field.component';
 import { ConfigurationInfoLabelComponent } from './components/configuration/configuration-info-label/configuration-info-label.component';
+import { ConfigurationCustomFieldCreationDialogComponent } from './components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
+import { ConfigurationConfirmationDialogComponent } from './components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +119,9 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
     PreviewDialogComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
-    ConfigurationInfoLabelComponent
+    ConfigurationInfoLabelComponent,
+    ConfigurationCustomFieldCreationDialogComponent,
+    ConfigurationConfirmationDialogComponent
   ],
   imports: [
     CommonModule,
@@ -192,7 +196,9 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
     ConfigurationTextFieldComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
-    ConfigurationInfoLabelComponent
+    ConfigurationInfoLabelComponent,
+    ConfigurationCustomFieldCreationDialogComponent,
+    ConfigurationConfirmationDialogComponent
   ]
 })
 export class SharedModule { }

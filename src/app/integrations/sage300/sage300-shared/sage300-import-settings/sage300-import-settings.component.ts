@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, DefaultImportFields } from 'src/app/core/models/enum/enum.model';
+import { AppName, DefaultImportFields, MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { ExpenseField, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
@@ -32,7 +32,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   customFieldForm: FormGroup;
 
-  showCustomFieldDialog: boolean;
+  showCustomFieldDialog: boolean = false;
 
   isPreviewDialogVisible: boolean;
 
@@ -51,6 +51,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
   customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
 
   customFieldForDependentField: boolean = false;
+
+  customFieldType: string = '';
 
   readonly defaultImportFields: Sage300DefaultFields[] = [
     {
@@ -80,6 +82,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
     }
   ];
 
+  showDependentFieldWarning: boolean;
+
   constructor(
     private router: Router,
     private importSettingService: Sage300ImportSettingsService,
@@ -89,65 +93,104 @@ export class Sage300ImportSettingsComponent implements OnInit {
     private helper: HelperService
   ) { }
 
-  saveCustomField(customFieldForms: FormGroup, type: string) {
-    this.customFieldForm = customFieldForms;
-    if (type && this.customFieldForm.value) {
-      this.customField = {
+  get expenseFieldsGetter() {
+    return this.importSettingForm.get('expenseFields') as FormArray;
+  }
+
+  closeModel() {
+    this.customFieldForm.reset();
+    this.showCustomFieldDialog = false;
+  }
+
+  acceptDependentFieldWarning(isWarningAccepted: boolean): void {
+    this.showDependentFieldWarning = false;
+    if (!isWarningAccepted) {
+      this.expenseFieldsGetter.controls.forEach((control) => {
+        if (control.value.source_field === MappingSourceField.PROJECT) {
+          control.patchValue({
+            source_field: MappingSourceField.PROJECT,
+            destination_field: control.value.destination_field,
+            import_to_fyle: true,
+            is_custom: control.value.is_custom,
+            source_placeholder: control.value.source_placeholder
+          });
+          this.importSettingForm.controls.isDependentImportEnabled.setValue(true);
+        }
+      });
+    }
+  }
+
+  showWarningForDependentFields(): void {
+    this.showDependentFieldWarning = true;
+  }
+
+  saveDependentCustomField(): void {
+    this.customField = {
+      attribute_type: this.customFieldForm.value.attribute_type,
+      display_name: this.customFieldForm.value.attribute_type,
+      source_placeholder: this.customFieldForm.value.source_placeholder,
+      is_dependent: true
+    };
+    if (this.customFieldControl) {
+      if (this.customFieldType === 'costCodes') {
+        this.costCodeFieldOption.push(this.customField);
+      } else {
+        this.costCategoryOption.push(this.customField);
+      }
+      this.customFieldControl.patchValue({
         attribute_type: this.customFieldForm.value.attribute_type,
         display_name: this.customFieldForm.value.attribute_type,
         source_placeholder: this.customFieldForm.value.source_placeholder,
         is_dependent: true
-      };
-      if (this.customFieldControl) {
-        if (type === 'costCode') {
-          this.costCodeFieldOption.push(this.customField);
-        } else {
-          this.costCodeFieldOption.push(this.customField);
-        }
-        this.customFieldControl.patchValue({
-          attribute_type: this.customFieldForm.value.attribute_type,
-          display_name: this.customFieldForm.value.attribute_type,
-          source_placeholder: this.customFieldForm.value.source_placeholder,
-          is_dependent: true
-        });
+      });
 
-        this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
-        this.customFieldControl.value.is_custom = true;
-        this.customFieldForm.reset();
-        this.showCustomFieldDialog = false;
-      }
-      this.customFieldControl.disable();
-      this.customFieldForDependentField = false;
+      this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
+      this.customFieldControl.value.is_custom = true;
+      this.customFieldForm.reset();
+      this.showCustomFieldDialog = false;
+    }
+    this.customFieldControl.disable();
+    this.customFieldForDependentField = false;
+  }
+
+  saveFyleExpenseField(): void {
+    this.customField = {
+      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.value.attribute_type,
+      source_placeholder: this.customFieldForm.value.source_placeholder,
+      is_dependent: false
+    };
+
+    if (this.customFieldControl) {
+      this.fyleFields.pop();
+      this.fyleFields.push(this.customField);
+      this.fyleFields.push(this.customFieldOption[0]);
+      const expenseField = {
+        source_field: this.customField.attribute_type,
+        destination_field: this.customFieldControl.value.destination_field,
+        import_to_fyle: true,
+        is_custom: true,
+        source_placeholder: this.customField.source_placeholder
+      };
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+      this.customFieldForm.reset();
+      this.showCustomFieldDialog = false;
+    }
+  }
+
+  saveCustomField() {
+    if (this.customFieldType.length > 0 && this.customFieldForm.value) {
+      this.saveDependentCustomField();
     } else {
-      this.customField = {
-        attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-        display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder,
-        is_dependent: false
-      };
-
-      if (this.customFieldControl) {
-        this.fyleFields.pop();
-        this.fyleFields.push(this.customField);
-        this.fyleFields.push(this.customFieldOption[0]);
-        const expenseField = {
-          source_field: this.customField.attribute_type,
-          destination_field: this.customFieldControl.value.destination_field,
-          import_to_fyle: true,
-          is_custom: true,
-          source_placeholder: this.customField.source_placeholder
-        };
-        (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
-        this.customFieldForm.reset();
-        this.showCustomFieldDialog = false;
-      }
+      this.saveFyleExpenseField();
     }
   }
 
   private dependentCostFieldsWatchers(formControllerName: string): void {
     this.importSettingForm.controls[formControllerName].valueChanges.subscribe((value) => {
       if (value?.attribute_type === 'custom_field') {
-        this.addCustomField();
+        this.addCustomField(true);
+        this.customFieldType = formControllerName;
         this.customFieldControl = this.importSettingForm.controls.costCodes;
         if (value.source_field === 'custom_field') {
           this.importSettingForm.controls.costCodes.patchValue({
@@ -162,7 +205,6 @@ export class Sage300ImportSettingsComponent implements OnInit {
         });
       }
     });
-
   }
 
   private dependentFieldWatchers(): void {
@@ -193,22 +235,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.dependentCostFieldsWatchers('costCategory');
   }
 
-  private addCustomField() {
+  private addCustomField(dialogValue: boolean) {
     this.customFieldForm = this.formBuilder.group({
       attribute_type: [null, Validators.required],
       display_name: [null],
       source_placeholder: [null, Validators.required]
     });
-    this.showCustomFieldDialog = true;
-  }
-
-  showDependentField() {
-    const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((val: any) => {
-      if (val.value.source_field === 'PROJECT' && val.value.destination_field === 'PROJECT') {
-        this.isDependentFieldAllowed = true;
-      }
-    });
+    this.showCustomFieldDialog = dialogValue;
   }
 
   private importSettingWatcher(): void {
@@ -216,9 +249,10 @@ export class Sage300ImportSettingsComponent implements OnInit {
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
         if (value.source_field === 'custom_field') {
-         this.addCustomField();
-         this.customFieldControl = control;
-         this.customFieldControl.patchValue({
+          this.addCustomField(true);
+          this.customFieldType = '';
+          this.customFieldControl = control;
+          this.customFieldControl.patchValue({
             source_field: '',
             destination_field: control.value.destination_field,
             import_to_fyle: control.value.import_to_fyle,
@@ -302,8 +336,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.sage300Fields = IntegrationFields;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
-      this.showDependentField();
       this.dependentFieldFormCreation();
+      this.addCustomField(false);
       this.isLoading = false;
     // });
   }

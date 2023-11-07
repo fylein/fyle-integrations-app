@@ -1,0 +1,66 @@
+<div>
+    <p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showCustomFieldCreationDialog" [draggable]="false" [style]="{width: '468px'}">
+        <div [formGroup]="customFieldForm">
+            <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <p class="tw-text-20-px tw-font-500">Add new Custom Field</p>
+                    <i class="pi pi-times tw-cursor-pointer tw-text-12-px" (click)="closeModel()"></i>
+                </div>
+            </div>
+            <div *ngIf="existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1">
+                <div class="tw-px-16-px tw-text-12-px tw-pt-12-px tw-flex">
+                    <span class="error-box tw-flex tw-p-4-px">
+                        <img class="tw-mb-16-px" src="assets/icons/error.svg"/>
+                        <h5 class="tw-ml-6-px">
+                            Oops! It looks like another field with the same name already exists in your Fyle account. Would you please
+                            give the field a different name?
+                        </h5>
+                    </span>
+                </div>
+            </div>
+            <div class="tw-p-24-px">
+                <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
+                    Field Name <span class="tw-text-mandatory-field-color">*</span>
+                </p>
+                <input formControlName="attribute_type" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
+                <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'Enter a valid type'"></app-mandatory-error-message>
+    
+                <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
+                    Placeholder Name <span class="tw-text-mandatory-field-color">*</span>
+                </p>
+                <input formControlName="source_placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+                <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
+    
+                <div>
+                    <h5 class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
+                      Field Type
+                    </h5>
+                    <div class="tw-w-388-px tw-h-48-px">
+                      <input class="tw-w-388-px form-input-disabled" type="text" placeholder="Select" disabled>
+                    </div>
+                  </div>
+    
+                  <div class="label-section tw-pt-8">
+                    <div class="label-content tw-w-388-px">
+                      <h5 class="name-text sub-text-color tw-text-14-px">
+                        {{customFieldForm.value.attribute_type ? customFieldForm.value.attribute_type : 'Label'}}
+                      </h5>
+                      <div class="form-field tw-pt-4-px">
+                        <input class="form-input tw-w-320-px" type="text"
+                        [placeholder]="customFieldForm.value.source_placeholder ? customFieldForm.value.source_placeholder : 'Enter Text'">
+                      </div>
+                    </div>
+                  </div>              
+                
+                <div class="tw-flex tw-justify-end tw-pt-24-px tw-text-14-px">
+                    <button type="button" class="cancel-btn" (click)="closeModel()">
+                        Cancel
+                    </button>
+                    <button type="button" class="save-btn" pButton [disabled]="!customFieldForm.valid || existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1" (click)="saveCustomField()">
+                        Create and Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </p-dialog>
+</div>
