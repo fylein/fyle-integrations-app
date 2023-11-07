@@ -125,7 +125,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.customFieldForDependentField = false;
   }
 
-  saveFyleFieldCustomFieldForm(): void {
+  saveFyleExpenseField(): void {
     this.customField = {
       attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
       display_name: this.customFieldForm.value.attribute_type,
@@ -154,7 +154,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
     if (this.customFieldType.length > 0 && this.customFieldForm.value) {
       this.saveDependentCustomField();
     } else {
-      this.saveFyleFieldCustomFieldForm();
+      this.saveFyleExpenseField();
     }
   }
 
