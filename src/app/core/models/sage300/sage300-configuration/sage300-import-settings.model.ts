@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ExpenseField, ImportSettingMappingRow, customField } from "../../common/import-settings.model";
+import { ExpenseField, ImportSettingMappingRow, ImportSettingsCustomFieldRow } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
 
@@ -17,7 +17,7 @@ export type Sage300DefaultFields = {
 }
 
 export type Sage300DependentImportFields = {
-    options: customField[],
+    options: ImportSettingsCustomFieldRow[],
     source_field: string,
     formController: string,
     isDisabled: boolean

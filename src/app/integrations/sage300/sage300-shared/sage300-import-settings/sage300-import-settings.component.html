@@ -1,5 +1,20 @@
 <p>sage300-import-settings works!</p>
-<app-configuration-import-field [form]="importSettingForm" [appName]="appName" [defaultImportFields]="defaultImportFields" [costCategoryOption]="costCategoryOption" [costCodeFieldOption]="costCodeFieldOption" [accountingFieldOptions]="sage300Fields" [fyleFieldOptions]="fyleFields" [form]="importSettingForm" [dependentImportFields]="dependentImportFields"></app-configuration-import-field>
+<app-configuration-import-field 
+    [form]="importSettingForm" 
+    [appName]="appName" 
+    [defaultImportFields]="defaultImportFields" 
+    [costCategoryOption]="costCategoryOption" 
+    [costCodeFieldOption]="costCodeFieldOption" 
+    [accountingFieldOptions]="sage300Fields" 
+    [fyleFieldOptions]="fyleFields" 
+    [form]="importSettingForm" 
+    [dependentImportFields]="dependentImportFields">
+</app-configuration-import-field>
 <div>
-    <app-configuration-custom-field-creation-dialog [customFieldForm]="customFieldForm" [showCustomFieldCreationDialog]="showCustomFieldDialog" (saveCustomFieldEmitter)="saveCustomField()" (closeModelEmitter)="closeModel()"></app-configuration-custom-field-creation-dialog>
+    <app-configuration-custom-field-creation-dialog 
+        [customFieldForm]="customFieldForm" 
+        [showCustomFieldCreationDialog]="showCustomFieldDialog" 
+        (saveCustomFieldEmitter)="saveCustomField()" 
+        (closeModelEmitter)="closeModel()">
+    </app-configuration-custom-field-creation-dialog>
 </div>
