@@ -10,6 +10,7 @@ import { ImportSettingPost } from '../../models/si/si-configuration/import-setti
 import { AdvancedSettingsPost } from '../../models/si/si-configuration/advanced-settings.model';
 import { Sage300OnboardingModule } from 'src/app/integrations/sage300/sage300-onboarding/sage300-onboarding.module';
 import { Sage300ExportSettingPost } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
+import { Sage300ImportSettingPost } from '../../models/sage300/sage300-configuration/sage300-import-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -84,7 +85,7 @@ export class TrackingService {
     this.eventTrack(`Time Spent on ${page} page`, {durationInSeconds: differenceInMs / 1000});
   }
 
-  onOnboardingStepCompletion(eventName: QBDOnboardingState | Sage300OnboardingModule, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost): void {
+  onOnboardingStepCompletion(eventName: QBDOnboardingState | Sage300OnboardingModule, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 
