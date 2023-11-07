@@ -1,0 +1,7 @@
+.pointer {
+    @apply tw-cursor-pointer;
+}
+
+.inside-container {
+    @apply tw-rounded-lg tw-border-1-px tw-border-gray-300 tw-flex-col tw-p-24-px tw-items-start tw-gap-14-px tw-max-w-max;
+}
