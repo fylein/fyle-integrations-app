@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AppName, AppNameInService, DefaultImportFields, MappingSourceField } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Page, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { ExpenseField, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
@@ -9,8 +9,11 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
-import { FyleFields, IntegrationFields, importSettings } from '../fixture';
+import { fyleFieldsResponse, importSettingsResponse, sage300FieldsResponse } from '../fixture';
 import { catchError, forkJoin, of } from 'rxjs';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-sage300-import-settings',
@@ -55,6 +58,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   customFieldType: string = '';
 
+  sessionStartTime = new Date();
+
   readonly defaultImportFields: Sage300DefaultFields[] = [
     {
       source_field: DefaultImportFields.CATEGORY,
@@ -85,13 +90,22 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   showDependentFieldWarning: boolean;
 
+  supportArticleLink: string = Sage300Link.IMPORT_SETTING;
+
+  isSaveInProgress: boolean;
+
+  ConfigurationCtaText = ConfigurationCta;
+
   constructor(
     private router: Router,
     private importSettingService: Sage300ImportSettingsService,
     private mappingService: MappingService,
     private helperService: Sage300HelperService,
     private formBuilder: FormBuilder,
-    private helper: HelperService
+    private helper: HelperService,
+    private toastService: IntegrationsToastService,
+    private trackingService: TrackingService,
+    private workspaceService: WorkspaceService
   ) { }
 
   get expenseFieldsGetter() {
@@ -271,11 +285,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.isPreviewDialogVisible = visible;
   }
 
-  showOrHideAddButton() {
-    if (this.importSettingForm.controls.expenseFields.value.length === this.sage300Fields.length) {
-      return false;
-    }
-    return true;
+  closeDialog() {
+    this.isPreviewDialogVisible = false;
   }
 
   refreshDimensions(isRefresh: boolean) {
@@ -323,13 +334,50 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.dependentFieldWatchers();
   }
 
+  constructPayloadAndSave() {
+    this.isSaveInProgress = true;
+    const importSettingPayload = Sage300ImportSettingModel.createImportSettingPayload(this.importSettingForm, this.importSettings);
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe((importSettingsResponse: Sage300ImportSettingGet) => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_SAGE300, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.IMPORT_SETTINGS) {
+        this.trackingService.onOnboardingStepCompletion(Sage300OnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
+          {
+            phase: this.helper.getPhase(this.isOnboarding),
+            oldState: this.importSettings,
+            newState: importSettingsResponse
+          }
+        );
+      }
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(Sage300OnboardingState.ADVANCED_CONFIGURATION);
+        this.router.navigate([`/integrations/sage300/onboarding/advanced_settings`]);
+      }
+
+
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      });
+  }
+
+  save(): void {
+    if (this.importSettingForm.valid) {
+      this.constructPayloadAndSave();
+    }
+  }
+
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.importSettingService.getSage300ImportSettings().pipe(catchError(() => of(null))),
       this.mappingService.getFyleFields(),
       this.mappingService.getIntegrationsFields(AppNameInService.SAGE300)
-      // This.mappingService.getGroupedDestinationAttributes([Sage300Field.TAX_DETAIL], AppNameInService.SAGE300)
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, sage300FieldsResponse]) => {
       this.importSettings = importSettingsResponse;
       this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse);

@@ -3,13 +3,6 @@ import { ExpenseField, ImportSettingMappingRow, ImportSettingsCustomFieldRow } f
 import { IntegrationField } from "../../db/mapping.model";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
 
-export type Sage300ImportSettingPost = {
-    import_categories: boolean,
-    import_vendors_as_merchants: boolean,
-    mapping_settings: [],
-    dependent_field_settings: null
-}
-
 export type Sage300DefaultFields = {
     destination_field: string,
     source_field: string,
@@ -31,13 +24,18 @@ export type Sage300ImportSettingsDependentFieldSetting = {
     is_import_enabled: boolean
 }
 
-export type Sage300ImportSettingGet = {
+export type Sage300ImportSetting = {
     import_categories: boolean,
     import_vendors_as_merchants: boolean,
     mapping_settings: ImportSettingMappingRow[] | [],
     dependent_field_settings: Sage300ImportSettingsDependentFieldSetting | null,
+}
+
+export interface  Sage300ImportSettingGet extends Sage300ImportSetting {
     workspaceId: number
 }
+
+export interface  Sage300ImportSettingPost extends Sage300ImportSetting {}
 
 export class Sage300ImportSettingModel {
 
@@ -119,6 +117,21 @@ export class Sage300ImportSettingModel {
             costCategory: new FormControl(importSettings?.dependent_field_settings?.cost_category_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_category_field_name, importSettings.dependent_field_settings.cost_category_placeholder) : null),
             dependentFieldImportToggle: new FormControl(true)
         });
+    }
+
+    static createImportSettingPayload(importSettingsForm: FormGroup, importSettings: Sage300ImportSettingGet): Sage300ImportSettingPost {
+        return {
+            import_categories: importSettingsForm.get('importCategories')?.value,
+            import_vendors_as_merchants: importSettingsForm.get('importVendorAsMerchant')?.value,
+            mapping_settings: importSettingsForm.get('expenseFields')?.value,
+            dependent_field_settings: {
+                cost_code_field_name: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.attribute_type : (importSettings.dependent_field_settings?.cost_code_field_name ? importSettings.dependent_field_settings?.cost_code_field_name : null),
+                cost_code_placeholder: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.display_name : (importSettings.dependent_field_settings?.cost_code_placeholder ? importSettings.dependent_field_settings?.cost_code_placeholder : null),
+                cost_category_field_name: importSettingsForm.get('costCategory')?.value ? importSettingsForm.get('costCategory')?.value.attribute_type : (importSettings.dependent_field_settings?.cost_category_field_name ? importSettings.dependent_field_settings?.cost_category_field_name : null),
+                cost_category_placeholder: importSettingsForm.get('costCategory')?.value ? importSettingsForm.get('costCategory')?.value.display_name : (importSettings.dependent_field_settings?.cost_category_placeholder ? importSettings.dependent_field_settings?.cost_category_placeholder : null),
+                is_import_enabled: importSettingsForm.get('isDependentImportEnabled')?.value
+            }
+        };
     }
 
 }

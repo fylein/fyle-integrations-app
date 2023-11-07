@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
+import { ImportSettingMappingRow, ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
-import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
 
 @Component({
@@ -33,6 +33,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   showDependentFieldWarning: boolean;
 
+  showAddButton: any;
 
   constructor(
     private formBuilder: FormBuilder
@@ -40,6 +41,26 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
+  }
+
+  showOrHideAddButton() {
+    if (this.form.controls.expenseFields.value.length === this.accountingFieldOptions.length) {
+      return false;
+    }
+    return true;
+  }
+
+  addExpenseField() {
+    const expenseFields = this.form.get('expenseFields') as FormArray;
+    const defaultFieldData: ImportSettingMappingRow = {
+      source_field: '',
+      destination_field: '',
+      import_to_fyle: true,
+      is_custom: false,
+      source_placeholder: null
+    };
+    expenseFields.push(Sage300ImportSettingModel.createFormGroup(defaultFieldData));
+    this.showAddButton = this.showOrHideAddButton();
   }
 
   hasDuplicateOption(formGroup: AbstractControl, index: number, controlName: string): boolean {
