@@ -1,4 +1,4 @@
-import { AccountingExportStatus } from "../enum/enum.model";
+import { AccountingExportStatus, AccountingExportType } from "../enum/enum.model";
 import { PaginatedResponse } from "./paginated-response.model";
 
 export interface AccountingExportCount {
@@ -35,4 +35,10 @@ export interface AccountingExportCreationType {
 
 export interface AccountingExportResponse extends PaginatedResponse {
     results: AccountingExportCreationType[];
+}
+
+export type AccountingExportGetParam = {
+    type__in: AccountingExportType[],
+    status__in: AccountingExportStatus[],
+    id__in?: number[]
 }

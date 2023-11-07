@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
-import { AccountingExportCount, AccountingExportResponse } from '../../models/db/accounting-export.model';
+import { AccountingExportCount, AccountingExportGetParam, AccountingExportResponse } from '../../models/db/accounting-export.model';
 import { Observable } from 'rxjs';
 import { AccountingExportStatus, AccountingExportType } from '../../models/enum/enum.model';
 import { Error } from '../../models/db/error.model';
@@ -36,10 +36,15 @@ export class DashboardService {
   }
 
   getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[]): Observable<AccountingExportResponse> {
-    const apiParams = {
+    const apiParams: AccountingExportGetParam = {
       type__in: [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
-      status__in: [status]
+      status__in: status,
     };
+
+    if (exportableAccountingExportIds.length) {
+      apiParams.id__in = exportableAccountingExportIds;
+    }
+
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_exports/`, apiParams);
   }
 

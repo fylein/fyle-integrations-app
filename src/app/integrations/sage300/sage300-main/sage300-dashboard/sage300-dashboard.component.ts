@@ -50,7 +50,7 @@ export class Sage300DashboardComponent implements OnInit {
     private dashboardService: DashboardService
   ) { }
 
-  private pollExportStatus(exportableAccountingExportIds: number[]): void {
+  private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAccountingExports([], exportableAccountingExportIds))),
       takeWhile((response: AccountingExportResponse) =>
@@ -113,8 +113,7 @@ export class Sage300DashboardComponent implements OnInit {
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
-        this.exportableAccountingExportIds = responses[2].results.filter((accountingExport: AccountingExportCreationType) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS).map((accountingExport: AccountingExportCreationType) => accountingExport.expense_group);
-        this.pollExportStatus(this.exportableAccountingExportIds);
+        this.pollExportStatus();
       } else {
         this.dashboardService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
