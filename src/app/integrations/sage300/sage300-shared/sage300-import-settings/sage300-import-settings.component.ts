@@ -289,13 +289,6 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.isPreviewDialogVisible = false;
   }
 
-  showOrHideAddButton() {
-    if (this.importSettingForm.controls.expenseFields.value.length === this.sage300Fields.length) {
-      return false;
-    }
-    return true;
-  }
-
   refreshDimensions(isRefresh: boolean) {
     this.helperService.importAttributes(isRefresh);
   }
