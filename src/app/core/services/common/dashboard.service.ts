@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
-import { AccountingExportCount, AccountingExportResponse, AccountingExportSummary } from '../../models/db/accounting-exports.model';
+import { AccountingExportCount, AccountingExportGetParam, AccountingExportResponse } from '../../models/db/accounting-export.model';
 import { Observable } from 'rxjs';
 import { AccountingExportStatus, AccountingExportType } from '../../models/enum/enum.model';
-import { AccountingError } from '../../models/db/accounting-errors.model';
+import { Error } from '../../models/db/error.model';
+import { AccountingExportSummary } from '../../models/db/accounting-export-summary.model';
+import { ExportableExpenseGroup } from '../../models/si/db/expense-group.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
 
-  // WorkspaceId: string = this.workspaceService.getWorkspaceId();
-  workspaceId: string = '1';
+  workspaceId: string = this.workspaceService.getWorkspaceId();
 
   constructor(
     private apiService: ApiService,
@@ -23,6 +24,10 @@ export class DashboardService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary`, {});
   }
 
+  getExportableAccountingExportIds(): Observable<ExportableExpenseGroup> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/exportable_accounting_groups/`, {});
+  }
+
   getExportableAccountingExportCount(): Observable<AccountingExportCount> {
     const apiParams = {
       status__in: [AccountingExportStatus.READY, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL]
@@ -30,23 +35,28 @@ export class DashboardService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count`, apiParams);
   }
 
-  getAccountingExports(status: AccountingExportStatus[]): Observable<AccountingExportResponse> {
-    const apiParams = {
+  getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[]): Observable<AccountingExportResponse> {
+    const apiParams: AccountingExportGetParam = {
       type__in: [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
-      status__in: [status]
+      status__in: status
     };
+
+    if (exportableAccountingExportIds.length) {
+      apiParams.id__in = exportableAccountingExportIds;
+    }
+
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_exports/`, apiParams);
   }
 
-  exportAccountingExports(): Observable<{}> {
+  triggerAccountingExport(): Observable<{}> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/exports/trigger/`, {});
   }
 
-  getExportErrors(): Observable<AccountingError[]> {
+  getExportErrors(): Observable<Error[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
   }
 
-  importAccountingExport(): Observable<{}> {
+  importExpensesFromFyle(): Observable<{}> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/accounting_exports/sync/`, {});
   }
 }
