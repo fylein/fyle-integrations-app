@@ -70,6 +70,7 @@ import { ConfigurationImportFieldComponent } from './components/configuration/co
 import { ConfigurationInfoLabelComponent } from './components/configuration/configuration-info-label/configuration-info-label.component';
 import { ConfigurationCustomFieldCreationDialogComponent } from './components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
 import { ConfigurationConfirmationDialogComponent } from './components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
+import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import { ConfigurationConfirmationDialogComponent } from './components/configura
     ConfigurationImportFieldComponent,
     ConfigurationInfoLabelComponent,
     ConfigurationCustomFieldCreationDialogComponent,
-    ConfigurationConfirmationDialogComponent
+    ConfigurationConfirmationDialogComponent,
+    ZeroStateComponent
   ],
   imports: [
     CommonModule,
@@ -198,7 +200,9 @@ import { ConfigurationConfirmationDialogComponent } from './components/configura
     ConfigurationImportFieldComponent,
     ConfigurationInfoLabelComponent,
     ConfigurationCustomFieldCreationDialogComponent,
-    ConfigurationConfirmationDialogComponent
+    ConfigurationConfirmationDialogComponent,
+    ZeroStateComponent,
+    DashboardExportSummarySectionComponent
   ]
 })
 export class SharedModule { }
