@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
+import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/error.model';
+import { AccountingExportResponse, AccountingExportCreationType } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import { RefinerService } from 'src/app/core/services/integration/refiner.service';
+import { environment } from 'src/environments/environment';
+import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
 
 @Component({
   selector: 'app-sage300-dashboard',
@@ -7,9 +16,117 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Sage300DashboardComponent implements OnInit {
 
-  constructor() { }
+  isLoading: boolean = true;
 
-  ngOnInit(): void {
+  appName: AppName = AppName.SAGE300;
+
+  isImportInProgress: boolean = true;
+
+  isExportInProgress: boolean = false;
+
+  exportableAccountingExportIds: number[];
+
+  failedExpenseGroupCount: number = 0;
+
+  exportProgressPercentage: number = 0;
+
+  accountingExportSummary: AccountingExportSummary;
+
+  processedCount: number = 0;
+
+  errors: AccountingGroupedErrors;
+
+  groupedErrorStat: AccountingGroupedErrorStat = {
+    [AccountingErrorType.EMPLOYEE_MAPPING]: null,
+    [AccountingErrorType.CATEGORY_MAPPING]: null
+  };
+
+  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
+
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.dashboardService.getAccountingExportSummary();
+
+  constructor(
+    private refinerService: RefinerService,
+    private dashboardService: DashboardService
+  ) { }
+
+  private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
+    interval(3000).pipe(
+      switchMap(() => from(this.dashboardService.getAccountingExports([], exportableAccountingExportIds))),
+      takeWhile((response: AccountingExportResponse) =>
+        response.results.filter(task =>
+          (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED) && exportableAccountingExportIds.includes(task.expense_group)
+        ).length > 0, true
+      )
+    ).subscribe((res: AccountingExportResponse) => {
+      this.processedCount = res.results.filter(task => (task.status !== AccountingExportStatus.IN_PROGRESS && task.status !== AccountingExportStatus.ENQUEUED)).length;
+      this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
+
+      if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED) && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
+        this.isLoading = true;
+        forkJoin([
+          this.getExportErrors$,
+          this.getAccountingExportSummary$
+        ]).subscribe(responses => {
+          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+          this.groupedErrorStat = {
+            EMPLOYEE_MAPPING: null,
+            CATEGORY_MAPPING: null
+          };
+          this.accountingExportSummary = responses[1];
+          this.isLoading = false;
+        });
+
+        this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
+        this.isExportInProgress = false;
+        this.exportProgressPercentage = 0;
+        this.processedCount = 0;
+
+        if (this.failedExpenseGroupCount === 0) {
+          this.refinerService.triggerSurvey(
+            AppName.SAGE300, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+          );
+        }
+      }
+    });
   }
 
+  export() {
+    this.isExportInProgress = true;
+    this.dashboardService.triggerAccountingExport().subscribe(() => {
+      this.pollExportStatus(this.exportableAccountingExportIds);
+    });
+  }
+
+  private setupPage(): void {
+    forkJoin([
+      this.getExportErrors$,
+      this.getAccountingExportSummary$,
+      this.dashboardService.getAccountingExports([AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [])
+    ]).subscribe((responses) => {
+      this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+      this.accountingExportSummary = responses[1];
+
+      const queuedTasks: AccountingExportCreationType[] = responses[2].results.filter((accountingExport: AccountingExportCreationType) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS);
+      this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: AccountingExportCreationType) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
+
+      if (queuedTasks.length) {
+        this.isImportInProgress = false;
+        this.isExportInProgress = true;
+        this.pollExportStatus();
+      } else {
+        this.dashboardService.importExpensesFromFyle().subscribe(() => {
+          this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
+            this.isImportInProgress = false;
+          });
+        });
+      }
+      this.isLoading = false;
+    });
+  }
+
+  ngOnInit(): void {
+    this.setupPage();
+  }
 }

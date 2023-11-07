@@ -68,6 +68,7 @@ import { PreviewDialogComponent } from './components/configuration/preview-dialo
 import { MainMenuComponent } from './components/menu/main-menu/main-menu.component';
 import { ConfigurationImportFieldComponent } from './components/configuration/configuration-import-field/configuration-import-field.component';
 import { ConfigurationInfoLabelComponent } from './components/configuration/configuration-info-label/configuration-info-label.component';
+import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
 
 @NgModule({
   declarations: [
@@ -117,7 +118,8 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
     PreviewDialogComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
-    ConfigurationInfoLabelComponent
+    ConfigurationInfoLabelComponent,
+    ZeroStateComponent
   ],
   imports: [
     CommonModule,
@@ -192,7 +194,9 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
     ConfigurationTextFieldComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
-    ConfigurationInfoLabelComponent
+    ConfigurationInfoLabelComponent,
+    ZeroStateComponent,
+    DashboardExportSummarySectionComponent
   ]
 })
 export class SharedModule { }

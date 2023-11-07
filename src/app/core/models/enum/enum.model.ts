@@ -431,3 +431,27 @@ export enum QBDOnboardingState {
     VENDOR = 'VENDOR',
     MERCHANTS = 'MERCHANTS'
   }
+
+  export enum AccountingExportStatus {
+    READY = 'READY',
+    FAILED = 'FAILED',
+    FATAL = 'FATAL',
+    COMPLETE = 'COMPLETE',
+    IN_PROGRESS = 'IN_PROGRESS',
+    ENQUEUED = 'ENQUEUED'
+  }
+
+  export enum AccountingExportType {
+    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+    DIRECT_COSTS = 'DIRECT_COSTS'
+  }
+
+  export enum AccountingErrorType {
+    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+  }
+
+  export enum AccountingExportCreationType{
+    CREATING_DIRECT_COST = 'CREATING_DIRECT_COST',
+    CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
+  }
