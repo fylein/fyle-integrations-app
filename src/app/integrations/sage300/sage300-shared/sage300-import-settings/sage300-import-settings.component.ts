@@ -85,7 +85,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   showDependentFieldWarning: boolean;
 
-  redirectLink: string = Sage300Link.IMPORT_SETTING;
+  supportArticleLink: string = Sage300Link.IMPORT_SETTING;
 
   isSaveInProgress: boolean;
 
