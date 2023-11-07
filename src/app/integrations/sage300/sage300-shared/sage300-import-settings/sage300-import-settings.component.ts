@@ -335,12 +335,12 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    forkJoin([
-      this.importSettingService.getSage300ImportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getFyleFields(),
-      this.mappingService.getIntegrationsFields(AppNameInService.SAGE300)
-      // This.mappingService.getGroupedDestinationAttributes([Sage300Field.TAX_DETAIL], AppNameInService.SAGE300)
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, sage300FieldsResponse]) => {
+    // ForkJoin([
+    //   This.importSettingService.getSage300ImportSettings().pipe(catchError(() => of(null))),
+    //   This.mappingService.getFyleFields(),
+    //   This.mappingService.getIntegrationsFields(AppNameInService.SAGE300)
+    //   // This.mappingService.getGroupedDestinationAttributes([Sage300Field.TAX_DETAIL], AppNameInService.SAGE300)
+    // ]).subscribe(([importSettingsResponse, fyleFieldsResponse, sage300FieldsResponse]) => {
       this.importSettings = importSettingsResponse;
       this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse);
       this.fyleFields = fyleFieldsResponse;
@@ -350,11 +350,11 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.dependentFieldFormCreation();
       this.addCustomField(false);
       this.isLoading = false;
-    });
+    // });
   }
 
   save() {
-    console.log(this.importSettingForm)
+    // Console.log(this.importSettingForm);
   }
 
   ngOnInit(): void {
