@@ -96,57 +96,65 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.showCustomFieldDialog = false;
   }
 
-  saveCustomField() {
-    if (this.customFieldType.length > 0 && this.customFieldForm.value) {
-      this.customField = {
+  saveDependentCustomField(): void {
+    this.customField = {
+      attribute_type: this.customFieldForm.value.attribute_type,
+      display_name: this.customFieldForm.value.attribute_type,
+      source_placeholder: this.customFieldForm.value.source_placeholder,
+      is_dependent: true
+    };
+    if (this.customFieldControl) {
+      if (this.customFieldType === 'costCodes') {
+        this.costCodeFieldOption.push(this.customField);
+      } else {
+        this.costCategoryOption.push(this.customField);
+      }
+      this.customFieldControl.patchValue({
         attribute_type: this.customFieldForm.value.attribute_type,
         display_name: this.customFieldForm.value.attribute_type,
         source_placeholder: this.customFieldForm.value.source_placeholder,
         is_dependent: true
-      };
-      if (this.customFieldControl) {
-        if (this.customFieldType === 'costCodes') {
-          this.costCodeFieldOption.push(this.customField);
-        } else {
-          this.costCategoryOption.push(this.customField);
-        }
-        this.customFieldControl.patchValue({
-          attribute_type: this.customFieldForm.value.attribute_type,
-          display_name: this.customFieldForm.value.attribute_type,
-          source_placeholder: this.customFieldForm.value.source_placeholder,
-          is_dependent: true
-        });
+      });
 
-        this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
-        this.customFieldControl.value.is_custom = true;
-        this.customFieldForm.reset();
-        this.showCustomFieldDialog = false;
-      }
-      this.customFieldControl.disable();
-      this.customFieldForDependentField = false;
+      this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
+      this.customFieldControl.value.is_custom = true;
+      this.customFieldForm.reset();
+      this.showCustomFieldDialog = false;
+    }
+    this.customFieldControl.disable();
+    this.customFieldForDependentField = false;
+  }
+
+  saveFyleFieldCustomFieldForm(): void {
+    this.customField = {
+      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.value.attribute_type,
+      source_placeholder: this.customFieldForm.value.source_placeholder,
+      is_dependent: false
+    };
+
+    if (this.customFieldControl) {
+      this.fyleFields.pop();
+      this.fyleFields.push(this.customField);
+      this.fyleFields.push(this.customFieldOption[0]);
+      const expenseField = {
+        source_field: this.customField.attribute_type,
+        destination_field: this.customFieldControl.value.destination_field,
+        import_to_fyle: true,
+        is_custom: true,
+        source_placeholder: this.customField.source_placeholder
+      };
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+      this.customFieldForm.reset();
+      this.showCustomFieldDialog = false;
+    }
+  }
+
+  saveCustomField() {
+    if (this.customFieldType.length > 0 && this.customFieldForm.value) {
+      this.saveDependentCustomField();
     } else {
-      this.customField = {
-        attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
-        display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder,
-        is_dependent: false
-      };
-
-      if (this.customFieldControl) {
-        this.fyleFields.pop();
-        this.fyleFields.push(this.customField);
-        this.fyleFields.push(this.customFieldOption[0]);
-        const expenseField = {
-          source_field: this.customField.attribute_type,
-          destination_field: this.customFieldControl.value.destination_field,
-          import_to_fyle: true,
-          is_custom: true,
-          source_placeholder: this.customField.source_placeholder
-        };
-        (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
-        this.customFieldForm.reset();
-        this.showCustomFieldDialog = false;
-      }
+      this.saveFyleFieldCustomFieldForm();
     }
   }
 
