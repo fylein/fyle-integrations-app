@@ -6,14 +6,14 @@ import { Observable } from 'rxjs';
 import { AccountingExportStatus, AccountingExportType } from '../../models/enum/enum.model';
 import { Error } from '../../models/db/error.model';
 import { AccountingExportSummary } from '../../models/db/accounting-export-summary.model';
+import { ExportableExpenseGroup } from '../../models/si/db/expense-group.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DashboardService {
-  // TODO
-  // WorkspaceId: string = this.workspaceService.getWorkspaceId();
-  workspaceId: string = '1';
+
+  workspaceId: string = this.workspaceService.getWorkspaceId();
 
   constructor(
     private apiService: ApiService,
@@ -22,6 +22,10 @@ export class DashboardService {
 
   getAccountingExportSummary(): Observable<AccountingExportSummary> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary`, {});
+  }
+
+  getExportableAccountingExportIds(): Observable<ExportableExpenseGroup> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/exportable_accounting_groups/`, {});
   }
 
   getExportableAccountingExportCount(): Observable<AccountingExportCount> {

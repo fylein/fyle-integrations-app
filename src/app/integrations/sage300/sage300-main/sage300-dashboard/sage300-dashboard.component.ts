@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/error.model';
-import { AccountingExportResponse, AccountingExport } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportResponse, AccountingExportCreationType } from 'src/app/core/models/db/accounting-export.model';
 import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
@@ -50,19 +50,6 @@ export class Sage300DashboardComponent implements OnInit {
     private dashboardService: DashboardService
   ) { }
 
-  private formatErrors(errors: Error[]): AccountingGroupedErrors {
-    return errors.reduce((groupedErrors: AccountingGroupedErrors, error: Error) => {
-      const group: Error[] = groupedErrors[error.type] || [];
-      group.push(error);
-      groupedErrors[error.type] = group;
-
-      return groupedErrors;
-    }, {
-      [AccountingErrorType.EMPLOYEE_MAPPING]: [],
-      [AccountingErrorType.CATEGORY_MAPPING]: []
-    });
-  }
-
   private pollExportStatus(exportableAccountingExportIds: number[]): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAccountingExports([], exportableAccountingExportIds))),
@@ -104,15 +91,11 @@ export class Sage300DashboardComponent implements OnInit {
     });
   }
 
-  export(eventData: boolean) {
-    if (eventData) {
-      this.isExportInProgress = true;
-      this.dashboardService.triggerAccountingExport().subscribe(() => {
-        this.pollExportStatus(this.exportableAccountingExportIds);
-      });
-    } else {
-      this.isExportInProgress = false;
-    }
+  export() {
+    this.isExportInProgress = true;
+    this.dashboardService.triggerAccountingExport().subscribe(() => {
+      this.pollExportStatus(this.exportableAccountingExportIds);
+    });
   }
 
   private setupPage(): void {
@@ -123,18 +106,21 @@ export class Sage300DashboardComponent implements OnInit {
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.accountingExportSummary = responses[1];
-      this.exportableAccountingExportIds = responses[2].results.filter((accountingExport: AccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS).map((accountingExport: AccountingExport) => accountingExport.expense_group);
 
-      const queuedTasks: AccountingExport[] = responses[2].results.filter((accountingExport: AccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS);
-      this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: AccountingExport) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
+      const queuedTasks: AccountingExportCreationType[] = responses[2].results.filter((accountingExport: AccountingExportCreationType) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS);
+      this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: AccountingExportCreationType) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
+        this.exportableAccountingExportIds = responses[2].results.filter((accountingExport: AccountingExportCreationType) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS).map((accountingExport: AccountingExportCreationType) => accountingExport.expense_group);
         this.pollExportStatus(this.exportableAccountingExportIds);
       } else {
         this.dashboardService.importExpensesFromFyle().subscribe(() => {
-          this.isImportInProgress = false;
+          this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
+            this.isImportInProgress = false;
+          });
         });
       }
       this.isLoading = false;

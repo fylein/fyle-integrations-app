@@ -5,7 +5,7 @@ export interface AccountingExportCount {
     count: number;
 }
 
-export interface AccountingExport {
+export interface AccountingExportCreationType {
     id: number;
     type: string;
     status: AccountingExportStatus;
@@ -34,5 +34,5 @@ export interface AccountingExport {
 }
 
 export interface AccountingExportResponse extends PaginatedResponse {
-    results: AccountingExport[];
+    results: AccountingExportCreationType[];
 }
