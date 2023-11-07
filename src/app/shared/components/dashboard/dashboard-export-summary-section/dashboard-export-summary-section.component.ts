@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AccountingExportSummary } from 'src/app/core/models/db/accounting-exports.model';
+import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 
 @Component({
   selector: 'app-dashboard-export-summary-section',

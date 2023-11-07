@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/accounting-errors.model';
+import { AccountingGroupedErrors, AccountingGroupedErrorStat } from 'src/app/core/models/db/error.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
