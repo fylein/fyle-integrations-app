@@ -11,6 +11,6 @@ export type EmployeeMapping = {
     workspace: number;
   };
 
-  export interface MappingIntacct extends MappingResult {
+  export interface EmployeeMappingResult extends MappingResult {
     employeemapping: EmployeeMapping;
   }
