@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
-import { Sage300DefaultFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
 
 @Component({
@@ -22,9 +23,13 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() defaultImportFields: Sage300DefaultFields[];
 
-  @Input() costCategoryOption: any;
+  @Input() costCategoryOption: ImportSettingsCustomFieldRow[];
 
-  @Input() costCodeFieldOption: any;
+  @Input() costCodeFieldOption: ImportSettingsCustomFieldRow[];
+
+  @Input() dependentImportFields: Sage300DependentImportFields[];
+
+  @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;
 
@@ -64,9 +69,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
     event?.stopPropagation();
   }
 
-  showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
+  onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
-      this.showDependentFieldWarning = true;
+      this.showWarningForDependentFields.emit();
     }
   }
 
