@@ -15,8 +15,8 @@ const routes: Routes = [
       {
         path: 'mapping',
         loadChildren: () => import('./sage300-mapping/sage300-mapping.module').then(m => m.Sage300MappingModule)
-      },
-      
+      }
+
     ]
   }
 ];
