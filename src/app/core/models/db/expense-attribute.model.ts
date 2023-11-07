@@ -13,7 +13,7 @@ export interface ExpenseAttribute {
     created_at: string;
     updated_at: string;
     workspace: number;
-};
+}
 
 export type ExpenseAttributeDetail = {
   location: string;
