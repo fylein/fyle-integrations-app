@@ -38,7 +38,7 @@ export class DashboardService {
   getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[]): Observable<AccountingExportResponse> {
     const apiParams: AccountingExportGetParam = {
       type__in: [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
-      status__in: status,
+      status__in: status
     };
 
     if (exportableAccountingExportIds.length) {
