@@ -1,0 +1,74 @@
+<div>
+    <div class="tw-flex tw-justify-between tw-align-middle">
+        <div>
+            <div>
+                <app-mandatory-field></app-mandatory-field>
+                <p class="tw-text-faded-text-color tw-text-14-px tw-font-400">Condition</p>
+            </div>
+            <div>
+                <p-dropdown appendTo="body" [options]="fyleFields" optionLabel="value" class="!tw-w-300-px" formControlName="condition1" placeholder="placeholder" [ngClass]="[skipExportForm.controls.condition1.invalid && skipExportForm.controls.condition1.touched ? 'error-box' : 'normal-box']">
+                </p-dropdown>
+            </div>
+        </div>
+        <div>
+            <div>
+                <app-mandatory-field></app-mandatory-field>
+                <p class="tw-text-faded-text-color tw-text-14-px tw-font-400">Operator</p>
+            </div>
+            <div>
+                <p-dropdown appendTo="body" [options]="fyleFields" optionLabel="value" class="!tw-w-300-px" formControlName="operation1" placeholder="placeholder" [ngClass]="[skipExportForm.controls.operation1.invalid && skipExportForm.controls.operation1.touched ? 'error-box' : 'normal-box']">
+                </p-dropdown>
+            </div>
+        </div>
+        <div>
+            <div>
+                <app-mandatory-field></app-mandatory-field>
+                <p class="tw-text-faded-text-color tw-text-14-px tw-font-400">Value</p>
+            </div>
+            <div>
+                <p-dropdown appendTo="body" [options]="fyleFields" optionLabel="value" class="!tw-w-300-px" formControlName="value1" placeholder="placeholder" [ngClass]="[skipExportForm.controls.value1.invalid && skipExportForm.controls.value1.touched ? 'error-box' : 'normal-box']">
+                </p-dropdown>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div *ngIf="" class="add-button-container" (click)="showOrHideAddButton()">
+            <svg-icon-sprite src="add" width="20px" height="20px" class="add-row-text" ></svg-icon-sprite>
+            <a class="add-row-text tw-pl-2">
+                Add more fields
+            </a>
+        </div> 
+    </div>
+    <div *NgIf="showSecondCondition" class="tw-flex tw-justify-between tw-align-middle">
+        <div>
+            <div>
+                <app-mandatory-field></app-mandatory-field>
+                <p class="tw-text-faded-text-color tw-text-14-px tw-font-400">Condition</p>
+            </div>
+            <div>
+                <p-dropdown appendTo="body" [options]="fyleFields" optionLabel="value" class="!tw-w-300-px" formControlName="condition2" placeholder="placeholder" [ngClass]="[skipExportForm.controls.condition2.invalid && skipExportForm.controls.condition2.touched ? 'error-box' : 'normal-box']">
+                </p-dropdown>
+            </div>
+        </div>
+        <div>
+            <div>
+                <app-mandatory-field></app-mandatory-field>
+                <p class="tw-text-faded-text-color tw-text-14-px tw-font-400">Operator</p>
+            </div>
+            <div>
+                <p-dropdown appendTo="body" [options]="fyleFields" optionLabel="value" class="!tw-w-300-px" formControlName="operation2" placeholder="placeholder" [ngClass]="[skipExportForm.controls.operation2.invalid && skipExportForm.controls.operation2.touched ? 'error-box' : 'normal-box']">
+                </p-dropdown>
+            </div>
+        </div>
+        <div>
+            <div>
+                <app-mandatory-field></app-mandatory-field>
+                <p class="tw-text-faded-text-color tw-text-14-px tw-font-400">Value</p>
+            </div>
+            <div>
+                <p-dropdown appendTo="body" [options]="fyleFields" optionLabel="value" class="!tw-w-300-px" formControlName="value2" placeholder="placeholder" [ngClass]="[skipExportForm.controls.value2.invalid && skipExportForm.controls.value2.touched ? 'error-box' : 'normal-box']">
+                </p-dropdown>
+            </div>
+        </div>
+    </div>
+</div>
