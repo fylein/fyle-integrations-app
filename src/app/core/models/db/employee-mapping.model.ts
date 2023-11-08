@@ -1,16 +1,17 @@
-import { MappingDestination } from "./mapping-destination.model";
-import { MappingSource } from "./mapping-source.model";
-import { MappingResult } from "./mapping.model";
+import { DestinationAttribute } from "./destination-attribute.model";
+import { ExpenseAttribute } from "./expense-attribute.model";
+
+
 
 export type EmployeeMapping = {
     id: number;
-    source_employee: MappingSource;
-    destination_employee?: MappingDestination;
-    destination_vendor?: MappingDestination;
-    destination_card_account?: MappingDestination;
+    source_employee: ExpenseAttribute;
+    destination_employee?: DestinationAttribute;
+    destination_vendor?: DestinationAttribute;
+    destination_card_account?: DestinationAttribute;
     workspace: number;
   };
 
-  export interface EmployeeMappingResult extends MappingResult {
+  export interface EmployeeMappingResult extends ExpenseAttribute {
     employeemapping: EmployeeMapping;
   }

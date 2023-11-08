@@ -1,7 +1,7 @@
 
 import { DestinationAttributeDetail } from "./destination-attribute.model";
 import { ExpenseAttribute } from "./expense-attribute.model";
-import { MappingResult } from "./mapping.model";
+
 
 export type CategoryMappingPost = {
   source_category: ExpenseAttribute;
@@ -16,6 +16,6 @@ export interface CategoryMapping extends CategoryMappingPost {
   id: number;
 }
 
-export interface CategoryMappingResult extends MappingResult {
+export interface CategoryMappingResult extends ExpenseAttribute {
   categorymapping: CategoryMapping;
 }
