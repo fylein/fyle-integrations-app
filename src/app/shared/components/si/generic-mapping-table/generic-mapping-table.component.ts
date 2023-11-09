@@ -62,9 +62,9 @@ export class GenericMappingTableComponent implements OnInit {
     } else if (genericMapping.categorymapping?.length) {
       if (this.destinationField === 'ACCOUNT') {
         return genericMapping.categorymapping[0].destination_account;
-      } else {
-        return genericMapping.categorymapping[0].destination_expense_head;
       }
+        return genericMapping.categorymapping[0].destination_expense_head;
+
     } else if (genericMapping.mapping?.length) {
       return genericMapping.mapping[0].destination;
     }
@@ -93,7 +93,7 @@ export class GenericMappingTableComponent implements OnInit {
         if (!selectedRow.employeemapping?.length) {
           this.mappingStats.unmapped_attributes_count -= 1;
         }
-  
+
         selectedRow.employeemapping = [response];
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
       }, () => {
@@ -114,13 +114,13 @@ export class GenericMappingTableComponent implements OnInit {
         },
         workspace: parseInt(this.workspaceService.getWorkspaceId())
       };
-  
+
       this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
         // Decrement unmapped count only for new mappings, ignore updates
         if (!selectedRow.categorymapping?.length) {
           this.mappingStats.unmapped_attributes_count -= 1;
         }
-  
+
         selectedRow.categorymapping = [response];
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
       }, () => {
@@ -133,7 +133,7 @@ export class GenericMappingTableComponent implements OnInit {
     if (this.filteredMappings) {
       return this.filteredMappings;
     } else if (this.mappingError) {
-      return this.mappingError
+      return this.mappingError;
     }
     return [];
   }
