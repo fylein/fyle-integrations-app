@@ -17,7 +17,7 @@ export class MappingComponent implements OnInit {
   isLoading: boolean;
 
   mappingPages: MenuItem[] = [
-    {label: 'TestMapping', routerLink: '/integrations/intacct/main/mapping/test_mapping/EMPLOYEE'},   
+    {label: 'TestMapping', routerLink: '/integrations/intacct/main/mapping/test_mapping/EMPLOYEE'},
     {label: 'Employee', routerLink: '/integrations/intacct/main/mapping/employee_mapping'},
     {label: 'Category', routerLink: '/integrations/intacct/main/mapping/test_mapping/CATEGORY'}
   ];
