@@ -7,7 +7,7 @@ import { EmployeeMappingPost } from 'src/app/core/models/si/db/employee-mapping.
 import { Error } from 'src/app/core/models/si/db/error.model';
 import { ExtendedGenericMappingV2 } from 'src/app/core/models/si/db/generic-mapping-v2.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';

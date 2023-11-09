@@ -9,7 +9,7 @@ import { ExtendedGenericMappingV2, GenericMappingV2, GenericMappingV2Response } 
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';

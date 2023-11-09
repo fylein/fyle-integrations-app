@@ -58,8 +58,6 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
 import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboard-menu.component';
-import { GenericMappingV2Component } from './components/si/helper/generic-mapping-v2/generic-mapping-v2.component';
-import { GenericMappingTableComponent } from './components/si/generic-mapping-table/generic-mapping-table.component';
 import { DashboardExportSectionComponent } from './components/dashboard/dashboard-export-section/dashboard-export-section.component';
 import { DashboardErrorSectionComponent } from './components/dashboard/dashboard-error-section/dashboard-error-section.component';
 import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
@@ -73,6 +71,8 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
 import { ConfigurationCustomFieldCreationDialogComponent } from './components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
 import { ConfigurationConfirmationDialogComponent } from './components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
+import { GenericMappingV2Component } from './components/si/helper/generic-mapping-v2/generic-mapping-v2.component';
+import { GenericMappingTableComponent } from './components/si/generic-mapping-table/generic-mapping-table.component';
 
 @NgModule({
   declarations: [
