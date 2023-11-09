@@ -36,7 +36,7 @@ export class Sage300ExportSettingService {
     cacheBusterNotifier: sage300ExportSettingGetCache
   })
   postExportSettings(exportSettingsPayload: Sage300ExportSettingPost): Observable<Sage300ExportSettingGet> {
-    return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 
   getDestinationAttributes(attributeType: string[] | string): Observable<Sage300DestinationAttributes[]> {
@@ -71,7 +71,7 @@ export class Sage300ExportSettingService {
       },
       {
         label: 'Last Spent Date',
-        value: Sage300ExpenseDate.LAST_SPEND_AT
+        value: Sage300ExpenseDate.LAST_SPENT_AT
       }
     ];
   }

@@ -420,7 +420,7 @@ export enum QBDOnboardingState {
   }
 
   export enum Sage300ExpenseDate {
-    LAST_SPEND_AT = 'last_spend_at',
+    LAST_SPENT_AT = 'last_spent_at',
     CURRENT_DATE = 'current_date',
     APPROVED_AT = 'approved_at'
   }

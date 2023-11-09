@@ -29,7 +29,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   isSaveInProgress: boolean;
 
-  exportSettings: Sage300ExportSettingGet;
+  exportSettings: Sage300ExportSettingGet | null | any;
 
   exportSettingForm: FormGroup;
 
@@ -152,13 +152,13 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
       this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT])
     ]).subscribe(([response]) => {
-      this.exportSettings = response[0];
+      this.exportSettings = response ? response[0] : null;
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setExportSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.vendorOptions = response[1].VENDOR;
-      this.creditCardAccountOptions = response[1].ACCOUNT;
+      this.vendorOptions = response ? response[1].VENDOR : null;
+      this.creditCardAccountOptions = response ? response[1].ACCOUNT : null;
       this.isLoading = false;
     });
   }

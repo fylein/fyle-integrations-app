@@ -53,7 +53,7 @@ export class ExportSettingModel {
     return '';
   }
 
-  static mapAPIResponseToFormGroup(exportSettings: Sage300ExportSettingGet | void): FormGroup {
+  static mapAPIResponseToFormGroup(exportSettings: Sage300ExportSettingGet | null): FormGroup {
     return new FormGroup({
       reimbursableExpense: new FormControl(exportSettings?.reimbursable_expenses_export_type ? true : false),
       reimbursableExportType: new FormControl(exportSettings?.reimbursable_expenses_export_type ? exportSettings.reimbursable_expenses_export_type : null),
