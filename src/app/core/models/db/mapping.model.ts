@@ -1,3 +1,7 @@
+export type MappingPrimaryKey = {
+    id: number | null
+}
+
 export type IntegrationField = {
     attribute_type: string,
     display_name: string

@@ -41,7 +41,7 @@ export class GenericMappingTestComponent implements OnInit {
 
   getAttributesFilteredByConfig() {
 
-    if(this.sourceField==='EMPLOYEE') {
+    if (this.sourceField==='EMPLOYEE') {
       if (this.employeeFieldMapping === 'VENDOR') {
         return 'VENDOR';
       } else if (this.employeeFieldMapping === 'EMPLOYEE') {
@@ -49,15 +49,15 @@ export class GenericMappingTestComponent implements OnInit {
       }
     }
 
-    if(this.sourceField==='CATEGORY') {
+    if (this.sourceField==='CATEGORY') {
       if (this.isExpenseTypeRequired()) {
         return 'EXPENSE_TYPE';
-      } else {
-        return 'ACCOUNT';
       }
+        return 'ACCOUNT';
+
     }
 
-    return ''
+    return '';
 
   }
 
@@ -69,15 +69,15 @@ export class GenericMappingTestComponent implements OnInit {
 
       this.employeeFieldMapping = response.employee_field_mapping;
       this.showAutoMapEmployee = response.auto_map_employees ? true : false;
-      
+
       this.destinationField = this.getAttributesFilteredByConfig();
 
 
       this.mappingService.getGroupedDestinationAttributes([this.destinationField]).subscribe((response) => {
-        if(this.sourceField==='EMPLOYEE') {
+        if (this.sourceField==='EMPLOYEE') {
           this.destinationOptions = this.destinationField ? response.EMPLOYEE : response.VENDOR;
         }
-        if(this.sourceField==='CATEGORY') {
+        if (this.sourceField==='CATEGORY') {
           if (this.destinationField === 'EXPENSE_TYPE') {
             this.destinationOptions = response.EXPENSE_TYPE;
           } else {
