@@ -12,6 +12,7 @@ import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sa
   styleUrls: ['./sage300-advanced-settings.component.scss']
 })
 export class Sage300AdvancedSettingsComponent implements OnInit {
+  isLoading: boolean = true;
 
   advancedSettingForm: FormGroup;
 
@@ -133,6 +134,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting);
       this.skipExportForm = Sage300AdvancedSettingModel.setupSkipExportForm(responses[2], []);
       this.formWatchers();
+      this.isLoading = false;
     });
   }
 
