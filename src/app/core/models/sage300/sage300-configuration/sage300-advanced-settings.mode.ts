@@ -23,9 +23,9 @@ export interface Sage300AdvancedSettingGet extends Sage300AdvancedSetting {
 
 export interface Sage300AdvancedSettingPost extends Sage300AdvancedSetting {}
 
-export class ExportSettingModel {
+export class Sage300AdvancedSettingModel {
 
-    static mapAPIResponseToFormGroup(advancedSettings: Sage300AdvancedSettingGet | void): FormGroup {
+    static mapAPIResponseToFormGroup(advancedSettings: Sage300AdvancedSettingGet | null): FormGroup {
         return new FormGroup({
             autoCreateMerchantDestinationEntity: new FormControl(advancedSettings?.auto_create_merchant_destination_entity ? true : false),
             syncSage300ToFylePayments: new FormControl(advancedSettings?.sync_sage_300_to_fyle_payments ? true : false),
