@@ -20,10 +20,6 @@ export class SkipExportComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  date1: Date;
-
-  date2: Date;
-
   expenseFilters: SkipExport[];
 
   showExpenseFilters: boolean;
