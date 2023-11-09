@@ -13,7 +13,7 @@ const routes: Routes = [
     component: MappingComponent,
     children: [
       {
-        path: 'test_mapping',
+        path: 'test_mapping/:source_field',
         component: GenericMappingTestComponent
       },
       {

@@ -27,17 +27,15 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() mappingStats: MappingStats;
 
+  @Input() destinationField: string;
+
   @Input() employeeFieldMapping: FyleField;
 
   @Input() reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
 
   @Input() cccExpenseObject?: CorporateCreditCardExpensesObject;
 
-  @Input() fyleEmployeeOptions: DestinationAttribute[];
-
-  @Input() sageIntacctAccounts: DestinationAttribute[];
-
-  @Input() sageIntacctExpenseTypes: DestinationAttribute[];
+  @Input() destinationOptions: DestinationAttribute[];
 
   isLoading: boolean = true;
 
@@ -54,27 +52,6 @@ export class GenericMappingTableComponent implements OnInit {
     }
   }
 
-  private isExpenseTypeRequired(): boolean {
-    return this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT;
-  }
-
-  getColumnName() {
-    if(this.mappingPageName==='EMPLOYEE') {
-      if(this.employeeFieldMapping==='EMPLOYEE'){
-        return 'Employee';
-      } else {
-        return 'Vendor';
-      }
-    } else if(this.mappingPageName==='CATEGORY') {
-      if(this.isExpenseTypeRequired()) {
-        return 'Expense Type';
-      } else {
-        return 'Account';
-      }
-    }
-    return 'Mapping';
-  }
-
   getDropdownValue(genericMapping: ExtendedGenericMappingV2) {
     if (genericMapping.employeemapping?.length) {
       if (this.employeeFieldMapping===FyleField.VENDOR) {
@@ -83,27 +60,15 @@ export class GenericMappingTableComponent implements OnInit {
         return genericMapping?.employeemapping[0].destination_employee;
       }
     } else if (genericMapping.categorymapping?.length) {
-      if (!this.isExpenseTypeRequired()) {
+      if (this.destinationField === 'ACCOUNT') {
         return genericMapping.categorymapping[0].destination_account;
-      } else if (this.isExpenseTypeRequired()) {
+      } else {
         return genericMapping.categorymapping[0].destination_expense_head;
       }
     } else if (genericMapping.mapping?.length) {
       return genericMapping.mapping[0].destination;
     }
     return null;
-  }
-
-  getOptions() {
-    if (this.mappingPageName==='EMPLOYEE') {
-      return this.fyleEmployeeOptions;
-    } else if (this.mappingPageName==='CATEGORY') {
-      if (this.isExpenseTypeRequired()) {
-        return this.sageIntacctExpenseTypes;
-      }
-      return this.sageIntacctAccounts;
-    }
-    return [];
   }
 
   save(selectedRow: ExtendedGenericMappingV2, event: any): void {
@@ -142,10 +107,10 @@ export class GenericMappingTableComponent implements OnInit {
           id: sourceId
         },
         destination_account: {
-          id: !this.isExpenseTypeRequired() ? event.value.id : null
+          id: this.destinationField === 'ACCOUNT' ? event.value.id : null
         },
         destination_expense_head: {
-          id: this.isExpenseTypeRequired() ? event.value.id : null
+          id: this.destinationField !== 'ACCOUNT' ? event.value.id : null
         },
         workspace: parseInt(this.workspaceService.getWorkspaceId())
       };

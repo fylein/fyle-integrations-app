@@ -25,11 +25,13 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() mappingPageName: string;
 
+  @Input() destinationField: string;
+
+  @Input() employeeFieldMapping: FyleField;
+
   isInitialSetupComplete: boolean = false;
 
-  employeeFieldMapping: FyleField;
-
-  autoMapEmployee: AutoMapEmployeeOptions | null;
+  @Input() showAutoMapEmployee: boolean;
 
   mappingStats: MappingStats;
 
@@ -41,17 +43,7 @@ export class GenericMappingV2Component implements OnInit {
 
   searchTerm: string = '';
 
-  fyleEmployeeOptions: DestinationAttribute[];
-
-  sageIntacctAccounts: DestinationAttribute[];
-
-  sageIntacctExpenseTypes: DestinationAttribute[];
-
-  filteredfyleEmployeeOptions: DestinationAttribute[] = [];
-
-  sageIntacctEmployee: MappingDestination[];
-
-  sageIntacctEmployeeOptions: MappingDestination[];
+  @Input() destinationOptions: DestinationAttribute[];
 
   sourceType: string;
 
@@ -85,42 +77,8 @@ export class GenericMappingV2Component implements OnInit {
     private mappingService: SiMappingsService,
     private paginatorService: PaginatorService,
     private route: ActivatedRoute,
-    private toastService: IntegrationsToastService,
-    private workspaceService: SiWorkspaceService
+    private toastService: IntegrationsToastService
   ) { }
-
-  private isExpenseTypeRequired(): boolean {
-    return this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT;
-  }
-
-  getColumnName() {
-    if(this.mappingPageName==='EMPLOYEE') {
-      if(this.employeeFieldMapping==='EMPLOYEE'){
-        return 'Employee';
-      } else {
-        return 'Vendor';
-      }
-    } else if(this.mappingPageName==='CATEGORY') {
-      if(this.isExpenseTypeRequired()) {
-        return 'Expense Type';
-      } else {
-        return 'Account';
-      }
-    }
-    return 'Mapping';
-  }
-
-  getOptions() {
-    if (this.mappingPageName==='EMPLOYEE') {
-      return this.fyleEmployeeOptions;
-    } else if (this.mappingPageName==='CATEGORY') {
-      if (this.isExpenseTypeRequired()) {
-        return this.sageIntacctExpenseTypes;
-      }
-      return this.sageIntacctAccounts;
-    }
-    return [];
-  }
 
   triggerAutoMapEmployees() {
     const that = this;
@@ -135,91 +93,12 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   private getFilteredMappings() {
-    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter, this.mappingPageName).subscribe((intacctMappingResult: GenericMappingV2Response) => {
+    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.mappingPageName).subscribe((intacctMappingResult: GenericMappingV2Response) => {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = intacctMappingResult.count;
       this.isLoading = false;
     });
-  }
-
-  getDropdownValue(genericMapping: ExtendedGenericMappingV2) {
-    if (genericMapping.employeemapping?.length) {
-      if (this.employeeFieldMapping===FyleField.VENDOR) {
-        return genericMapping?.employeemapping[0].destination_vendor;
-      } else if (this.employeeFieldMapping===FyleField.EMPLOYEE) {
-        return genericMapping?.employeemapping[0].destination_employee;
-      }
-    } else if (genericMapping.categorymapping?.length) {
-      if (!this.isExpenseTypeRequired()) {
-        return genericMapping.categorymapping[0].destination_account;
-      } else if (this.isExpenseTypeRequired()) {
-        return genericMapping.categorymapping[0].destination_expense_head;
-      }
-    } else if (genericMapping.mapping?.length) {
-      return genericMapping.mapping[0].destination;
-    }
-    return null;
-  }
-
-  save(selectedRow: ExtendedGenericMappingV2, event: any): void {
-    if (selectedRow.employeemapping) {
-      const employeeMapping: EmployeeMappingPost = {
-        source_employee: {
-          id: selectedRow.id
-        },
-        destination_vendor: {
-          id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_vendor ? selectedRow.employeemapping[0].destination_vendor?.id : null)
-        },
-        destination_employee: {
-          id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_employee ? selectedRow.employeemapping[0].destination_employee?.id : null)
-        },
-        destination_card_account: {
-          id: (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_card_account ? selectedRow.employeemapping[0].destination_card_account?.id : null)
-        },
-        workspace: parseInt(this.workspaceService.getWorkspaceId())
-      };
-      this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
-        // Decrement unmapped count only for new mappings, ignore updates
-        if (!selectedRow.employeemapping?.length) {
-          this.mappingStats.unmapped_attributes_count -= 1;
-        }
-  
-        selectedRow.employeemapping = [response];
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
-      }, () => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
-      });
-    } else if (selectedRow.categorymapping) {
-      const sourceId = selectedRow.id;
-
-      const categoryMappingsPayload: CategoryMappingPost = {
-        source_category: {
-          id: sourceId
-        },
-        destination_account: {
-          id: !this.isExpenseTypeRequired() ? event.value.id : null
-        },
-        destination_expense_head: {
-          id: this.isExpenseTypeRequired() ? event.value.id : null
-        },
-        workspace: parseInt(this.workspaceService.getWorkspaceId())
-      };
-  
-      this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
-        // Decrement unmapped count only for new mappings, ignore updates
-        if (!selectedRow.categorymapping?.length) {
-          this.mappingStats.unmapped_attributes_count -= 1;
-        }
-  
-        selectedRow.categorymapping = [response];
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
-        this.isLoading = false;
-      }, () => {
-        this.isLoading = false;
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
-      });
-    }
   }
 
   pageSizeChanges(limit: number): void {
@@ -268,51 +147,21 @@ export class GenericMappingV2Component implements OnInit {
     this.getFilteredMappings();
   }
 
-  getAttributesFilteredByConfig() {
-    const attributes = [];
-
-    if(this.mappingPageName==='EMPLOYEE') {
-      if (this.employeeFieldMapping === 'VENDOR') {
-        attributes.push('VENDOR');
-      } else if (this.employeeFieldMapping === 'EMPLOYEE') {
-        attributes.push('EMPLOYEE');
-      }
-    }
-
-    if(this.mappingPageName==='CATEGORY') {
-      if (this.isExpenseTypeRequired()) {
-        attributes.push('EXPENSE_TYPE');
-      } else {
-        attributes.push('ACCOUNT');
-      }
-    }
-    return attributes;
-  }
-
   setupPage() {
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
     this.limit = paginator.limit;
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
-      this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
-      this.mappingService.getGenericMappingsV2(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter, this.mappingPageName),
-      this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
+      this.mappingService.getGenericMappingsV2(10, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.mappingPageName),
+      this.mappingService.getMappingStats(this.mappingPageName, this.destinationField)
     ]).subscribe(
-      ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
-        this.totalCount = employeeMappingResponse.count;
-        if(this.mappingPageName==='EMPLOYEE') {
-          this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
-        }
-        if(this.mappingPageName==='CATEGORY') {
-          this.sageIntacctExpenseTypes = groupedDestResponse.EXPENSE_TYPE;
-          this.sageIntacctAccounts = groupedDestResponse.ACCOUNT;
-        }
-        this.employeeMapping = employeeMappingResponse;
+      ([mappingResponse, mappingStat]) => {
+        this.totalCount = mappingResponse.count;
         if (!this.isInitialSetupComplete) {
-          this.filteredMappingCount = employeeMappingResponse.count;
+          this.filteredMappingCount = mappingResponse.count;
         }
-        this.mappings = employeeMappingResponse.results;
+        this.mappings = mappingResponse.results;
         this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
         this.isInitialSetupComplete = true;
@@ -322,11 +171,7 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   ngOnInit(): void {
-    this.mappingService.getConfiguration().subscribe((response) => {
-      this.employeeFieldMapping = response.employee_field_mapping;
-      this.autoMapEmployee = response.auto_map_employees;
-      this.setupPage();
-    });
+    this.setupPage();
   }
 
 }

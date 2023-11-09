@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-                <div *ngIf="autoMapEmployee && mappingPageName==='EMPLOYEE'" class="tw-mt-24-px">
+                <div *ngIf="showAutoMapEmployee && mappingPageName==='EMPLOYEE'" class="tw-mt-24-px">
                   <button type="button" class="tw-text-white tw-text-500 tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="triggerAutoMapEmployees()">
                     <p class="tw-text-14-px tw-font-400 tw-pl-5px">Auto Map {{mappingPageName}}</p>
                   </button>
@@ -39,7 +39,7 @@
         </div>
         <!-- add a flag/dashboard mapping tab -->
         <div *ngIf="filteredMappingCount">
-            <app-generic-mapping-table [filteredMappings]="filteredMappings" [mappingPageName]="mappingPageName" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [reimbursableExpenseObject]="reimbursableExpenseObject" [cccExpenseObject]="cccExpenseObject" [fyleEmployeeOptions]="fyleEmployeeOptions" [sageIntacctAccounts]="sageIntacctAccounts"></app-generic-mapping-table>
+            <app-generic-mapping-table [destinationField]="destinationField" [filteredMappings]="filteredMappings" [mappingPageName]="mappingPageName" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [reimbursableExpenseObject]="reimbursableExpenseObject" [cccExpenseObject]="cccExpenseObject" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
         </div>
         <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount" >
             <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
