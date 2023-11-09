@@ -26,7 +26,15 @@ export class LoginComponent implements OnInit {
     private siAuthService : SiAuthService
   ) { }
 
-  private saveUserProfileAndNavigate(code: string): void {
+  private redirect(redirectUri: string | undefined): void {
+    if (redirectUri) {
+      this.router.navigate([redirectUri]);
+    } else {
+      this.router.navigate(['/integrations']);
+    }
+  }
+
+  private saveUserProfileAndNavigate(code: string, redirectUri: string | undefined): void {
     this.authService.login(code).subscribe(response => {
       const user: MinimalUser = {
         'email': response.user.email,
@@ -53,16 +61,18 @@ export class LoginComponent implements OnInit {
             'org_name': token.user.org_name
           };
           this.storageService.set('si.user', user);
+          this.redirect(redirectUri);
         });
+      } else {
+        this.redirect(redirectUri);
       }
-      this.router.navigate(['/integrations']);
     });
   }
 
   private login(): void {
     this.route.queryParams.subscribe(params => {
       if (params.code) {
-        this.saveUserProfileAndNavigate(params.code);
+        this.saveUserProfileAndNavigate(params.code, params.redirect_uri);
       }
     });
   }
