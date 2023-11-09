@@ -4,17 +4,17 @@ import { MappingPrimaryKey } from "./mapping.model";
 
 export type EmployeeMappingPost = {
   source_employee: MappingPrimaryKey;
-  destination_employee?: MappingPrimaryKey;
-  destination_vendor?: MappingPrimaryKey;
-  destination_card_account?: MappingPrimaryKey;
+  destination_employee: MappingPrimaryKey;
+  destination_vendor: MappingPrimaryKey;
+  destination_card_account: MappingPrimaryKey;
   workspace: number;
 }
 
 export type EmployeeMapping = {
     id: number;
     source_employee: ExpenseAttribute;
-    destination_employee?: DestinationAttribute;
-    destination_vendor?: DestinationAttribute;
-    destination_card_account?: DestinationAttribute;
+    destination_employee: DestinationAttribute;
+    destination_vendo?: DestinationAttribute;
+    destination_card_account: DestinationAttribute;
     workspace: number;
 };
