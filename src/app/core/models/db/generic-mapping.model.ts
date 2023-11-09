@@ -8,7 +8,7 @@ export type GenericMappingPost = {
     destination_id: string;
     destination_value: string;
   };
-  
+
   export interface GenericMapping {
     created_at: Date;
     destination: DestinationAttribute;
