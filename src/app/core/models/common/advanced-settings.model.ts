@@ -33,26 +33,23 @@ export enum CustomOperatorOption {
   IsNotEmpty = "is_not_empty"
 }
 
-export type SkipExport = {
-    id?: number;
+export type ExpenseFilter = {
     condition: string;
-    custom_field_type: any;
     operator: Operator.IsNull | Operator.IExact | Operator.IContains | Operator.LessThan | Operator.LessThanOrEqual;
-    values: string[];
+    values: string | string[]
     rank: number;
-    join_by: JoinOption.AND | JoinOption.OR | null;
+    join_by:JoinOption.AND | JoinOption.OR | null;
     is_custom: boolean;
+    custom_field_type: string | null;
 };
 
-export type ExpenseFilter = {
-    condition: string,
-    operator: string,
-    values: string | string[]
-    rank: number,
-    join_by: string | null,
-    is_custom: boolean,
-    custom_field_type: string | null
-};
+export type ExpenseFilterPayload = {
+    condition: ConditionField,
+    operator: Operator,
+    value: string[]
+    join_by: string,
+    rank: number
+  }
 
 export interface ExpenseFilterResponse extends ExpenseFilter {
     id: number,

@@ -1,4 +1,4 @@
-<!-- <div *ngIf="isLoading">
+<div *ngIf="isLoading">
 </div>
 <div *ngIf="enableSkipExport && !isLoading">
     <div class="tw-flex tw-flex-col">
@@ -12,7 +12,7 @@
                     Operator
                     <span class="tw-text-mandatory-field-color">*</span>
                 </div>
-                <div class="tw-w-296-px fields-header" *ngIf="showValueHeader1()">
+                <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(1)">
                   Value
                   <span class="tw-text-mandatory-field-color">*</span>
                 </div>
@@ -38,14 +38,14 @@
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.operator1.touched && !skipExportForm.controls.operator1.valid"
                 [customErrorMessage]="'Please select the operator'"></app-mandatory-error-message>
               </div>
-              <div class="tw-w-296-px" *ngIf="showInputField1()">
+              <div class="tw-w-296-px" *ngIf="showInputField(1)">
                 <input type="text" formControlName="value1" class="value-input-field" placeholder="Enter Value">
               </div>
-              <div class="tw-w-296-px" *ngIf="showDateField1()">
+              <div class="tw-w-296-px" *ngIf="showDateField(1)">
                 <p-calendar formControlName="value1" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
               </div>
-              <div class="tw-w-296-px" *ngIf="showChipField1()">
-                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
+              <div class="tw-w-296-px" *ngIf="showChipField(1)">
+                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
                 <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
               </div>
         </div>
@@ -60,7 +60,7 @@
                   Operator
                 <span class="tw-text-mandatory-field-color">*</span>
               </div>
-              <div class="tw-w-296-px fields-header" *ngIf="showValueHeader2()">
+              <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(2)">
                 Value
                 <span class="tw-text-mandatory-field-color">*</span>
               </div>
@@ -95,14 +95,14 @@
               <app-mandatory-error-message *ngIf="skipExportForm.controls.operator2.touched && !skipExportForm.controls.operator2.valid"
               [customErrorMessage]="'Please select the operator'"></app-mandatory-error-message>
             </div>
-            <div *ngIf="showInputField2()" class="tw-w-296-px">
+            <div *ngIf="showInputField(2)" class="tw-w-296-px">
               <input type="text" formControlName="value2" placeholder="Enter a value" class="border p-2 rounded value-input-field" placeholder="Enter Value">
             </div>
-            <div *ngIf="showChipField2()" class="tw-w-296-px">
-              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption2" formControlName="value2" placeholder="Enter Value"></p-chips>
+            <div *ngIf="showChipField(2)" class="tw-w-296-px">
+              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" placeholder="Enter Value"></p-chips>
               <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
             </div>
-            <div *ngIf="showDateField2()" class="tw-w-296-px">
+            <div *ngIf="showDateField(2)" class="tw-w-296-px">
               <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
             <img class="delete-icon" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
@@ -120,4 +120,4 @@
       </form>
     </div>
 </div>
-   -->
+  

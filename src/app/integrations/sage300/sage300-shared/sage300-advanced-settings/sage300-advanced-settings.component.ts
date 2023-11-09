@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { catchError, forkJoin, of } from 'rxjs';
+import { ConditionField, EmailOption, ExpenseFilter, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
+import { AdvancedSettingValidatorRule, Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.mode';
+import { HelperService } from 'src/app/core/services/common/helper.service';
+import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -7,9 +13,131 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Sage300AdvancedSettingsComponent implements OnInit {
 
-  constructor() { }
+  advancedSettingForm: FormGroup;
+
+  skipExportForm: FormGroup;
+
+  expenseFilters: ExpenseFilter[];
+
+  conditionFieldOptions: ConditionField[];
+
+  advancedSetting: Sage300AdvancedSettingGet | null;
+
+  adminEmails: EmailOption[];
+
+  constructor(
+    private advancedSettingsService: Sage300AdvancedSettingsService,
+    private helper: HelperService
+  ) { }
+
+  skipExportWatcher(): void {
+    this.advancedSettingForm.controls.skipExport.valueChanges.subscribe((isSelected) => {
+      if (isSelected) {
+        const fields = ['condition1', 'operator1', 'value1'];
+        this.helper.skipExportFormSettingChange(this.skipExportForm, fields, true);
+      } else {
+        const fields = ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by'];
+        this.helper.skipExportFormSettingChange(this.skipExportForm, fields, false);
+      }
+    });
+  }
+
+  formWatchers() {
+    this.skipExportWatcher();
+    const skipExportFormWatcherFields: AdvancedSettingValidatorRule = {
+      condition1: ['operator1', 'value1'],
+      condition2: ['operator2', 'value2'],
+      operator1: ['value1'],
+      operator2: ['value2']
+    };
+    this.helper.setConfigurationSettingValidatorsAndWatchers(skipExportFormWatcherFields, this.skipExportForm);
+  }
+
+  saveSkipExportFields(): void {
+    if (!this.skipExportForm.valid) {
+      return;
+    }
+    const valueField = this.skipExportForm.getRawValue();
+    if (!valueField.condition1.field_name) {
+      return;
+    }
+    if (valueField.condition1.field_name !== 'report_title' && valueField.operator1 === 'iexact') {
+      valueField.operator1 = 'in';
+    }
+    if (valueField.join_by) {
+      valueField.join_by = valueField.join_by.value;
+      if (valueField.condition2.field_name !== 'report_title' && valueField.operator2 === 'iexact') {
+        valueField.operator2 = 'in';
+      }
+    }
+    if (valueField.condition1.is_custom === true) {
+      if (valueField.operator1 === 'is_empty') {
+        valueField.value1 = ['True'];
+        valueField.operator1 = 'isnull';
+      } else if (valueField.operator1 === 'is_not_empty') {
+        valueField.value1 = ['False'];
+        valueField.operator1 = 'isnull';
+      }
+    }
+
+    if (valueField.condition1.field_name === 'spent_at') {
+      valueField.value1 = new Date(valueField.value1).toISOString().split('T')[0] + 'T17:00:00.000Z';
+    }
+
+    if (typeof valueField.value1 === 'string') {
+      valueField.value1 = [valueField.value1];
+    }
+    valueField.rank = 1;
+    const payload1 = Sage300AdvancedSettingModel.constructSkipExportPayload(valueField, this.skipExportForm.value.value1);
+    this.advancedSettingsService.postExpenseFilter(payload1).subscribe((skipExport1: ExpenseFilterResponse) => {
+      if (valueField.condition2 && valueField.operator2) {
+        if (valueField.condition2.field_name === 'spent_at') {
+          valueField.value2 = new Date(valueField.value2).toISOString().split('T')[0] + 'T17:00:00.000Z';
+        }
+
+        if (valueField.condition2.is_custom === true) {
+          if (valueField.operator2 === 'is_empty') {
+            valueField.value2 = ['True'];
+            valueField.operator2 = 'isnull';
+          } else if (valueField.operator2 === 'is_not_empty') {
+            valueField.value2 = ['False'];
+            valueField.operator2 = 'isnull';
+          }
+        }
+
+        if (typeof valueField.value2 === 'string') {
+          valueField.value2 = [valueField.value2];
+        }
+        valueField.rank = 2;
+        const payload2 = Sage300AdvancedSettingModel.constructSkipExportPayload(valueField, this.skipExportForm.value.value2);
+        this.advancedSettingsService.postExpenseFilter(payload2).subscribe((skipExport2: ExpenseFilterResponse) => {});
+      }
+    });
+  }
+
+  save(): void {
+    // TODO
+  }
+
+  private getSettingsAndSetupForm(): void {
+    forkJoin([
+      this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
+      this.advancedSettingsService.getAdminEmail(),
+      this.advancedSettingsService.getExpenseFilter(),
+      this.advancedSettingsService.getExpenseFilelds()
+    ]).subscribe((responses) => {
+      this.advancedSetting = responses[0];
+      this.adminEmails = responses[1];
+      this.expenseFilters = responses[2].results;
+      this.conditionFieldOptions = responses[3];
+      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting);
+      this.skipExportForm = Sage300AdvancedSettingModel.setupSkipExportForm(responses[2], []);
+      this.formWatchers();
+    });
+  }
 
   ngOnInit(): void {
+    this.getSettingsAndSetupForm();
   }
 
 }
