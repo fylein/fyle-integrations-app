@@ -17,8 +17,9 @@ export class MappingComponent implements OnInit {
   isLoading: boolean;
 
   mappingPages: MenuItem[] = [
+    {label: 'TestMapping', routerLink: '/integrations/intacct/main/mapping/test_mapping/EMPLOYEE'},   
     {label: 'Employee', routerLink: '/integrations/intacct/main/mapping/employee_mapping'},
-    {label: 'Category', routerLink: '/integrations/intacct/main/mapping/category_mapping'}
+    {label: 'Category', routerLink: '/integrations/intacct/main/mapping/test_mapping/CATEGORY'}
   ];
 
   activeModule: MenuItem;
@@ -38,7 +39,7 @@ export class MappingComponent implements OnInit {
             label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
             routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
           });
-}
+        }
         });
       }
       this.router.navigateByUrl(this.mappingPages[0].routerLink);

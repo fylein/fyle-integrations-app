@@ -88,4 +88,10 @@
             *Fyle and {{appName}} Fields should be unique.
         </div>                  
     </div>
+    <div *ngIf="showOrHideAddButton()" class="add-button-container">
+        <svg-icon-sprite src="add" width="20px" height="20px" class="add-row-text" (click)="addExpenseField()"></svg-icon-sprite>
+        <a class="add-row-text tw-pl-2" (click)="addExpenseField()">
+            Add more fields
+        </a>
+    </div>  
 </div>

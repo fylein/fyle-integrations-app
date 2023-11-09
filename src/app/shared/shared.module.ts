@@ -71,6 +71,8 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
 import { ConfigurationCustomFieldCreationDialogComponent } from './components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
 import { ConfigurationConfirmationDialogComponent } from './components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
+import { GenericMappingV2Component } from './components/si/helper/generic-mapping-v2/generic-mapping-v2.component';
+import { GenericMappingTableComponent } from './components/si/generic-mapping-table/generic-mapping-table.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +125,9 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     ConfigurationInfoLabelComponent,
     ConfigurationCustomFieldCreationDialogComponent,
     ConfigurationConfirmationDialogComponent,
-    ZeroStateComponent
+    ZeroStateComponent,
+    GenericMappingV2Component,
+    GenericMappingTableComponent
   ],
   imports: [
     CommonModule,
@@ -202,7 +206,9 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     ConfigurationCustomFieldCreationDialogComponent,
     ConfigurationConfirmationDialogComponent,
     ZeroStateComponent,
-    DashboardExportSummarySectionComponent
+    DashboardExportSummarySectionComponent,
+    PreviewDialogComponent,
+    GenericMappingV2Component
   ]
 })
 export class SharedModule { }
