@@ -7,9 +7,9 @@ export interface ExpenseAttribute {
     value: string;
     source_id: string;
     auto_mapped: boolean;
-    auto_created: boolean; // X
+    auto_created: boolean;
     active: boolean;
-    detail: DestinationAttributeDetail | null; // X
+    detail: DestinationAttributeDetail | null;
     created_at: string;
     updated_at: string;
     workspace: number;

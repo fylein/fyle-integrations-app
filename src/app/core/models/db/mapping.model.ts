@@ -1,4 +1,6 @@
-import { ExpenseAttributeDetail } from "./expense-attribute.model";
+export type MappingPrimaryKey = {
+    id: number | null
+}
 
 export type IntegrationField = {
     attribute_type: string,

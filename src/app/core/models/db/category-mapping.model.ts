@@ -1,21 +1,21 @@
-
-import { DestinationAttributeDetail } from "./destination-attribute.model";
+import { DestinationAttribute } from "./destination-attribute.model";
 import { ExpenseAttribute } from "./expense-attribute.model";
+import { MappingPrimaryKey } from "./mapping.model";
 
 
 export type CategoryMappingPost = {
-  source_category: ExpenseAttribute;
-  destination_account?: DestinationAttributeDetail;
-  destination_expense_head?: DestinationAttributeDetail;
-  created_at?: Date;
-  updated_at?: Date;
+  source_category: MappingPrimaryKey;
+  destination_account: MappingPrimaryKey;
+  destination_expense_head: MappingPrimaryKey;
   workspace: number;
 }
 
-export interface CategoryMapping extends CategoryMappingPost {
-  id: number;
-}
-
-export interface CategoryMappingResult extends ExpenseAttribute {
-  categorymapping: CategoryMapping;
+export interface CategoryMapping {
+  id: number,
+  created_at: Date,
+  destination_account: DestinationAttribute,
+  destination_expense_head: DestinationAttribute,
+  source_category: ExpenseAttribute,
+  updated_at: Date,
+  workspace: number
 }
