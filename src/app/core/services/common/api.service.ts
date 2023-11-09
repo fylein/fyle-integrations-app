@@ -9,7 +9,8 @@ let API_BASE_URL = environment.api_url;
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
-  })
+  }),
+  body: {}
 };
 
 @Injectable({
@@ -62,6 +63,13 @@ export class ApiService {
   put(endpoint: string, body: {}): Observable<any> {
     return this.http.put(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'PUT');
+    }));
+  }
+
+  delete(endpoint: string, body: {}): Observable<any> {
+    httpOptions.body = body;
+    return this.http.delete(API_BASE_URL + endpoint, httpOptions).pipe(catchError(error => {
+      return this.handleError(error, 'DELETE');
     }));
   }
 }
