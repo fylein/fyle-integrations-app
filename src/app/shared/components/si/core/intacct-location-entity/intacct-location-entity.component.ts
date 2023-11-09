@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigurationCta, IntacctField, IntacctOnboardingState, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AuthService } from 'src/app/core/services/core/auth.service';
+import { AuthService } from 'src/app/core/services/common/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
-import { StorageService } from 'src/app/core/services/core/storage.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { LocationEntityPost } from 'src/app/core/models/si/si-configuration/connector.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 
 @Component({
   selector: 'app-intacct-location-entity',
@@ -23,7 +23,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   locationEntityForm: FormGroup;
 
-  locationEntityOptions: DestinationAttribute[];
+  locationEntityOptions: IntacctDestinationAttribute[];
 
   locationEntity: LocationEntityMapping;
 
@@ -87,7 +87,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       return {
         location_entity_name: locationEntity[0].value,
         destination_id: locationEntity[0].destination_id,
-        country_name: locationEntity[0].detail.country ? locationEntity[0].detail.country : null,
+        country_name: locationEntity[0].detail?.country ? locationEntity[0].detail.country : null,
         workspace: this.workspaceId
       };
     }

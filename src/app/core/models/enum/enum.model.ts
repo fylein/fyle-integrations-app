@@ -28,7 +28,8 @@ export enum InAppIntegration {
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'TravelPerk',
   GUSTO = 'Gusto',
-  INTACCT = 'Sage Intacct'
+  INTACCT = 'Sage Intacct',
+  SAGE300 = 'Sage 300 CRE'
 }
 
 export enum RedirectLink {
@@ -37,11 +38,13 @@ export enum RedirectLink {
   // TODO: Change the link to the actual help article
   INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
   TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+  GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+  SAGE300 = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
 }
 
 export enum EmbedVideoLink {
-  INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk'
+  INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk',
+  SAGE300 = 'https://www.youtube.com/embed/2oYdc8KcQnk'
 }
 
 export enum ToastSeverity {
@@ -63,12 +66,29 @@ export enum IntacctUpdateEvent {
   ADVANCED_SETTINGS_INTACCT= 'Advanced Settings Intacct',
 }
 
+export enum Sage300UpdateEvent {
+  CONNECT_SAGE300 = 'Connect Sage300',
+  EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
+  IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
+  ADVANCED_SETTINGS_SAGE300= 'Advanced Settings Sage300',
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'Travelperk',
   GUSTO = 'Gusto',
-  INTACCT = 'Sage Intacct'
+  INTACCT = 'Sage Intacct',
+  SAGE300 = 'Sage 300 CRE'
+}
+
+export enum AppNameInService {
+  BAMBOO_HR = 'bambooHR',
+  QBD = 'qbd',
+  TRAVELPERK = 'travelperk',
+  GUSTO = 'gusto',
+  INTACCT = 'sage_intacct',
+  SAGE300 = 'sage300'
 }
 
 export enum Page {
@@ -87,6 +107,9 @@ export enum Page {
   IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct',
   FIELD_MAPPING_QBD = 'Field Mappings QBD',
   ADVANCED_SETTINGS_QBD = 'Advanced Settings QBD',
+  EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
+  IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
+  ADVANCED_SETTINGS_SAGE300 = 'Advanced Settings Sage300',
 }
 
 export enum ClickEvent {
@@ -114,7 +137,8 @@ export enum ClickEvent {
   QBD_EXPORT = 'Export IIF files',
   CONNECT_INTACCT  = 'Connect Sage Intacct',
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
-  INTACCT_EXPORT = 'Export Sage Intacct'
+  INTACCT_EXPORT = 'Export Sage Intacct',
+  CONNECT_SAGE300 = 'Connect Sage 300 CRE'
 }
 
 export enum ProgressPhase {
@@ -125,6 +149,14 @@ export enum ProgressPhase {
 export enum IntacctOnboardingState {
   CONNECTION = 'CONNECTION',
   LOCATION_ENTITY = 'LOCATION_ENTITY_MAPPINGS',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  COMPLETE = 'COMPLETE'
+}
+
+export enum Sage300OnboardingState {
+  CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
@@ -278,6 +310,14 @@ export enum QBDOnboardingState {
     ALL = 'ALL'
   }
 
+  export enum Sage300Field {
+    ACCOUNT = 'ACCOUNT',
+    CUSTOMER = 'CUSTOMER',
+    DEPARTMENT = 'DEPARTMENT',
+    CLASS = 'CLASS',
+    TAX_DETAIL = 'TAX_DETAIL'
+  }
+
   export enum SageIntacctField {
     ACCOUNT = 'ACCOUNT',
     CUSTOMER = 'CUSTOMER',
@@ -354,4 +394,64 @@ export enum QBDOnboardingState {
     ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
     LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
     SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+  }
+
+  export enum AppUrl {
+    BAMBOO_HR = 'bamboo_hr',
+    QBD = 'qbd',
+    TRAVELPERK = 'travelperk',
+    GUSTO = 'gusto',
+    INTACCT = 'intacct',
+    SAGE300 = 'sage300',
+    INTEGRATION = 'integration'
+  }
+
+  export enum Sage300Link {
+    IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
+    EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
+    ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
+    LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
+    SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+  }
+
+  export enum Sage300ExportType {
+    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+    DIRECT_COST = 'DIRECT_COST'
+  }
+
+  export enum Sage300ExpenseDate {
+    LAST_SPEND_AT = 'last_spend_at',
+    CURRENT_DATE = 'current_date',
+    APPROVED_AT = 'approved_at'
+  }
+
+  export enum DefaultImportFields {
+    CATEGORY = 'CATEGORY',
+    ACCOUNT = 'ACCOUNT',
+    VENDOR = 'VENDOR',
+    MERCHANTS = 'MERCHANTS'
+  }
+
+  export enum AccountingExportStatus {
+    READY = 'READY',
+    FAILED = 'FAILED',
+    FATAL = 'FATAL',
+    COMPLETE = 'COMPLETE',
+    IN_PROGRESS = 'IN_PROGRESS',
+    ENQUEUED = 'ENQUEUED'
+  }
+
+  export enum AccountingExportType {
+    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+    DIRECT_COSTS = 'DIRECT_COSTS'
+  }
+
+  export enum AccountingErrorType {
+    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+  }
+
+  export enum AccountingExportCreationType{
+    CREATING_DIRECT_COST = 'CREATING_DIRECT_COST',
+    CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
   }

@@ -3,7 +3,7 @@ import { getTestBed, TestBed } from '@angular/core/testing';
 import { environment } from 'src/environments/environment';
 import { AppName } from '../../models/enum/enum.model';
 import { bambooHRMockConfigurationPayload } from '../bamboo-hr/bamboo-hr.fixture';
-import { StorageService } from '../core/storage.service';
+import { StorageService } from '../common/storage.service';
 import { orgMockData, generateTokenData } from './org.fixture';
 
 import { OrgService } from './org.service';

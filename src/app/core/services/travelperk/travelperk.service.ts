@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
 import { Travelperk, TravelperkConfiguration } from '../../models/travelperk/travelperk.model';
-import { ApiService } from '../core/api.service';
+import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
 
 const travelPerkConfigurationCache$ = new Subject<void>();

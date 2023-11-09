@@ -2,17 +2,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, FyleField, IntacctLink, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, FyleField, IntacctLink, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
-import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, ExpenseFilterResponse, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { SkipExportComponent } from '../../helper/skip-export/skip-export.component';
 import { TitleCasePipe } from '@angular/common';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { Configuration } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 
 @Component({
   selector: 'app-configuration-advanced-settings',
@@ -49,17 +50,17 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   memoStructure: string[] = [];
 
-  sageIntacctLocations: DestinationAttribute[];
+  sageIntacctLocations: IntacctDestinationAttribute[];
 
-  sageIntacctDepartments: DestinationAttribute[];
+  sageIntacctDepartments: IntacctDestinationAttribute[];
 
-  sageIntacctProjects: DestinationAttribute[];
+  sageIntacctProjects: IntacctDestinationAttribute[];
 
-  sageIntacctClasses: DestinationAttribute[];
+  sageIntacctClasses: IntacctDestinationAttribute[];
 
-  sageIntacctDefaultItem: DestinationAttribute[];
+  sageIntacctDefaultItem: IntacctDestinationAttribute[];
 
-  sageIntacctPaymentAccount: DestinationAttribute[];
+  sageIntacctPaymentAccount: IntacctDestinationAttribute[];
 
   employeeFieldMapping: FyleField;
 
@@ -68,6 +69,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   IntacctReimbursableExpensesObjectER: IntacctReimbursableExpensesObject.EXPENSE_REPORT;
 
   IntacctReimbursableExpensesObjectBILL: IntacctReimbursableExpensesObject.BILL;
+
+  appName = AppName.INTACCT;
 
   private sessionStartTime = new Date();
 
@@ -97,6 +100,12 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     private workspaceService: SiWorkspaceService,
     private mappingService: SiMappingsService
   ) { }
+
+  refreshDimensions(isRefresh: boolean) {
+    this.mappingService.refreshSageIntacctDimensions().subscribe();
+    this.mappingService.refreshFyleDimensions().subscribe();
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
+  }
 
   getEmployeeField() {
     return new TitleCasePipe().transform(this.employeeFieldMapping);
@@ -155,9 +164,19 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
     });
   }
 
+  private getPaymentSyncConfiguration(configurations: Configuration): string {
+    let paymentSync = '';
+    if (configurations.sync_fyle_to_sage_intacct_payments) {
+      paymentSync = PaymentSyncDirection.FYLE_TO_INTACCT;
+    } else if (configurations.sync_sage_intacct_to_fyle_payments) {
+      paymentSync = PaymentSyncDirection.INTACCT_TO_FYLE;
+    }
+
+    return paymentSync;
+  }
+
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
-    const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
-    const findObjectById = (array: DestinationAttribute[], id: string) => array?.find(item => item.id.toString() === id) || null;
+    const findObjectByDestinationId = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     const filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOptions[]) => {
       const adminEmailsList: EmailOptions[] = [];
       for (const email of emailToSearch) {
@@ -169,7 +188,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
       search: [],
-      autoSyncPayments: [this.advancedSettings.configurations.sync_fyle_to_sage_intacct_payments ? PaymentSyncDirection.FYLE_TO_INTACCT : PaymentSyncDirection.INTACCT_TO_FYLE],
+      autoSyncPayments: [this.getPaymentSyncConfiguration(this.advancedSettings.configurations)],
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
       postEntriesCurrentPeriod: [this.advancedSettings.configurations.change_accounting_period ? true : false],
       setDescriptionField: [this.advancedSettings.configurations.memo_structure ? this.advancedSettings.configurations.memo_structure : this.defaultMemoFields, Validators.required],
@@ -179,7 +198,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       defaultProject: [findObjectByDestinationId(this.sageIntacctProjects, this.advancedSettings.general_mappings.default_project.id)],
       defaultClass: [findObjectByDestinationId(this.sageIntacctClasses, this.advancedSettings.general_mappings.default_class.id)],
       defaultItems: [findObjectByDestinationId(this.sageIntacctDefaultItem, this.advancedSettings.general_mappings.default_item.id)],
-      defaultPaymentAccount: [findObjectById(this.sageIntacctPaymentAccount, this.advancedSettings.general_mappings.payment_account.id)],
+      defaultPaymentAccount: [findObjectByDestinationId(this.sageIntacctPaymentAccount, this.advancedSettings.general_mappings.payment_account.id)],
       useEmployeeLocation: [this.advancedSettings.general_mappings.use_intacct_employee_locations ? this.advancedSettings.general_mappings.use_intacct_employee_locations : null],
       useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null]
     });

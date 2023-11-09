@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrConnection } from '../../models/bamboo-hr/bamboo-hr.model';
-import { ApiService } from '../core/api.service';
+import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
 
 @Injectable({

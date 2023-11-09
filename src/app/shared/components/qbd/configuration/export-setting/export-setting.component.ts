@@ -5,7 +5,7 @@ import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroup
 import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 
@@ -218,7 +218,7 @@ export class ExportSettingComponent implements OnInit {
     });
   }
 
-  private setCustomValidatorsAndWatchers(): void {
+  private setExportSettingValidatorsAndWatchers(): void {
 
     // Toggles
     this.createReimbursableExpenseWatcher();
@@ -316,7 +316,7 @@ export class ExportSettingComponent implements OnInit {
         reimbursableExpenseState: [this.exportSettings?.reimbursable_expense_state ? this.exportSettings?.reimbursable_expense_state : null],
         cccExpenseState: [this.exportSettings?.credit_card_expense_state ? this.exportSettings?.credit_card_expense_state : null]
       });
-      this.setCustomValidatorsAndWatchers();
+      this.setExportSettingValidatorsAndWatchers();
       this.isLoading = false;
     }, () => {
         this.setUpExpenseStates();
@@ -337,7 +337,7 @@ export class ExportSettingComponent implements OnInit {
           reimbursableExpenseState: [null],
           cccExpenseState: [null]
         });
-        this.setCustomValidatorsAndWatchers();
+        this.setExportSettingValidatorsAndWatchers();
         this.isLoading = false;
       }
     );

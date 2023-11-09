@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
@@ -13,6 +12,7 @@ import { MappingIntacct, MappingPost, MappingStats } from 'src/app/core/models/s
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
+import { GroupedDestinationAttribute, IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { GenericMappingV2Response } from 'src/app/core/models/si/db/generic-mapping-v2.model';
 
 @Injectable({
@@ -80,7 +80,7 @@ export class SiMappingsService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_attributes/`, params);
   }
 
-  getSageIntacctDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<DestinationAttribute[]> {
+  getSageIntacctDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<IntacctDestinationAttribute[]> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: {attribute_types: string | string[], account_type?: string, active?: boolean} = {
       attribute_types: attributeTypes
@@ -97,9 +97,9 @@ export class SiMappingsService {
   }
 
   getGroupedDestinationAttributes(attributeTypes: string[]): Observable<GroupedDestinationAttribute> {
-    return from(this.getSageIntacctDestinationAttributes(attributeTypes).toPromise().then((response: DestinationAttribute[] | undefined) => {
-      return response?.reduce((groupedAttributes: GroupedDestinationAttribute | any, attribute: DestinationAttribute) => {
-        const group: DestinationAttribute[] = groupedAttributes[attribute.attribute_type] || [];
+    return from(this.getSageIntacctDestinationAttributes(attributeTypes).toPromise().then((response: IntacctDestinationAttribute[] | undefined) => {
+      return response?.reduce((groupedAttributes: GroupedDestinationAttribute | any, attribute: IntacctDestinationAttribute) => {
+        const group: IntacctDestinationAttribute[] = groupedAttributes[attribute.attribute_type] || [];
         group.push(attribute);
         groupedAttributes[attribute.attribute_type] = group;
 

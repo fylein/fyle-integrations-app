@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
 import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
@@ -81,6 +82,8 @@ export class DashboardComponent implements OnInit {
 
   intacctErrorType: IntacctErrorType;
 
+  eventStartTime: Date;
+
   IntacctErrorType = IntacctErrorType;
 
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
@@ -112,6 +115,7 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   showMappingResolve(errorType: IntacctErrorType, groupedError: Error[]) {
+    this.eventStartTime = new Date();
     this.intacctErrorType = errorType;
     this.groupedError = groupedError;
     this.isMappingResolveVisible = true;
@@ -228,6 +232,7 @@ export class DashboardComponent implements OnInit {
       }
 
       this.errors = newError;
+      this.trackTimeTakenForResolvingMappingErrors();
     });
   }
 
@@ -243,6 +248,27 @@ export class DashboardComponent implements OnInit {
       [IntacctErrorType.CATEGORY_MAPPING]: [],
       [IntacctErrorType.INTACCT_ERROR]: []
     });
+  }
+
+  private trackTimeTakenForResolvingMappingErrors(): void {
+    if (this.intacctErrorType === IntacctErrorType.CATEGORY_MAPPING || this.intacctErrorType === IntacctErrorType.EMPLOYEE_MAPPING) {
+      const error = this.groupedErrorStat[this.intacctErrorType];
+
+      if (error?.totalCount && error?.totalCount > 0) {
+        const properties: ResolveMappingErrorProperty = {
+          resolvedCount: error?.resolvedCount ? error?.resolvedCount : 0,
+          totalCount: error?.totalCount ? error?.totalCount : 0,
+          unresolvedCount: error?.totalCount - error?.resolvedCount,
+          resolvedAllErrors: error.resolvedCount === error.totalCount,
+          startTime: this.eventStartTime,
+          endTime: new Date(),
+          durationInSeconds: Math.floor((new Date().getTime() - this.eventStartTime.getTime()) / 1000),
+          errorType: this.intacctErrorType
+        };
+
+        this.trackingService.onErrorResolve(properties);
+      }
+    }
   }
 
   private getExpenseGroupingSetting(expenseGroupSetting: ExpenseGroupSetting): string {

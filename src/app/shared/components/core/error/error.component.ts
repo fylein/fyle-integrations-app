@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { WindowService } from 'src/app/core/services/core/window.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-error',

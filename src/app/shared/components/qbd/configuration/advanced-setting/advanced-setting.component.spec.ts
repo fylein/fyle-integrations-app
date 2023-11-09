@@ -9,7 +9,7 @@ import { of, throwError } from 'rxjs';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
-import { IntegrationsToastService } from 'src/app/core/services/core/integrations-toast.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
