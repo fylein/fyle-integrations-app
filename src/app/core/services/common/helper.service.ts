@@ -19,9 +19,9 @@ export class HelperService {
     private apiService: ApiService
   ) {}
 
-  setBaseApiURL(): void {
+  setBaseApiURL(appUrl: string| void): void {
     const urlSplit = this.router.url.split('/');
-    const module:AppUrl = (urlSplit.length > 2 ? urlSplit[2] : urlSplit[1]) as AppUrl;
+    const module:AppUrl = appUrl ? appUrl as AppUrl : (urlSplit.length > 2 ? urlSplit[2] : urlSplit[1]) as AppUrl;
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,

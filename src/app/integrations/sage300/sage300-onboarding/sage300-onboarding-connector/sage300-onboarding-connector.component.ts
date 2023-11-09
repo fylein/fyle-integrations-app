@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { ConfigurationCta, RedirectLink, Sage300OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
+import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
 
 @Component({
   selector: 'app-sage300-onboarding-connector',
@@ -15,7 +18,7 @@ import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-
 })
 export class Sage300OnboardingConnectorComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   redirectLink = RedirectLink.SAGE300;
 
@@ -33,7 +36,8 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private formBuilder: FormBuilder,
     private connectorService: Sage300ConnectorService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private mappingService: Sage300MappingService
   ) { }
 
   save() {
@@ -43,9 +47,10 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
     this.isLoading = true;
     this.connectorService.connectSage300({
-      user_id: userID,
-      indentifier: companyID,
-      password: userPassword
+      username: userID,
+      identifier: companyID,
+      password: userPassword,
+      workspace: this.workspaceService.getWorkspaceId()
     }).subscribe((response) => {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
@@ -58,13 +63,22 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
   }
 
   private setupPage(): void {
-    this.isLoading = true;
-    this.connectSage300Form = this.formBuilder.group({
-      userID: ['', Validators.required],
-      companyID: ['', Validators.required],
-      userPassword: ['', Validators.required]
+    this.connectorService.getSage300Credential().subscribe((sage300Cred: Sage300Credential) => {
+      this.connectSage300Form = this.formBuilder.group({
+        userID: [sage300Cred.username, Validators.required],
+        companyID: [sage300Cred.identifier, Validators.required],
+        userPassword: [sage300Cred.password, Validators.required]
+      });
+      this.isLoading = false;
+    }, () => {
+      this.connectSage300Form = this.formBuilder.group({
+        userID: ['', Validators.required],
+        companyID: ['', Validators.required],
+        userPassword: ['', Validators.required]
+      });
+      this.isLoading = false;
     });
-    this.isLoading = false;
+
   }
 
 ngOnInit(): void {

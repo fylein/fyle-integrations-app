@@ -17,7 +17,7 @@ export class Sage300ConnectorService {
   constructor(
     private apiService: ApiService,
     private storageService: StorageService,
-    helper: HelperService
+    private helper: HelperService
   ) {
     helper.setBaseApiURL();
   }

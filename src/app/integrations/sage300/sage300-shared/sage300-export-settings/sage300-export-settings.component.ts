@@ -150,7 +150,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     ];
     forkJoin([
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT], AppNameInService.SAGE300)
+      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT])
     ]).subscribe(([response]) => {
       this.exportSettings = response[0];
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);

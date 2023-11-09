@@ -21,7 +21,7 @@ export class MappingService {
 
   workspaceId = this.workspaceService.getWorkspaceId();
 
-  getDestinationAttributes(attributeTypes: string | string[], app_name: string, accountType?: string, active?: boolean): Observable<any> {
+  getDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<any> {
     const params: {attribute_types: string | string[], account_type?: string, active?: boolean} = {
       attribute_types: attributeTypes
     };
@@ -33,11 +33,11 @@ export class MappingService {
       params.active = active;
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/destination_attributes/`, params);
+    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/destination_attributes/`, params);
   }
 
-  getGroupedDestinationAttributes(attributeTypes: string[], app_name: string): any {
-    return from(this.getDestinationAttributes(attributeTypes, app_name).toPromise().then((response: any | undefined) => {
+  getGroupedDestinationAttributes(attributeTypes: string[]): any {
+    return from(this.getDestinationAttributes(attributeTypes).toPromise().then((response: any | undefined) => {
       return response?.reduce((groupedAttributes: any, attribute: any) => {
         const group: any = groupedAttributes[attribute.attribute_type] || [];
         group.push(attribute);
