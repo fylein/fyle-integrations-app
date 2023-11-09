@@ -26,10 +26,16 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[];
 
+  isSaveInProgress: boolean;
+
   constructor(
     private advancedSettingsService: Sage300AdvancedSettingsService,
     private helper: HelperService
   ) { }
+
+  deleteExpenseFilter(rank: number) {
+    this.advancedSettingsService.deleteExpenseFilter(rank).subscribe();
+  }
 
   skipExportWatcher(): void {
     this.advancedSettingForm.controls.skipExport.valueChanges.subscribe((isSelected) => {
@@ -116,8 +122,24 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     });
   }
 
+  constructPayloadAndSave(){
+    this.isSaveInProgress = true;
+    if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.length > 0){
+      this.expenseFilters.forEach((value) => {
+        this.deleteExpenseFilter(value.rank);
+      });
+    }
+    if (this.advancedSettingForm.value.skipExport) {
+      this.saveSkipExportFields();
+    }
+    this.isSaveInProgress = false;
+  }
+
   save(): void {
     // TODO
+    if (this.advancedSettingForm.valid && this.skipExportForm.valid) {
+      this.constructPayloadAndSave();
+    }
   }
 
   private getSettingsAndSetupForm(): void {
