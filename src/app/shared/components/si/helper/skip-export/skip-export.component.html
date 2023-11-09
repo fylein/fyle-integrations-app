@@ -103,7 +103,7 @@
               <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
             </div>
             <div *ngIf="showDateField2()" class="tw-w-296-px">
-              <p-calendar [(ngModel)]="date2" formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
+              <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
             <img class="delete-icon" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
           </div>
