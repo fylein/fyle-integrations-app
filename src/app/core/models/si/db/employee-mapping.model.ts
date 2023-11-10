@@ -1,3 +1,4 @@
+import { IntacctDestinationAttribute } from './destination-attribute.model';
 import { ExpenseAttributeDetail } from './expense-attribute-detail.model';
 import { MappingDestination } from './mapping-destination.model';
 import { MappingSource } from './mapping-source.model';
@@ -5,10 +6,11 @@ import { MappingSource } from './mapping-source.model';
 export type EmployeeMapping = {
   id: number;
   source_employee: MappingSource;
-  destination_employee?: MappingDestination;
-  destination_vendor?: MappingDestination;
-  destination_card_account?: MappingDestination;
+  destination_employee: IntacctDestinationAttribute;
+  destination_vendor: IntacctDestinationAttribute;
+  destination_card_account?: IntacctDestinationAttribute;
   workspace: number;
+  isOptionSearchInProgress?: boolean;
 };
 
 export type EmployeeMappingResult = {
@@ -39,4 +41,10 @@ export type EmployeeMappingPost = {
   destination_vendor?: MappingDestination | {id: null};
   destination_card_account?: MappingDestination | {id: null};
   workspace: number;
+};
+
+export type DropdownOptionSearch = {
+  searchTerm: string,
+  currentSelectedOption: IntacctDestinationAttribute | null,
+  employeeMapping: EmployeeMapping,
 };

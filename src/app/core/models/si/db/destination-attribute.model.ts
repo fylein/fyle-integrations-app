@@ -14,6 +14,13 @@ export interface IntacctDestinationAttribute extends DestinationAttribute {
   detail: IntacctDestinationAttributeDetail;
 }
 
+export type PaginatedintacctDestinationAttribute = {
+  count: number;
+  next: string;
+  previous: string;
+  results: IntacctDestinationAttribute[];
+};
+
 export type GroupedDestinationAttribute = {
   ACCOUNT: IntacctDestinationAttribute[],
   EXPENSE_TYPE: IntacctDestinationAttribute[],
