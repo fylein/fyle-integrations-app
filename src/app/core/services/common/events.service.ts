@@ -2,6 +2,7 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.model';
 import { WindowService } from './window.service';
+import { NavigationStart, Router } from '@angular/router';
 
 export const EXPOSE_INTACCT_NEW_APP = true;
 
@@ -17,6 +18,7 @@ export class EventsService {
   @Output() redirectToOldIntacctApp: EventEmitter<string> = new EventEmitter();
 
   constructor(
+    private router: Router,
     private windowService: WindowService
   ) { }
 
@@ -35,8 +37,20 @@ export class EventsService {
     }, false);
   }
 
-  postEvent(callbackUrl: string, clientId: string): void {
-    const payload = { callbackUrl, clientId };
-    this.windowService.nativeWindow.parent.postMessage(payload, environment.fyle_app_url);
-  }
+    postEvent(callbackUrl: string, clientId: string): void {
+      const payload = { callbackUrl, clientId };
+      this.windowService.nativeWindow.parent.postMessage(payload, environment.fyle_app_url);
+    }
+
+    private postRoute(route: string): void {
+      this.windowService.nativeWindow.parent.postMessage({current_route: route}, environment.fyle_app_url);
+    }
+
+    setupRouteWatcher(): void {
+      this.router.events.subscribe((routerEvent) => {
+        if (routerEvent instanceof NavigationStart) {
+          this.postRoute(routerEvent.url);
+        }
+    });
+    }
 }
