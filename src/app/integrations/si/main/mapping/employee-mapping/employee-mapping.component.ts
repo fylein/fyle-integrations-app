@@ -208,7 +208,7 @@ export class EmployeeMappingComponent implements OnInit {
 
   optionSearchWatcher() {
     this.optionSearchUpdate.pipe(
-      debounceTime(1000),
+      debounceTime(1000)
       ).subscribe((event: DropdownOptionSearch) => {
       const existingOptions = this.fyleEmployeeOptions.concat();
       const newOptions: IntacctDestinationAttribute[] = [];
