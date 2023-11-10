@@ -18,9 +18,9 @@ export class Sage300MappingComponent implements OnInit {
 
   showAutoMapEmployee: boolean = false;
 
-  // reimbursableExpenseObject: IntacctReimbursableExpensesObject | undefined;
+  // ReimbursableExpenseObject: IntacctReimbursableExpensesObject | undefined;
 
-  // cccExpenseObject: CorporateCreditCardExpensesObject | undefined;
+  // CccExpenseObject: CorporateCreditCardExpensesObject | undefined;
 
   employeeFieldMapping: FyleField;
 
@@ -32,8 +32,8 @@ export class Sage300MappingComponent implements OnInit {
   ) { }
 
 
-  // private isExpenseTypeRequired(): boolean {
-  //   return this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT;
+  // Private isExpenseTypeRequired(): boolean {
+  //   Return this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT;
   // }
 
   getAttributesFilteredByConfig() {
@@ -46,11 +46,11 @@ export class Sage300MappingComponent implements OnInit {
       }
     }
 
-    // if (this.sourceField==='CATEGORY') {
-    //   if (this.isExpenseTypeRequired()) {
-    //     return 'EXPENSE_TYPE';
+    // If (this.sourceField==='CATEGORY') {
+    //   If (this.isExpenseTypeRequired()) {
+    //     Return 'EXPENSE_TYPE';
     //   }
-    //     return 'ACCOUNT';
+    //     Return 'ACCOUNT';
 
     // }
 
@@ -61,8 +61,8 @@ export class Sage300MappingComponent implements OnInit {
   ngOnInit(): void {
     this.sourceField = this.route.snapshot.params.source_field;
     this.mappingService.getConfiguration().subscribe((response) => {
-      // this.reimbursableExpenseObject = response.reimbursable_expenses_object;
-      // this.cccExpenseObject = response.corporate_credit_card_expenses_object;
+      // This.reimbursableExpenseObject = response.reimbursable_expenses_object;
+      // This.cccExpenseObject = response.corporate_credit_card_expenses_object;
 
       this.employeeFieldMapping = response.employee_field_mapping;
       this.showAutoMapEmployee = response.auto_map_employees ? true : false;
