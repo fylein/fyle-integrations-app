@@ -54,7 +54,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     [IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE]: [],
     [IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE]: [],
     [IntacctExportSettingDestinationOptionKey.VENDOR]: [],
-    [IntacctExportSettingDestinationOptionKey.CHARGE_CARD]: [],
+    [IntacctExportSettingDestinationOptionKey.CHARGE_CARD]: []
   };
 
   IntacctExportSettingDestinationOptionKey = IntacctExportSettingDestinationOptionKey;
@@ -464,7 +464,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       optionArray.push(newOption);
     }
   }
-  
+
   private addMissingOptions(): void {
     // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options    this.addMissingOption('ACCOUNT', this.exportSettings.general_mappings.default_gl_account);
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings.default_gl_account);
@@ -576,11 +576,11 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     });
 
     forkJoin(groupedAttributes$).subscribe((response) => {
-      this.destinationOptions['ACCOUNT'] = response[0].results;
-      this.destinationOptions['EXPENSE_PAYMENT_TYPE'] = response[1].results.filter((attr: IntacctDestinationAttribute) => attr.detail.is_reimbursable);
-      this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE'] = response[1].results.filter((attr: IntacctDestinationAttribute) => !attr.detail.is_reimbursable);
-      this.destinationOptions['VENDOR'] = response[2].results;
-      this.destinationOptions['CHARGE_CARD'] = response[3].results;
+      this.destinationOptions.ACCOUNT = response[0].results;
+      this.destinationOptions.EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => attr.detail.is_reimbursable);
+      this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => !attr.detail.is_reimbursable);
+      this.destinationOptions.VENDOR = response[2].results;
+      this.destinationOptions.CHARGE_CARD = response[3].results;
 
       this.getSettingsAndSetupForm();
     });
