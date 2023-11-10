@@ -21,6 +21,14 @@ export type PaginatedintacctDestinationAttribute = {
   results: IntacctDestinationAttribute[];
 };
 
+export type ExportSettingDestinationAttributeOption = {
+  'VENDOR': IntacctDestinationAttribute[],
+  'ACCOUNT': IntacctDestinationAttribute[],
+  'EXPENSE_PAYMENT_TYPE': IntacctDestinationAttribute[],
+  'CCC_EXPENSE_PAYMENT_TYPE': IntacctDestinationAttribute[],
+  'CHARGE_CARD': IntacctDestinationAttribute[],
+}
+
 export type GroupedDestinationAttribute = {
   ACCOUNT: IntacctDestinationAttribute[],
   EXPENSE_TYPE: IntacctDestinationAttribute[],

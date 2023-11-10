@@ -213,7 +213,7 @@ export class EmployeeMappingComponent implements OnInit {
       const existingOptions = this.fyleEmployeeOptions.concat();
       const newOptions: IntacctDestinationAttribute[] = [];
 
-      this.mappingService.getPaginatedDestinationAttributes(10, 0, this.getAttributesFilteredByConfig()[0], event.searchTerm).subscribe((response) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.getAttributesFilteredByConfig()[0], event.searchTerm).subscribe((response) => {
         response.results.forEach((option) => {
           // If option is not already present in the list, add it
           if (!this.optionsMap[option.id.toString()]) {
@@ -228,10 +228,10 @@ export class EmployeeMappingComponent implements OnInit {
     });
   }
 
-  searchOptions(event: any, currentSelectedOption: IntacctDestinationAttribute | null, employeeMapping: EmployeeMapping) {
+  searchOptions(event: any, employeeMapping: EmployeeMapping) {
     if (event.filter) {
       employeeMapping.isOptionSearchInProgress = true;
-      this.optionSearchUpdate.next({searchTerm: event.filter, currentSelectedOption: currentSelectedOption, employeeMapping});
+      this.optionSearchUpdate.next({searchTerm: event.filter, employeeMapping});
     }
   }
 
@@ -241,7 +241,7 @@ export class EmployeeMappingComponent implements OnInit {
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
-      this.mappingService.getPaginatedDestinationAttributes(10, 0, this.getAttributesFilteredByConfig()[0]),
+      this.mappingService.getPaginatedDestinationAttributes(this.getAttributesFilteredByConfig()[0]),
       this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(

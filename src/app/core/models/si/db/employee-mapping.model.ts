@@ -45,6 +45,5 @@ export type EmployeeMappingPost = {
 
 export type DropdownOptionSearch = {
   searchTerm: string,
-  currentSelectedOption: IntacctDestinationAttribute | null,
   employeeMapping: EmployeeMapping,
 };
