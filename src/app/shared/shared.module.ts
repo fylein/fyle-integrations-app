@@ -73,6 +73,7 @@ import { ConfigurationConfirmationDialogComponent } from './components/configura
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
 import { GenericMappingV2Component } from './components/si/helper/generic-mapping-v2/generic-mapping-v2.component';
 import { GenericMappingTableComponent } from './components/si/generic-mapping-table/generic-mapping-table.component';
+import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +128,8 @@ import { GenericMappingTableComponent } from './components/si/generic-mapping-ta
     ConfigurationConfirmationDialogComponent,
     ZeroStateComponent,
     GenericMappingV2Component,
-    GenericMappingTableComponent
+    GenericMappingTableComponent,
+    SubMenuComponent
   ],
   imports: [
     CommonModule,
@@ -208,7 +210,8 @@ import { GenericMappingTableComponent } from './components/si/generic-mapping-ta
     ZeroStateComponent,
     DashboardExportSummarySectionComponent,
     PreviewDialogComponent,
-    GenericMappingV2Component
+    GenericMappingV2Component,
+    SubMenuComponent
   ]
 })
 export class SharedModule { }

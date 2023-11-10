@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { Sage300MappingRoutingModule } from './sage300-mapping-routing.module';
 import { Sage300MappingComponent } from './sage300-mapping.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { Sage300MappingComponent } from './sage300-mapping.component';
   ],
   imports: [
     CommonModule,
+    SharedModule,
     Sage300MappingRoutingModule
   ]
 })
