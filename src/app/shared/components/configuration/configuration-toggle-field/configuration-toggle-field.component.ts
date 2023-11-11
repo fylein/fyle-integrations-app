@@ -21,6 +21,8 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   @Input() redirectLink: string;
 
+  @Input() iconPath: string;
+
   constructor(
     public windowService: WindowService
   ) { }

@@ -1,4 +1,4 @@
-<div [formGroup]="form" class="tw-p-24-px tw-flex tw-flex-row tw-space-between tw-items-center">
+<div [formGroup]="form" class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
     <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
         <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
             <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
@@ -16,33 +16,59 @@
         </div>
     </div>
     <div>
-        <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
+        <div *ngIf="destinationAttributes">
             <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="value" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
             </p-dropdown>
         </div>
-        <div *ngIf="options && !destinationAttributes && !simpleOptions">
-            <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
-                <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px" 
-                [formControlName]="formControllerName" [placeholder]="placeholder"
-                [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"
-                [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}"
-                >
-                <ng-template let-option pTemplate="item">
-                    <div #textElement 
-                         [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                         [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
-                        {{option.label}}
+        <div *ngIf="options && !destinationAttributes && !simpleOptions" class="tw-flex tw-justify-end">
+            <div *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
+                <p-dropdown *ngIf="formControllerName !== 'scheduleAutoExportFrequency'" appendTo="body" [options]="options" class="!tw-w-300-px" 
+                    [formControlName]="formControllerName" [placeholder]="placeholder"
+                    [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"
+                    [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}"
+                    >
+                    <ng-template let-option pTemplate="item">
+                        <div #textElement 
+                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                            [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                            {{option.label}}
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="selectedItem" let-item>
+                        <div class="tw-flex tw-justify-between tw-items-center">
+                            <span>
+                                {{ item.label }}
+                            </span>
+                            <i class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
+                <div class="tw-flex tw-justify-end" *ngIf="formControllerName === 'scheduleAutoExportFrequency'">
+                    <p-dropdown appendTo="body" [options]="options" class="dropdown-size-schedule" 
+                        [formControlName]="formControllerName" [placeholder]="placeholder"
+                        [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"
+                        [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}"
+                        >
+                        <ng-template let-option pTemplate="item">
+                            <div #textElement 
+                                [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                                [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                                {{option.label}}
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.label }}
+                                </span>
+                                <i class="pi pi-angle-down" (click)="removeFilter(form.controls[formControllerName])"></i>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    <div class="tw-ml-16-px">
+                        <input type="text" class="tw-border-box-color !tw-w-100-px !tw-h-40-px !tw-bg-disabled-bg-color tw-text-slightly-normal-text-color" pInputText disabled value="Hours">
                     </div>
-                </ng-template>
-                <ng-template pTemplate="selectedItem" let-item>
-                    <div class="tw-flex tw-justify-between tw-items-center">
-                        <span>
-                            {{ item.label }}
-                        </span>
-                        <i class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
-                    </div>
-                </ng-template>
-            </p-dropdown>                     
+                </div>                     
                 <div *ngIf="form.controls[formControllerName].value==='JOURNAL_ENTRY' || form.controls[formControllerName].value === 'EXPENSE_REPORT' || form.controls[formControllerName].value === 'BILL' || form.controls[formControllerName].value === 'CHARGE_CARD_TRANSACTION' || form.controls[formControllerName].value === 'PURCHASE_INVOICE' || form.controls[formControllerName].value === 'DIRECT_COST'" class="sub-text tw-pt-3-px">
                     <span>Click </span>
                     <a (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>

@@ -124,14 +124,16 @@ export class Sage300AdvancedSettingModel {
             autoCreateMerchantDestinationEntity: new FormControl(advancedSettings?.auto_create_merchant_destination_entity ? true : false),
             syncSage300ToFylePayments: new FormControl(advancedSettings?.sync_sage_300_to_fyle_payments ? true : false),
             autoCreateDestinationEntity: new FormControl(advancedSettings?.auto_create_destination_entity ? true : false),
-            skipExport: new FormControl(advancedSettings?.skipExport ? true : false),
+            skipExport: new FormControl(false),
             memoStructure: new FormControl(advancedSettings?.memo_structure ? advancedSettings?.memo_structure : null ),
             defaultJobName: new FormControl(advancedSettings?.default_job_name ? advancedSettings?.default_job_name : null ),
             defaultJobId: new FormControl(advancedSettings?.default_job_id ? advancedSettings?.default_job_id : null ),
             scheduleEnabled: new FormControl(advancedSettings?.schedule_enabled ? true : false),
-            emailsSelected: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : null),
+            email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : []),
             emailsAdded: new FormControl(advancedSettings?.emails_added ? advancedSettings?.emails_added : null),
-            autoMapVendor: new FormControl(advancedSettings?.auto_map_vendor ? true : false)
+            autoMapVendor: new FormControl(advancedSettings?.auto_map_vendor ? true : false),
+            scheduleAutoExportFrequency: new FormControl(1),
+            topLevelMemo: new FormControl(null)
         });
     }
 

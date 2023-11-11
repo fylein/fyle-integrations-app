@@ -205,7 +205,8 @@ import { ConfigurationSkipExportComponent } from './components/configuration/con
     ConfigurationConfirmationDialogComponent,
     ZeroStateComponent,
     DashboardExportSummarySectionComponent,
-    PreviewDialogComponent
+    PreviewDialogComponent,
+    ConfigurationSkipExportComponent
   ]
 })
 export class SharedModule { }

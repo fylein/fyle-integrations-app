@@ -3,6 +3,12 @@ export type EmailOption = {
     name: string;
 };
 
+export  interface HourOption {
+  label: string;
+  value: number;
+}
+
+
 export type ConditionField = {
   field_name: string;
   type: string;
