@@ -79,11 +79,11 @@ export class SiMappingsService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_attributes/`, params);
   }
 
-  getPaginatedDestinationAttributes(pageLimit: number, pageOffset: number, attributeType: string, value?: string): Observable<PaginatedintacctDestinationAttribute> {
+  getPaginatedDestinationAttributes(attributeType: string, value?: string): Observable<PaginatedintacctDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: {limit: number, offset: number, attribute_type: string, value?: string} = {
-      limit: pageLimit,
-      offset: pageOffset,
+      limit: 100,
+      offset: 0,
       attribute_type: attributeType
     };
 

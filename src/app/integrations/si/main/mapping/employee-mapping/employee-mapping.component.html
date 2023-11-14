@@ -65,7 +65,7 @@
                             filterBy="value"
                             [emptyFilterMessage]="mapping.employeemapping.isOptionSearchInProgress ? 'Searching...' : 'No results found'"
                             [dropdownIcon]="mapping.employeemapping.isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'"
-                            (onFilter)="searchOptions($event, getDropdownValue(mapping.employeemapping), mapping.employeemapping)">
+                            (onFilter)="searchOptions($event, mapping.employeemapping)">
                             </p-dropdown>
                         </td>
                         <td>
