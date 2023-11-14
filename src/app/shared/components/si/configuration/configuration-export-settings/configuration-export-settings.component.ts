@@ -456,12 +456,13 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     const optionArray = this.destinationOptions[key];
     const option = optionArray.find(attribute => attribute.destination_id === defaultDestinationAttribute.id);
 
-    if (!option) {
+    if (!option && defaultDestinationAttribute.id && defaultDestinationAttribute.name) {
       const newOption = {
         destination_id: defaultDestinationAttribute.id,
         value: defaultDestinationAttribute.name
       } as IntacctDestinationAttribute;
       optionArray.push(newOption);
+      this.sortDropdownOptions(key);
     }
   }
 
@@ -523,6 +524,12 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         });
     }
 
+  private sortDropdownOptions(destinationOptionKey: IntacctExportSettingDestinationOptionKey): void {
+    this.destinationOptions[destinationOptionKey].sort((a: IntacctDestinationAttribute, b: IntacctDestinationAttribute) => {
+      return a.value.localeCompare(b.value);
+    });
+  }
+
   private optionSearchWatcher(): void {
     this.optionSearchUpdate.pipe(
       debounceTime(1000)
@@ -554,6 +561,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         });
 
         this.destinationOptions[event.destinationOptionKey] = existingOptions.concat();
+        this.sortDropdownOptions(event.destinationOptionKey);
         this.isOptionSearchInProgress = false;
       });
     });
