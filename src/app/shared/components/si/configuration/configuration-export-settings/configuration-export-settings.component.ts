@@ -444,7 +444,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         cccExpenseState: [this.exportSettings?.expense_group_settings.ccc_expense_state || null],
         cccExpensePaymentType: [findObjectById(this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE, generalMappings?.default_ccc_expense_payment_type.id)],
         creditCardVendor: [findObjectById(this.destinationOptions.VENDOR, generalMappings?.default_ccc_vendor.id)],
-        creditCard: [findObjectById(this.destinationOptions.VENDOR, generalMappings?.default_credit_card.id)],
+        creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
         chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)]
       });
 
@@ -466,7 +466,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   }
 
   private addMissingOptions(): void {
-    // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options    this.addMissingOption('ACCOUNT', this.exportSettings.general_mappings.default_gl_account);
+    // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings.default_gl_account);
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings.default_credit_card);
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings.default_reimbursable_expense_payment_type);
