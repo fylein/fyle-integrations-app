@@ -83,7 +83,7 @@
                     </h5>
                 </div>
             </div>
-            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div *ngIf="!reimbursableExpense && cccExpense===IntacctCCTCCC" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Auto-Create ' + getEmployeeField()" 

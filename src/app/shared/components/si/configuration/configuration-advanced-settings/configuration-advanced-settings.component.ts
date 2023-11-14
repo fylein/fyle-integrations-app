@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { AppName, ConfigurationCta, FyleField, IntacctLink, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, IntacctLink, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -66,9 +66,13 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   reimbursableExpense?: IntacctReimbursableExpensesObject;
 
+  cccExpense?: CorporateCreditCardExpensesObject;
+
   IntacctReimbursableExpensesObjectER: IntacctReimbursableExpensesObject.EXPENSE_REPORT;
 
   IntacctReimbursableExpensesObjectBILL: IntacctReimbursableExpensesObject.BILL;
+
+  IntacctCCTCCC: CorporateCreditCardExpensesObject = CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
 
   appName = AppName.INTACCT;
 
@@ -269,6 +273,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         this.sageIntacctClasses = groupedAttributes.CLASS;
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
+        this.cccExpense = configuration.corporate_credit_card_expenses_object;
         this.employeeFieldMapping = configuration.employee_field_mapping;
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();
