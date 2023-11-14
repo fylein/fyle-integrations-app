@@ -9,8 +9,8 @@ import { MenuItem } from 'primeng/api';
 export class Sage300MappingComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Employee Mapping', routerLink: '/integrations/sage300/main/mapping/employee'},
-    {label: 'Category Mapping', routerLink: '/integrations/intacct/main/configuration/category'},
+    {label: 'Employee Mapping', routerLink: '/integrations/sage300/main/mapping/EMPLOYEE'},
+    {label: 'Category Mapping', routerLink: '/integrations/sage300/main/mapping/CATEGORY'},
     {label: 'Generic Mapping', routerLink: '/integrations/intacct/main/configuration/generic'}
   ];
 
