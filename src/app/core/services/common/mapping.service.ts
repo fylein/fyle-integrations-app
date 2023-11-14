@@ -4,6 +4,8 @@ import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
 import { IntegrationField, FyleField } from '../../models/db/mapping.model';
+import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
+import { MappingSetting, MappingSettingResponse } from '../../models/si/db/mapping-setting.model';
 
 
 @Injectable({
@@ -61,6 +63,22 @@ export class MappingService {
 
   getFyleFields(): Observable<FyleField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/fyle/fields/`, {});
+  }
+
+  postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/employee/`, employeeMapping);
+  }
+
+  getMappingSettings(): Observable<MappingSettingResponse> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, {});
+  }
+
+  postMappingSettings(mappingSettings: MappingSetting[]): Observable<MappingSetting[]> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, mappingSettings);
+  }
+
+  triggerAutoMapEmployees() {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
   }
 
 }
