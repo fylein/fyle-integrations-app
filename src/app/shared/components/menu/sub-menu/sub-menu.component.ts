@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-sub-menu',
@@ -6,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sub-menu.component.scss']
 })
 export class SubMenuComponent implements OnInit {
+
+  @Input() modules: MenuItem[];
+
+  @Input() activeModule: MenuItem;
 
   constructor() { }
 
