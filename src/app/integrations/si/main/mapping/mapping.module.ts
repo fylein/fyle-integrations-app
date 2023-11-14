@@ -9,15 +9,13 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { TableModule } from 'primeng/table';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
-import { GenericMappingTestComponent } from './generic-mapping-test/generic-mapping-test.component';
 
 
 @NgModule({
   declarations: [
     CategoryMappingComponent,
     EmployeeMappingComponent,
-    GenericMappingComponent,
-    GenericMappingTestComponent
+    GenericMappingComponent
   ],
   imports: [
     CommonModule,
