@@ -160,23 +160,6 @@ export class SiMappingsService {
     );
   }
 
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string, mappingPage: string): Observable<GenericMappingV2Response> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    const isMapped: boolean = mappingState==='UNMAPPED' ? false : true;
-    const params: { limit: number, offset: number, mapped: boolean | MappingState, destination_type: string, mapping_source_alphabets?: string } = {
-      limit: pageLimit,
-      offset: pageOffset,
-      mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
-      destination_type: sourceType
-    };
-
-    if (alphabetsFilter && alphabetsFilter !== 'All') {
-      params.mapping_source_alphabets = alphabetsFilter;
-    }
-
-    return mappingPage==='EMPLOYEE' ? this.apiService.get(`/workspaces/${workspaceId}/mappings/employee_attributes/`, params) : this.apiService.get(`/workspaces/${workspaceId}/mappings/category_attributes/`, params);
-  }
-
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/employee/`, employeeMapping);
   }

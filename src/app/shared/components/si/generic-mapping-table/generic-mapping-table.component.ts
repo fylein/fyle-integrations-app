@@ -1,16 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CategoryMappingPost } from 'src/app/core/models/db/category-mapping.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { EmployeeMappingPost } from 'src/app/core/models/db/employee-mapping.model';
+import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
+import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
-import { EmployeeMappingPost } from 'src/app/core/models/si/db/employee-mapping.model';
-import { Error } from 'src/app/core/models/si/db/error.model';
-import { ExtendedGenericMappingV2 } from 'src/app/core/models/si/db/generic-mapping-v2.model';
-import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-generic-mapping-table',
@@ -19,11 +17,11 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class GenericMappingTableComponent implements OnInit {
 
-  @Input() filteredMappings: ExtendedGenericMappingV2[];
+  @Input() filteredMappings: ExtendedGenericMapping[];
 
   @Input() mappingError: Error[];
 
-  @Input() mappingPageName: string;
+  @Input() sourceField: string;
 
   @Input() mappingStats: MappingStats;
 
@@ -40,9 +38,9 @@ export class GenericMappingTableComponent implements OnInit {
   isLoading: boolean = true;
 
   constructor(
-    private mappingService: SiMappingsService,
+    private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: SiWorkspaceService
+    private workspaceService: WorkspaceService
   ) { }
 
   tableDropdownWidth() {
@@ -52,7 +50,7 @@ export class GenericMappingTableComponent implements OnInit {
     }
   }
 
-  getDropdownValue(genericMapping: ExtendedGenericMappingV2) {
+  getDropdownValue(genericMapping: ExtendedGenericMapping) {
     if (genericMapping.employeemapping?.length) {
       if (this.employeeFieldMapping===FyleField.VENDOR) {
         return genericMapping?.employeemapping[0].destination_vendor;
@@ -71,7 +69,7 @@ export class GenericMappingTableComponent implements OnInit {
     return null;
   }
 
-  save(selectedRow: ExtendedGenericMappingV2, event: any): void {
+  save(selectedRow: ExtendedGenericMapping, event: any): void {
     if (selectedRow.employeemapping) {
       const employeeMapping: EmployeeMappingPost = {
         source_employee: {

@@ -12,3 +12,8 @@ export type FyleField = {
     display_name: string,
     is_dependent: boolean
 }
+
+export type MappingStats = {
+    all_attributes_count: number;
+    unmapped_attributes_count: number;
+};

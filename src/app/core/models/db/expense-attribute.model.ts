@@ -2,12 +2,12 @@ import { DestinationAttributeDetail } from "./error.model";
 
 export interface ExpenseAttribute {
     id: number;
-    attribute_type: string;
+    attribute_type: string | undefined;
     display_name: string;
     value: string;
     source_id: string;
     auto_mapped: boolean;
-    auto_created: boolean;
+    auto_created?: boolean;
     active: boolean;
     detail: DestinationAttributeDetail | null;
     created_at: string;

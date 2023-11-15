@@ -3,9 +3,12 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
-import { IntegrationField, FyleField } from '../../models/db/mapping.model';
+import { IntegrationField, FyleField, MappingStats } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
 import { MappingSetting, MappingSettingResponse } from '../../models/si/db/mapping-setting.model';
+import { AppName, MappingState } from '../../models/enum/enum.model';
+import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
+import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 
 
 @Injectable({
@@ -79,6 +82,38 @@ export class MappingService {
 
   triggerAutoMapEmployees() {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
+  }
+
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string, mappingPage: string): Observable<GenericMappingResponse> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    const isMapped: boolean = mappingState==='UNMAPPED' ? false : true;
+    const params: { limit: number, offset: number, mapped: boolean | MappingState, destination_type: string, mapping_source_alphabets?: string } = {
+      limit: pageLimit,
+      offset: pageOffset,
+      mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
+      destination_type: sourceType
+    };
+
+    if (alphabetsFilter && alphabetsFilter !== 'All') {
+      params.mapping_source_alphabets = alphabetsFilter;
+    }
+
+    return mappingPage==='EMPLOYEE' ? this.apiService.get(`/workspaces/${workspaceId}/mappings/employee_attributes/`, params) : this.apiService.get(`/workspaces/${workspaceId}/mappings/category_attributes/`, params);
+  }
+
+  getMappingStats(sourceType: string, destinationType: string, appName: string): Observable<MappingStats> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, {
+      source_type: sourceType,
+      destination_type: destinationType,
+      app_name: appName
+    });
+  }
+
+  postCategoryMappings(mapping: CategoryMappingPost): Observable<CategoryMapping> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.post(`/workspaces/${workspaceId}/mappings/category/`, mapping);
   }
 
 }

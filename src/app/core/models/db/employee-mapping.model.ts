@@ -14,7 +14,7 @@ export type EmployeeMapping = {
     id: number;
     source_employee: ExpenseAttribute;
     destination_employee: DestinationAttribute;
-    destination_vendo?: DestinationAttribute;
+    destination_vendor: DestinationAttribute;
     destination_card_account: DestinationAttribute;
     workspace: number;
 };
