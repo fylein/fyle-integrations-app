@@ -206,6 +206,10 @@ export class EmployeeMappingComponent implements OnInit {
     return attributes;
   }
 
+  sortDropdownOptions() {
+    this.fyleEmployeeOptions.sort((a, b) => a.value.localeCompare(b.value));
+  }
+
   optionSearchWatcher() {
     this.optionSearchUpdate.pipe(
       debounceTime(1000)
@@ -223,6 +227,7 @@ export class EmployeeMappingComponent implements OnInit {
         });
 
         this.fyleEmployeeOptions = existingOptions.concat(newOptions);
+        this.sortDropdownOptions();
         event.employeeMapping.isOptionSearchInProgress = false;
       });
     });
@@ -232,6 +237,14 @@ export class EmployeeMappingComponent implements OnInit {
     if (event.filter) {
       employeeMapping.isOptionSearchInProgress = true;
       this.optionSearchUpdate.next({searchTerm: event.filter, employeeMapping});
+    }
+  }
+
+  private addMissingOption(dropdownOption: IntacctDestinationAttribute): void {
+    const option = this.fyleEmployeeOptions.find(attribute => attribute.id === dropdownOption.id);
+
+    if (!option) {
+      this.fyleEmployeeOptions.push(dropdownOption);
     }
   }
 
@@ -253,9 +266,11 @@ export class EmployeeMappingComponent implements OnInit {
         employeeMappingResponse.results.forEach((mapping) => {
           const employeeMapping = this.getDropdownValue(mapping.employeemapping);
           if (employeeMapping) {
-            this.fyleEmployeeOptions.push(employeeMapping);
+            this.addMissingOption(employeeMapping);
           }
         });
+
+        this.sortDropdownOptions();
 
         // Creating a map of primary keys to avoid duplicate options during search
         this.fyleEmployeeOptions.forEach((option) => {
