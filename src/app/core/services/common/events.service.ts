@@ -3,6 +3,7 @@ import { environment } from 'src/environments/environment';
 import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.model';
 import { WindowService } from './window.service';
 import { NavigationStart, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 export const EXPOSE_INTACCT_NEW_APP = true;
 
@@ -18,6 +19,7 @@ export class EventsService {
   @Output() redirectToOldIntacctApp: EventEmitter<string> = new EventEmitter();
 
   constructor(
+    private location: Location,
     private router: Router,
     private windowService: WindowService
   ) { }
@@ -31,26 +33,28 @@ export class EventsService {
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }
-      } else if (message.data && typeof(message.data) !== 'object' && JSON.parse(message.data).type === 'connectionStatusChange' && message.origin.includes('workato')) {
+      } else if (message.data && message.data.navigateBack) {
+        this.location.back();
+      } else if (message.data && typeof (message.data) !== 'object' && JSON.parse(message.data).type === 'connectionStatusChange' && message.origin.includes('workato')) {
         this.getWorkatoConnectionStatus.emit(JSON.parse(message.data));
       }
     }, false);
   }
 
-    postEvent(callbackUrl: string, clientId: string): void {
-      const payload = { callbackUrl, clientId };
-      this.windowService.nativeWindow.parent.postMessage(payload, environment.fyle_app_url);
-    }
+  postEvent(callbackUrl: string, clientId: string): void {
+    const payload = { callbackUrl, clientId };
+    this.windowService.nativeWindow.parent.postMessage(payload, environment.fyle_app_url);
+  }
 
-    private postRoute(route: string): void {
-      this.windowService.nativeWindow.parent.postMessage({current_route: route}, environment.fyle_app_url);
-    }
+  private postRoute(route: string): void {
+    this.windowService.nativeWindow.parent.postMessage({ current_route: route.substring(1) }, environment.fyle_app_url);
+  }
 
-    setupRouteWatcher(): void {
-      this.router.events.subscribe((routerEvent) => {
-        if (routerEvent instanceof NavigationStart) {
-          this.postRoute(routerEvent.url);
-        }
+  setupRouteWatcher(): void {
+    this.router.events.subscribe((routerEvent) => {
+      if (routerEvent instanceof NavigationStart) {
+        this.postRoute(routerEvent.url);
+      }
     });
-    }
+  }
 }
