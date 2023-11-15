@@ -9,7 +9,7 @@ const routes: Routes = [
     component: Sage300MappingComponent,
     children: [
       {
-        path: 'mapping/:source_field',
+        path: ':source_field',
         component: Sage300BaseMappingComponent
       }
     ]
