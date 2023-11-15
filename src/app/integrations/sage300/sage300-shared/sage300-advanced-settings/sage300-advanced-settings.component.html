@@ -29,7 +29,7 @@
                     <app-configuration-toggle-field 
                         [form]="advancedSettingForm"
                         [label]="'Schedule automatic export'" 
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from Fyle to QuickBooks Desktop.'" 
+                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from Fyle to Sage 300 CRE.'" 
                         [formControllerName]="'scheduleEnabled'"
                         [iconPath]="'calender'">
                     </app-configuration-toggle-field>
@@ -57,7 +57,7 @@
                         </app-email-multi-select-field> -->
                     </div>
                 </div>
-                <div *ngIf="isReimbursableExpense" class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white">
+                <!-- <div *ngIf="isReimbursableExpense" class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white">
                     <app-configuration-toggle-field 
                         [form]="advancedSettingForm"
                         [label]="'Auto-Sync Payment Status for Reimbursable Expenses'" 
@@ -79,7 +79,7 @@
                             [formControllerName]="'defaultJobName'">
                         </app-configuration-select-field>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="tw-mb-16-px">
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg tw-p-24-px">
@@ -89,26 +89,6 @@
                     <h5 class="tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400">
                         In this section, you can customize the data that you'd like to export from Fyle to Sage 300 CRE. You can choose what data points need to be exported and what shouldn't be.
                     </h5>
-                </div>
-            </div>
-            <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'Top level description'"
-                    [label]="'Set the top-level Description Field in Sage 300 CRE'"
-                    [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Sage 300 CRE and re-order them as per your requirement.'"
-                    [simpleOptions]="defaultTopMemoOptions"
-                    [showClearIcon]="true"
-                    [iconPath]="'expense'"
-                    [placeholder]="'Set description'"
-                    [formControllerName]="'topLevelMemo'">
-                </app-configuration-select-field>
-                <div class="preview-text preview-section">
-                    <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
-                    <div class="preview-box">
-                        {{advancedSettingForm.value.topLevelMemo ? advancedSettingForm.value.topLevelMemo : 'Preview Description'}}
-                    </div>
                 </div>
             </div>
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
@@ -137,7 +117,7 @@
                     [subLabel]="'You could choose to skip expenses from Fyle to Sage 300 CRE by setting up a conditional rule.'" 
                     [formControllerName]="'skipExport'"
                     [iconPath]="'expense'"
-                    [redirectLink]="'jhjh'">
+                    [redirectLink]="skipExportRedirectLink">
                 </app-configuration-toggle-field>
                 <div *ngIf="advancedSettingForm.value.skipExport">
                     <app-configuration-skip-export
@@ -164,7 +144,7 @@
                     [form]="advancedSettingForm"
                     [label]="'Auto-Create Vendor'" 
                     [subLabel]="'When matching Vendor record is not found for an employee in Fyle, the integration will auto-create a new record in Sage 300 CRE.'" 
-                    [formControllerName]="'autoCreateMerchantDestinationEntity'"
+                    [formControllerName]="'autoCreateVendor'"
                     [iconPath]="'people'">
                 </app-configuration-toggle-field>
             </div>

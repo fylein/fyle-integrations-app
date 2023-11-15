@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ConditionField, EmailOption, ExpenseFilter, ExpenseFilterGetResponse, ExpenseFilterPayload} from "../../common/advanced-settings.model";
+import { ConditionField, EmailOption, ExpenseFilterPost, ExpenseFilterResponse, ExpenseFilterPayload} from "../../common/advanced-settings.model";
 import { JoinOption } from "../../enum/enum.model";
 
 export type AdvancedSettingValidatorRule = {
@@ -19,7 +19,7 @@ export type Sage300AdvancedSetting = {
     schedule_enabled: boolean,
     emails_selected: EmailOption[],
     emails_added: EmailOption[],
-    auto_map_vendor: boolean
+    auto_create_vendor: boolean
 }
 
 export interface Sage300AdvancedSettingGet extends Sage300AdvancedSetting {
@@ -33,7 +33,7 @@ export interface Sage300AdvancedSettingPost extends Sage300AdvancedSetting {}
 
 export class Sage300AdvancedSettingModel {
 
-    static constructSkipExportPayload(valueField: ExpenseFilterPayload, valueOption1: any[]): ExpenseFilter {
+    static constructSkipExportPayload(valueField: ExpenseFilterPayload, valueOption1: any[]): ExpenseFilterPost {
         const op:string = (valueField.operator) as string;
         return {
           condition: valueField.condition.field_name,
@@ -48,7 +48,7 @@ export class Sage300AdvancedSettingModel {
         };
       }
 
-    static mapAPIResponseToFormGroup(advancedSettings: Sage300AdvancedSettingGet | null): FormGroup {
+    static mapAPIResponseToFormGroup(advancedSettings: Sage300AdvancedSettingGet | null, isSkipExportEnabled: boolean): FormGroup {
         return new FormGroup({
             autoCreateMerchantDestinationEntity: new FormControl(advancedSettings?.auto_create_merchant_destination_entity ? true : false),
             syncSage300ToFylePayments: new FormControl(advancedSettings?.sync_sage_300_to_fyle_payments ? true : false),
@@ -58,9 +58,9 @@ export class Sage300AdvancedSettingModel {
             scheduleEnabled: new FormControl(advancedSettings?.schedule_enabled ? true : false),
             email: new FormControl(advancedSettings?.emails_selected ? advancedSettings?.emails_selected : []),
             emailsAdded: new FormControl(advancedSettings?.emails_added ? advancedSettings?.emails_added : null),
-            autoMapVendor: new FormControl(advancedSettings?.auto_map_vendor ? true : false),
+            autoCreateVendor: new FormControl(advancedSettings?.auto_create_vendor ? true : false),
             scheduleAutoExportFrequency: new FormControl(1),
-            topLevelMemo: new FormControl(null)
+            skipExport: new FormControl(isSkipExportEnabled)
         });
     }
 
@@ -75,7 +75,7 @@ export class Sage300AdvancedSettingModel {
             schedule_enabled: advancedSettingsForm.get('schedule_enabled')?.value ? advancedSettingsForm.get('schedule_enabled')?.value : false,
             emails_selected: advancedSettingsForm.get('emails_selected')?.value ? advancedSettingsForm.get('emails_selected')?.value : null,
             emails_added: advancedSettingsForm.get('emails_added')?.value ? advancedSettingsForm.get('emails_added')?.value : false,
-            auto_map_vendor: advancedSettingsForm.get('auto_map_vendor')?.value ? advancedSettingsForm.get('auto_map_vendor')?.value : false
+            auto_create_vendor: advancedSettingsForm.get('auto_create_vendor')?.value ? advancedSettingsForm.get('auto_create_vendor')?.value : false
         };
     }
 }

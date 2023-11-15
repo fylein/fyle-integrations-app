@@ -1,9 +1,9 @@
 <div [formGroup]="form" class="tw-p-24-px tw-flex tw-justify-between tw-items-center">
     <div class="tw-w-3/4 tw-flex tw-items-start">
-      <div *ngIf="iconPath">
+      <div *ngIf="iconPath" [ngClass]="[iconPath ? 'tw-pr-16-px' : '']">
         <svg-icon-sprite [src]="iconPath" width="20px" height="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
       </div>
-      <div class="tw-pl-16-px">
+      <div>
         <h4 [ngClass]="{'tw-text-slightly-normal-text-color': !isSectionHeader}" class="tw-text-16-px !tw-font-500 ">{{ label }}</h4>
         <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
           <span [innerHTML]="subLabel"></span>

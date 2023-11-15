@@ -18,7 +18,7 @@ export type ConditionField = {
   is_custom: boolean;
 };
 
-export type ExpenseFilter = {
+export type ExpenseFilterPost = {
     condition: string;
     operator: Operator | string;
     values: string | string[]
@@ -36,22 +36,22 @@ export type ExpenseFilterPayload = {
     rank: number
   }
 
-export interface ExpenseFilterResponse extends ExpenseFilter {
+export interface ExpenseFilter extends ExpenseFilterPost {
     id: number,
     created_at: Date,
     update_at: Date,
     workspace: number
 }
 
-export type ExpenseFilterGetResponse = {
+export type ExpenseFilterResponse = {
     count: number,
     next: string | null,
     previous: string | null,
-    results: ExpenseFilterResponse[]
+    results: ExpenseFilter[]
 };
 
 export class SkipExportModel {
-  static setConditionFields(response: ExpenseFilterGetResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
+  static setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
     response.results.forEach((element) => {
       const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
@@ -87,7 +87,7 @@ export class SkipExportModel {
 
   }
 
-  static setupSkipExportForm(response: ExpenseFilterGetResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
+  static setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
     this.setConditionFields(response, conditionArray, conditionFieldOptions);
     let [selectedOperator1, valueFC1, customFieldTypeFC1] = ['', '', ''];
     let [selectedOperator2, valueFC2] = ['', ''];
@@ -95,7 +95,7 @@ export class SkipExportModel {
     let isDisabledChip2: boolean = false;
     let isDisabledChip1: boolean = false;
 
-    response.results.forEach((result: ExpenseFilter, index: number) => {
+    response.results.forEach((result: ExpenseFilterPost, index: number) => {
         if (index === 0) {
             selectedOperator1 = this.getSelectedOperator(result.operator, result.values[0]);
             if (!(selectedOperator1 === 'is_empty' || selectedOperator1 === 'is_not_empty')) {

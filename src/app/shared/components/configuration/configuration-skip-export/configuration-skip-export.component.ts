@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { ConditionField, ExpenseFilterGetResponse } from 'src/app/core/models/common/advanced-settings.model';
+import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
 import { JoinOption } from 'src/app/core/models/enum/enum.model';
 import { CustomOperatorOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -16,7 +16,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   @Input() skipExportForm: FormGroup;
 
-  @Input() expenseFilter: ExpenseFilterGetResponse;
+  @Input() expenseFilter: ExpenseFilterResponse;
 
   @Input() conditionFieldOptions: ConditionField[];
 
@@ -72,7 +72,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     private helper: HelperService
   ) { }
 
-  private setConditionFields(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+  private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     response.results.forEach((element) => {
       const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
@@ -80,7 +80,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     });
   }
 
-  private setOperatorFieldOptions(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+  private setOperatorFieldOptions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     if (conditionArray.length) {
       if (response.results[0].is_custom) {
         this.setCustomOperatorOptions(response.results[0].rank, response.results[0].custom_field_type);
@@ -97,7 +97,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     }
   }
 
-  private setSkippedConditions(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+  private setSkippedConditions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     if (response.count > 0) {
       this.skippedCondition1 = conditionArray[0].field_name;
       if (response.count > 1 && response.results[0].join_by) {
@@ -245,7 +245,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     }
   }
 
-  setupSkipExportForm(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+  setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     this.isLoading = true;
     this.showAddButton = response.count === 1;
     this.setConditionFields(response, conditionArray);
