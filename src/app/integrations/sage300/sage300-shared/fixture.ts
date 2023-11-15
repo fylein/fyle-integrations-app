@@ -1,5 +1,6 @@
-import { ConditionField, EmailOption, ExpenseFilterGetResponse, JoinOption, Operator } from "src/app/core/models/common/advanced-settings.model";
+import { ConditionField, EmailOption, ExpenseFilterGetResponse} from "src/app/core/models/common/advanced-settings.model";
 import { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
+import { JoinOption, Operator } from "src/app/core/models/enum/enum.model";
 import { Sage300AdvancedSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.mode";
 import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
 
@@ -86,8 +87,7 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
     auto_create_destination_entity: false,
     default_job_name: "",
     default_job_id: 0,
-    auto_map_vendor: false,
-    skipExport: false
+    auto_map_vendor: false
 };
 
 export const adminEmails: EmailOption[] = [

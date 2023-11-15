@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
-import { ConditionField, EmailOption, ExpenseFilter, ExpenseFilterGetResponse, ExpenseFilterResponse, HourOption } from 'src/app/core/models/common/advanced-settings.model';
+import { ConditionField, EmailOption, ExpenseFilter, ExpenseFilterGetResponse, ExpenseFilterResponse, HourOption, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
 import { AppName, ConfigurationCta, Sage300Link } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingValidatorRule, Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.mode';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -101,10 +101,10 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.advancedSettingForm.controls.skipExport.valueChanges.subscribe((isSelected) => {
       if (isSelected) {
         const fields = ['condition1', 'operator1', 'value1'];
-        this.helper.skipExportFormSettingChange(this.skipExportForm, fields, true);
+        this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, true);
       } else {
         const fields = ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by'];
-        this.helper.skipExportFormSettingChange(this.skipExportForm, fields, false);
+        this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, false);
       }
     });
   }
@@ -230,7 +230,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = ExpenseFilterCondition;
       this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting);
-      this.skipExportForm = Sage300AdvancedSettingModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
+      this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;
     });

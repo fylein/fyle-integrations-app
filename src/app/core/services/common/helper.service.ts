@@ -130,7 +130,7 @@ export class HelperService {
     return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
   }
 
-  skipExportFormSettingChange(skipExportForm: FormGroup, fields: string[], isChanged: boolean): void {
+  handleSkipExportFormUpdates(skipExportForm: FormGroup, fields: string[], isChanged: boolean): void {
     if (isChanged) {
       fields.forEach((value) => {
         this.markControllerAsRequired(skipExportForm, value);

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { ConditionField, ExpenseFilterGetResponse, JoinOption} from 'src/app/core/models/common/advanced-settings.model';
+import { ConditionField, ExpenseFilterGetResponse } from 'src/app/core/models/common/advanced-settings.model';
+import { JoinOption } from 'src/app/core/models/enum/enum.model';
 import { CustomOperatorOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
@@ -146,7 +147,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.showAddButton = !show;
     if (this.showAdditionalCondition) {
       const fields = ['join_by', 'condition2', 'operator2'];
-      this.helper.skipExportFormSettingChange(this.skipExportForm, fields, true);
+      this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, true);
       if (this.skipExportForm.controls.value2.value.length===0) {
         this.helper.markControllerAsRequired(this.skipExportForm, 'value2');
       }
@@ -159,7 +160,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.resetAdditionalFilter();
     const isDelete = this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(2) : '';
     const fields = ['join_by', 'condition2', 'operator2', 'value2'];
-    this.helper.skipExportFormSettingChange(this.skipExportForm, fields, false);
+    this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, false);
   }
 
   checkValidationCondition() {
@@ -229,26 +230,19 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   setCustomOperatorOptions(rank: number, type: string | null) {
-      if (type !== 'SELECT') {
-        if (rank === 1) {
-          this.operatorFieldOptions1 = this.customOperatorOptions;
-        } else if (rank === 2) {
-          this.operatorFieldOptions2 = this.customOperatorOptions;
-        }
-      } else {
-        if (rank === 1) {
-          this.operatorFieldOptions1 = this.customSelectOperatorOptions;
-        } else if (rank === 2) {
-          this.operatorFieldOptions2 = this.customSelectOperatorOptions;
-        }
+    if (type !== 'SELECT') {
+      if (rank === 1) {
+        this.operatorFieldOptions1 = this.customOperatorOptions;
+      } else if (rank === 2) {
+        this.operatorFieldOptions2 = this.customOperatorOptions;
+      }
+    } else {
+      if (rank === 1) {
+        this.operatorFieldOptions1 = this.customSelectOperatorOptions;
+      } else if (rank === 2) {
+        this.operatorFieldOptions2 = this.customSelectOperatorOptions;
       }
     }
-
-  compareObjects(selectedOption: any, listedOption: any): boolean {
-    if (JSON.stringify(selectedOption) === JSON.stringify(listedOption)) {
-      return true;
-    }
-    return false;
   }
 
   setupSkipExportForm(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
