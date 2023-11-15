@@ -23,11 +23,6 @@ export enum Operator {
   LessThanOrEqual = "lte"
 }
 
-export const JoinOptions = {
-  AND: 'AND',
-  OR: 'OR'
-};
-
 export enum JoinOption {
   AND = "AND",
   OR = "OR"
@@ -41,7 +36,7 @@ export enum CustomOperatorOption {
 
 export type ExpenseFilter = {
     condition: string;
-    operator: Operator.IsNull | Operator.IExact | Operator.IContains | Operator.LessThan | Operator.LessThanOrEqual;
+    operator: Operator | string;
     values: string | string[]
     rank: number;
     join_by:JoinOption.AND | JoinOption.OR | null;

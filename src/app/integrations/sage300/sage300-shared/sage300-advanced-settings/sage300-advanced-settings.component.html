@@ -45,7 +45,7 @@
                             [placeholder]="'Set Schedule'"
                             [formControllerName]="'scheduleAutoExportFrequency'">
                         </app-configuration-select-field>
-                        <app-email-multi-select-field
+                        <!-- <app-email-multi-select-field
                             [form]="advancedSettingForm"
                             [label]="'Send Error Notification to'"
                             [isFieldMandatory]="false"
@@ -54,7 +54,7 @@
                             [options]="adminEmails"
                             [placeholder]="'Select email address'"
                             [formControllerName]="'email'">
-                        </app-email-multi-select-field>
+                        </app-email-multi-select-field> -->
                     </div>
                 </div>
                 <div *ngIf="isReimbursableExpense" class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white">
@@ -98,7 +98,7 @@
                     [mandatoryErrorListName]="'Top level description'"
                     [label]="'Set the top-level Description Field in Sage 300 CRE'"
                     [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Sage 300 CRE and re-order them as per your requirement.'"
-                    [options]="hours"
+                    [simpleOptions]="defaultTopMemoOptions"
                     [showClearIcon]="true"
                     [iconPath]="'expense'"
                     [placeholder]="'Set description'"
@@ -107,7 +107,26 @@
                 <div class="preview-text preview-section">
                     <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
                     <div class="preview-box">
-                        {{advancedSettingForm.value.topLevelMemo}}lkjljlkl
+                        {{advancedSettingForm.value.topLevelMemo ? advancedSettingForm.value.topLevelMemo : 'Preview Description'}}
+                    </div>
+                </div>
+            </div>
+            <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
+                <app-configuration-multi-select
+                    [form]="advancedSettingForm"
+                    [isFieldMandatory]="false"
+                    [mandatoryErrorListName]="'Item level description'"
+                    [label]="'Set the line item-level Description Field in Sage 300 CRE'"
+                    [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Sage 300 CRE and re-order them as per your requirement.'"
+                    [options]="defaultMemoOptions"
+                    [iconPath]="'expense'"
+                    [placeholder]="'Set description'"
+                    [formControllerName]="'memoStructure'">
+                </app-configuration-multi-select>
+                <div class="preview-text preview-section">
+                    <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
+                    <div class="preview-box">
+                        {{memoPreviewText}}
                     </div>
                 </div>
             </div>
@@ -125,6 +144,7 @@
                     [enableSkipExport]="advancedSettingForm.value.skipExport"
                     [skipExportForm]="skipExportForm"
                     [expenseFilter]="expenseFilters"
+                    [conditionFieldOptions]="conditionFieldOptions"
                     (deleteSkipExportForm)="deleteExpenseFilter($event)">
                     </app-configuration-skip-export>
                 </div>

@@ -1,11 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { forkJoin } from 'rxjs';
-import { ConditionField, ExpenseFilterGetResponse, JoinOptions, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
-import { Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.mode';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { ConditionField, ExpenseFilterGetResponse, JoinOption} from 'src/app/core/models/common/advanced-settings.model';
 import { CustomOperatorOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 
 @Component({
   selector: 'app-configuration-skip-export',
@@ -19,6 +16,8 @@ export class ConfigurationSkipExportComponent implements OnInit {
   @Input() skipExportForm: FormGroup;
 
   @Input() expenseFilter: ExpenseFilterGetResponse;
+
+  @Input() conditionFieldOptions: ConditionField[];
 
   @Output() deleteSkipExportForm = new EventEmitter<number>();
 
@@ -36,13 +35,11 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   workspaceId: number;
 
-  conditionFieldOptions: ConditionField[];
-
   operatorFieldOptions1: { label: string; value: string }[];
 
   operatorFieldOptions2: { label: string; value: string }[];
 
-  joinByOptions = [{value: JoinOptions.AND}, {value: JoinOptions.OR}];
+  joinByOptions = [{label: 'AND', value: JoinOption.AND}, {label: 'OR', value: JoinOption.OR}];
 
   customOperatorOptions = [
     {
@@ -256,7 +253,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   setupSkipExportForm(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
     this.isLoading = true;
-    this.showExpenseFilters = response.count > 0;
+    this.showAddButton = response.count === 1;
     this.setConditionFields(response, conditionArray);
     this.setOperatorFieldOptions(response, conditionArray);
     this.setSkippedConditions(response, conditionArray);

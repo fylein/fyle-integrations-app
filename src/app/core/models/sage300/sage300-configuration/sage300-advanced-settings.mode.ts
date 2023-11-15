@@ -1,5 +1,5 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ConditionField, EmailOption, ExpenseFilter, ExpenseFilterGetResponse, ExpenseFilterPayload, JoinOption, Operator } from "../../common/advanced-settings.model";
+import { ConditionField, EmailOption, ExpenseFilter, ExpenseFilterGetResponse, ExpenseFilterPayload, JoinOption } from "../../common/advanced-settings.model";
 
 export type AdvancedSettingValidatorRule = {
     condition1: string[];
@@ -33,6 +33,14 @@ export interface Sage300AdvancedSettingPost extends Sage300AdvancedSetting {}
 
 export class Sage300AdvancedSettingModel {
 
+    static setConditionFields(response: ExpenseFilterGetResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
+        response.results.forEach((element) => {
+          const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name === element.condition);
+          const selectedConditionOption : ConditionField = type[0];
+          conditionArray.push(selectedConditionOption);
+        });
+      }
+
     static getSelectedOperator(operator: string, value: any) {
         switch (operator) {
             case 'isnull':
@@ -47,9 +55,9 @@ export class Sage300AdvancedSettingModel {
     }
 
     static getFieldValue(value: any, condition: ConditionField, rank: number) {
-        if (condition.type === 'DATE') {
+        if (condition?.type === 'DATE') {
           return new Date(value[0]);
-        } else if (condition.field_name === 'report_title') {
+        } else if (condition?.field_name === 'report_title') {
           return value[0];
         }
         if (rank === 1) {
@@ -61,7 +69,8 @@ export class Sage300AdvancedSettingModel {
 
       }
 
-    static setupSkipExportForm(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+    static setupSkipExportForm(response: ExpenseFilterGetResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
+        this.setConditionFields(response, conditionArray, conditionFieldOptions);
         let [selectedOperator1, valueFC1, customFieldTypeFC1] = ['', '', ''];
         let [selectedOperator2, valueFC2] = ['', ''];
         let joinByFC = '';

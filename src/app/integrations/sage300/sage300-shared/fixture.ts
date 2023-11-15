@@ -1,4 +1,6 @@
+import { ConditionField, EmailOption, ExpenseFilterGetResponse, JoinOption, Operator } from "src/app/core/models/common/advanced-settings.model";
 import { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
+import { Sage300AdvancedSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.mode";
 import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
 
 export const importSettingsResponse: Sage300ImportSettingGet = {
@@ -48,17 +50,141 @@ export const fyleFieldsResponse: FyleField[] = [
     }
 ];
 export const sage300FieldsResponse: IntegrationField[] =
-    [
+[
+    {
+        "attribute_type": "COST_CENTER",
+        "display_name": "Cost Center"
+    },
+    {
+        "attribute_type": "PROJECT",
+        "display_name": "Project"
+    },
+    {
+        "attribute_type": "CLASS",
+        "display_name": "Class"
+    }
+];
+
+export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
+    "sync_sage_300_to_fyle_payments": true,
+    "memo_structure": [
+        "employee_email",
+        "category",
+        "spent_on",
+        "report_number",
+        "purpose",
+        "expense_link"
+    ],
+    "auto_create_merchant_destination_entity": false,
+    "schedule_enabled": true,
+    "emails_selected": [{ "name": "Nilesh Pant", "email": "nilesh.p@fyle.in" }],
+    "emails_added": [{ "name": "Ashwin", "email": "Asjhwein@gmail.com" }],
+    id: 0,
+    created_at: new Date(),
+    update_at: new Date(),
+    workspace: 1,
+    auto_create_destination_entity: false,
+    default_job_name: "",
+    default_job_id: 0,
+    auto_map_vendor: false,
+    skipExport: false
+};
+
+export const adminEmails: EmailOption[] = [
+	{
+			"name": "Nilesh Pant",
+			"email": "nilesh.p@fyle.in"
+  }
+];
+
+export const expenseFiltersGet: ExpenseFilterGetResponse =
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
         {
-            "attribute_type": "COST_CENTER",
-            "display_name": "Cost Center"
+            "id": 45,
+            "condition": "spent_at",
+            "operator": 'lt',
+            "values": [
+                "2023-10-16T17:00:00.000Z"
+            ],
+            "rank": 1,
+            "join_by": JoinOption.AND,
+            "is_custom": false,
+            "custom_field_type": null,
+            "created_at": new Date(),
+            "update_at": new Date(),
+            "workspace": 383
         },
         {
-            "attribute_type": "PROJECT",
-            "display_name": "Project"
-        },
-        {
-            "attribute_type": "CLASS",
-            "display_name": "Class"
+            "id": 46,
+            "condition": "employee_email",
+            "operator": Operator.IExact,
+            "values": [
+                "aba@gamil.com"
+            ],
+            "rank": 2,
+            "join_by": null,
+            "is_custom": false,
+            "custom_field_type": null,
+            "created_at": new Date(),
+            "update_at": new Date(),
+            "workspace": 383
         }
-    ];
+    ]
+};
+
+export const ExpenseFilterCondition: ConditionField[] = [
+    {
+        "field_name": "employee_email",
+        "type": "SELECT",
+        "is_custom": false
+    },
+    {
+        "field_name": "claim_number",
+        "type": "TEXT",
+        "is_custom": false
+    },
+    {
+        "field_name": "report_title",
+        "type": "TEXT",
+        "is_custom": false
+    },
+    {
+        "field_name": "spent_at",
+        "type": "DATE",
+        "is_custom": false
+    },
+    {
+        "field_name": "Class",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "Fyle Categories",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "Operating System",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "User Dimension",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "Asdasdas",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "Nilesh Custom Field",
+        "type": "SELECT",
+        "is_custom": true
+    }
+];
