@@ -23,11 +23,16 @@
             optionLabel="value" class="!tw-w-300-px"
             [formControlName]="formControllerName"
             [placeholder]="placeholder"
-            [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"
+            [ngClass]="{
+                'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
+                'normal-box': !form.controls[formControllerName].invalid || !isFieldMandatory || !form.controls[formControllerName].touched,
+                'hide-chevron': !isOptionSearchInProgress && form.controls[formControllerName].value
+            }"            
             [filter]="true" 
             filterBy="value"
             (onFilter)="searchOptions($event)"
-            [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'"
+            [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
+            [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : (form.controls[formControllerName].value ? '' : 'pi pi-chevron-down')"
             >
             <ng-template let-option pTemplate="item">
                 <div #textElement 
@@ -41,7 +46,7 @@
                     <span>
                         {{ item.label }}
                     </span>
-                    <i class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                    <i *ngIf="!isOptionSearchInProgress" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
                 </div>
             </ng-template>
             </p-dropdown>

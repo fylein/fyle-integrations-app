@@ -481,7 +481,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     this.exportSettingService.getExportSettings().subscribe((exportSettings) => {
       this.exportSettings = exportSettings;
 
-      this.addMissingOptions();
+      // this.addMissingOptions();
 
       this.setUpExpenseStates();
       this.setupCCCExpenseGroupingDateOptions();
