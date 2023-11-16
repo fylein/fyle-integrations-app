@@ -125,10 +125,10 @@ export class Sage300ImportSettingModel {
             import_vendors_as_merchants: importSettingsForm.get('importVendorAsMerchant')?.value,
             mapping_settings: importSettingsForm.get('expenseFields')?.value,
             dependent_field_settings: {
-                cost_code_field_name: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.attribute_type : (importSettings.dependent_field_settings?.cost_code_field_name ? importSettings.dependent_field_settings?.cost_code_field_name : null),
-                cost_code_placeholder: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.display_name : (importSettings.dependent_field_settings?.cost_code_placeholder ? importSettings.dependent_field_settings?.cost_code_placeholder : null),
-                cost_category_field_name: importSettingsForm.get('costCategory')?.value ? importSettingsForm.get('costCategory')?.value.attribute_type : (importSettings.dependent_field_settings?.cost_category_field_name ? importSettings.dependent_field_settings?.cost_category_field_name : null),
-                cost_category_placeholder: importSettingsForm.get('costCategory')?.value ? importSettingsForm.get('costCategory')?.value.display_name : (importSettings.dependent_field_settings?.cost_category_placeholder ? importSettings.dependent_field_settings?.cost_category_placeholder : null),
+                cost_code_field_name: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.attribute_type : (importSettings?.dependent_field_settings?.cost_code_field_name ? importSettings.dependent_field_settings?.cost_code_field_name : null),
+                cost_code_placeholder: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.display_name : (importSettings?.dependent_field_settings?.cost_code_placeholder ? importSettings.dependent_field_settings?.cost_code_placeholder : null),
+                cost_category_field_name: importSettingsForm.get('costCategory')?.value ? importSettingsForm.get('costCategory')?.value.attribute_type : (importSettings?.dependent_field_settings?.cost_category_field_name ? importSettings.dependent_field_settings?.cost_category_field_name : null),
+                cost_category_placeholder: importSettingsForm.get('costCategory')?.value ? importSettingsForm.get('costCategory')?.value.display_name : (importSettings?.dependent_field_settings?.cost_category_placeholder ? importSettings.dependent_field_settings?.cost_category_placeholder : null),
                 is_import_enabled: importSettingsForm.get('isDependentImportEnabled')?.value
             }
         };

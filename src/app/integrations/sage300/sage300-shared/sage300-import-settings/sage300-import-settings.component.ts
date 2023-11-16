@@ -380,9 +380,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.mappingService.getIntegrationsFields(AppNameInService.SAGE300)
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, sage300FieldsResponse]) => {
       this.importSettings = importSettingsResponse;
-      this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse);
-      this.fyleFields = fyleFieldsResponse;
-      this.sage300Fields = sage300FieldsResponse;
+      this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse.results);
+      this.fyleFields = fyleFieldsResponse.results;
+      this.sage300Fields = sage300FieldsResponse.results;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
       this.dependentFieldFormCreation();
