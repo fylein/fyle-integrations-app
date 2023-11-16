@@ -20,7 +20,7 @@ export type ConditionField = {
 
 export type ExpenseFilterPost = {
     condition: string;
-    operator: Operator | string;
+    operator: Operator.IsNull | Operator.IExact | Operator.IContains | Operator.LessThan | Operator.LessThanOrEqual | string;
     values: string | string[]
     rank: number;
     join_by:JoinOption.AND | JoinOption.OR | null;
@@ -30,7 +30,7 @@ export type ExpenseFilterPost = {
 
 export type ExpenseFilterPayload = {
     condition: ConditionField,
-    operator: Operator,
+    operator: ExpenseFilterPost['operator'],
     value: string[]
     join_by: string,
     rank: number

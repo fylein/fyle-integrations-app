@@ -33,8 +33,8 @@ export class Sage300AdvancedSettingsService {
   @CacheBuster({
     cacheBusterNotifier: sage300AdvancedSettingGetCache
   })
-  postExportSettings(exportSettingsPayload: Sage300AdvancedSettingPost): Observable<Sage300AdvancedSettingGet> {
-    return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+  postAdvancedSettings(advancedSettingsPayload: Sage300AdvancedSettingPost): Observable<Sage300AdvancedSettingGet> {
+    return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, advancedSettingsPayload);
   }
 
   getExpenseFilelds(): Observable<ConditionField[]> {

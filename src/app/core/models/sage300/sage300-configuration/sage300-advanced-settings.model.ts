@@ -65,15 +65,15 @@ export class Sage300AdvancedSettingModel {
 
     static createAdvancedSettingPayload(advancedSettingsForm: FormGroup): Sage300AdvancedSettingPost {
         return {
-          auto_create_merchant_destination_entity: advancedSettingsForm.get('auto_create_merchant_destination_entity')?.value ? advancedSettingsForm.get('auto_create_merchant_destination_entity')?.value : false,
-          sync_sage_300_to_fyle_payments: advancedSettingsForm.get('sync_sage_300_to_fyle_payments')?.value ? advancedSettingsForm.get('sync_sage_300_to_fyle_payments')?.value : false,
-          auto_create_destination_entity: advancedSettingsForm.get('auto_create_destination_entity')?.value ? advancedSettingsForm.get('auto_create_destination_entity')?.value : false,
-          memo_structure: advancedSettingsForm.get('memo_structure')?.value ? advancedSettingsForm.get('memo_structure')?.value : null,
-          default_job_name: advancedSettingsForm.get('default_job_name')?.value ? advancedSettingsForm.get('default_job_name')?.value.name : null,
-          default_job_id: advancedSettingsForm.get('default_job_name')?.value ? advancedSettingsForm.get('default_job_name')?.value.destination_id : null,
-          schedule_enabled: advancedSettingsForm.get('schedule_enabled')?.value ? advancedSettingsForm.get('schedule_enabled')?.value : false,
+          auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value ? advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value : false,
+          sync_sage_300_to_fyle_payments: advancedSettingsForm.get('syncSage300ToFylePayments')?.value ? advancedSettingsForm.get('syncSage300ToFylePayments')?.value : false,
+          auto_create_destination_entity: advancedSettingsForm.get('autoCreateDestinationEntity')?.value ? advancedSettingsForm.get('autoCreateDestinationEntity')?.value : false,
+          memo_structure: advancedSettingsForm.get('memoStructure')?.value ? advancedSettingsForm.get('memoStructure')?.value : null,
+          default_job_name: advancedSettingsForm.get('defaultJobName')?.value ? advancedSettingsForm.get('defaultJobName')?.value.name : null,
+          default_job_id: advancedSettingsForm.get('defaultJobName')?.value ? advancedSettingsForm.get('defaultJobName')?.value.destination_id : null,
+          schedule_enabled: advancedSettingsForm.get('scheduleEnabled')?.value ? advancedSettingsForm.get('scheduleEnabled')?.value : false,
           intervel_hours: advancedSettingsForm.get('scheduleAutoExportFrequency')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
-          auto_create_vendor: advancedSettingsForm.get('auto_create_vendor')?.value ? advancedSettingsForm.get('auto_create_vendor')?.value : false
+          auto_create_vendor: advancedSettingsForm.get('autoCreateVendor')?.value ? advancedSettingsForm.get('autoCreateVendor')?.value : false
         };
     }
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
-import { ConditionField, EmailOption, ExpenseFilterPost, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, AppNameInService, AppUrl, ConfigurationCta, Sage300Field, Sage300Link } from 'src/app/core/models/enum/enum.model';
+import { ConditionField, EmailOption, ExpenseFilterPost, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload } from 'src/app/core/models/common/advanced-settings.model';
+import { AppName, AppNameInService, AppUrl, ConfigurationCta, Page, Sage300Field, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingValidatorRule, Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
@@ -10,6 +10,10 @@ import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage3
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse, destinationAttributes } from '../fixture';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -54,12 +58,18 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   skipExportRedirectLink: string = Sage300Link.SKIP_EXPORT;
 
+  sessionStartTime: Date = new Date();
+
   constructor(
     private advancedSettingsService: Sage300AdvancedSettingsService,
     private helper: HelperService,
     private helperService: Sage300HelperService,
     private exportSettingsService: Sage300ExportSettingService,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private toastService: IntegrationsToastService,
+    private trackingService: TrackingService,
+    private workspaceService: WorkspaceService,
+    private router: Router
   ) { }
 
   private formatMemoPreview(): void {
@@ -168,7 +178,14 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       valueField.value1 = [valueField.value1];
     }
     valueField.rank = 1;
-    const payload1 = Sage300AdvancedSettingModel.constructSkipExportPayload(valueField, this.skipExportForm.value.value1);
+    const skipExportRank1: ExpenseFilterPayload = {
+      condition: valueField.condition1 as ConditionField,
+      operator: valueField.operator1,
+      value: valueField.value1,
+      join_by: valueField.join_by,
+      rank: 1
+    };
+    const payload1 = Sage300AdvancedSettingModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
     this.advancedSettingsService.postExpenseFilter(payload1).subscribe((skipExport1: ExpenseFilter) => {
       if (valueField.condition2 && valueField.operator2) {
         if (valueField.condition2.field_name === 'spent_at') {
@@ -189,7 +206,14 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
           valueField.value2 = [valueField.value2];
         }
         valueField.rank = 2;
-        const payload2 = Sage300AdvancedSettingModel.constructSkipExportPayload(valueField, this.skipExportForm.value.value2);
+        const skipExportRank2: ExpenseFilterPayload = {
+          condition: valueField.condition2 as ConditionField,
+          operator: valueField.operator2,
+          value: valueField.value2,
+          join_by: valueField.join_by,
+          rank: 2
+        };
+        const payload2 = Sage300AdvancedSettingModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);
         this.advancedSettingsService.postExpenseFilter(payload2).subscribe((skipExport2: ExpenseFilter) => {});
       }
     });
@@ -205,7 +229,35 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     if (this.advancedSettingForm.value.skipExport) {
       this.saveSkipExportFields();
     }
-    this.isSaveInProgress = false;
+    this.isSaveInProgress = true;
+    const advancedSettingPayload = Sage300AdvancedSettingModel.createAdvancedSettingPayload(this.advancedSettingForm);
+    this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: Sage300AdvancedSettingGet) => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_SAGE300, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.ADVANCED_SETTINGS) {
+        this.trackingService.onOnboardingStepCompletion(Sage300OnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
+          {
+            phase: this.helper.getPhase(this.isOnboarding),
+            oldState: this.advancedSetting,
+            newState: advancedSettingsResponse
+          }
+        );
+      }
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(Sage300OnboardingState.ADVANCED_SETTINGS);
+        this.router.navigate([`/integrations/sage300/onboarding/advanced_settings`]);
+      }
+
+
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      });
   }
 
   save(): void {
@@ -218,15 +270,15 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     for (let i = 1; i <= 24; i++) {
       this.hours.push({ label: `${i}`, value: i });
     }
-    forkJoin([
-      this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
-      this.exportSettingsService.getSage300ExportSettings(),
-      this.advancedSettingsService.getExpenseFilter(),
-      this.advancedSettingsService.getExpenseFilelds(),
-      this.mappingService.getDestinationAttributes(Sage300Field.JOB, AppNameInService.SAGE300)
-    ]).subscribe(([sage300AdvancedSettingResponse, exportSettingsResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
+    // ForkJoin([
+    //   This.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
+    //   This.exportSettingsService.getSage300ExportSettings(),
+    //   This.advancedSettingsService.getExpenseFilter(),
+    //   This.advancedSettingsService.getExpenseFilelds(),
+    //   This.mappingService.getDestinationAttributes(Sage300Field.JOB, AppNameInService.SAGE300)
+    // ]).subscribe(([sage300AdvancedSettingResponse, exportSettingsResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
-      this.isReimbursableExpense = exportSettingsResponse.reimbursable_expenses_export_type ? true : false;
+      this.isReimbursableExpense = false;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
@@ -234,7 +286,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;
-    });
+    // });
   }
 
   ngOnInit(): void {

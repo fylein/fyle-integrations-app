@@ -218,4 +218,4 @@ export const destinationAttributes: Sage300DestinationAttributes[] = [
         "updated_at": new Date(),
         "workspace": 313
     }
-]
+];
