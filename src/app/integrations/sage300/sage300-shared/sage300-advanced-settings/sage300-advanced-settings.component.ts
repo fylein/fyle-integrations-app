@@ -8,7 +8,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
-import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse } from '../fixture';
+import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse, destinationAttributes } from '../fixture';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 
 @Component({
@@ -223,14 +223,14 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.exportSettingsService.getSage300ExportSettings(),
       this.advancedSettingsService.getExpenseFilter(),
       this.advancedSettingsService.getExpenseFilelds(),
-      this.mappingService.getDestinationAttributes([Sage300Field.ACCOUNT], AppNameInService.SAGE300)
+      this.mappingService.getDestinationAttributes(Sage300Field.JOB, AppNameInService.SAGE300)
     ]).subscribe(([sage300AdvancedSettingResponse, exportSettingsResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
       this.isReimbursableExpense = exportSettingsResponse.reimbursable_expenses_export_type ? true : false;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
-      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, destinationAttributes.ACCOUNT);
+      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, destinationAttributes);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;

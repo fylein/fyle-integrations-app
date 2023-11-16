@@ -315,7 +315,8 @@ export enum QBDOnboardingState {
     CUSTOMER = 'CUSTOMER',
     DEPARTMENT = 'DEPARTMENT',
     CLASS = 'CLASS',
-    TAX_DETAIL = 'TAX_DETAIL'
+    TAX_DETAIL = 'TAX_DETAIL',
+    JOB = 'JOB'
   }
 
   export enum SageIntacctField {

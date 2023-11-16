@@ -1,6 +1,7 @@
 import { ConditionField, EmailOption, ExpenseFilterResponse} from "src/app/core/models/common/advanced-settings.model";
 import { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
 import { JoinOption, Operator } from "src/app/core/models/enum/enum.model";
+import { Sage300DestinationAttributes } from "src/app/core/models/sage300/db/sage300-destination-attribuite.model";
 import { Sage300AdvancedSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model";
 import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
 
@@ -187,3 +188,34 @@ export const expenseFilterCondition: ConditionField[] = [
         "is_custom": true
     }
 ];
+
+export const destinationAttributes: Sage300DestinationAttributes[] = [
+    {
+        "id": 214726,
+        "attribute_type": "CHARGE_CARD_NUMBER",
+        "display_name": "Charge Card Account",
+        "value": "1234",
+        "destination_id": "1234",
+        "auto_created": false,
+        "active": false,
+        "detail": null,
+        "created_at": new Date(),
+        "updated_at": new Date(),
+        "workspace": 313
+    },
+    {
+        "id": 214731,
+        "attribute_type": "VENDOR",
+        "display_name": "vendor",
+        "value": "A-1 Electric Company",
+        "destination_id": "V100",
+        "auto_created": false,
+        "active": true,
+        "detail": {
+            "email": null
+        },
+        "created_at": new Date(),
+        "updated_at": new Date(),
+        "workspace": 313
+    }
+]
