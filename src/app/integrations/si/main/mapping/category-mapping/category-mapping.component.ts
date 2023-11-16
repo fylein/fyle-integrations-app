@@ -7,7 +7,7 @@ import { CategoryMappingsResponse } from 'src/app/core/models/si/db/category-map
 import { CategoryMapping, CategoryMappingPost, CategoryMappingResult } from 'src/app/core/models/si/db/category-mapping.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
-import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';

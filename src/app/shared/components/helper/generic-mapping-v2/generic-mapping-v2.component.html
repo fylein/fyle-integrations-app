@@ -38,7 +38,7 @@
             </div>
             <!-- add a flag/dashboard mapping tab -->
             <div *ngIf="filteredMappingCount">
-                <app-generic-mapping-table [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [reimbursableExpenseObject]="reimbursableExpenseObject" [cccExpenseObject]="cccExpenseObject" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
+                <app-generic-mapping-table [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
             </div>
             <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount" >
                 <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>

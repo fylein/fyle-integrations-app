@@ -3,13 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
+import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { CorporateCreditCardExpensesObject, FieldType, FyleField, IntacctReimbursableExpensesObject, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
-import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
+import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 
 @Component({
   selector: 'app-generic-mapping-v2',
@@ -44,7 +43,7 @@ export class GenericMappingV2Component implements OnInit {
 
   sourceType: string;
 
-  limit: number = 10;
+  limit: number;
 
   offset: number = 0;
 
@@ -60,15 +59,7 @@ export class GenericMappingV2Component implements OnInit {
 
   searchValue: string;
 
-  destinationFieldType = FieldType;
-
-  operationgSystem: string;
-
   alphabetFilter: string = 'All';
-
-  reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
-
-  cccExpenseObject?: CorporateCreditCardExpensesObject;
 
   constructor(
     private mappingService: MappingService,
@@ -78,13 +69,12 @@ export class GenericMappingV2Component implements OnInit {
   ) { }
 
   triggerAutoMapEmployees() {
-    const that = this;
-    that.isLoading = true;
-    that.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      that.isLoading = false;
+    this.isLoading = true;
+    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
+      this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
     }, () => {
-      that.isLoading = false;
+      this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
     });
   }

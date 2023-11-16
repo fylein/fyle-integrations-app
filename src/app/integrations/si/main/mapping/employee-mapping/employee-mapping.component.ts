@@ -7,7 +7,7 @@ import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destinati
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
-import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -86,13 +86,12 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   triggerAutoMapEmployees() {
-    const that = this;
-    that.isLoading = true;
-    that.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      that.isLoading = false;
+    this.isLoading = true;
+    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
+      this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
     }, () => {
-      that.isLoading = false;
+      this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
     });
   }

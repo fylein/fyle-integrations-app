@@ -71,7 +71,7 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
 import { ConfigurationCustomFieldCreationDialogComponent } from './components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
 import { ConfigurationConfirmationDialogComponent } from './components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
-import { GenericMappingV2Component } from './components/si/helper/generic-mapping-v2/generic-mapping-v2.component';
+import { GenericMappingV2Component } from './components/helper/generic-mapping-v2/generic-mapping-v2.component';
 import { GenericMappingTableComponent } from './components/si/generic-mapping-table/generic-mapping-table.component';
 import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
 
