@@ -3,10 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, IntacctLink, AppName } from 'src/app/core/models/enum/enum.model';
-import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
-import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel } from 'src/app/core/models/si/si-configuration/export-settings.model';
+import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, IntacctLink, AppName, IntacctExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
@@ -48,15 +49,17 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   customMessage: string;
 
-  sageIntacctDefaultGLAccounts: IntacctDestinationAttribute[];
+  destinationOptions: ExportSettingDestinationAttributeOption = {
+    [IntacctExportSettingDestinationOptionKey.ACCOUNT]: [],
+    [IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE]: [],
+    [IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE]: [],
+    [IntacctExportSettingDestinationOptionKey.VENDOR]: [],
+    [IntacctExportSettingDestinationOptionKey.CHARGE_CARD]: []
+  };
 
-  sageIntacctExpensePaymentType: IntacctDestinationAttribute[];
+  IntacctExportSettingDestinationOptionKey = IntacctExportSettingDestinationOptionKey;
 
-  sageIntacctCCCExpensePaymentType: IntacctDestinationAttribute[];
-
-  sageIntacctDefaultVendor: IntacctDestinationAttribute[];
-
-  sageIntacctDefaultChargeCard: IntacctDestinationAttribute[];
+  isOptionSearchInProgress: boolean;
 
   appName: string = AppName.INTACCT;
 
@@ -163,7 +166,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     }
   ];
 
-  glAccount: boolean = false;
+  private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
 
   constructor(
     private router: Router,
@@ -427,54 +430,64 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       this.exportSettingsForm = this.formBuilder.group({
         reimbursableExpense: [Boolean(configurations?.reimbursable_expenses_object) || null, this.exportSelectionValidator()],
         reimbursableExportType: [configurations?.reimbursable_expenses_object || null],
-        reimbursableExpensePaymentType: [findObjectById(this.sageIntacctExpensePaymentType, generalMappings?.default_reimbursable_expense_payment_type.id)],
+        reimbursableExpensePaymentType: [findObjectById(this.destinationOptions.EXPENSE_PAYMENT_TYPE, generalMappings?.default_reimbursable_expense_payment_type.id)],
         reimbursableExportGroup: [this.getExportGroup(this.exportSettings?.expense_group_settings.reimbursable_expense_group_fields) || null],
         reimbursableExportDate: [this.exportSettings?.expense_group_settings.reimbursable_export_date_type || null],
         reimbursableExpenseState: [this.exportSettings?.expense_group_settings.expense_state || null],
         employeeFieldMapping: [configurations?.employee_field_mapping || null, Validators.required],
         autoMapEmployees: [configurations?.auto_map_employees || null],
-        glAccount: [findObjectById(this.sageIntacctDefaultGLAccounts, generalMappings?.default_gl_account.id)],
+        glAccount: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_gl_account.id)],
         creditCardExpense: [Boolean(configurations?.corporate_credit_card_expenses_object), this.exportSelectionValidator()],
         cccExportType: [configurations?.corporate_credit_card_expenses_object || null],
         cccExportGroup: [this.getExportGroup(this.exportSettings?.expense_group_settings.corporate_credit_card_expense_group_fields)],
         cccExportDate: [this.exportSettings?.expense_group_settings.ccc_export_date_type || null],
         cccExpenseState: [this.exportSettings?.expense_group_settings.ccc_expense_state || null],
-        cccExpensePaymentType: [findObjectById(this.sageIntacctCCCExpensePaymentType, generalMappings?.default_ccc_expense_payment_type.id)],
-        creditCardVendor: [findObjectById(this.sageIntacctDefaultVendor, generalMappings?.default_ccc_vendor.id)],
-        creditCard: [findObjectById(this.sageIntacctDefaultGLAccounts, generalMappings?.default_credit_card.id)],
-        chargeCard: [findObjectById(this.sageIntacctDefaultChargeCard, generalMappings?.default_charge_card.id)]
+        cccExpensePaymentType: [findObjectById(this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE, generalMappings?.default_ccc_expense_payment_type.id)],
+        creditCardVendor: [findObjectById(this.destinationOptions.VENDOR, generalMappings?.default_ccc_vendor.id)],
+        creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
+        chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)]
       });
 
       this.exportFieldsWatcher();
+      this.optionSearchWatcher();
     }
 
+  private addMissingOption(key: IntacctExportSettingDestinationOptionKey, defaultDestinationAttribute: DefaultDestinationAttribute): void {
+    const optionArray = this.destinationOptions[key];
+    const option = optionArray.find(attribute => attribute.destination_id === defaultDestinationAttribute.id);
+
+    if (!option && defaultDestinationAttribute.id && defaultDestinationAttribute.name) {
+      const newOption = {
+        destination_id: defaultDestinationAttribute.id,
+        value: defaultDestinationAttribute.name
+      } as IntacctDestinationAttribute;
+      optionArray.push(newOption);
+      this.sortDropdownOptions(key);
+    }
+  }
+
+  private addMissingOptions(): void {
+    // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings.default_gl_account);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings.default_credit_card);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings.default_reimbursable_expense_payment_type);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings.default_ccc_expense_payment_type);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.VENDOR, this.exportSettings.general_mappings.default_ccc_vendor);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.CHARGE_CARD, this.exportSettings.general_mappings.default_credit_card);
+  }
 
   private getSettingsAndSetupForm(): void {
-    this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
+    this.exportSettingService.getExportSettings().subscribe((exportSettings) => {
+      this.exportSettings = exportSettings;
 
-    const destinationAttributes = ['ACCOUNT', 'EXPENSE_PAYMENT_TYPE', 'VENDOR', 'CHARGE_CARD_NUMBER'];
+      this.addMissingOptions();
 
-    const groupedAttributes$ = this.mappingService.getGroupedDestinationAttributes(destinationAttributes);
-    const exportSettings$ = this.exportSettingService.getExportSettings();
-
-    forkJoin({
-      groupedAttributes: groupedAttributes$,
-      exportSettings: exportSettings$
-    }).subscribe(
-      ({ groupedAttributes, exportSettings }) => {
-        this.sageIntacctDefaultGLAccounts = groupedAttributes.ACCOUNT;
-        this.sageIntacctExpensePaymentType = groupedAttributes.EXPENSE_PAYMENT_TYPE.filter(attr => attr.detail.is_reimbursable);
-        this.sageIntacctCCCExpensePaymentType = groupedAttributes.EXPENSE_PAYMENT_TYPE.filter(attr => !attr.detail.is_reimbursable);
-        this.sageIntacctDefaultVendor = groupedAttributes.VENDOR;
-        this.sageIntacctDefaultChargeCard = groupedAttributes.CHARGE_CARD_NUMBER;
-
-        this.exportSettings = exportSettings;
-        this.setUpExpenseStates();
-        this.setupCCCExpenseGroupingDateOptions();
-        this.initializeExportSettingsFormWithData();
-        this.isLoading = false;
-      });
+      this.setUpExpenseStates();
+      this.setupCCCExpenseGroupingDateOptions();
+      this.initializeExportSettingsFormWithData();
+      this.isLoading = false;
+    });
   }
 
 
@@ -511,7 +524,77 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         });
     }
 
+  private sortDropdownOptions(destinationOptionKey: IntacctExportSettingDestinationOptionKey): void {
+    this.destinationOptions[destinationOptionKey].sort((a: IntacctDestinationAttribute, b: IntacctDestinationAttribute) => {
+      return a.value.localeCompare(b.value);
+    });
+  }
+
+  private optionSearchWatcher(): void {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+    ).subscribe((event: ExportSettingOptionSearch) => {
+      const existingOptions = this.destinationOptions[event.destinationOptionKey].concat();
+      const newOptions: IntacctDestinationAttribute[] = [];
+
+      this.mappingService.getPaginatedDestinationAttributes(existingOptions[0].attribute_type, event.searchTerm).subscribe((response) => {
+        response.results.forEach((option) => {
+          // Handle special case for expense payment type (reimburse and ccc)
+          if (event.destinationOptionKey === IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE) {
+            if (option.detail.is_reimbursable) {
+              newOptions.push(option);
+            }
+          } else if (event.destinationOptionKey === IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE) {
+            if (!option.detail.is_reimbursable) {
+              newOptions.push(option);
+            }
+          } else {
+            newOptions.push(option);
+          }
+        });
+
+        // Insert new options to existing options
+        newOptions.forEach((option: IntacctDestinationAttribute) => {
+          if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
+            existingOptions.push(option);
+          }
+        });
+
+        this.destinationOptions[event.destinationOptionKey] = existingOptions.concat();
+        this.sortDropdownOptions(event.destinationOptionKey);
+        this.isOptionSearchInProgress = false;
+      });
+    });
+  }
+
+  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+    if (event.searchTerm) {
+      this.isOptionSearchInProgress = true;
+      this.optionSearchUpdate.next(event);
+    }
+  }
+
+
+  private setupPage(): void {
+    const destinationAttributes = ['ACCOUNT', 'EXPENSE_PAYMENT_TYPE', 'VENDOR', 'CHARGE_CARD_NUMBER'];
+    const groupedAttributes$: Observable<PaginatedintacctDestinationAttribute>[]= [];
+
+    destinationAttributes.forEach((destinationAttribute) => {
+      groupedAttributes$.push(this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response)));
+    });
+
+    forkJoin(groupedAttributes$).subscribe((response) => {
+      this.destinationOptions.ACCOUNT = response[0].results;
+      this.destinationOptions.EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => attr.detail.is_reimbursable);
+      this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => !attr.detail.is_reimbursable);
+      this.destinationOptions.VENDOR = response[2].results;
+      this.destinationOptions.CHARGE_CARD = response[3].results;
+
+      this.getSettingsAndSetupForm();
+    });
+  }
+
   ngOnInit(): void {
-    this.getSettingsAndSetupForm();
+    this.setupPage();
   }
 }

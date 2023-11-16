@@ -1,6 +1,7 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { CorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption } from "../../enum/enum.model";
+import { CorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption, IntacctExportSettingDestinationOptionKey } from "../../enum/enum.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
+import { IntacctDestinationAttribute } from "../db/destination-attribute.model";
 
 export type ExportSettingFormOption = {
     label: string,
@@ -44,6 +45,12 @@ export type ExportSettingPost = {
     expense_group_settings: ExpenseGroupSettingPost,
     general_mappings: ExportSettingGeneralMapping
   }
+
+export type ExportSettingOptionSearch = {
+    searchTerm: string,
+    destinationAttributes: any[],
+    destinationOptionKey: IntacctExportSettingDestinationOptionKey
+}
 
   export class ExportSettingModel {
     static constructPayload(exportSettingsForm: FormGroup): ExportSettingPost {
