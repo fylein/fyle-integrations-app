@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
 import { ConditionField, EmailOption, ExpenseFilterPost, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, ConfigurationCta, Sage300Link } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppNameInService, AppUrl, ConfigurationCta, Sage300Field, Sage300Link } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingValidatorRule, Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
-import { ExpenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse } from '../fixture';
+import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse } from '../fixture';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -57,7 +58,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     private advancedSettingsService: Sage300AdvancedSettingsService,
     private helper: HelperService,
     private helperService: Sage300HelperService,
-    private exportSettingsService: Sage300ExportSettingService
+    private exportSettingsService: Sage300ExportSettingService,
+    private mappingService: MappingService
   ) { }
 
   private formatMemoPreview(): void {
@@ -220,14 +222,15 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
       this.exportSettingsService.getSage300ExportSettings(),
       this.advancedSettingsService.getExpenseFilter(),
-      this.advancedSettingsService.getExpenseFilelds()
-    ]).subscribe(([sage300AdvancedSettingResponse, exportSettingsResponse, expenseFiltersGet, ExpenseFilterCondition]) => {
+      this.advancedSettingsService.getExpenseFilelds(),
+      this.mappingService.getDestinationAttributes([Sage300Field.ACCOUNT], AppNameInService.SAGE300)
+    ]).subscribe(([sage300AdvancedSettingResponse, exportSettingsResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
       this.isReimbursableExpense = exportSettingsResponse.reimbursable_expenses_export_type ? true : false;
       this.expenseFilters = expenseFiltersGet;
-      this.conditionFieldOptions = ExpenseFilterCondition;
+      this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
-      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled);
+      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, destinationAttributes.ACCOUNT);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;

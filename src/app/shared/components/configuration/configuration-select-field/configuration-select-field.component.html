@@ -24,8 +24,12 @@
             <div *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
                 <p-dropdown *ngIf="formControllerName !== 'scheduleAutoExportFrequency'" appendTo="body" [options]="options" class="!tw-w-300-px" 
                     [formControlName]="formControllerName" [placeholder]="placeholder"
-                    [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"
-                    [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}"
+                    [ngClass]="{
+                        'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
+                        'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
+                        'selectedItem': form.controls[formControllerName].value,
+                        'filterDropdown': !form.controls[formControllerName].value
+                      }"
                     >
                     <ng-template let-option pTemplate="item">
                         <div #textElement 
@@ -46,8 +50,12 @@
                 <div class="tw-flex tw-justify-end" *ngIf="formControllerName === 'scheduleAutoExportFrequency'">
                     <p-dropdown appendTo="body" [options]="options" class="dropdown-size-schedule" 
                         [formControlName]="formControllerName" [placeholder]="placeholder"
-                        [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"
-                        [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}"
+                        [ngClass]="{
+                            'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
+                            'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
+                            'selectedItem': form.controls[formControllerName].value,
+                            'filterDropdown': !form.controls[formControllerName].value
+                          }"
                         >
                         <ng-template let-option pTemplate="item">
                             <div #textElement 

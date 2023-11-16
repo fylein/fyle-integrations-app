@@ -78,16 +78,15 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
     ],
     "auto_create_merchant_destination_entity": false,
     "schedule_enabled": true,
-    "emails_selected": [{ "name": "Nilesh Pant", "email": "nilesh.p@fyle.in" }],
-    "emails_added": [{ "name": "Ashwin", "email": "Asjhwein@gmail.com" }],
     id: 0,
     created_at: new Date(),
     update_at: new Date(),
     workspace: 1,
     auto_create_destination_entity: false,
     default_job_name: "",
-    default_job_id: 0,
-    auto_create_vendor: false
+    default_job_id: '0',
+    auto_create_vendor: false,
+    intervel_hours: 1
 };
 
 export const adminEmails: EmailOption[] = [
@@ -136,7 +135,7 @@ export const expenseFiltersGet: ExpenseFilterResponse =
     ]
 };
 
-export const ExpenseFilterCondition: ConditionField[] = [
+export const expenseFilterCondition: ConditionField[] = [
     {
         "field_name": "employee_email",
         "type": "SELECT",
