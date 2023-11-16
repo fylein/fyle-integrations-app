@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { Subject, debounce, debounceTime, forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AutoMapEmployeeOptions, FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
-import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
+import { DropdownOptionSearch, EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
@@ -40,7 +40,9 @@ export class EmployeeMappingComponent implements OnInit {
 
   fyleEmployeeOptions: IntacctDestinationAttribute[];
 
-  filteredfyleEmployeeOptions: IntacctDestinationAttribute[] = [];
+  private optionsMap: {[key: string]: boolean} = {};
+
+  private optionSearchUpdate = new Subject<DropdownOptionSearch>();
 
   sageIntacctEmployee: MappingDestination[];
 
@@ -203,19 +205,79 @@ export class EmployeeMappingComponent implements OnInit {
     return attributes;
   }
 
+  sortDropdownOptions() {
+    this.fyleEmployeeOptions.sort((a, b) => a.value.localeCompare(b.value));
+  }
+
+  optionSearchWatcher() {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+      ).subscribe((event: DropdownOptionSearch) => {
+      const existingOptions = this.fyleEmployeeOptions.concat();
+      const newOptions: IntacctDestinationAttribute[] = [];
+
+      this.mappingService.getPaginatedDestinationAttributes(this.getAttributesFilteredByConfig()[0], event.searchTerm).subscribe((response) => {
+        response.results.forEach((option) => {
+          // If option is not already present in the list, add it
+          if (!this.optionsMap[option.id.toString()]) {
+            this.optionsMap[option.id.toString()] = true;
+            newOptions.push(option);
+          }
+        });
+
+        this.fyleEmployeeOptions = existingOptions.concat(newOptions);
+        this.sortDropdownOptions();
+        event.employeeMapping.isOptionSearchInProgress = false;
+      });
+    });
+  }
+
+  searchOptions(event: any, employeeMapping: EmployeeMapping) {
+    if (event.filter) {
+      employeeMapping.isOptionSearchInProgress = true;
+      this.optionSearchUpdate.next({searchTerm: event.filter, employeeMapping});
+    }
+  }
+
+  private addMissingOption(dropdownOption: IntacctDestinationAttribute): void {
+    const option = this.fyleEmployeeOptions.find(attribute => attribute.id === dropdownOption.id);
+
+    if (!option) {
+      this.fyleEmployeeOptions.push(dropdownOption);
+    }
+  }
+
   setupPage() {
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
     this.limit = paginator.limit;
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
-      this.mappingService.getGroupedDestinationAttributes(this.getAttributesFilteredByConfig()),
+      this.mappingService.getPaginatedDestinationAttributes(this.getAttributesFilteredByConfig()[0]),
       this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
         this.totalCount = employeeMappingResponse.count;
-        this.fyleEmployeeOptions = this.getAttributesFilteredByConfig()[0] === 'EMPLOYEE' ? groupedDestResponse.EMPLOYEE : groupedDestResponse.VENDOR;
+        this.fyleEmployeeOptions = groupedDestResponse.results;
+
+        // Since pagination call doesn't return all results, we're making use of the mapping API to fill in options
+        employeeMappingResponse.results.forEach((mapping) => {
+          const employeeMapping = this.getDropdownValue(mapping.employeemapping);
+          if (employeeMapping) {
+            this.addMissingOption(employeeMapping);
+          }
+        });
+
+        this.sortDropdownOptions();
+
+        // Creating a map of primary keys to avoid duplicate options during search
+        this.fyleEmployeeOptions.forEach((option) => {
+          this.optionsMap[option.id.toString()] = true;
+        });
+
+        this.optionSearchWatcher();
+
         this.employeeMapping = employeeMappingResponse;
         if (!this.isInitialSetupComplete) {
           this.filteredMappingCount = employeeMappingResponse.count;

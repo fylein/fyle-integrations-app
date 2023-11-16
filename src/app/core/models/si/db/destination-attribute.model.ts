@@ -14,6 +14,21 @@ export interface IntacctDestinationAttribute extends DestinationAttribute {
   detail: IntacctDestinationAttributeDetail;
 }
 
+export type PaginatedintacctDestinationAttribute = {
+  count: number;
+  next: string;
+  previous: string;
+  results: IntacctDestinationAttribute[];
+};
+
+export type ExportSettingDestinationAttributeOption = {
+  'VENDOR': IntacctDestinationAttribute[],
+  'ACCOUNT': IntacctDestinationAttribute[],
+  'EXPENSE_PAYMENT_TYPE': IntacctDestinationAttribute[],
+  'CCC_EXPENSE_PAYMENT_TYPE': IntacctDestinationAttribute[],
+  'CHARGE_CARD': IntacctDestinationAttribute[],
+}
+
 export type GroupedDestinationAttribute = {
   ACCOUNT: IntacctDestinationAttribute[],
   EXPENSE_TYPE: IntacctDestinationAttribute[],
