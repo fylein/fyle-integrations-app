@@ -36,11 +36,12 @@
             >
             <ng-template let-option pTemplate="item">
                 <div #textElement 
-                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                        [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                     class="truncate"
+                     [ngClass]="{'max-w-[16rem]': true}"
+                     [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
                     {{option.label}}
                 </div>
-            </ng-template>
+            </ng-template>            
             <ng-template pTemplate="selectedItem" let-item>
                 <div class="tw-flex tw-justify-between tw-items-center">
                     <span>

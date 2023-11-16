@@ -39,8 +39,8 @@
 
 :host ::ng-deep .selectedItem .p-dropdown-trigger {
     @apply tw-hidden #{!important};
-  }
+}
 
-  :host ::ng-deep .hide-chevron .p-dropdown-trigger {
+:host ::ng-deep .hide-chevron .p-dropdown-trigger {
     @apply tw-hidden #{!important};
-  }
+}
