@@ -43,7 +43,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   expenseGroupByOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpenseGroupByOptions();
 
-  expenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
+
+  cccExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseGroupingDateOptions();
 
   expensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpensesExportTypeOptions();
 
@@ -152,13 +154,13 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
       this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT])
     ]).subscribe(([response]) => {
-      this.exportSettings = response ? response[0] : null;
+      this.exportSettings = response ? response : null;
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setExportSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.vendorOptions = response ? response[1].VENDOR : null;
-      this.creditCardAccountOptions = response ? response[1].ACCOUNT : null;
+      this.vendorOptions = response ? response[1]?.VENDOR : null;
+      this.creditCardAccountOptions = response ? response[1]?.ACCOUNT : null;
       this.isLoading = false;
     });
   }

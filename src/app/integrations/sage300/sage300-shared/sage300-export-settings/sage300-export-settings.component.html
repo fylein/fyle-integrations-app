@@ -70,11 +70,11 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date as'"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : reimbursableExpenseGroupingDateOptions[0].value) + ' date as'"
                         [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage 300 CRE. Click here for more details.'"
-                        [options]="expenseGroupingDateOptions"
+                        [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calender'"
-                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date'"
+                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : reimbursableExpenseGroupingDateOptions[0].value) + ' date'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -161,7 +161,7 @@
                         [mandatoryErrorListName]="'export date'"
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from Fyle to Sage Intacct. Click here for more details.'"
-                        [options]="expenseGroupingDateOptions"
+                        [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calender'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
