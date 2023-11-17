@@ -127,7 +127,7 @@ export class GenericMappingTableComponent implements OnInit {
     }
   }
 
-  setupTable() {
+  getTableSourceData() {
     if (this.filteredMappings) {
       return this.filteredMappings;
     } else if (this.mappingError) {

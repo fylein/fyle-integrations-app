@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
@@ -19,9 +20,9 @@ export class Sage300BaseMappingComponent implements OnInit {
 
   showAutoMapEmployee: boolean = false;
 
-  // ReimbursableExpenseObject: IntacctReimbursableExpensesObject | undefined;
+  reimbursableExpenseObject: string;
 
-  // CccExpenseObject: CorporateCreditCardExpensesObject | undefined;
+  cccExpenseObject: string;
 
   employeeFieldMapping: FyleField;
 
@@ -29,49 +30,43 @@ export class Sage300BaseMappingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private mappingService: SiMappingsService
+    private mappingService: MappingService
   ) { }
 
 
-  // Private isExpenseTypeRequired(): boolean {
-  //   Return this.reimbursableExpenseObject === IntacctReimbursableExpensesObject.EXPENSE_REPORT || this.cccExpenseObject === CorporateCreditCardExpensesObject.EXPENSE_REPORT;
-  // }
-
-  getAttributesFilteredByConfig() {
-
-    if (this.sourceField==='EMPLOYEE') {
-      if (this.employeeFieldMapping === 'VENDOR') {
-        return 'VENDOR';
-      } else if (this.employeeFieldMapping === 'EMPLOYEE') {
-        return 'EMPLOYEE';
-      }
-    }
-
-    // If (this.sourceField==='CATEGORY') {
-    //   If (this.isExpenseTypeRequired()) {
-    //     Return 'EXPENSE_TYPE';
-    //   }
-    //     Return 'ACCOUNT';
-
-    // }
-
-    return '';
-
+  private isExpenseTypeRequired(): boolean {
+    return this.reimbursableExpenseObject === "EXPENSE_REPORT" || this.cccExpenseObject === "EXPENSE_REPORT";
   }
 
-  ngOnInit(): void {
+  getSourceType() {
+    if (this.sourceField==='EMPLOYEE') {
+      return this.employeeFieldMapping;
+    }
+
+    if (this.sourceField==='CATEGORY') {
+      if (this.isExpenseTypeRequired()) {
+        return 'EXPENSE_TYPE';
+      }
+        return 'ACCOUNT';
+
+    }
+
+    return '';
+  }
+
+  setupPage(): void {
     this.sourceField = this.route.snapshot.params.source_field;
-    this.mappingService.getConfiguration().subscribe((response) => {
-      // This.reimbursableExpenseObject = response.reimbursable_expenses_object;
-      // This.cccExpenseObject = response.corporate_credit_card_expenses_object;
+    this.mappingService.getExportSettings().subscribe((response) => {
+      this.reimbursableExpenseObject = response.reimbursable_expenses_object;
+      this.cccExpenseObject = response.corporate_credit_card_expenses_object;
 
       this.employeeFieldMapping = response.employee_field_mapping;
       this.showAutoMapEmployee = response.auto_map_employees ? true : false;
 
-      this.destinationField = this.getAttributesFilteredByConfig();
+      this.destinationField = this.getSourceType();
 
 
-      this.mappingService.getGroupedDestinationAttributes([this.destinationField]).subscribe((response) => {
+      this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'SAGE300').subscribe((response: any) => {
         if (this.sourceField==='EMPLOYEE') {
           this.destinationOptions = this.destinationField ? response.EMPLOYEE : response.VENDOR;
         }
@@ -84,6 +79,10 @@ export class Sage300BaseMappingComponent implements OnInit {
         }
       });
     });
+  }
+
+  ngOnInit(): void {
+    this.setupPage();
   }
 
 }
