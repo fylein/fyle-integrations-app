@@ -1,1 +1,6 @@
-<p>sage300-main works!</p>
+<div>
+    <app-main-menu [modules]="modules" [appName]="appName" [isDropdrownRequired]="true" (refreshDimensionClick)="refreshDimensions($event)"></app-main-menu>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

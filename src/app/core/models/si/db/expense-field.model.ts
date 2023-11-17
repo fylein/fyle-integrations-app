@@ -2,6 +2,7 @@ export type ExpenseField = {
     attribute_type: string;
     display_name: string;
     source_placeholder: string | null;
+    is_dependent: boolean;
   };
 
   export type ExpenseFieldFormArray = {

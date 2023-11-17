@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, RedirectLink, ToastSeverity, FyleField, MappingSourceField, IntacctLink } from 'src/app/core/models/enum/enum.model';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, IntacctLink, AppName } from 'src/app/core/models/enum/enum.model';
+import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
@@ -25,6 +25,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  appName = AppName.INTACCT;
+
   importSettingsForm: FormGroup;
 
   customFieldForm: FormGroup;
@@ -41,7 +43,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   importSettings: ImportSettingGet;
 
-  sageIntacctTaxGroup: DestinationAttribute[];
+  sageIntacctTaxGroup: IntacctDestinationAttribute[];
 
   sageIntacctFields: ExpenseField[];
 
@@ -63,13 +65,13 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   private sessionStartTime = new Date();
 
-  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
+  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
 
   private isCostCodeFieldSelected: boolean = false;
 
-  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
+  costTypeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
 
-  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null }];
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
 
   dependentFieldSettings: DependentFieldSetting | null;
 
@@ -95,6 +97,12 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   get expenseFieldsGetter() {
     return this.importSettingsForm.get('expenseFields') as FormArray;
+  }
+
+  refreshDimensions(isRefresh: boolean) {
+    this.mappingService.refreshSageIntacctDimensions().subscribe();
+    this.mappingService.refreshFyleDimensions().subscribe();
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
   }
 
   removeFilter(expenseField: AbstractControl) {
@@ -148,7 +156,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       this.customField = {
         attribute_type: this.customFieldForm.value.attribute_type,
         display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder
+        source_placeholder: this.customFieldForm.value.source_placeholder,
+        is_dependent: true
       };
       if (this.customFieldControl) {
         if (this.isCostCodeFieldSelected) {
@@ -159,11 +168,14 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         this.customFieldControl.patchValue({
           attribute_type: this.customFieldForm.value.attribute_type,
           display_name: this.customFieldForm.value.attribute_type,
-          source_placeholder: this.customFieldForm.value.source_placeholder
+          source_placeholder: this.customFieldForm.value.source_placeholder,
+          is_dependent: true
         });
-      this.customFieldControl.value.is_custom = true;
-      this.customFieldForm.reset();
-      this.showDialog = false;
+
+        this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
+        this.customFieldControl.value.is_custom = true;
+        this.customFieldForm.reset();
+        this.showDialog = false;
       }
       this.customFieldControl.disable();
       this.customFieldForDependentField = false;
@@ -171,7 +183,8 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       this.customField = {
         attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
         display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder
+        source_placeholder: this.customFieldForm.value.source_placeholder,
+        is_dependent: false
       };
 
       if (this.customFieldControl) {
@@ -360,16 +373,70 @@ export class ConfigurationImportSettingsComponent implements OnInit {
     return expenseFieldFormArray;
   }
 
+  onDropdownChange(event: any, index: number) {
+    // Get the selected value from the <p-dropdown>
+    const selectedValue = event.value;
+
+    // Find the selected field in 'fyleFields' based on the selected value
+    const selectedField = this.fyleFields.find(field => field.attribute_type === selectedValue);
+
+    // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
+    if (selectedField?.is_dependent) {
+      // Set the toggle to false
+      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(false);
+
+      // Get the 'import_to_fyle' control at the specified index and disable it
+      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
+    }
+  }
+
+  isExpenseFieldDependent(expenseField: MappingSetting): boolean {
+    const isDependent = this.fyleFields.find(field => field.attribute_type === expenseField.source_field)?.is_dependent;
+    return isDependent ? true : false;
+  }
+
   private generateDependentFieldValue(attribute_type: string, source_placeholder: string): ExpenseField {
     return {
       attribute_type: attribute_type,
       display_name: attribute_type,
-      source_placeholder: source_placeholder
+      source_placeholder: source_placeholder,
+      is_dependent: true
     };
   }
 
   showImportTax(locationEntity: LocationEntityMapping) {
     return (locationEntity.country_name && locationEntity.country_name !== 'United States' && locationEntity.destination_id !== 'top_level') ? true : false;
+  }
+
+  private initializeForm(importSettings: ImportSettingGet): void {
+    this.importSettingsForm = this.formBuilder.group({
+      importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
+      importCategories: [importSettings.configurations.import_categories || null],
+      importTaxCodes: [importSettings.configurations.import_tax_codes || null],
+      costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
+      dependentFieldImportToggle: [true],
+      workspaceId: this.storageService.get('si.workspaceId'),
+      costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
+      isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
+      sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
+      expenseFields: this.formBuilder.array(this.constructFormArray())
+    });
+    if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value && this.dependentFieldSettings?.is_import_enabled) {
+      this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
+    }
+
+    // Disable toggle for expense fields that are dependent
+    const expenseFields = this.importSettingsForm.get('expenseFields') as FormArray;
+
+    expenseFields.controls.forEach((control, index) => {
+      if (this.isExpenseFieldDependent(control.value)) {
+        control.get('import_to_fyle')?.disable();
+      }
+    });
+
+    this.importSettingWatcher();
+    this.costCodesCostTypesWatcher();
+    this.isLoading = false;
   }
 
   private getSettingsAndSetupForm(): void {
@@ -416,13 +483,15 @@ export class ConfigurationImportSettingsComponent implements OnInit {
               this.customField = {
                 attribute_type: importSettings.dependent_field_settings.cost_code_field_name,
                 display_name: importSettings.dependent_field_settings.cost_code_field_name,
-                source_placeholder: importSettings.dependent_field_settings.cost_code_placeholder
+                source_placeholder: importSettings.dependent_field_settings.cost_code_placeholder,
+                is_dependent: true
               };
               this.costCodeFieldOption.push(this.customField);
               this.customField = {
                 attribute_type: importSettings.dependent_field_settings.cost_type_field_name,
                 display_name: importSettings.dependent_field_settings.cost_type_field_name,
-                source_placeholder: importSettings.dependent_field_settings.cost_type_placeholder
+                source_placeholder: importSettings.dependent_field_settings.cost_type_placeholder,
+                is_dependent: true
               };
               this.costTypeFieldOption.push(this.customField);
             }
@@ -435,21 +504,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
         } else {
           this.intacctCategoryDestination = IntacctCategoryDestination.ACCOUNT;
         }
-        this.importSettingsForm = this.formBuilder.group({
-          importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
-          importCategories: [importSettings.configurations.import_categories || null],
-          importTaxCodes: [importSettings.configurations.import_tax_codes || null],
-          costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null],
-          dependentFieldImportToggle: [true],
-          workspaceId: this.storageService.get('si.workspaceId'),
-          costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
-          isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
-          sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
-          expenseFields: this.formBuilder.array(this.constructFormArray())
-        });
-        this.importSettingWatcher();
-        this.costCodesCostTypesWatcher();
-        this.isLoading = false;
+        this.initializeForm(importSettings);
       }
     );
   }

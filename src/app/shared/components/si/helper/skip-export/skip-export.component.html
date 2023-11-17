@@ -42,7 +42,7 @@
                 <input type="text" formControlName="value1" class="value-input-field" placeholder="Enter Value">
               </div>
               <div class="tw-w-296-px" *ngIf="showDateField1()">
-                <p-calendar [(ngModel)]="date1" formControlName="value1" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
+                <p-calendar formControlName="value1" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
               </div>
               <div class="tw-w-296-px" *ngIf="showChipField1()">
                 <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
@@ -103,7 +103,7 @@
               <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
             </div>
             <div *ngIf="showDateField2()" class="tw-w-296-px">
-              <p-calendar [(ngModel)]="date2" formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
+              <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
             <img class="delete-icon" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
           </div>
