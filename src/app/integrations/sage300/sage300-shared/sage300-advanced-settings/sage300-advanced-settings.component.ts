@@ -60,7 +60,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
   skipExportRedirectLink: string = Sage300Link.SKIP_EXPORT;
 
   sessionStartTime: Date = new Date();
-  
+
   sageIntacctJobs: Sage300DestinationAttributes[];
 
   constructor(
