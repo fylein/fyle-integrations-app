@@ -34,6 +34,6 @@ export class Sage300ImportSettingsService {
     cacheBusterNotifier: sage300ImportSettingGetCache
   })
   postImportSettings(importSettingsPayload: Sage300ImportSettingPost): Observable<Sage300ImportSettingGet> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, importSettingsPayload);
+    return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, importSettingsPayload);
   }
 }
