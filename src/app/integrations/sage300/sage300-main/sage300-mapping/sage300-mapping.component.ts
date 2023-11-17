@@ -16,8 +16,8 @@ export class Sage300MappingComponent implements OnInit {
   isLoading: boolean;
 
   mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/sage300/main/mapping/EMPLOYEE'},
-    {label: 'Category', routerLink: '/integrations/sage300/main/mapping/CATEGORY'}
+    {label: 'Employee', routerLink: '/integrations/sage300/main/mapping/employee'},
+    {label: 'Category', routerLink: '/integrations/sage300/main/mapping/category'}
   ];
 
   activeModule: MenuItem;

@@ -1,4 +1,4 @@
-import { MappingState } from "../enum/enum.model"
+import { MappingState } from "../enum/enum.model";
 
 export type MappingPrimaryKey = {
     id: number | null
@@ -20,10 +20,10 @@ export type MappingStats = {
     unmapped_attributes_count: number;
 };
 
-export type GenericMappingApiParams = { 
+export type GenericMappingApiParams = {
     limit: number;
     offset: number;
     mapped: boolean | MappingState;
     destination_type: string;
-    mapping_source_alphabets?: string 
+    mapping_source_alphabets?: string
 };
