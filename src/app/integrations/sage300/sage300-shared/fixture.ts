@@ -68,8 +68,7 @@ export const sage300FieldsResponse: IntegrationField[] =
 ];
 
 export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
-    "sync_sage_300_to_fyle_payments": true,
-    "memo_structure": [
+    memo_structure: [
         "employee_email",
         "category",
         "spent_on",
@@ -77,13 +76,11 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
         "purpose",
         "expense_link"
     ],
-    "auto_create_merchant_destination_entity": false,
-    "schedule_enabled": true,
+    schedule_enabled: true,
     id: 0,
     created_at: new Date(),
     update_at: new Date(),
     workspace: 1,
-    auto_create_destination_entity: false,
     default_job_name: "",
     default_job_id: '0',
     auto_create_vendor: false,
@@ -92,9 +89,9 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
 
 export const adminEmails: EmailOption[] = [
 	{
-			"name": "Nilesh Pant",
-			"email": "nilesh.p@fyle.in"
-  }
+		"name": "Nilesh Pant",
+		"email": "nilesh.p@fyle.in"
+    }
 ];
 
 export const expenseFiltersGet: ExpenseFilterResponse =

@@ -52,6 +52,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() exportTypeIconPathArray: any;
 
+  @Input() isDefaultFields: boolean = false;
+
   exportTypeIconPath: string;
 
   meridiemOption: string[] = ['AM', 'PM'];

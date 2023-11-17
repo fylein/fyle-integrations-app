@@ -14,6 +14,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Router } from '@angular/router';
+import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -59,6 +60,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
   skipExportRedirectLink: string = Sage300Link.SKIP_EXPORT;
 
   sessionStartTime: Date = new Date();
+  
+  sageIntacctJobs: Sage300DestinationAttributes[];
 
   constructor(
     private advancedSettingsService: Sage300AdvancedSettingsService,
@@ -270,23 +273,22 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     for (let i = 1; i <= 24; i++) {
       this.hours.push({ label: `${i}`, value: i });
     }
-    // ForkJoin([
-    //   This.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
-    //   This.exportSettingsService.getSage300ExportSettings(),
-    //   This.advancedSettingsService.getExpenseFilter(),
-    //   This.advancedSettingsService.getExpenseFilelds(),
-    //   This.mappingService.getDestinationAttributes(Sage300Field.JOB, AppNameInService.SAGE300)
-    // ]).subscribe(([sage300AdvancedSettingResponse, exportSettingsResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
+    forkJoin([
+      this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
+      this.advancedSettingsService.getExpenseFilter(),
+      this.advancedSettingsService.getExpenseFilelds(),
+      this.mappingService.getDestinationAttributes(Sage300Field.JOB, AppNameInService.SAGE300)
+    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
-      this.isReimbursableExpense = false;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
+      this.sageIntacctJobs = destinationAttributes;
       this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, destinationAttributes);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;
-    // });
+    });
   }
 
   ngOnInit(): void {
