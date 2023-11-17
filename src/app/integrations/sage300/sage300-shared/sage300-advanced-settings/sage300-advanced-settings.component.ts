@@ -10,6 +10,7 @@ import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage3
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse, destinationAttributes } from '../fixture';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -53,6 +54,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
   memoStructure: string[] = [];
 
   skipExportRedirectLink: string = Sage300Link.SKIP_EXPORT;
+
+  sageIntacctJobs: Sage300DestinationAttributes[];
 
   constructor(
     private advancedSettingsService: Sage300AdvancedSettingsService,
@@ -220,16 +223,15 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     }
     forkJoin([
       this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
-      this.exportSettingsService.getSage300ExportSettings(),
       this.advancedSettingsService.getExpenseFilter(),
       this.advancedSettingsService.getExpenseFilelds(),
       this.mappingService.getDestinationAttributes(Sage300Field.JOB, AppNameInService.SAGE300)
-    ]).subscribe(([sage300AdvancedSettingResponse, exportSettingsResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
+    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
-      this.isReimbursableExpense = exportSettingsResponse.reimbursable_expenses_export_type ? true : false;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
+      this.sageIntacctJobs = destinationAttributes;
       this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, destinationAttributes);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
