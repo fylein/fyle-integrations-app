@@ -18,7 +18,7 @@ import { Sage300OnboardingImportSettingsComponent } from './sage300-onboarding-i
     Sage300OnboardingConnectorComponent,
     Sage300OnboardingExportSettingsComponent,
     Sage300OnboardingImportSettingsComponent,
-    Sage300OnboardingDoneComponent,
+    Sage300OnboardingDoneComponent
   ],
   imports: [
     CommonModule,

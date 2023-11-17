@@ -7,12 +7,12 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class OnboardingDoneComponent implements OnInit {
 
-  @Output() onLaunchIntegrationClick = new EventEmitter<undefined>();
+  @Output() launchIntegrationClick = new EventEmitter<undefined>();
 
   constructor() { }
 
   navigateToDashboard(): void {
-    this.onLaunchIntegrationClick.emit();
+    this.launchIntegrationClick.emit();
   }
 
   ngOnInit(): void {

@@ -31,7 +31,7 @@ const routes: Routes = [
       {
         path: 'done',
         component: Sage300OnboardingDoneComponent
-      },
+      }
     ]
   }
 ];
