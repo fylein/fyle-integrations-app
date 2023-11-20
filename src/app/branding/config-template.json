@@ -2,5 +2,6 @@
     "brandName": "{{BRAND_NAME}}",
     "webpageTitle": "{{WEBPAGE_TITLE}}",
     "brandId": "{{BRAND_ID}}",
-    "brandAppDomain": "{{BRAND_APP_DOMAIN}}"
+    "brandAppDomain": "{{BRAND_APP_DOMAIN}}",
+    "supportEmail": "{{SUPPORT_EMAIL}}"
 }

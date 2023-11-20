@@ -3,4 +3,5 @@ export type BrandingConfiguration = {
     webpageTitle: string;
     brandId: string;
     brandAppDomain: string;
+    supportEmail: string;
 };
