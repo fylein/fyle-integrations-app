@@ -454,9 +454,9 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   private addMissingOption(key: IntacctExportSettingDestinationOptionKey, defaultDestinationAttribute: DefaultDestinationAttribute): void {
     const optionArray = this.destinationOptions[key];
-    const option = optionArray.find(attribute => attribute.destination_id === defaultDestinationAttribute.id);
+    const option = optionArray.find(attribute => attribute.destination_id === defaultDestinationAttribute?.id);
 
-    if (!option && defaultDestinationAttribute.id && defaultDestinationAttribute.name) {
+    if (!option && defaultDestinationAttribute?.id && defaultDestinationAttribute?.name) {
       const newOption = {
         destination_id: defaultDestinationAttribute.id,
         value: defaultDestinationAttribute.name
@@ -468,12 +468,12 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   private addMissingOptions(): void {
     // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options
-    this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings.default_gl_account);
-    this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings.default_credit_card);
-    this.addMissingOption(IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings.default_reimbursable_expense_payment_type);
-    this.addMissingOption(IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings.default_ccc_expense_payment_type);
-    this.addMissingOption(IntacctExportSettingDestinationOptionKey.VENDOR, this.exportSettings.general_mappings.default_ccc_vendor);
-    this.addMissingOption(IntacctExportSettingDestinationOptionKey.CHARGE_CARD, this.exportSettings.general_mappings.default_credit_card);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings?.default_gl_account);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.ACCOUNT, this.exportSettings.general_mappings?.default_credit_card);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings?.default_reimbursable_expense_payment_type);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings?.default_ccc_expense_payment_type);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.VENDOR, this.exportSettings.general_mappings?.default_ccc_vendor);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.CHARGE_CARD, this.exportSettings.general_mappings?.default_credit_card);
   }
 
   private getSettingsAndSetupForm(): void {
