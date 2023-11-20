@@ -1,12 +1,35 @@
-const fs = require('fs');
-
-const configPath = './src/app/branding/config.json';
-const fileContent = fs.readFileSync(configPath, 'utf8');
-
-const config = JSON.parse(fileContent);
-const customColors = config['colors'];
-
 /** @type {import('tailwindcss').Config} */
+
+const customColors = {
+  white: 'var(--white)',
+  placeholder: 'var(--placeholder)',
+  separator: 'var(--separator)',
+  'normal-text-color': 'var(--normal-text-color)',
+  'slightly-normal-text-color': 'var(--slightly-normal-text-color)',
+  'menu-inactive-text-color': 'var(--menu-inactive-text-color)',
+  'sub-text-color': 'var(--sub-text-color)',
+  'faded-text-color': 'var(--faded-text-color)',
+  'box-color': 'var(--box-color)',
+  'hyperlink-color': 'var(--hyperlink-color)',
+  'mandatory-field-color': 'var(--mandatory-field-color)',
+  'disabled-bg-color': 'var(--disabled-bg-color)',
+  'configuration-bg': 'var(--configuration-bg)',
+  'dropdown-hover': 'var(--dropdown-hover)',
+  'check-box': 'var(--check-box)',
+  'info-section': 'var(--info-section)',
+  'info': 'var(--info)',
+  'success-toast': 'var(--success-toast)',
+  'alert-toast': 'var(--alert-toast)',
+  'cta-disabled': 'var(--cta-disabled)',
+  'line-inactive': 'var(--line-inactive)',
+  'progress-bar-bg': 'var(--progress-bar-bg)',
+  'mapped-green-border': 'var(--mapped-green-border)',
+  'mapped-green-bg': 'var(--mapped-green-bg)',
+  'unmapped-red-border': 'var(--unmapped-red-border)',
+  'unmapped-red-bg': 'var(--unmapped-red-bg)',
+  'pink': 'var(--pink)',
+  'pink-box-border': 'var(--pink-box-border)',
+}
 
 module.exports = {
   prefix: 'tw-',
