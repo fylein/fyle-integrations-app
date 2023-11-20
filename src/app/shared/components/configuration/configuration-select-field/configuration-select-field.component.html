@@ -47,7 +47,7 @@
                     <span>
                         {{ item.label }}
                     </span>
-                    <i *ngIf="!isOptionSearchInProgress" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                    <i *ngIf="!isOptionSearchInProgress&&showClearIcon" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
                 </div>
             </ng-template>
             </p-dropdown>
