@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
@@ -23,8 +24,7 @@ export class IntacctConnectorComponent implements OnInit {
 
   saveInProgress: boolean = false;
 
-  // to be changed
-  redirectLink: string = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6';
+  redirectLink: string = brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR;
 
   windowReference: Window;
 

@@ -14,6 +14,7 @@ export type KbArticle = {
                 EXPORT_SETTING: string;
                 ADVANCED_SETTING: string;
                 LANDING: string;
+                CONNECTOR: string;
                 SKIP_EXPORT: string;
             }
         }

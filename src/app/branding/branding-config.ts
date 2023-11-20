@@ -1,8 +1,9 @@
+import { BrandingConfiguration } from '../core/models/branding/branding-configuration.model';
 import { FeatureConfiguration } from '../core/models/branding/feature-configuration.model';
 import { KbArticle } from '../core/models/branding/kb-article.model';
 import config from './config.json';
 
-export const brandingConfig = config;
+export const brandingConfig: BrandingConfiguration = config;
 
 const featureConfigs: FeatureConfiguration = {
     fyle: {
@@ -32,11 +33,12 @@ const kbArticles: KbArticle = {
                 EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
                 ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
                 LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
+                CONNECTOR: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6',
                 SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
             }
         }
     }
-}
+};
 
 // @ts-ignore
 export const brandingKbArticles = kbArticles[brandingConfig.brandId];
