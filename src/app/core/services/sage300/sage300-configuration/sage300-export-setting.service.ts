@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Sage300ExportSettingFormOption, Sage300ExportSettingGet, Sage300ExportSettingPost } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { Subject } from 'rxjs';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { CCCExpenseState, ExpenseGroupingFieldOption, ExpenseState, Sage300ExpenseDate, Sage300ExportType } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, CorporateCreditCardExpensesObject, ExpenseGroupingFieldOption, ExpenseState, Sage300ExpenseDate, Sage300ExportType } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 
 const sage300ExportSettingGetCache = new Subject<void>();
@@ -93,11 +93,24 @@ export class Sage300ExportSettingService {
     ];
   }
 
-  getExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
+  getReimbursableExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
         label: 'Accounts Payable Invoice',
         value: Sage300ExportType.PURCHASE_INVOICE
+      },
+      {
+        label: 'Direct Cost',
+        value: Sage300ExportType.DIRECT_COST
+      }
+    ];
+  }
+
+  getCCCExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
+    return [
+      {
+        label: 'Journal Entry',
+        value: CorporateCreditCardExpensesObject.JOURNAL_ENTRY
       },
       {
         label: 'Direct Cost',

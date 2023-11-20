@@ -4,6 +4,8 @@ import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
 import { FyleField, IntegrationField } from '../../models/db/mapping.model';
+import { Sage300GroupedDestinationAttribute } from '../../models/sage300/db/sage300-destination-attribuite.model';
+import { GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
 
 
 @Injectable({
@@ -36,7 +38,7 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/destination_attributes/`, params);
   }
 
-  getGroupedDestinationAttributes(attributeTypes: string[]): any {
+  getGroupedDestinationAttributes(attributeTypes: string[]): Observable<GroupedDestinationAttribute> {
     return from(this.getDestinationAttributes(attributeTypes).toPromise().then((response: any | undefined) => {
       return response?.reduce((groupedAttributes: any, attribute: any) => {
         const group: any = groupedAttributes[attribute.attribute_type] || [];

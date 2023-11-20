@@ -1,9 +1,9 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption } from "../../enum/enum.model";
+import { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption, CorporateCreditCardExpensesObject } from "../../enum/enum.model";
 
 export type Sage300ExportSettingFormOption = {
     label: string,
-    value: ExpenseState | CCCExpenseState | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
+    value: ExpenseState | CorporateCreditCardExpensesObject | CCCExpenseState | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
 }
 
 export type ExportSettingValidatorRule = {

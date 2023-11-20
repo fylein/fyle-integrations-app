@@ -206,9 +206,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
       if (value?.attribute_type === 'custom_field') {
         this.addCustomField(true);
         this.customFieldType = formControllerName;
-        this.customFieldControl = this.importSettingForm.controls.costCodes;
+        this.customFieldControl = this.importSettingForm.controls[formControllerName];
         if (value.source_field === 'custom_field') {
-          this.importSettingForm.controls.costCodes.patchValue({
+          this.importSettingForm.controls[formControllerName].patchValue({
             source_field: null
           });
         }
@@ -252,9 +252,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   private addCustomField(dialogValue: boolean) {
     this.customFieldForm = this.formBuilder.group({
-      attribute_type: [null, Validators.required],
-      display_name: [null],
-      source_placeholder: [null, Validators.required]
+      attribute_type: ['', Validators.required],
+      display_name: [''],
+      source_placeholder: ['', Validators.required]
     });
     this.showCustomFieldDialog = dialogValue;
   }
