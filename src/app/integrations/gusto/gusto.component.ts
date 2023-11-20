@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { catchError, concat, merge, Observable, of, toArray } from 'rxjs';
-import { AppName, ClickEvent, InAppIntegration, Page, ConfigurationCta, RedirectLink, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, InAppIntegration, Page, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
@@ -10,6 +10,7 @@ import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-gusto',
@@ -36,7 +37,7 @@ export class GustoComponent implements OnInit {
 
   isConfigurationSaveInProgress: boolean;
 
-  RedirectLink = RedirectLink;
+  brandingKbArticles = brandingKbArticles;
 
   showErrorScreen: boolean;
 

@@ -87,6 +87,7 @@ export class AdvancedSettingComponent implements OnInit {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
+      // to be changed
       expense_link: 'https://app.fylehq.com/app/main/#/enterprise/view_expense/'
     };
     this.memoPreviewText = '';

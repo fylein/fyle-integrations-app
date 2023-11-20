@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfigurationCta, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-field-mapping',
@@ -26,7 +27,7 @@ export class FieldMappingComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  redirectLink: RedirectLink.QBD;
+  redirectLink = brandingKbArticles.topLevelArticles.QBD;
 
   representationOption: QBDExportSettingFormOption[] = [
     {

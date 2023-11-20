@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { AppName, ConfigurationCta, FyleField, IntacctLink, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -14,6 +14,7 @@ import { SkipExportComponent } from '../../helper/skip-export/skip-export.compon
 import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { Configuration } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-advanced-settings',
@@ -30,9 +31,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   skipExportForm: FormGroup;
 
-  redirectLink = IntacctLink.ADVANCED_SETTING;
+  redirectLink = brandingKbArticles.onboardingArticles.INTACCT.ADVANCED_SETTING;
 
-  IntacctLink = IntacctLink;
+  intacctLink = brandingKbArticles.topLevelArticles.INTACCT;
 
   isOnboarding: boolean;
 
@@ -127,6 +128,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
+      // to be changed
       expense_link: 'https://app.fylehq.com/app/main/#/enterprise/view_expense/'
     };
     this.memoPreviewText = '';
