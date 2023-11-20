@@ -7,7 +7,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 })
 export class OnboardingDoneComponent implements OnInit {
 
-  @Output() launchIntegrationClick = new EventEmitter<undefined>();
+  @Output() launchIntegrationClick = new EventEmitter();
 
   constructor() { }
 
