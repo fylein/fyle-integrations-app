@@ -67,7 +67,6 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     private advancedSettingsService: Sage300AdvancedSettingsService,
     private helper: HelperService,
     private helperService: Sage300HelperService,
-    private exportSettingsService: Sage300ExportSettingService,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
@@ -181,13 +180,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       valueField.value1 = [valueField.value1];
     }
     valueField.rank = 1;
-    const skipExportRank1: ExpenseFilterPayload = {
-      condition: valueField.condition1 as ConditionField,
-      operator: valueField.operator1,
-      value: valueField.value1,
-      join_by: valueField.join_by,
-      rank: 1
-    };
+    const skipExportRank1: ExpenseFilterPayload = Sage300AdvancedSettingModel.constructExportFilterPayload(valueField);
     const payload1 = Sage300AdvancedSettingModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
     this.advancedSettingsService.postExpenseFilter(payload1).subscribe((skipExport1: ExpenseFilter) => {
       if (valueField.condition2 && valueField.operator2) {
@@ -209,13 +202,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
           valueField.value2 = [valueField.value2];
         }
         valueField.rank = 2;
-        const skipExportRank2: ExpenseFilterPayload = {
-          condition: valueField.condition2 as ConditionField,
-          operator: valueField.operator2,
-          value: valueField.value2,
-          join_by: valueField.join_by,
-          rank: 2
-        };
+        const skipExportRank2: ExpenseFilterPayload = Sage300AdvancedSettingModel.constructExportFilterPayload(valueField);
         const payload2 = Sage300AdvancedSettingModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);
         this.advancedSettingsService.postExpenseFilter(payload2).subscribe((skipExport2: ExpenseFilter) => {});
       }
