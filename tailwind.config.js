@@ -344,6 +344,13 @@ module.exports = {
       },
       top: {
         '70': '70%'
+      },
+      lineHeight: {
+        '16-px': '16px'
+      },
+      content: {
+        'no': "'No'",
+        'yes': "'Yes'"
       }
     },
   },

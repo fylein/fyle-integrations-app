@@ -315,7 +315,7 @@ export enum QBDOnboardingState {
     CUSTOMER = 'CUSTOMER',
     DEPARTMENT = 'DEPARTMENT',
     CLASS = 'CLASS',
-    TAX_CODE = 'TAX_CODE'
+    TAX_DETAIL = 'TAX_DETAIL'
   }
 
   export enum SageIntacctField {
@@ -423,4 +423,43 @@ export enum QBDOnboardingState {
     LAST_SPEND_AT = 'last_spend_at',
     CURRENT_DATE = 'current_date',
     APPROVED_AT = 'approved_at'
+  }
+
+  export enum DefaultImportFields {
+    CATEGORY = 'CATEGORY',
+    ACCOUNT = 'ACCOUNT',
+    VENDOR = 'VENDOR',
+    MERCHANTS = 'MERCHANTS'
+  }
+
+  export enum AccountingExportStatus {
+    READY = 'READY',
+    FAILED = 'FAILED',
+    FATAL = 'FATAL',
+    COMPLETE = 'COMPLETE',
+    IN_PROGRESS = 'IN_PROGRESS',
+    ENQUEUED = 'ENQUEUED'
+  }
+
+  export enum AccountingExportType {
+    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+    DIRECT_COSTS = 'DIRECT_COSTS'
+  }
+
+  export enum AccountingErrorType {
+    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+  }
+
+  export enum AccountingExportCreationType{
+    CREATING_DIRECT_COST = 'CREATING_DIRECT_COST',
+    CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
+  }
+
+  export enum IntacctExportSettingDestinationOptionKey {
+    VENDOR = 'VENDOR',
+    ACCOUNT = 'ACCOUNT',
+    EXPENSE_PAYMENT_TYPE = 'EXPENSE_PAYMENT_TYPE',
+    CCC_EXPENSE_PAYMENT_TYPE = 'CCC_EXPENSE_PAYMENT_TYPE',
+    CHARGE_CARD = 'CHARGE_CARD'
   }

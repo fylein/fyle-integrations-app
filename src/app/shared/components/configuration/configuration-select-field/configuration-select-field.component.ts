@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
-import { ExportSettingFormOption } from 'src/app/core/models/si/si-configuration/export-settings.model';
-import { ClickEvent, CorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { ExportSettingFormOption, ExportSettingOptionSearch } from 'src/app/core/models/si/si-configuration/export-settings.model';
+import { ClickEvent, CorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
@@ -48,9 +48,17 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() appName: string;
 
-  @Input() exportConfiguration: string;
+  @Input() exportConfigurationIconPath: string;
 
-  @Input() exportTypeIconPath: string;
+  @Input() exportTypeIconPathArray: any;
+
+  @Input() destinationOptionKey: IntacctExportSettingDestinationOptionKey;
+
+  @Input() isOptionSearchInProgress: boolean;
+
+  @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
+
+  exportTypeIconPath: string;
 
   meridiemOption: string[] = ['AM', 'PM'];
 
@@ -91,13 +99,16 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   showExportTable() {
-    this.isPreviewDialogVisible = true;
     this.dialogHeader = 'Export Module';
+    this.exportTypeIconPath = this.exportConfigurationIconPath;
+    this.isPreviewDialogVisible = true;
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.isPreviewDialogVisible = true;
     this.dialogHeader = 'Preview how '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' is made in '+ this.appName;
+    const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
+    this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
+    this.isPreviewDialogVisible = true;
   }
 
   showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
@@ -112,5 +123,9 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   closeDialog() {
     this.isPreviewDialogVisible = false;
     this.isPreviewDialogVisible = false;
+  }
+
+  searchOptions(event: any) {
+    this.searchOptionsDropdown.emit({ searchTerm: event.filter, destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey });
   }
 }
