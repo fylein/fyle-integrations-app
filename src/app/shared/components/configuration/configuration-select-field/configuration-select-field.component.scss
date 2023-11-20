@@ -43,10 +43,14 @@
     @apply tw-text-14-px tw-font-400 ;
 }
 
-:host ::ng-deep .selectedItem  .p-dropdown-trigger {
+:host ::ng-deep .selectedItem .p-dropdown-trigger {
     @apply tw-hidden #{!important};
 }
 
 :host ::ng-deep .dropdown-size-schedule .selectedItem  .p-dropdown-trigger {
     @apply tw-visible #{!important};
+}
+
+:host ::ng-deep .hide-chevron .p-dropdown-trigger {
+    @apply tw-hidden #{!important};
 }
