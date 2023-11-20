@@ -10,7 +10,7 @@ export class BrandingService {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private title: Title,
+    private title: Title
   ) { }
 
   private setupBrandingConfig(): void {

@@ -52,8 +52,8 @@ import { BrandingService } from './core/services/common/branding.service';
       provide: APP_INITIALIZER,
       useFactory: (brandingService: BrandingService) => () => brandingService.init(),
       deps: [BrandingService],
-      multi: true,
-    },
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
