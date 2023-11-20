@@ -48,17 +48,17 @@ export const fyleFieldsResponse: FyleField[] = [
     }
 ];
 export const sage300FieldsResponse: IntegrationField[] =
-    [
-        {
-            "attribute_type": "COST_CENTER",
-            "display_name": "Cost Center"
-        },
-        {
-            "attribute_type": "PROJECT",
-            "display_name": "Project"
-        },
-        {
-            "attribute_type": "CLASS",
-            "display_name": "Class"
-        }
-    ];
+[
+    {
+        "attribute_type": "COST_CENTER",
+        "display_name": "Cost Center"
+    },
+    {
+        "attribute_type": "PROJECT",
+        "display_name": "Project"
+    },
+    {
+        "attribute_type": "CLASS",
+        "display_name": "Class"
+    }
+];

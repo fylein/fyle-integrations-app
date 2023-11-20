@@ -20,10 +20,10 @@ type Sage300ExportSetting = {
   reimbursable_expenses_export_type: Sage300ExportType,
   reimbursable_expense_state: ExpenseState,
   reimbursable_expense_date: Sage300ExpenseDate,
-  reimbursable_expense_grouped_by: string[],
+  reimbursable_expense_grouped_by: string,
   credit_card_expense_export_type: Sage300ExportType,
   credit_card_expense_state:  CCCExpenseState,
-  credit_card_expense_grouped_by: string[],
+  credit_card_expense_grouped_by: string,
   credit_card_expense_date: Sage300ExpenseDate,
   default_ccc_credit_card_account_name: string,
   default_ccc_credit_card_account_id: string,
@@ -43,16 +43,6 @@ export interface Sage300ExportSettingGet extends Sage300ExportSetting {
 export interface Sage300ExportSettingPost extends Sage300ExportSetting {}
 
 export class ExportSettingModel {
-  static getExportGroup(exportGroups: string[] | null): string {
-    if (exportGroups) {
-
-      const exportGroup = exportGroups.find((exportGroup) => {
-        return exportGroup === ExpenseGroupingFieldOption.EXPENSE || exportGroup === ExpenseGroupingFieldOption.REPORT;
-      });
-      return exportGroup ? exportGroup : ExpenseGroupingFieldOption.CLAIM_NUMBER;
-    }
-    return '';
-  }
 
   static mapAPIResponseToFormGroup(exportSettings: Sage300ExportSettingGet | null): FormGroup {
     return new FormGroup({

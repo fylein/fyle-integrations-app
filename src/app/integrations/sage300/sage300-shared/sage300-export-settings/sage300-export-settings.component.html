@@ -70,11 +70,11 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : reimbursableExpenseGroupingDateOptions[0].value) + ' date as'"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
                         [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage 300 CRE. Click here for more details.'"
                         [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calender'"
-                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : reimbursableExpenseGroupingDateOptions[0].value) + ' date'"
+                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

@@ -21,7 +21,13 @@ export class HelperService {
 
   setBaseApiURL(appUrl: string| void): void {
     const urlSplit = this.router.url.split('/');
-    const module:AppUrl = appUrl ? appUrl as AppUrl : (urlSplit.length > 2 ? urlSplit[2] : urlSplit[1]) as AppUrl;
+    const module: AppUrl = appUrl
+      ? appUrl as AppUrl  // Condition 1: If appUrl is truthy, use it as AppUrl
+      : (
+          urlSplit.length > 2  // Condition 2: If appUrl is falsy, check if urlSplit length is greater than 2
+            ? urlSplit[2] as AppUrl  // If true, use urlSplit[2] as AppUrl
+            : urlSplit[1] as AppUrl  // If false, use urlSplit[1] as AppUrl
+        );
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,

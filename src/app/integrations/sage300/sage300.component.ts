@@ -50,23 +50,23 @@ export class Sage300Component implements OnInit {
   }
 
   private setupWorkspace(): void {
-    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: Sage300Workspace) => {
-      if (workspaces?.id) {
-        this.workspaceSetting(workspaces);
+    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: Sage300Workspace[]) => {
+      if (workspaces.length) {
+        this.storeWorkspaceAndNavigate(workspaces[0]);
       }
     }, () => {
       this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
-        this.workspaceSetting(workspaces);
+        this.storeWorkspaceAndNavigate(workspaces);
       });
     }
     );
   }
 
-  workspaceSetting(workspace:Sage300Workspace) {
+  storeWorkspaceAndNavigate(workspace:Sage300Workspace) {
     this.workspace = workspace;
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
-    this.workspaceService.importFyleAttributes(true).subscribe();
+    this.workspaceService.importFyleAttributes(false).subscribe();
     this.mapping.importSage300Attributes(false).subscribe();
     this.isLoading = false;
     this.navigate();

@@ -29,7 +29,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   isSaveInProgress: boolean;
 
-  exportSettings: Sage300ExportSettingGet | null | any;
+  exportSettings: Sage300ExportSettingGet | null ;
 
   exportSettingForm: FormGroup;
 
@@ -104,7 +104,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
           Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
           {
             phase: this.helper.getPhase(this.isOnboarding),
-            oldState: this.exportSettings,
+            oldState: this.exportSettings as Sage300ExportSettingGet,
             newState: exportSettingResponse
           }
         );
@@ -154,13 +154,13 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
       this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT])
     ]).subscribe(([response]) => {
-      this.exportSettings = response ? response : null;
+      this.exportSettings = response;
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setExportSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.vendorOptions = response ? response[1]?.VENDOR : null;
-      this.creditCardAccountOptions = response ? response[1]?.ACCOUNT : null;
+      this.vendorOptions = response[1]?.VENDOR;
+      this.creditCardAccountOptions = response[1]?.ACCOUNT;
       this.isLoading = false;
     });
   }

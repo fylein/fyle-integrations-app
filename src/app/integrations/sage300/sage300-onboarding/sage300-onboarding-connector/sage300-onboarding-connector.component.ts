@@ -67,7 +67,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
       this.connectSage300Form = this.formBuilder.group({
         userID: [sage300Cred.username, Validators.required],
         companyID: [sage300Cred.identifier, Validators.required],
-        userPassword: [sage300Cred.password, Validators.required]
+        userPassword: ['', Validators.required]
       });
       this.isLoading = false;
     }, () => {

@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
-import { MappingsResponse } from '../../models/db/mapping.model';
+import { FyleField, IntegrationField } from '../../models/db/mapping.model';
 
 
 @Injectable({
@@ -55,11 +55,11 @@ export class MappingService {
     }));
   }
 
-  getIntegrationsFields(app_name: string): Observable<MappingsResponse> {
+  getIntegrationsFields(app_name: string): Observable<IntegrationField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/fields/`, {});
   }
 
-  getFyleFields(): Observable<MappingsResponse> {
+  getFyleFields(): Observable<FyleField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/fields/`, {});
   }
 

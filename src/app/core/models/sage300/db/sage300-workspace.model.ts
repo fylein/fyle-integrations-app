@@ -7,6 +7,5 @@ export interface Sage300Workspace extends Workspace {
     ccc_last_synced_at: Date,
     source_synced_at: Date,
     destination_synced_at: Date,
-    app_version: string,
     onboarding_state: Sage300OnboardingState
 }
