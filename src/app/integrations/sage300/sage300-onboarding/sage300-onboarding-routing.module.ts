@@ -5,6 +5,7 @@ import { Sage300OnboardingLandingComponent } from './sage300-onboarding-landing/
 import { Sage300OnboardingExportSettingsComponent } from './sage300-onboarding-export-settings/sage300-onboarding-export-settings.component';
 import { Sage300OnboardingConnectorComponent } from './sage300-onboarding-connector/sage300-onboarding-connector.component';
 import { Sage300OnboardingImportSettingsComponent } from './sage300-onboarding-import-settings/sage300-onboarding-import-settings.component';
+import { Sage300OnboardingAdvancedSettingsComponent } from './sage300-onboarding-advanced-settings/sage300-onboarding-advanced-settings.component';
 
 
 const routes: Routes = [
@@ -27,6 +28,10 @@ const routes: Routes = [
       {
         path: 'import_settings',
         component: Sage300OnboardingImportSettingsComponent
+      },
+      {
+        path: 'advanced_settings',
+        component: Sage300OnboardingAdvancedSettingsComponent
       }
     ]
   }
