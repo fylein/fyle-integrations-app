@@ -1,11 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { forkJoin } from 'rxjs';
-import { ConditionField, ExpenseFilterGetResponse, JoinOptions, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
-import { Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.mode';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
+import { JoinOption } from 'src/app/core/models/enum/enum.model';
 import { CustomOperatorOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 
 @Component({
   selector: 'app-configuration-skip-export',
@@ -18,7 +16,9 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   @Input() skipExportForm: FormGroup;
 
-  @Input() expenseFilter: ExpenseFilterGetResponse;
+  @Input() expenseFilter: ExpenseFilterResponse;
+
+  @Input() conditionFieldOptions: ConditionField[];
 
   @Output() deleteSkipExportForm = new EventEmitter<number>();
 
@@ -36,13 +36,11 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   workspaceId: number;
 
-  conditionFieldOptions: ConditionField[];
-
   operatorFieldOptions1: { label: string; value: string }[];
 
   operatorFieldOptions2: { label: string; value: string }[];
 
-  joinByOptions = [{value: JoinOptions.AND}, {value: JoinOptions.OR}];
+  joinByOptions = [{label: 'AND', value: JoinOption.AND}, {label: 'OR', value: JoinOption.OR}];
 
   customOperatorOptions = [
     {
@@ -74,7 +72,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     private helper: HelperService
   ) { }
 
-  private setConditionFields(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+  private setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     response.results.forEach((element) => {
       const type = this.conditionFieldOptions.filter( (fieldOption) => fieldOption.field_name === element.condition);
       const selectedConditionOption : ConditionField = type[0];
@@ -82,7 +80,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     });
   }
 
-  private setOperatorFieldOptions(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+  private setOperatorFieldOptions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     if (conditionArray.length) {
       if (response.results[0].is_custom) {
         this.setCustomOperatorOptions(response.results[0].rank, response.results[0].custom_field_type);
@@ -99,7 +97,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     }
   }
 
-  private setSkippedConditions(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+  private setSkippedConditions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     if (response.count > 0) {
       this.skippedCondition1 = conditionArray[0].field_name;
       if (response.count > 1 && response.results[0].join_by) {
@@ -149,7 +147,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.showAddButton = !show;
     if (this.showAdditionalCondition) {
       const fields = ['join_by', 'condition2', 'operator2'];
-      this.helper.skipExportFormSettingChange(this.skipExportForm, fields, true);
+      this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, true);
       if (this.skipExportForm.controls.value2.value.length===0) {
         this.helper.markControllerAsRequired(this.skipExportForm, 'value2');
       }
@@ -162,7 +160,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.resetAdditionalFilter();
     const isDelete = this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(2) : '';
     const fields = ['join_by', 'condition2', 'operator2', 'value2'];
-    this.helper.skipExportFormSettingChange(this.skipExportForm, fields, false);
+    this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, false);
   }
 
   checkValidationCondition() {
@@ -232,31 +230,24 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   setCustomOperatorOptions(rank: number, type: string | null) {
-      if (type !== 'SELECT') {
-        if (rank === 1) {
-          this.operatorFieldOptions1 = this.customOperatorOptions;
-        } else if (rank === 2) {
-          this.operatorFieldOptions2 = this.customOperatorOptions;
-        }
-      } else {
-        if (rank === 1) {
-          this.operatorFieldOptions1 = this.customSelectOperatorOptions;
-        } else if (rank === 2) {
-          this.operatorFieldOptions2 = this.customSelectOperatorOptions;
-        }
+    if (type !== 'SELECT') {
+      if (rank === 1) {
+        this.operatorFieldOptions1 = this.customOperatorOptions;
+      } else if (rank === 2) {
+        this.operatorFieldOptions2 = this.customOperatorOptions;
+      }
+    } else {
+      if (rank === 1) {
+        this.operatorFieldOptions1 = this.customSelectOperatorOptions;
+      } else if (rank === 2) {
+        this.operatorFieldOptions2 = this.customSelectOperatorOptions;
       }
     }
-
-  compareObjects(selectedOption: any, listedOption: any): boolean {
-    if (JSON.stringify(selectedOption) === JSON.stringify(listedOption)) {
-      return true;
-    }
-    return false;
   }
 
-  setupSkipExportForm(response: ExpenseFilterGetResponse, conditionArray: ConditionField[]) {
+  setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     this.isLoading = true;
-    this.showExpenseFilters = response.count > 0;
+    this.showAddButton = response.count === 1;
     this.setConditionFields(response, conditionArray);
     this.setOperatorFieldOptions(response, conditionArray);
     this.setSkippedConditions(response, conditionArray);

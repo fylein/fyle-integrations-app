@@ -50,7 +50,7 @@
               </div>
         </div>
   
-        <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
+        <div *ngIf="showAdditionalCondition || !showAddButton" class="tw-pb-24-px">
           <div class="tw-flex tw-ml-120-px tw-mt-8-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
                   Condition
@@ -67,9 +67,9 @@
           </div>
           <div class="tw-flex">
             <div class="joinby-field">
-              <p-dropdown optionLabel="value" appendTo="body" class="joinby-field" [options]="joinByOptions" formControlName="join_by" placeholder="Join by">
-                <ng-template let-value pTemplate="selectedItem" >
-                  {{ value.value }}
+              <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" formControlName="join_by" placeholder="Join by">
+                <ng-template let-selectedValue pTemplate="selectedItem" >
+                  {{ selectedValue.value }}
                 </ng-template>
                 <ng-template let-value pTemplate="item">
                   {{ value.value }}
