@@ -1,8 +1,4 @@
 import { Sage300DestinationAttributes } from "../sage300/db/sage300-destination-attribuite.model";
-export type DefaultDestinationAttribute = {
-  id: string,
-  name: string,
-};
 
 export type DestinationAttributeDetail = {
   email: string;
