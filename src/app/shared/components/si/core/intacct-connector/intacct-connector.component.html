@@ -5,7 +5,7 @@
    <div>
       <app-configuration-step-header 
       [headerText]="'Connect to Sage Intacct'"
-      [contentText]="'Connect to your Sage Intacct account to establish a connection between Fyle and Sage Intacct.'"
+      [contentText]="'Connect to your Sage Intacct account to establish a connection between ' + brandingConfig.brandName + ' and Sage Intacct.'"
       [redirectLink]="redirectLink"></app-configuration-step-header>
    </div>
    <div *ngIf="!isLoading">

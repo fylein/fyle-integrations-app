@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-landing',
@@ -15,6 +15,8 @@ export class LandingComponent implements OnInit {
   isQBDConnected: boolean = false;
 
   isLoading: boolean = false;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

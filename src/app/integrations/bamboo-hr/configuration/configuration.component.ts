@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { ClickEvent } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -34,6 +35,8 @@ export class ConfigurationComponent implements OnInit {
   });
 
   showDialog: boolean;
+
+  brandingConfig = brandingConfig;
 
   private readonly org: Org = this.orgService.getCachedOrg();
 

@@ -388,6 +388,7 @@ export enum QBDOnboardingState {
     INTEGRATION = 'integration'
   }
 
+  // Whitelabelling TODO
   export enum Sage300Link {
     IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
     EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',

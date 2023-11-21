@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { Sage300Link, EmbedVideoLink, AppName, QBDOnboardingState, Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
@@ -13,6 +14,8 @@ export class Sage300OnboardingLandingComponent implements OnInit {
   redirectLink = Sage300Link.LANDING;
 
   EmbedVideo = EmbedVideoLink;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

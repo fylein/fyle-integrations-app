@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { EmbedVideoLink } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
@@ -21,6 +22,8 @@ export class AppLandingPageBodyComponent implements OnInit {
   @Input() embedVideo: EmbedVideoLink;
 
   embedVideoUrl: SafeResourceUrl;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     public windowService: WindowService,

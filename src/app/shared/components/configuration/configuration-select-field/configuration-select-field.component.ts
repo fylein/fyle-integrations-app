@@ -12,6 +12,7 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -79,6 +80,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   ];
 
   dialogHeader: string;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private trackingService: TrackingService,
