@@ -29,6 +29,8 @@ type Sage300ExportSetting = {
   default_ccc_credit_card_account_id: string,
   default_reimbursable_credit_card_account_name: string,
   default_reimbursable_credit_card_account_id: string,
+  default_debit_card_account_name: string,
+  default_debit_card_account_id: string,
   default_vendor_name: string,
   default_vendor_id: string
 };
@@ -59,7 +61,7 @@ export class ExportSettingModel {
       cccExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by: null),
       defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_credit_card_account_name ? exportSettings?.default_ccc_credit_card_account_name : null),
       defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? exportSettings?.default_vendor_name : null),
-      defaultVendorId: new FormControl(exportSettings?.default_vendor_id ? exportSettings?.default_vendor_id : null)
+      defaultDebitCardAccountName: new FormControl(exportSettings?.default_debit_card_account_name ? exportSettings?.default_debit_card_account_name : null)
     });
   }
 
@@ -78,7 +80,9 @@ export class ExportSettingModel {
       default_reimbursable_credit_card_account_name: exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value ? exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value.value : null,
       default_reimbursable_credit_card_account_id: exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value ? exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value.id : null,
       default_vendor_name: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.value : null,
-      default_vendor_id: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.id : null
+      default_vendor_id: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.id : null,
+      default_debit_card_account_name: exportSettingsForm.get('defaultDebitCardAccountName')?.value ? exportSettingsForm.get('defaultDebitCardAccountName')?.value.value : null,
+      default_debit_card_account_id: exportSettingsForm.get('defaultDebitCardAccountName')?.value ? exportSettingsForm.get('defaultDebitCardAccountName')?.value.id : null
     };
   }
 }
