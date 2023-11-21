@@ -15,7 +15,7 @@
     *ngIf="!isLoading && !showErrorScreen"
     [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" 
     [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
-    [redirectLink]="RedirectLink.TRAVELPERK"
+    [redirectLink]="brandingKbArticles.topLevelArticles.TRAVELPERK"
 ></app-landing-page-body>
 
 <app-error *ngIf="showErrorScreen"></app-error>

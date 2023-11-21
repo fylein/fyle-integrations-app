@@ -1,0 +1,123 @@
+<div *ngIf="isLoading">
+</div>
+<div *ngIf="enableSkipExport && !isLoading">
+    <div class="tw-flex tw-flex-col">
+      <form [formGroup]="skipExportForm" class="tw-flex tw-flex-col tw-pl-24-px">
+            <div class="tw-flex">
+                <div class="tw-ml-120-px tw-w-200-px tw-mr-6-px fields-header">
+                    Condition
+                    <span class="tw-text-mandatory-field-color">*</span>
+                </div>
+                  <div class="tw-w-180-px tw-mr-24-px fields-header">
+                    Operator
+                    <span class="tw-text-mandatory-field-color">*</span>
+                </div>
+                <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(1)">
+                  Value
+                  <span class="tw-text-mandatory-field-color">*</span>
+                </div>
+            </div>
+            <div class="tw-flex dropdown-row tw-mt-8-px">
+              <p class="tw-text-14-px tw-text-sub-text-color tw-pt-6-px">Where</p>
+              <div class="tw-ml-80-px tw-mr-24-px">
+                <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select Condition">
+                  For options
+                  <ng-template let-option pTemplate="item">
+                    {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
+                  </ng-template>
+                  For selected option
+                  <ng-template let-selectedOption pTemplate="selectedItem">
+                    {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                  </ng-template>
+                </p-dropdown>                               
+                <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
+                [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
+              </div>
+              <div class="tw-mr-24-px">
+                <p-dropdown appendTo="body" [options]="operatorFieldOptions1" formControlName="operator1" placeholder="Select Operator"></p-dropdown>
+                <app-mandatory-error-message *ngIf="skipExportForm.controls.operator1.touched && !skipExportForm.controls.operator1.valid"
+                [customErrorMessage]="'Please select the operator'"></app-mandatory-error-message>
+              </div>
+              <div class="tw-w-296-px" *ngIf="showInputField(1)">
+                <input type="text" formControlName="value1" class="value-input-field" placeholder="Enter Value">
+              </div>
+              <div class="tw-w-296-px" *ngIf="showDateField(1)">
+                <p-calendar formControlName="value1" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
+              </div>
+              <div class="tw-w-296-px" *ngIf="showChipField(1)">
+                <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
+                <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
+              </div>
+        </div>
+  
+        <div *ngIf="showAdditionalCondition || !showAddButton" class="tw-pb-24-px">
+          <div class="tw-flex tw-ml-120-px tw-mt-8-px">
+              <div class="tw-w-200-px tw-mr-6-px fields-header">
+                  Condition
+                  <span class="tw-text-mandatory-field-color">*</span>
+              </div>
+                <div class="tw-w-180-px fields-header tw-mr-24-px">
+                  Operator
+                <span class="tw-text-mandatory-field-color">*</span>
+              </div>
+              <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(2)">
+                Value
+                <span class="tw-text-mandatory-field-color">*</span>
+              </div>
+          </div>
+          <div class="tw-flex">
+            <div class="joinby-field">
+              <p-dropdown appendTo="body" class="joinby-field" [options]="joinByOptions" formControlName="join_by" placeholder="Join by">
+                <ng-template let-selectedValue pTemplate="selectedItem" >
+                  {{ selectedValue.value }}
+                </ng-template>
+                <ng-template let-value pTemplate="item">
+                  {{ value.value }}
+                </ng-template>
+              </p-dropdown>
+            </div>
+            <div class="tw-ml-24-px tw-mr-24-px">
+              <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select Condition">
+                For options
+                <ng-template let-option pTemplate="item">
+                  {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
+                </ng-template>
+                For selected option
+                <ng-template let-selectedOption pTemplate="selectedItem">
+                  {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                </ng-template>
+              </p-dropdown>                            
+              <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
+              [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
+            </div>
+            <div class="tw-mr-24-px">
+              <p-dropdown appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" placeholder="Select Operator"></p-dropdown>
+              <app-mandatory-error-message *ngIf="skipExportForm.controls.operator2.touched && !skipExportForm.controls.operator2.valid"
+              [customErrorMessage]="'Please select the operator'"></app-mandatory-error-message>
+            </div>
+            <div *ngIf="showInputField(2)" class="tw-w-296-px">
+              <input type="text" formControlName="value2" placeholder="Enter a value" class="border p-2 rounded value-input-field" placeholder="Enter Value">
+            </div>
+            <div *ngIf="showChipField(2)" class="tw-w-296-px">
+              <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" placeholder="Enter Value"></p-chips>
+              <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
+            </div>
+            <div *ngIf="showDateField(2)" class="tw-w-296-px">
+              <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
+            </div>
+            <img class="delete-icon" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
+          </div>
+          <div class=" tw-text-mandatory-field-color" *ngIf="checkValidationCondition()">
+            <p>*Condition selected should be distinct.</p>
+          </div>
+        </div>
+        <div class="tw-flex items-center tw-text-mandatory-field-color tw-pt-12-px tw-pb-24-px" *ngIf="showAddButton">
+          <img src="assets/icons/add.svg" (click)="updateAdditionalFilterVisibility(true)">
+          <a class="add-row-text tw-cursor-pointer tw-pl-8-px tw-text-14-px" (click)="updateAdditionalFilterVisibility(true)">
+            Add More Fields
+          </a>
+        </div>
+      </form>
+    </div>
+</div>
+  

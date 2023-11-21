@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { APP_INITIALIZER, ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -16,6 +16,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { SharedModule } from './shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
+import { BrandingService } from './core/services/common/branding.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,12 @@ import { RippleModule } from 'primeng/ripple';
     {
       provide: ErrorHandler,
       useClass: GlobalErrorHandler
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (brandingService: BrandingService) => () => brandingService.init(),
+      deps: [BrandingService],
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

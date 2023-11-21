@@ -71,6 +71,8 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
 import { ConfigurationCustomFieldCreationDialogComponent } from './components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
 import { ConfigurationConfirmationDialogComponent } from './components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
+import { ConfigurationSkipExportComponent } from './components/configuration/configuration-skip-export/configuration-skip-export.component';
+import { ConfigurationStepSubHeaderComponent } from './components/configuration/configuration-step-sub-header/configuration-step-sub-header.component';
 import { GenericMappingV2Component } from './components/si/helper/generic-mapping-v2/generic-mapping-v2.component';
 import { GenericMappingTableComponent } from './components/si/generic-mapping-table/generic-mapping-table.component';
 import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
@@ -127,6 +129,8 @@ import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component'
     ConfigurationCustomFieldCreationDialogComponent,
     ConfigurationConfirmationDialogComponent,
     ZeroStateComponent,
+    ConfigurationSkipExportComponent,
+    ConfigurationStepSubHeaderComponent,
     GenericMappingV2Component,
     GenericMappingTableComponent,
     SubMenuComponent
@@ -210,6 +214,8 @@ import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component'
     ZeroStateComponent,
     DashboardExportSummarySectionComponent,
     PreviewDialogComponent,
+    ConfigurationSkipExportComponent,
+    ConfigurationStepSubHeaderComponent,
     GenericMappingV2Component,
     SubMenuComponent
   ]
