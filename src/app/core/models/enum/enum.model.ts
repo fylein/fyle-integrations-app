@@ -32,16 +32,6 @@ export enum InAppIntegration {
   SAGE300 = 'Sage 300 CRE'
 }
 
-export enum RedirectLink {
-  BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
-  QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
-  // TODO: Change the link to the actual help article
-  INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  SAGE300 = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
-}
-
 export enum EmbedVideoLink {
   INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk',
   SAGE300 = 'https://www.youtube.com/embed/2oYdc8KcQnk'
@@ -159,7 +149,7 @@ export enum Sage300OnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
-  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
 }
 
@@ -315,7 +305,8 @@ export enum QBDOnboardingState {
     CUSTOMER = 'CUSTOMER',
     DEPARTMENT = 'DEPARTMENT',
     CLASS = 'CLASS',
-    TAX_DETAIL = 'TAX_DETAIL'
+    TAX_DETAIL = 'TAX_DETAIL',
+    JOB = 'JOB'
   }
 
   export enum SageIntacctField {
@@ -388,14 +379,6 @@ export enum QBDOnboardingState {
     EXPORT_DONE = 'Export Done'
   }
 
-  export enum IntacctLink {
-    IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-    EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-    ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-    LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-    SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
-  }
-
   export enum AppUrl {
     BAMBOO_HR = 'bamboo_hr',
     QBD = 'qbd',
@@ -456,6 +439,24 @@ export enum QBDOnboardingState {
     CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
   }
 
+  export enum Operator {
+    IsNull = "isnull",
+    IExact = "iexact",
+    IContains = "icontains",
+    LessThan = "lt",
+    LessThanOrEqual = "lte"
+  }
+
+  export enum JoinOption {
+    AND = "AND",
+    OR = "OR"
+  }
+
+  export enum CustomOperatorOption {
+    Is = "iexact",
+    IsEmpty = "is_empty",
+    IsNotEmpty = "is_not_empty"
+  }
   export enum IntacctExportSettingDestinationOptionKey {
     VENDOR = 'VENDOR',
     ACCOUNT = 'ACCOUNT',
