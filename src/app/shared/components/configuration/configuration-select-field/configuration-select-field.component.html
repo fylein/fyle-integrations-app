@@ -17,89 +17,41 @@
             </div>
         </div>
         <div>
-            <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
-                <p-dropdown 
-                    appendTo="body"
-                    [options]="destinationAttributes"
-                    optionLabel="value" class="!tw-w-300-px"
-                    [formControlName]="formControllerName"
-                    [placeholder]="placeholder"
-                    [ngClass]="{
-                        'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
-                        'normal-box': !form.controls[formControllerName].invalid || !isFieldMandatory || !form.controls[formControllerName].touched,
-                        'hide-chevron': !isOptionSearchInProgress && form.controls[formControllerName].value
-                    }"            
-                    [filter]="true" 
-                    filterBy="value"
-                    (onFilter)="searchOptions($event)"
-                    [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
-                    [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : (form.controls[formControllerName].value ? '' : 'pi pi-chevron-down')"
-                    >
-                    <ng-template let-option pTemplate="item">
-                        <div #textElement 
-                            class="truncate"
-                            [ngClass]="{'max-w-[16rem]': true}"
-                            [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
-                            {{option.label}}
-                        </div>
-                    </ng-template>            
-                    <ng-template pTemplate="selectedItem" let-item>
-                        <div class="tw-flex tw-justify-between tw-items-center">
-                            <span>
-                                {{ item.label }}
-                            </span>
-                            <i *ngIf="!isOptionSearchInProgress&&showClearIcon" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
-                        </div>
-                    </ng-template>
-                </p-dropdown>
-            </div>
-            <div *ngIf="options && !destinationAttributes && !simpleOptions">
-                <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
-                    <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px" 
-                    [formControlName]="formControllerName" [placeholder]="placeholder"
-                    [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"
-                    [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}"
-                    >
-                    <ng-template let-option pTemplate="item">
-                        <div #textElement 
-                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                            [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
-                            {{option.label}}
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="selectedItem" let-item>
-                        <div class="tw-flex tw-justify-between tw-items-center">
-                            <span>
-                                {{ item.label }}
-                            </span>
-                            <i class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
-                        </div>
-                    </ng-template>
-                </p-dropdown>                     
-                    <div *ngIf="form.controls[formControllerName].value==='JOURNAL_ENTRY' || form.controls[formControllerName].value === 'EXPENSE_REPORT' || form.controls[formControllerName].value === 'BILL' || form.controls[formControllerName].value === 'CHARGE_CARD_TRANSACTION' || form.controls[formControllerName].value === 'PURCHASE_INVOICE' || form.controls[formControllerName].value === 'DIRECT_COST'" class="sub-text tw-pt-3-px">
-                        <span>Click </span>
-                        <a (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
-                        <span> to preview how it looks on {{appName}}</span>
-                    </div>
-                    <div *ngIf="form.controls[formControllerName].value==='spent_at' && isOnboarding" class="sub-text">
-                        <span>Using the Spend Date may lead to multiple single line<br>item entries.</span>
-                    </div>
-                </div>
-                
-                <div>
-                    <h5 class="tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
-                    <h5 *ngIf="formControllerName!=='reimbursableExportType' && formControllerName!=='cccExportType'" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel"></h5>
-                    <h5 *ngIf="formControllerName==='reimbursableExportType'" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
-                        Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from Fyle. Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more details.
-                    </h5>
-                    <h5 *ngIf="formControllerName==='cccExportType'" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
-                        Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from Fyle. Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more details.
-                    </h5>
-                </div>
-            </div>
             <div>
-                <div *ngIf="destinationAttributes">
-                    <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="value" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
+                <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
+                    <p-dropdown 
+                        appendTo="body"
+                        [options]="destinationAttributes"
+                        optionLabel="value" class="!tw-w-300-px"
+                        [formControlName]="formControllerName"
+                        [placeholder]="placeholder"
+                        [ngClass]="{
+                            'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
+                            'normal-box': !form.controls[formControllerName].invalid || !isFieldMandatory || !form.controls[formControllerName].touched,
+                            'hide-chevron': !isOptionSearchInProgress && form.controls[formControllerName].value
+                        }"            
+                        [filter]="true" 
+                        filterBy="value"
+                        (onFilter)="searchOptions($event)"
+                        [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
+                        [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : (form.controls[formControllerName].value ? '' : 'pi pi-chevron-down')"
+                        >
+                        <ng-template let-option pTemplate="item">
+                            <div #textElement 
+                                class="truncate"
+                                [ngClass]="{'max-w-[16rem]': true}"
+                                [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                                {{option.label}}
+                            </div>
+                        </ng-template>            
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.label }}
+                                </span>
+                                <i *ngIf="!isOptionSearchInProgress&&showClearIcon" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                            </div>
+                        </ng-template>
                     </p-dropdown>
                 </div>
                 <div *ngIf="options && !destinationAttributes && !simpleOptions" class="tw-flex tw-justify-end">
