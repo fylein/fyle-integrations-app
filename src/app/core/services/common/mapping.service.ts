@@ -58,11 +58,11 @@ export class MappingService {
   }
 
   getIntegrationsFields(app_name: string): Observable<IntegrationField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/fields/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/${app_name}/fields/`, {});
   }
 
   getFyleFields(): Observable<FyleField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/fields/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/fyle/fields/`, {});
   }
 
 }
