@@ -4,11 +4,12 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "npm run setup:env && ng build",
+    "build": "npm run setup:env && npm run setup:branding && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "unit_test:ci": "npm run setup:env && ng test --watch=false --browsers=ChromeHeadlessCustom",
     "setup:env": "node scripts/setup_env.js",
+    "setup:branding": "node scripts/setup_branding_config.js",
     "lint": "ng lint",
     "generate:svg-sprite": "svg2sprite ./src/assets/icons ./src/assets/sprites/sprite.svg --stripAttrs fill --stripAttrs stroke --stripAttrs id",
     "stop": "kill $(lsof -t -i:4200) || true"

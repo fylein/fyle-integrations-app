@@ -8,6 +8,7 @@ import { AbstractControl, FormArray, FormGroup, ValidatorFn, Validators } from '
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { AdvancedSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -75,7 +76,7 @@ export class HelperService {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
 
-  setExportSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule, form: FormGroup) {
+  setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | AdvancedSettingValidatorRule, form: FormGroup) {
     const keys = Object.keys(validatorRule);
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((isSelected) => {
@@ -141,6 +142,18 @@ export class HelperService {
 
   getPhase(isOnboarding: boolean): ProgressPhase {
     return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
+
+  handleSkipExportFormUpdates(skipExportForm: FormGroup, fields: string[], isChanged: boolean): void {
+    if (isChanged) {
+      fields.forEach((value) => {
+        this.markControllerAsRequired(skipExportForm, value);
+      });
+    } else {
+      fields.forEach((value) => {
+        this.clearValidatorAndResetValue(skipExportForm, value);
+      });
+    }
   }
 }
 

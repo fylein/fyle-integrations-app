@@ -14,7 +14,7 @@
     <form [formGroup]="exportSettingsForm">
         <div class="tw-p-24-px">
             <div class="tw-mb-16-px">
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                <div *ngIf="brandingFeatureConfig.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field 
                     [form]="exportSettingsForm"
                     [label]="'Export Reimbursable Expenses'" 
@@ -22,7 +22,7 @@
                     [formControllerName]="'reimbursableExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
-                <div *ngIf="exportSettingsForm.value?.reimbursableExpense">
+                <div *ngIf="brandingFeatureConfig.reimbursableExpenses && exportSettingsForm.value?.reimbursableExpense">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingsForm"
@@ -44,10 +44,13 @@
                                 [mandatoryErrorListName]="'GL Account'"
                                 [label]="'To which GL Account should the expenses be credited to?'"
                                 [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
-                                [destinationAttributes]="sageIntacctDefaultGLAccounts"
+                                [destinationAttributes]="this.destinationOptions['ACCOUNT']"
+                                [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
+                                [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [iconPath]="'expense'"
                                 [placeholder]="'Select GL account'"
-                                [formControllerName]="'glAccount'"></app-configuration-select-field>
+                                [formControllerName]="'glAccount'"
+                                (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
                                 <app-configuration-select-field
@@ -56,10 +59,13 @@
                                 [mandatoryErrorListName]="'expense payment type'"
                                 [label]="'Set the Default Expense Payment Type as?'"
                                 [subLabel]="'The selected Expense Payment Type will be added to the reimbursable expenses exported from Fyle to Sage Intacct.'"
-                                [destinationAttributes]="sageIntacctExpensePaymentType"
+                                [destinationAttributes]="this.destinationOptions['EXPENSE_PAYMENT_TYPE']"
+                                [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE"
+                                [isOptionSearchInProgress]="isOptionSearchInProgress"
                                 [iconPath]="'expense'"
                                 [placeholder]="'Select expense payment type'"
-                                [formControllerName]="'reimbursableExpensePaymentType'"></app-configuration-select-field>
+                                [formControllerName]="'reimbursableExpensePaymentType'"
+                                (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                     </div>
                     <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -145,10 +151,13 @@
                             [mandatoryErrorListName]="'expense payment type'"
                             [label]="'Set the Default Expense Payment Type as?'"
                             [subLabel]="'The selected Expense Payment Type will be added to the Corporate credit card expenses exported from Fyle to Sage Intacct.'"
-                            [destinationAttributes]="sageIntacctCCCExpensePaymentType"
+                            [destinationAttributes]="this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE']"
+                            [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [iconPath]="'expense'"
                             [placeholder]="'Select expense payment type'"
-                            [formControllerName]="'cccExpensePaymentType'"></app-configuration-select-field>
+                            [formControllerName]="'cccExpensePaymentType'"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.BILL">
                             <app-configuration-select-field
@@ -157,10 +166,13 @@
                             [mandatoryErrorListName]="'credit card vendor'"
                             [label]="'Set the Default Credit Card Vendor as'"
                             [subLabel]="'The vendor configured here will be added to all the Credit Card expenses exported as Bills.'"
-                            [destinationAttributes]="sageIntacctDefaultVendor"
+                            [destinationAttributes]="this.destinationOptions['VENDOR']"
+                            [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.VENDOR"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [iconPath]="'expense'"
                             [placeholder]="'Select credit card vendor'"
-                            [formControllerName]="'creditCardVendor'"></app-configuration-select-field>
+                            [formControllerName]="'creditCardVendor'"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <app-configuration-select-field
@@ -169,10 +181,13 @@
                             [mandatoryErrorListName]="'GL account'"
                             [label]="'To which GL Account should the expenses be credited to?'"
                             [subLabel]="'The integration will credit the account selected here for Corporate Credit Card Expenses exported as Journal Entries.'"
-                            [destinationAttributes]="sageIntacctDefaultGLAccounts"
+                            [destinationAttributes]="this.destinationOptions['ACCOUNT']"
+                            [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [iconPath]="'expense'"
                             [placeholder]="'Select GL account'"
-                            [formControllerName]="'creditCard'"></app-configuration-select-field>
+                            [formControllerName]="'creditCard'"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <app-configuration-select-field
@@ -181,10 +196,13 @@
                             [mandatoryErrorListName]="'charge card'"
                             [label]="'Set the Default Charge Card'"
                             [subLabel]="'Expenses of Corporate Cards in Fyle that are not mapped to their respective cards in Sage Intacct will be posted to the Card configured here. You can map your cards in the Mapping section after configuring the integration.'"
-                            [destinationAttributes]="sageIntacctDefaultChargeCard"
+                            [destinationAttributes]="this.destinationOptions['CHARGE_CARD']"
+                            [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CHARGE_CARD"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [iconPath]="'expense'"
                             [placeholder]="'Select Charge Corporate Card'"
-                            [formControllerName]="'chargeCard'"></app-configuration-select-field>
+                            [formControllerName]="'chargeCard'"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                     </div>
                     <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

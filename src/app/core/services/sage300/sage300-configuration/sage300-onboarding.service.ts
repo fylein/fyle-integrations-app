@@ -13,7 +13,7 @@ export class Sage300OnboardingService {
     [Sage300OnboardingState.CONNECTION]: 1,
     [Sage300OnboardingState.EXPORT_SETTINGS]: 2,
     [Sage300OnboardingState.IMPORT_SETTINGS]: 3,
-    [Sage300OnboardingState.ADVANCED_CONFIGURATION]: 4,
+    [Sage300OnboardingState.ADVANCED_SETTINGS]: 4,
     [Sage300OnboardingState.COMPLETE]: 5
   };
 

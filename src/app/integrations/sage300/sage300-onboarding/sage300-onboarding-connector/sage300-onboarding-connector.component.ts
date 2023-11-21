@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { ConfigurationCta, RedirectLink, Sage300OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { ConfigurationCta, Sage300OnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { Sage300Credential } from 'src/app/core/models/sage300/db/sage300-credentials.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -20,7 +20,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  redirectLink = RedirectLink.SAGE300;
+  redirectLink = brandingKbArticles.topLevelArticles.SAGE300;
 
   onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Sage 300 CRE');
 
