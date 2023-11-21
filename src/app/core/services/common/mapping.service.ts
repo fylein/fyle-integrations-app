@@ -3,7 +3,6 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
-import { FyleField, IntegrationField } from '../../models/db/mapping.model';
 import { Sage300GroupedDestinationAttribute } from '../../models/sage300/db/sage300-destination-attribuite.model';
 import { GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
