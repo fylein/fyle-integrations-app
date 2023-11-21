@@ -11,6 +11,7 @@ import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service'
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { Token } from 'src/app/core/models/misc/token.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-landing',
@@ -71,6 +72,8 @@ export class LandingComponent implements OnInit {
   };
 
   private readonly sessionStartTime = new Date();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private eventsService: EventsService,

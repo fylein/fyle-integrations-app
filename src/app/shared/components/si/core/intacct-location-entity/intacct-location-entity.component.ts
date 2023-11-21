@@ -13,6 +13,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { LocationEntityPost } from 'src/app/core/models/si/si-configuration/connector.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-intacct-location-entity',
@@ -39,7 +40,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  redirectLink: string = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6';
+  redirectLink: string = brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR;
 
   fyleOrgName: string = this.userService.getUserProfile('si.user').org_name;
 

@@ -7,6 +7,7 @@ import { Sage300OnboardingExportSettingsComponent } from './sage300-onboarding-e
 import { Sage300SharedModule } from '../sage300-shared/sage300-shared.module';
 import { Sage300OnboardingConnectorComponent } from './sage300-onboarding-connector/sage300-onboarding-connector.component';
 import { Sage300OnboardingImportSettingsComponent } from './sage300-onboarding-import-settings/sage300-onboarding-import-settings.component';
+import { Sage300OnboardingAdvancedSettingsComponent } from './sage300-onboarding-advanced-settings/sage300-onboarding-advanced-settings.component';
 
 
 
@@ -15,7 +16,8 @@ import { Sage300OnboardingImportSettingsComponent } from './sage300-onboarding-i
     Sage300OnboardingLandingComponent,
     Sage300OnboardingExportSettingsComponent,
     Sage300OnboardingConnectorComponent,
-    Sage300OnboardingImportSettingsComponent
+    Sage300OnboardingImportSettingsComponent,
+    Sage300OnboardingAdvancedSettingsComponent
   ],
   imports: [
     CommonModule,

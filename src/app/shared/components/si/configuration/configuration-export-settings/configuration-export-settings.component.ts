@@ -4,8 +4,9 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import { brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, IntacctLink, AppName, IntacctExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -27,7 +28,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
   exportSettingsForm: FormGroup;
 
-  redirectLink = IntacctLink.EXPORT_SETTING;
+  redirectLink = brandingKbArticles.onboardingArticles.INTACCT.EXPORT_SETTING;
 
   isOnboarding: boolean;
 
@@ -167,6 +168,8 @@ export class ConfigurationExportSettingsComponent implements OnInit {
   ];
 
   private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     private router: Router,
