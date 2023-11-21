@@ -13,7 +13,6 @@ import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 import { GroupedDestinationAttribute, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
-import { GenericMappingV2Response } from 'src/app/core/models/si/db/generic-mapping-v2.model';
 
 @Injectable({
   providedIn: 'root'

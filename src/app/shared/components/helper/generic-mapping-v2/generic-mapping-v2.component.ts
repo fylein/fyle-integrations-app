@@ -31,8 +31,6 @@ export class GenericMappingV2Component implements OnInit {
 
   mappingStats: MappingStats;
 
-  employeeMapping: GenericMappingResponse;
-
   mappings: ExtendedGenericMapping[];
 
   filteredMappings: ExtendedGenericMapping[];
@@ -56,8 +54,6 @@ export class GenericMappingV2Component implements OnInit {
   PaginatorPage = PaginatorPage;
 
   currentPage: number = 1;
-
-  searchValue: string;
 
   alphabetFilter: string = 'All';
 

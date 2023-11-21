@@ -80,15 +80,11 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, {});
   }
 
-  postMappingSettings(mappingSettings: MappingSetting[]): Observable<MappingSetting[]> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/settings/`, mappingSettings);
-  }
-
   triggerAutoMapEmployees() {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
   }
 
-  getEndpoint(mappingPage: string): string {
+  private getEndpoint(mappingPage: string): string {
     switch (mappingPage) {
       case 'EMPLOYEE':
         return 'employee_attributes';

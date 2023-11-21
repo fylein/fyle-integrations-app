@@ -1,7 +1,7 @@
 <p-table [value]="getTableSourceData()" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
-        <th class="!tw-pl-40-px">{{sourceField | titlecase}} in Fyle</th>
+        <th class="!tw-pl-40-px">{{sourceField | titlecase | snakeCaseToSpaceCase}} in Fyle</th>
         <th>{{destinationField | titlecase}} in Sage Intacct</th>
         <th>Status</th>
         </tr>

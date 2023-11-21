@@ -24,7 +24,7 @@ export class Sage300BaseMappingComponent implements OnInit {
 
   cccExpenseObject: string;
 
-  employeeFieldMapping: FyleField;
+  employeeFieldMapping: FyleField = FyleField.VENDOR;
 
   destinationOptions: DestinationAttribute[];
 
@@ -40,7 +40,7 @@ export class Sage300BaseMappingComponent implements OnInit {
 
   getSourceType() {
     if (this.sourceField==='EMPLOYEE') {
-      return this.employeeFieldMapping;
+      return 'VENDOR';
     }
 
     if (this.sourceField==='CATEGORY') {
@@ -60,7 +60,6 @@ export class Sage300BaseMappingComponent implements OnInit {
       this.reimbursableExpenseObject = response.reimbursable_expenses_object;
       this.cccExpenseObject = response.corporate_credit_card_expenses_object;
 
-      this.employeeFieldMapping = response.employee_field_mapping;
       this.showAutoMapEmployee = response.auto_map_employees ? true : false;
 
       this.destinationField = this.getSourceType();
@@ -82,7 +81,9 @@ export class Sage300BaseMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setupPage();
+    this.route.params.subscribe(() => {
+      this.isLoading = true;
+      this.setupPage();
+    });
   }
-
 }
