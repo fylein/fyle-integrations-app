@@ -50,9 +50,9 @@ export class Sage300Component implements OnInit {
   }
 
   private setupWorkspace(): void {
-    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: Sage300Workspace[]) => {
-      if (workspaces.length) {
-        this.storeWorkspaceAndNavigate(workspaces[0]);
+    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: Sage300Workspace) => {
+      if (workspaces) {
+        this.storeWorkspaceAndNavigate(workspaces);
       }
     }, () => {
       this.workspaceService.postWorkspace().subscribe((workspaces: any) => {
