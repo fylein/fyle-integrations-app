@@ -1,4 +1,4 @@
-const fs = require('fs');
+/** @type {import('tailwindcss').Config} */
 
 const customColors = {
   white: 'var(--white)',
