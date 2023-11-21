@@ -84,7 +84,7 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
     default_job_name: "",
     default_job_id: '0',
     auto_create_vendor: false,
-    intervel_hours: 1
+    interval_hours: 1
 };
 
 export const adminEmails: EmailOption[] = [

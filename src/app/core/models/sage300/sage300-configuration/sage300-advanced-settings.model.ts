@@ -16,7 +16,7 @@ export type Sage300AdvancedSetting = {
   default_job_id: string
   schedule_enabled: boolean,
   auto_create_vendor: boolean,
-  intervel_hours: number
+  interval_hours: number
 }
 
 export interface Sage300AdvancedSettingGet extends Sage300AdvancedSetting {
@@ -62,7 +62,7 @@ export class Sage300AdvancedSettingModel {
       defaultJobName: new FormControl(advancedSettings?.default_job_name ? findObjectByDestinationId(jobDestinationAttribute, advancedSettings?.default_job_id) : null),
       scheduleEnabled: new FormControl(advancedSettings?.schedule_enabled ? true : false),
       autoCreateVendor: new FormControl(advancedSettings?.auto_create_vendor ? true : false),
-      scheduleAutoExportFrequency: new FormControl(advancedSettings?.intervel_hours),
+      scheduleAutoExportFrequency: new FormControl(advancedSettings?.interval_hours),
       skipExport: new FormControl(isSkipExportEnabled)
     });
   }
@@ -73,7 +73,7 @@ export class Sage300AdvancedSettingModel {
       default_job_name: advancedSettingsForm.get('default_job_name')?.value ? advancedSettingsForm.get('default_job_name')?.value.name : null,
       default_job_id: advancedSettingsForm.get('default_job_name')?.value ? advancedSettingsForm.get('default_job_name')?.value.destination_id : null,
       schedule_enabled: advancedSettingsForm.get('schedule_enabled')?.value ? advancedSettingsForm.get('schedule_enabled')?.value : false,
-      intervel_hours: advancedSettingsForm.get('scheduleAutoExportFrequency')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
+      interval_hours: advancedSettingsForm.get('scheduleAutoExportFrequency')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
       auto_create_vendor: advancedSettingsForm.get('auto_create_vendor')?.value ? advancedSettingsForm.get('auto_create_vendor')?.value : false
     };
   }
