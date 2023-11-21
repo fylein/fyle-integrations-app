@@ -61,6 +61,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   creditCardAccountOptions: Sage300DestinationAttributes[];
 
+  debitCardAccountOptions: Sage300DestinationAttributes[];
+
   previewImagePaths =[
     {
       'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
@@ -163,6 +165,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
       this.vendorOptions = destinationAttributes.VENDOR;
       this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
+      this.debitCardAccountOptions = destinationAttributes.ACCOUNT;
       this.isLoading = false;
     });
   }

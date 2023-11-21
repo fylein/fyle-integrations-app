@@ -51,6 +51,17 @@
                                 [placeholder]="'Select default reimbursable credit card account'"
                                 [formControllerName]="'defaultReimbursableCCCAccountName'">
                             </app-configuration-select-field>
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Default Debit Card Account Name'"
+                                [label]="'Set the Default Debit Card Account as?'"
+                                [subLabel]="'The integration will debit the account selected here for All Expenses exported as Direct Cost.'"
+                                [destinationAttributes]="debitCardAccountOptions"
+                                [iconPath]="'expense'"
+                                [placeholder]="'Select default debit card account'"
+                                [formControllerName]="'defaultDebitCardAccountName'">
+                            </app-configuration-select-field>
                         </div>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -127,6 +138,19 @@
                                 [placeholder]="'Select default credit account'"
                                 [formControllerName]="'defaultCreditCardCCCAccountName'">
                             </app-configuration-select-field>
+                            <div *ngIf="exportSettingForm?.value.reimbursableExportType!==Sage300ExportType.DIRECT_COST">
+                                <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Default Debit Card Account Name'"
+                                [label]="'Set the Default Debit Card Account as?'"
+                                [subLabel]="'The integration will debit the account selected here for All Expenses exported as Direct Cost.'"
+                                [destinationAttributes]="debitCardAccountOptions"
+                                [iconPath]="'expense'"
+                                [placeholder]="'Select default debit card account'"
+                                [formControllerName]="'defaultDebitCardAccountName'">
+                            </app-configuration-select-field>
+                            </div>
                         </div>
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE">
                             <app-configuration-select-field
