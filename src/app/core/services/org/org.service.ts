@@ -3,7 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { EmailOption } from '../../models/bamboo-hr/bamboo-hr.model';
-import { AppName } from '../../models/enum/enum.model';
+import { AppName, AppUrl } from '../../models/enum/enum.model';
 import { GeneratedToken, Org } from '../../models/org/org.model';
 import { ApiService } from '../common/api.service';
 import { StorageService } from '../common/storage.service';
@@ -20,7 +20,7 @@ export class OrgService {
     private storageService: StorageService,
     private helper : HelperService
   ) {
-    helper.setBaseApiURL('integration');
+    helper.setBaseApiURL(AppUrl.INTEGRATION);
    }
 
   getOrgId(): string {

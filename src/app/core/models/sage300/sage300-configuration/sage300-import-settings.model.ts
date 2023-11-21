@@ -111,8 +111,8 @@ export class Sage300ImportSettingModel {
     static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[]): FormGroup {
         const expenseFieldsArray = this.constructFormArray(importSettings, sage300Fields);
         return new FormGroup({
-            importCategories: new FormControl(importSettings?.import_settings?.import_categories ? importSettings.import_settings.import_categories : false),
-            importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ? importSettings.import_settings.import_vendors_as_merchants : false),
+            importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
+            importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),
             expenseFields: new FormArray(expenseFieldsArray),
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),

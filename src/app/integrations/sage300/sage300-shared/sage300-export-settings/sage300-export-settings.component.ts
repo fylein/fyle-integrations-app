@@ -161,7 +161,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.addFormValidator();
       this.helper.setExportSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.vendorOptions = destinationAttributes?.VENDOR;
+      this.vendorOptions = destinationAttributes.VENDOR;
       this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
       this.isLoading = false;
     });

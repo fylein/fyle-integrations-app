@@ -204,7 +204,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
   private dependentCostFieldsWatchers(formControllerName: string): void {
     this.importSettingForm.controls[formControllerName].valueChanges.subscribe((value) => {
       if (value?.attribute_type === 'custom_field') {
-        this.addCustomField(true);
+        this.initializeCustomFieldForm(true);
         this.customFieldType = formControllerName;
         this.customFieldControl = this.importSettingForm.controls[formControllerName];
         if (value.source_field === 'custom_field') {
@@ -250,13 +250,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.dependentCostFieldsWatchers('costCategory');
   }
 
-  private addCustomField(dialogValue: boolean) {
+  private initializeCustomFieldForm(shouldShowDialog: boolean) {
     this.customFieldForm = this.formBuilder.group({
       attribute_type: ['', Validators.required],
       display_name: [''],
       source_placeholder: ['', Validators.required]
     });
-    this.showCustomFieldDialog = dialogValue;
+    this.showCustomFieldDialog = shouldShowDialog;
   }
 
   private importSettingWatcher(): void {
@@ -264,7 +264,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
         if (value.source_field === 'custom_field') {
-          this.addCustomField(true);
+          this.initializeCustomFieldForm(true);
           this.customFieldType = '';
           this.customFieldControl = control;
           this.customFieldControl.patchValue({
@@ -386,7 +386,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
       this.dependentFieldFormCreation();
-      this.addCustomField(false);
+      this.initializeCustomFieldForm(false);
       this.isLoading = false;
     });
   }

@@ -8,10 +8,3 @@ export type FyleField = {
     display_name: string,
     is_dependent?: boolean
 }
-
-export type MappingsResponse = {
-    count: number,
-    next: string,
-    previous: string,
-    results: IntegrationField[] | FyleField[]
-}
