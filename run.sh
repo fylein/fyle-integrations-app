@@ -35,6 +35,7 @@ do
     sed -i $SED_EXTRA_ARGS "s?{{BRAND_NAME}}?${BRAND_NAME}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{WEBPAGE_TITLE}}?${WEBPAGE_TITLE}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{BRAND_ID}}?${BRAND_ID}?g" $f;
+    sed -i $SED_EXTRA_ARGS "s?{{SUPPORT_EMAIL}}?${SUPPORT_EMAIL}?g" $f;
 done
 
 nginx -g "daemon off;"
