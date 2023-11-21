@@ -42,7 +42,7 @@ export class Sage300Component implements OnInit {
         [Sage300OnboardingState.CONNECTION]: '/integrations/sage300/onboarding/landing',
         [Sage300OnboardingState.EXPORT_SETTINGS]: '/integrations/sage300/onboarding/export_settings',
         [Sage300OnboardingState.IMPORT_SETTINGS]: '/integrations/sage300/onboarding/import_settings',
-        [Sage300OnboardingState.ADVANCED_CONFIGURATION]: '/integrations/sage300/onboarding/advanced_settings',
+        [Sage300OnboardingState.ADVANCED_SETTINGS]: '/integrations/sage300/onboarding/advanced_settings',
         [Sage300OnboardingState.COMPLETE]: '/integrations/sage300/main'
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
