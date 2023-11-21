@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300UpdateEvent, UpdateEvent } from '../../models/enum/enum.model';
+import { ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, UpdateEvent } from '../../models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
@@ -8,7 +8,6 @@ import { LocationEntityPost } from '../../models/si/si-configuration/connector.m
 import { ExportSettingPost } from '../../models/si/si-configuration/export-settings.model';
 import { ImportSettingPost } from '../../models/si/si-configuration/import-settings.model';
 import { AdvancedSettingsPost } from '../../models/si/si-configuration/advanced-settings.model';
-import { Sage300OnboardingModule } from 'src/app/integrations/sage300/sage300-onboarding/sage300-onboarding.module';
 import { Sage300ExportSettingPost } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { Sage300ImportSettingPost } from '../../models/sage300/sage300-configuration/sage300-import-settings.model';
 import { Sage300AdvancedSettingPost } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';
@@ -86,7 +85,7 @@ export class TrackingService {
     this.eventTrack(`Time Spent on ${page} page`, {durationInSeconds: differenceInMs / 1000});
   }
 
-  onOnboardingStepCompletion(eventName: QBDOnboardingState | Sage300OnboardingModule, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost): void {
+  onOnboardingStepCompletion(eventName: QBDOnboardingState | Sage300OnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 
