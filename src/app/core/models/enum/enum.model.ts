@@ -32,16 +32,6 @@ export enum InAppIntegration {
   SAGE300 = 'Sage 300 CRE'
 }
 
-export enum RedirectLink {
-  BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
-  QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
-  // TODO: Change the link to the actual help article
-  INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  SAGE300 = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
-}
-
 export enum EmbedVideoLink {
   INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk',
   SAGE300 = 'https://www.youtube.com/embed/2oYdc8KcQnk'
@@ -387,14 +377,6 @@ export enum QBDOnboardingState {
   export enum RefinerSurveyType {
     ONBOARDING_DONE = 'Onboarding Done',
     EXPORT_DONE = 'Export Done'
-  }
-
-  export enum IntacctLink {
-    IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-    EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-    ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-    LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-    SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
   }
 
   export enum AppUrl {

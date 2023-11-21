@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+// Import all the themes here
+@import 'assets/themes/fyle.scss';
+
+
 html,
 body {
     @apply tw-h-[100%];
