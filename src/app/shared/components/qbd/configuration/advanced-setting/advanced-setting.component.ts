@@ -9,7 +9,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-advanced-setting',
@@ -88,7 +88,7 @@ export class AdvancedSettingComponent implements OnInit {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
-      expense_link: `${brandingConfig.brandAppDomain}/app/main/#/enterprise/view_expense/`
+      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     this.memoPreviewText = '';
     const memo: string[] = [];

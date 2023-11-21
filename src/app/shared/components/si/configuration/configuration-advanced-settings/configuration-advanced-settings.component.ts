@@ -14,7 +14,8 @@ import { SkipExportComponent } from '../../helper/skip-export/skip-export.compon
 import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { Configuration } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-configuration-advanced-settings',
@@ -128,7 +129,7 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
-      expense_link: `${brandingConfig.brandAppDomain}/app/main/#/enterprise/view_expense/`
+      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     this.memoPreviewText = '';
     const memo: string[] = [];
