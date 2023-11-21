@@ -71,6 +71,8 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
 import { ConfigurationCustomFieldCreationDialogComponent } from './components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
 import { ConfigurationConfirmationDialogComponent } from './components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
+import { ConfigurationSkipExportComponent } from './components/configuration/configuration-skip-export/configuration-skip-export.component';
+import { ConfigurationStepSubHeaderComponent } from './components/configuration/configuration-step-sub-header/configuration-step-sub-header.component';
 
 @NgModule({
   declarations: [
@@ -123,7 +125,9 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     ConfigurationInfoLabelComponent,
     ConfigurationCustomFieldCreationDialogComponent,
     ConfigurationConfirmationDialogComponent,
-    ZeroStateComponent
+    ZeroStateComponent,
+    ConfigurationSkipExportComponent,
+    ConfigurationStepSubHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -203,7 +207,9 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     ConfigurationConfirmationDialogComponent,
     ZeroStateComponent,
     DashboardExportSummarySectionComponent,
-    PreviewDialogComponent
+    PreviewDialogComponent,
+    ConfigurationSkipExportComponent,
+    ConfigurationStepSubHeaderComponent
   ]
 })
 export class SharedModule { }
