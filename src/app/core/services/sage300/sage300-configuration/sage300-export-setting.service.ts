@@ -93,24 +93,11 @@ export class Sage300ExportSettingService {
     ];
   }
 
-  getReimbursableExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
+  getExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
         label: 'Accounts Payable Invoice',
         value: Sage300ExportType.PURCHASE_INVOICE
-      },
-      {
-        label: 'Direct Cost',
-        value: Sage300ExportType.DIRECT_COST
-      }
-    ];
-  }
-
-  getCCCExpensesExportTypeOptions(): Sage300ExportSettingFormOption[] {
-    return [
-      {
-        label: 'Journal Entry',
-        value: CorporateCreditCardExpensesObject.JOURNAL_ENTRY
       },
       {
         label: 'Direct Cost',

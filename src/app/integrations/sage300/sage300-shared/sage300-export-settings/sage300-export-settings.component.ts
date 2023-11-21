@@ -47,9 +47,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   cccExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseGroupingDateOptions();
 
-  reimbursableExpensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpensesExportTypeOptions();
-
-  cccExpensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpensesExportTypeOptions();
+  expensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpensesExportTypeOptions();
 
   reimbursableExpenseState: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseState();
 
