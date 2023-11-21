@@ -20,10 +20,10 @@ export type ConditionField = {
 
 export type ExpenseFilterPost = {
     condition: string;
-    operator: Operator | string;
+    operator: Operator;
     values: string | string[]
     rank: number;
-    join_by:JoinOption.AND | JoinOption.OR | null;
+    join_by:JoinOption | null;
     is_custom: boolean;
     custom_field_type: string | null;
 };

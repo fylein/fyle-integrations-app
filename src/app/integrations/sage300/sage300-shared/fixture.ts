@@ -103,7 +103,7 @@ export const expenseFiltersGet: ExpenseFilterResponse =
         {
             "id": 45,
             "condition": "spent_at",
-            "operator": 'lt',
+            "operator": Operator.LessThan,
             "values": [
                 "2023-10-16T17:00:00.000Z"
             ],
