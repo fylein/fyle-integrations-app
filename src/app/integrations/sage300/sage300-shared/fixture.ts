@@ -6,8 +6,6 @@ import { Sage300AdvancedSettingGet } from "src/app/core/models/sage300/sage300-c
 import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
 
 export const importSettingsResponse: Sage300ImportSettingGet = {
-    "import_categories": false,
-    "import_vendors_as_merchants": false,
     "mapping_settings": [
         {
             "source_field": "COST_CENTER",
@@ -31,7 +29,11 @@ export const importSettingsResponse: Sage300ImportSettingGet = {
         "cost_category_placeholder": "null",
         "is_import_enabled": true
     },
-    workspaceId: 312
+    "workspaceId": 312,
+    "import_settings": {
+        "import_categories": false,
+        "import_vendors_as_merchants": false
+    }
 };
 
 export const fyleFieldsResponse: FyleField[] = [
