@@ -158,7 +158,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.exportSettings = response[0];
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
-      this.helper.setExportSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
+      this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
       this.vendorOptions = response[1].VENDOR;
       this.creditCardAccountOptions = response[1].ACCOUNT;

@@ -149,7 +149,7 @@ export enum Sage300OnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
-  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
 }
 
@@ -305,7 +305,8 @@ export enum QBDOnboardingState {
     CUSTOMER = 'CUSTOMER',
     DEPARTMENT = 'DEPARTMENT',
     CLASS = 'CLASS',
-    TAX_DETAIL = 'TAX_DETAIL'
+    TAX_DETAIL = 'TAX_DETAIL',
+    JOB = 'JOB'
   }
 
   export enum SageIntacctField {
@@ -439,6 +440,24 @@ export enum QBDOnboardingState {
     CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
   }
 
+  export enum Operator {
+    IsNull = "isnull",
+    IExact = "iexact",
+    IContains = "icontains",
+    LessThan = "lt",
+    LessThanOrEqual = "lte"
+  }
+
+  export enum JoinOption {
+    AND = "AND",
+    OR = "OR"
+  }
+
+  export enum CustomOperatorOption {
+    Is = "iexact",
+    IsEmpty = "is_empty",
+    IsNotEmpty = "is_not_empty"
+  }
   export enum IntacctExportSettingDestinationOptionKey {
     VENDOR = 'VENDOR',
     ACCOUNT = 'ACCOUNT',

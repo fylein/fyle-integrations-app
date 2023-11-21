@@ -53,6 +53,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() exportTypeIconPathArray: any;
 
+  @Input() isDefaultFields: boolean = false;
+
   @Input() destinationOptionKey: IntacctExportSettingDestinationOptionKey;
 
   @Input() isOptionSearchInProgress: boolean;
