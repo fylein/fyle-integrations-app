@@ -26,6 +26,7 @@ Follow instructions mentioned in [Integrations Central](https://github.com/fylei
 
     ```bash
     cp ../fyle-integrations-central/app-secrets/integrations-settings-app/environment.json src/environments/environment.json
+    cp ../fyle-integrations-central/app-secrets/integrations-settings-app/config.json src/app/branding/config.json
     ```
 
 * Run app

@@ -32,16 +32,6 @@ export enum InAppIntegration {
   SAGE300 = 'Sage 300 CRE'
 }
 
-export enum RedirectLink {
-  BAMBOO_HR = 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
-  QBD = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
-  // TODO: Change the link to the actual help article
-  INTACCT = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  TRAVELPERK = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  GUSTO = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-  SAGE300 = 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
-}
-
 export enum EmbedVideoLink {
   INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk',
   SAGE300 = 'https://www.youtube.com/embed/2oYdc8KcQnk'
@@ -315,7 +305,7 @@ export enum QBDOnboardingState {
     CUSTOMER = 'CUSTOMER',
     DEPARTMENT = 'DEPARTMENT',
     CLASS = 'CLASS',
-    TAX_CODE = 'TAX_CODE'
+    TAX_DETAIL = 'TAX_DETAIL'
   }
 
   export enum SageIntacctField {
@@ -388,14 +378,6 @@ export enum QBDOnboardingState {
     EXPORT_DONE = 'Export Done'
   }
 
-  export enum IntacctLink {
-    IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-    EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-    ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-    LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-    SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
-  }
-
   export enum AppUrl {
     BAMBOO_HR = 'bamboo_hr',
     QBD = 'qbd',
@@ -423,4 +405,43 @@ export enum QBDOnboardingState {
     LAST_SPEND_AT = 'last_spend_at',
     CURRENT_DATE = 'current_date',
     APPROVED_AT = 'approved_at'
+  }
+
+  export enum DefaultImportFields {
+    CATEGORY = 'CATEGORY',
+    ACCOUNT = 'ACCOUNT',
+    VENDOR = 'VENDOR',
+    MERCHANTS = 'MERCHANTS'
+  }
+
+  export enum AccountingExportStatus {
+    READY = 'READY',
+    FAILED = 'FAILED',
+    FATAL = 'FATAL',
+    COMPLETE = 'COMPLETE',
+    IN_PROGRESS = 'IN_PROGRESS',
+    ENQUEUED = 'ENQUEUED'
+  }
+
+  export enum AccountingExportType {
+    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+    DIRECT_COSTS = 'DIRECT_COSTS'
+  }
+
+  export enum AccountingErrorType {
+    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+  }
+
+  export enum AccountingExportCreationType{
+    CREATING_DIRECT_COST = 'CREATING_DIRECT_COST',
+    CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
+  }
+
+  export enum IntacctExportSettingDestinationOptionKey {
+    VENDOR = 'VENDOR',
+    ACCOUNT = 'ACCOUNT',
+    EXPENSE_PAYMENT_TYPE = 'EXPENSE_PAYMENT_TYPE',
+    CCC_EXPENSE_PAYMENT_TYPE = 'CCC_EXPENSE_PAYMENT_TYPE',
+    CHARGE_CARD = 'CHARGE_CARD'
   }

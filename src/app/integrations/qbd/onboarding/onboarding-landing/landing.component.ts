@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-landing',
@@ -8,7 +8,7 @@ import { RedirectLink } from 'src/app/core/models/enum/enum.model';
 })
 export class LandingComponent implements OnInit {
 
-  RedirectLink = RedirectLink;
+  brandingKbArticles = brandingKbArticles;
 
   isQBDSetupInProgress: boolean = false;
 

@@ -62,8 +62,11 @@
                             placeholder="Select an Option" 
                             (onChange)="save(mapping, $event); getDropdownValue(mapping.employeemapping)"
                             [filter]="true"
-                            filterBy="value">
-                            </p-dropdown>                
+                            filterBy="value"
+                            [emptyFilterMessage]="mapping.employeemapping.isOptionSearchInProgress ? 'Searching...' : 'No results found'"
+                            [dropdownIcon]="mapping.employeemapping.isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'"
+                            (onFilter)="searchOptions($event, mapping.employeemapping)">
+                            </p-dropdown>
                         </td>
                         <td>
                             <p *ngIf="getDropdownValue(mapping.employeemapping)" class="mapped">MAPPED</p>

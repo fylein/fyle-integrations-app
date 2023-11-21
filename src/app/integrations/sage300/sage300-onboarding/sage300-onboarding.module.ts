@@ -6,6 +6,7 @@ import { Sage300OnboardingRoutingModule } from './sage300-onboarding-routing.mod
 import { Sage300OnboardingExportSettingsComponent } from './sage300-onboarding-export-settings/sage300-onboarding-export-settings.component';
 import { Sage300SharedModule } from '../sage300-shared/sage300-shared.module';
 import { Sage300OnboardingConnectorComponent } from './sage300-onboarding-connector/sage300-onboarding-connector.component';
+import { Sage300OnboardingImportSettingsComponent } from './sage300-onboarding-import-settings/sage300-onboarding-import-settings.component';
 
 
 
@@ -13,7 +14,8 @@ import { Sage300OnboardingConnectorComponent } from './sage300-onboarding-connec
   declarations: [
     Sage300OnboardingLandingComponent,
     Sage300OnboardingExportSettingsComponent,
-    Sage300OnboardingConnectorComponent
+    Sage300OnboardingConnectorComponent,
+    Sage300OnboardingImportSettingsComponent
   ],
   imports: [
     CommonModule,

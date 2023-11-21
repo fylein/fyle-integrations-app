@@ -3,7 +3,8 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
 import { forkJoin } from 'rxjs';
-import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, IntacctLink, AppName } from 'src/app/core/models/enum/enum.model';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, IntacctUpdateEvent, Page, ProgressPhase, ToastSeverity, MappingSourceField, AppName } from 'src/app/core/models/enum/enum.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
@@ -33,7 +34,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
 
   expenseFields: FormArray;
 
-  redirectLink = IntacctLink.IMPORT_SETTING;
+  redirectLink = brandingKbArticles.onboardingArticles.INTACCT.IMPORT_SETTING;
 
   saveInProgress: boolean = false;
 
@@ -421,7 +422,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
       expenseFields: this.formBuilder.array(this.constructFormArray())
     });
-    if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value) {
+    if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value && this.dependentFieldSettings?.is_import_enabled) {
       this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
     }
 
