@@ -28,7 +28,7 @@
     (syncEmployees)="syncEmployees()"
 ></app-landing-page-header>
 
-<app-landing-page-body  *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'Auto sync employee details between Bamboo HR and Fyle.'" [svgPath]="'assets/flow-charts/bamboo-hr-flow-chart.svg'" [redirectLink]="RedirectLink.BAMBOO_HR"></app-landing-page-body>
+<app-landing-page-body  *ngIf="!isLoading && !isBambooConnected && !showErrorScreen"  [headerText]="'Auto sync employee details between Bamboo HR and Fyle.'" [svgPath]="'assets/flow-charts/bamboo-hr-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.BAMBOO_HR"></app-landing-page-body>
 
 <app-error *ngIf="showErrorScreen"></app-error>
 

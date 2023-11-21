@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EmbedVideoLink, IntacctLink, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { EmbedVideoLink } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-onboarding-landing',
@@ -8,7 +9,7 @@ import { EmbedVideoLink, IntacctLink, RedirectLink } from 'src/app/core/models/e
 })
 export class OnboardingLandingComponent implements OnInit {
 
-  redirectLink = IntacctLink.LANDING;
+  redirectLink = brandingKbArticles.onboardingArticles.INTACCT.LANDING;
 
   EmbedVideo = EmbedVideoLink;
 

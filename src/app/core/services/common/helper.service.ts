@@ -8,6 +8,7 @@ import { AbstractControl, FormArray, FormGroup, ValidatorFn, Validators } from '
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { AdvancedSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,23 @@ export class HelperService {
     private apiService: ApiService
   ) {}
 
-  setBaseApiURL(): void {
+  setBaseApiURL(appUrl: string| void): void {
     const urlSplit = this.router.url.split('/');
-    const module:AppUrl = (urlSplit.length > 2 ? urlSplit[2] : urlSplit[1]) as AppUrl;
+    let module: AppUrl;
+
+  if (appUrl) {
+    // Condition 1: If appUrl is truthy, use it as AppUrl
+    module = appUrl as AppUrl;
+  } else {
+    // Condition 2: If appUrl is falsy, check if urlSplit length is greater than 2
+    if (urlSplit.length > 2) {
+      // If true, use urlSplit[2] as AppUrl
+      module = urlSplit[2] as AppUrl;
+    } else {
+      // If false, use urlSplit[1] as AppUrl
+      module = urlSplit[1] as AppUrl;
+    }
+  }
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
@@ -61,7 +76,7 @@ export class HelperService {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
 
-  setExportSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule, form: FormGroup) {
+  setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | AdvancedSettingValidatorRule, form: FormGroup) {
     const keys = Object.keys(validatorRule);
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((isSelected) => {
@@ -127,6 +142,18 @@ export class HelperService {
 
   getPhase(isOnboarding: boolean): ProgressPhase {
     return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
+
+  handleSkipExportFormUpdates(skipExportForm: FormGroup, fields: string[], isChanged: boolean): void {
+    if (isChanged) {
+      fields.forEach((value) => {
+        this.markControllerAsRequired(skipExportForm, value);
+      });
+    } else {
+      fields.forEach((value) => {
+        this.clearValidatorAndResetValue(skipExportForm, value);
+      });
+    }
   }
 }
 

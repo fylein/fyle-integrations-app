@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { concat, toArray } from 'rxjs';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { AppName, RedirectLink } from 'src/app/core/models/enum/enum.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { environment } from 'src/environments/environment';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-travelperk',
@@ -15,7 +16,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./travelperk.component.scss']
 })
 export class TravelperkComponent implements OnInit {
-  RedirectLink = RedirectLink;
+  brandingKbArticles = brandingKbArticles;
 
   AppName = AppName;
 

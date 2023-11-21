@@ -1,35 +1,35 @@
 /** @type {import('tailwindcss').Config} */
 
 const customColors = {
-  white: '#FFFFFF',
-  placeholder: '#A9ACBC',
-  separator: '#ECECEE',
-  'normal-text-color': '#161528',
-  'slightly-normal-text-color': '#2C304E',
-  'menu-inactive-text-color': '#A9ACBC',
-  'sub-text-color': '#414562',
-  'faded-text-color': '#5A5D72',
-  'box-color': '#DFDFE2',
-  'hyperlink-color': '#0062FF',
-  'mandatory-field-color': '#FF3366',
-  'disabled-bg-color': '#F5F5F5',
-  'configuration-bg': '#FAFCFF',
-  'dropdown-hover': '#e9ecef',
-  'check-box': '#ced4da',
-  'info-section': '#EFF5FC',
-  'info': '#5C98E5',
-  'success-toast': '#24A148',
-  'alert-toast': '#DA1E28',
-  'cta-disabled': '#FFC2D6',
-  'line-inactive': '#CCCDD7',
-  'progress-bar-bg': '#FFF0F5',
-  'mapped-green-border': '#D9EBE1',
-  'mapped-green-bg': '#EEF8F2',
-  'unmapped-red-border': '#F5C0C3',
-  'unmapped-red-bg': '#FCE9EA',
-  'pink': '#D23669',
-  'pink-box-border': '#FF336629'
-};
+  white: 'var(--white)',
+  placeholder: 'var(--placeholder)',
+  separator: 'var(--separator)',
+  'normal-text-color': 'var(--normal-text-color)',
+  'slightly-normal-text-color': 'var(--slightly-normal-text-color)',
+  'menu-inactive-text-color': 'var(--menu-inactive-text-color)',
+  'sub-text-color': 'var(--sub-text-color)',
+  'faded-text-color': 'var(--faded-text-color)',
+  'box-color': 'var(--box-color)',
+  'hyperlink-color': 'var(--hyperlink-color)',
+  'mandatory-field-color': 'var(--mandatory-field-color)',
+  'disabled-bg-color': 'var(--disabled-bg-color)',
+  'configuration-bg': 'var(--configuration-bg)',
+  'dropdown-hover': 'var(--dropdown-hover)',
+  'check-box': 'var(--check-box)',
+  'info-section': 'var(--info-section)',
+  'info': 'var(--info)',
+  'success-toast': 'var(--success-toast)',
+  'alert-toast': 'var(--alert-toast)',
+  'cta-disabled': 'var(--cta-disabled)',
+  'line-inactive': 'var(--line-inactive)',
+  'progress-bar-bg': 'var(--progress-bar-bg)',
+  'mapped-green-border': 'var(--mapped-green-border)',
+  'mapped-green-bg': 'var(--mapped-green-bg)',
+  'unmapped-red-border': 'var(--unmapped-red-border)',
+  'unmapped-red-bg': 'var(--unmapped-red-bg)',
+  'pink': 'var(--pink)',
+  'pink-box-border': 'var(--pink-box-border)',
+}
 
 module.exports = {
   prefix: 'tw-',
@@ -224,6 +224,9 @@ module.exports = {
       minHeight: {
         '70-px': '70px'
       },
+      maxHeight: {
+        '20-px': '20px'
+      },
       width: {
         '1-px': '1px',
         '8-px': '8px',
@@ -251,6 +254,7 @@ module.exports = {
         '70-px': '70px',
         '80-px': '80px',
         '92-px': '92px',
+        '98-px': '98px',
         '100-px': '100px',
         '118-px': '118px',
         '120-px': '120px',
@@ -306,6 +310,9 @@ module.exports = {
         '250-px': '250px',
         '300-px': '300px'
       },
+      maxWidth: {
+        '20-px': '20px'
+      },
       borderRadius: {
         '0-px': '0px',
         '4-px': '4px',
@@ -350,7 +357,8 @@ module.exports = {
       },
       boxShadow: {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
-        'btn-cta-shadow': '0px 4px 4px rgba(44, 48, 78, 0.1)'
+        'btn-cta-shadow': '0px 4px 4px rgba(44, 48, 78, 0.1)',
+        'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2);'
       },
       dropShadow: {
       },

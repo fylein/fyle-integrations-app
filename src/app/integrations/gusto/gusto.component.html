@@ -9,12 +9,12 @@
         [isRecipeRunning]="gustoConfiguration?.recipe_status ? true : false"
         [isIntegrationSetupInProgress]="isGustoSetupInProgress" 
         [isIntegrationConnected]="isGustoConnected" 
-        [redirectLink]="RedirectLink.GUSTO"
+        [redirectLink]="brandingKbArticles.topLevelArticles.GUSTO"
         [iframeSourceUrl]="iframeSourceUrl"
         (syncEmployees)="syncEmployees()"
     ></app-landing-page-header>
     
-    <app-landing-page-body  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="RedirectLink.GUSTO"></app-landing-page-body>
+    <app-landing-page-body  *ngIf="!isLoading && !isGustoConnected && !showErrorScreen"  [headerText]="'Connect your Gusto account to your Fyle account to atuo-sync employee data.'" [svgPath]="'assets/flow-charts/gusto-flow-chart.svg'" [redirectLink]="brandingKbArticles.topLevelArticles.GUSTO"></app-landing-page-body>
 
     <div *ngIf="showErrorScreen" class="tw-pt-100-px">
         <app-error></app-error>
