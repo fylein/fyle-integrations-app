@@ -222,7 +222,6 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.isSaveInProgress = true;
     const advancedSettingPayload = Sage300AdvancedSettingModel.createAdvancedSettingPayload(this.advancedSettingForm);
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: Sage300AdvancedSettingGet) => {
-      this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
       this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.ADVANCED_SETTINGS) {
@@ -237,10 +236,10 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
           }
         );
       }
-
+      this.isSaveInProgress = false;
       if (this.isOnboarding) {
-        this.workspaceService.setOnboardingState(Sage300OnboardingState.ADVANCED_SETTINGS);
-        this.router.navigate([`/integrations/sage300/onboarding/advanced_settings`]);
+        this.workspaceService.setOnboardingState(Sage300OnboardingState.COMPLETE);
+        this.router.navigate([`/integrations/sage300/onboarding/done`]);
       }
 
 
