@@ -4,6 +4,7 @@ import { Sage300ExportSettingsComponent } from './sage300-export-settings/sage30
 import { SharedModule } from 'src/app/shared/shared.module';
 import { Sage300ImportSettingsComponent } from './sage300-import-settings/sage300-import-settings.component';
 import { Sage300AdvancedSettingsComponent } from './sage300-advanced-settings/sage300-advanced-settings.component';
+import { IconSpriteModule } from 'ng-svg-icon-sprite';
 
 
 
@@ -15,7 +16,8 @@ import { Sage300AdvancedSettingsComponent } from './sage300-advanced-settings/sa
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
     Sage300ExportSettingsComponent,
