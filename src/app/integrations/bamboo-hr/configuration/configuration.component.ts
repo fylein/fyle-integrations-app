@@ -36,7 +36,7 @@ export class ConfigurationComponent implements OnInit {
 
   showDialog: boolean;
 
-  brandingConfig = brandingConfig;
+  readonly brandingConfig = brandingConfig;
 
   private readonly org: Org = this.orgService.getCachedOrg();
 
