@@ -475,3 +475,10 @@ export enum QBDOnboardingState {
     IsEmpty = "is_empty",
     IsNotEmpty = "is_not_empty"
   }
+  export enum IntacctExportSettingDestinationOptionKey {
+    VENDOR = 'VENDOR',
+    ACCOUNT = 'ACCOUNT',
+    EXPENSE_PAYMENT_TYPE = 'EXPENSE_PAYMENT_TYPE',
+    CCC_EXPENSE_PAYMENT_TYPE = 'CCC_EXPENSE_PAYMENT_TYPE',
+    CHARGE_CARD = 'CHARGE_CARD'
+  }

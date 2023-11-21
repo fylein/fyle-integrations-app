@@ -12,7 +12,7 @@ import { MappingIntacct, MappingPost, MappingStats } from 'src/app/core/models/s
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
-import { GroupedDestinationAttribute, IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { GroupedDestinationAttribute, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +77,21 @@ export class SiMappingsService {
     }
 
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_attributes/`, params);
+  }
+
+  getPaginatedDestinationAttributes(attributeType: string, value?: string): Observable<PaginatedintacctDestinationAttribute> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    const params: {limit: number, offset: number, attribute_type: string, value?: string} = {
+      limit: 100,
+      offset: 0,
+      attribute_type: attributeType
+    };
+
+    if (value) {
+      params.value = value;
+    }
+
+    return this.apiService.get(`/workspaces/${workspaceId}/sage_intacct/paginated_destination_attributes/`, params);
   }
 
   getSageIntacctDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<IntacctDestinationAttribute[]> {

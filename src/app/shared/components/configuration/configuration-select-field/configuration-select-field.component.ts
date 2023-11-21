@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
-import { ExportSettingFormOption } from 'src/app/core/models/si/si-configuration/export-settings.model';
-import { ClickEvent, CorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { ExportSettingFormOption, ExportSettingOptionSearch } from 'src/app/core/models/si/si-configuration/export-settings.model';
+import { ClickEvent, CorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
@@ -53,6 +53,12 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   @Input() exportTypeIconPathArray: any;
 
   @Input() isDefaultFields: boolean = false;
+  
+  @Input() destinationOptionKey: IntacctExportSettingDestinationOptionKey;
+
+  @Input() isOptionSearchInProgress: boolean;
+
+  @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
 
@@ -119,5 +125,9 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   closeDialog() {
     this.isPreviewDialogVisible = false;
     this.isPreviewDialogVisible = false;
+  }
+
+  searchOptions(event: any) {
+    this.searchOptionsDropdown.emit({ searchTerm: event.filter, destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey });
   }
 }
