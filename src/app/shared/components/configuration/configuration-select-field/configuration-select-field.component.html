@@ -18,7 +18,39 @@
         </div>
         <div>
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
-                <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="value" class="!tw-w-300-px" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" [filter]="true" filterBy="value" (onFilter)="searchOptions($event)" [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'">
+                <p-dropdown 
+                    appendTo="body"
+                    [options]="destinationAttributes"
+                    optionLabel="value" class="!tw-w-300-px"
+                    [formControlName]="formControllerName"
+                    [placeholder]="placeholder"
+                    [ngClass]="{
+                        'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
+                        'normal-box': !form.controls[formControllerName].invalid || !isFieldMandatory || !form.controls[formControllerName].touched,
+                        'hide-chevron': !isOptionSearchInProgress && form.controls[formControllerName].value
+                    }"            
+                    [filter]="true" 
+                    filterBy="value"
+                    (onFilter)="searchOptions($event)"
+                    [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
+                    [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : (form.controls[formControllerName].value ? '' : 'pi pi-chevron-down')"
+                    >
+                    <ng-template let-option pTemplate="item">
+                        <div #textElement 
+                            class="truncate"
+                            [ngClass]="{'max-w-[16rem]': true}"
+                            [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
+                            {{option.label}}
+                        </div>
+                    </ng-template>            
+                    <ng-template pTemplate="selectedItem" let-item>
+                        <div class="tw-flex tw-justify-between tw-items-center">
+                            <span>
+                                {{ item.label }}
+                            </span>
+                            <i *ngIf="!isOptionSearchInProgress&&showClearIcon" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                        </div>
+                    </ng-template>
                 </p-dropdown>
             </div>
             <div *ngIf="options && !destinationAttributes && !simpleOptions">
