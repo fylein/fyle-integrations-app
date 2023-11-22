@@ -26,7 +26,7 @@ export class SiApiService {
       console.error('An error occurred:', error.error.message);
     } else {
       console.error(
-        `Backend returned code ${error.status}, method was: ${httpMethod}, body was: ${JSON.stringify(error.error)} url was ${error.url}`
+        `Backend returned code ${error.status}, method was: ${httpMethod}, body was: ${JSON.stringify(error.error)} url was ${JSON.stringify(error)}`
       );
     }
     return throwError(error);
