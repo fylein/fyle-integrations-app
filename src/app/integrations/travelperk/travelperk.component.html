@@ -1,7 +1,7 @@
 <app-landing-page-header 
     [iconPath]="'assets/logos/travelperk-logo.svg'"
     [appName]="AppName.TRAVELPERK"
-    [appDescription]="'Autosync employee details between Fyle and TravelPerk.'"
+    [appDescription]="'Autosync employee details between ' + brandingConfig.brandName + ' and TravelPerk.'"
     [isLoading]="isLoading"
     [appName]="AppName.TRAVELPERK"
     [isIntegrationConnected]="isIntegrationConnected"
@@ -13,7 +13,7 @@
 
 <app-landing-page-body
     *ngIf="!isLoading && !showErrorScreen"
-    [headerText]="'Auto sync employee details between TravelPerk and Fyle.'" 
+    [headerText]="'Auto sync employee details between TravelPerk and ' + brandingConfig.brandName + '.'" 
     [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
     [redirectLink]="brandingKbArticles.topLevelArticles.TRAVELPERK"
 ></app-landing-page-body>

@@ -8,7 +8,7 @@ import { OrgService } from 'src/app/core/services/org/org.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { environment } from 'src/environments/environment';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-travelperk',
@@ -33,6 +33,8 @@ export class TravelperkComponent implements OnInit {
   isConnectionInProgress: boolean;
 
   org: Org = this.orgService.getCachedOrg();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private travelperkService: TravelperkService,

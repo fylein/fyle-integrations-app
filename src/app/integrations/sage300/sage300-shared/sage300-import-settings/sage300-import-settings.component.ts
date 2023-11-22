@@ -14,6 +14,7 @@ import { catchError, forkJoin, of } from 'rxjs';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-sage300-import-settings',
@@ -95,6 +96,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
   isSaveInProgress: boolean;
 
   ConfigurationCtaText = ConfigurationCta;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private router: Router,

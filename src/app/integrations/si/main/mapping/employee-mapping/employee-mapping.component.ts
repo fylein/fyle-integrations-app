@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, debounce, debounceTime, forkJoin } from 'rxjs';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AutoMapEmployeeOptions, FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
@@ -71,6 +72,8 @@ export class EmployeeMappingComponent implements OnInit {
   operationgSystem: string;
 
   alphabetFilter: string = 'All';
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private mappingService: SiMappingsService,

@@ -8,7 +8,7 @@ import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configura
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-export-setting',
@@ -99,6 +99,8 @@ export class ExportSettingComponent implements OnInit {
   customMessage: string;
 
   private sessionStartTime = new Date();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private router: Router,
