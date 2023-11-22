@@ -29,7 +29,9 @@ export class LoginComponent implements OnInit {
   ) { }
 
   private saveUserProfileAndNavigate(code: string): void {
+    console.log("save User profile 1");
     this.authService.login(code).subscribe(response => {
+      console.log('login authservice 2');
       const user: MinimalUser = {
         'email': response.user.email,
         'access_token': response.access_token,
@@ -40,12 +42,18 @@ export class LoginComponent implements OnInit {
         'org_name': response.user.org_name
       };
       this.userService.storeUserProfile(user);
-      this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
+      this.qbdAuthService.qbdLogin(user.refresh_token).subscribe(() => {
+        console.log('qbd service 3');
+      });
 
       // Only local dev needs this, login happens via postMessage for prod/staging through webapp
       if (!environment.production) {
-        this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
-        this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+        this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe(() => {
+          console.log('Si service 4');
+        });
+        this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe(() => {
+          console.log('sag300 service 5');
+        });
       }
       this.router.navigate(['/integrations']);
     });
@@ -53,8 +61,11 @@ export class LoginComponent implements OnInit {
 
   private login(): void {
     this.route.queryParams.subscribe(params => {
+      console.log("start 1", params);
       if (params.code) {
+        console.log("start 2");
         this.saveUserProfileAndNavigate(params.code);
+        console.log("start 3");
       }
     });
   }
