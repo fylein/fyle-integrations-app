@@ -50,7 +50,7 @@ export class EmployeeMappingComponent implements OnInit {
 
   sourceType: string;
 
-  limit: number = 10;
+  limit: number;
 
   offset: number = 0;
 
@@ -104,6 +104,7 @@ export class EmployeeMappingComponent implements OnInit {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = intacctMappingResult.count;
+      this.setupDropdownOptions(intacctMappingResult);
       this.isLoading = false;
     });
   }
@@ -241,21 +242,28 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   private addMissingOption(dropdownOption: IntacctDestinationAttribute): void {
-    // @ts-ignore
-    console.log('dropdownOption', dropdownOption); // @ts-ignore
-    // @ts-ignore
-    console.log('this.fyleEmployeeOptions', this.fyleEmployeeOptions);
     const option = this.fyleEmployeeOptions.find(attribute => attribute.id === dropdownOption.id);
-    // @ts-ignore
-    console.log('option', option);
 
     if (!option) {
-      // @ts-ignore
-      console.log('adding');
       this.fyleEmployeeOptions.push(dropdownOption);
-      // @ts-ignore
-      console.log('this.fyleEmployeeOptions', this.fyleEmployeeOptions);
     }
+  }
+
+  private setupDropdownOptions(employeeMappingResponse: EmployeeMappingsResponse): void {
+    // Since pagination call doesn't return all results, we're making use of the mapping API to fill in options
+    employeeMappingResponse.results.forEach((mapping) => {
+      const employeeMapping = this.getDropdownValue(mapping.employeemapping);
+      if (employeeMapping) {
+        this.addMissingOption(employeeMapping);
+      }
+    });
+
+    this.sortDropdownOptions();
+
+    // Creating a map of primary keys to avoid duplicate options during search
+    this.fyleEmployeeOptions.forEach((option) => {
+      this.optionsMap[option.id.toString()] = true;
+    });
   }
 
   setupPage() {
@@ -265,33 +273,14 @@ export class EmployeeMappingComponent implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getPaginatedDestinationAttributes(this.getAttributesFilteredByConfig()[0]),
-      this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
+      this.mappingService.getEmployeeMappings(this.limit, this.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
         this.totalCount = employeeMappingResponse.count;
         this.fyleEmployeeOptions = groupedDestResponse.results;
-        // @ts-ignore
-        console.log('this.fyleEmployeeOptions - 1', this.fyleEmployeeOptions);
 
-        // Since pagination call doesn't return all results, we're making use of the mapping API to fill in options
-        employeeMappingResponse.results.forEach((mapping) => {
-          const employeeMapping = this.getDropdownValue(mapping.employeemapping);
-          // @ts-ignore
-          console.log('employeeMapping', employeeMapping);
-          if (employeeMapping) {
-            this.addMissingOption(employeeMapping);
-          }
-        });
-
-        this.sortDropdownOptions();
-
-        // Creating a map of primary keys to avoid duplicate options during search
-        this.fyleEmployeeOptions.forEach((option) => {
-          this.optionsMap[option.id.toString()] = true;
-        });
-        // @ts-ignore
-        console.log('this.optionsMap', this.optionsMap);
+        this.setupDropdownOptions(employeeMappingResponse);
 
         this.optionSearchWatcher();
 
