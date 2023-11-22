@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
-import { AuthService } from 'src/app/core/services/common/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -13,7 +12,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { LocationEntityPost } from 'src/app/core/models/si/si-configuration/connector.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-intacct-location-entity',
@@ -44,14 +43,14 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   fyleOrgName: string = this.userService.getUserProfile('si.user').org_name;
 
+  readonly brandingConfig = brandingConfig;
+
   constructor(
     private formBuilder: FormBuilder,
     private mappingsService: SiMappingsService,
     private connectorService: IntacctConnectorService,
-    private authService: AuthService,
     private userService: UserService,
     private storageService: StorageService,
-    private route: ActivatedRoute,
     private router: Router,
     private workspaceService: SiWorkspaceService,
     private toastService: IntegrationsToastService,

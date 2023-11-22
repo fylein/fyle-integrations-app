@@ -14,7 +14,7 @@ import { SkipExportComponent } from '../../helper/skip-export/skip-export.compon
 import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { Configuration } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -84,14 +84,16 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
       value: null
     },
     {
-      label: 'Export Fyle ACH Payments to Sage Intacct',
+      label: 'Export ' + brandingConfig.brandName + ' ACH Payments to Sage Intacct',
       value: PaymentSyncDirection.FYLE_TO_INTACCT
     },
     {
-      label: 'Import Sage Intacct Payments into Fyle',
+      label: 'Import Sage Intacct Payments into ' + brandingConfig.brandName + '',
       value: PaymentSyncDirection.INTACCT_TO_FYLE
     }
   ];
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private router: Router,
