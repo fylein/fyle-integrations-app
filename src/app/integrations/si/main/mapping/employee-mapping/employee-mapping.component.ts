@@ -241,20 +241,9 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   private addMissingOption(dropdownOption: IntacctDestinationAttribute): void {
-    // @ts-ignore
-    console.log('dropdownOption', dropdownOption); // @ts-ignore
-    // @ts-ignore
-    console.log('this.fyleEmployeeOptions', this.fyleEmployeeOptions);
     const option = this.fyleEmployeeOptions.find(attribute => attribute.id === dropdownOption.id);
-    // @ts-ignore
-    console.log('option', option);
-
     if (!option) {
-      // @ts-ignore
-      console.log('adding');
       this.fyleEmployeeOptions.push(dropdownOption);
-      // @ts-ignore
-      console.log('this.fyleEmployeeOptions', this.fyleEmployeeOptions);
     }
   }
 
@@ -271,14 +260,10 @@ export class EmployeeMappingComponent implements OnInit {
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
         this.totalCount = employeeMappingResponse.count;
         this.fyleEmployeeOptions = groupedDestResponse.results;
-        // @ts-ignore
-        console.log('this.fyleEmployeeOptions - 1', this.fyleEmployeeOptions);
 
         // Since pagination call doesn't return all results, we're making use of the mapping API to fill in options
         employeeMappingResponse.results.forEach((mapping) => {
           const employeeMapping = this.getDropdownValue(mapping.employeemapping);
-          // @ts-ignore
-          console.log('employeeMapping', employeeMapping);
           if (employeeMapping) {
             this.addMissingOption(employeeMapping);
           }
@@ -290,8 +275,6 @@ export class EmployeeMappingComponent implements OnInit {
         this.fyleEmployeeOptions.forEach((option) => {
           this.optionsMap[option.id.toString()] = true;
         });
-        // @ts-ignore
-        console.log('this.optionsMap', this.optionsMap);
 
         this.optionSearchWatcher();
 
