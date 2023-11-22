@@ -4,7 +4,6 @@ import { MappingComponent } from './mapping.component';
 import { EmployeeMappingComponent } from './employee-mapping/employee-mapping.component';
 import { CategoryMappingComponent } from './category-mapping/category-mapping.component';
 import { GenericMappingComponent } from './generic-mapping/generic-mapping.component';
-import { GenericMappingTestComponent } from './generic-mapping-test/generic-mapping-test.component';
 
 
 const routes: Routes = [
@@ -12,10 +11,6 @@ const routes: Routes = [
     path: '',
     component: MappingComponent,
     children: [
-      {
-        path: 'test_mapping/:source_field',
-        component: GenericMappingTestComponent
-      },
       {
         path: 'employee_mapping',
         component: EmployeeMappingComponent

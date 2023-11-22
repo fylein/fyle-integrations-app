@@ -1,18 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AutoMapEmployeeOptions, CorporateCreditCardExpensesObject, FieldType, FyleField, IntacctReimbursableExpensesObject, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
-import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
-import { ExtendedGenericMappingV2, GenericMappingV2, GenericMappingV2Response } from 'src/app/core/models/si/db/generic-mapping-v2.model';
-import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
-import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
-import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
+import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
+import { MappingStats } from 'src/app/core/models/db/mapping.model';
+import { FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
-import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 
 @Component({
   selector: 'app-generic-mapping-v2',
@@ -21,33 +17,31 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 })
 export class GenericMappingV2Component implements OnInit {
 
-  isLoading: boolean = true;
+  @Input() isLoading: boolean;
 
-  @Input() mappingPageName: string;
+  @Input() sourceField: string;
 
   @Input() destinationField: string;
 
   @Input() employeeFieldMapping: FyleField;
 
-  isInitialSetupComplete: boolean = false;
-
   @Input() showAutoMapEmployee: boolean;
-
-  mappingStats: MappingStats;
-
-  employeeMapping: GenericMappingV2Response;
-
-  mappings: ExtendedGenericMappingV2[];
-
-  filteredMappings: ExtendedGenericMappingV2[];
-
-  searchTerm: string = '';
 
   @Input() destinationOptions: DestinationAttribute[];
 
+  isInitialSetupComplete: boolean = false;
+
+  mappingStats: MappingStats;
+
+  mappings: ExtendedGenericMapping[];
+
+  filteredMappings: ExtendedGenericMapping[];
+
+  searchTerm: string = '';
+
   sourceType: string;
 
-  limit: number = 10;
+  limit: number;
 
   offset: number = 0;
 
@@ -61,42 +55,26 @@ export class GenericMappingV2Component implements OnInit {
 
   currentPage: number = 1;
 
-  searchValue: string;
-
-  destinationFieldType = FieldType;
-
-  operationgSystem: string;
-
   alphabetFilter: string = 'All';
 
-  reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
-
-  cccExpenseObject?: CorporateCreditCardExpensesObject;
+  @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
 
   constructor(
-    private mappingService: SiMappingsService,
+    private mappingService: MappingService,
     private paginatorService: PaginatorService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService
   ) { }
 
   triggerAutoMapEmployees() {
-    const that = this;
-    that.isLoading = true;
-    that.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      that.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
-    }, () => {
-      that.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
-    });
+    this.triggerAutoMapEmployee.emit(true);
   }
 
   private getFilteredMappings() {
-    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.mappingPageName).subscribe((intacctMappingResult: GenericMappingV2Response) => {
-      this.filteredMappings = intacctMappingResult.results.concat();
+    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField).subscribe((mappingResponse: GenericMappingResponse) => {
+      this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
-      this.totalCount = intacctMappingResult.count;
+      this.totalCount = mappingResponse.count;
       this.isLoading = false;
     });
   }
@@ -129,10 +107,9 @@ export class GenericMappingV2Component implements OnInit {
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: ExtendedGenericMappingV2[] = this.filteredMappings.filter((mapping) =>
-        mapping.value?.toLowerCase().includes(searchValue)
-      );
-      this.filteredMappings = results;
+      this.filteredMappings = this.filteredMappings.filter((mapping) =>
+      mapping.value?.toLowerCase().includes(searchValue)
+    );
     } else {
       this.filteredMappings = this.mappings.concat();
     }
@@ -153,8 +130,8 @@ export class GenericMappingV2Component implements OnInit {
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
-      this.mappingService.getGenericMappingsV2(10, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.mappingPageName),
-      this.mappingService.getMappingStats(this.mappingPageName, this.destinationField)
+      this.mappingService.getGenericMappingsV2(10, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField),
+      this.mappingService.getMappingStats(this.sourceField, this.destinationField, 'SAGE300')
     ]).subscribe(
       ([mappingResponse, mappingStat]) => {
         this.totalCount = mappingResponse.count;
