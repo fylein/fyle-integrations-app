@@ -107,10 +107,9 @@ export class GenericMappingV2Component implements OnInit {
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: ExtendedGenericMapping[] = this.filteredMappings.filter((mapping) =>
-        mapping.value?.toLowerCase().includes(searchValue)
-      );
-      this.filteredMappings = results;
+      this.filteredMappings = this.filteredMappings.filter((mapping) =>
+      mapping.value?.toLowerCase().includes(searchValue)
+    );    
     } else {
       this.filteredMappings = this.mappings.concat();
     }
