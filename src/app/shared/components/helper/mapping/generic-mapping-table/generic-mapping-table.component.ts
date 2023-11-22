@@ -108,7 +108,7 @@ export class GenericMappingTableComponent implements OnInit {
         if (!selectedRow.mapping?.length) {
           this.mappingStats.unmapped_attributes_count -= 1;
         }
-  
+
         selectedRow.mapping = [response];
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping saved successfully');
       }, () => {

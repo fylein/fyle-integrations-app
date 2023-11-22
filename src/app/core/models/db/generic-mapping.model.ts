@@ -23,7 +23,7 @@ export interface GenericMapping {
   source_type: string,
   updated_at: Date;
   workspace: number;
-};
+}
 
 export type MinimalMappingSetting = {
   source_field: string;
