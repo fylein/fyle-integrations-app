@@ -25,15 +25,9 @@ export class SiApiService {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
-      if (error.status >= 500 && httpMethod === 'GET') {
-        console.error(
-          `Backend returned code ${error.status}, ` + `body was: ${JSON.stringify(error.error)}`
-        );
-      } else if (error.status >= 400 && httpMethod === 'POST') {
-        console.error(
-          `Backend returned code ${error.status}, ` + `body was: ${JSON.stringify(error.error)}`
-        );
-      }
+      console.error(
+        `Backend returned code ${error.status}, method was: ${httpMethod}, body was: ${JSON.stringify(error.error)} url was ${error.url}`
+      );
     }
     return throwError(error);
   }

@@ -26,7 +26,7 @@ export class QbdApiService {
       console.error('An error occurred:', error.error.message);
     } else {
       console.error(
-        `Backend returned code ${error.status}, method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
+        `Backend returned code ${error.status}, method was: ${httpMethod}, body was: ${JSON.stringify(error.error)} url was ${error.url}`
       );
     }
     return throwError(error);
