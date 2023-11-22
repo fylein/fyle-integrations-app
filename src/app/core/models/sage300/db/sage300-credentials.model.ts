@@ -1,7 +1,7 @@
 export type Sage300Credential = {
     id?: number;
-    identifier: string;
-    username: string;
+    indentifier: string;
+    user_id: string;
     password: string;
-    workspace?: string;
+    workspace?: number;
   };

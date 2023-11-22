@@ -57,13 +57,12 @@ export class Sage300AdvancedSettingModel {
 
   static mapAPIResponseToFormGroup(advancedSettings: Sage300AdvancedSettingGet | null, isSkipExportEnabled: boolean, jobDestinationAttribute: Sage300DestinationAttributes[]): FormGroup {
     const findObjectByDestinationId = (array: Sage300DestinationAttributes[], id: string) => array?.find(item => item.destination_id === id) || null;
-    const defaultMemoOptions: string[] = ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
     return new FormGroup({
-      memoStructure: new FormControl(advancedSettings?.memo_structure ? advancedSettings?.memo_structure : defaultMemoOptions),
+      memoStructure: new FormControl(advancedSettings?.memo_structure ? advancedSettings?.memo_structure : null),
       defaultJobName: new FormControl(advancedSettings?.default_job_name ? findObjectByDestinationId(jobDestinationAttribute, advancedSettings?.default_job_id) : null),
       scheduleEnabled: new FormControl(advancedSettings?.schedule_enabled ? true : false),
       autoCreateVendor: new FormControl(advancedSettings?.auto_create_vendor ? true : false),
-      scheduleAutoExportFrequency: new FormControl(advancedSettings?.interval_hours ? advancedSettings.interval_hours : 1),
+      scheduleAutoExportFrequency: new FormControl(advancedSettings?.interval_hours),
       skipExport: new FormControl(isSkipExportEnabled)
     });
   }
@@ -74,7 +73,7 @@ export class Sage300AdvancedSettingModel {
       default_job_name: advancedSettingsForm.get('default_job_name')?.value ? advancedSettingsForm.get('default_job_name')?.value.name : null,
       default_job_id: advancedSettingsForm.get('default_job_name')?.value ? advancedSettingsForm.get('default_job_name')?.value.destination_id : null,
       schedule_enabled: advancedSettingsForm.get('schedule_enabled')?.value ? advancedSettingsForm.get('schedule_enabled')?.value : false,
-      interval_hours: advancedSettingsForm.get('schedule_enabled')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
+      interval_hours: advancedSettingsForm.get('scheduleAutoExportFrequency')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
       auto_create_vendor: advancedSettingsForm.get('auto_create_vendor')?.value ? advancedSettingsForm.get('auto_create_vendor')?.value : false
     };
   }
