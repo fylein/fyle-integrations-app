@@ -29,7 +29,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   isSaveInProgress: boolean;
 
-  exportSettings: Sage300ExportSettingGet | null ;
+  exportSettings: Sage300ExportSettingGet;
 
   exportSettingForm: FormGroup;
 
@@ -43,13 +43,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   expenseGroupByOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
+  expenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseGroupingDateOptions();
-
-  reimbursableExpensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpensesExportTypeOptions();
-
-  cccExpensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpensesExportTypeOptions();
+  expensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpensesExportTypeOptions();
 
   reimbursableExpenseState: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseState();
 
@@ -60,8 +56,6 @@ export class Sage300ExportSettingsComponent implements OnInit {
   vendorOptions: Sage300DestinationAttributes[];
 
   creditCardAccountOptions: Sage300DestinationAttributes[];
-
-  debitCardAccountOptions: Sage300DestinationAttributes[];
 
   previewImagePaths =[
     {
@@ -108,7 +102,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
           Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
           {
             phase: this.helper.getPhase(this.isOnboarding),
-            oldState: this.exportSettings as Sage300ExportSettingGet,
+            oldState: this.exportSettings,
             newState: exportSettingResponse
           }
         );
@@ -156,16 +150,15 @@ export class Sage300ExportSettingsComponent implements OnInit {
     ];
     forkJoin([
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT])
-    ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
-      this.exportSettings = exportSettingsResponse;
+      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT], AppNameInService.SAGE300)
+    ]).subscribe(([response]) => {
+      this.exportSettings = response[0];
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.vendorOptions = destinationAttributes.VENDOR;
-      this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
-      this.debitCardAccountOptions = destinationAttributes.ACCOUNT;
+      this.vendorOptions = response[1].VENDOR;
+      this.creditCardAccountOptions = response[1].ACCOUNT;
       this.isLoading = false;
     });
   }
