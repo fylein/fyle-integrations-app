@@ -19,6 +19,8 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class GenericMappingTableComponent implements OnInit {
 
+  @Input() isLoading: boolean = true;
+
   @Input() filteredMappings: ExtendedGenericMapping[];
 
   @Input() mappingError: Error[];
@@ -38,8 +40,6 @@ export class GenericMappingTableComponent implements OnInit {
   @Input() destinationOptions: DestinationAttribute[];
 
   @Input() mappingSetting: MinimalMappingSetting;
-
-  isLoading: boolean = true;
 
   constructor(
     private mappingService: MappingService,

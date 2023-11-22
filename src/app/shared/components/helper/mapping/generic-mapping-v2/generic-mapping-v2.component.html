@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="tw-py-16-px tw-px-120-px">
         <div>
-            <app-mapping-header></app-mapping-header>
+            <app-mapping-header (triggerAutoMapEmployee)="triggerAutoMapEmployees()"></app-mapping-header>
         </div>
         <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
             <div class="tw-p-24-px tw-border-b-separator">
@@ -11,7 +11,7 @@
             </div>
             <!-- add a flag/dashboard mapping tab -->
             <div *ngIf="filteredMappingCount">
-                <app-generic-mapping-table [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
+                <app-generic-mapping-table [isLoading]="isLoading" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
             </div>
             <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount" >
                 <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
