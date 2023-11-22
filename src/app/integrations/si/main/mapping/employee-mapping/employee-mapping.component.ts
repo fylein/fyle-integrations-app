@@ -243,7 +243,6 @@ export class EmployeeMappingComponent implements OnInit {
 
   private addMissingOption(dropdownOption: IntacctDestinationAttribute): void {
     const option = this.fyleEmployeeOptions.find(attribute => attribute.id === dropdownOption.id);
-
     if (!option) {
       this.fyleEmployeeOptions.push(dropdownOption);
     }
