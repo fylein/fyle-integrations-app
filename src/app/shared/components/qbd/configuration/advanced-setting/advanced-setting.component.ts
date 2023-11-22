@@ -10,6 +10,7 @@ import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configu
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { environment } from 'src/environments/environment';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-advanced-setting',
@@ -66,6 +67,8 @@ export class AdvancedSettingComponent implements OnInit {
   memoStructure: string[] = [];
 
   private sessionStartTime = new Date();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private router: Router,

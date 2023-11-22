@@ -6,14 +6,14 @@
   <div class="configuration--step-header configuration--step-header-styles">
     <app-configuration-step-header
       [headerText]="'Connect to Sage Intacct'"
-      [contentText]="'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change Fyle Organization or Location Entity.'"
+      [contentText]="'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.'"
       [redirectLink]="redirectLink">
     </app-configuration-step-header>
   </div>
   <div class="tw-flex">
     <div class="tw-w-40-vw tw-h-240-px tw-flex tw-flex-col tw-items-center tw-justify-center">
       <h5 class="tw-text-14-px tw-font-500 align-center tw-text-sub-text-color tw-cursor-default">
-        FYLE
+        {{ brandingConfig.brandName | uppercase }}
       </h5>
       <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px tw-pt-18-px tw-whitespace-nowrap tw-cursor-default">
         {{ fyleOrgName | trimCharacter: 26 }}
