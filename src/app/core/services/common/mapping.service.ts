@@ -4,7 +4,6 @@ import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
 import { Sage300GroupedDestinationAttribute } from '../../models/sage300/db/sage300-destination-attribuite.model';
-import { GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
 import { MappingSetting, MappingSettingResponse } from '../../models/si/db/mapping-setting.model';
@@ -32,7 +31,7 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
   }
 
-  getDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<any> {
+  getDestinationAttributes(attributeTypes: string | string[], app_name: string, accountType?: string, active?: boolean): Observable<any> {
     const params: {attribute_types: string | string[], account_type?: string, active?: boolean} = {
       attribute_types: attributeTypes
     };
