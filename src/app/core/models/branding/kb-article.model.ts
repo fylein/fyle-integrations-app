@@ -16,6 +16,13 @@ export type KbArticle = {
                 LANDING: string;
                 CONNECTOR: string;
                 SKIP_EXPORT: string;
+            },
+            SAGE300: {
+                IMPORT_SETTING: string;
+                EXPORT_SETTING: string;
+                ADVANCED_SETTING: string;
+                LANDING: string;
+                SKIP_EXPORT: string;
             }
         }
     }
