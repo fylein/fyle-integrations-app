@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { even } from '@rxweb/reactive-form-validators';
 import { CategoryMappingPost } from 'src/app/core/models/db/category-mapping.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { EmployeeMappingPost } from 'src/app/core/models/db/employee-mapping.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
+import { GenericMapping, GenericMappingPost, MappingUtility, MinimalMappingSetting } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -27,13 +29,15 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() destinationField: string;
 
-  @Input() employeeFieldMapping: FyleField;
+  @Input() employeeFieldMapping: FyleField = FyleField.VENDOR;
 
   @Input() reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
 
   @Input() cccExpenseObject?: CorporateCreditCardExpensesObject;
 
   @Input() destinationOptions: DestinationAttribute[];
+
+  @Input() mappingSetting: MinimalMappingSetting;
 
   isLoading: boolean = true;
 
@@ -71,47 +75,19 @@ export class GenericMappingTableComponent implements OnInit {
 
   save(selectedRow: ExtendedGenericMapping, event: any): void {
     if (selectedRow.employeemapping) {
-      const employeeMapping: EmployeeMappingPost = {
-        source_employee: {
-          id: selectedRow.id
-        },
-        destination_vendor: {
-          id: this.employeeFieldMapping===FyleField.VENDOR ? event.value.id : (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_vendor ? selectedRow.employeemapping[0].destination_vendor?.id : null)
-        },
-        destination_employee: {
-          id: this.employeeFieldMapping===FyleField.EMPLOYEE ? event.value.id : (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_employee ? selectedRow.employeemapping[0].destination_employee?.id : null)
-        },
-        destination_card_account: {
-          id: (selectedRow.employeemapping?.length && selectedRow.employeemapping[0].destination_card_account ? selectedRow.employeemapping[0].destination_card_account?.id : null)
-        },
-        workspace: parseInt(this.workspaceService.getWorkspaceId())
-      };
+      const employeeMapping = MappingUtility.saveEmployeeMapping(selectedRow, event, this.employeeFieldMapping, this.workspaceService.getWorkspaceId());
       this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
         // Decrement unmapped count only for new mappings, ignore updates
         if (!selectedRow.employeemapping?.length) {
           this.mappingStats.unmapped_attributes_count -= 1;
         }
-
         selectedRow.employeemapping = [response];
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
       }, () => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
       });
     } else if (selectedRow.categorymapping) {
-      const sourceId = selectedRow.id;
-
-      const categoryMappingsPayload: CategoryMappingPost = {
-        source_category: {
-          id: sourceId
-        },
-        destination_account: {
-          id: this.destinationField === 'ACCOUNT' ? event.value.id : null
-        },
-        destination_expense_head: {
-          id: this.destinationField !== 'ACCOUNT' ? event.value.id : null
-        },
-        workspace: parseInt(this.workspaceService.getWorkspaceId())
-      };
+      const categoryMappingsPayload = MappingUtility.saveCategoryMapping(selectedRow, event, this.destinationField, this.workspaceService.getWorkspaceId());
 
       this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
         // Decrement unmapped count only for new mappings, ignore updates
@@ -121,6 +97,20 @@ export class GenericMappingTableComponent implements OnInit {
 
         selectedRow.categorymapping = [response];
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
+      }, () => {
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+      });
+    } else {
+      const genericMappingPayload = MappingUtility.saveGenericMapping(selectedRow, event, this.mappingSetting);
+
+      this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
+        // Decrement unmapped count only for new mappings, ignore updates
+        if (!selectedRow.mapping?.length) {
+          this.mappingStats.unmapped_attributes_count -= 1;
+        }
+  
+        selectedRow.mapping = [response];
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping saved successfully');
       }, () => {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
       });

@@ -11,6 +11,7 @@ import { MappingSetting, MappingSettingResponse } from '../../models/si/db/mappi
 import { AppName, MappingState } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
+import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
 
 
 @Injectable({
@@ -129,6 +130,10 @@ export class MappingService {
   postCategoryMappings(mapping: CategoryMappingPost): Observable<CategoryMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/category/`, mapping);
+  }
+
+  postMapping(mapping: GenericMappingPost): Observable<GenericMapping> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 
 }
