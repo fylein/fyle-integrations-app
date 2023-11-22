@@ -2,11 +2,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 
 @Component({
-  selector: 'app-mapping-header',
-  templateUrl: './mapping-header.component.html',
-  styleUrls: ['./mapping-header.component.scss']
+  selector: 'app-card-mapping-header',
+  templateUrl: './mapping-card-header.component.html',
+  styleUrls: ['./mapping-card-header.component.scss']
 })
-export class MappingHeaderComponent implements OnInit {
+export class MappingCardHeaderComponent implements OnInit {
 
   @Input() sourceField: string;
 

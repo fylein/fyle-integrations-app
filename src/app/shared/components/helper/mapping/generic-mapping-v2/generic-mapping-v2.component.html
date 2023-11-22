@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="tw-py-16-px tw-px-120-px">
         <div>
-            <app-mapping-header (triggerAutoMapEmployee)="triggerAutoMapEmployees()"></app-mapping-header>
+            <app-card-mapping-header (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceField" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees"></app-card-mapping-header>
         </div>
         <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
             <div class="tw-p-24-px tw-border-b-separator">

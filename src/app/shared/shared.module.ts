@@ -77,7 +77,7 @@ import { ConfigurationStepSubHeaderComponent } from './components/configuration/
 import { GenericMappingV2Component } from './components/helper/mapping/generic-mapping-v2/generic-mapping-v2.component';
 import { GenericMappingTableComponent } from './components/helper/mapping/generic-mapping-table/generic-mapping-table.component';
 import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
-import { MappingHeaderComponent } from './components/helper/mapping/mapping-header/mapping-header.component';
+import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-card-header/mapping-card-header.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +137,7 @@ import { MappingHeaderComponent } from './components/helper/mapping/mapping-head
     GenericMappingV2Component,
     GenericMappingTableComponent,
     SubMenuComponent,
-    MappingHeaderComponent
+    MappingCardHeaderComponent
   ],
   imports: [
     CommonModule,

@@ -5,7 +5,7 @@ import { CategoryMappingPost } from 'src/app/core/models/db/category-mapping.mod
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { EmployeeMappingPost } from 'src/app/core/models/db/employee-mapping.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { GenericMapping, GenericMappingPost, MappingUtility, MinimalMappingSetting } from 'src/app/core/models/db/generic-mapping.model';
+import { GenericMapping, GenericMappingPost, MappingClass, MinimalMappingSetting } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -75,47 +75,51 @@ export class GenericMappingTableComponent implements OnInit {
 
   save(selectedRow: ExtendedGenericMapping, event: any): void {
     if (selectedRow.employeemapping) {
-      const employeeMapping = MappingUtility.saveEmployeeMapping(selectedRow, event, this.employeeFieldMapping, this.workspaceService.getWorkspaceId());
+      const employeeMapping = MappingClass.constructEmployeeMappingPayload(selectedRow, event, this.employeeFieldMapping, this.workspaceService.getWorkspaceId());
       this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
-        // Decrement unmapped count only for new mappings, ignore updates
-        if (!selectedRow.employeemapping?.length) {
-          this.mappingStats.unmapped_attributes_count -= 1;
-        }
+        this.decrementUnmappedCountIfNeeded(selectedRow.employeemapping);
         selectedRow.employeemapping = [response];
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
+        this.displaySuccessToast('Employee Mapping saved successfully');
       }, () => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+        this.displayErrorToast();
       });
     } else if (selectedRow.categorymapping) {
-      const categoryMappingsPayload = MappingUtility.saveCategoryMapping(selectedRow, event, this.destinationField, this.workspaceService.getWorkspaceId());
-
+      const categoryMappingsPayload = MappingClass.constructCategoryMappingPayload(selectedRow, event, this.destinationField, this.workspaceService.getWorkspaceId());
+  
       this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
-        // Decrement unmapped count only for new mappings, ignore updates
-        if (!selectedRow.categorymapping?.length) {
-          this.mappingStats.unmapped_attributes_count -= 1;
-        }
-
+        this.decrementUnmappedCountIfNeeded(selectedRow.categorymapping);
         selectedRow.categorymapping = [response];
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
+        this.displaySuccessToast('Category Mapping saved successfully');
       }, () => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+        this.displayErrorToast();
       });
     } else {
-      const genericMappingPayload = MappingUtility.saveGenericMapping(selectedRow, event, this.mappingSetting);
-
+      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, this.mappingSetting);
+  
       this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
-        // Decrement unmapped count only for new mappings, ignore updates
-        if (!selectedRow.mapping?.length) {
-          this.mappingStats.unmapped_attributes_count -= 1;
-        }
-
+        this.decrementUnmappedCountIfNeeded(selectedRow.mapping);
         selectedRow.mapping = [response];
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Mapping saved successfully');
+        this.displaySuccessToast('Mapping saved successfully');
       }, () => {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+        this.displayErrorToast();
       });
     }
   }
+  
+  decrementUnmappedCountIfNeeded(mapping: any): void {
+    if (!mapping?.length) {
+      this.mappingStats.unmapped_attributes_count -= 1;
+    }
+  }
+  
+  displaySuccessToast(message: string): void {
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, message);
+  }
+  
+  displayErrorToast(): void {
+    this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
+  }
+  
 
   getTableSourceData() {
     if (this.filteredMappings) {

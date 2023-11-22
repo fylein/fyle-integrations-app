@@ -30,9 +30,9 @@ export type MinimalMappingSetting = {
   destination_field: string;
 };
 
-export class MappingUtility {
+export class MappingClass {
 
-  static saveEmployeeMapping(selectedRow: ExtendedGenericMapping, event: any, employeeFieldMapping: FyleField, workspaceId: string) {
+  static constructEmployeeMappingPayload(selectedRow: ExtendedGenericMapping, event: any, employeeFieldMapping: FyleField, workspaceId: string) {
     const employeeMapping: EmployeeMappingPost = {
       source_employee: {
         id: selectedRow.id
@@ -52,7 +52,7 @@ export class MappingUtility {
     return employeeMapping;
   }
 
-  static saveCategoryMapping(selectedRow: ExtendedGenericMapping, event: any, destinationField: string, workspaceId: string) {
+  static constructCategoryMappingPayload(selectedRow: ExtendedGenericMapping, event: any, destinationField: string, workspaceId: string) {
     const sourceId = selectedRow.id;
 
     const categoryMappingsPayload: CategoryMappingPost = {
@@ -71,7 +71,7 @@ export class MappingUtility {
     return categoryMappingsPayload;
   }
 
-  static saveGenericMapping(selectedRow: ExtendedGenericMapping, event: any, mappingSetting: MinimalMappingSetting) {
+  static constructGenericMappingPayload(selectedRow: ExtendedGenericMapping, event: any, mappingSetting: MinimalMappingSetting) {
     const genericMappingPayload: GenericMappingPost = {
       source_type: mappingSetting.source_field,
       source_value: selectedRow.value,
