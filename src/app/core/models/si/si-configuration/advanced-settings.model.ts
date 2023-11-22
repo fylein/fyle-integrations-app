@@ -124,7 +124,7 @@ export type AdvancedSettingsPost = {
           sync_fyle_to_sage_intacct_payments: getFormValue('autoSyncPayments') === PaymentSyncDirection.FYLE_TO_INTACCT,
           sync_sage_intacct_to_fyle_payments: getFormValue('autoSyncPayments') === PaymentSyncDirection.INTACCT_TO_FYLE,
           auto_create_destination_entity: getFormValue('autoCreateEmployeeVendor'),
-          change_accounting_period: !getFormValue('postEntriesCurrentPeriod'),
+          change_accounting_period: !!getFormValue('postEntriesCurrentPeriod'),
           memo_structure: getFormValue('setDescriptionField')
         },
         general_mappings: {
