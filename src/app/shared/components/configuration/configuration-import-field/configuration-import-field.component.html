@@ -28,44 +28,34 @@
             <div class="tw-flex tw-mt-18-px">
                 <div>
                     <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field"
-                    optionLabel="display_name" optionValue="attribute_type">
-                        <ng-template let-option pTemplate="item">
-                            <div>
-                                {{ option.display_name | snakeCaseToSpaceCase }}
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="selectedItem" let-item>
-                            <div class="tw-flex tw-justify-between tw-items-center">
-                                <span>
-                                    {{ item.display_name | snakeCaseToSpaceCase }}
-                                </span>
-                            </div>
-                        </ng-template>
-                    </p-dropdown>
+                    optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
+                    <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                        {{appName}} Fields should be unique
+                    </p>
                 </div>
-                <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
-                <div class="tw-w-28-vw">
-                    <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFieldOptions" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
+                    <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
+                    <div class="tw-w-28-vw">
+                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFieldOptions" [placeholder]="'Choose Fyle Expense field'" formControlName="source_field"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
-                        <ng-template let-option pTemplate="item">
+                            <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                 <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
                                 {{ option.display_name }}
                             </div>
-                        </ng-template>
-                        <ng-template pTemplate="selectedItem" let-item>
+                            </ng-template>
+                            <ng-template pTemplate="selectedItem" let-item>
                             <div class="tw-flex tw-justify-between tw-items-center">
                                 <span>
                                     {{ item.display_name }}
                                 </span>
                                 <i class="pi pi-times" (click)="removeFilter(expenseField)"></i>
                             </div>
-                        </ng-template>
-                    </p-dropdown>
-                    <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                            </ng-template>
+                      </p-dropdown>
+                      <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
                         Fyle Fields should be unique
-                    </p>
-                </div>
+                        </p>
+                    </div>
                 <p-inputSwitch (onChange)="onShowWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section tw-pt-10-px"></p-inputSwitch>
             </div>
             <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle" [formGroup]="form">

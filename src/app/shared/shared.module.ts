@@ -64,6 +64,7 @@ import { DashboardExportLogDialogComponent } from './components/dashboard/dashbo
 import { DashboardAccountingErrorDialogComponent } from './components/dashboard/dashboard-accounting-error-dialog/dashboard-accounting-error-dialog.component';
 import { DashboardExportSummarySectionComponent } from './components/dashboard/dashboard-export-summary-section/dashboard-export-summary-section.component';
 import { ConfigurationTextFieldComponent } from './components/configuration/configuration-text-field/configuration-text-field.component';
+import { OnboardingDoneComponent } from './components/helper/onboarding-done/onboarding-done.component';
 import { PreviewDialogComponent } from './components/configuration/preview-dialog/preview-dialog.component';
 import { MainMenuComponent } from './components/menu/main-menu/main-menu.component';
 import { ConfigurationImportFieldComponent } from './components/configuration/configuration-import-field/configuration-import-field.component';
@@ -122,6 +123,7 @@ import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component'
     DashboardAccountingErrorDialogComponent,
     DashboardExportSummarySectionComponent,
     ConfigurationTextFieldComponent,
+    OnboardingDoneComponent,
     PreviewDialogComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
@@ -206,6 +208,7 @@ import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component'
     DashboardExportLogDialogComponent,
     DashboardAccountingErrorDialogComponent,
     ConfigurationTextFieldComponent,
+    OnboardingDoneComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
     ConfigurationInfoLabelComponent,
