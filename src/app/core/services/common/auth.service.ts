@@ -5,6 +5,8 @@ import { Token } from '../../models/misc/token.model';
 import { UserService } from '../misc/user.service';
 import { ApiService } from './api.service';
 import { StorageService } from './storage.service';
+import { HelperService } from './helper.service';
+import { AppNameInService, AppUrl } from '../../models/enum/enum.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,11 @@ export class AuthService {
   constructor(
     private apiService: ApiService,
     private storageService: StorageService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    helper: HelperService
+  ) { 
+    helper.setBaseApiURL(AppUrl.INTEGRATION)
+  }
 
   isLoggedIn(): boolean | null {
     return this.userService.getUserProfile() !== null;
