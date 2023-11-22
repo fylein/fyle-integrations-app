@@ -38,6 +38,10 @@ export class ApiService {
   }
 
   post(endpoint: string, body: {}): Observable<any> {
+    console.log("post Api base url", API_BASE_URL);
+    console.log("post endpoint", endpoint);
+    console.log("post body", body);
+    console.log("post Ahttpoptions", httpOptions);
     return this.http.post(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
       return this.handleError(error, 'POST');
     }));
