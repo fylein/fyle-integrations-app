@@ -43,7 +43,7 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
 import { CalendarModule } from 'primeng/calendar';
 import { AppLandingPageBodyComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
 import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
-import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
+import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
 import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
 import { TableModule } from 'primeng/table';
 import { ConfigurationExportSettingsComponent } from './components/si/configuration/configuration-export-settings/configuration-export-settings.component';
@@ -73,9 +73,10 @@ import { ConfigurationConfirmationDialogComponent } from './components/configura
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
 import { ConfigurationSkipExportComponent } from './components/configuration/configuration-skip-export/configuration-skip-export.component';
 import { ConfigurationStepSubHeaderComponent } from './components/configuration/configuration-step-sub-header/configuration-step-sub-header.component';
-import { GenericMappingV2Component } from './components/helper/generic-mapping-v2/generic-mapping-v2.component';
-import { GenericMappingTableComponent } from './components/si/generic-mapping-table/generic-mapping-table.component';
+import { GenericMappingV2Component } from './components/helper/mapping/generic-mapping-v2/generic-mapping-v2.component';
+import { GenericMappingTableComponent } from './components/helper/mapping/generic-mapping-table/generic-mapping-table.component';
 import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
+import { MappingHeaderComponent } from './components/helper/mapping/mapping-header/mapping-header.component';
 
 @NgModule({
   declarations: [
@@ -133,7 +134,8 @@ import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component'
     ConfigurationStepSubHeaderComponent,
     GenericMappingV2Component,
     GenericMappingTableComponent,
-    SubMenuComponent
+    SubMenuComponent,
+    MappingHeaderComponent
   ],
   imports: [
     CommonModule,

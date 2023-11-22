@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -56,6 +56,8 @@ export class GenericMappingV2Component implements OnInit {
   currentPage: number = 1;
 
   alphabetFilter: string = 'All';
+
+  @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
 
   constructor(
     private mappingService: MappingService,
