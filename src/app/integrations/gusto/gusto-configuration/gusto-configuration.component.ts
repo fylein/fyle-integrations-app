@@ -7,6 +7,7 @@ import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-gusto-configuration',
@@ -32,6 +33,8 @@ export class GustoConfigurationComponent implements OnInit {
   configurationFields: string[] = ['Employee Name', 'Employee ID', 'Email ID', 'Department', 'Manager'];
 
   private sessionStartTime = new Date();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private gustoService: GustoService,

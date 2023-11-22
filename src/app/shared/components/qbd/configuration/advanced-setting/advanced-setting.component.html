@@ -14,7 +14,7 @@
                     <app-configuration-toggle-field 
                         [form]="advancedSettingsForm"
                         [label]="'Schedule automatic export'" 
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from Fyle to QuickBooks Desktop.'" 
+                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
                         [formControllerName]="'exportSchedule'">
                     </app-configuration-toggle-field>
                 </div>
@@ -86,7 +86,7 @@
                     <app-configuration-select-field
                     [form]="advancedSettingsForm"
                     [label]="'Select the Top level MEMO field data for QuickBooks Desktop'"
-                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>Top-level MEMO</b> field while exporting expenses from Fyle.'"
+                    [subLabel]="'You can customize the <b>data point</b> you would like to export to QuickBooks Desktop\’s <b>Top-level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'top level memo'"
                     [simpleOptions]="defaultTopMemoOptions"
@@ -100,7 +100,7 @@
                     [isFieldMandatory]="true"
                     [customErrorMessage]="'Please select atleast one memo type from the list'"
                     [label]="'Set the Line-Item level MEMO field data for QuickBooks Desktop.*'"
-                    [subLabel]="'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>Transaction Line-Item level MEMO</b> field while exporting expenses from Fyle.'"
+                    [subLabel]="'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>Transaction Line-Item level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
                     [options]="defaultMemoFields"
                     [iconPath]="'expense'"
                     [placeholder]="'Select Memo Types'"
