@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { FyleField } from 'src/app/core/models/enum/enum.model';
+import { FyleField, IntegrationName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
   selector: 'app-sage300-base-mapping',
@@ -30,9 +30,20 @@ export class Sage300BaseMappingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private toastService: IntegrationsToastService
   ) { }
 
+  triggerAutoMapEmployees() {
+    this.isLoading = true;
+    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
+      this.isLoading = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
+    }, () => {
+      this.isLoading = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
+    });
+  }
 
   private isExpenseTypeRequired(): boolean {
     return this.reimbursableExpenseObject === "EXPENSE_REPORT" || this.cccExpenseObject === "EXPENSE_REPORT";
@@ -65,7 +76,7 @@ export class Sage300BaseMappingComponent implements OnInit {
       this.destinationField = this.getSourceType();
 
 
-      this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'SAGE300').subscribe((response: any) => {
+      this.mappingService.getGroupedDestinationAttributes([this.destinationField], IntegrationName.SAGE300).subscribe((response: any) => {
         if (this.sourceField==='EMPLOYEE') {
           this.destinationOptions = this.destinationField ? response.EMPLOYEE : response.VENDOR;
         }
@@ -76,6 +87,8 @@ export class Sage300BaseMappingComponent implements OnInit {
             this.destinationOptions = response.ACCOUNT;
           }
         }
+
+        this.isLoading = false;
       });
     });
   }

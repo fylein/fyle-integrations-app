@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
@@ -17,7 +17,7 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 })
 export class GenericMappingV2Component implements OnInit {
 
-  isLoading: boolean = false;
+  @Input() isLoading: boolean;
 
   @Input() sourceField: string;
 
@@ -25,9 +25,11 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() employeeFieldMapping: FyleField;
 
-  isInitialSetupComplete: boolean = false;
-
   @Input() showAutoMapEmployee: boolean;
+
+  @Input() destinationOptions: DestinationAttribute[];
+
+  isInitialSetupComplete: boolean = false;
 
   mappingStats: MappingStats;
 
@@ -36,8 +38,6 @@ export class GenericMappingV2Component implements OnInit {
   filteredMappings: ExtendedGenericMapping[];
 
   searchTerm: string = '';
-
-  @Input() destinationOptions: DestinationAttribute[];
 
   sourceType: string;
 
@@ -57,6 +57,8 @@ export class GenericMappingV2Component implements OnInit {
 
   alphabetFilter: string = 'All';
 
+  @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
+
   constructor(
     private mappingService: MappingService,
     private paginatorService: PaginatorService,
@@ -65,14 +67,7 @@ export class GenericMappingV2Component implements OnInit {
   ) { }
 
   triggerAutoMapEmployees() {
-    this.isLoading = true;
-    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
-    }, () => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
-    });
+    this.triggerAutoMapEmployee.emit(true);
   }
 
   private getFilteredMappings() {
@@ -112,10 +107,9 @@ export class GenericMappingV2Component implements OnInit {
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      const results: ExtendedGenericMapping[] = this.filteredMappings.filter((mapping) =>
-        mapping.value?.toLowerCase().includes(searchValue)
-      );
-      this.filteredMappings = results;
+      this.filteredMappings = this.filteredMappings.filter((mapping) =>
+      mapping.value?.toLowerCase().includes(searchValue)
+    );
     } else {
       this.filteredMappings = this.mappings.concat();
     }
