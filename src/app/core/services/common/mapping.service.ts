@@ -44,11 +44,11 @@ export class MappingService {
       params.active = active;
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/destination_attributes/`, params);
+    return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/destination_attributes/`, params);
   }
 
-  getGroupedDestinationAttributes(attributeTypes: string[]): Observable<GroupedDestinationAttribute> {
-    return from(this.getDestinationAttributes(attributeTypes).toPromise().then((response: any | undefined) => {
+  getGroupedDestinationAttributes(attributeTypes: string[], app_name: string): any {
+    return from(this.getDestinationAttributes(attributeTypes, app_name).toPromise().then((response: any | undefined) => {
       return response?.reduce((groupedAttributes: any, attribute: any) => {
         const group: any = groupedAttributes[attribute.attribute_type] || [];
         group.push(attribute);
