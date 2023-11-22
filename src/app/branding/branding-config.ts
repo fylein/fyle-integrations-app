@@ -1,7 +1,7 @@
 import { BrandingConfiguration } from '../core/models/branding/branding-configuration.model';
 import { FeatureConfiguration } from '../core/models/branding/feature-configuration.model';
 import { KbArticle } from '../core/models/branding/kb-article.model';
-import config from './config-template.json';
+import config from './config.json';
 
 export const brandingConfig: BrandingConfiguration = config;
 
