@@ -3,11 +3,10 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
 import { EmailOption } from '../../models/bamboo-hr/bamboo-hr.model';
-import { AppName, AppUrl } from '../../models/enum/enum.model';
+import { AppName } from '../../models/enum/enum.model';
 import { GeneratedToken, Org } from '../../models/org/org.model';
 import { ApiService } from '../common/api.service';
 import { StorageService } from '../common/storage.service';
-import { HelperService } from '../common/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,11 +16,8 @@ export class OrgService {
   constructor(
     private sanitizer: DomSanitizer,
     private apiService: ApiService,
-    private storageService: StorageService,
-    private helper : HelperService
-  ) {
-    helper.setBaseApiURL(AppUrl.INTEGRATION);
-   }
+    private storageService: StorageService
+  ) { }
 
   getOrgId(): string {
     return this.storageService.get('orgId');
