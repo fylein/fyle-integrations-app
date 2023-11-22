@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
-import { ConditionField, EmailOption, ExpenseFilterPost, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, AppNameInService, AppUrl, ConfigurationCta, Page, Sage300Field, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload } from 'src/app/core/models/common/advanced-settings.model';
+import { AppName, AppNameInService, ConfigurationCta, Page, Sage300Field, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingValidatorRule, Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
-import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse, destinationAttributes } from '../fixture';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -260,6 +259,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     for (let i = 1; i <= 24; i++) {
       this.hours.push({ label: `${i}`, value: i });
     }
+    this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
       this.advancedSettingsService.getExpenseFilter(),
