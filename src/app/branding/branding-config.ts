@@ -1,4 +1,5 @@
 import { BrandingConfiguration } from '../core/models/branding/branding-configuration.model';
+import { DemoVideo } from '../core/models/branding/demo-video.model';
 import { FeatureConfiguration } from '../core/models/branding/feature-configuration.model';
 import { KbArticle } from '../core/models/branding/kb-article.model';
 import config from './config.json';
@@ -35,6 +36,14 @@ const kbArticles: KbArticle = {
                 LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
                 CONNECTOR: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6',
                 SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+            },
+            // TODO: Update KB articles for Sage 300
+            SAGE300: {
+                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
+                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
+                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
+                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
             }
         }
     }
@@ -42,3 +51,16 @@ const kbArticles: KbArticle = {
 
 // @ts-ignore
 export const brandingKbArticles = kbArticles[brandingConfig.brandId];
+
+const demoVideoLinks: DemoVideo = {
+    fyle: {
+        onboarding: {
+            INTACCT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            // TODO: Update link for Sage 300
+            SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+        }
+    }
+};
+
+// @ts-ignore
+export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];

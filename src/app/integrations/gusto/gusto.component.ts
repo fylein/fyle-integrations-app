@@ -10,7 +10,7 @@ import { GustoService } from 'src/app/core/services/gusto/gusto.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-gusto',
@@ -52,6 +52,8 @@ export class GustoComponent implements OnInit {
   appName: string = InAppIntegration.GUSTO;
 
   private sessionStartTime = new Date();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private gustoService: GustoService,

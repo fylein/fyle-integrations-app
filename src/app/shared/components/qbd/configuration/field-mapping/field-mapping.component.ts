@@ -8,7 +8,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-field-mapping',
@@ -43,6 +43,8 @@ export class FieldMappingComponent implements OnInit {
   private sessionStartTime = new Date();
 
   fieldMapping: QBDFieldMappingGet;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private router: Router,

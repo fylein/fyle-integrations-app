@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { ImportSettingMappingRow, ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
@@ -35,9 +36,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   showAddButton: any;
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) { }
+  readonly brandingConfig = brandingConfig;
+
+  constructor() { }
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;

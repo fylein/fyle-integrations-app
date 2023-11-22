@@ -3,7 +3,7 @@
         <div>
             <app-configuration-step-header 
                 [headerText]="'Configuration'"
-                [contentText]="'The Fyle-Gusto Integration will import and auto-sync employee information between Gusto and Fyle. Admins will be notified when the imports fail.'"
+                [contentText]="'The ' + brandingConfig.brandName + '-Gusto Integration will import and auto-sync employee information between Gusto and ' + brandingConfig.brandName + '. Admins will be notified when the imports fail.'"
             ></app-configuration-step-header>
         </div>
         <div class="tw-p-24-px">
@@ -14,7 +14,7 @@
                     </div>
                     <div>
                         <h5 class="tw-text-14-px !tw-font-500">Import Employee</h5>
-                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" >The following employee fields in Gusto will be mapped to their respective fields in Fyle as shown below. Any changes made to the below fields in Gusto will be auto-synced to Fyle every 24 hours.</h5>
+                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" >The following employee fields in Gusto will be mapped to their respective fields in {{ brandingConfig.brandName }} as shown below. Any changes made to the below fields in Gusto will be auto-synced to {{ brandingConfig.brandName }} every 24 hours.</h5>
                     </div>
                 </div>
                 <div class="tw-pt-20-px tw-pb-44-px tw-flex tw-items-center tw-justify-center">
@@ -23,7 +23,7 @@
                           <tr>
                             <th>Gusto Field</th>
                             <th></th>
-                            <th>Fyle Field</th>
+                            <th>{{ brandingConfig.brandName }} Field</th>
                           </tr>
                         </thead>
                         <tbody>

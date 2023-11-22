@@ -14,6 +14,7 @@ import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-generic-mapping',
@@ -63,6 +64,8 @@ export class GenericMappingComponent implements OnInit {
   operationgSystem: string;
 
   alphabetFilter: string = 'All';
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private paginatorService: PaginatorService,

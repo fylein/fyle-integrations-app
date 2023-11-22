@@ -20,7 +20,7 @@
                     </p>
                     <div *ngIf="isIntegrationSetupInProgress" class="tw-flex tw-text-slightly-normal-text-color tw-text-14-px tw-pt-10-px tw-pb-18-px">
                         <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
-                        <p class="tw-pl-10-px">We are syncing your data between your Fyle - {{ appName }} account and this may take a few seconds</p>
+                        <p class="tw-pl-10-px">We are syncing your data between your {{brandingConfig.brandName}} - {{ appName }} account and this may take a few seconds</p>
                     </div>
                 </div>
             </div>
