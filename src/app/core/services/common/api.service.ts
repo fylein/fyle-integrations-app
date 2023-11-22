@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { AppUrl } from '../../models/enum/enum.model';
 
 let API_BASE_URL = environment.api_url;
 
@@ -23,7 +24,8 @@ export class ApiService {
   ) { }
 
   setBaseApiURL(url: string): void {
-    API_BASE_URL = url;
+    console.log("URL", url)
+    API_BASE_URL = url.length ? url : AppUrl.INTEGRATION;
   }
 
   private handleError(error: HttpErrorResponse, httpMethod: string) {
