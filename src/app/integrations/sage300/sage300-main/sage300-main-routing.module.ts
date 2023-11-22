@@ -11,6 +11,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./sage300-dashboard/sage300-dashboard.module').then(m => m.Sage300DashboardModule)
+      },
+      {
+        path: 'configuration',
+        loadChildren: () => import('./sage300-configuration/sage300-configuration.module').then(m => m.Sage300ConfigurationModule)
       }
     ]
   }
