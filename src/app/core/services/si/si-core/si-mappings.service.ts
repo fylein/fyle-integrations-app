@@ -13,7 +13,6 @@ import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 import { GroupedDestinationAttribute, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
-import { GenericMappingV2Response } from 'src/app/core/models/si/db/generic-mapping-v2.model';
 
 @Injectable({
   providedIn: 'root'
@@ -173,23 +172,6 @@ export class SiMappingsService {
     return this.apiService.get(
       `/workspaces/${workspaceId}/mappings/employee_attributes/`, params
     );
-  }
-
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string, mappingPage: string): Observable<GenericMappingV2Response> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    const isMapped: boolean = mappingState==='UNMAPPED' ? false : true;
-    const params: { limit: number, offset: number, mapped: boolean | MappingState, destination_type: string, mapping_source_alphabets?: string } = {
-      limit: pageLimit,
-      offset: pageOffset,
-      mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
-      destination_type: sourceType
-    };
-
-    if (alphabetsFilter && alphabetsFilter !== 'All') {
-      params.mapping_source_alphabets = alphabetsFilter;
-    }
-
-    return mappingPage==='EMPLOYEE' ? this.apiService.get(`/workspaces/${workspaceId}/mappings/employee_attributes/`, params) : this.apiService.get(`/workspaces/${workspaceId}/mappings/category_attributes/`, params);
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {

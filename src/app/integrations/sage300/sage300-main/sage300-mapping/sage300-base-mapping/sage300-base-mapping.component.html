@@ -1,1 +1,9 @@
-<app-generic-mapping-v2 [destinationOptions]="destinationOptions" [employeeFieldMapping]="employeeFieldMapping" [mappingPageName]="sourceField" [destinationField]="destinationField" [showAutoMapEmployee]="showAutoMapEmployee"></app-generic-mapping-v2>
+<app-generic-mapping-v2
+    [isLoading]="isLoading"
+    [destinationOptions]="destinationOptions"
+    [employeeFieldMapping]="employeeFieldMapping"
+    [sourceField]="sourceField"
+    [destinationField]="destinationField"
+    [showAutoMapEmployee]="showAutoMapEmployee"
+    (triggerAutoMapEmployee)="triggerAutoMapEmployees()"
+></app-generic-mapping-v2>
