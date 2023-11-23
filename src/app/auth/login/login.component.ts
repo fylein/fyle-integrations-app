@@ -39,6 +39,7 @@ export class LoginComponent implements OnInit {
         'org_id': response.user.org_id,
         'org_name': response.user.org_name
       };
+      console.log("user", user)
       this.userService.storeUserProfile(user);
       this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
 

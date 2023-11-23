@@ -34,7 +34,7 @@ export class HelperService {
 
     // Use a default value if module is still falsy
     module = module || AppUrl.INTEGRATION;
-
+    console.log('cdcd',module)
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
