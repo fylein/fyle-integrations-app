@@ -22,10 +22,6 @@ export interface AccountingExportCreationType {
     export_url: string;
 }
 
-export interface AccountingExportResponse extends PaginatedResponse {
-    results: AccountingExportCreationType[];
-}
-
 export type AccountingExportGetParam = {
     type__in: AccountingExportType[],
     status__in: AccountingExportStatus[],

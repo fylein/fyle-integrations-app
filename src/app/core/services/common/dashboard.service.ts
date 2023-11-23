@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
-import { AccountingExportCount, AccountingExportGetParam, AccountingExportResponse } from '../../models/db/accounting-export.model';
+import { AccountingExportCount, AccountingExportGetParam } from '../../models/db/accounting-export.model';
 import { Observable } from 'rxjs';
 import { AccountingExportStatus, AccountingExportType } from '../../models/enum/enum.model';
 import { Error } from '../../models/db/error.model';
 import { AccountingExportSummary } from '../../models/db/accounting-export-summary.model';
 import { ExportableExpenseGroup } from '../../models/si/db/expense-group.model';
+import { AccountingExportResponse } from '../../models/sage300/db/sage300-accounting-export.model';
 
 @Injectable({
   providedIn: 'root'
