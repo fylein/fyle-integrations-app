@@ -45,21 +45,13 @@ export class Sage300BaseMappingComponent implements OnInit {
     });
   }
 
-  private isExpenseTypeRequired(): boolean {
-    return this.reimbursableExpenseObject === "EXPENSE_REPORT" || this.cccExpenseObject === "EXPENSE_REPORT";
-  }
-
   getSourceType() {
     if (this.sourceField==='EMPLOYEE') {
       return 'VENDOR';
     }
 
     if (this.sourceField==='CATEGORY') {
-      if (this.isExpenseTypeRequired()) {
-        return 'EXPENSE_TYPE';
-      }
-        return 'ACCOUNT';
-
+      return 'ACCOUNT';
     }
 
     return '';
