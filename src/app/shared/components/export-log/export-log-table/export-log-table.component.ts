@@ -8,7 +8,7 @@ import { Expense } from 'src/app/core/models/si/db/expense.model';
   styleUrls: ['./export-log-table.component.scss']
 })
 export class ExportLogTableComponent implements OnInit {
-  
+
   @Input() filteredExpenseGroups: ExpenseGroupList [];
 
   clickedExportLogIndex: number = 0;
