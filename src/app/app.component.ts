@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.eventsService.receiveEvent();
-    this.eventsService.setupRouteWatcher();
     this.primengConfig.ripple = true;
   }
 }

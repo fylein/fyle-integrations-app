@@ -41,7 +41,13 @@ export class DashboardMenuComponent implements OnInit {
     this.eventsService.redirectToOldIntacctApp.subscribe((redirectUri: string) => {
       this.windowService.openInNewTab(redirectUri);
     });
-    this.eventsService.postEvent(environment.si_callback_url, environment.si_client_id);
+
+    const payload = {
+      callbackUrl: environment.si_callback_url,
+      clientId: environment.si_client_id
+    };
+
+    this.eventsService.postEvent(payload);
   }
 
   refreshDimensions() {

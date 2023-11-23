@@ -41,19 +41,20 @@ export class EventsService {
     }, false);
   }
 
-  postEvent(callbackUrl: string, clientId: string): void {
-    const payload = { callbackUrl, clientId };
+  postEvent(payload: Object): void {
     this.windowService.nativeWindow.parent.postMessage(payload, environment.fyle_app_url);
   }
 
-  private postRoute(route: string): void {
-    this.windowService.nativeWindow.parent.postMessage({ current_route: route.substring(1) }, environment.fyle_app_url);
-  }
-
   setupRouteWatcher(): void {
+    this.postEvent({ updateIframedAppNavigationAvailability: true });
     this.router.events.subscribe((routerEvent) => {
       if (routerEvent instanceof NavigationStart) {
-        this.postRoute(routerEvent.url);
+        if (routerEvent.restoredState && routerEvent.restoredState.navigationId === 1) {
+          this.postEvent({ updateIframedAppNavigationAvailability: false });
+        } else {
+          const payload = { currentRoute: routerEvent.url.substring(1) }
+          this.postEvent(payload);
+        }
       }
     });
   }

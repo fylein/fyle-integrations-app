@@ -7,6 +7,7 @@ import { WindowService } from '../core/services/common/window.service';
 import { TrackingService } from '../core/services/integration/tracking.service';
 import { UserService } from '../core/services/misc/user.service';
 import { OrgService } from '../core/services/org/org.service';
+import { EventsService } from '../core/services/common/events.service';
 
 @Component({
   selector: 'app-integrations',
@@ -22,6 +23,7 @@ export class IntegrationsComponent implements OnInit {
   org: Org;
 
   constructor(
+    private eventsService: EventsService,
     private orgService: OrgService,
     private router: Router,
     private storageService: StorageService,
@@ -54,6 +56,7 @@ export class IntegrationsComponent implements OnInit {
   }
 
   private setupOrg(): void {
+    this.eventsService.setupRouteWatcher();
     this.user = this.userService.getUserProfile();
     this.getOrCreateOrg().then((org: Org | undefined) => {
       if (org) {
