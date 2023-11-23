@@ -11,7 +11,7 @@ export class ExportLogFilterComponent implements OnInit {
 
   @Input() exportLogForm: FormGroup;
 
-  @Input() isSearchFocused: boolean
+  @Input() isSearchFocused: boolean;
 
   @Input() isDateFieldFocused: boolean;
 
