@@ -29,7 +29,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   isSaveInProgress: boolean;
 
-  exportSettings: Sage300ExportSettingGet;
+  exportSettings: Sage300ExportSettingGet | null;
 
   exportSettingForm: FormGroup;
 
@@ -43,7 +43,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   expenseGroupByOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpenseGroupByOptions();
 
-  expenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
+
+  cccExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseGroupingDateOptions();
 
   expensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpensesExportTypeOptions();
 
@@ -56,6 +58,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
   vendorOptions: Sage300DestinationAttributes[];
 
   creditCardAccountOptions: Sage300DestinationAttributes[];
+
+  debitCardAccountOptions: Sage300DestinationAttributes[];
 
   previewImagePaths =[
     {
@@ -137,28 +141,28 @@ export class Sage300ExportSettingsComponent implements OnInit {
       {
         'formController': 'reimbursableExportType',
         'requiredValue': {
-          'DIRECT_COST': ['defaultReimbursableCCCAccountName']
+          'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName']
         }
       },
       {
         'formController': 'cccExportType',
         'requiredValue': {
-          'DIRECT_COST': ['defaultCreditCardCCCAccountName'],
+          'DIRECT_COST': ['defaultCreditCardCCCAccountName', 'defaultDebitCardAccountName'],
           'PURCHASE_INVOICE': ['defaultVendorName']
         }
       }
     ];
     forkJoin([
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT], AppNameInService.SAGE300)
-    ]).subscribe(([response]) => {
-      this.exportSettings = response[0];
+      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT])
+    ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
+      this.exportSettings = exportSettingsResponse;
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.vendorOptions = response[1].VENDOR;
-      this.creditCardAccountOptions = response[1].ACCOUNT;
+      this.vendorOptions = destinationAttributes.VENDOR;
+      this.creditCardAccountOptions = this.debitCardAccountOptions = destinationAttributes.ACCOUNT;
       this.isLoading = false;
     });
   }
