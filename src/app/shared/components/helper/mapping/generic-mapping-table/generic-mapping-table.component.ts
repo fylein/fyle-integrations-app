@@ -85,7 +85,7 @@ export class GenericMappingTableComponent implements OnInit {
       });
     } else if (selectedRow.categorymapping) {
       const categoryMappingsPayload = MappingClass.constructCategoryMappingPayload(selectedRow, event, this.destinationField, this.workspaceService.getWorkspaceId());
-  
+
       this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe((response) => {
         this.decrementUnmappedCountIfNeeded(selectedRow.categorymapping);
         selectedRow.categorymapping = [response];
@@ -95,7 +95,7 @@ export class GenericMappingTableComponent implements OnInit {
       });
     } else {
       const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, this.mappingSetting);
-  
+
       this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
         this.decrementUnmappedCountIfNeeded(selectedRow.mapping);
         selectedRow.mapping = [response];
@@ -105,21 +105,21 @@ export class GenericMappingTableComponent implements OnInit {
       });
     }
   }
-  
+
   decrementUnmappedCountIfNeeded(mapping: any): void {
     if (!mapping?.length) {
       this.mappingStats.unmapped_attributes_count -= 1;
     }
   }
-  
+
   displaySuccessToast(message: string): void {
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, message);
   }
-  
+
   displayErrorToast(): void {
     this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
   }
-  
+
 
   getTableSourceData() {
     if (this.filteredMappings) {
