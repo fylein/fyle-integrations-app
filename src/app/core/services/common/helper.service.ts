@@ -21,7 +21,7 @@ export class HelperService {
   ) {}
 
   setBaseApiURL(appUrl: string| void): void {
-    console.log(appUrl)
+    console.log(this.router.url)
     const urlSplit = this.router.url.split('/');
     let module: AppUrl;
 
@@ -34,7 +34,7 @@ export class HelperService {
     }
 
     // Use a default value if module is still falsy
-    module = module ?? AppUrl.INTEGRATION;
+    module = module.length > 11 ? AppUrl.INTEGRATION : module;
     console.log('cdcd',module)
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
