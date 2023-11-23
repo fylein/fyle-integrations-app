@@ -230,7 +230,8 @@ import { ExportLogDialogComponent } from './components/export-log/export-log-dia
     GenericMappingV2Component,
     SubMenuComponent,
     ExportLogTableComponent,
-    ExportLogFilterComponent
+    ExportLogFilterComponent,
+    ExportLogDialogComponent
   ]
 })
 export class SharedModule { }
