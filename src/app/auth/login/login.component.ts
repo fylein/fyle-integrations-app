@@ -45,9 +45,11 @@ export class LoginComponent implements OnInit {
 
       // Only local dev needs this, login happens via postMessage for prod/staging through webapp
       if (!environment.production) {
+        console.log("login segment")
         this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
       }
+      console.log("login segment out")
       this.router.navigate(['/integrations']);
     });
   }
