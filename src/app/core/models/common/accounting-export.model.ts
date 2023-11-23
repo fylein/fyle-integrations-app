@@ -1,4 +1,4 @@
-// for export log
+// For export log
 
 export type ExpenseGroupDescription = {
   claim_number: string;
