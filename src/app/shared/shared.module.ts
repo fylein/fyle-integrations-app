@@ -78,6 +78,8 @@ import { GenericMappingV2Component } from './components/helper/mapping/generic-m
 import { GenericMappingTableComponent } from './components/helper/mapping/generic-mapping-table/generic-mapping-table.component';
 import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
 import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-card-header/mapping-card-header.component';
+import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
+import { ExportLogFilterComponent } from './components/export-log/export-log-filter/export-log-filter.component';
 
 @NgModule({
   declarations: [
@@ -137,7 +139,9 @@ import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-
     GenericMappingV2Component,
     GenericMappingTableComponent,
     SubMenuComponent,
-    MappingCardHeaderComponent
+    MappingCardHeaderComponent,
+    ExportLogTableComponent,
+    ExportLogFilterComponent
   ],
   imports: [
     CommonModule,
@@ -222,7 +226,9 @@ import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-
     ConfigurationSkipExportComponent,
     ConfigurationStepSubHeaderComponent,
     GenericMappingV2Component,
-    SubMenuComponent
+    SubMenuComponent,
+    ExportLogTableComponent,
+    ExportLogFilterComponent
   ]
 })
 export class SharedModule { }
