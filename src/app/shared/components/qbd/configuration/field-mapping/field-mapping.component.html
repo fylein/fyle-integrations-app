@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header 
         [headerText]="'Field Mapping'"
-        [contentText]="'In this section, choose appropriate representation of your Customers & Classes on Fyle.'"
+        [contentText]="'In this section, choose appropriate representation of your Customers & Classes on ' + brandingConfig.brandName + '.'"
         [redirectLink]="redirectLink"></app-configuration-step-header>
     </div>
     <div>
@@ -15,8 +15,8 @@
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="fieldMappingForm"
-                        [label]="'How to map CUSTOMER: JOB in QuickBooks Desktop to Fyle'"
-                        [subLabel]="'Select the field in Fyle that needs to be mapped to the \'Customers\' field in QuickBooks Desktops'"
+                        [label]="'How to map CUSTOMER: JOB in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
+                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'Customers\' field in QuickBooks Desktops'"
                         [options]="mappingFieldFormOptionsFunction('classType')"
                         [iconPath]="'people'"
                         [placeholder]="'Select representation'"
@@ -25,8 +25,8 @@
                     <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="fieldMappingForm"
-                        [label]="'How to map CLASS in QuickBooks Desktop to Fyle'"
-                        [subLabel]="'Select the field in Fyle that needs to be mapped to the \'Class\' field in QuickBooks Desktops'"
+                        [label]="'How to map CLASS in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
+                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'Class\' field in QuickBooks Desktops'"
                         [options]="mappingFieldFormOptionsFunction('customerType')"
                         [iconPath]="'expense'"
                         [placeholder]="'Select representation'"

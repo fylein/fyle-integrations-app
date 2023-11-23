@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
@@ -104,6 +105,8 @@ export class DashboardComponent implements OnInit {
     fyleReferenceType: FyleReferenceType.EXPENSE,
     expenses: []
   }];
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private dashboardService: DashboardService,

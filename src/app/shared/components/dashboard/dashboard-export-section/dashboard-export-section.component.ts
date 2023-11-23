@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
@@ -26,6 +27,8 @@ export class DashboardExportSectionComponent implements OnInit {
   @Input() processedCount: number;
 
   @Output() export = new EventEmitter<boolean>();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

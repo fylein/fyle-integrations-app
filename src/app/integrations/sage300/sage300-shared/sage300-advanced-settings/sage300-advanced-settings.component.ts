@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
 import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, AppNameInService, ConfigurationCta, Page, Sage300Field, Sage300Link, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppNameInService, ConfigurationCta, Page, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingValidatorRule, Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
@@ -14,6 +14,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Router } from '@angular/router';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -38,7 +40,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   isSaveInProgress: boolean;
 
-  supportArticleLink: string = Sage300Link.ADVANCED_SETTING;
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.SAGE300.ADVANCED_SETTING;
 
   isOnboarding: boolean;
 
@@ -56,7 +58,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   memoStructure: string[] = [];
 
-  skipExportRedirectLink: string = Sage300Link.SKIP_EXPORT;
+  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.SAGE300.SKIP_EXPORT;
 
   sessionStartTime: Date = new Date();
 
@@ -84,7 +86,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
-      expense_link: 'https://app.fylehq.com/app/main/#/enterprise/view_expense/'
+      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     this.memoPreviewText = '';
     const memo: string[] = [];

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { ClickEvent, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -36,6 +36,8 @@ export class BambooHrComponent implements OnInit {
   org: Org = this.orgService.getCachedOrg();
 
   brandingKbArticles = brandingKbArticles;
+
+  readonly brandingConfig = brandingConfig;
 
   bambooConnectionForm: FormGroup = this.formBuilder.group({
     apiToken: [null, Validators.required],
