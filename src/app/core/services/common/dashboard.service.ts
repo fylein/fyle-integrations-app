@@ -8,6 +8,7 @@ import { Error } from '../../models/db/error.model';
 import { AccountingExportSummary } from '../../models/db/accounting-export-summary.model';
 import { ExportableExpenseGroup } from '../../models/si/db/expense-group.model';
 import { AccountingExportResponse } from '../../models/sage300/db/sage300-accounting-export.model';
+import { HelperService } from './helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,11 @@ export class DashboardService {
 
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+    private helper: HelperService
+  ) {
+    helper.setBaseApiURL();
+  }
 
   getAccountingExportSummary(): Observable<AccountingExportSummary> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary`, {});
