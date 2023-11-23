@@ -21,6 +21,7 @@ export class HelperService {
   ) {}
 
   setBaseApiURL(appUrl: string| void): void {
+    console.log(appUrl)
     const urlSplit = this.router.url.split('/');
     let module: AppUrl;
 
