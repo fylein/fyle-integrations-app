@@ -44,7 +44,7 @@ export class HelperService {
     };
 
     const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration
-    this.apiService.setBaseApiURL(apiUrlMap[module]);
+    this.apiService.setBaseApiURL(apiUrl);
   }
 
   getAppName(): string {
