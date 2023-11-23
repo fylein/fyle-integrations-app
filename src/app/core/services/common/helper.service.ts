@@ -33,9 +33,6 @@ export class HelperService {
       module = (urlSplit.length > 2 ? urlSplit[2] : urlSplit[1]) as AppUrl;
     }
 
-    // Use a default value if module is still falsy
-    module = module.length > 11 ? AppUrl.INTEGRATION : module;
-    console.log('cdcd',module)
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
@@ -46,6 +43,7 @@ export class HelperService {
       [AppUrl.INTEGRATION]: environment.api_url
     };
 
+    const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration
     this.apiService.setBaseApiURL(apiUrlMap[module]);
   }
 
