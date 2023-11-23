@@ -5,8 +5,6 @@ import { AuthService } from 'src/app/core/services/common/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
-import { EXPOSE_INTACCT_NEW_APP } from 'src/app/core/services/common/events.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
 import { environment } from 'src/environments/environment';
 import { Sage300AuthService } from 'src/app/core/services/sage300/sage300-core/sage300-auth.service';
 
@@ -21,7 +19,6 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private storageService: StorageService,
     private userService: UserService,
     private qbdAuthService: QbdAuthService,
     private siAuthService : SiAuthService,
@@ -39,17 +36,14 @@ export class LoginComponent implements OnInit {
         'org_id': response.user.org_id,
         'org_name': response.user.org_name
       };
-      console.log("user", user)
       this.userService.storeUserProfile(user);
       this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
 
       // Only local dev needs this, login happens via postMessage for prod/staging through webapp
       if (!environment.production) {
-        console.log("login segment")
         this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
       }
-      console.log("login segment out")
       this.router.navigate(['/integrations']);
     });
   }

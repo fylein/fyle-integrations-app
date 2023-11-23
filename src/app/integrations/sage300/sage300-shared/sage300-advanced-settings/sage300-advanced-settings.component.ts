@@ -241,7 +241,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(Sage300OnboardingState.COMPLETE);
-        this.router.navigate([`/integrations/sage300/onboarding/done`])
+        this.router.navigate([`/integrations/sage300/onboarding/done`]);
       }
 
 
