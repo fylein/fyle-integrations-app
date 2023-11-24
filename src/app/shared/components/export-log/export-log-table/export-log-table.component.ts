@@ -16,6 +16,10 @@ export class ExportLogTableComponent implements OnInit {
 
   @Input() appName: AppName;
 
+  @Input() isExportLogTable: boolean;
+
+  @Input() isDashboardFailed: boolean;
+
   clickedExportLogIndex: number = 0;
 
   visible: boolean = false;

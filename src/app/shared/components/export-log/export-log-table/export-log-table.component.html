@@ -3,10 +3,10 @@
         <tr>
             <th>Date and Time of Export</th>
             <th>Employee Name and ID</th>
-            <th>Expense Type</th>
+            <th *ngIf="isExportLogTable">Expense Type</th>
             <th>Reference ID</th>
-            <th>Exported As</th>
-            <th>Link to {{appName}}</th>
+            <th *ngIf="!isDashboardFailed">Exported As</th>
+            <th *ngIf="!isDashboardFailed">Link to {{appName}}</th>
         </tr>
     </ng-template>
 
@@ -24,9 +24,9 @@
                     {{rowData.employee[1]}}
                 </h5>
             </td>
-            <td>{{rowData.expenseType | titlecase}}</td>
-            <td class="tw-underline" (click)="openUrl($event, rowData.export_url)">{{rowData.referenceNumber}}</td>
-            <td>{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
+            <td *ngIf="isExportLogTable">{{rowData.expenseType | titlecase}}</td>
+            <td *ngIf="!isDashboardFailed" class="tw-underline" (click)="openUrl($event, rowData.export_url)">{{rowData.referenceNumber}}</td>
+            <td *ngIf="!isDashboardFailed">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
             <td>
                 <div *ngIf="rowData.intacctUrl">
                   <button (click)="openUrl(rowData.export_url)" pTooltip="Open in New Tab" tooltipPosition="top">
