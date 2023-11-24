@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { Sage300ConfigurationComponent } from './sage300-configuration.component';
-import { Sage300ConfigurationExportSettingsComponent } from './sage300-configuration-export-settings/sage300-configuration-export-settings.component';
-import { Sage300ConfigurationImportSettingsComponent } from './sage300-configuration-import-settings/sage300-configuration-import-settings.component';
-import { Sage300ConfigurationAdvancedSettingsComponent } from './sage300-configuration-advanced-settings/sage300-configuration-advanced-settings.component';
+import { Sage300ExportSettingsComponent } from '../../sage300-shared/sage300-export-settings/sage300-export-settings.component';
+import { Sage300ImportSettingsComponent } from '../../sage300-shared/sage300-import-settings/sage300-import-settings.component';
+import { Sage300AdvancedSettingsComponent } from '../../sage300-shared/sage300-advanced-settings/sage300-advanced-settings.component';
 
 const routes: Routes = [
   {
@@ -13,15 +13,15 @@ const routes: Routes = [
     children: [
       {
         path: 'export_settings',
-        component: Sage300ConfigurationExportSettingsComponent
+        component: Sage300ExportSettingsComponent
       },
       {
         path: 'import_settings',
-        component: Sage300ConfigurationImportSettingsComponent
+        component: Sage300ImportSettingsComponent
       },
       {
         path: 'advanced_settings',
-        component: Sage300ConfigurationAdvancedSettingsComponent
+        component: Sage300AdvancedSettingsComponent
       }
     ]
   }
