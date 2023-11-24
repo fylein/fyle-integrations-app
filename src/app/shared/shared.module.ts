@@ -80,7 +80,8 @@ import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component'
 import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-card-header/mapping-card-header.component';
 import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
 import { ExportLogFilterComponent } from './components/export-log/export-log-filter/export-log-filter.component';
-import { ExportLogDialogComponent } from './components/export-log/export-log-dialog/export-log-dialog.component';
+import { ExportLogChildTableDialogComponent } from './components/export-log/export-log-dialog/export-log-child-table-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -143,7 +144,7 @@ import { ExportLogDialogComponent } from './components/export-log/export-log-dia
     MappingCardHeaderComponent,
     ExportLogTableComponent,
     ExportLogFilterComponent,
-    ExportLogDialogComponent
+    ExportLogChildTableDialogComponent
   ],
   imports: [
     CommonModule,
@@ -231,7 +232,7 @@ import { ExportLogDialogComponent } from './components/export-log/export-log-dia
     SubMenuComponent,
     ExportLogTableComponent,
     ExportLogFilterComponent,
-    ExportLogDialogComponent
+    ExportLogChildTableDialogComponent
   ]
 })
 export class SharedModule { }
