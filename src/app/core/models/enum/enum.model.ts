@@ -447,6 +447,7 @@ export enum QBDOnboardingState {
     IsEmpty = "is_empty",
     IsNotEmpty = "is_not_empty"
   }
+
   export enum IntacctExportSettingDestinationOptionKey {
     VENDOR = 'VENDOR',
     ACCOUNT = 'ACCOUNT',
@@ -454,3 +455,7 @@ export enum QBDOnboardingState {
     CCC_EXPENSE_PAYMENT_TYPE = 'CCC_EXPENSE_PAYMENT_TYPE',
     CHARGE_CARD = 'CHARGE_CARD'
   }
+
+ export enum IntegrationName {
+  SAGE300 = 'SAGE300'
+ }

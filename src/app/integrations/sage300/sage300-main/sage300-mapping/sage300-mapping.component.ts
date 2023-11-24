@@ -7,17 +7,17 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-  selector: 'app-mapping',
-  templateUrl: './mapping.component.html',
-  styleUrls: ['./mapping.component.scss']
+  selector: 'app-sage300-mapping',
+  templateUrl: './sage300-mapping.component.html',
+  styleUrls: ['./sage300-mapping.component.scss']
 })
-export class MappingComponent implements OnInit {
+export class Sage300MappingComponent implements OnInit {
 
   isLoading: boolean;
 
   mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/intacct/main/mapping/employee_mapping'},
-    {label: 'Category', routerLink: '/integrations/intacct/main/mapping/category_mapping'}
+    {label: 'Employee', routerLink: '/integrations/sage300/main/mapping/employee'},
+    {label: 'Category', routerLink: '/integrations/sage300/main/mapping/category'}
   ];
 
   activeModule: MenuItem;
@@ -27,17 +27,17 @@ export class MappingComponent implements OnInit {
     private mappingService: SiMappingsService
   ) { }
 
-  private setupPages(): void {
+  private setupPage(): void {
     this.isLoading = true;
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY') {
-          this.mappingPages.push({
-            label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
-            routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
-          });
-}
+            this.mappingPages.push({
+              label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
+              routerLink: `/integrations/sage300/main/mapping/${item.source_field.toLowerCase()}`
+            });
+          }
         });
       }
       this.router.navigateByUrl(this.mappingPages[0].routerLink);
@@ -46,8 +46,6 @@ export class MappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activeModule = this.mappingPages[0];
-    this.setupPages();
+    this.setupPage();
   }
-
 }

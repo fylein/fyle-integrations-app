@@ -1,5 +1,15 @@
 import { Sage300DestinationAttributes } from "../sage300/db/sage300-destination-attribuite.model";
 
+export type DestinationAttributeDetail = {
+  email: string;
+  customer_id: string;
+  customer_name: string;
+  gl_account_no: string;
+  gl_account_title: string;
+  is_reimbursable: boolean;
+  country: string;
+};
+
 export type DestinationAttribute = {
   id: number;
   attribute_type: string;
