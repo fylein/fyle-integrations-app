@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 
@@ -11,6 +12,8 @@ export class ExportLogTableComponent implements OnInit {
 
   @Input() filteredExpenseGroups: ExpenseGroupList [];
 
+  @Input() appName: AppName;
+
   clickedExportLogIndex: number = 0;
 
   expenses: Expense [] = [];
@@ -18,12 +21,6 @@ export class ExportLogTableComponent implements OnInit {
   visible: boolean = false;
 
   constructor() { }
-
-  displayChildTable(index: number) {
-    this.clickedExportLogIndex = index;
-    this.expenses = this.filteredExpenseGroups[this.clickedExportLogIndex].expenses;
-    this.visible = true;
-  }
 
   openUrl(event: Event, url: string) {
     window.open(url, '_blank');
