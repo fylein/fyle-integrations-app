@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -23,11 +24,22 @@ export class ConfigurationStepHeaderComponent implements OnInit {
 
   @Output() refreshDimension = new EventEmitter<boolean>();
 
+  readonly brandingConfig = brandingConfig;
+
   constructor(
-    public windowService: WindowService
+    private toastService: IntegrationsToastService,
+    public windowService: WindowService,
+    private mappingsService: SiMappingsService
   ) { }
 
   refreshDimensions() {
+    this.mappingsService.refreshSageIntacctDimensions().subscribe();
+    this.mappingsService.refreshFyleDimensions().subscribe();
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
+  }
+
+  // This funtion name is for time being
+  sage300RefreshDimensions() {
     this.refreshDimension.emit(true);
   }
 

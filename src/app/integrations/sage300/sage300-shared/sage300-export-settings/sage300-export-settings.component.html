@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header 
             [headerText]="'Export Settings'"
-            [contentText]="'In this section, you can configure how and when expenses from Fyle should be exported to Sage 300 CRE. '"
+            [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Sage 300 CRE. '"
             [redirectLink]="redirectLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -19,7 +19,7 @@
                     <app-configuration-toggle-field 
                         [form]="exportSettingForm"
                         [label]="'Export Reimbursable Expenses'" 
-                        [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage 300 CRE.'" 
+                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Sage 300 CRE.'" 
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -51,17 +51,6 @@
                                 [placeholder]="'Select default reimbursable credit card account'"
                                 [formControllerName]="'defaultReimbursableCCCAccountName'">
                             </app-configuration-select-field>
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Default Debit Card Account Name'"
-                                [label]="'Set the Default Debit Card Account as?'"
-                                [subLabel]="'The integration will debit the account selected here for All Expenses exported as Direct Cost.'"
-                                [destinationAttributes]="debitCardAccountOptions"
-                                [iconPath]="'expense'"
-                                [placeholder]="'Select default debit card account'"
-                                [formControllerName]="'defaultDebitCardAccountName'">
-                            </app-configuration-select-field>
                         </div>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -69,7 +58,7 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
-                        [label]="'At which state should the expenses be ready to export from Fyle?'"
+                        [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                         [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
                         [options]="reimbursableExpenseState"
                         [iconPath]="'expense'"
@@ -81,11 +70,11 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
-                        [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage 300 CRE. Click here for more details.'"
-                        [options]="reimbursableExpenseGroupingDateOptions"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date as'"
+                        [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
+                        [options]="expenseGroupingDateOptions"
                         [iconPath]="'calender'"
-                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date'"
+                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType ? exportSettingForm.value.reimbursableExportType : expenseGroupingDateOptions[0].value) + ' date'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -107,7 +96,7 @@
                     <app-configuration-toggle-field 
                     [form]="exportSettingForm"
                     [label]="'Export Corporate Card Expenses'" 
-                    [subLabel]="'Enable this to export Non-Reimbursable expenses from Fyle. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage Intacct.'" 
+                    [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage Intacct.'" 
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -138,19 +127,6 @@
                                 [placeholder]="'Select default credit account'"
                                 [formControllerName]="'defaultCreditCardCCCAccountName'">
                             </app-configuration-select-field>
-                            <div *ngIf="exportSettingForm?.value.reimbursableExportType!==Sage300ExportType.DIRECT_COST">
-                                <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Default Debit Card Account Name'"
-                                [label]="'Set the Default Debit Card Account as?'"
-                                [subLabel]="'The integration will debit the account selected here for All Expenses exported as Direct Cost.'"
-                                [destinationAttributes]="debitCardAccountOptions"
-                                [iconPath]="'expense'"
-                                [placeholder]="'Select default debit card account'"
-                                [formControllerName]="'defaultDebitCardAccountName'">
-                            </app-configuration-select-field>
-                            </div>
                         </div>
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE">
                             <app-configuration-select-field
@@ -171,7 +147,7 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
-                        [label]="'At which state should the expenses be ready to export from Fyle?'"
+                        [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                         [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
                         [options]="cccExpenseState"
                         [iconPath]="'expense'"
@@ -184,8 +160,8 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from Fyle to Sage Intacct. Click here for more details.'"
-                        [options]="cccExpenseGroupingDateOptions"
+                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct. Click here for more details.'"
+                        [options]="expenseGroupingDateOptions"
                         [iconPath]="'calender'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>

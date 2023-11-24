@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { EmbedVideoLink } from 'src/app/core/models/enum/enum.model';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -18,9 +18,11 @@ export class AppLandingPageBodyComponent implements OnInit {
 
   @Input() redirectLink: string;
 
-  @Input() embedVideo: EmbedVideoLink;
+  @Input() embedVideo: string;
 
   embedVideoUrl: SafeResourceUrl;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     public windowService: WindowService,

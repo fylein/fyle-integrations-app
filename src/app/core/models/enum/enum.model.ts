@@ -32,11 +32,6 @@ export enum InAppIntegration {
   SAGE300 = 'Sage 300 CRE'
 }
 
-export enum EmbedVideoLink {
-  INTACCT = 'https://www.youtube.com/embed/2oYdc8KcQnk',
-  SAGE300 = 'https://www.youtube.com/embed/2oYdc8KcQnk'
-}
-
 export enum ToastSeverity {
   SUCCESS = 'success',
   ERROR = 'error'
@@ -207,9 +202,7 @@ export enum FyleField {
 export enum ExpenseGroupingFieldOption {
   CLAIM_NUMBER = 'claim_number',
   SETTLEMENT_ID = 'settlement_id',
-  EXPENSE_ID = 'expense_id',
-  EXPENSE = 'EXPENSE',
-  REPORT = 'REPORT'
+  EXPENSE_ID = 'expense_id'
 }
 
 export enum QBDOnboardingState {
@@ -391,24 +384,15 @@ export enum QBDOnboardingState {
     INTEGRATION = 'integration'
   }
 
-  export enum Sage300Link {
-    IMPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-    EXPORT_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-    ADVANCED_SETTING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-    LANDING = 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-    SKIP_EXPORT = 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
-  }
-
   export enum Sage300ExportType {
     PURCHASE_INVOICE = 'PURCHASE_INVOICE',
     DIRECT_COST = 'DIRECT_COST'
   }
 
   export enum Sage300ExpenseDate {
-    LAST_SPENT_AT = 'LAST_SPENT_AT',
-    CREATED_AT = 'CREATED_AT',
-    SPENT_AT = 'SPENT_AT',
-    POSTED_AT = 'POSTED_AT'
+    LAST_SPEND_AT = 'last_spend_at',
+    CURRENT_DATE = 'current_date',
+    APPROVED_AT = 'approved_at'
   }
 
   export enum DefaultImportFields {
@@ -460,6 +444,7 @@ export enum QBDOnboardingState {
     IsEmpty = "is_empty",
     IsNotEmpty = "is_not_empty"
   }
+
   export enum IntacctExportSettingDestinationOptionKey {
     VENDOR = 'VENDOR',
     ACCOUNT = 'ACCOUNT',
@@ -467,3 +452,7 @@ export enum QBDOnboardingState {
     CCC_EXPENSE_PAYMENT_TYPE = 'CCC_EXPENSE_PAYMENT_TYPE',
     CHARGE_CARD = 'CHARGE_CARD'
   }
+
+ export enum IntegrationName {
+  SAGE300 = 'SAGE300'
+ }

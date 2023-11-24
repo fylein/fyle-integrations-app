@@ -2,7 +2,6 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { forkJoin } from 'rxjs';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';

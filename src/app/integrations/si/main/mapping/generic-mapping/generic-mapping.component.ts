@@ -11,9 +11,10 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
-import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-generic-mapping',
@@ -40,7 +41,7 @@ export class GenericMappingComponent implements OnInit {
 
   sourceType: string;
 
-  limit: number = 10;
+  limit: number;
 
   offset: number = 0;
 
@@ -63,6 +64,8 @@ export class GenericMappingComponent implements OnInit {
   operationgSystem: string;
 
   alphabetFilter: string = 'All';
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private paginatorService: PaginatorService,

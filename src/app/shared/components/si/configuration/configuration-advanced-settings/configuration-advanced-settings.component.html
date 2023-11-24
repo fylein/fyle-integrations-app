@@ -29,7 +29,7 @@
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'automatic export method'"
                     [label]="'Schedule Automatic Export'"
-                    [subLabel]="'Set a frequency based on how often you want your expenses in Fyle to be exported to Sage Intacct.'"
+                    [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Sage Intacct.'"
                     [options]="hours"
                     [iconPath]="'email'"
                     [showClearIcon]="true"
@@ -54,7 +54,7 @@
                 [isFieldMandatory]="false"
                 [mandatoryErrorListName]="'payment sync method'"
                 [label]="'Auto-Sync Payment Status for Reimbursable Expenses'"
-                [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within Fyle or outside Fyle.'"
+                [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
                 [options]="paymentSyncOptions"
                 [iconPath]="'synced'"
                 [placeholder]="'Select payment sync method'"
@@ -65,7 +65,7 @@
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'payment account'"
                     [label]="'Select Payment Account'"
-                    [subLabel]="'Select a Payment Account handling the payments for your employees within Fyle or outside Fyle.'"
+                    [subLabel]="'Select a Payment Account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
                     [destinationAttributes]="sageIntacctPaymentAccount"
                     [iconPath]="'expense'"
                     [placeholder]="'Select Payment Account'"
@@ -79,7 +79,7 @@
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500 ">Other Preferences</h4>
                     <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-4">
-                        Based on your preference, you can choose whether you want to create any new records in Sage Intacct from Fyle (when there is no employee record found, or when the accounting period is closed.)
+                        Based on your preference, you can choose whether you want to create any new records in Sage Intacct from {{brandingConfig.brandName}} (when there is no employee record found, or when the accounting period is closed.)
                     </h5>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Auto-Create ' + getEmployeeField()" 
-                [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in Fyle, the integration will auto-create a new record in Sage Intacct.'" 
+                [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in Sage Intacct.'"
                 [formControllerName]="'autoCreateEmployeeVendor'"></app-configuration-toggle-field>
             </div>
             <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -104,7 +104,7 @@
                 <div class="sub-text">
                     <h4 class="tw-text-16-px !tw-font-500 ">Customization</h4>
                     <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-pb-4">
-                        In this section, you can customize the data that you'd like to export from Fyle to Sage Intacct. You can choose what data points need to be exported and what shouldn't be.
+                        In this section, you can customize the data that you'd like to export from {{brandingConfig.brandName}} to Sage Intacct. You can choose what data points need to be exported and what shouldn't be.
                     </h5>
                 </div>
             </div>
