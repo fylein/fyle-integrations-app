@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AccountingExportCreationType } from 'src/app/core/models/db/accounting-export.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-export-log-table',
@@ -9,25 +12,24 @@ import { Expense } from 'src/app/core/models/si/db/expense.model';
 })
 export class ExportLogTableComponent implements OnInit {
 
-  @Input() filteredExpenseGroups: ExpenseGroupList [];
+  @Input() filteredExpenseGroups: AccountingExportCreationType [];
+
+  @Input() appName: AppName;
+
+  @Input() isExportLogTable: boolean;
+
+  @Input() isDashboardFailed: boolean;
 
   clickedExportLogIndex: number = 0;
 
-  expenses: Expense [] = [];
-
   visible: boolean = false;
 
-  constructor() { }
+  constructor(
+    private windowService: WindowService
+  ) { }
 
-  displayChildTable(index: number) {
-    this.clickedExportLogIndex = index;
-    this.expenses = this.filteredExpenseGroups[this.clickedExportLogIndex].expenses;
-    this.visible = true;
-  }
-
-  openUrl(event: Event, url: string) {
-    window.open(url, '_blank');
-    event.stopPropagation();
+  openUrl(url: string) {
+    this.windowService.openInNewTab(url);
   }
 
   ngOnInit(): void {
