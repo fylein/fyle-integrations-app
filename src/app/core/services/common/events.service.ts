@@ -49,7 +49,7 @@ export class EventsService {
     this.postEvent({ updateIframedAppNavigationAvailability: true });
     this.router.events.subscribe((routerEvent) => {
       if (routerEvent instanceof NavigationStart) {
-        if (routerEvent.restoredState && routerEvent.restoredState.navigationId === 1) {
+        if (routerEvent.restoredState && routerEvent.restoredState.navigationId < 3) {
           this.postEvent({ updateIframedAppNavigationAvailability: false });
         } else {
           const payload = { currentRoute: routerEvent.url.substring(1) };
