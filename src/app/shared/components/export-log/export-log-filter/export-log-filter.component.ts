@@ -53,8 +53,9 @@ export class ExportLogFilterComponent implements OnInit {
   dropDownWatcher() {
     if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
       this.isCalendarVisible = false;
+    } else {
+      this.isCalendarVisible = true;
     }
-    this.isCalendarVisible = true;
   }
 
   removeFilter(formField: AbstractControl) {
