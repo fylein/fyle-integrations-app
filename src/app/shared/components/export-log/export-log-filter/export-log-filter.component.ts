@@ -11,11 +11,11 @@ export class ExportLogFilterComponent implements OnInit {
 
   @Input() exportLogForm: FormGroup;
 
-  @Input() isSearchFocused: boolean;
+  @Output() handleSimpleSearch = new EventEmitter<any>();
 
-  @Input() isDateFieldFocused: boolean;
+  isSearchFocused: boolean = false;
 
-  @Output() filterTableChange = new EventEmitter<any>();
+  isDateFieldFocused: boolean = false;
 
   isCalendarVisible: boolean;
 
@@ -46,8 +46,8 @@ export class ExportLogFilterComponent implements OnInit {
 
   constructor() { }
 
-  filterTable(event: any) {
-    this.filterTableChange.emit(event);
+  search(event: any) {
+    this.handleSimpleSearch.emit(event);
   }
 
   dropDownWatcher() {
@@ -58,10 +58,10 @@ export class ExportLogFilterComponent implements OnInit {
     }
   }
 
-  removeFilter(formField: AbstractControl) {
+  removeFilter(formField: AbstractControl, event?: Event) {
     (formField as FormGroup).reset();
     event?.stopPropagation();
-  }
+  }  
 
   showCalendar(event: Event) {
     event.stopPropagation();
