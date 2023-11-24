@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -41,6 +42,8 @@ export class GenericMappingComponent implements OnInit {
   destinationFieldType = FieldType;
 
   operationgSystem: string;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private mappingService: QbdMappingService,

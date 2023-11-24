@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
     <div>
         <app-configuration-step-header [headerText]="'Import Settings'"
-            [contentText]="'In this section, you can choose the fields required to be imported from Sage 300 CRE to Fyle. '"
+            [contentText]="'In this section, you can choose the fields required to be imported from Sage 300 CRE to ' + brandingConfig.brandName + '. '"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions($event)">
         </app-configuration-step-header>
@@ -18,8 +18,8 @@
                             Import / Map Sage 300 CRE Dimensions
                         </h4>
                         <p class="tw-text-14-px tw-text-faded-text-color">
-                            The Sage 300 CRE dimensions listed below can be mapped to an existing Fyle field of your preference,
-                            or a new custom field. Importing these dimensions from Sage 300 CRE to Fyle will make the values
+                            The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandingConfig.brandName}} field of your preference,
+                            or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandingConfig.brandName}} will make the values
                             available as a dropdown in the expense form for your employees to choose from.<a
                                 class="tw-text-hyperlink-color tw-pl-4-px tw-w-fit tw-cursor-pointer"
                                 (click)="showPreviewDialog(true)">Click here</a> to preview.
@@ -27,7 +27,7 @@
                     </div>
                     <div class="tw-pt-16-px">
                         <app-configuration-info-label
-                            [infoText]="'If you\'d like to use only selective data from Sage Intacct, map a Sage Intacct dimension to a field in Fyle and turn off the import, as importing the data will sync in all the active values in Sage Intacct. You can add the required values in Fyle and map them later in the integration mapping section.'">
+                            [infoText]="'If you\'d like to use only selective data from Sage Intacct, map a Sage Intacct dimension to a field in ' + brandingConfig.brandName + ' and turn off the import, as importing the data will sync in all the active values in Sage Intacct. You can add the required values in ' + brandingConfig.brandName + ' and map them later in the integration mapping section.'">
                         </app-configuration-info-label>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
         (warningAccepted)="acceptDependentFieldWarning($event)"
         [showDependentFieldWarning]="showDependentFieldWarning" 
         [headerText]="'Warning'"
-        [contextText]="'You have imported Cost codes and Cost Types from Sage Intacct by mapping them to fields in Fyle. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
+        [contextText]="'You have imported Cost codes and Cost Types from Sage Intacct by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
         [iconPath]="'assets/icons/alert_dialog.svg'" 
         [confirmBtnText]="'Continue'">
     </app-configuration-confirmation-dialog>

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject, debounce, debounceTime, forkJoin } from 'rxjs';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AutoMapEmployeeOptions, FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { DropdownOptionSearch, EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
 import { MappingStats } from 'src/app/core/models/si/db/mapping.model';
-import { Paginator } from 'src/app/core/models/si/misc/paginator.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -50,7 +51,7 @@ export class EmployeeMappingComponent implements OnInit {
 
   sourceType: string;
 
-  limit: number = 10;
+  limit: number;
 
   offset: number = 0;
 
@@ -72,6 +73,8 @@ export class EmployeeMappingComponent implements OnInit {
 
   alphabetFilter: string = 'All';
 
+  readonly brandingConfig = brandingConfig;
+
   constructor(
     private mappingService: SiMappingsService,
     private paginatorService: PaginatorService,
@@ -88,13 +91,12 @@ export class EmployeeMappingComponent implements OnInit {
   }
 
   triggerAutoMapEmployees() {
-    const that = this;
-    that.isLoading = true;
-    that.mappingService.triggerAutoMapEmployees().subscribe(() => {
-      that.isLoading = false;
+    this.isLoading = true;
+    this.mappingService.triggerAutoMapEmployees().subscribe(() => {
+      this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
     }, () => {
-      that.isLoading = false;
+      this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
     });
   }
@@ -104,6 +106,7 @@ export class EmployeeMappingComponent implements OnInit {
       this.filteredMappings = intacctMappingResult.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = intacctMappingResult.count;
+      this.setupDropdownOptions(intacctMappingResult);
       this.isLoading = false;
     });
   }
@@ -242,10 +245,26 @@ export class EmployeeMappingComponent implements OnInit {
 
   private addMissingOption(dropdownOption: IntacctDestinationAttribute): void {
     const option = this.fyleEmployeeOptions.find(attribute => attribute.id === dropdownOption.id);
-
     if (!option) {
       this.fyleEmployeeOptions.push(dropdownOption);
     }
+  }
+
+  private setupDropdownOptions(employeeMappingResponse: EmployeeMappingsResponse): void {
+    // Since pagination call doesn't return all results, we're making use of the mapping API to fill in options
+    employeeMappingResponse.results.forEach((mapping) => {
+      const employeeMapping = this.getDropdownValue(mapping.employeemapping);
+      if (employeeMapping) {
+        this.addMissingOption(employeeMapping);
+      }
+    });
+
+    this.sortDropdownOptions();
+
+    // Creating a map of primary keys to avoid duplicate options during search
+    this.fyleEmployeeOptions.forEach((option) => {
+      this.optionsMap[option.id.toString()] = true;
+    });
   }
 
   setupPage() {
@@ -255,27 +274,14 @@ export class EmployeeMappingComponent implements OnInit {
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
     forkJoin([
       this.mappingService.getPaginatedDestinationAttributes(this.getAttributesFilteredByConfig()[0]),
-      this.mappingService.getEmployeeMappings(10, 0, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
+      this.mappingService.getEmployeeMappings(this.limit, this.offset, this.getAttributesFilteredByConfig()[0], this.selectedMappingFilter, this.alphabetFilter),
       this.mappingService.getMappingStats(FyleField.EMPLOYEE, this.getAttributesFilteredByConfig()[0])
     ]).subscribe(
       ([groupedDestResponse, employeeMappingResponse, mappingStat]) => {
         this.totalCount = employeeMappingResponse.count;
         this.fyleEmployeeOptions = groupedDestResponse.results;
 
-        // Since pagination call doesn't return all results, we're making use of the mapping API to fill in options
-        employeeMappingResponse.results.forEach((mapping) => {
-          const employeeMapping = this.getDropdownValue(mapping.employeemapping);
-          if (employeeMapping) {
-            this.addMissingOption(employeeMapping);
-          }
-        });
-
-        this.sortDropdownOptions();
-
-        // Creating a map of primary keys to avoid duplicate options during search
-        this.fyleEmployeeOptions.forEach((option) => {
-          this.optionsMap[option.id.toString()] = true;
-        });
+        this.setupDropdownOptions(employeeMappingResponse);
 
         this.optionSearchWatcher();
 

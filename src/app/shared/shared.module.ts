@@ -43,7 +43,7 @@ import { ConfigurationLabelComponent } from './components/qbd/configuration/conf
 import { CalendarModule } from 'primeng/calendar';
 import { AppLandingPageBodyComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
 import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
-import { MappingFilterComponent } from './components/qbd/mapping/mapping-filter/mapping-filter.component';
+import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
 import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
 import { TableModule } from 'primeng/table';
 import { ConfigurationExportSettingsComponent } from './components/si/configuration/configuration-export-settings/configuration-export-settings.component';
@@ -64,6 +64,7 @@ import { DashboardExportLogDialogComponent } from './components/dashboard/dashbo
 import { DashboardAccountingErrorDialogComponent } from './components/dashboard/dashboard-accounting-error-dialog/dashboard-accounting-error-dialog.component';
 import { DashboardExportSummarySectionComponent } from './components/dashboard/dashboard-export-summary-section/dashboard-export-summary-section.component';
 import { ConfigurationTextFieldComponent } from './components/configuration/configuration-text-field/configuration-text-field.component';
+import { OnboardingDoneComponent } from './components/helper/onboarding-done/onboarding-done.component';
 import { PreviewDialogComponent } from './components/configuration/preview-dialog/preview-dialog.component';
 import { MainMenuComponent } from './components/menu/main-menu/main-menu.component';
 import { ConfigurationImportFieldComponent } from './components/configuration/configuration-import-field/configuration-import-field.component';
@@ -71,6 +72,12 @@ import { ConfigurationInfoLabelComponent } from './components/configuration/conf
 import { ConfigurationCustomFieldCreationDialogComponent } from './components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
 import { ConfigurationConfirmationDialogComponent } from './components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
 import { ZeroStateComponent } from './components/helper/zero-state/zero-state.component';
+import { ConfigurationSkipExportComponent } from './components/configuration/configuration-skip-export/configuration-skip-export.component';
+import { ConfigurationStepSubHeaderComponent } from './components/configuration/configuration-step-sub-header/configuration-step-sub-header.component';
+import { GenericMappingV2Component } from './components/helper/mapping/generic-mapping-v2/generic-mapping-v2.component';
+import { GenericMappingTableComponent } from './components/helper/mapping/generic-mapping-table/generic-mapping-table.component';
+import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
+import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-card-header/mapping-card-header.component';
 
 @NgModule({
   declarations: [
@@ -117,13 +124,20 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     DashboardAccountingErrorDialogComponent,
     DashboardExportSummarySectionComponent,
     ConfigurationTextFieldComponent,
+    OnboardingDoneComponent,
     PreviewDialogComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
     ConfigurationInfoLabelComponent,
     ConfigurationCustomFieldCreationDialogComponent,
     ConfigurationConfirmationDialogComponent,
-    ZeroStateComponent
+    ZeroStateComponent,
+    ConfigurationSkipExportComponent,
+    ConfigurationStepSubHeaderComponent,
+    GenericMappingV2Component,
+    GenericMappingTableComponent,
+    SubMenuComponent,
+    MappingCardHeaderComponent
   ],
   imports: [
     CommonModule,
@@ -196,6 +210,7 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     DashboardExportLogDialogComponent,
     DashboardAccountingErrorDialogComponent,
     ConfigurationTextFieldComponent,
+    OnboardingDoneComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
     ConfigurationInfoLabelComponent,
@@ -203,7 +218,11 @@ import { ZeroStateComponent } from './components/helper/zero-state/zero-state.co
     ConfigurationConfirmationDialogComponent,
     ZeroStateComponent,
     DashboardExportSummarySectionComponent,
-    PreviewDialogComponent
+    PreviewDialogComponent,
+    ConfigurationSkipExportComponent,
+    ConfigurationStepSubHeaderComponent,
+    GenericMappingV2Component,
+    SubMenuComponent
   ]
 })
 export class SharedModule { }

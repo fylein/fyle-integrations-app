@@ -41,7 +41,7 @@
             <p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
                 <ng-template pTemplate="header">
                     <tr>
-                    <th class="!tw-pl-40-px">Employee in Fyle</th>
+                    <th class="!tw-pl-40-px">Employee in {{brandingConfig.brandName}}</th>
                     <th>{{getAttributesFilteredByConfig()[0] | titlecase}} in Sage Intacct</th>
                     <th>Status</th>
                     </tr>

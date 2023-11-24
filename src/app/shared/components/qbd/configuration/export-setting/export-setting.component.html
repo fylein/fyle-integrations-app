@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header 
         [headerText]="'Export Settings'"
-        [contentText]="'In this section, you can configure how and when expenses from Fyle can be exported to QuickBooks Desktop.'"
+        [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Desktop.'"
         [redirectLink]="redirectLink"></app-configuration-step-header>
     </div>
     <div>
@@ -16,7 +16,7 @@
                         <app-configuration-toggle-field 
                         [form]="exportSettingsForm"
                         [label]="'Export Reimbursable Expenses'" 
-                        [subLabel]="'Enable this to export the reimbursable expenses from Fyle. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.'" 
+                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Desktop.'" 
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
@@ -27,7 +27,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be exported'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your Fyle expenses.'"
+                            [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName + ' expenses.'"
                             [options]="reimbursableExportTypes"
                             [iconPath]="'expense'"
                             [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
@@ -36,7 +36,7 @@
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} be posted to?<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the {{ accountName() }} account as per your QuickBooks Desktop setup. This is the account to which all the expenses from Fyle will be posted. </h5>
+                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the {{ accountName() }} account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
@@ -49,7 +49,7 @@
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">To which account should the Mileage expenses be posted to?</h4>
-                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Mileage account as per your QuickBooks Desktop setup. This is the account to which all the mileage expenses from Fyle will be posted.</h5>
+                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Mileage account as per your QuickBooks Desktop setup. This is the account to which all the mileage expenses from {{ brandingConfig.brandName }} will be posted.</h5>
                                     </div>
                             
                                     <div class="tw-pl-18-px">
@@ -100,7 +100,7 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export state'"
-                            [label]="'At which state should the expenses be ready to export from Fyle?'"
+                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                             [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.'"
                             [options]="expenseStateOptions"
                             [iconPath]="'questionmark'"
@@ -114,7 +114,7 @@
                         <app-configuration-toggle-field 
                         [form]="exportSettingsForm"
                         [label]="'Export Corporate Card Expenses'" 
-                        [subLabel]="'Enable the export of <b>credit card</b> expenses from Fyle to QuickBooks Desktop.'" 
+                        [subLabel]="'Enable the export of <b>credit card</b> expenses from ' + brandingConfig.brandName + ' to QuickBooks Desktop.'"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"></app-configuration-toggle-field>
                     </div>
@@ -125,7 +125,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expenses to be exported'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your Fyle expenses.'"
+                            [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName + ' expenses.'"
                             [options]="creditCardExportTypes"
                             [iconPath]="'expense'"
                             [formControllerName]="'cccExportType'"></app-configuration-radio-field>
@@ -134,7 +134,7 @@
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">Enter the Credit card account name<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Credit Card Account as per your QuickBooks Desktop setup. This is the account to which all the expenses from Fyle will be posted. </h5>
+                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Credit Card Account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
@@ -208,7 +208,7 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from Fyle?'"
+                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                             [subLabel]="'You could choose to export expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.'"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'questionmark'"
