@@ -146,8 +146,9 @@ export class SkipExportLogComponent implements OnInit {
   dropDownWatcher() {
     if (this.skipExportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
       this.isCalendarVisible = false;
+    } else {
+      this.isCalendarVisible = true;
     }
-    this.isCalendarVisible = true;
   }
 
   showCalendar(event: Event) {
