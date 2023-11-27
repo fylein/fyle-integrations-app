@@ -1,21 +1,20 @@
 import { AccountingExportStatus, AccountingExportType } from "../enum/enum.model";
-import { PaginatedResponse } from "./paginated-response.model";
+import { Expense } from "../si/db/expense.model";
 
 export interface AccountingExportCount {
     count: number;
 }
 
 export interface AccountingExportList {
-    index?: number;
     exportedAt: Date;
     employee: [string, string];
-    expenseType?: string;
+    expenseType: string;
     referenceNumber: string;
     exportedAs: string;
-    integrationUrl?: string;
-    fyleUrl?: string;
-    fyleReferenceType?: string | null;
-    expenses: any[];
+    integrationUrl: string;
+    fyleUrl: string;
+    fyleReferenceType: string;
+    expenses: Expense[];
   }
 
 export interface AccountingExportCreationType {
