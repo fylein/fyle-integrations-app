@@ -5,6 +5,19 @@ export interface AccountingExportCount {
     count: number;
 }
 
+export interface AccountingExportList {
+    index?: number;
+    exportedAt: Date;
+    employee: [string, string];
+    expenseType?: 'Corporate Card' | 'Reimbursable';
+    referenceNumber: string;
+    exportedAs: string;
+    integrationUrl?: string;
+    fyleUrl?: string;
+    fyleReferenceType?: string | null;
+    expenses: any[];
+  }
+
 export interface AccountingExportCreationType {
     id: number;
     type: string;
