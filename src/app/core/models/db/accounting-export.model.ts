@@ -9,7 +9,7 @@ export interface AccountingExportList {
     index?: number;
     exportedAt: Date;
     employee: [string, string];
-    expenseType?: 'Corporate Card' | 'Reimbursable';
+    expenseType?: string;
     referenceNumber: string;
     exportedAs: string;
     integrationUrl?: string;
