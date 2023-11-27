@@ -222,6 +222,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     }
     this.isSaveInProgress = true;
     const advancedSettingPayload = Sage300AdvancedSettingModel.createAdvancedSettingPayload(this.advancedSettingForm);
+    console.log(advancedSettingPayload, this.advancedSettingForm.value)
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: Sage300AdvancedSettingGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');

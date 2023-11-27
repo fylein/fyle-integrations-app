@@ -78,7 +78,7 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
         "purpose",
         "expense_link"
     ],
-    schedule_enabled: true,
+    schedule_is_enabled: true,
     id: 0,
     created_at: new Date(),
     update_at: new Date(),
