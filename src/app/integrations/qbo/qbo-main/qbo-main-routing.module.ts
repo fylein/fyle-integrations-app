@@ -22,7 +22,7 @@ const routes: Routes = [
       {
         path: 'configuration',
         loadChildren: () => import('./qbo-configuration/qbo-configuration.module').then(m => m.QboConfigurationModule)
-      },
+      }
     ]
   }
 ];
