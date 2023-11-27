@@ -11,7 +11,7 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-rowData>
-        <tr class="clickable-row" (click)="displayChildTable(rowData.index)">
+        <tr class="clickable-row" (click)="null">
             <td>
                 <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
                 <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>
@@ -25,7 +25,7 @@
                 </h5>
             </td>
             <td *ngIf="isExportLogTable">{{rowData.expenseType | titlecase}}</td>
-            <td *ngIf="!isDashboardFailed" class="tw-underline" (click)="openUrl($event, rowData.export_url)">{{rowData.referenceNumber}}</td>
+            <td *ngIf="!isDashboardFailed" class="tw-underline" (click)="openUrl(rowData.export_url)">{{rowData.referenceNumber}}</td>
             <td *ngIf="!isDashboardFailed">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
             <td>
                 <div *ngIf="rowData.intacctUrl">

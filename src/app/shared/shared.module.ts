@@ -81,6 +81,7 @@ import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-
 import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
 import { ExportLogFilterComponent } from './components/export-log/export-log-filter/export-log-filter.component';
 import { ExportLogChildTableDialogComponent } from './components/export-log/export-log-dialog/export-log-child-table-dialog.component';
+import { SkippedExportLogTableComponent } from './components/export-log/skipped-export-log-table/skipped-export-log-table.component';
 
 
 @NgModule({
@@ -144,7 +145,8 @@ import { ExportLogChildTableDialogComponent } from './components/export-log/expo
     MappingCardHeaderComponent,
     ExportLogTableComponent,
     ExportLogFilterComponent,
-    ExportLogChildTableDialogComponent
+    ExportLogChildTableDialogComponent,
+    SkippedExportLogTableComponent
   ],
   imports: [
     CommonModule,
