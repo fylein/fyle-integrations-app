@@ -14,7 +14,7 @@ export type Sage300AdvancedSetting = {
   memo_structure: string[],
   default_job_name: string,
   default_job_id: string
-  schedule_enabled: boolean,
+  schedule_is_enabled: boolean,
   auto_create_vendor: boolean,
   interval_hours: number
 }
@@ -61,7 +61,7 @@ export class Sage300AdvancedSettingModel {
     return new FormGroup({
       memoStructure: new FormControl(advancedSettings?.memo_structure ? advancedSettings?.memo_structure : defaultMemoOptions),
       defaultJobName: new FormControl(advancedSettings?.default_job_name ? findObjectByDestinationId(jobDestinationAttribute, advancedSettings?.default_job_id) : null),
-      scheduleEnabled: new FormControl(advancedSettings?.schedule_enabled ? true : false),
+      scheduleEnabled: new FormControl(advancedSettings?.schedule_is_enabled ? true : false),
       autoCreateVendor: new FormControl(advancedSettings?.auto_create_vendor ? true : false),
       scheduleAutoExportFrequency: new FormControl(advancedSettings?.interval_hours ? advancedSettings.interval_hours : 1),
       skipExport: new FormControl(isSkipExportEnabled)
@@ -70,12 +70,12 @@ export class Sage300AdvancedSettingModel {
 
   static createAdvancedSettingPayload(advancedSettingsForm: FormGroup): Sage300AdvancedSettingPost {
     return {
-      memo_structure: advancedSettingsForm.get('memo_structure')?.value ? advancedSettingsForm.get('memo_structure')?.value : null,
-      default_job_name: advancedSettingsForm.get('default_job_name')?.value ? advancedSettingsForm.get('default_job_name')?.value.name : null,
-      default_job_id: advancedSettingsForm.get('default_job_name')?.value ? advancedSettingsForm.get('default_job_name')?.value.destination_id : null,
-      schedule_enabled: advancedSettingsForm.get('schedule_enabled')?.value ? advancedSettingsForm.get('schedule_enabled')?.value : false,
-      interval_hours: advancedSettingsForm.get('schedule_enabled')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
-      auto_create_vendor: advancedSettingsForm.get('auto_create_vendor')?.value ? advancedSettingsForm.get('auto_create_vendor')?.value : false
+      memo_structure: advancedSettingsForm.get('memoStructure')?.value ? advancedSettingsForm.get('memoStructure')?.value : null,
+      default_job_name: advancedSettingsForm.get('defaultJobName')?.value ? advancedSettingsForm.get('defaultJobName')?.value.value : null,
+      default_job_id: advancedSettingsForm.get('defaultJobName')?.value ? advancedSettingsForm.get('defaultJobName')?.value.destination_id : null,
+      schedule_is_enabled: advancedSettingsForm.get('scheduleEnabled')?.value ? advancedSettingsForm.get('scheduleEnabled')?.value : false,
+      interval_hours: advancedSettingsForm.get('scheduleEnabled')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
+      auto_create_vendor: advancedSettingsForm.get('autoCreateVendor')?.value ? advancedSettingsForm.get('autoCreateVendor')?.value : false
     };
   }
 }
