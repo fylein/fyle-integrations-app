@@ -9,6 +9,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
+import { Sage300ExportLogService } from 'src/app/core/services/sage300/sage300-export-log/sage300-export-log.service';
 
 @Component({
   selector: 'app-completed-export-log',
@@ -89,7 +90,7 @@ export class CompletedExportLogComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
-    private exportLogService: ExportLogService,
+    private exportLogService: Sage300ExportLogService,
     private paginatorService: PaginatorService
   ) { }
 
