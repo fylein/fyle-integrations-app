@@ -22,6 +22,6 @@ import { BusinessCentralEmployeeSettingsComponent } from './business-central-emp
     BusinessCentralImportSettingsComponent,
     BusinessCentralAdvancedSettingsComponent,
     BusinessCentralEmployeeSettingsComponent
-  ],
+  ]
 })
 export class BusinessCentralSharedModule { }
