@@ -27,19 +27,10 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    private toastService: IntegrationsToastService,
-    public windowService: WindowService,
-    private mappingsService: SiMappingsService
+    public windowService: WindowService
   ) { }
 
   refreshDimensions() {
-    this.mappingsService.refreshSageIntacctDimensions().subscribe();
-    this.mappingsService.refreshFyleDimensions().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
-  }
-
-  // This funtion name is for time being
-  sage300RefreshDimensions() {
     this.refreshDimension.emit(true);
   }
 

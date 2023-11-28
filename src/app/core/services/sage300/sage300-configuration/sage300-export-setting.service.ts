@@ -36,7 +36,7 @@ export class Sage300ExportSettingService {
     cacheBusterNotifier: sage300ExportSettingGetCache
   })
   postExportSettings(exportSettingsPayload: Sage300ExportSettingPost): Observable<Sage300ExportSettingGet> {
-    return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 
   getDestinationAttributes(attributeType: string[] | string): Observable<Sage300DestinationAttributes[]> {
@@ -50,28 +50,45 @@ export class Sage300ExportSettingService {
     return [
       {
         label: 'Expense',
-        value: ExpenseGroupingFieldOption.EXPENSE_ID
+        value: ExpenseGroupingFieldOption.EXPENSE
       },
       {
         label: 'Expense Report',
-        value: ExpenseGroupingFieldOption.CLAIM_NUMBER
+        value: ExpenseGroupingFieldOption.REPORT
       }
     ];
   }
 
-  getExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
+  getCCCExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: 'Current Date',
-        value: Sage300ExpenseDate.CURRENT_DATE
+        label: 'Created At',
+        value: Sage300ExpenseDate.CREATED_AT
       },
       {
-        label: 'Approved Date',
-        value: Sage300ExpenseDate.APPROVED_AT
+        label: 'Card Transaction Post date',
+        value: Sage300ExpenseDate.POSTED_AT
       },
       {
         label: 'Last Spent Date',
-        value: Sage300ExpenseDate.LAST_SPEND_AT
+        value: Sage300ExpenseDate.LAST_SPENT_AT
+      }
+    ];
+  }
+
+  getReimbursableExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
+    return [
+      {
+        label: 'Created At',
+        value: Sage300ExpenseDate.CREATED_AT
+      },
+      {
+        label: 'Spent Date',
+        value: Sage300ExpenseDate.SPENT_AT
+      },
+      {
+        label: 'Last Spent Date',
+        value: Sage300ExpenseDate.LAST_SPENT_AT
       }
     ];
   }

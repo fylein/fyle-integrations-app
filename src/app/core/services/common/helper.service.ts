@@ -20,9 +20,18 @@ export class HelperService {
     private apiService: ApiService
   ) {}
 
-  setBaseApiURL(): void {
+  setBaseApiURL(appUrl: string| void): void {
     const urlSplit = this.router.url.split('/');
-    const module:AppUrl = (urlSplit.length > 2 ? urlSplit[2] : urlSplit[1]) as AppUrl;
+    let module: AppUrl;
+
+    if (appUrl) {
+      // Condition 1: If appUrl is truthy, use it as AppUrl
+      module = appUrl as AppUrl;
+    } else {
+      // Condition 2: If appUrl is falsy, determine module based on urlSplit length
+      module = (urlSplit.length > 2 ? urlSplit[2] : urlSplit[1]) as AppUrl;
+    }
+
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
@@ -33,7 +42,8 @@ export class HelperService {
       [AppUrl.INTEGRATION]: environment.api_url
     };
 
-    this.apiService.setBaseApiURL(apiUrlMap[module]);
+    const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration;
+    this.apiService.setBaseApiURL(apiUrl);
   }
 
   getAppName(): string {
