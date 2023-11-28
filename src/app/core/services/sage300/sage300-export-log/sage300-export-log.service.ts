@@ -4,6 +4,10 @@ import { environment } from 'src/environments/environment';
 import { WorkspaceService } from '../../common/workspace.service';
 import { UserService } from '../../misc/user.service';
 import { ApiService } from '../../common/api.service';
+import { FyleReferenceType, AccountingExportStatus } from 'src/app/core/models/enum/enum.model';
+import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
+import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { AccountingExportResponse } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 
 
 @Injectable({
@@ -21,7 +25,7 @@ export class Sage300ExportLogService {
     private workspaceService: WorkspaceService
   ) { }
 
-  getExpenseGroups(state: TaskLogState | TaskLogState.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: Date | void | null): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: AccountingExportStatus | AccountingExportStatus.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: Date | void | null): Observable<AccountingExportResponse> {
     const params: any = {
       limit,
       offset
@@ -60,11 +64,6 @@ export class Sage300ExportLogService {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
-  }
-
-  getExpenseGroupSettings(): Observable<ExpenseGroupSetting> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expense_group_settings/`, {});
   }
 
   generateFyleUrl(expenseGroup: ExpenseGroup, referenceType: FyleReferenceType) : string {

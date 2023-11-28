@@ -27,9 +27,9 @@ export interface AccountingExportCreationType {
         value: string;
     }[] | null;
     response: Record<string, unknown>;
-    created_at: string;
-    updated_at: string;
-    exported_at: string;
+    created_at: Date;
+    updated_at: Date;
+    exported_at: Date;
     workspace: number;
     export_url: string;
 }
