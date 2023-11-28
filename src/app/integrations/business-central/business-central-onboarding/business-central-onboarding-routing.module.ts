@@ -6,6 +6,7 @@ import { BusinessCentralOnboardingConnectorComponent } from './business-central-
 import { BusinessCentralOnboardingExportSettingsComponent } from './business-central-onboarding-export-settings/business-central-onboarding-export-settings.component';
 import { BusinessCentralOnboardingImportSettingsComponent } from './business-central-onboarding-import-settings/business-central-onboarding-import-settings.component';
 import { BusinessCentralOnboardingDoneComponent } from './business-central-onboarding-done/business-central-onboarding-done.component';
+import { BusinessCentralOnboardingEmployeeSettingsComponent } from './business-central-onboarding-employee-settings/business-central-onboarding-employee-settings.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,10 @@ const routes: Routes = [
       {
         path: 'connector',
         component: BusinessCentralOnboardingConnectorComponent
+      },
+      {
+        path: 'employee_settings',
+        component: BusinessCentralOnboardingEmployeeSettingsComponent
       },
       {
         path: 'export_settings',
