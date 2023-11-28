@@ -9,7 +9,7 @@ required based on the your needs
 [qbd-api](https://github.com/fylein/fyle-qbd-api) while working in QBD
 
 ## Documentation
-Please refer this link to find the [documentation](https://fylein.github.io/fyle-integrations-settings-app) of the project.
+Please refer this link to find the [documentation](https://fylein.github.io/fyle-integrations-app) of the project.
 
 ## Local development setup
 ### Setup - 1 (Recommended)
