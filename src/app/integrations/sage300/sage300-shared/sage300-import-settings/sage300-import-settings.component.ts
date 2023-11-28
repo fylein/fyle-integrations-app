@@ -307,7 +307,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
     if (mappingSettings) {
       for (const setting of mappingSettings) {
         const { source_field, destination_field, import_to_fyle } = setting;
-        if (source_field === 'PROJECT' && destination_field === 'PROJECT' && import_to_fyle === true) {
+        if (source_field === 'PROJECT' && destination_field === 'JOB' && import_to_fyle === true) {
           if (this.importSettings?.dependent_field_settings?.is_import_enabled) {
             this.customField = {
               attribute_type: this.importSettings.dependent_field_settings.cost_code_field_name,
