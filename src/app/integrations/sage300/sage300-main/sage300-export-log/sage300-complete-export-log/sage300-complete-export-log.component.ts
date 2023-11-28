@@ -13,11 +13,11 @@ import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 
 @Component({
-  selector: 'app-sage300-completed-export-log',
-  templateUrl: './sage300-completed-export-log.component.html',
-  styleUrls: ['./sage300-completed-export-log.component.scss']
+  selector: 'app-sage300-complete-export-log',
+  templateUrl: './sage300-complete-export-log.component.html',
+  styleUrls: ['./sage300-complete-export-log.component.scss']
 })
-export class Sage300CompletedExportLogComponent implements OnInit {
+export class Sage300CompleteExportLogComponent implements OnInit {
 
   isLoading: boolean;
 
