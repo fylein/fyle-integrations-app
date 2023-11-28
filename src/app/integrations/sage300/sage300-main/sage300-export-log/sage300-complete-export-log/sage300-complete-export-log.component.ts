@@ -7,7 +7,6 @@ import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
-import { Sage300ExportLogService } from 'src/app/core/services/sage300/sage300-export-log/sage300-export-log.service';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
@@ -56,8 +55,6 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   selectedDateFilter: SelectedDateFilter | null;
 
-  presentDate = new Date().toLocaleDateString();
-
   exportLogForm: FormGroup;
 
   isCalendarVisible: boolean;
@@ -74,7 +71,6 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
-    private sage300ExportLogService: Sage300ExportLogService,
     private paginatorService: PaginatorService
   ) { }
 
@@ -105,7 +101,6 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     this.isLoading = true;
     this.limit = limit;
     this.currentPage = 1;
-    this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getAccountingExports(limit, this.offset);
   }
 
@@ -113,7 +108,6 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     this.isLoading = true;
     this.offset = offset;
     this.currentPage = Math.ceil(offset / this.limit) + 1;
-    this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getAccountingExports(this.limit, offset);
   }
 
@@ -141,7 +135,6 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     this.dateOptions[3].dateRange = this.exportLogForm.value.start[0].toLocaleDateString() + '-' + this.exportLogForm.value.start[1].toLocaleDateString();
     this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
     this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
-    this.presentDate = this.dateOptions[3].dateRange;
     this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
   }
 
@@ -153,7 +146,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.sage300ExportLogService.getAccountingExports(AccountingExportStatus.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+    return this.exportLogService.getAccountingExports(AccountingExportStatus.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
       if (!this.isDateSelected) {
         this.totalCount = accountingExportResponse.count;
       }

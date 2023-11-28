@@ -1,4 +1,4 @@
-import { AccountingExportStatus, AccountingExportType } from "../enum/enum.model";
+import { AccountingExportStatus, AccountingExportType, FundSource } from "../enum/enum.model";
 import { ExpenseGroupDescription } from "../si/db/expense-group.model";
 import { Expense } from "../si/db/expense.model";
 
@@ -18,7 +18,7 @@ export interface AccountingExportList {
     expenses: Expense[];
   }
 
-export interface AccountingExportCreationType {
+export interface AccountingExport {
     id: number;
     type: string;
     description: ExpenseGroupDescription;
@@ -35,11 +35,9 @@ export interface AccountingExportCreationType {
     workspace: number;
     export_url: string;
     expenses: Expense[];
-    fund_source: string;
+    fund_source: FundSource;
 }
 
-// enum for fund_source PERSONAL CCC
-//  remove creationType from model name
 
 export type AccountingExportGetParam = {
     type__in: AccountingExportType[],
