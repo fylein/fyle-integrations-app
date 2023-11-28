@@ -7,10 +7,7 @@ import { BusinessCentralSkippedExportLogComponent } from './business-central-ski
 
 
 @NgModule({
-  declarations: [
-    BusinessCentralCompleteExportLogComponent,
-    BusinessCentralSkippedExportLogComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     BusinessCentralExportLogRoutingModule

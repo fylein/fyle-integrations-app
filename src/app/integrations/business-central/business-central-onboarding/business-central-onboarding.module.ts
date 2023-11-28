@@ -8,6 +8,7 @@ import { BusinessCentralOnboardingLandingComponent } from './business-central-on
 import { BusinessCentralOnboardingExportSettingsComponent } from './business-central-onboarding-export-settings/business-central-onboarding-export-settings.component';
 import { BusinessCentralOnboardingImportSettingsComponent } from './business-central-onboarding-import-settings/business-central-onboarding-import-settings.component';
 import { BusinessCentralOnboardingEmployeeSettingsComponent } from './business-central-onboarding-employee-settings/business-central-onboarding-employee-settings.component';
+import { BusinessCentralOnboardingComponent } from './business-central-onboarding.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { BusinessCentralOnboardingEmployeeSettingsComponent } from './business-c
     BusinessCentralOnboardingExportSettingsComponent,
     BusinessCentralOnboardingImportSettingsComponent,
     BusinessCentralOnboardingAdvancedSettingsComponent,
-    BusinessCentralOnboardingEmployeeSettingsComponent
+    BusinessCentralOnboardingEmployeeSettingsComponent,
+    BusinessCentralOnboardingComponent
   ],
   imports: [
     CommonModule,

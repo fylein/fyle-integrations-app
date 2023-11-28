@@ -6,9 +6,7 @@ import { BusinessCentralBaseMappingComponent } from './business-central-base-map
 
 
 @NgModule({
-  declarations: [
-    BusinessCentralBaseMappingComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     BusinessCentralMappingRoutingModule
