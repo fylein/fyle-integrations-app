@@ -46,12 +46,15 @@ export class EventsService {
   }
 
   setupRouteWatcher(): void {
+    // Updating the iframe app navigation availability to true on page load
     this.postEvent({ updateIframedAppNavigationAvailability: true });
     this.router.events.subscribe((routerEvent) => {
       if (routerEvent instanceof NavigationStart) {
+        // Updating the iframe app navigation availability to false when user comes back to the initial page
         if (routerEvent.restoredState && routerEvent.restoredState.navigationId < 3) {
           this.postEvent({ updateIframedAppNavigationAvailability: false });
         } else {
+          // Keep updating the current route to the parent app to help in navigation during browser refresh
           const payload = { currentRoute: routerEvent.url.substring(1) };
           this.postEvent(payload);
         }
