@@ -35,10 +35,10 @@ export class EventsService {
   private checkStateAndNavigate(): void {
     this.navigateBack();
 
-    // pick last item from history
+    // Pick last item from history
     const lastItem: string = this.history[this.history.length - 1];
 
-    // if last item is module path, then go back again
+    // If last item is module path, then go back again
     if (lastItem && MODULE_PATHS.indexOf((lastItem.split('/').pop() as string)) > -1) {
       this.navigateBack();
     } else {
