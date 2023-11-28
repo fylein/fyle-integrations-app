@@ -2,11 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExportStatus, FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
+import { ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
 import { Sage300ExportLogService } from 'src/app/core/services/sage300/sage300-export-log/sage300-export-log.service';
@@ -14,9 +13,9 @@ import { AccountingExportList } from 'src/app/core/models/db/accounting-export.m
 import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 
 @Component({
-  selector: 'app-completed-export-log',
-  templateUrl: './completed-export-log.component.html',
-  styleUrls: ['./completed-export-log.component.scss']
+  selector: 'app-sage300-completed-export-log',
+  templateUrl: './sage300-completed-export-log.component.html',
+  styleUrls: ['./sage300-completed-export-log.component.scss']
 })
 export class CompletedExportLogComponent implements OnInit {
 
@@ -67,9 +66,9 @@ export class CompletedExportLogComponent implements OnInit {
 
   isRecordPresent: boolean = false;
 
-  expenseGroups: ExpenseGroupList [];
+  expenseGroups: AccountingExportList [];
 
-  filteredExpenseGroups: ExpenseGroupList [];
+  filteredExpenseGroups: AccountingExportList [];
 
   expenses: Expense [] = [];
 
@@ -120,7 +119,7 @@ export class CompletedExportLogComponent implements OnInit {
   public filterTable(event: any) {
     const query = event.target.value.toLowerCase();
 
-    this.filteredExpenseGroups = this.expenseGroups.filter((group: ExpenseGroupList) => {
+    this.filteredExpenseGroups = this.expenseGroups.filter((group: AccountingExportList) => {
       const employeeName = group.employee ? group.employee[0] : '';
       const employeeID = group.employee ? group.employee[1] : '';
       const expenseType = group.expenseType ? group.expenseType : '';
@@ -203,11 +202,11 @@ export class CompletedExportLogComponent implements OnInit {
 
         expenseGroups.push({
           exportedAt: expenseGroup.exported_at,
-          employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
+          employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
           expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
           fyleReferenceType: '',
           referenceNumber: referenceNumber,
-          exportedAs: expenseGroup.export_type,
+          exportedAs: expenseGroup.type,
           fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
           integrationUrl: ``,
           expenses: expenseGroup.expenses
@@ -218,6 +217,8 @@ export class CompletedExportLogComponent implements OnInit {
       this.isLoading = false;
     });
   }
+
+  // creating_ for type
 
   private setupForm(): void {
     this.exportLogForm = this.formBuilder.group({

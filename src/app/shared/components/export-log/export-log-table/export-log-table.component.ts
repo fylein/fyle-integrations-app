@@ -20,8 +20,6 @@ export class ExportLogTableComponent implements OnInit {
 
   @Input() isDashboardFailed: boolean;
 
-  clickedExportLogIndex: number = 0;
-
   visible: boolean = false;
 
   constructor(

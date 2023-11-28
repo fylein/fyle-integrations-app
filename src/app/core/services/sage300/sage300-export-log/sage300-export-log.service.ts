@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, from, mergeMap, of, reduce, takeWhile } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { WorkspaceService } from '../../common/workspace.service';
 import { UserService } from '../../misc/user.service';
@@ -7,7 +7,7 @@ import { ApiService } from '../../common/api.service';
 import { FyleReferenceType, AccountingExportStatus } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { AccountingExportResponse } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
+import { AccountingExportResponse, Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 
 
 @Injectable({
@@ -17,7 +17,7 @@ export class Sage300ExportLogService {
 
   workspaceId: string = this.workspaceService.getWorkspaceId();
 
-  private org_id: string = this.userService.getUserProfile('si.user').org_id;
+  private org_id: string = this.userService.getUserProfile('user').org_id;
 
   constructor(
     private apiService: ApiService,
@@ -66,7 +66,7 @@ export class Sage300ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
   }
 
-  generateFyleUrl(expenseGroup: ExpenseGroup, referenceType: FyleReferenceType) : string {
+  generateFyleUrl(expenseGroup: Sage300AccountingExport, referenceType: FyleReferenceType) : string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
       url += `main/#/view_expense/${expenseGroup.expenses[0].expense_id}`;
@@ -78,4 +78,7 @@ export class Sage300ExportLogService {
 
     return `${url}?org_id=${this.org_id}`;
   }
+
+  // new function for generateFyleURL
+  // move to common, accountingExport
 }
