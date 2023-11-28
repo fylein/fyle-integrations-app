@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExportStatus, FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportStatus, AppName, FyleReferenceType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -11,19 +10,18 @@ import { environment } from 'src/environments/environment';
 import { Sage300ExportLogService } from 'src/app/core/services/sage300/sage300-export-log/sage300-export-log.service';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
+import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 
 @Component({
   selector: 'app-sage300-completed-export-log',
   templateUrl: './sage300-completed-export-log.component.html',
   styleUrls: ['./sage300-completed-export-log.component.scss']
 })
-export class CompletedExportLogComponent implements OnInit {
+export class Sage300CompletedExportLogComponent implements OnInit {
 
-  isLoading: boolean = false;
+  isLoading: boolean;
 
-  isSearchFocused: boolean = false;
-
-  isDateFieldFocused: boolean = false;
+  appName: AppName = AppName.SAGE300;
 
   totalCount: number;
 
@@ -64,62 +62,31 @@ export class CompletedExportLogComponent implements OnInit {
 
   isCalendarVisible: boolean;
 
-  isRecordPresent: boolean = false;
+  accountingExports: AccountingExportList [];
 
-  expenseGroups: AccountingExportList [];
-
-  filteredExpenseGroups: AccountingExportList [];
+  filteredAccountingExports: AccountingExportList [];
 
   expenses: Expense [] = [];
 
   isDateSelected: boolean = false;
 
-  count: number;
-
-  state: string;
-
-  pageSize: number;
-
-  pageNumber = 0;
-
-  clickedExportLogIndex: number = 0;
-
-  dateValue: Date;
-
-  visible: boolean = false;
-
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
-    private exportLogService: Sage300ExportLogService,
+    private exportLogService: ExportLogService,
+    private sage300ExportLogService: Sage300ExportLogService,
     private paginatorService: PaginatorService
   ) { }
-
-  displayChildTable(index: number) {
-    this.clickedExportLogIndex = index;
-    this.expenses = this.filteredExpenseGroups[this.clickedExportLogIndex].expenses;
-    this.visible = true;
-  }
 
   openExpenseinFyle(expense_id: string) {
     const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
     window.open(url, '_blank');
   }
 
-  openUrl(event: Event, url: string) {
-    window.open(url, '_blank');
-    event.stopPropagation();
-  }
-
-  removeFilter(formField: AbstractControl) {
-    (formField as FormGroup).reset();
-    event?.stopPropagation();
-  }
-
-  public filterTable(event: any) {
+  public filterTableChange(event: any) {
     const query = event.target.value.toLowerCase();
 
-    this.filteredExpenseGroups = this.expenseGroups.filter((group: AccountingExportList) => {
+    this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
       const employeeName = group.employee ? group.employee[0] : '';
       const employeeID = group.employee ? group.employee[1] : '';
       const expenseType = group.expenseType ? group.expenseType : '';
@@ -139,7 +106,7 @@ export class CompletedExportLogComponent implements OnInit {
     this.limit = limit;
     this.currentPage = 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
-    this.getExpenseGroups(limit, this.offset);
+    this.getAccountingExports(limit, this.offset);
   }
 
   pageChanges(offset: number): void {
@@ -147,14 +114,14 @@ export class CompletedExportLogComponent implements OnInit {
     this.offset = offset;
     this.currentPage = Math.ceil(offset / this.limit) + 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
-    this.getExpenseGroups(this.limit, offset);
+    this.getAccountingExports(this.limit, offset);
   }
 
   dateFilter(event: any): void {
     this.isLoading = true;
     this.isDateSelected = true;
     this.selectedDateFilter = event.value;
-    this.getExpenseGroups(this.limit, this.offset);
+    this.getAccountingExports(this.limit, this.offset);
   }
 
   dropDownWatcher() {
@@ -178,47 +145,47 @@ export class CompletedExportLogComponent implements OnInit {
     this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
   }
 
-  getExpenseGroups(limit: number, offset:number) {
+  getAccountingExports(limit: number, offset:number) {
     this.isLoading = true;
-    const expenseGroups: AccountingExportList[] = [];
+    const accountingExports: AccountingExportList[] = [];
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getExpenseGroups(AccountingExportStatus.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(expenseGroupResponse => {
+    return this.sage300ExportLogService.getAccountingExports(AccountingExportStatus.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
       if (!this.isDateSelected) {
-        this.totalCount = expenseGroupResponse.count;
+        this.totalCount = accountingExportResponse.count;
       }
-      expenseGroupResponse.results.forEach((expenseGroup: Sage300AccountingExport) => {
-        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
-        let referenceNumber: string = expenseGroup.description[referenceType];
+      accountingExportResponse.results.forEach((accountingExport: Sage300AccountingExport) => {
+        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(accountingExport.description);
+        let referenceNumber: string = accountingExport.description[referenceType];
 
         if (referenceType === FyleReferenceType.EXPENSE) {
-          referenceNumber = expenseGroup.expenses[0].expense_number;
+          referenceNumber = accountingExport.expenses[0].expense_number;
         } else if (referenceType === FyleReferenceType.PAYMENT) {
-          referenceNumber = expenseGroup.expenses[0].payment_number;
+          referenceNumber = accountingExport.expenses[0].payment_number;
         }
 
-        expenseGroups.push({
-          exportedAt: expenseGroup.exported_at,
-          employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
-          expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
+        accountingExports.push({
+          exportedAt: accountingExport.exported_at,
+          employee: [accountingExport.expenses[0].employee_name, accountingExport.description.employee_email],
+          expenseType: accountingExport.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
           fyleReferenceType: '',
           referenceNumber: referenceNumber,
-          exportedAs: expenseGroup.type,
-          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
-          integrationUrl: ``,
-          expenses: expenseGroup.expenses
+          exportedAs: accountingExport.type,
+          fyleUrl: this.exportLogService.generateFyleUrl(accountingExport, referenceType),
+          integrationUrl: accountingExport.export_url,
+          expenses: accountingExport.expenses
         });
       });
-      this.filteredExpenseGroups = expenseGroups;
-      this.expenseGroups = [...this.filteredExpenseGroups];
+      this.filteredAccountingExports = accountingExports;
+      this.accountingExports = [...this.filteredAccountingExports];
       this.isLoading = false;
     });
   }
 
-  // creating_ for type
+  // creating_ for type: fyleReferenceType
 
   private setupForm(): void {
     this.exportLogForm = this.formBuilder.group({
@@ -237,22 +204,22 @@ export class CompletedExportLogComponent implements OnInit {
         };
 
         this.trackDateFilter('existing', this.selectedDateFilter);
-        this.getExpenseGroups(paginator.limit, paginator.offset);
+        this.getAccountingExports(paginator.limit, paginator.offset);
       } else {
         this.selectedDateFilter = null;
-        this.getExpenseGroups(paginator.limit, paginator.offset);
+        this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });
   }
 
-  private getExpenseGroupsAndSetupPage(): void {
+  private getAccountingExportsAndSetupPage(): void {
     this.setupForm();
 
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
     this.limit = paginator.limit;
     this.offset = paginator.offset;
 
-    this.getExpenseGroups(paginator.limit, paginator.offset);
+    this.getAccountingExports(paginator.limit, paginator.offset);
   }
 
   private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
@@ -264,7 +231,7 @@ export class CompletedExportLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getExpenseGroupsAndSetupPage();
+    this.getAccountingExportsAndSetupPage();
   }
 
 }

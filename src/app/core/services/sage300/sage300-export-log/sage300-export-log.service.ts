@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { WorkspaceService } from '../../common/workspace.service';
 import { UserService } from '../../misc/user.service';
 import { ApiService } from '../../common/api.service';
-import { FyleReferenceType, AccountingExportStatus } from 'src/app/core/models/enum/enum.model';
-import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
+import { AccountingExportStatus } from 'src/app/core/models/enum/enum.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { AccountingExportResponse, Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
+import { AccountingExportResponse } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 
 
 @Injectable({
@@ -25,7 +23,7 @@ export class Sage300ExportLogService {
     private workspaceService: WorkspaceService
   ) { }
 
-  getExpenseGroups(state: AccountingExportStatus | AccountingExportStatus.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: Date | void | null): Observable<AccountingExportResponse> {
+  getAccountingExports(state: AccountingExportStatus | AccountingExportStatus.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt: Date | void | null): Observable<AccountingExportResponse> {
     const params: any = {
       limit,
       offset
@@ -44,39 +42,6 @@ export class Sage300ExportLogService {
     }
 
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
-  }
-
-  getReferenceType(description: Partial<ExpenseGroupDescription>): FyleReferenceType {
-    let referenceType = FyleReferenceType.EXPENSE_REPORT;
-
-    if (FyleReferenceType.EXPENSE in description) {
-      referenceType = FyleReferenceType.EXPENSE;
-    } else if (FyleReferenceType.EXPENSE_REPORT in description) {
-      referenceType = FyleReferenceType.EXPENSE_REPORT;
-    } else if (FyleReferenceType.PAYMENT in description) {
-      referenceType = FyleReferenceType.PAYMENT;
-    }
-
-    return referenceType;
-  }
-
-  getSkipExportLogs(limit: number, offset: number): Observable<SkipExportLogResponse> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-
-    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
-  }
-
-  generateFyleUrl(expenseGroup: Sage300AccountingExport, referenceType: FyleReferenceType) : string {
-    let url = `${environment.fyle_app_url}/app/`;
-    if (referenceType === FyleReferenceType.EXPENSE) {
-      url += `main/#/view_expense/${expenseGroup.expenses[0].expense_id}`;
-    } else if (referenceType === FyleReferenceType.EXPENSE_REPORT) {
-      url += `admin/#/reports/${expenseGroup.expenses[0].report_id}`;
-    } else if (referenceType === FyleReferenceType.PAYMENT) {
-      url += `admin/#/settlements/${expenseGroup.expenses[0].settlement_id}`;
-    }
-
-    return `${url}?org_id=${this.org_id}`;
   }
 
   // new function for generateFyleURL
