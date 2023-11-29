@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { AccountingExportResponse, Sage300AccountingExport } from '../../models/sage300/db/sage300-accounting-export.model';
 import { AccountingExport } from '../../models/db/accounting-export.model';
 import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
+import { Paginator, Params } from '../../models/misc/paginator.model';
 
 @Injectable({
   providedIn: 'root'
@@ -60,7 +61,7 @@ export class ExportLogService {
 
 
   getAccountingExports(state: AccountingExportStatus | AccountingExportStatus.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: Date | null): Observable<AccountingExportResponse> {
-    const params: any = {
+    const params: Params = {
       limit,
       offset
     };
