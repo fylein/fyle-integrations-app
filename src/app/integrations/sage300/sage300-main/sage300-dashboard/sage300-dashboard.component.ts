@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AccountingExportResponse, Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
   selector: 'app-sage300-dashboard',
@@ -43,16 +44,17 @@ export class Sage300DashboardComponent implements OnInit {
 
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
 
-  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.dashboardService.getAccountingExportSummary();
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary();
 
   constructor(
     private refinerService: RefinerService,
-    private dashboardService: DashboardService
+    private dashboardService: DashboardService,
+    private accountingExportService: AccountingExportService
   ) { }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAccountingExports([], exportableAccountingExportIds))),
+      switchMap(() => from(this.accountingExportService.getAccountingExports([], exportableAccountingExportIds))),
       takeWhile((response: AccountingExportResponse) =>
         response.results.filter(task =>
           (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED) && exportableAccountingExportIds.includes(task.expense_group)
@@ -102,7 +104,7 @@ export class Sage300DashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$,
-      this.dashboardService.getAccountingExports([AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [])
+      this.accountingExportService.getAccountingExports([AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [])
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.accountingExportSummary = responses[1];
@@ -115,7 +117,7 @@ export class Sage300DashboardComponent implements OnInit {
         this.isExportInProgress = true;
         this.pollExportStatus();
       } else {
-        this.dashboardService.importExpensesFromFyle().subscribe(() => {
+        this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
             this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
             this.isImportInProgress = false;

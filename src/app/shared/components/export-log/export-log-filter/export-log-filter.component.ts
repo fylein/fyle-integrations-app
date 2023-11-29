@@ -16,7 +16,7 @@ export class ExportLogFilterComponent implements OnInit {
 
   isDateFieldFocused: boolean;
 
-  @Output() filterTableChange = new EventEmitter<any>();
+  @Output() handleSimpleSearch = new EventEmitter<any>();
 
   isCalendarVisible: boolean;
 
@@ -27,7 +27,7 @@ export class ExportLogFilterComponent implements OnInit {
   constructor() { }
 
   filterTable(event: any) {
-    this.filterTableChange.emit(event);
+    this.handleSimpleSearch.emit(event);
   }
 
   dropDownWatcher() {

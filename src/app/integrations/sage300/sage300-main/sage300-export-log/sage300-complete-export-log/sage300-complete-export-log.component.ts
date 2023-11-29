@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
   selector: 'app-sage300-complete-export-log',
@@ -50,29 +52,20 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
+    private accountingExportService: AccountingExportService,
+    private windowService: WindowService,
     private paginatorService: PaginatorService
   ) { }
 
   openExpenseinFyle(expense_id: string) {
-    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
-    window.open(url, '_blank');
+    this.windowService.openInNewTab(ExportLogService.getFyleExpenseUrl(expense_id));
   }
 
-  public filterTableChange(event: any) {
+  public handleSimpleSearch(event: any) {
     const query = event.target.value.toLowerCase();
 
     this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
-      const employeeName = group.employee ? group.employee[0] : '';
-      const employeeID = group.employee ? group.employee[1] : '';
-      const expenseType = group.expenseType ? group.expenseType : '';
-      const referenceNumber = group.referenceNumber ? group.referenceNumber : '';
-
-      return (
-        employeeName.toLowerCase().includes(query) ||
-        employeeID.toLowerCase().includes(query) ||
-        expenseType.toLowerCase().includes(query) ||
-        referenceNumber.toLowerCase().includes(query)
-      );
+      return ExportLogService.getfilteredAccountingExports(query, group);
     });
   }
 
@@ -97,27 +90,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, this.offset);
   }
 
-  dropDownWatcher() {
-    if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
-      this.isCalendarVisible = false;
-    } else {
-      this.isCalendarVisible = true;
-    }
-  }
-
-  showCalendar(event: Event) {
-    event.stopPropagation();
-    this.isCalendarVisible = true;
-  }
-
-  getDates() {
-    this.dateOptions[3].dateRange = this.exportLogForm.value.start[0].toLocaleDateString() + '-' + this.exportLogForm.value.start[1].toLocaleDateString();
-    this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
-    this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
-    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
-  }
-
-  getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset:number) {
     this.isLoading = true;
     const accountingExports: AccountingExportList[] = [];
 
@@ -125,7 +98,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getAccountingExports(AccountingExportStatus.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+  this.accountingExportService.getAccountingExports(AccountingExportStatus.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
       if (!this.isDateSelected) {
         this.totalCount = accountingExportResponse.count;
       }
@@ -138,7 +111,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
         } else if (referenceType === FyleReferenceType.PAYMENT) {
           referenceNumber = accountingExport.expenses[0].payment_number;
         }
-
+        // creating_ for type: exportedAs (remove creating_ from the string and rest add to exportedAs, snake to space and then title)
         accountingExports.push({
           exportedAt: accountingExport.exported_at,
           employee: [accountingExport.expenses[0].employee_name, accountingExport.description.employee_email],
@@ -156,8 +129,6 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       this.isLoading = false;
     });
   }
-
-  // creating_ for type: fyleReferenceType
 
   private setupForm(): void {
     this.exportLogForm = this.formBuilder.group({

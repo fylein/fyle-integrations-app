@@ -6,7 +6,7 @@
     <div *ngIf="totalCount > 0">
         <app-export-log-filter 
             [exportLogForm]="exportLogForm" 
-            (filterTableChange)="filterTableChange($event)">
+            (handleSimpleSearch)="handleSimpleSearch($event)">
         </app-export-log-filter>
 
         <app-export-log-table 

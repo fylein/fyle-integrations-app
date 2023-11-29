@@ -7,7 +7,7 @@ import { ExpenseGroupDescription, SkipExportLogResponse } from '../../models/si/
 import { AccountingExportStatus, FyleReferenceType } from '../../models/enum/enum.model';
 import { Observable } from 'rxjs';
 import { AccountingExportResponse, Sage300AccountingExport } from '../../models/sage300/db/sage300-accounting-export.model';
-import { AccountingExport } from '../../models/db/accounting-export.model';
+import { AccountingExport, AccountingExportList } from '../../models/db/accounting-export.model';
 import { DateFilter, SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
 import { Paginator, Params } from '../../models/misc/paginator.model';
 
@@ -53,6 +53,25 @@ export class ExportLogService {
     return dateOptions;
   }
 
+  static getFyleExpenseUrl(expense_id: string): string {
+    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+    return url;
+  }
+
+  static getfilteredAccountingExports(query: any, group: AccountingExportList) {
+    const employeeName = group.employee ? group.employee[0] : '';
+    const employeeID = group.employee ? group.employee[1] : '';
+    const expenseType = group.expenseType ? group.expenseType : '';
+    const referenceNumber = group.referenceNumber ? group.referenceNumber : '';
+
+    return (
+      employeeName.toLowerCase().includes(query) ||
+      employeeID.toLowerCase().includes(query) ||
+      expenseType.toLowerCase().includes(query) ||
+      referenceNumber.toLowerCase().includes(query)
+    );
+  }
+
   getReferenceType(description: Partial<ExpenseGroupDescription>): FyleReferenceType {
     let referenceType = FyleReferenceType.EXPENSE_REPORT;
 
@@ -87,25 +106,25 @@ export class ExportLogService {
   }
 
 
-  getAccountingExports(state: AccountingExportStatus | AccountingExportStatus.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: Date | null): Observable<AccountingExportResponse> {
-    const params: Params = {
-      limit,
-      offset
-    };
-    params.state = state;
+  // getAccountingExports(state: AccountingExportStatus | AccountingExportStatus.COMPLETE, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: Date | null): Observable<AccountingExportResponse> {
+  //   const params: Params = {
+  //     limit,
+  //     offset
+  //   };
+  //   params.state = state;
 
-    if (selectedDateFilter) {
-      const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
-      const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      params.start_date = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-      params.end_date = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
-    }
+  //   if (selectedDateFilter) {
+  //     const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
+  //     const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
+  //     params.start_date = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
+  //     params.end_date = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+  //   }
 
-    if (exportedAt) {
-      params.exported_at = exportedAt;
-    }
+  //   if (exportedAt) {
+  //     params.exported_at = exportedAt;
+  //   }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_export/`, params);
-  }
+  //   return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_export/`, params);
+  // }
 
 }
