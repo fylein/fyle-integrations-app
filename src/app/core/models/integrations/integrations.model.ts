@@ -38,5 +38,4 @@ export type AppUrlMap = {
     [AppUrl.INTACCT]: string,
     [AppUrl.SAGE300]: string,
     [AppUrl.INTEGRATION]: string
-    [AppUrl.QBO]: string
 }

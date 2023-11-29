@@ -22,8 +22,6 @@ export class IntegrationsComponent implements OnInit {
 
   org: Org;
 
-  isLoading: boolean = true;
-
   constructor(
     private eventsService: EventsService,
     private orgService: OrgService,
@@ -38,7 +36,6 @@ export class IntegrationsComponent implements OnInit {
 
   private navigate(): void {
     const pathName = this.windowReference.location.pathname;
-    this.isLoading = false;
     if (pathName === '/integrations') {
       this.router.navigate(['/integrations/landing']);
     }
