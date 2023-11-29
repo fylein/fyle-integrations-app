@@ -11,11 +11,8 @@ import { AppUrl } from 'src/app/core/models/enum/enum.model';
 export class QboAuthService {
 
   constructor(
-    private apiService: ApiService,
-    private helper: HelperService
-  ) {
-    helper.setBaseApiURL(AppUrl.QBO);
-  }
+    private apiService: ApiService
+  ) {}
 
   loginWithRefreshToken(refresh_token: string): Observable<Token> {
     return this.apiService.post('/auth/login_with_refresh_token/', { refresh_token });
