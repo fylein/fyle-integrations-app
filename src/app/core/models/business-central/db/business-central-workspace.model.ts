@@ -2,7 +2,6 @@ import { Workspace } from "../../db/workspaces.model";
 import { BusinessCentralOnboardingState } from "../../enum/enum.model";
 
 export interface BusinessCentralWorkspace extends Workspace {
-    cluster_domain: string,
     business_central_currency: string,
     last_synced_at: Date,
     ccc_last_synced_at: Date,
