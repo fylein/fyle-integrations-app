@@ -43,7 +43,7 @@ export class BusinessCentralComponent implements OnInit {
         [BusinessCentralOnboardingState.EXPORT_SETTINGS]: '/integrations/business_central/onboarding/export_settings',
         [BusinessCentralOnboardingState.IMPORT_SETTINGS]: '/integrations/business_central/onboarding/import_settings',
         [BusinessCentralOnboardingState.ADVANCED_SETTINGS]: '/integrations/business_central/onboarding/advanced_settings',
-        [BusinessCentralOnboardingState.COMPLETE]: '/integrations/business_central/main'
+        [BusinessCentralOnboardingState.COMPLETE]: '/integrations/business_central/main/dashboard'
       };
       this.router.navigateByUrl(onboardingStateComponentMap[this.workspace.onboarding_state]);
     }
@@ -67,7 +67,7 @@ export class BusinessCentralComponent implements OnInit {
     this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
     this.workspaceService.importFyleAttributes(false).subscribe();
-    this.mapping.importSage300Attributes(false).subscribe();
+    this.mapping.importBusinessCentralAttributes(false).subscribe();
     this.isLoading = false;
     this.navigate();
   }
