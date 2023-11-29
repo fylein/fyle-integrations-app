@@ -6,7 +6,7 @@ import { NavigationStart, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 export const EXPOSE_INTACCT_NEW_APP = true;
-const MODULE_PATHS = ['mapping', 'export_log', 'configuration', 'intacct'];
+const MODULE_PATHS = ['mapping', 'export_log', 'configuration', 'intacct', 'qbd'];
 
 @Injectable({
   providedIn: 'root'
