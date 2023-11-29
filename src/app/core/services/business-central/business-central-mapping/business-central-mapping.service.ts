@@ -17,7 +17,7 @@ export class BusinessCentralMappingService {
     helper.setBaseApiURL();
   }
 
-  importSage300Attributes(refresh: boolean): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/sage300/import_attributes/`, {refresh});
+  importBusinessCentralAttributes(refresh: boolean): Observable<{}> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/import_attributes/`, {refresh});
   }
 }
