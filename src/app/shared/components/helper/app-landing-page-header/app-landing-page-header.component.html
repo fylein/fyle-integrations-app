@@ -4,8 +4,8 @@
 <div class="tw-p-24-px tw-text-slightly-normal-text-color">
     <div class="tw-h-68-px tw-flex tw-justify-between">
             <div class="tw-flex">
-                <div [ngClass]="[appName === AppName.BUSINESS_CENTRAL ? 'tw-flex tw-justify-center' : 'tw-rounded-4-px tw-border-1-px tw-border-box-color tw-flex tw-justify-center tw-bg-white tw-w-176-px']">
-                    <img src="{{ iconPath }}" width="appName === AppName.BUSINESS_CENTRAL ? '140px' : '65px'" height="44px" [ngClass]="[appName === AppName.BUSINESS_CENTRAL ? '' : 'tw-py-10-px tw-px-20-px']" />
+                <div class="tw-flex tw-justify-center" [ngClass]="[appName === AppName.BUSINESS_CENTRAL ? '' : 'tw-rounded-4-px tw-border-1-px tw-border-box-color tw-bg-white tw-w-176-px']">
+                    <img src="{{ iconPath }}" width="logoWidth" height="44px" [ngClass]="additionalClasses" />
                 </div>
                 <div class="tw-pl-16-px tw-flex tw-flex-col">
                     <div class="tw-flex tw-pt-6-px">

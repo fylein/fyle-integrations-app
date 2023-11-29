@@ -8,7 +8,7 @@ import { BusinessCentralImportSettingsComponent } from './business-central-impor
   declarations: [
     BusinessCentralExportSettingsComponent,
     BusinessCentralImportSettingsComponent,
-    BusinessCentralAdvancedSettingsComponent,
+    BusinessCentralAdvancedSettingsComponent
   ],
   imports: [
     CommonModule
@@ -16,7 +16,7 @@ import { BusinessCentralImportSettingsComponent } from './business-central-impor
   exports: [
     BusinessCentralExportSettingsComponent,
     BusinessCentralImportSettingsComponent,
-    BusinessCentralAdvancedSettingsComponent,
+    BusinessCentralAdvancedSettingsComponent
   ]
 })
 export class BusinessCentralSharedModule { }
