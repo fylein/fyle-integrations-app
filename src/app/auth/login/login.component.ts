@@ -7,6 +7,7 @@ import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.serv
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { environment } from 'src/environments/environment';
 import { Sage300AuthService } from 'src/app/core/services/sage300/sage300-core/sage300-auth.service';
+import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private qbdAuthService: QbdAuthService,
     private siAuthService : SiAuthService,
-    private sage300AuthService: Sage300AuthService
+    private sage300AuthService: Sage300AuthService,
+    private qboAuthService: QboAuthService
   ) { }
 
   private redirect(redirectUri: string | undefined): void {
@@ -50,6 +52,7 @@ export class LoginComponent implements OnInit {
       // Only local dev needs this, login happens via postMessage for prod/staging through webapp
       if (!environment.production) {
         this.userService.storeUserProfile(user, 'si.user');
+        this.qboAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.redirect(redirectUri);
