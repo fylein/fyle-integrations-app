@@ -140,6 +140,16 @@ export enum IntacctOnboardingState {
   COMPLETE = 'COMPLETE'
 }
 
+export enum QBOOnboardingState {
+  CONNECTION = 'CONNECTION',
+  MAP_EMPLOYEES = 'MAP_EMPLOYEES',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  COMPLETE = 'COMPLETE',
+  CLONE_SETTINGS = 'CLONE_SETTINGS'
+}
+
 export enum Sage300OnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
@@ -383,7 +393,8 @@ export enum QBDOnboardingState {
     GUSTO = 'gusto',
     INTACCT = 'intacct',
     SAGE300 = 'sage300',
-    INTEGRATION = 'integration'
+    INTEGRATION = 'integration',
+    QBO = 'qbo'
   }
 
   export enum Sage300ExportType {
