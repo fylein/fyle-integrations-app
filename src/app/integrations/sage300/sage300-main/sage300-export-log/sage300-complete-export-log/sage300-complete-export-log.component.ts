@@ -30,28 +30,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = [
-    {
-      dateRange: 'This Month',
-      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-      endDate: new Date()
-    },
-    {
-      dateRange: 'This Week',
-      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay()),
-      endDate: new Date()
-    },
-    {
-      dateRange: 'Today',
-      startDate: new Date(),
-      endDate: new Date()
-    },
-    {
-      dateRange: new Date().toLocaleDateString(),
-      startDate: new Date(),
-      endDate: new Date()
-    }
-  ];
+  dateOptions: DateFilter[] = ExportLogService.getDateOptions();
 
   selectedDateFilter: SelectedDateFilter | null;
 

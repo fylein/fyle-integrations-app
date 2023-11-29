@@ -8,7 +8,7 @@ import { AccountingExportStatus, FyleReferenceType } from '../../models/enum/enu
 import { Observable } from 'rxjs';
 import { AccountingExportResponse, Sage300AccountingExport } from '../../models/sage300/db/sage300-accounting-export.model';
 import { AccountingExport } from '../../models/db/accounting-export.model';
-import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
 import { Paginator, Params } from '../../models/misc/paginator.model';
 
 @Injectable({
@@ -25,6 +25,33 @@ export class ExportLogService {
     private userService: UserService,
     private workspaceService: WorkspaceService
   ) { }
+
+  static getDateOptions(): DateFilter[] {
+    const dateOptions: DateFilter[] = [
+      {
+        dateRange: 'This Month',
+        startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        endDate: new Date()
+      },
+      {
+        dateRange: 'This Week',
+        startDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay()),
+        endDate: new Date()
+      },
+      {
+        dateRange: 'Today',
+        startDate: new Date(),
+        endDate: new Date()
+      },
+      {
+        dateRange: new Date().toLocaleDateString(),
+        startDate: new Date(),
+        endDate: new Date()
+      }
+    ];
+
+    return dateOptions;
+  }
 
   getReferenceType(description: Partial<ExpenseGroupDescription>): FyleReferenceType {
     let referenceType = FyleReferenceType.EXPENSE_REPORT;
