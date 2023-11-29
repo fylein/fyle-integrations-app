@@ -3,6 +3,7 @@ export type DemoVideo = {
         onboarding: {
             INTACCT: string;
             SAGE300: string;
+            QBO: string;
         }
     }
 };

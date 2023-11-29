@@ -23,6 +23,14 @@ export type KbArticle = {
                 ADVANCED_SETTING: string;
                 LANDING: string;
                 SKIP_EXPORT: string;
+            },
+            QBO: {
+                LANDING: string;
+                CONNECTOR: string;
+                EMPLOYEE_SETTING: string;
+                EXPORT_SETTING: string;
+                IMPORT_SETTING: string;
+                ADVANCED_SETTING: string;
             }
         }
     }

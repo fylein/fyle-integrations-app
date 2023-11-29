@@ -44,6 +44,15 @@ const kbArticles: KbArticle = {
                 ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
                 LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
                 SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+            },
+            // TODO: Update KB articles for QBO
+            QBO: {
+                LANDING: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-2-0',
+                CONNECTOR: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0',
+                EMPLOYEE_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc',
+                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686',
+                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f',
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7'
             }
         }
     }
@@ -57,7 +66,8 @@ const demoVideoLinks: DemoVideo = {
         onboarding: {
             INTACCT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             // TODO: Update link for Sage 300
-            SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            QBO: 'https://www.youtube.com/embed/b63lS2DG5j4'
         }
     }
 };
