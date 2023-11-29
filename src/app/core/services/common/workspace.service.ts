@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from './storage.service';
 import { Observable } from 'rxjs';
-import { AppUrl, IntacctOnboardingState, QBDOnboardingState, Sage300OnboardingState } from '../../models/enum/enum.model';
+import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, QBDOnboardingState, Sage300OnboardingState } from '../../models/enum/enum.model';
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
@@ -54,7 +54,8 @@ export class WorkspaceService {
       [AppUrl.BAMBOO_HR]: IntacctOnboardingState.CONNECTION,
       [AppUrl.QBD]: IntacctOnboardingState.CONNECTION,
       [AppUrl.TRAVELPERK]: IntacctOnboardingState.CONNECTION,
-      [AppUrl.INTEGRATION]: IntacctOnboardingState.CONNECTION
+      [AppUrl.INTEGRATION]: IntacctOnboardingState.CONNECTION,
+      [AppUrl.BUSINESS_CENTRAL]: BusinessCentralOnboardingState.CONNECTION
     };
     const onboardingState = this.storageService.get('onboarding-state');
     return onboardingState ? onboardingState : appInitialOnboardingState[(this.helper.getAppName()) as AppUrl];

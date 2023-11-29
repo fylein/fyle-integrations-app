@@ -4,7 +4,7 @@ import { BusinessCentralDashboardComponent } from './business-central-dashboard.
 
 const routes: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: BusinessCentralDashboardComponent
   }
 ];

@@ -28,6 +28,7 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.GUSTO]: string,
     [InAppIntegration.INTACCT]: string,
     [InAppIntegration.SAGE300]: string,
+    [InAppIntegration.BUSINESS_CENTRAL]: string
 }
 
 export type AppUrlMap = {
@@ -37,5 +38,6 @@ export type AppUrlMap = {
     [AppUrl.GUSTO]: string,
     [AppUrl.INTACCT]: string,
     [AppUrl.SAGE300]: string,
-    [AppUrl.INTEGRATION]: string
+    [AppUrl.INTEGRATION]: string,
+    [AppUrl.BUSINESS_CENTRAL]: string
 }
