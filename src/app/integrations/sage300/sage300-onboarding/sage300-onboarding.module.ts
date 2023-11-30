@@ -26,6 +26,11 @@ import { Sage300OnboardingAdvancedSettingsComponent } from './sage300-onboarding
     SharedModule,
     Sage300SharedModule,
     Sage300OnboardingRoutingModule
+  ],
+  exports: [
+    Sage300OnboardingExportSettingsComponent,
+    Sage300OnboardingImportSettingsComponent,
+    Sage300OnboardingAdvancedSettingsComponent
   ]
 })
 export class Sage300OnboardingModule { }

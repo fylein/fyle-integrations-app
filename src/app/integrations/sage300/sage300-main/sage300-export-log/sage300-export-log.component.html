@@ -7,9 +7,13 @@
 
 
 <div *ngIf="!isLoading" class="tw-py-40-px tw-px-120-px">
+<<<<<<< HEAD
     <div class="tw-mb-16-px">
         <p-tabMenu [model]="modules" [activeItem]="activeModule"></p-tabMenu>
     </div>
+=======
+    <app-sub-menu [modules]="modules" [activeModule]="activeModule"></app-sub-menu>
+>>>>>>> master
     <div>
         <router-outlet></router-outlet>
     </div>
