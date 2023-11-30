@@ -22,7 +22,8 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
   exports: [
     Sage300ExportSettingsComponent,
     Sage300ImportSettingsComponent,
-    Sage300AdvancedSettingsComponent
+    Sage300AdvancedSettingsComponent,
+    SharedModule
   ]
 })
 export class Sage300SharedModule { }

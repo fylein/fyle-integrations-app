@@ -17,6 +17,7 @@ import { MessageService } from 'primeng/api';
 import { SharedModule } from './shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
 import { BrandingService } from './core/services/common/branding.service';
+import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/sage300-configuration/sage300-configuration.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { BrandingService } from './core/services/common/branding.service';
     ToastModule,
     SharedModule,
     RippleModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
+    Sage300ConfigurationModule
   ],
   providers: [
     MessageService,
