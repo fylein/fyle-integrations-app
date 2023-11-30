@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BusinessCentralRoutingModule } from './business-central-routing.module';
 import { BusinessCentralComponent } from './business-central.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { BusinessCentralComponent } from './business-central.component';
   ],
   imports: [
     CommonModule,
-    BusinessCentralRoutingModule
+    BusinessCentralRoutingModule,
+    SharedModule
   ]
 })
 export class BusinessCentralModule { }
