@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 })
 export class SkippedExportLogTableComponent implements OnInit {
 
-  @Input() filteredExpenseGroups: AccountingExportList [];
+  @Input() filteredExpense: Expense[];
 
   constructor(
     private windowService: WindowService
