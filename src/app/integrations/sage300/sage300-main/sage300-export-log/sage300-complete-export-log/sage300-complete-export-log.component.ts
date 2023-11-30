@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExportStatus, AppName, FyleReferenceType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportStatus, AppName, FundSource, FyleReferenceType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
-import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportList, AccountingExportUtils } from 'src/app/core/models/db/accounting-export.model';
 import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-sage300-complete-export-log',
@@ -92,42 +94,22 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   private getAccountingExports(limit: number, offset:number) {
     this.isLoading = true;
-    const accountingExports: AccountingExportList[] = [];
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-  this.accountingExportService.getAccountingExports([AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
-      if (!this.isDateSelected) {
-        this.totalCount = accountingExportResponse.count;
-      }
-      accountingExportResponse.results.forEach((accountingExport: Sage300AccountingExport) => {
-        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(accountingExport.description);
-        let referenceNumber: string = accountingExport.description[referenceType];
-
-        if (referenceType === FyleReferenceType.EXPENSE) {
-          referenceNumber = accountingExport.expenses[0].expense_number;
-        } else if (referenceType === FyleReferenceType.PAYMENT) {
-          referenceNumber = accountingExport.expenses[0].payment_number;
+    this.accountingExportService.getAccountingExports([AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+        if (!this.isDateSelected) {
+          this.totalCount = accountingExportResponse.count;
         }
-        // creating_ for type: exportedAs (remove creating_ from the string and rest add to exportedAs, snake to space and then title)
-        accountingExports.push({
-          exportedAt: accountingExport.exported_at,
-          employee: [accountingExport.expenses[0].employee_name, accountingExport.description.employee_email],
-          expenseType: accountingExport.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
-          fyleReferenceType: '',
-          referenceNumber: referenceNumber,
-          exportedAs: accountingExport.type,
-          fyleUrl: this.exportLogService.generateFyleUrl(accountingExport, referenceType),
-          integrationUrl: accountingExport.export_url,
-          expenses: accountingExport.expenses
-        });
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport => 
+          AccountingExportUtils.createAccountingExport(accountingExport, this.exportLogService)
+        );
+        this.filteredAccountingExports = accountingExports;
+        this.accountingExports = [...this.filteredAccountingExports];
+        this.isLoading = false;
       });
-      this.filteredAccountingExports = accountingExports;
-      this.accountingExports = [...this.filteredAccountingExports];
-      this.isLoading = false;
-    });
   }
 
   private setupForm(): void {

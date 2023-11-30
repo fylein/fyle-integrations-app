@@ -459,5 +459,7 @@ export enum QBDOnboardingState {
 
  export enum FundSource {
   PERSONAL = 'PERSONAL',
-  CCC = 'CCC'
+  CCC = 'CCC',
+  REIMBURSABLE = 'Reimbursable',
+  CORPORATE_CARD = 'Corporate Card'
  }
