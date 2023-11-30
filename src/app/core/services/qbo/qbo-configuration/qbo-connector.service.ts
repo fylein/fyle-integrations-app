@@ -32,8 +32,7 @@ export class QboConnectorService {
     cacheBusterObserver: qboCredentialsCache$
   })
   getQBOCredentials(): Observable<QBOCredential> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.get(`/workspaces/${workspaceId}/credentials/qbo/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/credentials/qbo/`, {});
   }
 
   @Cacheable({
@@ -41,8 +40,7 @@ export class QboConnectorService {
   })
   disconnectQBOConnection(): Observable<QBOCredential> {
     globalCacheBusterNotifier.next();
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.patch(`/workspaces/${workspaceId}/credentials/qbo/`, {});
+    return this.apiService.patch(`/workspaces/${this.workspaceId}/credentials/qbo/`, {});
   }
 
   @Cacheable()
