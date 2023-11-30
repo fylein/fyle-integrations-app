@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AccountingExportCreationType, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
+import { ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
+import { Expense } from 'src/app/core/models/si/db/expense.model';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-export-log-table',
@@ -7,7 +12,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExportLogTableComponent implements OnInit {
 
-  constructor() { }
+  @Input() filteredExpenseGroups: AccountingExportList [];
+
+  @Input() appName: AppName;
+
+  @Input() isExportLogTable: boolean;
+
+  @Input() isDashboardFailed: boolean;
+
+  clickedExportLogIndex: number = 0;
+
+  visible: boolean = false;
+
+  constructor(
+    private windowService: WindowService
+  ) { }
+
+  openUrl(url: string) {
+    this.windowService.openInNewTab(url);
+  }
 
   ngOnInit(): void {
   }

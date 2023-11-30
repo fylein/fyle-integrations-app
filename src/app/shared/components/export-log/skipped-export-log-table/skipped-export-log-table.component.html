@@ -1,0 +1,29 @@
+<p-table *ngIf="filteredExpense.length > 0" #dt1 [value]="filteredExpense">
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Export Skipped On</th>
+            <th>Employee Name and ID</th>
+            <th>Expense Type</th>
+            <th>Reference ID</th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-rowData>
+        <tr>
+            <td>
+                <p class="tw-font-400 tw-text-sub-text-color">{{rowData.updated_at | date}}</p>
+                <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.updated_at | date : "HH:ss"}}</span>
+            </td>
+            <td>
+                <h4>
+                    {{rowData.employee[1]}}
+                </h4>
+                <h5 *ngIf="false" class="tw-font-400 !tw-text-12-px tw-text-placeholder">
+                    {{rowData.employee[1]}}
+                </h5>
+            </td>
+            <td>{{rowData.expenseType | titlecase}}</td>
+            <td class="tw-underline tw-cursor-pointer" (click)="openUrl(rowData.fyleUrl)">{{rowData.claim_number}}</td>
+        </tr>
+    </ng-template>
+</p-table>
