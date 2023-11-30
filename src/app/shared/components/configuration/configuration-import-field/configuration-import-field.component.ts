@@ -30,6 +30,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() dependentImportFields: Sage300DependentImportFields[];
 
+  @Input() dependentDestinationValue: string;
+
   @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;

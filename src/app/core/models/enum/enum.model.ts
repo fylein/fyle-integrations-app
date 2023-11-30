@@ -140,6 +140,16 @@ export enum IntacctOnboardingState {
   COMPLETE = 'COMPLETE'
 }
 
+export enum QBOOnboardingState {
+  CONNECTION = 'CONNECTION',
+  MAP_EMPLOYEES = 'MAP_EMPLOYEES',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  COMPLETE = 'COMPLETE',
+  CLONE_SETTINGS = 'CLONE_SETTINGS'
+}
+
 export enum Sage300OnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
@@ -202,7 +212,9 @@ export enum FyleField {
 export enum ExpenseGroupingFieldOption {
   CLAIM_NUMBER = 'claim_number',
   SETTLEMENT_ID = 'settlement_id',
-  EXPENSE_ID = 'expense_id'
+  EXPENSE_ID = 'expense_id',
+  EXPENSE = 'EXPENSE',
+  REPORT = 'REPORT'
 }
 
 export enum QBDOnboardingState {
@@ -381,7 +393,8 @@ export enum QBDOnboardingState {
     GUSTO = 'gusto',
     INTACCT = 'intacct',
     SAGE300 = 'sage300',
-    INTEGRATION = 'integration'
+    INTEGRATION = 'integration',
+    QBO = 'qbo'
   }
 
   export enum Sage300ExportType {
@@ -390,9 +403,10 @@ export enum QBDOnboardingState {
   }
 
   export enum Sage300ExpenseDate {
-    LAST_SPEND_AT = 'last_spend_at',
-    CURRENT_DATE = 'current_date',
-    APPROVED_AT = 'approved_at'
+    LAST_SPENT_AT = 'LAST_SPENT_AT',
+    CREATED_AT = 'CREATED_AT',
+    SPENT_AT = 'SPENT_AT',
+    POSTED_AT = 'POSTED_AT'
   }
 
   export enum DefaultImportFields {

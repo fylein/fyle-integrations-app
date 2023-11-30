@@ -111,6 +111,30 @@ export class ConfigurationSkipExportComponent implements OnInit {
     }
   }
 
+  conditionFieldWatcher() {
+    this.skipExportForm.controls.condition1.valueChanges.subscribe(
+      (conditionSelected) => {
+        this.resetFields(
+          this.skipExportForm.controls.operator1,
+          this.skipExportForm.controls.value1,
+          conditionSelected,
+          1
+        );
+      }
+    );
+
+    this.skipExportForm.controls.condition2.valueChanges.subscribe(
+      (conditionSelected) => {
+        this.resetFields(
+          this.skipExportForm.controls.operator2,
+          this.skipExportForm.controls.value2,
+          conditionSelected,
+          2
+        );
+      }
+    );
+  }
+
   resetAdditionalFilter() {
     this.skipExportForm.controls.join_by.reset();
     this.skipExportForm.controls.condition2.reset();
@@ -247,10 +271,11 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
     this.isLoading = true;
-    this.showAddButton = response.count === 1;
+    this.showAddButton = response.count !== 2 ? true : false;
     this.setConditionFields(response, conditionArray);
     this.setOperatorFieldOptions(response, conditionArray);
     this.setSkippedConditions(response, conditionArray);
+    this.conditionFieldWatcher();
     this.isLoading = false;
   }
 
