@@ -78,6 +78,7 @@ import { GenericMappingV2Component } from './components/helper/mapping/generic-m
 import { GenericMappingTableComponent } from './components/helper/mapping/generic-mapping-table/generic-mapping-table.component';
 import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
 import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-card-header/mapping-card-header.component';
+import { ConfigurationScheduleExportComponent } from './components/configuration/configuration-schedule-export/configuration-schedule-export.component';
 import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
 import { ExportLogFilterComponent } from './components/export-log/export-log-filter/export-log-filter.component';
 
@@ -140,6 +141,7 @@ import { ExportLogFilterComponent } from './components/export-log/export-log-fil
     GenericMappingTableComponent,
     SubMenuComponent,
     MappingCardHeaderComponent,
+    ConfigurationScheduleExportComponent,
     ExportLogTableComponent,
     ExportLogFilterComponent
   ],
@@ -227,6 +229,7 @@ import { ExportLogFilterComponent } from './components/export-log/export-log-fil
     ConfigurationStepSubHeaderComponent,
     GenericMappingV2Component,
     SubMenuComponent,
+    ConfigurationScheduleExportComponent,
     ExportLogTableComponent,
     ExportLogFilterComponent
   ]

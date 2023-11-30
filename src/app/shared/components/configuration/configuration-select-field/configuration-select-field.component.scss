@@ -32,12 +32,7 @@
 
 .sub-text {
     @apply tw-text-faded-text-color tw-text-12-px ;
-  }
-  
-.sub-text a {
-    color: rgb(0 98 255 / var(--tw-text-opacity));
-    cursor: pointer;
-  }
+}
 
 .smaller-th th {
     @apply tw-text-14-px tw-font-400 ;

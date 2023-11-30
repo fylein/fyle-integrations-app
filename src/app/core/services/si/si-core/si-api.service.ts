@@ -76,7 +76,6 @@ export class SiApiService {
     Object.keys(apiParams).forEach(key => {
       params = params.set(key, apiParams[key]);
     });
-
     return this.http.get(API_BASE_URL + endpoint, { params }).pipe(catchError(error => {
       return this.handleError(error, 'GET');
     }));

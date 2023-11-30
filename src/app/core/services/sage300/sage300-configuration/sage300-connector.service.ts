@@ -26,7 +26,7 @@ export class Sage300ConnectorService {
     cacheBusterObserver: sage300CredentialCache
   })
   getSage300Credential(): Observable<Sage300Credential> {
-    return this.apiService.get(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage_300/`, {});
+    return this.apiService.get(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage300/`, {});
   }
 
   @CacheBuster({
@@ -34,7 +34,7 @@ export class Sage300ConnectorService {
   })
   connectSage300(data: Sage300Credential): Observable<Sage300Credential> {
     globalCacheBusterNotifier.next();
-    return this.apiService.post(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage_300/`, data);
+    return this.apiService.post(`/workspaces/${this.storageService.get('workspaceId')}/credentials/sage300/`, data);
   }
 
 }

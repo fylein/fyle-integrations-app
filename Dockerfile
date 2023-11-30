@@ -27,7 +27,7 @@ RUN npm run build
 FROM nginx
 
 # copy artifact build from the 'build environment'
-COPY --from=build /app/dist/fyle-integrations-settings-app /usr/share/nginx/html
+COPY --from=build /app/dist/fyle-integrations-app /usr/share/nginx/html
 
 COPY --from=build /app/nginx.conf /etc/nginx/nginx.conf
 
