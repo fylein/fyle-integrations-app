@@ -10,7 +10,7 @@ import { Sage300MappingComponent } from './sage300-mapping/sage300-mapping.compo
 
 @NgModule({
   declarations: [
-    Sage300ConfigurationComponent
+
   ],
   imports: [
     CommonModule,

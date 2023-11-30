@@ -35,4 +35,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class Sage300MainRoutingModule { }
+export class Sage300ConfigurationRoutingModule { }
