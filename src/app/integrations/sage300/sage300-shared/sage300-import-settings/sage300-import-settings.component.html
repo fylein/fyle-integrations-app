@@ -63,7 +63,7 @@
 <div>
     <app-configuration-confirmation-dialog 
         (warningAccepted)="acceptDependentFieldWarning($event)"
-        [showDependentFieldWarning]="showDependentFieldWarning" 
+        [isWarningVisible]="showDependentFieldWarning" 
         [headerText]="'Warning'"
         [contextText]="'You have imported Cost codes and Cost Types from Sage Intacct by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
         [iconPath]="'assets/icons/alert_dialog.svg'" 

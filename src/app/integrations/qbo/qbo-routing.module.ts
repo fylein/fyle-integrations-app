@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QboComponent } from './qbo.component';
+import { QboTokenGuard } from 'src/app/core/guard/qbo-token.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
       },
       {
         path: 'main',
-        loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule)
+        loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule),
+        canActivate: [QboTokenGuard]
       }
     ]
   }

@@ -11,7 +11,7 @@ type QBOOnboardingStepperMap = {
     [QBOOnboardingState.CLONE_SETTINGS]: number,
 }
 
-export class QBOOnboaringClass {
+export class QBOOnboaringModel {
     private readonly onboardingSteps: OnboardingStepper[] = [
         {
           active: false,

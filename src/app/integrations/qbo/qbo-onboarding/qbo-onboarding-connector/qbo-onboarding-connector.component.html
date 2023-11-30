@@ -16,6 +16,14 @@
                 <div class="tw-p-24-px">
                     Hi
                 </div>
+                <app-configuration-confirmation-dialog
+                    (warningAccepted)="acceptWarning($event)"
+                    [isWarningVisible]="isIncorrectQBOConnectedDialogVisible"
+                    [headerText]="'Incorrect account selected'"
+                    [contextText]="'You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings'"
+                    [iconPath]="'assets/icons/alert_dialog.svg'"
+                    [confirmBtnText]="'Re connect'">
+                </app-configuration-confirmation-dialog>
             </div>
             <div>
                 <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" ></app-configuration-step-footer>

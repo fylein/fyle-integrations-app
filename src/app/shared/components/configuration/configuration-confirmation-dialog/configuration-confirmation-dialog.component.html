@@ -1,12 +1,12 @@
 <div>
-    <p-dialog [showHeader]="false" [modal]="true" [(visible)]="showDependentFieldWarning" [draggable]="false" [style]="{width: '468px'}">
+    <p-dialog [showHeader]="false" [modal]="true" [(visible)]="isWarningVisible" [draggable]="false" [style]="{width: '468px'}">
         <div class="tw-px-24-px tw-py-22-px tw-border-b-1-px tw-border-b-box-color">
             <div class="tw-flex tw-justify-between tw-items-center">
                 <div class="tw-flex">
                     <img [src]="iconPath" class="tw-pr-12-px"/>
                     <p class="tw-text-20-px tw-font-500 tw-text-normal-text-color">{{headerText}}</p>
                 </div>
-                <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="acceptDependentFieldWarning(false)"></i>
+                <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="acceptWarning(false)"></i>
             </div>
         </div>
         <div class="tw-pl-24-px tw-pr-10-px tw-pt-16-px tw-pb-24-px">
@@ -18,10 +18,10 @@
             </div>
         </div>
         <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px tw-px-24-px tw-py-16-px">
-            <button type="button" class="cancel-btn" (click)="acceptDependentFieldWarning(false)">
+            <button type="button" class="cancel-btn" (click)="acceptWarning(false)">
                 Cancel
             </button>
-            <button type="button" class="save-btn" pButton (click)="acceptDependentFieldWarning(true)">
+            <button type="button" class="save-btn" pButton (click)="acceptWarning(true)">
                 {{confirmBtnText}}
             </button>
         </div>
