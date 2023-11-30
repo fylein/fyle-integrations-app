@@ -58,7 +58,7 @@ export class ExportLogFilterComponent implements OnInit {
     }
   }
 
-  removeFilter(formField: AbstractControl) {
+  removeFilter(formField: AbstractControl, event?: Event) {
     (formField as FormGroup).reset();
     event?.stopPropagation();
   }
