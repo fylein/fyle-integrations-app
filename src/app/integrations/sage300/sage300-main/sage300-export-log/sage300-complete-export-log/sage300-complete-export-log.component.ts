@@ -103,7 +103,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
         if (!this.isDateSelected) {
           this.totalCount = accountingExportResponse.count;
         }
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport => 
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport =>
           AccountingExportUtils.createAccountingExport(accountingExport, this.exportLogService)
         );
         this.filteredAccountingExports = accountingExports;
