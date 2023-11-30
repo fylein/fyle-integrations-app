@@ -28,7 +28,20 @@
             <div class="tw-flex tw-mt-18-px">
                 <div>
                     <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field"
-                    optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
+                        optionLabel="display_name" optionValue="attribute_type">
+                        <ng-template let-option pTemplate="item">
+                            <div>
+                                {{ option.display_name | snakeCaseToSpaceCase }}
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.display_name | snakeCaseToSpaceCase }}
+                                </span>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
                     <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
                         {{appName}} Fields should be unique
                     </p>
@@ -58,7 +71,7 @@
                     </div>
                 <p-inputSwitch (onChange)="onShowWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section tw-pt-10-px"></p-inputSwitch>
             </div>
-            <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle" [formGroup]="form">
+            <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex">
                     <div>
                         <input formControlName="isDependentImportEnabled" type="checkbox"/>

@@ -6,6 +6,7 @@ import { Cacheable } from 'ts-cacheable';
 import { StorageService } from '../../common/storage.service';
 import { SiApiService } from './si-api.service';
 import { Configuration } from 'src/app/core/models/si/db/configuration.model';
+import { HelperService } from '../../common/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,8 @@ export class SiWorkspaceService {
   constructor(
     private storageService: StorageService,
     private apiService: SiApiService
-  ) { }
+  ) {
+  }
 
   @Cacheable()
   syncFyleDimensions() {

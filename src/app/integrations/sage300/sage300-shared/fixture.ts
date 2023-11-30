@@ -6,8 +6,10 @@ import { Sage300AdvancedSettingGet } from "src/app/core/models/sage300/sage300-c
 import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model";
 
 export const importSettingsResponse: Sage300ImportSettingGet = {
-    "import_categories": false,
-    "import_vendors_as_merchants": false,
+    "import_settings": {
+        "import_categories": false,
+        "import_vendors_as_merchants": false
+    },
     "mapping_settings": [
         {
             "source_field": "COST_CENTER",
@@ -76,7 +78,7 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
         "purpose",
         "expense_link"
     ],
-    schedule_enabled: true,
+    schedule_is_enabled: true,
     id: 0,
     created_at: new Date(),
     update_at: new Date(),
