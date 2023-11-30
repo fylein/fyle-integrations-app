@@ -10,6 +10,7 @@ do
     sed -i $SED_EXTRA_ARGS "s?{{QBD_API_URL}}?${QBD_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{SI_API_URL}}?${SI_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{SAGE300_API_URL}}?${SAGE300_API_URL}?g" $f;
+    sed -i $SED_EXTRA_ARGS "s?{{BUSINESS_CENTRAL_API_URL}}?${BUSINESS_CENTRAL_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{FYLE_APP_URL}}?${FYLE_APP_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{CALLBACK_URI}}?${CALLBACK_URI}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{FYLE_CLIENT_ID}}?${FYLE_CLIENT_ID}?g" $f;

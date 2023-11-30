@@ -6,7 +6,7 @@ import { BusinessCentralSkippedExportLogComponent } from './business-central-ski
 
 const routes: Routes = [
   {
-    path: 'export_log',
+    path: '',
     component: BusinessCentralExportLogComponent,
     children: [
       {

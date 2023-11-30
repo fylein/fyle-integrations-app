@@ -7,6 +7,7 @@ import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.serv
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
 import { environment } from 'src/environments/environment';
 import { Sage300AuthService } from 'src/app/core/services/sage300/sage300-core/sage300-auth.service';
+import { BusinessCentralAuthService } from 'src/app/core/services/business-central/business-central-core/business-central-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
     private qbdAuthService: QbdAuthService,
     private siAuthService : SiAuthService,
-    private sage300AuthService: Sage300AuthService
+    private sage300AuthService: Sage300AuthService,
+    private businessCentralAuthService: BusinessCentralAuthService
   ) { }
 
   private saveUserProfileAndNavigate(code: string): void {
@@ -44,6 +46,7 @@ export class LoginComponent implements OnInit {
         this.userService.storeUserProfile(user, 'si.user');
         this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+        this.businessCentralAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
       }
       this.router.navigate(['/integrations']);
     });
