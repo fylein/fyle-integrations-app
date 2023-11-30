@@ -19,7 +19,7 @@ const routes: Routes = [
       {
         path: 'export_log',
         loadChildren: () => import('./sage300-export-log/sage300-export-log.module').then(m => m.Sage300ExportLogModule)
-      },
+      }
     ]
   }
 ];

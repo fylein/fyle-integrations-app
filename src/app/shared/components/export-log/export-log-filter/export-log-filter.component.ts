@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { AccountingExportClass } from 'src/app/core/models/db/accounting-export.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 
 @Component({
   selector: 'app-export-log-filter',
@@ -15,39 +17,18 @@ export class ExportLogFilterComponent implements OnInit {
 
   isDateFieldFocused: boolean;
 
-  @Output() filterTableChange = new EventEmitter<any>();
+  @Output() handleSimpleSearch = new EventEmitter<any>();
 
   isCalendarVisible: boolean;
 
   presentDate = new Date().toLocaleDateString();
 
-  dateOptions: DateFilter[] = [
-    {
-      dateRange: 'This Month',
-      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-      endDate: new Date()
-    },
-    {
-      dateRange: 'This Week',
-      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay()),
-      endDate: new Date()
-    },
-    {
-      dateRange: 'Today',
-      startDate: new Date(),
-      endDate: new Date()
-    },
-    {
-      dateRange: new Date().toLocaleDateString(),
-      startDate: new Date(),
-      endDate: new Date()
-    }
-  ];
+  dateOptions: DateFilter[] = AccountingExportClass.getDateOptions();
 
   constructor() { }
 
   filterTable(event: any) {
-    this.filterTableChange.emit(event);
+    this.handleSimpleSearch.emit(event);
   }
 
   dropDownWatcher() {
