@@ -42,5 +42,9 @@ export interface AccountingExport {
 export type AccountingExportGetParam = {
     type__in: AccountingExportType[],
     status__in: AccountingExportStatus[],
-    id__in?: number[]
+    id__in?: number[],
+    limit?: number,
+    offset?: number,
+    exported_at__lte?: string,
+    exported_at__gte?: string
 }

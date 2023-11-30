@@ -98,7 +98,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-  this.accountingExportService.getAccountingExports(AccountingExportStatus.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+  this.accountingExportService.getAccountingExports([AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
       if (!this.isDateSelected) {
         this.totalCount = accountingExportResponse.count;
       }
