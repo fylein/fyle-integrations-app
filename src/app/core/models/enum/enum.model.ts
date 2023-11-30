@@ -29,7 +29,8 @@ export enum InAppIntegration {
   TRAVELPERK = 'TravelPerk',
   GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
-  SAGE300 = 'Sage 300 CRE'
+  SAGE300 = 'Sage 300 CRE',
+  BUSINESS_CENTRAL = 'Dynamics 365 Business Central'
 }
 
 export enum ToastSeverity {
@@ -64,7 +65,8 @@ export enum AppName {
   TRAVELPERK = 'Travelperk',
   GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
-  SAGE300 = 'Sage 300 CRE'
+  SAGE300 = 'Sage 300 CRE',
+  BUSINESS_CENTRAL = 'Dynamics 365 Business Central'
 }
 
 export enum AppNameInService {
@@ -73,7 +75,8 @@ export enum AppNameInService {
   TRAVELPERK = 'travelperk',
   GUSTO = 'gusto',
   INTACCT = 'sage_intacct',
-  SAGE300 = 'sage300'
+  SAGE300 = 'sage300',
+  BUSINESS_CENTRAL = 'business_central'
 }
 
 export enum Page {
@@ -393,6 +396,7 @@ export enum QBDOnboardingState {
     GUSTO = 'gusto',
     INTACCT = 'intacct',
     SAGE300 = 'sage300',
+    BUSINESS_CENTRAL = 'business_central',
     INTEGRATION = 'integration',
     QBO = 'qbo'
   }
@@ -469,4 +473,12 @@ export enum QBDOnboardingState {
 
  export enum IntegrationName {
   SAGE300 = 'SAGE300'
+ }
+
+ export enum BusinessCentralOnboardingState {
+  CONNECTION = 'CONNECTION',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
  }

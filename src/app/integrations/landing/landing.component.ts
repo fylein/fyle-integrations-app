@@ -61,7 +61,8 @@ export class LandingComponent implements OnInit {
     [InAppIntegration.TRAVELPERK]: '/integrations/travelperk/',
     [InAppIntegration.GUSTO]: '/integrations/gusto/',
     [InAppIntegration.INTACCT]: '/integrations/intacct',
-    [InAppIntegration.SAGE300]: '/integrations/sage300'
+    [InAppIntegration.SAGE300]: '/integrations/sage300',
+    [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central'
   };
 
   private readonly accountingIntegrationEventMap: AccountingIntegrationEvent = {
