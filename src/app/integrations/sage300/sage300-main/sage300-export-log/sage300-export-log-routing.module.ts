@@ -1,0 +1,29 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { Sage300ExportLogComponent } from './sage300-export-log.component';
+import { Sage300CompletedExportLogComponent } from './sage300-completed-export-log/sage300-completed-export-log.component';
+import { Sage300SkippedExportLogComponent } from './sage300-skipped-export-log/sage300-skipped-export-log.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: Sage300ExportLogComponent,
+    children: [
+      {
+        path: 'complete_export_log',
+        component: Sage300CompletedExportLogComponent
+      },
+      {
+        path: 'skip_export_log',
+        component: Sage300SkippedExportLogComponent
+      }
+    ]
+  }
+];
+
+@NgModule({
+  declarations: [],
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class Sage300ExportLogRoutingModule { }
