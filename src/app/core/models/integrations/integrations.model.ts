@@ -40,4 +40,5 @@ export type AppUrlMap = {
     [AppUrl.SAGE300]: string,
     [AppUrl.INTEGRATION]: string,
     [AppUrl.BUSINESS_CENTRAL]: string
+    [AppUrl.QBO]: string
 }

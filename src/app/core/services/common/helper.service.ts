@@ -40,7 +40,8 @@ export class HelperService {
       [AppUrl.GUSTO]: environment.api_url,
       [AppUrl.SAGE300]: environment.sage300_api_url,
       [AppUrl.INTEGRATION]: environment.api_url,
-      [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url
+      [AppUrl.BUSINESS_CENTRAL]: environment.ms_business_central_api_url,
+      [AppUrl.QBO]: environment.qbo_api_url
     };
 
     const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration;

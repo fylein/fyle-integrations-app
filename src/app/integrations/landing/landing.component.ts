@@ -98,7 +98,13 @@ export class LandingComponent implements OnInit {
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
     this.trackingService.trackTimeSpent(Page.LANDING, this.sessionStartTime);
     this.trackingService.onClickEvent(this.accountingIntegrationEventMap[accountingIntegrationApp]);
-    this.eventsService.postEvent(this.integrationCallbackUrlMap[accountingIntegrationApp][0], this.integrationCallbackUrlMap[accountingIntegrationApp][1]);
+
+    const payload = {
+      callbackUrl: this.integrationCallbackUrlMap[accountingIntegrationApp][0],
+      clientId: this.integrationCallbackUrlMap[accountingIntegrationApp][1]
+    };
+
+    this.eventsService.postEvent(payload);
   }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
