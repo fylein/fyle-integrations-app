@@ -4,6 +4,7 @@ export type DemoVideo = {
             INTACCT: string;
             SAGE300: string;
             QBO: string;
+            BUSINESS_CENTRAL: string;
         }
     }
 };

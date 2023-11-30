@@ -4,8 +4,8 @@
 <div class="tw-p-24-px tw-text-slightly-normal-text-color">
     <div class="tw-h-68-px tw-flex tw-justify-between">
             <div class="tw-flex">
-                <div class="tw-rounded-4-px tw-border-1-px tw-border-box-color tw-flex tw-justify-center tw-bg-white tw-w-176-px">
-                    <img src="{{ iconPath }}" width="140px" height="44px" class="tw-py-10-px tw-px-20-px" />
+                <div class="tw-flex tw-justify-center" [ngClass]="logoSectionStyleClasses">
+                    <img src="{{ iconPath }}" width="logoWidth" height="44px" [ngClass]="logoStyleClasses" />
                 </div>
                 <div class="tw-pl-16-px tw-flex tw-flex-col">
                     <div class="tw-flex tw-pt-6-px">
@@ -33,7 +33,7 @@
                 <button *ngIf="isIntegrationConnected && isRecipeRunning && appName !== AppName.GUSTO" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                     Disconnect
                 </button>
-                <button *ngIf="(appName === AppName.QBD || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.QBO)" pButton type="button" class="p-button-raised" (click)="connectIntegration()">
+                <button *ngIf="(appName === AppName.QBD || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL || appName === AppName.QBO)" pButton type="button" class="p-button-raised" (click)="connectIntegration()">
                     {{buttonText}}
                     <i *ngIf="appName === AppName.QBD" class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
                 </button>

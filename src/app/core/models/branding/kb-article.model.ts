@@ -7,6 +7,7 @@ export type KbArticle = {
             TRAVELPERK: string;
             GUSTO: string;
             SAGE300: string;
+            BUSINESS_CENTRAL: string;
         },
         onboardingArticles: {
             INTACCT: {
@@ -31,6 +32,13 @@ export type KbArticle = {
                 EXPORT_SETTING: string;
                 IMPORT_SETTING: string;
                 ADVANCED_SETTING: string;
+            }
+            BUSINESS_CENTRAL: {
+                IMPORT_SETTING: string;
+                EXPORT_SETTING: string;
+                ADVANCED_SETTING: string;
+                LANDING: string;
+                SKIP_EXPORT: string;
             }
         }
     }

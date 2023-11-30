@@ -49,6 +49,12 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() postConnectionRoute: string;
 
+  @Input() logoWidth: string = '140px';
+
+  @Input() logoStyleClasses: string = 'tw-py-10-px tw-px-20-px';
+
+  @Input() logoSectionStyleClasses: string = 'tw-rounded-4-px tw-border-1-px tw-border-box-color tw-bg-white tw-w-176-px';
+
   readonly brandingConfig = brandingConfig;
 
   constructor(

@@ -26,7 +26,8 @@ const kbArticles: KbArticle = {
             INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             TRAVELPERK: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             GUSTO: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+            SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
         },
         onboardingArticles: {
             INTACCT: {
@@ -53,6 +54,14 @@ const kbArticles: KbArticle = {
                 EXPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686',
                 IMPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f',
                 ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7'
+            },
+            // TODO: Update KB articles for MS Dynamics
+            BUSINESS_CENTRAL: {
+                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
+                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
+                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
+                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
             }
         }
     }
@@ -67,7 +76,9 @@ const demoVideoLinks: DemoVideo = {
             INTACCT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             // TODO: Update link for Sage 300
             SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            QBO: 'https://www.youtube.com/embed/b63lS2DG5j4'
+            QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
+            // TODO: Update link for MS Dynamics
+            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk'
         }
     }
 };
