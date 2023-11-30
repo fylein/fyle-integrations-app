@@ -1,4 +1,4 @@
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import { DestinationAttribute, GroupedDestinationAttribute } from "../../db/destination-attribute.model";
 
 type EmployeeMappingDetail = {
     email: string | null;
@@ -14,7 +14,7 @@ export interface Sage300DestinationAttributes extends DestinationAttribute {
     detail: EmployeeMappingDetail | TaxMappingDetails | null;
 }
 
-export type Sage300GroupedDestinationAttribute = {
+export interface Sage300GroupedDestinationAttribute extends GroupedDestinationAttribute {
     ACCOUNT: Sage300DestinationAttributes[],
     EXPENSE_TYPE: Sage300DestinationAttributes[],
     EXPENSE_PAYMENT_TYPE: Sage300DestinationAttributes[],
@@ -28,4 +28,4 @@ export type Sage300GroupedDestinationAttribute = {
     ITEM: Sage300DestinationAttributes[],
     PAYMENT_ACCOUNT: Sage300DestinationAttributes[],
     EMPLOYEE: Sage300DestinationAttributes[]
-  };
+  }

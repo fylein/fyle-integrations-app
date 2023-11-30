@@ -5,9 +5,12 @@ import { AuthService } from 'src/app/core/services/common/auth.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { QbdAuthService } from 'src/app/core/services/qbd/qbd-core/qbd-auth.service';
 import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service';
-import { EXPOSE_INTACCT_NEW_APP } from 'src/app/core/services/common/events.service';
-import { StorageService } from 'src/app/core/services/common/storage.service';
 import { environment } from 'src/environments/environment';
+import { Sage300AuthService } from 'src/app/core/services/sage300/sage300-core/sage300-auth.service';
+import { BusinessCentralAuthService } from 'src/app/core/services/business-central/business-central-core/business-central-auth.service';
+import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
+import { AppUrl } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-login',
@@ -18,15 +21,26 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private helperService: HelperService,
     private route: ActivatedRoute,
     private router: Router,
-    private storageService: StorageService,
     private userService: UserService,
     private qbdAuthService: QbdAuthService,
-    private siAuthService : SiAuthService
+    private siAuthService : SiAuthService,
+    private sage300AuthService: Sage300AuthService,
+    private businessCentralAuthService: BusinessCentralAuthService,
+    private qboAuthService: QboAuthService
   ) { }
 
-  private saveUserProfileAndNavigate(code: string): void {
+  private redirect(redirectUri: string | undefined): void {
+    if (redirectUri) {
+      this.router.navigate([redirectUri]);
+    } else {
+      this.router.navigate(['/integrations']);
+    }
+  }
+
+  private saveUserProfileAndNavigate(code: string, redirectUri: string | undefined): void {
     this.authService.login(code).subscribe(response => {
       const user: MinimalUser = {
         'email': response.user.email,
@@ -42,27 +56,25 @@ export class LoginComponent implements OnInit {
 
       // Only local dev needs this, login happens via postMessage for prod/staging through webapp
       if (!environment.production) {
-        this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe((token) => {
-          const user: MinimalUser = {
-            'email': token.user.email,
-            'access_token': token.access_token,
-            'refresh_token': token.refresh_token,
-            'full_name': token.user.full_name,
-            'user_id': token.user.user_id,
-            'org_id': token.user.org_id,
-            'org_name': token.user.org_name
-          };
-          this.storageService.set('si.user', user);
-        });
+        this.userService.storeUserProfile(user, 'si.user');
+        this.helperService.setBaseApiURL(AppUrl.QBO);
+        this.qboAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+        this.helperService.setBaseApiURL(AppUrl.INTACCT);
+        this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+        this.helperService.setBaseApiURL(AppUrl.SAGE300);
+        this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+        this.businessCentralAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+        this.redirect(redirectUri);
+      } else {
+        this.redirect(redirectUri);
       }
-      this.router.navigate(['/integrations']);
     });
   }
 
   private login(): void {
     this.route.queryParams.subscribe(params => {
       if (params.code) {
-        this.saveUserProfileAndNavigate(params.code);
+        this.saveUserProfileAndNavigate(params.code, params.redirect_uri);
       }
     });
   }

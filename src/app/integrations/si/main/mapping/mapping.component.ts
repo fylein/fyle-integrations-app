@@ -13,7 +13,7 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 })
 export class MappingComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   mappingPages: MenuItem[] = [
     {label: 'Employee', routerLink: '/integrations/intacct/main/mapping/employee_mapping'},
@@ -28,7 +28,6 @@ export class MappingComponent implements OnInit {
   ) { }
 
   private setupPages(): void {
-    this.isLoading = true;
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {

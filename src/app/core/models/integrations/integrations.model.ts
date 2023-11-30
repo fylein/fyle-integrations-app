@@ -28,14 +28,17 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.GUSTO]: string,
     [InAppIntegration.INTACCT]: string,
     [InAppIntegration.SAGE300]: string,
+    [InAppIntegration.BUSINESS_CENTRAL]: string
 }
 
 export type AppUrlMap = {
-    [AppUrl.BAMBOO_HR]: string,
+    [AppUrl.BAMBOO_HR]: string | null,
     [AppUrl.QBD]: string,
-    [AppUrl.TRAVELPERK]: string,
-    [AppUrl.GUSTO]: string,
+    [AppUrl.TRAVELPERK]: string | null,
+    [AppUrl.GUSTO]: string | null,
     [AppUrl.INTACCT]: string,
     [AppUrl.SAGE300]: string,
-    [AppUrl.INTEGRATION]: string
+    [AppUrl.INTEGRATION]: string,
+    [AppUrl.BUSINESS_CENTRAL]: string
+    [AppUrl.QBO]: string
 }

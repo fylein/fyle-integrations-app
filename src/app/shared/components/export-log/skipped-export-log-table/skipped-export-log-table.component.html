@@ -1,7 +1,7 @@
-<p-table *ngIf="filteredExpenseGroups.length > 0" #dt1 [value]="filteredExpenseGroups">
+<p-table *ngIf="filteredExpense.length > 0" #dt1 [value]="filteredExpense">
     <ng-template pTemplate="header">
         <tr>
-            <th>Date and Time of Export</th>
+            <th>Export Skipped On</th>
             <th>Employee Name and ID</th>
             <th>Expense Type</th>
             <th>Reference ID</th>

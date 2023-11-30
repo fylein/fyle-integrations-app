@@ -35,6 +35,14 @@ const routes: Routes = [
       {
         path: 'sage300',
         loadChildren: () => import('./sage300/sage300.module').then(m => m.Sage300Module)
+      },
+      {
+        path: 'qbo',
+        loadChildren: () => import('./qbo/qbo.module').then(m => m.QboModule)
+      },
+      {
+        path: 'business_central',
+        loadChildren: () => import('./business-central/business-central.module').then(m => m.BusinessCentralModule)
       }
     ]
   }
