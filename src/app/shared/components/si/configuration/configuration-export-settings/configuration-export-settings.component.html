@@ -244,11 +244,13 @@
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
-                            <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                                <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
-                                <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
-                                    <h4 class="!tw-text-14-px !tw-font-500">How should the expenses be grouped?<app-mandatory-field></app-mandatory-field></h4>
-                                    <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)</h5>
+                            <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
+                                <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
+                                    <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                                    <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
+                                        <h4 class="!tw-text-14-px !tw-font-500">How should the expenses be grouped?<app-mandatory-field></app-mandatory-field></h4>
+                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)</h5>
+                                    </div>
                                 </div>
                                 <div class="tw-pl-18-px tw-pt-18-px">
                                     <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="cccExportGroup">
@@ -280,13 +282,15 @@
             [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
 
         <div *ngIf="exportSettingsForm.controls.employeeFieldMapping.disabled">
-            <div class="tw-pl-6 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
-                <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
-                <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
-                    <h4 class="!tw-text-14-px !tw-font-500">How are your Employees represented in Sage Intacct?<app-mandatory-field></app-mandatory-field></h4>
-                    <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct</h5>
+            <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
+                <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
+                    <svg-icon-sprite src="expense" width="20px" hight="20px" class="tw-text-mandatory-field-color tw-pr-16-px tw-mt-4-px"></svg-icon-sprite>
+                    <div>
+                        <h4 class="!tw-text-14-px !tw-font-500">How are your Employees represented in Sage Intacct?<app-mandatory-field></app-mandatory-field></h4>
+                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct</h5>
+                    </div>
                 </div>
-                <div class="tw-ml-12-px tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
+                <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
                     <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingsForm.value.employeeFieldMapping, exportSettingsForm.value.reimbursableExportType)}}</div>
                     <span class="sub-text tw-pt-3-px tw-text-12-px tw-text-sub-text-color">Auto-selected based on your export module</span>
                 </div>
