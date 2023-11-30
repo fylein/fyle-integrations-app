@@ -439,7 +439,7 @@ export enum QBDOnboardingState {
     CATEGORY_MAPPING = 'CATEGORY_MAPPING'
   }
 
-  export enum AccountingExportCreationType{
+  export enum AccountingExport{
     CREATING_DIRECT_COST = 'CREATING_DIRECT_COST',
     CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
   }
@@ -481,4 +481,11 @@ export enum QBDOnboardingState {
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
+ }
+
+ export enum FundSource {
+  PERSONAL = 'PERSONAL',
+  CCC = 'CCC',
+  REIMBURSABLE = 'Reimbursable',
+  CORPORATE_CARD = 'Corporate Card'
  }
