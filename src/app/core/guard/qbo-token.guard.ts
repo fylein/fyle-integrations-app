@@ -16,7 +16,7 @@ export class QboTokenGuard implements CanActivate {
     private qboConnectorService: QboConnectorService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService,
+    private workspaceService: WorkspaceService
   ) { }
 
   canActivate(
@@ -54,5 +54,5 @@ export class QboTokenGuard implements CanActivate {
         })
       );
   }
-  
+
 }

@@ -38,7 +38,7 @@ const routes: Routes = [
       },
       {
         path: 'qbo',
-        loadChildren: () => import('./qbo/qbo.module').then(m => m.QboModule),
+        loadChildren: () => import('./qbo/qbo.module').then(m => m.QboModule)
       },
       {
         path: 'business_central',

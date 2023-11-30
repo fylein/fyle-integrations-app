@@ -15,6 +15,6 @@ export class QBOConnectorModel {
       code,
       realm_id: realmId,
       redirect_uri: `${environment.qbo_oauth_redirect_uri}`
-    }
+    };
   }
 }

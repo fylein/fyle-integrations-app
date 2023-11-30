@@ -9,4 +9,3 @@ export type QBOCredential = {
     updated_at: Date;
     workspace: number;
 }
- 
