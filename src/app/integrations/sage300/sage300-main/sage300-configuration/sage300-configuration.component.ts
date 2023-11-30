@@ -10,7 +10,7 @@ export class Sage300ConfigurationComponent implements OnInit {
 
   modules: MenuItem[] = [
     {label: 'Export Settings', routerLink: '/integrations/sage300/main/configuration/export_settings'},
-    {label: 'Field Mapping', routerLink: '/integrations/sage300/main/configuration/field_mapping'},
+    {label: 'Import Settings', routerLink: '/integrations/sage300/main/configuration/import_settings'},
     {label: 'Advanced Settings', routerLink: '/integrations/sage300/main/configuration/advanced_settings'}
   ];
 
