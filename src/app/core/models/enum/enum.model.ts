@@ -66,6 +66,7 @@ export enum AppName {
   GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
+  QBO = 'QuickBooks Online',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central'
 }
 
