@@ -15,7 +15,7 @@ jobs:
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
           DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
-          IMAGE_NAME: fyle_integration_settings-app
+          IMAGE_NAME: fyle_integrations-app
 
       - name: Install kustomize
         run: |
@@ -35,7 +35,7 @@ jobs:
         run: |
           NEW_TAG="v$(git rev-parse --short HEAD)"
           cd ${{ secrets.PROD_DEPLOY_REPO }}/${{ secrets.EKS_CLUSTER_NAME }}/integrations
-          kustomize edit set image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integration_settings-app=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integration_settings-app:$NEW_TAG
+          kustomize edit set image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integrations-app=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integrations-app:$NEW_TAG
 
       - name: Commit and push changes
         run: |

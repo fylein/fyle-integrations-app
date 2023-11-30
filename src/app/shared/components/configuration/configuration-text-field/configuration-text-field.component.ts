@@ -20,6 +20,8 @@ export class ConfigurationTextFieldComponent implements OnInit {
 
   @Input() customErrorMessage: string;
 
+  @Input() type: string = 'text';
+
   constructor() { }
 
   ngOnInit(): void {
