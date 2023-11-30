@@ -6,7 +6,7 @@ import { ConfigurationCta, QBOOnboardingState, ToastSeverity } from 'src/app/cor
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
-import { QBOOnboaringModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
+import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
@@ -20,7 +20,7 @@ import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.
 })
 export class QboOnboardingConnectorComponent implements OnInit {
 
-  onboardingSteps: OnboardingStepper[] = new QBOOnboaringModel().getOnboardingSteps('Connect to QuickBooks Online', this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps('Connect to QuickBooks Online', this.workspaceService.getOnboardingState());
 
   isLoading: boolean = true;
 
