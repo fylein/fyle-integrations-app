@@ -47,7 +47,7 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
   }
 
-  getReferenceType(description: ExpenseGroupDescription): FyleReferenceType {
+  getReferenceType(description: Partial<ExpenseGroupDescription>): FyleReferenceType {
     let referenceType = FyleReferenceType.EXPENSE_REPORT;
 
     if (FyleReferenceType.EXPENSE in description) {
