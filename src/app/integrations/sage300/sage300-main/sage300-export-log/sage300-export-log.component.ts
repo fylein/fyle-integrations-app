@@ -12,7 +12,7 @@ export class Sage300ExportLogComponent implements OnInit {
   isLoading: boolean = false;
 
   modules: MenuItem[] = [
-    {label: 'Complete', routerLink: '/integrations/sage300/main/export_log/complete_export_log'},
+    {label: 'Completed', routerLink: '/integrations/sage300/main/export_log/complete_export_log'},
     {label: 'Skipped', routerLink: '/integrations/sage300/main/export_log/skip_export_log'}
   ];
 
