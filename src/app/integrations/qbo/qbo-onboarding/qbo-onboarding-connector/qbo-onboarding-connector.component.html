@@ -13,8 +13,8 @@
                 ></app-configuration-step-header>
             </div>
             <div class="tw-flex tw-justify-center tw-items-center">
-                <div class="tw-p-24-px">
-                    Hi
+                <div class="tw-p-24-px" (click)="connectQbo()">
+                    Connect QBO
                 </div>
                 <app-configuration-confirmation-dialog
                     (warningAccepted)="acceptWarning($event)"

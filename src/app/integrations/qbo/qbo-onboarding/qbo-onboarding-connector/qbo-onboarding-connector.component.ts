@@ -56,6 +56,10 @@ export class QboOnboardingConnectorComponent implements OnInit {
     private workspaceService: WorkspaceService
   ) { }
 
+  connectQbo(): void {
+    // TODO
+  }
+
   save(): void {
     // TODO
   }
