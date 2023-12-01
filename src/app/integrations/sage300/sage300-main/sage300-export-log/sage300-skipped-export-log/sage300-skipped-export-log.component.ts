@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { AccountingExportClass, AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportClass, AccountingExportList, SkippedAccountingExportClass } from 'src/app/core/models/db/accounting-export.model';
 import { SkipExportList } from 'src/app/core/models/si/db/expense-group.model';
 
 @Component({
@@ -14,13 +14,27 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   totalCount: number;
 
-  exportLogForm: FormGroup;
+  skipExportLogForm: FormGroup;
 
   accountingExports: SkipExportList[];
 
   filteredAccountingExports: SkipExportList[];
 
+  limit: number;
+
+  offset: number = 0;
+
+  currentPage: number = 1;
+
   constructor() { }
+
+  public handleSimpleSearch(event: any) {
+    const query = event.target.value.toLowerCase();
+
+    this.filteredAccountingExports = this.accountingExports.filter((group: SkipExportList) => {
+      return SkippedAccountingExportClass.getfilteredSkippedAccountingExports(query, group);
+    });
+  }
 
   ngOnInit(): void {
   }

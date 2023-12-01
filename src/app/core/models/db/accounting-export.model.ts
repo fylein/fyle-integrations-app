@@ -1,6 +1,6 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
 import { AccountingExportStatus, AccountingExportType, FundSource, FyleReferenceType } from "../enum/enum.model";
-import { ExpenseGroupDescription } from "../si/db/expense-group.model";
+import { ExpenseGroupDescription, SkipExportList } from "../si/db/expense-group.model";
 import { Expense } from "../si/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
 import { ExportLogService } from "../../services/common/export-log.service";
@@ -145,5 +145,19 @@ export class AccountingExportClass {
       integrationUrl: accountingExport.export_url,
       expenses: accountingExport.expenses
     };
+  }
+}
+
+export class SkippedAccountingExportClass {
+  static getfilteredSkippedAccountingExports(query: any, group: SkipExportList) {
+    const employeeID = group.employee ? group.employee[1] : '';
+    const expenseType = group.expenseType ? group.expenseType : '';
+    const referenceNumber = group.claim_number ? group.claim_number : '';
+
+    return (
+      employeeID.toLowerCase().includes(query) ||
+      expenseType.toLowerCase().includes(query) ||
+      referenceNumber.toLowerCase().includes(query)
+    );
   }
 }
