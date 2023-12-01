@@ -2,25 +2,29 @@
 <div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 <div>
     <app-dashboard-export-section 
-    (export)="export()" 
-    [appName]="appName" 
-    [isImportInProgress]="isImportInProgress" 
-    [isExportInProgress]="isExportInProgress"
-    [failedExpenseGroupCount]="failedExpenseGroupCount" 
-    [exportProgressPercentage]="exportProgressPercentage" 
-    [accountingExportSummary]="accountingExportSummary" 
-    [processedCount]="processedCount"></app-dashboard-export-section>
+        (export)="export()" 
+        [appName]="appName" 
+        [isImportInProgress]="isImportInProgress" 
+        [isExportInProgress]="isExportInProgress"
+        [failedExpenseGroupCount]="failedExpenseGroupCount" 
+        [exportProgressPercentage]="exportProgressPercentage" 
+        [accountingExportSummary]="accountingExportSummary" 
+        [processedCount]="processedCount">
+    </app-dashboard-export-section>
     
     <app-zero-state 
-    *ngIf="!accountingExportSummary" 
-    [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'"></app-zero-state>
+        *ngIf="!accountingExportSummary" 
+        [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'">
+    </app-zero-state>
     
     <app-dashboard-export-summary-section 
-    *ngIf="accountingExportSummary" 
-    [accountingExportSummary]="accountingExportSummary"></app-dashboard-export-summary-section>
+        *ngIf="accountingExportSummary" 
+        [accountingExportSummary]="accountingExportSummary">
+    </app-dashboard-export-summary-section>
     
     <app-dashboard-error-section 
-    [appName]="appName" 
-    [errors]="errors" 
-    [groupedErrorStat]="groupedErrorStat"></app-dashboard-error-section>
+        [appName]="appName" 
+        [errors]="errors" 
+        [groupedErrorStat]="groupedErrorStat">
+    </app-dashboard-error-section>
 </div>
