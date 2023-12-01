@@ -52,7 +52,7 @@ export type AccountingExportGetParam = {
     exported_at__gte?: string
 }
 
-export class AccountingExportClass {
+export class AccountingExportModel {
 
   static getDateOptions(): DateFilter[] {
     const dateOptions: DateFilter[] = [
@@ -86,7 +86,7 @@ export class AccountingExportClass {
     return url;
   }
 
-  static getfilteredAccountingExports(query: any, group: AccountingExportList) {
+  static getfilteredAccountingExports(query: string, group: AccountingExportList): boolean {
     const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';
@@ -132,7 +132,7 @@ export class AccountingExportClass {
   }
 
   static parseAPIResponseToExportLog(accountingExport: AccountingExport, exportLogService: ExportLogService): AccountingExportList {
-    const referenceType = AccountingExportClass.getReferenceType(accountingExport.description);
+    const referenceType = AccountingExportModel.getReferenceType(accountingExport.description);
     const referenceNumber = this.getFyleReferenceNumber(referenceType, accountingExport);
 
     return {
@@ -148,8 +148,8 @@ export class AccountingExportClass {
   }
 }
 
-export class SkippedAccountingExportClass {
-  static getfilteredSkippedAccountingExports(query: any, group: SkipExportList) {
+export class SkippedAccountingExportModel {
+  static getfilteredSkippedAccountingExports(query: string, group: SkipExportList): boolean {
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';
     const referenceNumber = group.claim_number ? group.claim_number : '';
@@ -161,7 +161,7 @@ export class SkippedAccountingExportClass {
     );
   }
 
-  static mapSkipExportLogToSkipExportList(skippedExpenses: SkipExportLog): SkipExportList {
+  static parseAPIResponseToSkipExportList(skippedExpenses: SkipExportLog): SkipExportList {
     return {
       updated_at: skippedExpenses.updated_at,
       claim_number: skippedExpenses.claim_number,
@@ -171,4 +171,3 @@ export class SkippedAccountingExportClass {
     };
   }
 }
-

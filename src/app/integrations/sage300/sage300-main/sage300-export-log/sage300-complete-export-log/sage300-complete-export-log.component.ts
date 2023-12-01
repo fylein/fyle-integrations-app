@@ -7,7 +7,7 @@ import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
-import { AccountingExportList, AccountingExportClass } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -34,7 +34,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportClass.getDateOptions();
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptions();
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -60,14 +60,14 @@ export class Sage300CompleteExportLogComponent implements OnInit {
   ) { }
 
   openExpenseinFyle(expense_id: string) {
-    this.windowService.openInNewTab(AccountingExportClass.getFyleExpenseUrl(expense_id));
+    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(event: any) {
     const query = event.target.value.toLowerCase();
 
     this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
-      return AccountingExportClass.getfilteredAccountingExports(query, group);
+      return AccountingExportModel.getfilteredAccountingExports(query, group);
     });
   }
 
@@ -104,7 +104,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
           this.totalCount = accountingExportResponse.count;
         }
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport =>
-          AccountingExportClass.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
+          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];

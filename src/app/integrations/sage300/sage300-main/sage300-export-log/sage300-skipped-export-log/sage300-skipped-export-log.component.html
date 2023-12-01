@@ -9,10 +9,10 @@
             (handleSimpleSearch)="handleSimpleSearch($event)">
         </app-export-log-filter>
 
-        <app-skipped-export-log-table [filteredExpense]="filteredAccountingExports">
+        <app-skipped-export-log-table [filteredExpense]="filteredExpenses">
         </app-skipped-export-log-table>
 
-        <div *ngIf="filteredAccountingExports.length > 0" class="tw-p-24-px tw-border-t-1-px">
+        <div *ngIf="filteredExpenses.length > 0" class="tw-p-24-px tw-border-t-1-px">
             <app-paginator 
                 [dropDownValue]="limit" 
                 [page]="currentPage" 
@@ -22,7 +22,7 @@
             </app-paginator>
         </div>
 
-        <app-zero-state-with-illustration *ngIf="!filteredAccountingExports.length"
+        <app-zero-state-with-illustration *ngIf="!filteredExpenses.length"
             [mainText]="'Sorry, no results found!'"
             [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
         </app-zero-state-with-illustration>
