@@ -427,7 +427,8 @@ export enum QBDOnboardingState {
     FATAL = 'FATAL',
     COMPLETE = 'COMPLETE',
     IN_PROGRESS = 'IN_PROGRESS',
-    ENQUEUED = 'ENQUEUED'
+    ENQUEUED = 'ENQUEUED',
+    EXPORT_QUEUED = 'EXPORT_QUEUED'
   }
 
   export enum AccountingExportType {
