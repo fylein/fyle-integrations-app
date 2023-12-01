@@ -13,9 +13,15 @@
                 [contentText]="'Expenses will be posted to the Dynamics 365 Business Central Location entity selected here.'"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
-            <div class="tw-flex tw-justify-center tw-items-center">
-                <div class="tw-p-24-px">
-                </div>
+            <div>
+                <app-configuration-connector
+                [accountingAppTitle]="'Dynamics 365 Business Central'"
+                [accountingCompanyName]="'Dynamics 365 Business Central'"
+                [fyleOrgName]="'Fyle Testing Org'"
+                [accountingCompanyTokenExpired]="true"
+                [isAccountingCompanyConnected]="true"
+                [showDisconnect]="false"
+                [accountingCompanyConnectionInProgress]="false"></app-configuration-connector>
             </div>
             <div>
                 <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" ></app-configuration-step-footer>

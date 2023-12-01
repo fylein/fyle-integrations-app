@@ -128,6 +128,7 @@ module.exports = {
         '60-px': '60px',
         '70-px': '70px',
         '74-px': '74px',
+        '76-px': '76px',
         '80-px': '80px',
         '100-px': '100px',
         '110-px': '110px',
@@ -311,7 +312,8 @@ module.exports = {
         '300-px': '300px'
       },
       maxWidth: {
-        '20-px': '20px'
+        '20-px': '20px',
+        '300-px': '300px'
       },
       borderRadius: {
         '0-px': '0px',

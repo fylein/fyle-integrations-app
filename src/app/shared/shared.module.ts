@@ -79,6 +79,7 @@ import { GenericMappingTableComponent } from './components/helper/mapping/generi
 import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component';
 import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-card-header/mapping-card-header.component';
 import { ConfigurationScheduleExportComponent } from './components/configuration/configuration-schedule-export/configuration-schedule-export.component';
+import { ConfigurationConnectorComponent } from './components/configuration/configuration-connector/configuration-connector.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +140,8 @@ import { ConfigurationScheduleExportComponent } from './components/configuration
     GenericMappingTableComponent,
     SubMenuComponent,
     MappingCardHeaderComponent,
-    ConfigurationScheduleExportComponent
+    ConfigurationScheduleExportComponent,
+    ConfigurationConnectorComponent
   ],
   imports: [
     CommonModule,
@@ -225,7 +227,8 @@ import { ConfigurationScheduleExportComponent } from './components/configuration
     ConfigurationStepSubHeaderComponent,
     GenericMappingV2Component,
     SubMenuComponent,
-    ConfigurationScheduleExportComponent
+    ConfigurationScheduleExportComponent,
+    ConfigurationConnectorComponent
   ]
 })
 export class SharedModule { }

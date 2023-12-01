@@ -1,0 +1,50 @@
+<div class="tw-flex tw-justify-center tw-items-center">
+    <div class="tw-text-center tw-py-80-px tw-pr-130-px tw-border-r-1-px  right-margin-style tw-items-center">
+        <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-18-px">
+            FYLE
+        </h5>
+        <h3 class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
+            {{ fyleOrgName }}
+        </h3>
+        <p class="tw-text-14-px tw-text-slightly-normal-text-color tw-font-500">
+            Not the organization that you wish to connect? 
+        </p>
+    </div>
+    <div>
+        <img src="assets/gifs/disconnect.gif" height="100px" width="100px"/>
+    </div>
+    <div class="tw-text-center tw-py-70-px tw-pl-130-px left-margin-style tw-items-center">
+        <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-18-px">
+            {{ accountingAppTitle }}
+        </h5>
+        <h3 *ngIf="!accountingCompanyConnectionInProgress" class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
+            {{ accountingCompanyName }}
+        </h3>
+        <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px">
+            <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
+        </div>
+        <div class="tw-text-14-px tw-font-500">
+            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" class="tw-text-slightly-normal-text-color ">
+                No {{ accountingAppTitle }} company is connected yet.
+            </h4>
+            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color">
+                Connect to {{ accountingAppTitle }}
+            </h4>
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect" class="tw-text-slightly-normal-text-color ">
+                Not the company that you wish to connect with?
+            </h4>
+            <h4 *ngIf="accountingCompanyConnectionInProgress" class="tw-text-slightly-normal-text-color tw-max-w-300-px tw-overflow-hidden tw-break-all">
+                Please hold on; we are fetching data from your {{ accountingAppTitle }} account, which may take a few seconds.
+            </h4>
+            <h4 *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-slightly-normal-text-color ">
+                Token expired
+            </h4>
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color">
+                Re-Connect to {{ accountingAppTitle }}
+            </h4>
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect" (click)="disconnect()" class="tw-text-mandatory-field-color">
+                Disconnect
+            </h4>
+        </div>
+    </div>
+</div>
