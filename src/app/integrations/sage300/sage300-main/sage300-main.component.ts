@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 
 @Component({
   selector: 'app-sage300-main',
@@ -22,13 +23,12 @@ export class Sage300MainComponent implements OnInit {
   activeModule: MenuItem;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private helperService: Sage300HelperService,
   ) { }
 
-  refreshDimensions(eventData: boolean) {
-    if (eventData){
-      // RefreshDimension
-    }
+  refreshDimensions(isRefresh: boolean) {
+    this.helperService.importAttributes(isRefresh);
   }
 
   private setupPage() {
