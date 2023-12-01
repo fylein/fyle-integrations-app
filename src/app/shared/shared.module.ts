@@ -235,10 +235,10 @@ import { SkippedExportLogTableComponent } from './components/export-log/skipped-
     GenericMappingV2Component,
     SubMenuComponent,
     ConfigurationScheduleExportComponent,
-    ConfigurationScheduleExportComponent,
     ExportLogTableComponent,
     ExportLogFilterComponent,
-    ExportLogChildTableDialogComponent
+    ExportLogChildTableDialogComponent,
+    SkippedExportLogTableComponent
   ]
 })
 export class SharedModule { }
