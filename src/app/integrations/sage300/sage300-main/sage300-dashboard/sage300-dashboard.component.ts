@@ -53,7 +53,7 @@ export class Sage300DashboardComponent implements OnInit {
   ) { }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
-    interval(3000).pipe(
+    interval(20000).pipe(
       switchMap(() => from(this.accountingExportService.getAccountingExports([], exportableAccountingExportIds, 500, 0))),
       takeWhile((response: AccountingExportResponse) =>
         response.results.filter(task =>
