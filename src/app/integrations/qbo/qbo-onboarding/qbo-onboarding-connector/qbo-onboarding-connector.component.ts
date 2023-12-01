@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { ConfigurationCta, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -7,18 +8,20 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
 import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-qbo-onboarding-connector',
   templateUrl: './qbo-onboarding-connector.component.html',
   styleUrls: ['./qbo-onboarding-connector.component.scss']
 })
-export class QboOnboardingConnectorComponent implements OnInit {
+export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
   onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps('Connect to QuickBooks Online', this.workspaceService.getOnboardingState());
 
@@ -46,7 +49,10 @@ export class QboOnboardingConnectorComponent implements OnInit {
 
   isQboConnected: boolean = false;
 
+  private oauthCallbackSubscription: Subscription;
+
   constructor(
+    private helperService: HelperService,
     private qboConnectorService: QboConnectorService,
     private qboHelperService: QboHelperService,
     private qboExportSettingsService: QboExportSettingsService,
@@ -56,6 +62,19 @@ export class QboOnboardingConnectorComponent implements OnInit {
     private workspaceService: WorkspaceService
   ) { }
 
+  connectQbo(): void {
+    this.qboConnectionInProgress = true;
+    const url = `${environment.qbo_authorize_uri}?client_id=${environment.qbo_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.qbo_oauth_redirect_uri}&state=qbo_local_redirect`;
+
+    this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
+      const code = callbackURL.split('code=')[1].split('&')[0];
+      const realmId = callbackURL.split('realmId=')[1].split('&')[0];
+      this.postQboCredentials(code, realmId);
+    });
+
+    this.helperService.oauthHandler(url);
+  }
+
   save(): void {
     // TODO
   }
@@ -63,7 +82,7 @@ export class QboOnboardingConnectorComponent implements OnInit {
   acceptWarning(isWarningAccepted: boolean): void {
     this.isIncorrectQBOConnectedDialogVisible = false;
     if (isWarningAccepted) {
-      this.router.navigate([`/workspaces/onboarding/landing`]);
+      this.router.navigate([`/integrations/qbo/onboarding/landing`]);
     }
   }
 
@@ -99,7 +118,7 @@ export class QboOnboardingConnectorComponent implements OnInit {
         this.isIncorrectQBOConnectedDialogVisible = true;
       } else {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
-        this.router.navigate([`/integration/qbo/onboarding/landing`]);
+        this.router.navigate([`/integrations/qbo/onboarding/landing`]);
       }
     });
   }
@@ -138,6 +157,12 @@ export class QboOnboardingConnectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupPage();
+  }
+
+  ngOnDestroy(): void {
+    if (this.oauthCallbackSubscription) {
+      this.oauthCallbackSubscription.unsubscribe();
+    }
   }
 
 }
