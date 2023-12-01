@@ -6,7 +6,7 @@
         <h3 class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
             {{ fyleOrgName }}
         </h3>
-        <p class="tw-text-14-px tw-text-slightly-normal-text-color tw-font-500">
+        <p class="tw-text-14-px tw-text-faded-text-color tw-font-500">
             Not the organization that you wish to connect? 
         </p>
     </div>
@@ -24,26 +24,26 @@
             <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
         </div>
         <div class="tw-text-14-px tw-font-500">
-            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" class="tw-text-slightly-normal-text-color ">
+            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" class="tw-text-faded-text-color ">
                 No {{ accountingAppTitle }} company is connected yet.
             </h4>
             <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color">
                 Connect to {{ accountingAppTitle }}
             </h4>
-            <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect" class="tw-text-slightly-normal-text-color ">
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect" class="tw-text-faded-text-color">
                 Not the company that you wish to connect with?
             </h4>
-            <h4 *ngIf="accountingCompanyConnectionInProgress" class="tw-text-slightly-normal-text-color tw-max-w-300-px tw-overflow-hidden tw-break-all">
+            <h4 *ngIf="accountingCompanyConnectionInProgress" class="tw-text-faded-text-color tw-max-w-300-px tw-overflow-hidden tw-break-all">
                 Please hold on; we are fetching data from your {{ accountingAppTitle }} account, which may take a few seconds.
             </h4>
-            <h4 *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-slightly-normal-text-color ">
+            <h4 *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-faded-text-color ">
                 Token expired
             </h4>
             <h4 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color">
                 Re-Connect to {{ accountingAppTitle }}
             </h4>
             <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect" (click)="disconnect()" class="tw-text-mandatory-field-color">
-                Disconnect
+                {{ switchLinkTex }}
             </h4>
         </div>
     </div>

@@ -18,10 +18,11 @@
                 [accountingAppTitle]="'Dynamics 365 Business Central'"
                 [accountingCompanyName]="'Dynamics 365 Business Central'"
                 [fyleOrgName]="'Fyle Testing Org'"
-                [accountingCompanyTokenExpired]="true"
-                [isAccountingCompanyConnected]="true"
+                [accountingCompanyTokenExpired]="false"
+                [isAccountingCompanyConnected]="false"
                 [showDisconnect]="false"
-                [accountingCompanyConnectionInProgress]="false"></app-configuration-connector>
+                [accountingCompanyConnectionInProgress]="false"
+                [switchLinkTex]="'Switch Entity'"></app-configuration-connector>
             </div>
             <div>
                 <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" ></app-configuration-step-footer>
