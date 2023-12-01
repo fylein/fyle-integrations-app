@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { QboOauthCallbackComponent } from './qbo-oauth-callback.component';
+import { OauthCallbackComponent } from './oauth-callback.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: QboOauthCallbackComponent
+    component: OauthCallbackComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class QboOauthCallbackRoutingModule { }
+export class OauthCallbackRoutingModule { }

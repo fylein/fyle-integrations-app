@@ -79,7 +79,7 @@ export class QboOnboardingConnectorComponent implements OnInit {
   acceptWarning(isWarningAccepted: boolean): void {
     this.isIncorrectQBOConnectedDialogVisible = false;
     if (isWarningAccepted) {
-      this.router.navigate([`/workspaces/onboarding/landing`]);
+      this.router.navigate([`/integrations/qbo/onboarding/landing`]);
     }
   }
 

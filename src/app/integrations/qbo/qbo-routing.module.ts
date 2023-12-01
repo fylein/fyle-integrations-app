@@ -16,10 +16,6 @@ const routes: Routes = [
         path: 'main',
         loadChildren: () => import('./qbo-main/qbo-main.module').then(m => m.QboMainModule),
         canActivate: [QboTokenGuard]
-      },
-      {
-        path: 'oauth_callback',
-        loadChildren: () => import('./qbo-oauth-callback/qbo-oauth-callback.module').then(m => m.QboOauthCallbackModule)
       }
     ]
   }

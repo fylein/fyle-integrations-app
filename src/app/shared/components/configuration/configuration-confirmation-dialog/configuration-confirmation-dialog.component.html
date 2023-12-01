@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="tw-flex tw-justify-end tw-text-14-px tw-border-t-1-px tw-px-24-px tw-py-16-px">
-            <button type="button" class="cancel-btn" (click)="acceptWarning(false)">
+            <button *ngIf="showSecondaryCTA" type="button" class="cancel-btn" (click)="acceptWarning(false)">
                 Cancel
             </button>
             <button type="button" class="save-btn" pButton (click)="acceptWarning(true)">

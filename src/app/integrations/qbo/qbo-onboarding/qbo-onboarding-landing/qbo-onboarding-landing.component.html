@@ -1,4 +1,5 @@
-<div>
+<div *ngIf="!isIncorrectQBOConnectedDialogVisible">
+    <p (click)="connectQbo()">Connect QBO Button will be added somewhere in this page</p>
     <div>
         <app-landing-page-header [iconPath]="'assets/logos/qbo.svg'" [appName]="'QuickBooks Online'" [appDescription]="'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. '" [isLoading]="false" [isIntegrationSetupInProgress]="false" [isIntegrationConnected]="false" [redirectLink]="redirectLink" [buttonText]="'Connect'" [postConnectionRoute]="'qbo/onboarding/connector'"></app-landing-page-header>
     </div>
@@ -6,3 +7,12 @@
         <app-landing-page-body [headlineText]="'Guide to setup your Integrations'" [headerText]="'A quick guide to help you set up the integration quick and easy.'" [embedVideo]="embedVideoLink" [svgPath]="'assets/flow-charts/fyle-qbo-data-flow.svg'"></app-landing-page-body>
     </div>
 </div>
+<app-configuration-confirmation-dialog *ngIf="isIncorrectQBOConnectedDialogVisible"
+    (warningAccepted)="acceptWarning($event)"
+    [isWarningVisible]="isIncorrectQBOConnectedDialogVisible"
+    [headerText]="'Incorrect account selected'"
+    [contextText]="'You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings'"
+    [iconPath]="'assets/icons/alert_dialog.svg'"
+    [confirmBtnText]="'Re connect'"
+    [showSecondaryCTA]="false">
+</app-configuration-confirmation-dialog>

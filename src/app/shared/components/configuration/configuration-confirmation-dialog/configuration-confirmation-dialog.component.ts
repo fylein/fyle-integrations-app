@@ -17,6 +17,8 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   @Input() confirmBtnText: string;
 
+  @Input() showSecondaryCTA: boolean = true;
+
   @Output() warningAccepted = new EventEmitter<boolean>();
 
   constructor() { }
