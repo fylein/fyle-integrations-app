@@ -9,7 +9,7 @@
             (handleSimpleSearch)="handleSimpleSearch($event)">
         </app-export-log-filter>
 
-        <app-skipped-export-log-table>
+        <app-skipped-export-log-table [filteredExpense]="filteredAccountingExports">
         </app-skipped-export-log-table>
 
         <div *ngIf="filteredAccountingExports.length > 0" class="tw-p-24-px tw-border-t-1-px">
