@@ -7,6 +7,7 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
 import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
@@ -48,6 +49,7 @@ export class QboOnboardingConnectorComponent implements OnInit {
   isQboConnected: boolean = false;
 
   constructor(
+    private helperService: HelperService,
     private qboConnectorService: QboConnectorService,
     private qboHelperService: QboHelperService,
     private qboExportSettingsService: QboExportSettingsService,
@@ -61,23 +63,13 @@ export class QboOnboardingConnectorComponent implements OnInit {
     this.qboConnectionInProgress = true;
     const url = `${environment.qbo_authorize_uri}?client_id=${environment.qbo_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.qbo_oauth_redirect_uri}&state=qbo_local_redirect`;
 
-    const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
+    this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
+      const code = callbackURL.split('code=')[1].split('&')[0];
+      const realmId = callbackURL.split('realmId=')[1].split('&')[0];
+      this.postQboCredentials(code, realmId);
+    });
 
-    const activePopup = setInterval(() => {
-      if (popup?.location?.href?.includes('code')) {
-        const callbackURL = popup?.location.href;
-        const code = callbackURL.split('code=')[1].split('&')[0];
-        const realmId = callbackURL.split('realmId=')[1].split('&')[0];
-
-        this.postQboCredentials(code, realmId);
-
-        popup.close();
-      } else if (!popup || !popup.closed) {
-        return;
-      }
-
-      clearInterval(activePopup);
-    }, 500);
+    this.helperService.oauthHandler(url);
   }
 
   save(): void {

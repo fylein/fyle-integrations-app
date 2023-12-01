@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
@@ -14,6 +14,8 @@ import { AdvancedSettingValidatorRule } from '../../models/sage300/sage300-confi
   providedIn: 'root'
 })
 export class HelperService {
+
+  @Output() oauthCallbackUrl: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private router: Router,
@@ -152,6 +154,23 @@ export class HelperService {
         this.clearValidatorAndResetValue(skipExportForm, value);
       });
     }
+  }
+
+  oauthHandler(url: string): void {
+    const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
+
+    const activePopup = setInterval(() => {
+      if (popup?.location?.href?.includes('code')) {
+        const callbackURL = popup?.location.href;
+        this.oauthCallbackUrl.emit(callbackURL);
+
+        popup.close();
+      } else if (!popup || !popup.closed) {
+        return;
+      }
+
+      clearInterval(activePopup);
+    }, 500);
   }
 }
 

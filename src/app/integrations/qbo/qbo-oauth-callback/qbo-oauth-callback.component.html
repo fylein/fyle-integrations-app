@@ -1,0 +1,11 @@
+<div class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-h-[100%]">
+    <app-loader *ngIf="!isIncorrectQBOConnectedDialogVisible"></app-loader>
+    <app-configuration-confirmation-dialog
+        (warningAccepted)="acceptWarning($event)"
+        [isWarningVisible]="isIncorrectQBOConnectedDialogVisible"
+        [headerText]="'Incorrect account selected'"
+        [contextText]="'You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings'"
+        [iconPath]="'assets/icons/alert_dialog.svg'"
+        [confirmBtnText]="'Re connect'">
+    </app-configuration-confirmation-dialog>
+</div>
