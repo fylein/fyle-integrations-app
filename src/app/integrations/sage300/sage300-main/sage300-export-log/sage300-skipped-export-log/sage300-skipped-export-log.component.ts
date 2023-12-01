@@ -59,20 +59,20 @@ export class Sage300SkippedExportLogComponent implements OnInit {
   getSkippedAccountingExports(limit: number, offset: number) {
     this.isLoading = true;
     const expenseGroups: SkipExportList[] = [];
-  
+
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
-  
+
     return this.exportLogService.getSkippedExpenses(limit, offset).subscribe((skippedExpenses: SkipExportLogResponse) => {
       if (!this.isDateSelected) {
         this.totalCount = skippedExpenses.count;
       }
-  
+
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
         expenseGroups.push(SkippedAccountingExportClass.mapSkipExportLogToSkipExportList(skippedExpense));
       });
-  
+
       this.filteredAccountingExports = expenseGroups;
       this.accountingExports = [...this.filteredAccountingExports];
       this.isLoading = false;
