@@ -1,6 +1,6 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
 import { AccountingExportStatus, AccountingExportType, FundSource, FyleReferenceType } from "../enum/enum.model";
-import { ExpenseGroupDescription } from "../si/db/expense-group.model";
+import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../si/db/expense-group.model";
 import { Expense } from "../si/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
 import { ExportLogService } from "../../services/common/export-log.service";
@@ -52,7 +52,7 @@ export type AccountingExportGetParam = {
     exported_at__gte?: string
 }
 
-export class AccountingExportClass {
+export class AccountingExportModel {
 
   static getDateOptions(): DateFilter[] {
     const dateOptions: DateFilter[] = [
@@ -86,7 +86,7 @@ export class AccountingExportClass {
     return url;
   }
 
-  static getfilteredAccountingExports(query: any, group: AccountingExportList) {
+  static getfilteredAccountingExports(query: string, group: AccountingExportList): boolean {
     const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';
@@ -132,7 +132,7 @@ export class AccountingExportClass {
   }
 
   static parseAPIResponseToExportLog(accountingExport: AccountingExport, exportLogService: ExportLogService): AccountingExportList {
-    const referenceType = AccountingExportClass.getReferenceType(accountingExport.description);
+    const referenceType = AccountingExportModel.getReferenceType(accountingExport.description);
     const referenceNumber = this.getFyleReferenceNumber(referenceType, accountingExport);
 
     return {
@@ -144,6 +144,30 @@ export class AccountingExportClass {
       fyleUrl: exportLogService.generateFyleUrl(accountingExport, referenceType),
       integrationUrl: accountingExport.export_url,
       expenses: accountingExport.expenses
+    };
+  }
+}
+
+export class SkippedAccountingExportModel {
+  static getfilteredSkippedAccountingExports(query: string, group: SkipExportList): boolean {
+    const employeeID = group.employee ? group.employee[1] : '';
+    const expenseType = group.expenseType ? group.expenseType : '';
+    const referenceNumber = group.claim_number ? group.claim_number : '';
+
+    return (
+      employeeID.toLowerCase().includes(query) ||
+      expenseType.toLowerCase().includes(query) ||
+      referenceNumber.toLowerCase().includes(query)
+    );
+  }
+
+  static parseAPIResponseToSkipExportList(skippedExpenses: SkipExportLog): SkipExportList {
+    return {
+      updated_at: skippedExpenses.updated_at,
+      claim_number: skippedExpenses.claim_number,
+      employee: [skippedExpenses.employee_name, skippedExpenses.employee_email],
+      expenseType: skippedExpenses.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
+      fyleUrl: `${environment.fyle_app_url}/app/main/#/view_expense/${skippedExpenses.expense_id}`
     };
   }
 }
