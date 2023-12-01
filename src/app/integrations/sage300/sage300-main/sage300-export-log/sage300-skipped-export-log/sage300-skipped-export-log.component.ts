@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SkippedAccountingExportClass } from 'src/app/core/models/db/accounting-export.model';
+import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
@@ -25,9 +25,9 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  accountingExports: SkipExportList[];
+  expenses: SkipExportList[];
 
-  filteredAccountingExports: SkipExportList[];
+  filteredExpenses: SkipExportList[];
 
   limit: number;
 
@@ -51,14 +51,14 @@ export class Sage300SkippedExportLogComponent implements OnInit {
   public handleSimpleSearch(event: any) {
     const query = event.target.value.toLowerCase();
 
-    this.filteredAccountingExports = this.accountingExports.filter((group: SkipExportList) => {
-      return SkippedAccountingExportClass.getfilteredSkippedAccountingExports(query, group);
+    this.filteredExpenses = this.expenses.filter((group: SkipExportList) => {
+      return SkippedAccountingExportModel.getfilteredSkippedAccountingExports(query, group);
     });
   }
 
-  getSkippedAccountingExports(limit: number, offset: number) {
+  getSkippedExpenses(limit: number, offset: number) {
     this.isLoading = true;
-    const expenseGroups: SkipExportList[] = [];
+    const skippedExpenseGroup: SkipExportList[] = [];
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
@@ -70,11 +70,11 @@ export class Sage300SkippedExportLogComponent implements OnInit {
       }
 
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        expenseGroups.push(SkippedAccountingExportClass.mapSkipExportLogToSkipExportList(skippedExpense));
+        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
       });
 
-      this.filteredAccountingExports = expenseGroups;
-      this.accountingExports = [...this.filteredAccountingExports];
+      this.filteredExpenses = skippedExpenseGroup;
+      this.expenses = [...this.filteredExpenses];
       this.isLoading = false;
     });
   }
@@ -83,14 +83,14 @@ export class Sage300SkippedExportLogComponent implements OnInit {
     this.isLoading = true;
     this.limit = limit;
     this.currentPage = 1;
-    this.getSkippedAccountingExports(limit, this.offset);
+    this.getSkippedExpenses(limit, this.offset);
   }
 
   pageChanges(offset: number): void {
     this.isLoading = true;
     this.offset = offset;
     this.currentPage = Math.ceil(offset / this.limit) + 1;
-    this.getSkippedAccountingExports(this.limit, offset);
+    this.getSkippedExpenses(this.limit, offset);
   }
 
   private setupForm(): void {
@@ -110,22 +110,22 @@ export class Sage300SkippedExportLogComponent implements OnInit {
         };
 
         this.trackDateFilter('existing', this.selectedDateFilter);
-        this.getSkippedAccountingExports(paginator.limit, paginator.offset);
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
       } else {
         this.selectedDateFilter = null;
-        this.getSkippedAccountingExports(paginator.limit, paginator.offset);
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
       }
     });
   }
 
-  private getSkippedAccountingExportsAndSetupPage(): void {
+  private getSkippedExpensesAndSetupPage(): void {
     this.setupForm();
 
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
     this.limit = paginator.limit;
     this.offset = paginator.offset;
 
-    this.getSkippedAccountingExports(paginator.limit, paginator.offset);
+    this.getSkippedExpenses(paginator.limit, paginator.offset);
   }
 
   private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
@@ -137,7 +137,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getSkippedAccountingExportsAndSetupPage();
+    this.getSkippedExpensesAndSetupPage();
   }
 
 }
