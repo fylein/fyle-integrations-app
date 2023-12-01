@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SkippedAccountingExportClass } from 'src/app/core/models/db/accounting-export.model';
-import { SkipExportList } from 'src/app/core/models/si/db/expense-group.model';
+import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { Paginator } from 'src/app/core/models/misc/paginator.model';
+import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { PaginatorService } from 'src/app/core/services/common/paginator.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-sage300-skipped-export-log',
@@ -26,7 +35,18 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  constructor() { }
+  isDateSelected: boolean = false;
+
+  selectedDateFilter: SelectedDateFilter | null;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private trackingService: TrackingService,
+    private exportLogService: ExportLogService,
+    private accountingExportService: AccountingExportService,
+    private windowService: WindowService,
+    private paginatorService: PaginatorService
+  ) { }
 
   public handleSimpleSearch(event: any) {
     const query = event.target.value.toLowerCase();
@@ -44,7 +64,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkipExportLogs(limit, offset).subscribe((skippedExpenses: SkipExportLogResponse) => {
+    return this.exportLogService.getSkippedExpenses(limit, offset).subscribe((skippedExpenses: SkipExportLogResponse) => {
       if (!this.isDateSelected) {
         this.totalCount = skippedExpenses.count;
       }
@@ -57,8 +77,8 @@ export class Sage300SkippedExportLogComponent implements OnInit {
           fyleUrl: `${environment.fyle_app_url}/app/main/#/view_expense/${skippedExpenses.expense_id}`
         });
       });
-      this.filteredExpenseGroups = expenseGroups;
-      this.expenseGroups = [...this.filteredExpenseGroups];
+      this.filteredAccountingExports = expenseGroups;
+      this.accountingExports = [...this.filteredAccountingExports];
       this.isLoading = false;
     });
   }
@@ -77,7 +97,51 @@ export class Sage300SkippedExportLogComponent implements OnInit {
     this.getSkippedAccountingExports(this.limit, offset);
   }
 
+  private setupForm(): void {
+    this.skipExportLogForm = this.formBuilder.group({
+      searchOption: [''],
+      dateRange: [null],
+      start: [''],
+      end: ['']
+    });
+
+    this.skipExportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+      if (dateRange) {
+        this.selectedDateFilter = {
+          startDate: dateRange.startDate,
+          endDate: dateRange.endDate
+        };
+
+        this.trackDateFilter('existing', this.selectedDateFilter);
+        this.getSkippedAccountingExports(paginator.limit, paginator.offset);
+      } else {
+        this.selectedDateFilter = null;
+        this.getSkippedAccountingExports(paginator.limit, paginator.offset);
+      }
+    });
+  }
+
+  private getAccountingExportsAndSetupPage(): void {
+    this.setupForm();
+
+    const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+    this.limit = paginator.limit;
+    this.offset = paginator.offset;
+
+    this.getSkippedAccountingExports(paginator.limit, paginator.offset);
+  }
+
+  private trackDateFilter(filterType: 'existing' | 'custom', selectedDateFilter: SelectedDateFilter): void {
+    const trackingProperty = {
+      filterType,
+      ...selectedDateFilter
+    };
+    this.trackingService.onDateFilter(trackingProperty);
+  }
+
   ngOnInit(): void {
+    this.getAccountingExportsAndSetupPage();
   }
 
 }
