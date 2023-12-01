@@ -122,7 +122,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
     });
   }
 
-  private getAccountingExportsAndSetupPage(): void {
+  private getSkippedAccountingExportsAndSetupPage(): void {
     this.setupForm();
 
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
@@ -141,7 +141,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAccountingExportsAndSetupPage();
+    this.getSkippedAccountingExportsAndSetupPage();
   }
 
 }
