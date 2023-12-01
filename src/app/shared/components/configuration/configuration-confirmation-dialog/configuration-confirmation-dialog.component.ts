@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class ConfigurationConfirmationDialogComponent implements OnInit {
 
-  @Input() showDependentFieldWarning: any;
+  @Input() isWarningVisible: boolean;
 
   @Input() headerText: string;
 
@@ -17,15 +17,15 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   @Input() confirmBtnText: string;
 
+  @Input() showSecondaryCTA: boolean = true;
+
   @Output() warningAccepted = new EventEmitter<boolean>();
 
   constructor() { }
 
-  acceptDependentFieldWarning(isWarningAccepted: boolean) {
+  acceptWarning(isWarningAccepted: boolean) {
     this.warningAccepted.emit(isWarningAccepted);
   }
-
-
 
   ngOnInit(): void {
   }

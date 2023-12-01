@@ -41,7 +41,7 @@ export class WorkspaceService {
     this.storageService.set('workspaceId', workspaceId);
   }
 
-  setOnboardingState(onboardingState: IntacctOnboardingState | QBDOnboardingState | Sage300OnboardingState): void {
+  setOnboardingState(onboardingState: string): void {
     this.storageService.set('onboarding-state', onboardingState);
   }
 
