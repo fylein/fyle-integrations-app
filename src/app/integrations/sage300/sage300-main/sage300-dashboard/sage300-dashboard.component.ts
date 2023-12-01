@@ -25,7 +25,7 @@ export class Sage300DashboardComponent implements OnInit {
 
   isExportInProgress: boolean = false;
 
-  exportableAccountingExportIds: number[];
+  exportableAccountingExportIds: number[] = [];
 
   failedExpenseGroupCount: number = 0;
 
