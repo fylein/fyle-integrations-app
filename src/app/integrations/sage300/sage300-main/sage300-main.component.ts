@@ -24,7 +24,7 @@ export class Sage300MainComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private helperService: Sage300HelperService,
+    private helperService: Sage300HelperService
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
