@@ -12,6 +12,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-qbo-onboarding-connector',
@@ -57,7 +58,26 @@ export class QboOnboardingConnectorComponent implements OnInit {
   ) { }
 
   connectQbo(): void {
-    // TODO
+    this.qboConnectionInProgress = true;
+    const url = `${environment.qbo_authorize_uri}?client_id=${environment.qbo_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.qbo_oauth_redirect_uri}&state=qbo_local_redirect`;
+
+    const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
+
+    const activePopup = setInterval(() => {
+      if (popup?.location?.href?.includes('code')) {
+        const callbackURL = popup?.location.href;
+        const code = callbackURL.split('code=')[1].split('&')[0];
+        const realmId = callbackURL.split('realmId=')[1].split('&')[0];
+
+        this.postQboCredentials(code, realmId);
+
+        popup.close();
+      } else if (!popup || !popup.closed) {
+        return;
+      }
+
+      clearInterval(activePopup);
+    }, 500);
   }
 
   save(): void {
