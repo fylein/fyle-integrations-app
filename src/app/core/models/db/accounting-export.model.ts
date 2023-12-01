@@ -1,6 +1,6 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
 import { AccountingExportStatus, AccountingExportType, FundSource, FyleReferenceType } from "../enum/enum.model";
-import { ExpenseGroupDescription, SkipExportList } from "../si/db/expense-group.model";
+import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../si/db/expense-group.model";
 import { Expense } from "../si/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
 import { ExportLogService } from "../../services/common/export-log.service";
@@ -160,4 +160,15 @@ export class SkippedAccountingExportClass {
       referenceNumber.toLowerCase().includes(query)
     );
   }
+
+  static mapSkipExportLogToSkipExportList(skippedExpenses: SkipExportLog): SkipExportList {
+    return {
+      updated_at: skippedExpenses.updated_at,
+      claim_number: skippedExpenses.claim_number,
+      employee: [skippedExpenses.employee_name, skippedExpenses.employee_email],
+      expenseType: skippedExpenses.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
+      fyleUrl: `${environment.fyle_app_url}/app/main/#/view_expense/${skippedExpenses.expense_id}`
+    };
+  }
 }
+
