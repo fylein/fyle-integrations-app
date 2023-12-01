@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
@@ -18,7 +19,11 @@ export class Sage300MainComponent implements OnInit {
     {label: 'Configuration', routerLink: '/integrations/sage300/main/configuration'}
   ];
 
-  constructor() { }
+  activeModule: MenuItem;
+
+  constructor(
+    private router: Router
+  ) { }
 
   refreshDimensions(eventData: boolean) {
     if (eventData){
@@ -26,7 +31,13 @@ export class Sage300MainComponent implements OnInit {
     }
   }
 
+  private setupPage() {
+    this.activeModule = this.modules[0];
+    this.router.navigateByUrl(this.modules[0].routerLink);
+  }
+
   ngOnInit(): void {
+    this.setupPage();
   }
 
 }
