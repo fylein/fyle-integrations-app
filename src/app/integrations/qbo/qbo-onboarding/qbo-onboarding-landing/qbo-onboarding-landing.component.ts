@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
@@ -15,7 +16,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './qbo-onboarding-landing.component.html',
   styleUrls: ['./qbo-onboarding-landing.component.scss']
 })
-export class QboOnboardingLandingComponent implements OnInit {
+export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 
   brandingConfig = brandingConfig;
 
@@ -24,6 +25,8 @@ export class QboOnboardingLandingComponent implements OnInit {
   embedVideoLink = brandingDemoVideoLinks.onboarding.QBO;
 
   isIncorrectQBOConnectedDialogVisible: boolean = false;
+
+  private oauthCallbackSubscription: Subscription;
 
   constructor(
     private helperService: HelperService,
@@ -63,7 +66,7 @@ export class QboOnboardingLandingComponent implements OnInit {
         this.isIncorrectQBOConnectedDialogVisible = true;
       } else {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
-        this.router.navigate([`/integration/qbo/onboarding/landing`]);
+        this.router.navigate([`/integrations/qbo/onboarding/landing`]);
       }
     });
   }
@@ -85,6 +88,12 @@ export class QboOnboardingLandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    if (this.oauthCallbackSubscription) {
+      this.oauthCallbackSubscription.unsubscribe();
+    }
   }
 
 }
