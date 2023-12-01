@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { AccountingExportClass } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 
@@ -23,7 +23,7 @@ export class ExportLogFilterComponent implements OnInit {
 
   presentDate = new Date().toLocaleDateString();
 
-  dateOptions: DateFilter[] = AccountingExportClass.getDateOptions();
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptions();
 
   constructor() { }
 
