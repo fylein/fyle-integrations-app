@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BusinessCentralConnectorPost, BusinessCentralConnectorModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
@@ -31,13 +31,23 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit {
 
   private oauthCallbackSubscription: Subscription;
 
+  isIncorrectQBOConnectedDialogVisible: boolean;
+
   constructor(
     private helperService: HelperService,
     private businessCentralConnectorService: BusinessCentralConnectorService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private businessCentralHelperService: BusinessCentralHelperService
+    private businessCentralHelperService: BusinessCentralHelperService,
+    private workspaceService: WorkspaceService
   ) { }
+
+  acceptWarning(isWarningAccepted: boolean): void {
+    this.isIncorrectQBOConnectedDialogVisible = false;
+    if (isWarningAccepted) {
+      this.router.navigate([`/integrations/qbo/onboarding/landing`]);
+    }
+  }
 
   connectBusinessCentral(): void {
     this.businessCentralConnectionInProgress = true;
@@ -45,7 +55,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit {
 
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
       const code = callbackURL.split('code=')[1].split('&')[0];
-      this.postBusinessCentralCredentials(code);
+      this.checkProgressAndRedirect(code);
     });
 
     this.helperService.oauthHandler(url);
@@ -55,15 +65,13 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit {
     const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(code);
 
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe(() => {
-      this.businessCentralHelperService.refreshBusinessCentralDimensions().subscribe(() => {
         this.businessCentralConnectionInProgress = false;
         this.isIntegrationConnected = true;
-        this.router.navigate([`/integrations/business_central/onboarding/connector`]);
-      });
+        this.router.navigate([`/integrations/business_central/main/dashboard`]);
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
       if (errorMessage === 'Please choose the correct Dynamic 360 Business Central account') {
-        this.isIntegrationConnected = false;
+        this.isIncorrectQBOConnectedDialogVisible = false;
       } else {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
         this.router.navigate([`/integrations/business_central/onboarding/landing`]);
@@ -71,7 +79,27 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit {
     });
   }
 
+  private checkProgressAndRedirect(code: string): void {
+    const onboardingState: BusinessCentralOnboardingState = this.workspaceService.getOnboardingState();
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        code
+      }
+    };
+
+    if (onboardingState !== BusinessCentralOnboardingState.COMPLETE) {
+      this.router.navigate(['integrations/qbo/onboarding/connector'], navigationExtras);
+    } else {
+      this.postBusinessCentralCredentials(code);
+    }
+  }
+
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    if (this.oauthCallbackSubscription) {
+      this.oauthCallbackSubscription.unsubscribe();
+    }
+  }
 }

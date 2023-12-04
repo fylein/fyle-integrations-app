@@ -14,6 +14,8 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
+import { environment } from 'src/environments/environment';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-business-central-onboarding-connector',
@@ -60,8 +62,21 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
-    private businessCentralHelperService: BusinessCentralHelperService
+    private businessCentralHelperService: BusinessCentralHelperService,
+    private helperService: HelperService
   ) { }
+
+  connectQbo(): void {
+    this.businessCentralConnectionInProgress = true;
+    const url = `${environment.business_central_authorize_uri}?client_id=${environment.business_central_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect`;
+
+    this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
+      const code = callbackURL.split('code=')[1].split('&')[0];
+      this.postBusinessCentralCredentials(code);
+    });
+
+    this.helperService.oauthHandler(url);
+  }
 
   save(): void {
     // TODO
@@ -95,10 +110,12 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
 
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe((businessCentralCredential: BusinessCentralCredential) => {
       this.businessCentralConnectorService.getBusinessCentralCompany().subscribe((businessCentralCompanyDetails: BusinessCentralCompanyDetails) => {
-        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
-        this.businessCentralConnectionInProgress = false;
-        this.businessCentralCompanyName = businessCentralCompanyDetails.business_central_company;
-        this.showOrHideDisconnectBusinessCentral();
+        this.businessCentralHelperService.refreshBusinessCentralDimensions().subscribe(() => {
+          this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
+          this.businessCentralConnectionInProgress = false;
+          this.businessCentralCompanyName = businessCentralCompanyDetails.business_central_company;
+          this.showOrHideDisconnectBusinessCentral();
+        });
       });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
