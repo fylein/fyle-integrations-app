@@ -43,6 +43,10 @@ const routes: Routes = [
       {
         path: 'business_central',
         loadChildren: () => import('./business-central/business-central.module').then(m => m.BusinessCentralModule)
+      },
+      {
+        path: 'oauth_callback',
+        loadChildren: () => import('./oauth-callback/oauth-callback.module').then(m => m.OauthCallbackModule)
       }
     ]
   }

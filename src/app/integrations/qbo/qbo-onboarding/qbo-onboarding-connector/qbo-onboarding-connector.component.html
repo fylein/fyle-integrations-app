@@ -1,1 +1,34 @@
-<p>qbo-onboarding-connector works!</p>
+<div>
+    <app-onboarding-steppers [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
+    <div>
+        <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
+            <app-loader></app-loader>
+        </div>
+        <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-24-px">
+            <div>
+                <app-configuration-step-header
+                    [headerText]="'Connect to QuickBooks Online'"
+                    [contentText]="'Connect to the QuickBooks Online Company from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and QuickBooks Online company cannot be changed once the configuration steps are complete'"
+                    [redirectLink]="redirectLink"
+                ></app-configuration-step-header>
+            </div>
+            <div class="tw-flex tw-justify-center tw-items-center">
+                <div class="tw-p-24-px" (click)="connectQbo()">
+                    Connect QBO
+                </div>
+                <app-configuration-confirmation-dialog
+                    (warningAccepted)="acceptWarning($event)"
+                    [isWarningVisible]="isIncorrectQBOConnectedDialogVisible"
+                    [headerText]="'Incorrect account selected'"
+                    [contextText]="'You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings'"
+                    [iconPath]="'assets/icons/alert_dialog.svg'"
+                    [confirmBtnText]="'Re connect'"
+                    [showSecondaryCTA]="false">
+                </app-configuration-confirmation-dialog>
+            </div>
+            <div>
+                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" ></app-configuration-step-footer>
+             </div>
+        </div>
+    </div>
+</div>

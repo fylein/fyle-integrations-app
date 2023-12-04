@@ -1,5 +1,5 @@
 import { AccountingErrorType } from "../enum/enum.model";
-import { AccountingExportCreationType } from "./accounting-export.model";
+import { AccountingExport } from "./accounting-export.model";
 import { ExpenseAttribute } from "./expense-attribute.model";
 
 export interface DestinationAttributeDetail {
@@ -15,7 +15,7 @@ export interface DestinationAttributeDetail {
 export interface Error {
     id: number;
     expense_attribute: ExpenseAttribute;
-    expense_group: AccountingExportCreationType | null;
+    expense_group: AccountingExport | null;
     type: AccountingErrorType;
     is_resolved: boolean;
     error_title: string;
