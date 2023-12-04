@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -17,16 +18,7 @@ export class DashboardExportLogDialogComponent implements OnInit {
 
   @Input() isExportLogFetchInProgress: boolean;
 
-  readonly dummyExpenseGroupList: AccountingExportList[] = [{
-    exportedAt: new Date(),
-    employee: ['a', 'b'],
-    expenseType: 'Corporate Card',
-    referenceNumber: '123',
-    exportedAs: 'a',
-    integrationUrl: 'a',
-    fyleUrl: 'a',
-    expenses: []
-  }];
+  @Input() appName: AppName;
 
   constructor(
     private windowService: WindowService
