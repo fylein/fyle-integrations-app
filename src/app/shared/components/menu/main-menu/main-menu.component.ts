@@ -12,6 +12,8 @@ export class MainMenuComponent implements OnInit {
 
   @Input() modules: MenuItem[];
 
+  @Input() activeItem: MenuItem;
+
   @Input() moreDropdown = null;
 
   @Input() appName: AppName;
