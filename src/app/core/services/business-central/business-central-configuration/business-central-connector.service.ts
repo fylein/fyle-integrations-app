@@ -3,7 +3,7 @@ import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable'
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { Observable, Subject } from 'rxjs';
-import { BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
+import { BusinessCentralCompanyDetails, BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
 import { BusinessCentralConnectorPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
 
 const businessCentralCredentialsCache$ = new Subject<void>();
@@ -41,6 +41,10 @@ export class BusinessCentralConnectorService {
   disconnectBusinessCentralConnection(): Observable<BusinessCentralCredential> {
     globalCacheBusterNotifier.next();
     return this.apiService.patch(`/workspaces/${this.workspaceId}/credentials/business_central/`, {});
+  }
+
+  getBusinessCentralCompany(): Observable<BusinessCentralCompanyDetails> {
+    return this.apiService.get(`/workspace/${this.workspaceId}/business_central/company/`, {});
   }
 
 }

@@ -18,10 +18,10 @@
                 [accountingAppTitle]="'Dynamics 365 Business Central'"
                 [accountingCompanyName]="'Dynamics 365 Business Central'"
                 [fyleOrgName]="'Fyle Testing Org'"
-                [accountingCompanyTokenExpired]="false"
-                [isAccountingCompanyConnected]="false"
-                [showDisconnect]="false"
-                [accountingCompanyConnectionInProgress]="false"
+                [accountingCompanyTokenExpired]="businessCentralTokenExpired"
+                [isAccountingCompanyConnected]="isBusinessCentralConnected"
+                [showDisconnect]="showDisconnectBusinessCentral"
+                [accountingCompanyConnectionInProgress]="businessCentralConnectionInProgress"
                 [switchLinkText]="'Switch Entity'"></app-configuration-connector>
             </div>
             <div>
