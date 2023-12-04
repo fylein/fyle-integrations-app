@@ -12,22 +12,31 @@
                     [redirectLink]="redirectLink"
                 ></app-configuration-step-header>
             </div>
-            <div class="tw-flex tw-justify-center tw-items-center">
-                <div class="tw-p-24-px" (click)="connectQbo()">
-                    Connect QBO
-                </div>
-                <app-configuration-confirmation-dialog
-                    (warningAccepted)="acceptWarning($event)"
-                    [isWarningVisible]="isIncorrectQBOConnectedDialogVisible"
-                    [headerText]="'Incorrect account selected'"
-                    [contextText]="'You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings'"
-                    [iconPath]="'assets/icons/alert_dialog.svg'"
-                    [confirmBtnText]="'Re connect'"
-                    [showSecondaryCTA]="false">
-                </app-configuration-confirmation-dialog>
-            </div>
+            <app-configuration-connector
+                [accountingAppTitle]="'QuickBooks Online Company'"
+                [accountingCompanyName]="qboCompanyName"
+                [fyleOrgName]="fyleOrgName"
+                [accountingCompanyTokenExpired]="qboTokenExpired"
+                [isAccountingCompanyConnected]="isQboConnected"
+                [showDisconnect]="showDisconnectQBO"
+                [accountingCompanyConnectionInProgress]="qboConnectionInProgress"
+                [switchLinkText]="'Disconnect'"
+                (switchCompany)="disconnectQbo()"
+                (connectCompany)="connectQbo()"
+            ></app-configuration-connector>
+
+            <app-configuration-confirmation-dialog
+                (warningAccepted)="acceptWarning($event)"
+                [isWarningVisible]="isIncorrectQBOConnectedDialogVisible"
+                [headerText]="'Incorrect account selected'"
+                [contextText]="'You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings'"
+                [iconPath]="'assets/icons/alert_dialog.svg'"
+                [confirmBtnText]="'Re connect'"
+                [showSecondaryCTA]="false">
+            </app-configuration-confirmation-dialog>
+
             <div>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" ></app-configuration-step-footer>
+                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
              </div>
         </div>
     </div>

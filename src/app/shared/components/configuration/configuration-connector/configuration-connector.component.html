@@ -14,7 +14,7 @@
         <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-18-px">
             {{ accountingAppTitle }}
         </h5>
-        <h3 *ngIf="!accountingCompanyConnectionInProgress" class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
+        <h3 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyName" class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
             {{ accountingCompanyName }}
         </h3>
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px">
@@ -22,9 +22,9 @@
         </div>
         <div class="tw-text-14-px tw-font-500">
             <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" class="tw-text-faded-text-color ">
-                No {{ accountingAppTitle }} company is connected yet.
+                No {{ accountingAppTitle }} is connected yet.
             </h4>
-            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color">
+            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
                 Connect to {{ accountingAppTitle }}
             </h4>
             <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect" class="tw-text-faded-text-color">
@@ -36,10 +36,10 @@
             <h4 *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-faded-text-color ">
                 Token expired
             </h4>
-            <h4 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color">
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
                 Re-Connect to {{ accountingAppTitle }}
             </h4>
-            <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect" (click)="disconnect()" class="tw-text-mandatory-field-color">
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect" (click)="disconnect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
                 {{ switchLinkText }}
             </h4>
         </div>
