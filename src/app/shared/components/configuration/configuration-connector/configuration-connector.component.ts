@@ -1,4 +1,5 @@
 import { Component, EventEmitter, INJECTOR, Input, OnInit, Output } from '@angular/core';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-connector',
@@ -13,7 +14,7 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   @Input() accountingCompanyName: string;
 
-  @Input() switchLinkTex: string;
+  @Input() switchLinkText: string;
 
   @Input() isAccountingCompanyConnected: boolean;
 
@@ -27,6 +28,7 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   @Output() connectCompany = new EventEmitter();
 
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

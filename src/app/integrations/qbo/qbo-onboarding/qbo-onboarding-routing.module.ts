@@ -8,6 +8,7 @@ import { QboOnboardingExportSettingsComponent } from './qbo-onboarding-export-se
 import { QboOnboardingImportSettingsComponent } from './qbo-onboarding-import-settings/qbo-onboarding-import-settings.component';
 import { QboOnboardingAdvancedSettingsComponent } from './qbo-onboarding-advanced-settings/qbo-onboarding-advanced-settings.component';
 import { QboOnboardingDoneComponent } from './qbo-onboarding-done/qbo-onboarding-done.component';
+import { QboTokenGuard } from 'src/app/core/guard/qbo-token.guard';
 
 const routes: Routes = [
   {
@@ -24,23 +25,28 @@ const routes: Routes = [
       },
       {
         path: 'employee_settings',
-        component: QboOnboardingEmployeeSettingsComponent
+        component: QboOnboardingEmployeeSettingsComponent,
+        canActivate: [QboTokenGuard]
       },
       {
         path: 'export_settings',
-        component: QboOnboardingExportSettingsComponent
+        component: QboOnboardingExportSettingsComponent,
+        canActivate: [QboTokenGuard]
       },
       {
         path: 'import_settings',
-        component: QboOnboardingImportSettingsComponent
+        component: QboOnboardingImportSettingsComponent,
+        canActivate: [QboTokenGuard]
       },
       {
         path: 'advanced_settings',
-        component: QboOnboardingAdvancedSettingsComponent
+        component: QboOnboardingAdvancedSettingsComponent,
+        canActivate: [QboTokenGuard]
       },
       {
         path: 'done',
-        component: QboOnboardingDoneComponent
+        component: QboOnboardingDoneComponent,
+        canActivate: [QboTokenGuard]
       }
     ]
   }

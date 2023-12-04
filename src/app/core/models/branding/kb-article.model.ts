@@ -25,6 +25,14 @@ export type KbArticle = {
                 LANDING: string;
                 SKIP_EXPORT: string;
             },
+            QBO: {
+                LANDING: string;
+                CONNECTOR: string;
+                EMPLOYEE_SETTING: string;
+                EXPORT_SETTING: string;
+                IMPORT_SETTING: string;
+                ADVANCED_SETTING: string;
+            }
             BUSINESS_CENTRAL: {
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;

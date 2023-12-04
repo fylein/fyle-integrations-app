@@ -1,14 +1,11 @@
 <div class="tw-flex tw-justify-center tw-items-center">
     <div class="tw-text-center tw-py-80-px tw-pr-130-px tw-border-r-1-px  right-margin-style tw-items-center">
         <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-18-px">
-            FYLE
+            {{brandingConfig.brandName}}
         </h5>
         <h3 class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
             {{ fyleOrgName }}
         </h3>
-        <p class="tw-text-14-px tw-text-faded-text-color tw-font-500">
-            Not the organization that you wish to connect? 
-        </p>
     </div>
     <div>
         <img src="assets/gifs/disconnect.gif" height="100px" width="100px"/>
@@ -43,7 +40,7 @@
                 Re-Connect to {{ accountingAppTitle }}
             </h4>
             <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect" (click)="disconnect()" class="tw-text-mandatory-field-color">
-                {{ switchLinkTex }}
+                {{ switchLinkText }}
             </h4>
         </div>
     </div>

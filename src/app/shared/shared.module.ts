@@ -80,6 +80,11 @@ import { SubMenuComponent } from './components/menu/sub-menu/sub-menu.component'
 import { MappingCardHeaderComponent } from './components/helper/mapping/mapping-card-header/mapping-card-header.component';
 import { ConfigurationScheduleExportComponent } from './components/configuration/configuration-schedule-export/configuration-schedule-export.component';
 import { ConfigurationConnectorComponent } from './components/configuration/configuration-connector/configuration-connector.component';
+import { ExportLogTableComponent } from './components/export-log/export-log-table/export-log-table.component';
+import { ExportLogFilterComponent } from './components/export-log/export-log-filter/export-log-filter.component';
+import { ExportLogChildTableDialogComponent } from './components/export-log/export-log-dialog/export-log-child-table-dialog.component';
+import { SkippedExportLogTableComponent } from './components/export-log/skipped-export-log-table/skipped-export-log-table.component';
+
 
 @NgModule({
   declarations: [
@@ -141,7 +146,11 @@ import { ConfigurationConnectorComponent } from './components/configuration/conf
     SubMenuComponent,
     MappingCardHeaderComponent,
     ConfigurationScheduleExportComponent,
-    ConfigurationConnectorComponent
+    ConfigurationConnectorComponent,
+    ExportLogTableComponent,
+    ExportLogFilterComponent,
+    ExportLogChildTableDialogComponent,
+    SkippedExportLogTableComponent
   ],
   imports: [
     CommonModule,
@@ -228,7 +237,11 @@ import { ConfigurationConnectorComponent } from './components/configuration/conf
     GenericMappingV2Component,
     SubMenuComponent,
     ConfigurationScheduleExportComponent,
-    ConfigurationConnectorComponent
+    ConfigurationConnectorComponent,
+    ExportLogTableComponent,
+    ExportLogFilterComponent,
+    ExportLogChildTableDialogComponent,
+    SkippedExportLogTableComponent
   ]
 })
 export class SharedModule { }
