@@ -25,7 +25,7 @@ export class BusinessCentralTokenGuard implements CanActivate {
       const workspaceId = this.workspaceService.getWorkspaceId();
 
       if (!workspaceId) {
-        return this.router.navigateByUrl(`workspaces`);
+        return this.router.navigateByUrl(`integrations/business_central/`);
       }
 
       return forkJoin(
