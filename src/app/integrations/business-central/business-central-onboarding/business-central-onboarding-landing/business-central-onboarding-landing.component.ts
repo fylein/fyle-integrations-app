@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -18,7 +18,8 @@ import { environment } from 'src/environments/environment';
   templateUrl: './business-central-onboarding-landing.component.html',
   styleUrls: ['./business-central-onboarding-landing.component.scss']
 })
-export class BusinessCentralOnboardingLandingComponent implements OnInit {
+export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDestroy {
+
   redirectLink = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.LANDING;
 
   embedVideoLink = brandingDemoVideoLinks.onboarding.BUSINESS_CENTRAL;

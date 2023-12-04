@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -22,7 +22,7 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
   templateUrl: './business-central-onboarding-connector.component.html',
   styleUrls: ['./business-central-onboarding-connector.component.scss']
 })
-export class BusinessCentralOnboardingConnectorComponent implements OnInit {
+export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = true;
 
