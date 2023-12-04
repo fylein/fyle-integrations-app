@@ -33,6 +33,7 @@ export type ErrorStat = {
 export type AccountingGroupedErrors = {
     [AccountingErrorType.EMPLOYEE_MAPPING]: Error[];
     [AccountingErrorType.CATEGORY_MAPPING]: Error[];
+    [AccountingErrorType.SAGE300_ERROR]: Error[];
   }
 
 export type AccountingGroupedErrorStat = {

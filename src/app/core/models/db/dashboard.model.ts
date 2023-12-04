@@ -11,7 +11,8 @@ export class DashboardModel {
           return groupedErrors;
         }, {
           [AccountingErrorType.EMPLOYEE_MAPPING]: [],
-          [AccountingErrorType.CATEGORY_MAPPING]: []
+          [AccountingErrorType.CATEGORY_MAPPING]: [],
+          [AccountingErrorType.SAGE300_ERROR]: []
         });
       }
 }
