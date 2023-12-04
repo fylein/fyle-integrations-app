@@ -15,21 +15,4 @@ export class EmployeeSettingModel {
             }
           ];
     }
-
-    static getAutoMapEmployeeOptions(): SelectFormOption[] {
-        return [
-            {
-              value: AutoMapEmployeeOptions.NAME,
-              label: `${brandingConfig.brandName} Name to QuickBooks Online Display name`
-            },
-            {
-              value: AutoMapEmployeeOptions.EMAIL,
-              label: `${brandingConfig.brandName} Email to QuickBooks Online Email`
-            },
-            {
-              value: AutoMapEmployeeOptions.EMPLOYEE_CODE,
-              label: `${brandingConfig.brandName} Employee Code to QuickBooks Online Display name`
-            }
-          ];
-    }
 }

@@ -29,7 +29,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
 
   employeeMappingOptions: SelectFormOption[] = EmployeeSettingModel.getEmployeeFieldMappingOptions();
 
-  autoMapEmployeeOptions: SelectFormOption[] = EmployeeSettingModel.getAutoMapEmployeeOptions();
+  autoMapEmployeeOptions: SelectFormOption[] = QBOEmployeeSettingModel.getAutoMapEmployeeOptions();
 
   isOnboarding: boolean;
 

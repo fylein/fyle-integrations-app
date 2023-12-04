@@ -1,5 +1,7 @@
-import { UntypedFormGroup } from "@angular/forms";
 import { AutoMapEmployeeOptions, FyleField } from "../../enum/enum.model";
+import { SelectFormOption } from "../../common/select-form-option.model";
+import { brandingConfig } from "src/app/branding/branding-config";
+import { FormGroup } from "@angular/forms";
 
 export type EmployeeSettingWorkspaceGeneralSetting = {
   employee_field_mapping: FyleField,
@@ -16,7 +18,24 @@ export type EmployeeSettingGet = {
 }
 
 export class QBOEmployeeSettingModel {
-  static constructPayload(employeeSettingsForm: UntypedFormGroup): EmployeeSettingPost {
+  static getAutoMapEmployeeOptions(): SelectFormOption[] {
+    return [
+        {
+          value: AutoMapEmployeeOptions.NAME,
+          label: `${brandingConfig.brandName} Name to QuickBooks Online Display name`
+        },
+        {
+          value: AutoMapEmployeeOptions.EMAIL,
+          label: `${brandingConfig.brandName} Email to QuickBooks Online Email`
+        },
+        {
+          value: AutoMapEmployeeOptions.EMPLOYEE_CODE,
+          label: `${brandingConfig.brandName} Employee Code to QuickBooks Online Display name`
+        }
+      ];
+}
+
+static constructPayload(employeeSettingsForm: FormGroup): EmployeeSettingPost {
     const employeeSettingPayload: EmployeeSettingPost = {
       workspace_general_settings: {
         employee_field_mapping: employeeSettingsForm.get('employeeMapping')?.value,

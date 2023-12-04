@@ -28,7 +28,7 @@
                             [form]="employeeSettingForm"
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'option'"
-                            [label]="'How should Employees in '+ brandingConfig.brandName +' be matched to Employees/Vendors in QuickBooks Online?'"
+                            [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
                             [options]="autoMapEmployeeOptions"
                             [iconPath]="'employee'"
                             [placeholder]="'Select representation'"
@@ -38,7 +38,11 @@
                 </div>
             </div>
             <div>
-                <app-configuration-step-footer [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!employeeSettingForm.valid"></app-configuration-step-footer>
+                <app-configuration-step-footer
+                    [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+                    [isButtonDisabled]="!employeeSettingForm.valid">
+                    (save)="save()"
+                </app-configuration-step-footer>
             </div>
         </form>
     </div>
