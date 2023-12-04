@@ -11,6 +11,7 @@ import { QboOnboardingImportSettingsComponent } from './qbo-onboarding-import-se
 import { QboOnboardingAdvancedSettingsComponent } from './qbo-onboarding-advanced-settings/qbo-onboarding-advanced-settings.component';
 import { QboOnboardingDoneComponent } from './qbo-onboarding-done/qbo-onboarding-done.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { QboSharedModule } from '../qbo-shared/qbo-shared.module';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     QboOnboardingRoutingModule,
-    SharedModule
+    SharedModule,
+    QboSharedModule
   ]
 })
 export class QboOnboardingModule { }

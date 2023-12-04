@@ -205,8 +205,6 @@ import { SkippedExportLogTableComponent } from './components/export-log/skipped-
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     IntacctStepperComponent,
-    ConfigurationStepFooterComponent,
-    ConfigurationStepHeaderComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
     MappingTableComponent,
