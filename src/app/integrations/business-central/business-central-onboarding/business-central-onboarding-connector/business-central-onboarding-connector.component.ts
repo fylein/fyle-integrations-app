@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { BusinessCentralConnectorModel, BusinessCentralConnectorPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
 import { BusinessCentralCompanyDetails, BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
 import { BusinessCentralOnboardingState, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -12,10 +10,10 @@ import { BusinessCentralConnectorService } from 'src/app/core/services/business-
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { BusinessCentralOnboardingService } from 'src/app/core/services/business-central/business-central-configuration/business-central-onboarding.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { environment } from 'src/environments/environment';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 
 @Component({
   selector: 'app-business-central-onboarding-connector',
@@ -29,6 +27,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
   redirectLink = brandingKbArticles.topLevelArticles.BUSINESS_CENTRAL;
 
   onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Dynamics \n 365 Business Central');
+
+  connectBusinessCentralForm: FormGroup;
 
   brandingConfig: BrandingConfiguration = brandingConfig;
 
@@ -95,12 +95,10 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
 
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe((businessCentralCredential: BusinessCentralCredential) => {
       this.businessCentralConnectorService.getBusinessCentralCompany().subscribe((businessCentralCompanyDetails: BusinessCentralCompanyDetails) => {
-        this.businessCentralHelperService.refreshBusinessCentralDimensions().subscribe(() => {
-          this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
-          this.businessCentralConnectionInProgress = false;
-          this.businessCentralCompanyName = businessCentralCompanyDetails.business_central_company;
-          this.showOrHideDisconnectBusinessCentral();
-        });
+        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
+        this.businessCentralConnectionInProgress = false;
+        this.businessCentralCompanyName = businessCentralCompanyDetails.business_central_company;
+        this.showOrHideDisconnectBusinessCentral();
       });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
