@@ -16,7 +16,7 @@ export class DashboardExportSectionComponent implements OnInit {
 
   @Input() isExportInProgress: boolean;
 
-  @Input() exportableExpenseGroupIds: number[];
+  @Input() exportableAccountingExportIds: number[];
 
   @Input() failedExpenseGroupCount: number;
 

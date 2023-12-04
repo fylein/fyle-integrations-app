@@ -8,9 +8,10 @@
 <div *ngIf="!isLoading">
     <app-dashboard-export-section 
         (export)="export()" 
-        [appName]="appName" 
+        [appName]="appName"
         [isImportInProgress]="isImportInProgress" 
         [isExportInProgress]="isExportInProgress"
+        [exportableAccountingExportIds]="exportableAccountingExportIds"
         [failedExpenseGroupCount]="failedExpenseGroupCount" 
         [exportProgressPercentage]="exportProgressPercentage" 
         [accountingExportSummary]="accountingExportSummary" 
