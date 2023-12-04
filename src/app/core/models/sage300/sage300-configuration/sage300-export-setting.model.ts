@@ -33,7 +33,9 @@ type Sage300ExportSetting = {
   default_debit_card_account_name: string,
   default_debit_card_account_id: string,
   default_vendor_name: string,
-  default_vendor_id: string
+  default_vendor_id: string,
+  default_job_name: string,
+  default_job_id: string
 };
 
 export interface Sage300ExportSettingGet extends Sage300ExportSetting {
@@ -47,7 +49,8 @@ export interface Sage300ExportSettingPost extends Sage300ExportSetting {}
 
 export class ExportSettingModel {
 
-  static mapAPIResponseToFormGroup(exportSettings: Sage300ExportSettingGet | null): FormGroup {
+  static mapAPIResponseToFormGroup(exportSettings: Sage300ExportSettingGet | null, jobDestinationAttribute: Sage300DestinationAttributes[]): FormGroup {
+    const findObjectByDestinationId = (array: Sage300DestinationAttributes[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
       reimbursableExpense: new FormControl(exportSettings?.reimbursable_expenses_export_type ? true : false),
       reimbursableExportType: new FormControl(exportSettings?.reimbursable_expenses_export_type ? exportSettings.reimbursable_expenses_export_type : null),
@@ -62,7 +65,8 @@ export class ExportSettingModel {
       cccExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by: null),
       defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_credit_card_account_name ? exportSettings?.default_ccc_credit_card_account_name : null),
       defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? exportSettings?.default_vendor_name : null),
-      defaultDebitCardAccountName: new FormControl(exportSettings?.default_debit_card_account_name ? exportSettings?.default_debit_card_account_name : null)
+      defaultDebitCardAccountName: new FormControl(exportSettings?.default_debit_card_account_name ? exportSettings?.default_debit_card_account_name : null),
+      defaultJobName: new FormControl(exportSettings?.default_job_name ? findObjectByDestinationId(jobDestinationAttribute, exportSettings?.default_job_id) : null)
     });
   }
 
@@ -77,13 +81,15 @@ export class ExportSettingModel {
       credit_card_expense_grouped_by: exportSettingsForm.get('cccExportGroup')?.value ? exportSettingsForm.get('cccExportGroup')?.value : null,
       credit_card_expense_date: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null,
       default_ccc_credit_card_account_name: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.value : null,
-      default_ccc_credit_card_account_id: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.id : null,
+      default_ccc_credit_card_account_id: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.destination_id : null,
       default_reimbursable_credit_card_account_name: exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value ? exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value.value : null,
-      default_reimbursable_credit_card_account_id: exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value ? exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value.id : null,
+      default_reimbursable_credit_card_account_id: exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value ? exportSettingsForm.get('defaultReimbursableCCCAccountName')?.value.destination_id : null,
       default_vendor_name: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.value : null,
-      default_vendor_id: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.id : null,
+      default_vendor_id: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.destination_id : null,
       default_debit_card_account_name: exportSettingsForm.get('defaultDebitCardAccountName')?.value ? exportSettingsForm.get('defaultDebitCardAccountName')?.value.value : null,
-      default_debit_card_account_id: exportSettingsForm.get('defaultDebitCardAccountName')?.value ? exportSettingsForm.get('defaultDebitCardAccountName')?.value.id : null
+      default_debit_card_account_id: exportSettingsForm.get('defaultDebitCardAccountName')?.value ? exportSettingsForm.get('defaultDebitCardAccountName')?.value.destination_id : null,
+      default_job_name: exportSettingsForm.get('defaultJobName')?.value ? exportSettingsForm.get('defaultJobName')?.value.value : null,
+      default_job_id: exportSettingsForm.get('defaultJobName')?.value ? exportSettingsForm.get('defaultJobName')?.value.destination_id : null
     };
   }
 }
