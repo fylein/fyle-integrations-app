@@ -11,6 +11,7 @@ import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qb
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { UserService } from 'src/app/core/services/misc/user.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
@@ -37,7 +38,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
   qboConnectionInProgress: boolean = false;
 
-  qboCompanyName: string;
+  qboCompanyName: string | null;
 
   isContinueDisabled: boolean = true;
 
@@ -51,6 +52,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
   private oauthCallbackSubscription: Subscription;
 
+  readonly fyleOrgName: string = this.userService.getUserProfile().org_name;
+
   constructor(
     private helperService: HelperService,
     private qboConnectorService: QboConnectorService,
@@ -59,6 +62,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private toastService: IntegrationsToastService,
+    private userService: UserService,
     private workspaceService: WorkspaceService
   ) { }
 
@@ -75,8 +79,12 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     this.helperService.oauthHandler(url);
   }
 
-  save(): void {
-    // TODO
+  continueToNextStep(): void {
+    if (this.isContinueDisabled) {
+      return;
+    }
+
+    this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
   }
 
   acceptWarning(isWarningAccepted: boolean): void {
@@ -84,6 +92,15 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     if (isWarningAccepted) {
       this.router.navigate([`/integrations/qbo/onboarding/landing`]);
     }
+  }
+
+  disconnectQbo(): void {
+    this.isLoading = true;
+    this.qboConnectorService.disconnectQBOConnection().subscribe(() => {
+      this.showDisconnectQBO = false;
+      this.qboCompanyName = null;
+      this.getSettings();
+    });
   }
 
   private showOrHideDisconnectQBO(): void {
@@ -110,6 +127,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
         this.workspaceService.setOnboardingState(QBOOnboardingState.MAP_EMPLOYEES);
         this.qboConnectionInProgress = false;
         this.qboCompanyName = qboCredential.company_name;
+        this.isQboConnected = true;
+        this.qboTokenExpired = false;
         this.showOrHideDisconnectQBO();
       });
     }, (error) => {
@@ -127,6 +146,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     this.qboConnectorService.getQBOCredentials().subscribe((qboCredential: QBOCredential) => {
       this.qboCompanyName = qboCredential.company_name;
       this.showOrHideDisconnectQBO();
+      this.isQboConnected = true;
     }, (error) => {
       // Token expired
       if ('id' in error.error) {

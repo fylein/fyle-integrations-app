@@ -12,7 +12,7 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   @Input() accountingAppTitle: string;
 
-  @Input() accountingCompanyName: string;
+  @Input() accountingCompanyName: string | null;
 
   @Input() switchLinkText: string;
 
