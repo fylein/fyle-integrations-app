@@ -18,7 +18,7 @@ export class DashboardExportLogDialogComponent implements OnInit {
 
   @Input() isExportLogFetchInProgress: boolean;
 
-  appName: AppName = AppName.SAGE300;
+  @Input() appName: AppName;
 
   readonly dummyExpenseGroupList: AccountingExportList[] = [{
     exportedAt: new Date(),
