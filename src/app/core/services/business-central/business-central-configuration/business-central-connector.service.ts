@@ -42,5 +42,5 @@ export class BusinessCentralConnectorService {
     globalCacheBusterNotifier.next();
     return this.apiService.patch(`/workspaces/${this.workspaceId}/credentials/business_central/`, {});
   }
-  
+
 }
