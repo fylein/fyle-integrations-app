@@ -20,17 +20,6 @@ export class DashboardExportLogDialogComponent implements OnInit {
 
   @Input() appName: AppName;
 
-  readonly dummyExpenseGroupList: AccountingExportList[] = [{
-    exportedAt: new Date(),
-    employee: ['a', 'b'],
-    expenseType: 'Corporate Card',
-    referenceNumber: '123',
-    exportedAs: 'a',
-    integrationUrl: 'a',
-    fyleUrl: 'a',
-    expenses: []
-  }];
-
   constructor(
     private windowService: WindowService
   ) { }
