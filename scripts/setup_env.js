@@ -24,6 +24,9 @@ const environment = {
   travelperk_redirect_uri: `${process.env.TRAVELPERK_REDIRECT_URI ? process.env.TRAVELPERK_REDIRECT_URI : '{{TRAVELPERK_REDIRECT_URI}}'}`,
   travelperk_base_url: `${process.env.TRAVELPERK_BASE_URL ? process.env.TRAVELPERK_BASE_URL : '{{TRAVELPERK_BASE_URL}}'}`,
   travelperk_client_id: `${process.env.TRAVELPERK_CLIENT_ID ? process.env.TRAVELPERK_CLIENT_ID : '{{TRAVELPERK_CLIENT_ID}}'}`,
+  business_central_oauth_redirect_uri: `${process.env.QBO_OAUTH_REDIRECT_URI ? process.env.QBO_OAUTH_REDIRECT_URI : '{{QBO_OAUTH_REDIRECT_URI}}'}`,
+  business_central_authorize_uri: `${process.env.QBO_AUTHORIZE_URI ? process.env.QBO_AUTHORIZE_URI : '{{QBO_AUTHORIZE_URI}}'}`,
+  business_central_oauth_client_id: `${process.env.QBO_OAUTH_CLIENT_ID ? process.env.QBO_OAUTH_CLIENT_ID : '{{QBO_OAUTH_CLIENT_ID}}'}`,
   refiner_survey: {
     intacct: {
       onboarding_done_survery_id: `${process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID ? process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID : '{{REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID}}'}`,
