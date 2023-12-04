@@ -15,7 +15,7 @@ export interface DestinationAttributeDetail {
 export interface Error {
     id: number;
     expense_attribute: ExpenseAttribute;
-    expense_group: AccountingExport | null;
+    expense_group: AccountingExport;
     type: AccountingErrorType;
     is_resolved: boolean;
     error_title: string;

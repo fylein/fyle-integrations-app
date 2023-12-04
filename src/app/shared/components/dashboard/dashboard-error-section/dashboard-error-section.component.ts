@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { AccountingGroupedErrors, AccountingGroupedErrorStat } from 'src/app/core/models/db/error.model';
+import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat } from 'src/app/core/models/db/error.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { Expense } from 'src/app/core/models/si/db/expense.model';
 
 @Component({
   selector: 'app-dashboard-error-section',
@@ -16,9 +17,21 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() groupedErrorStat: AccountingGroupedErrorStat;
 
+  errorDialogVisible: boolean = false;
+
+  errorDetail: string;
+
+  errorExpenses: Expense[] = [];
+
   readonly brandingConfig = brandingConfig;
 
   constructor() { }
+
+  showErrorDialog(accountingError: Error) {
+    this.errorDialogVisible = true;
+    this.errorDetail = accountingError.error_detail;
+    this.errorExpenses = accountingError.expense_group?.expenses;
+  }
 
   ngOnInit(): void {
   }
