@@ -17,7 +17,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
 
   redirectLink = brandingKbArticles.topLevelArticles.BUSINESS_CENTRAL;
 
-  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Dynamics 365 Business Central');
+  onboardingSteps: OnboardingStepper[] = this.onboardingService.getOnboardingSteps('Connect to Dynamics \n 365 Business Central');
 
   connectBusinessCentralForm: FormGroup;
 
