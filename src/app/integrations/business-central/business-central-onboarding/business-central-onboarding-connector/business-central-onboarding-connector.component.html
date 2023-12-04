@@ -14,9 +14,6 @@
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
             <div>
-                <div class="tw-p-24-px" (click)="connectQbo()">
-                    Connect QBO
-                </div>
                 <app-configuration-connector
                     [accountingAppTitle]="'Dynamics 365 Business Central'"
                     [accountingCompanyName]="'Dynamics 365 Business Central'"
@@ -25,7 +22,9 @@
                     [isAccountingCompanyConnected]="isBusinessCentralConnected"
                     [showDisconnect]="showDisconnectBusinessCentral"
                     [accountingCompanyConnectionInProgress]="businessCentralConnectionInProgress"
-                    [switchLinkText]="'Switch Entity'">
+                    [switchLinkText]="'Switch Entity'"
+                    (connectCompany)="connectBusinessCentral()"
+                    (switchCompany)="disconnectBusinessCentral()">
                 </app-configuration-connector>
                 <app-configuration-confirmation-dialog
                     (warningAccepted)="acceptWarning($event)"
@@ -38,7 +37,7 @@
                 </app-configuration-confirmation-dialog>
             </div>
             <div>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" ></app-configuration-step-footer>
+                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()" ></app-configuration-step-footer>
              </div>
         </div>
     </div>

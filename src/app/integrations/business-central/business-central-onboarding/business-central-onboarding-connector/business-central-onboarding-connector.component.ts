@@ -36,7 +36,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  businessCentralCompanyName: string;
+  businessCentralCompanyName: string | null;
 
   saveInProgress: boolean = false;
 
@@ -66,7 +66,24 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
     private helperService: HelperService
   ) { }
 
-  connectQbo(): void {
+  continueToNextStep(): void {
+    if (this.isContinueDisabled) {
+      return;
+    }
+
+    this.router.navigate(['/integrations/business_central/onboarding/export_settings']);
+  }
+
+  disconnectBusinessCentral(): void {
+    this.isLoading = true;
+    this.businessCentralConnectorService.disconnectBusinessCentralConnection().subscribe(() => {
+      this.showDisconnectBusinessCentral = false;
+      this.businessCentralCompanyName = null;
+      this.getSettings();
+    });
+  }
+
+  connectBusinessCentral(): void {
     this.businessCentralConnectionInProgress = true;
     const url = `${environment.business_central_authorize_uri}?client_id=${environment.business_central_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect`;
 
@@ -114,6 +131,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
           this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
           this.businessCentralConnectionInProgress = false;
           this.businessCentralCompanyName = businessCentralCompanyDetails.business_central_company;
+          this.isBusinessCentralConnected = true;
+          this.businessCentralTokenExpired = false;
           this.showOrHideDisconnectBusinessCentral();
         });
       });
@@ -133,6 +152,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit {
       this.businessCentralConnectorService.getBusinessCentralCompany().subscribe((businessCentralCompanyDetails: BusinessCentralCompanyDetails) => {
         this.businessCentralCompanyName = businessCentralCompanyDetails.business_central_company;
         this.showOrHideDisconnectBusinessCentral();
+        this.isBusinessCentralConnected= true;
       });
     }, (error) => {
       // Token expired
