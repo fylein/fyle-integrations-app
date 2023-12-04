@@ -1,1 +1,32 @@
-<p>business-central-onboarding-connector works!</p>
+<div>
+    <div>
+       <app-onboarding-steppers [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
+    </div>
+    <div>
+        <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+            <app-loader></app-loader>
+        </div>
+        <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+            <div>
+                <app-configuration-step-header 
+                [headerText]="'Connect to your Dynamics 365 Business Central account'"
+                [contentText]="'Expenses will be posted to the Dynamics 365 Business Central Location entity selected here.'"
+                [redirectLink]="redirectLink"></app-configuration-step-header>
+            </div>
+            <div>
+                <app-configuration-connector
+                [accountingAppTitle]="'Dynamics 365 Business Central'"
+                [accountingCompanyName]="'Dynamics 365 Business Central'"
+                [fyleOrgName]="'Fyle Testing Org'"
+                [accountingCompanyTokenExpired]="false"
+                [isAccountingCompanyConnected]="false"
+                [showDisconnect]="false"
+                [accountingCompanyConnectionInProgress]="false"
+                [switchLinkText]="'Switch Entity'"></app-configuration-connector>
+            </div>
+            <div>
+                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" ></app-configuration-step-footer>
+             </div>
+        </div>
+    </div>
+</div>
