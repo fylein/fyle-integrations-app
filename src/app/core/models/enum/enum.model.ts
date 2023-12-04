@@ -445,7 +445,8 @@ export enum QBDOnboardingState {
 
   export enum AccountingErrorType {
     EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
-    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING',
+    SAGE300_ERROR = 'SAGE300_ERROR'
   }
 
   export enum AccountingExport{
