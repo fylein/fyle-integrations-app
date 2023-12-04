@@ -175,6 +175,13 @@ export enum IntacctReimbursableExpensesObject {
   EXPENSE_REPORT = 'EXPENSE_REPORT'
 }
 
+export enum QBOReimbursableExpensesObject {
+  BILL = 'BILL',
+  CHECK = 'CHECK',
+  JOURNAL_ENTRY = 'JOURNAL ENTRY',
+  EXPENSE = 'EXPENSE'
+}
+
 export enum CorporateCreditCardExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',

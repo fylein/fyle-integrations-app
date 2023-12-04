@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty } from 'src/app/core/models/misc/tracking.model';
 import { Mapping } from 'src/app/core/models/qbd/db/mapping.model';
-import { SelectFormOption } from 'src/app/core/models/qbd/misc/select-form-option.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
