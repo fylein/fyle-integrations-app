@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -16,6 +17,8 @@ export class DashboardExportLogDialogComponent implements OnInit {
   @Input() accountingExports: AccountingExportList[];
 
   @Input() isExportLogFetchInProgress: boolean;
+
+  appName: AppName = AppName.SAGE300
 
   readonly dummyExpenseGroupList: AccountingExportList[] = [{
     exportedAt: new Date(),
