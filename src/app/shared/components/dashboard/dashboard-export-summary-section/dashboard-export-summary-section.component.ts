@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportStatus, AppName, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 
 @Component({
   selector: 'app-dashboard-export-summary-section',
@@ -10,7 +14,48 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   @Input() accountingExportSummary: AccountingExportSummary;
 
-  constructor() { }
+  @Input() appName: AppName;
+
+  filteredAccountingExports: AccountingExportList[];
+
+  accountingExports: AccountingExportList[];
+
+  isLoading: boolean;
+
+  exportLogHeader: string;
+
+  isExportLogFetchInProgress: boolean;
+
+  taskLogStatusComplete: AccountingExportStatus = AccountingExportStatus.COMPLETE;
+
+  taskLogStatusFailed: AccountingExportStatus = AccountingExportStatus.FAILED;
+
+  isExportLogVisible: boolean;
+
+  constructor(
+    private accountingExportService: AccountingExportService,
+    private exportLogService: ExportLogService
+  ) { }
+
+  getAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
+    this.isLoading = true;
+
+    this.accountingExportService.getAccountingExports([status], null, limit, offset).subscribe(accountingExportResponse => {
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport =>
+          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
+        );
+        this.filteredAccountingExports = accountingExports;
+        this.accountingExports = [...this.filteredAccountingExports];
+        this.isLoading = false;
+      });
+  }
+
+  showExportLog(status: AccountingExportStatus) {
+    this.isExportLogFetchInProgress = true;
+    this.exportLogHeader = status === this.taskLogStatusComplete ? 'Successful' : 'Failed';
+    this.getAccountingExports(500, 0, status);
+    this.isExportLogVisible = true;
+  }
 
   ngOnInit(): void {
   }
