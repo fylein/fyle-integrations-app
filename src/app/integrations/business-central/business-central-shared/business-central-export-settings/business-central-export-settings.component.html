@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header 
             [headerText]="'Export Settings'"
-            [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Dynamic 360 Business Central CRE. '"
+            [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Dynamic 360 Business Central. '"
             [redirectLink]="redirectLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -19,7 +19,7 @@
                     <app-configuration-toggle-field 
                         [form]="exportSettingForm"
                         [label]="'Export Reimbursable Expenses'" 
-                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Dynamic 360 Business Central CRE.'" 
+                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Dynamic 360 Business Central.'" 
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -58,11 +58,10 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
-                        [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Dynamic 360 Business Central CRE. Click here for more details.'"
+                        [label]="'Set the date of the transaction as?'"
+                        [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Dynamic 360 Business Central. Click here for more details.'"
                         [options]="getExportDate(reimbursableExpenseGroupingDateOptions)"
                         [iconPath]="'calender'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -104,30 +103,32 @@
                             [exportTypeIconPathArray]="previewImagePaths"
                             [isDisabled]="true">
                         </app-configuration-select-field>
-                        <div *ngIf="exportSettingForm.value.cccExportType===BusinessCentralExportType.JOURNAL_ENTRY">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Default Credit Account Name'"
-                                [label]="'Set the Default Credit Account as?'"
-                                [subLabel]="'The integration will credit the account selected here for Corporate Card Expenses exported as Direct Cost.'"
-                                [destinationAttributes]="creditCardAccountOptions"
-                                [iconPath]="'expense'"
-                                [placeholder]="'Select default credit account'"
-                                [formControllerName]="'defaultCreditCardCCCAccountName'">
-                            </app-configuration-select-field>
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Default Vendor Name'"
-                                [label]="'Set the Default Vendor as?'"
-                                [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the vendor selected here.'"
-                                [destinationAttributes]="vendorOptions"
-                                [iconPath]="'expense'"
-                                [placeholder]="'Select default vendor'"
-                                [formControllerName]="'defaultVendorName'">
-                            </app-configuration-select-field>
-                        </div>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Default Credit Account Name'"
+                            [label]="'To which GL Account should the expenses be credited to?'"
+                            [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
+                            [destinationAttributes]="creditCardAccountOptions"
+                            [iconPath]="'expense'"
+                            [placeholder]="'Select default credit account'"
+                            [formControllerName]="'defaultCreditCardCCCAccountName'">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Default Vendor Name'"
+                            [label]="'Set the Default Vendor as?'"
+                            [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the vendor selected here.'"
+                            [destinationAttributes]="vendorOptions"
+                            [iconPath]="'expense'"
+                            [placeholder]="'Select default vendor'"
+                            [formControllerName]="'defaultVendorName'">
+                        </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
@@ -146,7 +147,7 @@
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
+                        [label]="'Set the date of the transaction as?'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from Fyle to Sage Intacct. Click here for more details.'"
                         [options]="getExportDate(cccExpenseGroupingDateOptions)"
                         [iconPath]="'calender'"
