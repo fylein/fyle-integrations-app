@@ -24,7 +24,8 @@
     </app-zero-state>
     
     <app-dashboard-export-summary-section 
-        *ngIf="accountingExportSummary" 
+        *ngIf="accountingExportSummary"
+        [appName]="appName"
         [accountingExportSummary]="accountingExportSummary">
     </app-dashboard-export-summary-section>
     

@@ -29,6 +29,10 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() groupedErrorStat: AccountingGroupedErrorStat;
 
+  @Input() isExportLogFetchInProgress: boolean;
+
+  @Input() exportLogHeader: string;
+
   filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];

@@ -58,6 +58,14 @@
                 </div>
             </div>
 
+            <div *ngIf="errors"  class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+                <div class="container">
+                    <div class="sub-text-container">
+                        <h4 class="tw-text-16-px !tw-font-500 tw-text-normal-text-color">{{appName}} Errors</h4>
+                        <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">Resolve these errors on your {{appName}} Account before trying to re-export them again.</h5>
+                    </div>
+                </div>
+            </div>
 
             <div *ngFor="let error of errors?.SAGE300_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                 <div class="container">
@@ -77,6 +85,27 @@
         </div>
     </div>
 </div>
+
+<!-- Integration Specific Errors -->
+<div *ngIf="errorDialogVisible">
+    <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="errorDialogVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+        <p-header>
+            <p>{{appName}} Error</p>
+            <h3 class="sub-header">{{errorDetail}}</h3>
+        </p-header>
+        <app-dashboard-accounting-error-dialog [errorExpenses]="errorExpenses"></app-dashboard-accounting-error-dialog>
+    </p-dialog>
+</div>
+
+<ng-template #shimmers>
+    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress && exportLogHeader==='Successful'"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isExportLogFetchInProgress && exportLogHeader==='Successful'"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
+    </tr>
+</ng-template>
 
 
 <!-- Mapping Errors -->

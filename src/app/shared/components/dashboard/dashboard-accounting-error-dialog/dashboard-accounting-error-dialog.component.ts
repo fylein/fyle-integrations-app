@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Expense } from 'src/app/core/models/si/db/expense.model';
 
 @Component({
   selector: 'app-dashboard-accounting-error-dialog',
@@ -7,7 +8,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DashboardAccountingErrorDialogComponent implements OnInit {
 
+  @Input() errorExpenses: Expense[];
+
   constructor() { }
+
+  openUrl(event: Event, url: string) {
+    window.open(url, '_blank');
+    event.stopPropagation();
+  }
 
   ngOnInit(): void {
   }

@@ -13,7 +13,7 @@
                                 <span class="tw-w-120-px tw-text-right tw-mt-2-px tw-text-faded-text-color">
                                     {{ accountingExportSummary?.successful_expense_groups_count ? accountingExportSummary?.successful_expense_groups_count : 0 }}
                                 </span>  
-                            <a *ngIf="accountingExportSummary?.successful_expense_groups_count" (click)="null" class="tw-ml-20-px tw-text-pink pointer">View</a>
+                            <a *ngIf="accountingExportSummary?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-20-px tw-text-pink pointer">View</a>
                         </div>
                         <div class="tw-flex tw-flex-col tw-mt-2-px">
                             <span class="tw-w-260-px tw-text-left">
@@ -30,7 +30,7 @@
                             <span class="tw-w-150-px tw-text-right tw-mt-2-px tw-text-faded-text-color">
                                 {{ accountingExportSummary?.failed_expense_groups_count ? accountingExportSummary?.failed_expense_groups_count : 0 }}
                             </span>
-                            <a *ngIf="accountingExportSummary?.failed_expense_groups_count" (click)="null" class="tw-ml-20-px tw-text-pink pointer tw-mt-2-px">View</a>
+                            <a *ngIf="accountingExportSummary?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-20-px tw-text-pink pointer tw-mt-2-px">View</a>
                         </div>
                         <div class="tw-flex tw-flex-col tw-mt-2-px">
                             <span class="tw-w-260-px tw-text-left" *ngIf="accountingExportSummary?.next_export_at">
@@ -44,4 +44,8 @@
             </div>
         </div>
     </div>
+</div>
+
+<div *ngIf="isExportLogVisible">
+    <app-dashboard-export-log-dialog [appName]="appName" [isExportLogVisible]="isExportLogVisible" [accountingExports]="filteredAccountingExports" [isExportLogFetchInProgress]="isExportLogFetchInProgress" [exportLogHeader]="exportLogHeader"></app-dashboard-export-log-dialog>
 </div>
