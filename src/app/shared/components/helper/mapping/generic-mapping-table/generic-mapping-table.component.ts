@@ -7,7 +7,7 @@ import { EmployeeMappingPost } from 'src/app/core/models/db/employee-mapping.mod
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, GenericMappingPost, MappingClass, MinimalMappingSetting } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -20,6 +20,8 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 export class GenericMappingTableComponent implements OnInit {
 
   @Input() isLoading: boolean = true;
+
+  @Input() appName: AppName;
 
   @Input() filteredMappings: ExtendedGenericMapping[];
 

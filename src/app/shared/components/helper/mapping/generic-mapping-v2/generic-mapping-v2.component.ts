@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -28,6 +28,8 @@ export class GenericMappingV2Component implements OnInit {
   @Input() showAutoMapEmployee: boolean;
 
   @Input() destinationOptions: DestinationAttribute[];
+
+  appName: AppName = AppName.SAGE300;
 
   isInitialSetupComplete: boolean = false;
 
