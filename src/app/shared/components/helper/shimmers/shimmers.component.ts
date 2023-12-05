@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ShimmersComponent implements OnInit {
 
   @Input() exportLogHeader: string;
-  
+
   @Input() isExportLogFetchInProgress: boolean;
 
   constructor() { }
