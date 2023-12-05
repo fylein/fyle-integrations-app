@@ -59,6 +59,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() isOptionSearchInProgress: boolean;
 
+  @Input() isDisabled: boolean;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
