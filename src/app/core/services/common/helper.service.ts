@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
-import { AppUrl, ExpenseState, ProgressPhase } from '../../models/enum/enum.model';
+import { AppUrl, ExpenseState, ProgressPhase, Sage300ExportType } from '../../models/enum/enum.model';
 import { AbstractControl, FormArray, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
@@ -64,6 +64,10 @@ export class HelperService {
     form.controls[controllerName].setValue(null);
   }
 
+  setSage300ExportTypeControllerValue(form: FormGroup, controllerName: string): void {
+    form.controls[controllerName].setValue(Sage300ExportType.PURCHASE_INVOICE);
+  }
+
   enableFormField(form: FormGroup, controllerName: string): void {
     form.controls[controllerName].enable();
   }
@@ -83,6 +87,10 @@ export class HelperService {
         if (isSelected) {
           value.forEach((element: string) => {
             this.markControllerAsRequired(form, element);
+            const urlSplit = this.router.url.split('/');
+            if (urlSplit[2] === AppUrl.SAGE300 && (element === 'cccExportType' || element === 'reimbursableExportType')) {
+              this.setSage300ExportTypeControllerValue(form, element);
+            }
           });
         } else {
           value.forEach((element: string) => {
