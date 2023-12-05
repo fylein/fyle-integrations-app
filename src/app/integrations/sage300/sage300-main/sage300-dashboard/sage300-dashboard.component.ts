@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, MappingState, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { environment } from 'src/environments/environment';
@@ -9,6 +9,7 @@ import { AccountingExportSummary } from 'src/app/core/models/db/accounting-expor
 import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
 import { AccountingExportResponse, Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
 
 @Component({
   selector: 'app-sage300-dashboard',

@@ -31,7 +31,7 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() destinationField: string;
 
-  @Input() employeeFieldMapping: FyleField = FyleField.VENDOR;
+  @Input() employeeFieldMapping: FyleField;
 
   @Input() reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
 
@@ -40,6 +40,8 @@ export class GenericMappingTableComponent implements OnInit {
   @Input() destinationOptions: DestinationAttribute[];
 
   @Input() mappingSetting: MinimalMappingSetting;
+
+  @Input() isDashboardMappingResolve: boolean;
 
   constructor(
     private mappingService: MappingService,
