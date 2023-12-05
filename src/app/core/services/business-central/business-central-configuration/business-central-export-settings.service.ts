@@ -66,16 +66,16 @@ export class BusinessCentralExportSettingsService {
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Spent Date',
-        value: ExportDateType.SPENT_AT
-      },
-      {
         label: 'Approval Date',
         value: ExportDateType.APPROVAL_DATE
       },
       {
         label: 'Last Spent At',
         value: ExportDateType.LAST_SPENT_AT
+      },
+      {
+        label: 'Spent Date',
+        value: ExportDateType.SPENT_AT
       }
     ];
   }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
 import { ExportModuleRule, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
-import { AppName, BusinessCentralExportType, BusinessCentralField, ConfigurationCta, FyleField } from 'src/app/core/models/enum/enum.model';
+import { AppName, BusinessCentralExportType, BusinessCentralField, ConfigurationCta, ExpenseGroupedBy, FyleField } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -57,7 +57,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   cccExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseGroupingDateOptions();
 
-  expensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getCCCExpensesExportTypeOptions();
+  reimbursableExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getReimbursableExpensesExportTypeOptions();
+
+  cccExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getCCCExpensesExportTypeOptions();
 
   reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseState();
 
@@ -65,15 +67,28 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   sessionStartTime = new Date();
 
+  isSaveInProgress: boolean;
+
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,
     private router: Router,
     private mappingService: MappingService,
-    private helper: HelperService,
-    private helperService: BusinessCentralHelperService
+    private helperService: BusinessCentralHelperService,
+    public helper: HelperService
   ) { }
 
-  refreshDimensions(isRefresh: boolean) {
+  save() {
+    // TODO
+  }
+
+  getExportDate(options: BusinessCentralExportSettingFormOption[]): BusinessCentralExportSettingFormOption[]{
+    if (this.exportSettingForm.value.reimbursableExpenseState === ExpenseGroupedBy.REPORT) {
+      return options.slice(0, -1);
+    }
+    return options;
+  }
+
+  refreshDimensions(isRefresh: boolean): void{
     this.helperService.importAttributes(isRefresh);
   }
 
