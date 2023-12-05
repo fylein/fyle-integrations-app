@@ -10,10 +10,10 @@ export type BusinessCentralExportSetting = {
     credit_card_expense_state: CCCExpenseState,
     credit_card_expense_grouped_by: ExpenseGroupedBy,
     credit_card_expense_date: ExportDateType,
-    default_ccc_account_name: string,
-    default_ccc_account_id: string,
-    default_vendor_name: string,
-    default_vendor_id: string,
+    default_credit_card_account_name: string,
+    default_credit_card_account_id: string,
+    default_bank_account_name: string,
+    default_bank_account_id: string,
 }
 
 export interface BusinessCentralExportSettingGet extends BusinessCentralExportSetting {
@@ -44,8 +44,8 @@ export class BusinessCentralExportSettingModel {
             cccExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
             cccExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : null),
             cccExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by: null),
-            defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_account_name ? exportSettings?.default_ccc_account_name : null),
-            defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? exportSettings?.default_vendor_name : null)
+            defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_credit_card_account_name ? exportSettings?.default_credit_card_account_name : null),
+            defaultBankName: new FormControl(exportSettings?.default_bank_account_name ? exportSettings?.default_bank_account_name : null)
         });
     }
 
@@ -59,10 +59,10 @@ export class BusinessCentralExportSettingModel {
             credit_card_expense_state: exportSettingsForm.get('cccExpenseState')?.value ? exportSettingsForm.get('cccExpenseState')?.value : null,
             credit_card_expense_grouped_by: exportSettingsForm.get('cccExportGroup')?.value ? exportSettingsForm.get('cccExportGroup')?.value : null,
             credit_card_expense_date: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null,
-            default_ccc_account_name: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.value : null,
-            default_ccc_account_id: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.destination_id : null,
-            default_vendor_name: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.value : null,
-            default_vendor_id: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.destination_id : null
+            default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.value : null,
+            default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.destination_id : null,
+            default_bank_account_name: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.value : null,
+            default_bank_account_id: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.destination_id : null
         };
     }
   }

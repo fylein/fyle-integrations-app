@@ -27,7 +27,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   creditCardAccountOptions: BusinessCentralDestinationAttributes[];
 
-  vendorOptions: BusinessCentralDestinationAttributes[];
+  bankOptions: BusinessCentralDestinationAttributes[];
 
   isLoading: boolean = true;
 
@@ -108,28 +108,26 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       {
         'formController': 'reimbursableExportType',
         'requiredValue': {
-          'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName']
+
         }
       },
       {
         'formController': 'cccExportType',
         'requiredValue': {
-          'DIRECT_COST': ['defaultCreditCardCCCAccountName', 'defaultDebitCardAccountName'],
-          'PURCHASE_INVOICE': ['defaultVendorName']
+          'JOURNAL_ENTRY': ['defaultCreditCardCCCAccountName', 'defaultBankName']
         }
       }
     ];
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, BusinessCentralField.ACCOUNT])
+      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT])
     ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
       this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.vendorOptions = destinationAttributes.VENDOR;
-      this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
+      this.creditCardAccountOptions = this.bankOptions = destinationAttributes.ACCOUNT;
       this.isLoading = false;
     });
   }

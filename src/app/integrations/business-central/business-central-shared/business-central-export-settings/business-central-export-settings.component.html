@@ -125,13 +125,13 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Default Vendor Name'"
-                            [label]="'Set the Default Vendor as?'"
-                            [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the vendor selected here.'"
-                            [destinationAttributes]="vendorOptions"
+                            [mandatoryErrorListName]="'Default Bank Account Name'"
+                            [label]="'Set the Default Bank Account as?'"
+                            [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the Bank Account selected here.'"
+                            [destinationAttributes]="bankOptions"
                             [iconPath]="'expense'"
-                            [placeholder]="'Select default vendor'"
-                            [formControllerName]="'defaultVendorName'">
+                            [placeholder]="'Select default Bank Account'"
+                            [formControllerName]="'defaultBankName'">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
