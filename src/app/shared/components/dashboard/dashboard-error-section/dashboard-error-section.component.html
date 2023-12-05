@@ -58,7 +58,7 @@
                 </div>
             </div>
 
-            <div *ngIf="errors"  class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+            <div *ngIf="errors" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                 <div class="container">
                     <div class="sub-text-container">
                         <h4 class="tw-text-16-px !tw-font-500 tw-text-normal-text-color">{{appName}} Errors</h4>
@@ -67,7 +67,7 @@
                 </div>
             </div>
 
-            <div *ngFor="let error of errors?.SAGE300_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
+            <div *ngFor="let error of errors?.ACCOUNTING_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                 <div class="container">
                     <div class="inside-container">
                         <h4 class="tw-text-14-px !tw-font-500 tw-text-slightly-normal-text-color tw-w-600-px">{{ error.error_title }}</h4>
@@ -87,8 +87,8 @@
 </div>
 
 <!-- Integration Specific Errors -->
-<div *ngIf="errorDialogVisible">
-    <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="errorDialogVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+<div *ngIf="isAccountingErrorDialogVisible">
+    <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="isAccountingErrorDialogVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
         <p-header>
             <p>{{appName}} Error</p>
             <h3 class="sub-header">{{errorDetail}}</h3>
