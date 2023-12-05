@@ -85,6 +85,6 @@
         <p-header>
             <p>{{errorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
           </p-header>
-        
+          <app-generic-mapping-table [isLoading]="isLoading" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
     </p-dialog>
 </div>
