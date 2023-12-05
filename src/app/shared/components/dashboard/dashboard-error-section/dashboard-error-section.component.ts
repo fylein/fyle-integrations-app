@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat } from 'src/app/core/models/db/error.model';
+import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { AccountingErrorType, AppName, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
@@ -80,7 +80,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     const genericMappings$ = this.mappingService.getGenericMappingsV2(100, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField);
 
     forkJoin([groupedDestinationAttributes$, genericMappings$]).subscribe(
-      ([groupedDestinationResponse, genericMappingsResponse]: [any, GenericMappingResponse]) => {
+      ([groupedDestinationResponse, genericMappingsResponse]: [GroupedDestinationAttribute, GenericMappingResponse]) => {
         if (this.sourceField === 'EMPLOYEE') {
           this.destinationOptions = this.destinationField ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
         }
@@ -105,7 +105,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.groupedError = groupedError;
     this.sourceField = sourceField;
     this.getOptions();
-    this.destinationField = this.getSourceType();
+    this.destinationField = this.destinationFieldMap[this.sourceField];
     this.isMappingResolveVisible = true;
   }
 
@@ -116,17 +116,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   private formatErrors(errors: Error[]): AccountingGroupedErrors {
-    return errors.reduce((groupedErrors: AccountingGroupedErrors, error: Error) => {
-      const group: Error[] = groupedErrors[error.type] || [];
-      group.push(error);
-      groupedErrors[error.type] = group;
-
-      return groupedErrors;
-    }, {
-      [AccountingErrorType.EMPLOYEE_MAPPING]: [],
-      [AccountingErrorType.CATEGORY_MAPPING]: [],
-      [AccountingErrorType.ACCOUNTING_ERROR]: []
-    });
+    return ErrorModel.formatErrors(errors);
   }
 
   private trackTimeTakenForResolvingMappingErrors(): void {
@@ -150,7 +140,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     }
   }
 
-  showErrorStats(): void {
+  handleResolvedMappingStat(): void {
     this.getExportErrors$.subscribe((errors) => {
       const newError: AccountingGroupedErrors = this.formatErrors(errors);
 
