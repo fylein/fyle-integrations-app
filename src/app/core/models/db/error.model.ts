@@ -40,3 +40,19 @@ export type AccountingGroupedErrorStat = {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null | ErrorStat;
     [AccountingErrorType.CATEGORY_MAPPING]: null | ErrorStat;
   }
+
+export class ErrorModel {
+  static formatErrors(errors: Error[]): AccountingGroupedErrors {
+    return errors.reduce((groupedErrors: AccountingGroupedErrors, error: Error) => {
+      const group: Error[] = groupedErrors[error.type] || [];
+      group.push(error);
+      groupedErrors[error.type] = group;
+
+      return groupedErrors;
+    }, {
+      [AccountingErrorType.EMPLOYEE_MAPPING]: [],
+      [AccountingErrorType.CATEGORY_MAPPING]: [],
+      [AccountingErrorType.ACCOUNTING_ERROR]: []
+    });
+  }
+}

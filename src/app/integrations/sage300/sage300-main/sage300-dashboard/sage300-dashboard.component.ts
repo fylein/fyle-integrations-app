@@ -37,7 +37,7 @@ export class Sage300DashboardComponent implements OnInit {
 
   errors: AccountingGroupedErrors;
 
-  destinationFieldMap : DestinationFieldMap = {
+  readonly destinationFieldMap : DestinationFieldMap = {
     'EMPLOYEE': 'VENDOR',
     'CATEGORY': 'ACCOUNT'
   };
