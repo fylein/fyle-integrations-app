@@ -328,6 +328,15 @@ export enum QBDOnboardingState {
     JOB = 'JOB'
   }
 
+  export enum BusinessCentralField {
+    ACCOUNT = 'ACCOUNT',
+    CUSTOMER = 'CUSTOMER',
+    DEPARTMENT = 'DEPARTMENT',
+    CLASS = 'CLASS',
+    TAX_DETAIL = 'TAX_DETAIL',
+    JOB = 'JOB'
+  }
+
   export enum SageIntacctField {
     ACCOUNT = 'ACCOUNT',
     CUSTOMER = 'CUSTOMER',

@@ -30,7 +30,7 @@ export type BusinessCentralExportSettingFormOption = {
     value: ExpenseState | CCCExpenseState | FyleField | ExpenseGroupedBy | BusinessCentralExportType | ExportDateType
 }
 
-export class ExportSettingModel {
+export class BusinessCentralExportSettingModel {
 
     static mapAPIResponseToFormGroup(exportSettings: BusinessCentralExportSettingGet | null): FormGroup {
         return new FormGroup({
