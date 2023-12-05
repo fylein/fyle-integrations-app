@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment";
+
 export type Expense = {
   id: number;
   employee_email: string;
@@ -50,4 +52,11 @@ export interface ExpenseList {
   expenseType?: 'Credit Card' | 'Reimbursable';
   name?: [string, string];
   fundSource?: string;
+}
+
+export class ExpenseModel {
+  static constructViewExpenseUrl (expense_id: string) {
+    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+    return url;
+  }
 }

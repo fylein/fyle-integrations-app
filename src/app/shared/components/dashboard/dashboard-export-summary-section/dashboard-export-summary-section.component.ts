@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { AccountingExportStatus, AppName, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 
@@ -26,6 +27,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   isExportLogFetchInProgress: boolean;
 
+  selectedDateFilter: SelectedDateFilter | null;
+
   taskLogStatusComplete: AccountingExportStatus = AccountingExportStatus.COMPLETE;
 
   taskLogStatusFailed: AccountingExportStatus = AccountingExportStatus.FAILED;
@@ -39,8 +42,9 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   getAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
     this.isLoading = true;
+    this.selectedDateFilter = {startDate: new Date(this.accountingExportSummary.last_exported_at), endDate: new Date};
 
-    this.accountingExportService.getAccountingExports([status], null, limit, offset).subscribe(accountingExportResponse => {
+    this.accountingExportService.getAccountingExports([status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport =>
           AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
         );

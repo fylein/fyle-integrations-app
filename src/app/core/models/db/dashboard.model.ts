@@ -12,7 +12,7 @@ export class DashboardModel {
         }, {
           [AccountingErrorType.EMPLOYEE_MAPPING]: [],
           [AccountingErrorType.CATEGORY_MAPPING]: [],
-          [AccountingErrorType.SAGE300_ERROR]: []
+          [AccountingErrorType.ACCOUNTING_ERROR]: []
         });
       }
 }

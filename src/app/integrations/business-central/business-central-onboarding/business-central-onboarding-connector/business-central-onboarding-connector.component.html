@@ -15,17 +15,29 @@
             </div>
             <div>
                 <app-configuration-connector
-                [accountingAppTitle]="'Dynamics 365 Business Central'"
-                [accountingCompanyName]="'Dynamics 365 Business Central'"
-                [fyleOrgName]="'Fyle Testing Org'"
-                [accountingCompanyTokenExpired]="false"
-                [isAccountingCompanyConnected]="false"
-                [showDisconnect]="false"
-                [accountingCompanyConnectionInProgress]="false"
-                [switchLinkText]="'Switch Entity'"></app-configuration-connector>
+                    [accountingAppTitle]="'Dynamics 365 Business Central'"
+                    [accountingCompanyName]="'Dynamics 365 Business Central'"
+                    [fyleOrgName]="'Fyle Testing Org'"
+                    [accountingCompanyTokenExpired]="businessCentralTokenExpired"
+                    [isAccountingCompanyConnected]="isBusinessCentralConnected"
+                    [showDisconnect]="showDisconnectBusinessCentral"
+                    [accountingCompanyConnectionInProgress]="businessCentralConnectionInProgress"
+                    [switchLinkText]="'Switch Entity'"
+                    (connectCompany)="connectBusinessCentral()"
+                    (switchCompany)="disconnectBusinessCentral()">
+                </app-configuration-connector>
+                <app-configuration-confirmation-dialog
+                    (warningAccepted)="acceptWarning($event)"
+                    [isWarningVisible]="isIncorrectBusinessCentralConnectedDialogVisible"
+                    [headerText]="'Incorrect account selected'"
+                    [contextText]="'You had previously set up the integration with a different Dynamic 360 Business Central account. Please choose the same to restore the settings'"
+                    [iconPath]="'assets/icons/alert_dialog.svg'"
+                    [confirmBtnText]="'Re connect'"
+                    [showSecondaryCTA]="false">
+                </app-configuration-confirmation-dialog>
             </div>
             <div>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" ></app-configuration-step-footer>
+                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()" ></app-configuration-step-footer>
              </div>
         </div>
     </div>

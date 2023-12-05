@@ -41,7 +41,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   destinationField: string;
 
-  errorDialogVisible: boolean = false;
+  isAccountingErrorDialogVisible: boolean = false;
 
   errorDetail: string;
 
@@ -110,7 +110,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   showErrorDialog(accountingError: Error) {
-    this.errorDialogVisible = true;
+    this.isAccountingErrorDialogVisible = true;
     this.errorDetail = accountingError.error_detail;
     this.errorExpenses = accountingError.expense_group?.expenses;
   }
