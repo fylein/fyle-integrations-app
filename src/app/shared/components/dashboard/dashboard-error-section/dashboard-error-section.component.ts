@@ -24,9 +24,9 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() errors: AccountingGroupedErrors;
 
-  @Input() filteredMappings: ExtendedGenericMapping[];
-
   @Input() groupedErrorStat: AccountingGroupedErrorStat;
+
+  filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];
 
