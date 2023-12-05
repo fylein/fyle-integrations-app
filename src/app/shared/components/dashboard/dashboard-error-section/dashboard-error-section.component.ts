@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { DestinationMap } from 'src/app/core/models/db/dashboard.model';
+import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -25,7 +25,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() errors: AccountingGroupedErrors;
 
-  @Input() destinationFieldMap: DestinationMap;
+  @Input() destinationFieldMap: DestinationFieldMap;
 
   @Input() groupedErrorStat: AccountingGroupedErrorStat;
 
