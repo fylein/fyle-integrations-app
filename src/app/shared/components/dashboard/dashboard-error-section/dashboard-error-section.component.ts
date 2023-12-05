@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat } from 'src/app/core/models/db/error.model';
-import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName } from 'src/app/core/models/enum/enum.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 
 @Component({
@@ -23,9 +23,26 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   errorExpenses: Expense[] = [];
 
+  eventStartTime: Date;
+
+  errorType: AccountingErrorType;
+
+  groupedError: Error[];
+
+  isMappingResolveVisible: boolean = false;
+
+  ErrorType = AccountingErrorType;
+
   readonly brandingConfig = brandingConfig;
 
   constructor() { }
+
+  showMappingResolve(errorType: AccountingErrorType, groupedError: Error[]) {
+    this.eventStartTime = new Date();
+    this.errorType = errorType;
+    this.groupedError = groupedError;
+    this.isMappingResolveVisible = true;
+  }
 
   showErrorDialog(accountingError: Error) {
     this.errorDialogVisible = true;
