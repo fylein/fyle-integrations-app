@@ -59,7 +59,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   debitCardAccountOptions: Sage300DestinationAttributes[];
 
-  sageIntacctJobs: Sage300DestinationAttributes[];
+  sage300Jobs: Sage300DestinationAttributes[];
 
   previewImagePaths =[
     {
@@ -161,8 +161,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.exportSettings = exportSettingsResponse;
       this.vendorOptions = destinationAttributes.VENDOR;
       this.creditCardAccountOptions = this.debitCardAccountOptions = destinationAttributes.ACCOUNT;
-      this.sageIntacctJobs = destinationAttributes.JOB;
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.sageIntacctJobs);
+      this.sage300Jobs = destinationAttributes.JOB;
+      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.sage300Jobs);
       this.addFormValidator();
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);

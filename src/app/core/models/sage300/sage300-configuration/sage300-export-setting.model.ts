@@ -70,6 +70,7 @@ export class ExportSettingModel {
     });
   }
 
+  /* eslint-disable */
   static createExportSettingPayload(exportSettingsForm: FormGroup): Sage300ExportSettingPost {
     return {
       reimbursable_expenses_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
