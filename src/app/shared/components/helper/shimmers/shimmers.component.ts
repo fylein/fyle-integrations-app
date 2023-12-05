@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-shimmers',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./shimmers.component.scss']
 })
 export class ShimmersComponent implements OnInit {
+
+  @Input() exportLogHeader: string;
+  
+  @Input() isExportLogFetchInProgress: boolean;
 
   constructor() { }
 
