@@ -499,3 +499,8 @@ export enum QBDOnboardingState {
   REIMBURSABLE = 'Reimbursable',
   CORPORATE_CARD = 'Corporate Card'
  }
+
+export enum BusinessCentralExportType {
+  JOURNAL_ENTRY = 'journal_entry',
+  PURCHASE_INVOICE = 'PURCHASE_INVOICE'
+}
