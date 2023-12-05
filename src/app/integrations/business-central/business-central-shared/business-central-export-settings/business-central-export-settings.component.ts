@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
-import { BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
+import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
 import { ExportModuleRule, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
-import { BusinessCentralField, FyleField } from 'src/app/core/models/enum/enum.model';
+import { AppName, BusinessCentralExportType, BusinessCentralField, ConfigurationCta, FyleField } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { BusinessCentralDestinationAttributes } from '/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/business-central/db/business-central-destination-attribute.model';
 import { FormGroup } from '@angular/forms';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-business-central-export-settings',
@@ -28,7 +29,41 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   vendorOptions: BusinessCentralDestinationAttributes[];
 
-  isLoading: boolean;
+  isLoading: boolean = true;
+
+  previewImagePaths =[
+    {
+      'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg'
+    },
+    {
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC Bill.jpg'
+    }
+  ];
+
+  readonly brandingConfig = brandingConfig;
+
+  redirectLink: string = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.EXPORT_SETTING;
+
+  appName: string = AppName.BUSINESS_CENTRAL;
+
+  BusinessCentralExportType = BusinessCentralExportType;
+
+  ConfigurationCtaText = ConfigurationCta;
+
+  expenseGroupByOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseGroupByOptions();
+
+  reimbursableExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseGroupingDateOptions();
+
+  cccExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseGroupingDateOptions();
+
+  expensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getCCCExpensesExportTypeOptions();
+
+  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseState();
+
+  cccExpenseState: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseState();
+
+  sessionStartTime = new Date();
 
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,
