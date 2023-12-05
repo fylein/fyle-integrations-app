@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { DestinationMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -23,6 +24,8 @@ export class DashboardErrorSectionComponent implements OnInit {
   @Input() appName: AppName;
 
   @Input() errors: AccountingGroupedErrors;
+
+  @Input() destinationFieldMap: DestinationMap;
 
   @Input() groupedErrorStat: AccountingGroupedErrorStat;
 
@@ -65,15 +68,31 @@ export class DashboardErrorSectionComponent implements OnInit {
   ) { }
 
   getSourceType() {
-    if (this.sourceField==='EMPLOYEE') {
-      return 'VENDOR';
-    }
+    return this.destinationFieldMap[this.sourceField];
+  }
 
-    if (this.sourceField==='CATEGORY') {
-      return 'ACCOUNT';
-    }
+  private getOptions() {
+    const groupedDestinationAttributes$ = this.mappingService.getGroupedDestinationAttributes([this.destinationField]);
+    const genericMappings$ = this.mappingService.getGenericMappingsV2(100, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField);
 
-    return '';
+    forkJoin([groupedDestinationAttributes$, genericMappings$]).subscribe(
+      ([groupedDestinationResponse, genericMappingsResponse]: [any, GenericMappingResponse]) => {
+        if (this.sourceField === 'EMPLOYEE') {
+          this.destinationOptions = this.destinationField ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
+        }
+        if (this.sourceField === 'CATEGORY') {
+          if (this.destinationField === 'EXPENSE_TYPE') {
+            this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
+          } else {
+            this.destinationOptions = groupedDestinationResponse.ACCOUNT;
+          }
+        }
+
+        this.filteredMappings = genericMappingsResponse.results.concat();
+
+        this.isLoading = false;
+      }
+    );
   }
 
   showMappingResolve(errorType: AccountingErrorType, groupedError: Error[], sourceField: string) {
@@ -81,6 +100,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.errorType = errorType;
     this.groupedError = groupedError;
     this.sourceField = sourceField;
+    this.getOptions();
     this.destinationField = this.getSourceType();
     this.isMappingResolveVisible = true;
   }
@@ -153,33 +173,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     });
   }
 
-  private setupPage() {
-    const groupedDestinationAttributes$ = this.mappingService.getGroupedDestinationAttributes([this.destinationField]);
-    const genericMappings$ = this.mappingService.getGenericMappingsV2(100, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField);
-
-    forkJoin([groupedDestinationAttributes$, genericMappings$]).subscribe(
-      ([groupedDestinationResponse, genericMappingsResponse]: [any, GenericMappingResponse]) => {
-        if (this.sourceField === 'EMPLOYEE') {
-          this.destinationOptions = this.destinationField ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
-        }
-        if (this.sourceField === 'CATEGORY') {
-          if (this.destinationField === 'EXPENSE_TYPE') {
-            this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
-          } else {
-            this.destinationOptions = groupedDestinationResponse.ACCOUNT;
-          }
-        }
-
-        this.filteredMappings = genericMappingsResponse.results.concat();
-
-        this.isLoading = false;
-      }
-    );
-  }
-
-
   ngOnInit(): void {
-    this.setupPage();
   }
 
 }

@@ -16,3 +16,7 @@ export class DashboardModel {
         });
       }
 }
+
+export interface DestinationFieldMap {
+  [key: string]: string;
+}
