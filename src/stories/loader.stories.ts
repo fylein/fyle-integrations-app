@@ -11,18 +11,18 @@ const meta: Meta<LoaderComponent> = {
   tags: ['autodocs'],
   render: (args: LoaderComponent) => ({
     props: {
-      ...args,
-    },
+      ...args
+    }
   }),
   decorators: [
     moduleMetadata({
       declarations: [LoaderComponent],
-      imports: [CommonModule, SharedModule, ProgressSpinnerModule],
-    }),
+      imports: [CommonModule, SharedModule, ProgressSpinnerModule]
+    })
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } },
-  },
+    ngOnInit: { table: { disable: true } }
+  }
 };
 
 export default meta;
@@ -33,5 +33,5 @@ export const simple: Story = {};
 export const smallLoader: Story = {
   args: {
     styleClass: "!tw-w-16-px !tw-h-16-px spinner-default"
-  },
+  }
 };

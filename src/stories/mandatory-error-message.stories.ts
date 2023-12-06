@@ -12,16 +12,16 @@ const meta: Meta<MandatoryErrorMessageComponent> = {
   render: (args: MandatoryErrorMessageComponent) => ({
     props: {
       ...args
-    },
+    }
   }),
   decorators: [
     moduleMetadata({
-      imports: [SharedModule, TabMenuModule, CommonModule],
-    }),
+      imports: [SharedModule, TabMenuModule, CommonModule]
+    })
   ],
   argTypes: {
-    ngOnInit: { table: { disable: true } },
-  },
+    ngOnInit: { table: { disable: true } }
+  }
 };
 
 export default meta;
@@ -31,19 +31,19 @@ type Story = StoryObj<MandatoryErrorMessageComponent>;
 export const example1: Story = {
   args: {
     listName: 'project'
-  },
+  }
 };
 
 
 export const example2: Story = {
   args: {
     listName: 'user'
-  },
+  }
 };
 
 export const custom: Story = {
   args: {
     customErrorMessage: 'Please select hehe huhu hoho'
-  },
+  }
 };
 
