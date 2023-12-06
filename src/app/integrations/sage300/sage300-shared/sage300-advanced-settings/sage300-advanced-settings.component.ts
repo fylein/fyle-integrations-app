@@ -265,15 +265,13 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     forkJoin([
       this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
       this.advancedSettingsService.getExpenseFilter(),
-      this.advancedSettingsService.getExpenseFilelds(),
-      this.mappingService.getDestinationAttributes(Sage300Field.JOB, AppNameInService.SAGE300)
-    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, destinationAttributes]) => {
+      this.advancedSettingsService.getExpenseFilelds()
+    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
-      this.sageIntacctJobs = destinationAttributes;
-      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, destinationAttributes);
+      this.advancedSettingForm = Sage300AdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled);
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;
