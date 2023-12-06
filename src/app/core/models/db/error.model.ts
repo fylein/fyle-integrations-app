@@ -1,6 +1,7 @@
 import { AccountingErrorType } from "../enum/enum.model";
 import { AccountingExport } from "./accounting-export.model";
 import { ExpenseAttribute } from "./expense-attribute.model";
+import { ExtendedGenericMapping } from "./extended-generic-mapping.model";
 
 export interface DestinationAttributeDetail {
   user_id?: string;
@@ -55,5 +56,23 @@ export class ErrorModel {
       [AccountingErrorType.CATEGORY_MAPPING]: [],
       [AccountingErrorType.ACCOUNTING_ERROR]: []
     });
+  }
+
+  static getErroredMappings(errors: AccountingGroupedErrors,errorType: AccountingErrorType): ExtendedGenericMapping[] {
+    const filteredMappings: ExtendedGenericMapping[] = [];
+
+    errors[errorType].forEach(element => {
+      const filteredMapping: ExtendedGenericMapping = element.expense_attribute;
+      if (errorType === AccountingErrorType.ACCOUNTING_ERROR) {
+        filteredMapping.mapping = [];
+      } else if (errorType === AccountingErrorType.EMPLOYEE_MAPPING) {
+        filteredMapping.employeemapping = [];
+      } else if (errorType === AccountingErrorType.CATEGORY_MAPPING) {
+        filteredMapping.categorymapping = [];
+      }
+      filteredMappings.push(filteredMapping);
+    });
+
+    return filteredMappings;
   }
 }

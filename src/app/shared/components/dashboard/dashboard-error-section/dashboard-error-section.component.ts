@@ -77,46 +77,26 @@ export class DashboardErrorSectionComponent implements OnInit {
     return this.destinationFieldMap[this.sourceField];
   }
 
-  getErroredMappings(errorType: AccountingErrorType): ExtendedGenericMapping[] {
-    const filteredMappings: ExtendedGenericMapping[] = [];
-
-    this.errors[errorType].forEach(element => {
-      const filteredMapping: ExtendedGenericMapping = element.expense_attribute;
-      if (errorType === AccountingErrorType.ACCOUNTING_ERROR) {
-        filteredMapping.mapping = [];
-      } else if (errorType === AccountingErrorType.EMPLOYEE_MAPPING) {
-        filteredMapping.employeemapping = [];
-      } else if (errorType === AccountingErrorType.CATEGORY_MAPPING) {
-        filteredMapping.categorymapping = [];
-      }
-      filteredMappings.push(filteredMapping);
-    });
-
-    return filteredMappings;
-  }
-
-
   private getOptions(errorType: AccountingErrorType) {
     const groupedDestinationAttributes$ = this.mappingService.getGroupedDestinationAttributes([this.destinationField]);
 
-    forkJoin([groupedDestinationAttributes$]).subscribe(
-      ([groupedDestinationResponse]: [GroupedDestinationAttribute]) => {
-        if (this.sourceField === 'EMPLOYEE') {
-          this.destinationOptions = this.destinationField ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
+    this.mappingService.getGroupedDestinationAttributes([this.destinationField])
+    .subscribe(groupedDestinationResponse => {
+      if (this.sourceField === 'EMPLOYEE') {
+        this.destinationOptions = this.destinationField ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
+      } else if (this.sourceField === 'CATEGORY') {
+        if (this.destinationField === 'EXPENSE_TYPE') {
+          this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
+        } else {
+          this.destinationOptions = groupedDestinationResponse.ACCOUNT;
         }
-        if (this.sourceField === 'CATEGORY') {
-          if (this.destinationField === 'EXPENSE_TYPE') {
-            this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
-          } else {
-            this.destinationOptions = groupedDestinationResponse.ACCOUNT;
-          } this.errors[errorType][0].expense_attribute;
-        }
-
-        this.filteredMappings = this.getErroredMappings(errorType);
-
-        this.isLoading = false;
       }
-    );
+  
+      this.errors[errorType][0].expense_attribute;
+      this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType);
+      this.isLoading = false;
+    });
+  
   }
 
   showMappingResolve(errorType: AccountingErrorType, groupedError: Error[], sourceField: ExportErrorSourceType) {
