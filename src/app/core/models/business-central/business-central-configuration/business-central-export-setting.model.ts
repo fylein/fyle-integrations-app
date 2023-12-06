@@ -21,7 +21,7 @@ export type BusinessCentralExportSetting = {
 export interface BusinessCentralExportSettingGet extends BusinessCentralExportSetting {
     id: number,
     created_at: Date,
-    update_at: Date,
+    updated_at: Date,
     workspace: number
 }
 
@@ -33,6 +33,96 @@ export type BusinessCentralExportSettingFormOption = {
 }
 
 export class BusinessCentralExportSettingModel {
+
+    static getExpenseGroupByOptions(): BusinessCentralExportSettingFormOption[] {
+        return [
+          {
+            label: 'Expense',
+            value: ExpenseGroupedBy.EXPENSE
+          },
+          {
+            label: 'Expense Report',
+            value: ExpenseGroupedBy.REPORT
+          }
+        ];
+    }
+
+    static getExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
+        return [
+          {
+            label: 'Current Date',
+            value: ExportDateType.CURRENT_DATE
+          },
+          {
+            label: 'Approval Date',
+            value: ExportDateType.APPROVAL_DATE
+          },
+          {
+            label: 'Last Spent At',
+            value: ExportDateType.LAST_SPENT_AT
+          },
+          {
+            label: 'Spent Date',
+            value: ExportDateType.SPENT_AT
+          }
+        ];
+    }
+
+    static getReimbursableExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
+        return [
+          {
+            label: 'Accounts Payable Invoice',
+            value: BusinessCentralExportType.PURCHASE_INVOICE
+          },
+          {
+            label: 'Journal Entry',
+            value: BusinessCentralExportType.JOURNAL_ENTRY
+          }
+        ];
+    }
+
+    static getCCCExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
+        return [
+          {
+            label: 'Journal Entry',
+            value: BusinessCentralExportType.JOURNAL_ENTRY
+          }
+        ];
+    }
+
+    static getExpenseState(): BusinessCentralExportSettingFormOption[] {
+        return [
+          {
+            label: 'Processing',
+            value: ExpenseState.PAYMENT_PROCESSING
+          },
+          {
+            label: 'Closed',
+            value: ExpenseState.PAID
+          }
+        ];
+    }
+
+    static getEntityOptions(): BusinessCentralExportSettingFormOption[] {
+        return [
+            {
+              label: 'Employee',
+              value: FyleField.EMPLOYEE
+            },
+            {
+              label: 'Vendor',
+              value: FyleField.VENDOR
+            }
+        ];
+    }
+
+    static getEmployeeMappingOptions(): BusinessCentralExportSettingFormOption[] {
+        return [
+            { label: 'Based on Employee E-mail ID', value: AutoMapEmployeeOptions.EMAIL },
+            { label: 'Based on Employee Name', value: AutoMapEmployeeOptions.NAME },
+            { label: 'Based on Employee Code', value: AutoMapEmployeeOptions.EMPLOYEE_CODE }
+        ];
+    }
 
     static mapAPIResponseToFormGroup(exportSettings: BusinessCentralExportSettingGet | null): FormGroup {
         return new FormGroup({
