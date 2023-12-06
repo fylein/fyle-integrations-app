@@ -119,18 +119,18 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
         }
       }
     ];
-    // ForkJoin([
-    //   This.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
-    //   This.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT])
-    // ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
+    forkJoin([
+      this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
+      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT])
+    ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
       this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.creditCardAccountOptions = this.bankOptions = destinationAttributes;
+      this.creditCardAccountOptions = this.bankOptions = destinationAttributes.ACCOUNT;
       this.isLoading = false;
-    // });
+    });
   }
 
   ngOnInit(): void {
