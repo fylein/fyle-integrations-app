@@ -91,12 +91,12 @@ export class DashboardErrorSectionComponent implements OnInit {
           this.destinationOptions = groupedDestinationResponse.ACCOUNT;
         }
       }
-  
+
       this.errors[errorType][0].expense_attribute;
       this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType);
       this.isLoading = false;
     });
-  
+
   }
 
   showMappingResolve(errorType: AccountingErrorType, groupedError: Error[], sourceField: ExportErrorSourceType) {

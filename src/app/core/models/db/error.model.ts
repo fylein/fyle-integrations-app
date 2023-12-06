@@ -58,7 +58,7 @@ export class ErrorModel {
     });
   }
 
-  static getErroredMappings(errors: AccountingGroupedErrors,errorType: AccountingErrorType): ExtendedGenericMapping[] {
+  static getErroredMappings(errors: AccountingGroupedErrors, errorType: AccountingErrorType): ExtendedGenericMapping[] {
     const filteredMappings: ExtendedGenericMapping[] = [];
 
     errors[errorType].forEach(element => {
