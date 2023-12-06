@@ -520,6 +520,6 @@ export enum QBDOnboardingState {
  }
 
 export enum BusinessCentralExportType {
-  JOURNAL_ENTRY = 'journal_entry',
-  PURCHASE_INVOICE = 'PURCHASE_INVOICE'
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  PURCHASE_INVOICE = 'JOURNAL_ENTRY'
 }

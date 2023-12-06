@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
 import { ExportModuleRule, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
-import { AppName,  AutoMapEmployeeOptions, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName,  AutoMapEmployeeOptions, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, ExportDateType, FyleField, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { BusinessCentralDestinationAttributes } from '/Users/fyle/integrations/fyle-integrations-app/src/app/core/models/business-central/db/business-central-destination-attribute.model';
+import { BusinessCentralDestinationAttributes } from 'src/app/core/models/business-central/db/business-central-destination-attribute.model';
 import { FormGroup } from '@angular/forms';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -55,36 +55,23 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  expenseGroupByOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseGroupByOptions();
+  expenseGroupByOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseGroupingDateOptions();
 
-  reimbursableExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getReimbursableExpensesExportTypeOptions();
+  reimbursableExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getReimbursableExpensesExportTypeOptions();
 
-  cccExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getCCCExpensesExportTypeOptions();
+  cccExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCExpensesExportTypeOptions();
 
-  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseState();
+  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseState();
 
-  cccExpenseState: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseState();
+  cccExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseState();
 
-  entityName: BusinessCentralExportSettingFormOption[] = [
-    {
-      label: 'Employee',
-      value: FyleField.EMPLOYEE
-    },
-    {
-      label: 'Vendor',
-      value: FyleField.VENDOR
-    }
-  ];
+  entityName: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEntityOptions();
 
-  employeeMapOptions: BusinessCentralExportSettingFormOption[] = [
-    { label: 'Based on Employee E-mail ID', value: AutoMapEmployeeOptions.EMAIL },
-    { label: 'Based on Employee Name', value: AutoMapEmployeeOptions.NAME },
-    { label: 'Based on Employee Code', value: AutoMapEmployeeOptions.EMPLOYEE_CODE }
-  ];
+  employeeMapOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEmployeeMappingOptions();
 
   sessionStartTime = new Date();
 
@@ -141,7 +128,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   getExportDate(options: BusinessCentralExportSettingFormOption[]): BusinessCentralExportSettingFormOption[]{
     if (this.exportSettingForm.value.reimbursableExpenseState === ExpenseGroupedBy.REPORT) {
-      return options.slice(0, -1);
+      return options.filter(option => option.value !== ExportDateType.SPENT_AT);
     }
     return options;
   }
@@ -165,9 +152,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     const exportModuleRule: ExportModuleRule[] = [
       {
         'formController': 'reimbursableExportType',
-        'requiredValue': {
-
-        }
+        'requiredValue': {}
       },
       {
         'formController': 'cccExportType',
@@ -185,7 +170,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.addFormValidator();
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.creditCardAccountOptions = this.bankOptions = destinationAttributes.ACCOUNT;
+      this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
+      this.bankOptions = destinationAttributes.ACCOUNT;
       this.isLoading = false;
     });
   }
