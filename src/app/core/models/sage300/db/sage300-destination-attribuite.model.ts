@@ -27,5 +27,6 @@ export interface Sage300GroupedDestinationAttribute extends GroupedDestinationAt
     CLASS: Sage300DestinationAttributes[],
     ITEM: Sage300DestinationAttributes[],
     PAYMENT_ACCOUNT: Sage300DestinationAttributes[],
-    EMPLOYEE: Sage300DestinationAttributes[]
+    EMPLOYEE: Sage300DestinationAttributes[],
+    JOB: Sage300DestinationAttributes[]
   }

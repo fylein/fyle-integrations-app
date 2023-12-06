@@ -1,7 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ExpenseFilterPost, ExpenseFilterPayload, ConditionField } from "../../common/advanced-settings.model";
 import { JoinOption, Operator } from "../../enum/enum.model";
-import { Sage300DestinationAttributes } from "../db/sage300-destination-attribuite.model";
 
 export type AdvancedSettingValidatorRule = {
   condition1: string[];
@@ -12,8 +11,6 @@ export type AdvancedSettingValidatorRule = {
 
 export type Sage300AdvancedSetting = {
   memo_structure: string[],
-  default_job_name: string,
-  default_job_id: string
   schedule_is_enabled: boolean,
   auto_create_vendor: boolean,
   interval_hours: number
@@ -55,12 +52,10 @@ export class Sage300AdvancedSettingModel {
     };
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: Sage300AdvancedSettingGet | null, isSkipExportEnabled: boolean, jobDestinationAttribute: Sage300DestinationAttributes[]): FormGroup {
-    const findObjectByDestinationId = (array: Sage300DestinationAttributes[], id: string) => array?.find(item => item.destination_id === id) || null;
+  static mapAPIResponseToFormGroup(advancedSettings: Sage300AdvancedSettingGet | null, isSkipExportEnabled: boolean): FormGroup {
     const defaultMemoOptions: string[] = ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
     return new FormGroup({
       memoStructure: new FormControl(advancedSettings?.memo_structure ? advancedSettings?.memo_structure : defaultMemoOptions),
-      defaultJobName: new FormControl(advancedSettings?.default_job_name ? findObjectByDestinationId(jobDestinationAttribute, advancedSettings?.default_job_id) : null),
       scheduleEnabled: new FormControl(advancedSettings?.schedule_is_enabled ? true : false),
       autoCreateVendor: new FormControl(advancedSettings?.auto_create_vendor ? true : false),
       scheduleAutoExportFrequency: new FormControl(advancedSettings?.interval_hours ? advancedSettings.interval_hours : 1),
@@ -71,8 +66,6 @@ export class Sage300AdvancedSettingModel {
   static createAdvancedSettingPayload(advancedSettingsForm: FormGroup): Sage300AdvancedSettingPost {
     return {
       memo_structure: advancedSettingsForm.get('memoStructure')?.value ? advancedSettingsForm.get('memoStructure')?.value : null,
-      default_job_name: advancedSettingsForm.get('defaultJobName')?.value ? advancedSettingsForm.get('defaultJobName')?.value.value : null,
-      default_job_id: advancedSettingsForm.get('defaultJobName')?.value ? advancedSettingsForm.get('defaultJobName')?.value.destination_id : null,
       schedule_is_enabled: advancedSettingsForm.get('scheduleEnabled')?.value ? advancedSettingsForm.get('scheduleEnabled')?.value : false,
       interval_hours: advancedSettingsForm.get('scheduleEnabled')?.value ? advancedSettingsForm.get('scheduleAutoExportFrequency')?.value : null,
       auto_create_vendor: advancedSettingsForm.get('autoCreateVendor')?.value ? advancedSettingsForm.get('autoCreateVendor')?.value : false
