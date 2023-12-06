@@ -30,9 +30,10 @@
                 <p *ngIf="!getDropdownValue(mapping)" class="unmapped">UNMAPPED</p>
             </td>
         </tr>
+        <ng-container *ngTemplateOutlet="shimmers"></ng-container>
     </ng-template>
 </p-table>
 
 <ng-template #shimmers>
-    <app-shimmers [isMappingTableShimmers]="true"></app-shimmers>
+    <app-shimmers [isMappingTableShimmers]="isLoading"></app-shimmers>
 </ng-template>
