@@ -95,7 +95,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
-                        [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage 300 CRE. Click here for more details.'"
+                        [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
                         [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calender'"
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
@@ -120,7 +120,7 @@
                     <app-configuration-toggle-field 
                     [form]="exportSettingForm"
                     [label]="'Export Corporate Card Expenses'" 
-                    [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage Intacct.'" 
+                    [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage 300 CRE.'" 
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -210,7 +210,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from Fyle to Sage Intacct. Click here for more details.'"
+                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calender'"
                         [placeholder]="'Select date'"
