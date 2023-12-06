@@ -241,7 +241,8 @@ import { ShimmersComponent } from './components/helper/shimmers/shimmers.compone
     ExportLogTableComponent,
     ExportLogFilterComponent,
     ExportLogChildTableDialogComponent,
-    SkippedExportLogTableComponent
+    SkippedExportLogTableComponent,
+    ShimmersComponent
   ]
 })
 export class SharedModule { }

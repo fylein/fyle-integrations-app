@@ -11,6 +11,8 @@ export class ShimmersComponent implements OnInit {
 
   @Input() isExportLogFetchInProgress: boolean;
 
+  @Input() isDashboardImportInProgress: boolean;
+
   constructor() { }
 
   ngOnInit(): void {
