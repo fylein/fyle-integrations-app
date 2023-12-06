@@ -41,6 +41,28 @@
                             [isDisabled]="false">
                         </app-configuration-select-field>
                     </div>
+                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'export date'"
+                            [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                            [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                            [options]="entityName"
+                            [iconPath]="'people'"
+                            [formControllerName]="'entityNamePreference'">
+                        </app-configuration-select-field>
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'export date'"
+                            [label]="'How should Employees in  ' + brandingConfig.brandName + ' be mapped to Employees in Dynamics 365 Business Central ?'"
+                            [subLabel]="'Automatically map the employees in  ' + brandingConfig.brandName + ' to their corresponding records in Dynamics 365 Business Central based on a unique parameter'"
+                            [options]="employeeMapOptions"
+                            [iconPath]="'questionmark'"
+                            [formControllerName]="'reimbursableEmployeeMapping'">
+                        </app-configuration-select-field>
+                    </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
