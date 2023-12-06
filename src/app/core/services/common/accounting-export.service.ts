@@ -8,6 +8,7 @@ import { HelperService } from './helper.service';
 import { AccountingExportCount, AccountingExportGetParam } from '../../models/db/accounting-export.model';
 import { AccountingExportResponse } from '../../models/sage300/db/sage300-accounting-export.model';
 import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
+import { BusinessCentralAccountingExportResponse } from '../../models/business-central/db/business-central-accounting-export.model';
 
 @Injectable({
   providedIn: 'root'
