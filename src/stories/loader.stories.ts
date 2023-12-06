@@ -1,23 +1,20 @@
+
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, type Meta, type StoryObj } from '@storybook/angular';
-import { SharedModule } from 'primeng/api';
+import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoaderComponent } from 'src/app/shared/components/core/loader/loader.component';
 
-
 const meta: Meta<LoaderComponent> = {
-  title: 'Core/Loader Component',
+  title: 'Components/Loader',
   component: LoaderComponent,
   tags: ['autodocs'],
   render: (args: LoaderComponent) => ({
-    props: {
-      ...args
-    }
+    props: { ...args }
   }),
   decorators: [
     moduleMetadata({
       declarations: [LoaderComponent],
-      imports: [CommonModule, SharedModule, ProgressSpinnerModule]
+      imports: [CommonModule, ProgressSpinnerModule]
     })
   ],
   argTypes: {
