@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, filter, forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { AccountingErrorType, AppName, MappingState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName, ExportErrorSourceType, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -37,7 +37,9 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   destinationOptions: DestinationAttribute[];
 
-  sourceField: string;
+  ExportErrorSourceType = ExportErrorSourceType;
+
+  sourceField: ExportErrorSourceType;
 
   destinationField: string;
 
@@ -75,12 +77,30 @@ export class DashboardErrorSectionComponent implements OnInit {
     return this.destinationFieldMap[this.sourceField];
   }
 
-  private getOptions() {
-    const groupedDestinationAttributes$ = this.mappingService.getGroupedDestinationAttributes([this.destinationField]);
-    const genericMappings$ = this.mappingService.getGenericMappingsV2(100, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField);
+  getErroredMappings(errorType: AccountingErrorType): ExtendedGenericMapping[] {
+    let filteredMappings: ExtendedGenericMapping[] = [];
 
-    forkJoin([groupedDestinationAttributes$, genericMappings$]).subscribe(
-      ([groupedDestinationResponse, genericMappingsResponse]: [GroupedDestinationAttribute, GenericMappingResponse]) => {
+    this.errors[errorType].forEach(element => {
+      let filteredMapping: ExtendedGenericMapping;
+      filteredMapping = element.expense_attribute;
+      if (errorType = AccountingErrorType.ACCOUNTING_ERROR) {
+        filteredMapping.mapping = [];
+      } else if (errorType=AccountingErrorType.EMPLOYEE_MAPPING) {
+        filteredMapping.employeemapping = [];
+      } else if (errorType=AccountingErrorType.CATEGORY_MAPPING) {
+        filteredMapping.categorymapping = []
+      }
+      filteredMappings.push(filteredMapping);
+    });
+
+    return filteredMappings;
+  }
+
+  private getOptions(errorType: AccountingErrorType) {
+    const groupedDestinationAttributes$ = this.mappingService.getGroupedDestinationAttributes([this.destinationField]);
+    
+    forkJoin([groupedDestinationAttributes$]).subscribe(
+      ([groupedDestinationResponse]: [GroupedDestinationAttribute]) => {
         if (this.sourceField === 'EMPLOYEE') {
           this.destinationOptions = this.destinationField ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
         }
@@ -89,22 +109,22 @@ export class DashboardErrorSectionComponent implements OnInit {
             this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
           } else {
             this.destinationOptions = groupedDestinationResponse.ACCOUNT;
-          }
+          }this.errors[errorType][0].expense_attribute;
         }
 
-        this.filteredMappings = genericMappingsResponse.results.concat();
+        this.filteredMappings = this.getErroredMappings(errorType);
 
         this.isLoading = false;
       }
     );
   }
 
-  showMappingResolve(errorType: AccountingErrorType, groupedError: Error[], sourceField: string) {
+  showMappingResolve(errorType: AccountingErrorType, groupedError: Error[], sourceField: ExportErrorSourceType) {
     this.eventStartTime = new Date();
     this.errorType = errorType;
     this.groupedError = groupedError;
     this.sourceField = sourceField;
-    this.getOptions();
+    this.getOptions(errorType);
     this.destinationField = this.destinationFieldMap[this.sourceField];
     this.isMappingResolveVisible = true;
   }
