@@ -500,3 +500,8 @@ export enum QBDOnboardingState {
   REIMBURSABLE = 'Reimbursable',
   CORPORATE_CARD = 'Corporate Card'
  }
+
+ export enum ExportErrorSourceType {
+  EMPLOYEE = 'EMPLOYEE',
+  CATEGORY = 'CATEGORY'
+ }

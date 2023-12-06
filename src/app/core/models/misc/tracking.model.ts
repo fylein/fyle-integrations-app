@@ -1,4 +1,4 @@
-import { IntacctErrorType, ProgressPhase } from "../enum/enum.model";
+import { AccountingErrorType, IntacctErrorType, ProgressPhase } from "../enum/enum.model";
 import { QBDAdvancedSettingsGet } from "../qbd/qbd-configuration/advanced-setting.model";
 import { QBDExportSettingGet } from "../qbd/qbd-configuration/export-setting.model";
 import { QBDFieldMappingGet } from "../qbd/qbd-configuration/field-mapping.model";
@@ -35,5 +35,5 @@ export type ResolveMappingErrorProperty = {
   startTime: Date,
   endTime: Date,
   durationInSeconds: number,
-  errorType: IntacctErrorType
+  errorType: IntacctErrorType | AccountingErrorType
 };

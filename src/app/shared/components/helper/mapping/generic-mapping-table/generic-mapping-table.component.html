@@ -2,8 +2,8 @@
     <ng-template pTemplate="header">
         <tr>
         <th class="!tw-pl-40-px">{{sourceField | titlecase | snakeCaseToSpaceCase}} in Fyle</th>
-        <th>{{destinationField | titlecase}} in Sage Intacct</th>
-        <th>Status</th>
+        <th>{{destinationField | titlecase}} in {{appName}}</th>
+        <th *ngIf="!isDashboardMappingResolve">Status</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-mapping>
@@ -25,7 +25,7 @@
                 filterBy="value">
                 </p-dropdown>                
             </td>
-            <td>
+            <td *ngIf="!isDashboardMappingResolve">
                 <p *ngIf="getDropdownValue(mapping)" class="mapped">MAPPED</p>
                 <p *ngIf="!getDropdownValue(mapping)" class="unmapped">UNMAPPED</p>
             </td>
