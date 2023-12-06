@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationMultiSelectComponent } from 'src/app/shared/components/configuration/configuration-multi-select/configuration-multi-select.component';
 
 const meta: Meta<ConfigurationMultiSelectComponent> = {

@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { DashboardMappingResolveComponent } from 'src/app/shared/components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 
 const meta: Meta<DashboardMappingResolveComponent> = {

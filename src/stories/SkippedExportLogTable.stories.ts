@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { SkippedExportLogTableComponent } from 'src/app/shared/components/export-log/skipped-export-log-table/skipped-export-log-table.component';
 
 const meta: Meta<SkippedExportLogTableComponent> = {

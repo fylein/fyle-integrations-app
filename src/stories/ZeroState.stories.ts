@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ZeroStateComponent } from 'src/app/shared/components/helper/zero-state/zero-state.component';
 
 const meta: Meta<ZeroStateComponent> = {

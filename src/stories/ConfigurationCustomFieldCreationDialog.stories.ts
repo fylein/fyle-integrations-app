@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationCustomFieldCreationDialogComponent } from 'src/app/shared/components/configuration/configuration-custom-field-creation-dialog/configuration-custom-field-creation-dialog.component';
 
 const meta: Meta<ConfigurationCustomFieldCreationDialogComponent> = {

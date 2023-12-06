@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { MappingTableComponent } from 'src/app/shared/components/qbd/mapping/mapping-table/mapping-table.component';
 
 const meta: Meta<MappingTableComponent> = {

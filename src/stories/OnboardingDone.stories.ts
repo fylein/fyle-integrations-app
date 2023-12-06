@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { OnboardingDoneComponent } from 'src/app/shared/components/helper/onboarding-done/onboarding-done.component';
 
 const meta: Meta<OnboardingDoneComponent> = {

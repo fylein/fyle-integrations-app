@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { DashboardErrorSectionComponent } from 'src/app/shared/components/dashboard/dashboard-error-section/dashboard-error-section.component';
 
 const meta: Meta<DashboardErrorSectionComponent> = {

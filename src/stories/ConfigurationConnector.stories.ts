@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationConnectorComponent } from 'src/app/shared/components/configuration/configuration-connector/configuration-connector.component';
 
 const meta: Meta<ConfigurationConnectorComponent> = {

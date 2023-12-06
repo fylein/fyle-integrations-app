@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ZeroStateWithIllustrationComponent } from 'src/app/shared/components/qbd/core/zero-state-with-illustration/zero-state-with-illustration.component';
 
 const meta: Meta<ZeroStateWithIllustrationComponent> = {

@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationStepSubHeaderComponent } from 'src/app/shared/components/configuration/configuration-step-sub-header/configuration-step-sub-header.component';
 
 const meta: Meta<ConfigurationStepSubHeaderComponent> = {

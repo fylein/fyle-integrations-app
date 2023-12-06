@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoaderComponent } from 'src/app/shared/components/core/loader/loader.component';
 

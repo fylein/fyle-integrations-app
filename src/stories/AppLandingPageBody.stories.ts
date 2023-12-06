@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { AppLandingPageBodyComponent } from 'src/app/shared/components/helper/app-landing-page-body/app-landing-page-body.component';
 
 const meta: Meta<AppLandingPageBodyComponent> = {

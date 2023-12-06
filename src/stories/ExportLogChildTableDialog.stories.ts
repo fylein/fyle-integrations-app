@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ExportLogChildTableDialogComponent } from 'src/app/shared/components/export-log/export-log-dialog/export-log-child-table-dialog.component';
 
 const meta: Meta<ExportLogChildTableDialogComponent> = {

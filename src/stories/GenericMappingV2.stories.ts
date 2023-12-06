@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { GenericMappingV2Component } from 'src/app/shared/components/helper/mapping/generic-mapping-v2/generic-mapping-v2.component';
 
 const meta: Meta<GenericMappingV2Component> = {

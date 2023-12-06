@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { OnboardingStepperComponent } from 'src/app/shared/components/qbd/helper/onboarding-stepper/onboarding-stepper.component';
 
 const meta: Meta<OnboardingStepperComponent> = {

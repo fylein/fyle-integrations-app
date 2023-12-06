@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { DashboardMenuComponent } from 'src/app/shared/components/core/dashboard-menu/dashboard-menu.component';
 
 const meta: Meta<DashboardMenuComponent> = {

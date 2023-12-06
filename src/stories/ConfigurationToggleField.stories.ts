@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationToggleFieldComponent } from 'src/app/shared/components/configuration/configuration-toggle-field/configuration-toggle-field.component';
 
 const meta: Meta<ConfigurationToggleFieldComponent> = {

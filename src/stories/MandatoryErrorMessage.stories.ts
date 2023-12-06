@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { MandatoryErrorMessageComponent } from 'src/app/shared/components/helper/mandatory-error-message/mandatory-error-message.component';
 
 const meta: Meta<MandatoryErrorMessageComponent> = {

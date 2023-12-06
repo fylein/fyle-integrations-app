@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { PreviewDialogComponent } from 'src/app/shared/components/configuration/preview-dialog/preview-dialog.component';
 
 const meta: Meta<PreviewDialogComponent> = {

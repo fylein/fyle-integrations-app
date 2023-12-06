@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationScheduleExportComponent } from 'src/app/shared/components/configuration/configuration-schedule-export/configuration-schedule-export.component';
 
 const meta: Meta<ConfigurationScheduleExportComponent> = {

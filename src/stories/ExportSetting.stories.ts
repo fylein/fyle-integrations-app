@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ExportSettingComponent } from 'src/app/shared/components/qbd/configuration/export-setting/export-setting.component';
 
 const meta: Meta<ExportSettingComponent> = {

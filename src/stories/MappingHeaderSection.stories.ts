@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { MappingHeaderSectionComponent } from 'src/app/shared/components/qbd/mapping/mapping-header-section/mapping-header-section.component';
 
 const meta: Meta<MappingHeaderSectionComponent> = {

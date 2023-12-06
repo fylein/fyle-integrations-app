@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationRadioFieldComponent } from 'src/app/shared/components/qbd/configuration/configuration-radio-field/configuration-radio-field.component';
 
 const meta: Meta<ConfigurationRadioFieldComponent> = {

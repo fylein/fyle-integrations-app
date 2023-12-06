@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationInfoLabelComponent } from 'src/app/shared/components/configuration/configuration-info-label/configuration-info-label.component';
 
 const meta: Meta<ConfigurationInfoLabelComponent> = {

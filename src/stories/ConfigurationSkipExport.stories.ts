@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationSkipExportComponent } from 'src/app/shared/components/configuration/configuration-skip-export/configuration-skip-export.component';
 
 const meta: Meta<ConfigurationSkipExportComponent> = {

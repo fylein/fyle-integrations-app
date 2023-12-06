@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { MappingCardHeaderComponent } from 'src/app/shared/components/helper/mapping/mapping-card-header/mapping-card-header.component';
 
 const meta: Meta<MappingCardHeaderComponent> = {

@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { MandatoryFieldComponent } from 'src/app/shared/components/helper/mandatory-field/mandatory-field.component';
 
 const meta: Meta<MandatoryFieldComponent> = {

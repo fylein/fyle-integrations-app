@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { DashboardExportSectionComponent } from 'src/app/shared/components/dashboard/dashboard-export-section/dashboard-export-section.component';
 
 const meta: Meta<DashboardExportSectionComponent> = {

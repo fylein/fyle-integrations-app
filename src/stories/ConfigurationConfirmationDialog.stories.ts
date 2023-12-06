@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationConfirmationDialogComponent } from 'src/app/shared/components/configuration/configuration-confirmation-dialog/configuration-confirmation-dialog.component';
 
 const meta: Meta<ConfigurationConfirmationDialogComponent> = {

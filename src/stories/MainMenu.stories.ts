@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { MainMenuComponent } from 'src/app/shared/components/menu/main-menu/main-menu.component';
 
 const meta: Meta<MainMenuComponent> = {

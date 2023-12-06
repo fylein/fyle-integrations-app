@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { PaginatorComponent } from 'src/app/shared/components/helper/paginator/paginator.component';
 
 const meta: Meta<PaginatorComponent> = {
@@ -18,7 +19,7 @@ const meta: Meta<PaginatorComponent> = {
   ],
   argTypes: {
     ngOnInit: { table: { disable: true } },
-    pageSizeChangeEvent: { control: { disable: true } },
+    pageSizeChangeEvent: { control: { disable: true } }
   }
 };
 

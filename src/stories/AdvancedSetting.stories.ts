@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { AdvancedSettingComponent } from 'src/app/shared/components/qbd/configuration/advanced-setting/advanced-setting.component';
 
 const meta: Meta<AdvancedSettingComponent> = {

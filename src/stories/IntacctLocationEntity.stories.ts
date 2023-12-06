@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { IntacctLocationEntityComponent } from 'src/app/shared/components/si/core/intacct-location-entity/intacct-location-entity.component';
 
 const meta: Meta<IntacctLocationEntityComponent> = {

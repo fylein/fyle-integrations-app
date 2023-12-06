@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { DashboardAccountingErrorDialogComponent } from 'src/app/shared/components/dashboard/dashboard-accounting-error-dialog/dashboard-accounting-error-dialog.component';
 
 const meta: Meta<DashboardAccountingErrorDialogComponent> = {

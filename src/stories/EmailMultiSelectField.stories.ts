@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { EmailMultiSelectFieldComponent } from 'src/app/shared/components/configuration/email-multi-select-field/email-multi-select-field.component';
 
 const meta: Meta<EmailMultiSelectFieldComponent> = {

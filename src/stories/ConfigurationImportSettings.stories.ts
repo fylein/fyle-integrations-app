@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { moduleMetadata, Meta, StoryObj } from '@storybook/angular';
+import type { Meta, StoryObj } from '@storybook/angular';
+import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationImportSettingsComponent } from 'src/app/shared/components/si/configuration/configuration-import-settings/configuration-import-settings.component';
 
 const meta: Meta<ConfigurationImportSettingsComponent> = {
