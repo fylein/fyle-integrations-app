@@ -13,6 +13,8 @@ export class ShimmersComponent implements OnInit {
 
   @Input() isDashboardImportInProgress: boolean;
 
+  @Input() isMappingTableShimmers: boolean;
+
   constructor() { }
 
   ngOnInit(): void {
