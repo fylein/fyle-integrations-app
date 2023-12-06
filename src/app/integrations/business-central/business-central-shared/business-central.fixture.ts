@@ -18,7 +18,9 @@ export const exportSettingsResponse: BusinessCentralExportSettingGet = {
   "credit_card_expense_grouped_by": ExpenseGroupedBy.EXPENSE,
   "credit_card_expense_date": ExportDateType.LAST_SPENT_AT,
   "update_at": new Date("2023-10-09T08:18:29.080160Z"),
-  "workspace": 1
+  "workspace": 1,
+  "credit_card_entity_name_preference": "EMPLOYEE",
+  "employee_mapping": "EMAIL"
 };
 
 export const destinationAttributes: BusinessCentralDestinationAttributes[] = [

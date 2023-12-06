@@ -1,5 +1,5 @@
 import { FormGroup, FormControl } from "@angular/forms";
-import { BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField } from "../../enum/enum.model";
+import { AutoMapEmployeeOptions, BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField } from "../../enum/enum.model";
 
 export type BusinessCentralExportSetting = {
     reimbursable_expenses_export_type: BusinessCentralExportType,
@@ -14,6 +14,8 @@ export type BusinessCentralExportSetting = {
     default_credit_card_account_id: string,
     default_bank_account_name: string,
     default_bank_account_id: string,
+    credit_card_entity_name_preference: string,
+    employee_mapping: string
 }
 
 export interface BusinessCentralExportSettingGet extends BusinessCentralExportSetting {
@@ -27,7 +29,7 @@ export interface BusinessCentralExportSettingPost extends BusinessCentralExportS
 
 export type BusinessCentralExportSettingFormOption = {
     label: string,
-    value: ExpenseState | CCCExpenseState | FyleField | ExpenseGroupedBy | BusinessCentralExportType | ExportDateType
+    value: ExpenseState | CCCExpenseState | FyleField | ExpenseGroupedBy | BusinessCentralExportType | ExportDateType | AutoMapEmployeeOptions;
 }
 
 export class BusinessCentralExportSettingModel {
@@ -45,7 +47,9 @@ export class BusinessCentralExportSettingModel {
             cccExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : null),
             cccExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by: null),
             defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_credit_card_account_name ? exportSettings?.default_credit_card_account_name : null),
-            defaultBankName: new FormControl(exportSettings?.default_bank_account_name ? exportSettings?.default_bank_account_name : null)
+            defaultBankName: new FormControl(exportSettings?.default_bank_account_name ? exportSettings?.default_bank_account_name : null),
+            entityNamePreference: new FormControl(exportSettings?.credit_card_entity_name_preference ? exportSettings?.credit_card_entity_name_preference : null),
+            reimbursableEmployeeMapping: new FormControl(exportSettings?.employee_mapping ? exportSettings?.employee_mapping : null)
         });
     }
 
@@ -62,7 +66,9 @@ export class BusinessCentralExportSettingModel {
             default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.value : null,
             default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.destination_id : null,
             default_bank_account_name: exportSettingsForm.get('defaultBankName')?.value ? exportSettingsForm.get('defaultBankName')?.value.value : null,
-            default_bank_account_id: exportSettingsForm.get('defaultBankName')?.value ? exportSettingsForm.get('defaultBankName')?.value.destination_id : null
+            default_bank_account_id: exportSettingsForm.get('defaultBankName')?.value ? exportSettingsForm.get('defaultBankName')?.value.destination_id : null,
+            credit_card_entity_name_preference: exportSettingsForm.get('entityNamePreference')?.value ? exportSettingsForm.get('entityNamePreference')?.value : null,
+            employee_mapping: exportSettingsForm.get('reimbursableEmployeeMapping')?.value ? exportSettingsForm.get('reimbursableEmployeeMapping')?.value : null
         };
     }
   }

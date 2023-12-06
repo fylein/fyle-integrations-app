@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
 import { ExportModuleRule, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
-import { AppName, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName,  AutoMapEmployeeOptions, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -68,6 +68,23 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseState();
 
   cccExpenseState: BusinessCentralExportSettingFormOption[] = this.exportSettingService.getExpenseState();
+
+  entityName: BusinessCentralExportSettingFormOption[] = [
+    {
+      label: 'Employee',
+      value: FyleField.EMPLOYEE
+    },
+    {
+      label: 'Vendor',
+      value: FyleField.VENDOR
+    }
+  ];
+
+  employeeMapOptions: BusinessCentralExportSettingFormOption[] = [
+    { label: 'Based on Employee E-mail ID', value: AutoMapEmployeeOptions.EMAIL },
+    { label: 'Based on Employee Name', value: AutoMapEmployeeOptions.NAME },
+    { label: 'Based on Employee Code', value: AutoMapEmployeeOptions.EMPLOYEE_CODE }
+  ];
 
   sessionStartTime = new Date();
 
@@ -141,7 +158,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
-      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
+      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'entityNamePreference', 'reimbursableEmployeeMapping'],
       'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
     };
 
