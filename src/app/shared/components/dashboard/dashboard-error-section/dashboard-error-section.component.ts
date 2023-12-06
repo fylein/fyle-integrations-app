@@ -78,27 +78,27 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   getErroredMappings(errorType: AccountingErrorType): ExtendedGenericMapping[] {
-    let filteredMappings: ExtendedGenericMapping[] = [];
-
+    const filteredMappings: ExtendedGenericMapping[] = [];
+  
     this.errors[errorType].forEach(element => {
-      let filteredMapping: ExtendedGenericMapping;
-      filteredMapping = element.expense_attribute;
-      if (errorType = AccountingErrorType.ACCOUNTING_ERROR) {
+      const filteredMapping: ExtendedGenericMapping = element.expense_attribute;
+      if (errorType === AccountingErrorType.ACCOUNTING_ERROR) {
         filteredMapping.mapping = [];
-      } else if (errorType=AccountingErrorType.EMPLOYEE_MAPPING) {
+      } else if (errorType === AccountingErrorType.EMPLOYEE_MAPPING) {
         filteredMapping.employeemapping = [];
-      } else if (errorType=AccountingErrorType.CATEGORY_MAPPING) {
-        filteredMapping.categorymapping = []
+      } else if (errorType === AccountingErrorType.CATEGORY_MAPPING) {
+        filteredMapping.categorymapping = [];
       }
       filteredMappings.push(filteredMapping);
     });
-
+  
     return filteredMappings;
   }
+  
 
   private getOptions(errorType: AccountingErrorType) {
     const groupedDestinationAttributes$ = this.mappingService.getGroupedDestinationAttributes([this.destinationField]);
-    
+
     forkJoin([groupedDestinationAttributes$]).subscribe(
       ([groupedDestinationResponse]: [GroupedDestinationAttribute]) => {
         if (this.sourceField === 'EMPLOYEE') {
@@ -109,7 +109,7 @@ export class DashboardErrorSectionComponent implements OnInit {
             this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;
           } else {
             this.destinationOptions = groupedDestinationResponse.ACCOUNT;
-          }this.errors[errorType][0].expense_attribute;
+          } this.errors[errorType][0].expense_attribute;
         }
 
         this.filteredMappings = this.getErroredMappings(errorType);
