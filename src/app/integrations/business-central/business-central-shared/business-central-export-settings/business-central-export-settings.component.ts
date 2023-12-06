@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
 import { ExportModuleRule, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
-import { AppName, BusinessCentralExportType, BusinessCentralField, ConfigurationCta, ExpenseGroupedBy, FyleField } from 'src/app/core/models/enum/enum.model';
+import { AppName, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -12,6 +12,9 @@ import { FormGroup } from '@angular/forms';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { destinationAttributes, exportSettingsResponse } from '../business-central.fixture';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
   selector: 'app-business-central-export-settings',
@@ -75,11 +78,48 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     private router: Router,
     private mappingService: MappingService,
     private helperService: BusinessCentralHelperService,
+    private workspaceService: WorkspaceService,
+    private toastService: IntegrationsToastService,
+    private trackingService: TrackingService,
     public helper: HelperService
   ) { }
 
-  save() {
-    // TODO
+  private constructPayloadAndSave(): void {
+    this.isSaveInProgress = true;
+    const exportSettingPayload = BusinessCentralExportSettingModel.createExportSettingPayload(this.exportSettingForm);
+    this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((exportSettingResponse: BusinessCentralExportSettingGet) => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_BUSINESS_CENTRAL, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.EXPORT_SETTINGS) {
+        this.trackingService.onOnboardingStepCompletion(BusinessCentralOnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
+          {
+            phase: this.helper.getPhase(this.isOnboarding),
+            oldState: this.exportSettings,
+            newState: exportSettingResponse
+          }
+        );
+      }
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.IMPORT_SETTINGS);
+        this.router.navigate([`/integrations/business_central/onboarding/import_settings`]);
+      }
+
+
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      });
+  }
+
+  save(): void {
+    if (this.exportSettingForm.valid) {
+      this.constructPayloadAndSave();
+    }
   }
 
   getExportDate(options: BusinessCentralExportSettingFormOption[]): BusinessCentralExportSettingFormOption[]{
@@ -119,18 +159,18 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
         }
       }
     ];
-    // ForkJoin([
-    //   This.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
-    //   This.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT])
-    // ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
+    forkJoin([
+      this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
+      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT])
+    ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
       this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.creditCardAccountOptions = this.bankOptions = destinationAttributes;
+      this.creditCardAccountOptions = this.bankOptions = destinationAttributes.ACCOUNT;
       this.isLoading = false;
-    // });
+    });
   }
 
   ngOnInit(): void {

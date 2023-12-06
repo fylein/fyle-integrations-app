@@ -59,6 +59,13 @@ export enum Sage300UpdateEvent {
   ADVANCED_SETTINGS_SAGE300= 'Advanced Settings Sage300',
 }
 
+export enum BusinessCentralUpdateEvent {
+  CONNECT_BUSINESS_CENTRAL = 'Connect Business Central',
+  EXPORT_SETTING_BUSINESS_CENTRAL = 'Export Settings Business Central',
+  IMPORT_SETTINGS_BUSINESS_CENTRAL = 'Import Settings Business Central',
+  ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings Business Central',
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
@@ -99,6 +106,9 @@ export enum Page {
   EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
   IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
   ADVANCED_SETTINGS_SAGE300 = 'Advanced Settings Sage300',
+  EXPORT_SETTING_BUSINESS_CENTRAL = 'Export Settings BusinessCentral',
+  IMPORT_SETTINGS_BUSINESS_CENTRAL = 'Import Settings BusinessCentral',
+  ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings BusinessCentral',
 }
 
 export enum ClickEvent {
