@@ -79,7 +79,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   getErroredMappings(errorType: AccountingErrorType): ExtendedGenericMapping[] {
     const filteredMappings: ExtendedGenericMapping[] = [];
-  
+
     this.errors[errorType].forEach(element => {
       const filteredMapping: ExtendedGenericMapping = element.expense_attribute;
       if (errorType === AccountingErrorType.ACCOUNTING_ERROR) {
@@ -91,10 +91,10 @@ export class DashboardErrorSectionComponent implements OnInit {
       }
       filteredMappings.push(filteredMapping);
     });
-  
+
     return filteredMappings;
   }
-  
+
 
   private getOptions(errorType: AccountingErrorType) {
     const groupedDestinationAttributes$ = this.mappingService.getGroupedDestinationAttributes([this.destinationField]);
