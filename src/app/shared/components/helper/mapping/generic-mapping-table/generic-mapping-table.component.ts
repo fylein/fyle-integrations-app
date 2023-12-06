@@ -1,13 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { even } from '@rxweb/reactive-form-validators';
-import { CategoryMappingPost } from 'src/app/core/models/db/category-mapping.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { EmployeeMappingPost } from 'src/app/core/models/db/employee-mapping.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { GenericMapping, GenericMappingPost, MappingClass, MinimalMappingSetting } from 'src/app/core/models/db/generic-mapping.model';
+import { GenericMapping, MappingClass, MinimalMappingSetting } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -19,7 +15,9 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class GenericMappingTableComponent implements OnInit {
 
-  @Input() isLoading: boolean = true;
+  @Input() isLoading: boolean;
+
+  @Input() appName: AppName;
 
   @Input() filteredMappings: ExtendedGenericMapping[];
 
@@ -31,7 +29,7 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() destinationField: string;
 
-  @Input() employeeFieldMapping: FyleField = FyleField.VENDOR;
+  @Input() employeeFieldMapping: FyleField;
 
   @Input() reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
 
@@ -40,6 +38,8 @@ export class GenericMappingTableComponent implements OnInit {
   @Input() destinationOptions: DestinationAttribute[];
 
   @Input() mappingSetting: MinimalMappingSetting;
+
+  @Input() isDashboardMappingResolve: boolean;
 
   constructor(
     private mappingService: MappingService,

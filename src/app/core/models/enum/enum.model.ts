@@ -446,7 +446,8 @@ export enum QBDOnboardingState {
 
   export enum AccountingErrorType {
     EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
-    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING',
+    ACCOUNTING_ERROR = 'ACCOUNTING_ERROR'
   }
 
   export enum AccountingExport{
@@ -498,4 +499,9 @@ export enum QBDOnboardingState {
   CCC = 'CCC',
   REIMBURSABLE = 'Reimbursable',
   CORPORATE_CARD = 'Corporate Card'
+ }
+
+ export enum ExportErrorSourceType {
+  EMPLOYEE = 'EMPLOYEE',
+  CATEGORY = 'CATEGORY'
  }

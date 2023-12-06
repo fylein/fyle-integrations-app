@@ -2,8 +2,8 @@
     <ng-template pTemplate="header">
         <tr>
         <th class="!tw-pl-40-px">{{sourceField | titlecase | snakeCaseToSpaceCase}} in Fyle</th>
-        <th>{{destinationField | titlecase}} in Sage Intacct</th>
-        <th>Status</th>
+        <th>{{destinationField | titlecase}} in {{appName}}</th>
+        <th *ngIf="!isDashboardMappingResolve">Status</th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-mapping>
@@ -25,17 +25,15 @@
                 filterBy="value">
                 </p-dropdown>                
             </td>
-            <td>
+            <td *ngIf="!isDashboardMappingResolve">
                 <p *ngIf="getDropdownValue(mapping)" class="mapped">MAPPED</p>
                 <p *ngIf="!getDropdownValue(mapping)" class="unmapped">UNMAPPED</p>
             </td>
         </tr>
+        <ng-container *ngTemplateOutlet="shimmers"></ng-container>
     </ng-template>
 </p-table>
 
 <ng-template #shimmers>
-    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
-        <td *ngIf="isLoading"><p-skeleton width="150px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isLoading"><p-skeleton width="250px" height="28px" shape="rectangle"></p-skeleton></td>
-    </tr>
+    <app-shimmers [isMappingTableShimmers]="isLoading"></app-shimmers>
 </ng-template>

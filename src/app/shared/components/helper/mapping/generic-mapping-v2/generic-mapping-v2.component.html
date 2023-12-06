@@ -9,9 +9,8 @@
             <div class="tw-p-24-px tw-border-b-separator">
                 <app-mapping-filter [selectedAlphabeticalFilter]="alphabetFilter" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)" (mappingFilterUpdateHandler)="mappingFilterUpdate($event)" [isAlphabetFilterHidden]="false"></app-mapping-filter>
             </div>
-            <!-- add a flag/dashboard mapping tab -->
             <div *ngIf="filteredMappingCount">
-                <app-generic-mapping-table [isLoading]="isLoading" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
+                <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
             </div>
             <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount" >
                 <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>

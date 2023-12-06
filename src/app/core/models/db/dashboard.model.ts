@@ -1,4 +1,4 @@
-import { AccountingErrorType } from "../enum/enum.model";
+import { AccountingErrorType, DefaultImportFields, ExportErrorSourceType, FyleField } from "../enum/enum.model";
 import { AccountingGroupedErrors, Error } from "./error.model";
 
 export class DashboardModel {
@@ -11,7 +11,14 @@ export class DashboardModel {
           return groupedErrors;
         }, {
           [AccountingErrorType.EMPLOYEE_MAPPING]: [],
-          [AccountingErrorType.CATEGORY_MAPPING]: []
+          [AccountingErrorType.CATEGORY_MAPPING]: [],
+          [AccountingErrorType.ACCOUNTING_ERROR]: []
         });
       }
+}
+
+export interface DestinationFieldMap {
+  [ExportErrorSourceType.EMPLOYEE]: string;
+  [ExportErrorSourceType.CATEGORY]: string;
+
 }
