@@ -11,6 +11,7 @@ import { BusinessCentralDestinationAttributes } from '/Users/fyle/integrations/f
 import { FormGroup } from '@angular/forms';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { destinationAttributes, exportSettingsResponse } from '../business-central.fixture';
 
 @Component({
   selector: 'app-business-central-export-settings',
@@ -118,18 +119,18 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
         }
       }
     ];
-    forkJoin([
-      this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT])
-    ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
+    // ForkJoin([
+    //   This.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
+    //   This.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT])
+    // ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
       this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       this.addFormValidator();
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
-      this.creditCardAccountOptions = this.bankOptions = destinationAttributes.ACCOUNT;
+      this.creditCardAccountOptions = this.bankOptions = destinationAttributes;
       this.isLoading = false;
-    });
+    // });
   }
 
   ngOnInit(): void {

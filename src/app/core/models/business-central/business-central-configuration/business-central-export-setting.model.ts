@@ -61,8 +61,8 @@ export class BusinessCentralExportSettingModel {
             credit_card_expense_date: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null,
             default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.value : null,
             default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.destination_id : null,
-            default_bank_account_name: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.value : null,
-            default_bank_account_id: exportSettingsForm.get('defaultVendorName')?.value ? exportSettingsForm.get('defaultVendorName')?.value.destination_id : null
+            default_bank_account_name: exportSettingsForm.get('defaultBankName')?.value ? exportSettingsForm.get('defaultBankName')?.value.value : null,
+            default_bank_account_id: exportSettingsForm.get('defaultBankName')?.value ? exportSettingsForm.get('defaultBankName')?.value.destination_id : null
         };
     }
   }
