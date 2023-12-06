@@ -61,7 +61,8 @@ export class MappingService {
         VENDOR: [],
         EMPLOYEE: [],
         CHARGE_CARD_NUMBER: [],
-        TAX_DETAIL: []
+        TAX_DETAIL: [],
+        JOB: []
       });
     }));
   }
