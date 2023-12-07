@@ -36,7 +36,7 @@ export class BusinessCentralAdvancedSettingsService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_settings/`, advancedSettingsPayload);
   }
 
-  getExpenseFilelds(): Observable<ConditionField[]> {
+  getExpenseFields(): Observable<ConditionField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_fields/`, {});
   }
 

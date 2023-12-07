@@ -12,7 +12,7 @@ export type AdvancedSettingValidatorRule = {
 export type BusinessCentralAdvancedSettings = {
     top_memo_structure: string[],
     expense_memo_structure: string[],
-    schedule_is_enabled: true,
+    schedule_is_enabled: boolean,
     interval_hours: number
 }
 
@@ -38,7 +38,6 @@ export class BusinessCentralAdvancedSettingsModel {
     }
 
     static constructSkipExportPayload(valueField: ExpenseFilterPayload, valueOption: any[]): ExpenseFilterPost {
-      const op: string = (valueField.operator) as string;
       return {
         condition: valueField.condition.field_name,
         operator: valueField.operator,
