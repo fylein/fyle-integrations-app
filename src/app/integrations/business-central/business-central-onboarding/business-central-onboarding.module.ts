@@ -9,6 +9,7 @@ import { BusinessCentralOnboardingExportSettingsComponent } from './business-cen
 import { BusinessCentralOnboardingImportSettingsComponent } from './business-central-onboarding-import-settings/business-central-onboarding-import-settings.component';
 import { BusinessCentralOnboardingComponent } from './business-central-onboarding.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { BusinessCentralSharedModule } from '../business-central-shared/business-central-shared.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     BusinessCentralOnboardingRoutingModule,
-    SharedModule
+    SharedModule,
+    BusinessCentralSharedModule
   ]
 })
 export class BusinessCentralOnboardingModule { }
