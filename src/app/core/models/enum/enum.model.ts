@@ -465,7 +465,8 @@ export enum QBDOnboardingState {
 
   export enum AccountingErrorType {
     EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
-    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
+    CATEGORY_MAPPING = 'CATEGORY_MAPPING',
+    ACCOUNTING_ERROR = 'ACCOUNTING_ERROR'
   }
 
   export enum AccountingExport{
@@ -523,3 +524,7 @@ export enum BusinessCentralExportType {
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   PURCHASE_INVOICE = 'JOURNAL_ENTRY'
 }
+ export enum ExportErrorSourceType {
+  EMPLOYEE = 'EMPLOYEE',
+  CATEGORY = 'CATEGORY'
+ }

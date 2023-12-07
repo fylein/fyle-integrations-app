@@ -42,5 +42,6 @@ export type GroupedDestinationAttribute = {
   CLASS: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
   ITEM: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
   PAYMENT_ACCOUNT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
-  EMPLOYEE: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[]
+  EMPLOYEE: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  JOB: Sage300DestinationAttributes[]
 };

@@ -84,6 +84,7 @@ import { ExportLogTableComponent } from './components/export-log/export-log-tabl
 import { ExportLogFilterComponent } from './components/export-log/export-log-filter/export-log-filter.component';
 import { ExportLogChildTableDialogComponent } from './components/export-log/export-log-dialog/export-log-child-table-dialog.component';
 import { SkippedExportLogTableComponent } from './components/export-log/skipped-export-log-table/skipped-export-log-table.component';
+import { ShimmersComponent } from './components/helper/shimmers/shimmers.component';
 
 
 @NgModule({
@@ -150,7 +151,8 @@ import { SkippedExportLogTableComponent } from './components/export-log/skipped-
     ExportLogTableComponent,
     ExportLogFilterComponent,
     ExportLogChildTableDialogComponent,
-    SkippedExportLogTableComponent
+    SkippedExportLogTableComponent,
+    ShimmersComponent
   ],
   imports: [
     CommonModule,
@@ -239,7 +241,8 @@ import { SkippedExportLogTableComponent } from './components/export-log/skipped-
     ExportLogTableComponent,
     ExportLogFilterComponent,
     ExportLogChildTableDialogComponent,
-    SkippedExportLogTableComponent
+    SkippedExportLogTableComponent,
+    ShimmersComponent
   ]
 })
 export class SharedModule { }

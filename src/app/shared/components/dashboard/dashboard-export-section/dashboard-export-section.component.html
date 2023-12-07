@@ -1,5 +1,5 @@
 <div class="tw-py-32-px tw-px-120-px">
-    <div *ngIf="isImportInProgress" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+    <div *ngIf="!isImportInProgress" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-4/5">
@@ -37,23 +37,12 @@
             </div>
         </div>
         <div  *ngIf="isExportInProgress">
-            <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]='false'></p-progressBar>
+            <p-progressBar class="!tw-h-6-px" [showValue]='false' mode="indeterminate"></p-progressBar>
         </div>
     </div>
     
     <!-- Shimmers -->
-    <div *ngIf="!isImportInProgress" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
-        <div class="tw-p-24-px">
-            <div class="tw-flex tw-justify-between tw-items-center ">
-                <div class="tw-w-3/5">
-                    <div class="tw-mb-10-px"><p-skeleton width="250px" height="16px" shape="rectangle" ></p-skeleton></div>
-                    <div class="tw-mb-10-px"><p-skeleton width="500px" height="16px" shape="rectangle"></p-skeleton></div>
-                    <div class="tw-mb-10-px"><p-skeleton width="300px" height="16px" shape="rectangle"></p-skeleton></div>
-                </div>
-                <div class="tw-flex tw-items-end tw-justify-end">
-                    <p-skeleton width="120px" height="50px" shape="rectangle" ></p-skeleton>
-                </div>
-            </div>
-        </div>
+    <div class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
+        <app-shimmers [isDashboardImportInProgress]="isImportInProgress"></app-shimmers>
     </div>
 </div>

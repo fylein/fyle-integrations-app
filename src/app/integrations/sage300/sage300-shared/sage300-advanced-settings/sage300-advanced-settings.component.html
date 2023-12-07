@@ -103,25 +103,6 @@
                     [iconPath]="'people'">
                 </app-configuration-toggle-field>
             </div>
-            <div>
-                <app-configuration-step-sub-header
-                    [label]="'Default Field Values'"
-                    [subLabel]="'If you\'ve made a field mandatory in Sage 300 CRE but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.'">
-                </app-configuration-step-sub-header>
-            </div>
-            <div>
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'Job'"
-                    [label]="'Default Job'"
-                    [destinationAttributes]="sageIntacctJobs"
-                    [isDefaultFields]="true"
-                    [showClearIcon]="true"
-                    [placeholder]="'Select Job'"
-                    [formControllerName]="'defaultJobName'">
-                </app-configuration-select-field>
-            </div>
         </div>
         <div>
             <app-configuration-step-footer [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingForm.valid"></app-configuration-step-footer>
