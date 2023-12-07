@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BusinessCentralAdvancedSettingsComponent } from './business-central-advanced-settings/business-central-advanced-settings.component';
 import { BusinessCentralExportSettingsComponent } from './business-central-export-settings/business-central-export-settings.component';
 import { BusinessCentralImportSettingsComponent } from './business-central-import-settings/business-central-import-settings.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { BusinessCentralImportSettingsComponent } from './business-central-impor
     BusinessCentralAdvancedSettingsComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ],
   exports: [
     BusinessCentralExportSettingsComponent,
