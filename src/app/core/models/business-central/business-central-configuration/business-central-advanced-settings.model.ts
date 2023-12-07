@@ -19,7 +19,7 @@ export type BusinessCentralAdvancedSettings = {
 export interface BusinessCentralAdvancedSettingsGet extends BusinessCentralAdvancedSettings {
     id: number,
     created_at: Date,
-    update_at: Date,
+    updated_at: Date,
     workspace: number
 }
 
