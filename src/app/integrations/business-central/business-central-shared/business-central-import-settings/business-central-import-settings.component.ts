@@ -1,4 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { catchError, of } from 'rxjs';
+import { forkJoin } from 'rxjs/internal/observable/forkJoin';
+import { BusinessCentralImportSettingsGet, BusinessCentralImportSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
+import { AppNameInService } from 'src/app/core/models/enum/enum.model';
+import { BusinessCentralImportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-import-settings.service';
+import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 
 @Component({
   selector: 'app-business-central-import-settings',
@@ -7,9 +21,143 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BusinessCentralImportSettingsComponent implements OnInit {
 
-  constructor() { }
+  isOnboarding: boolean;
+
+  importSettings: BusinessCentralImportSettingsGet | null;
+
+  importSettingForm: any;
+
+  fyleFields: FyleField[];
+
+  businessCentralFields: IntegrationField[];
+
+  isLoading: boolean = true;
+
+  isPreviewDialogVisible: boolean;
+
+  customFieldForm: FormGroup;
+
+  showCustomFieldDialog: boolean;
+
+  customFieldType: string;
+
+  customFieldControl: AbstractControl;
+
+  customField: { attribute_type: any; display_name: any; source_placeholder: any; is_dependent: boolean; };
+
+  customFieldOption: any;
+
+  constructor(
+    private router: Router,
+    private importSettingService: BusinessCentralImportSettingsService,
+    private mappingService: MappingService,
+    private helperService: BusinessCentralHelperService,
+    private formBuilder: FormBuilder,
+    private helper: HelperService,
+    private toastService: IntegrationsToastService,
+    private trackingService: TrackingService,
+    private workspaceService: WorkspaceService
+  ) { }
+
+  get expenseFieldsGetter() {
+    return this.importSettingForm.get('expenseFields') as FormArray;
+  }
+
+  closeModel() {
+    this.customFieldForm.reset();
+    this.showCustomFieldDialog = false;
+  }
+
+  showPreviewDialog(visible: boolean) {
+    this.isPreviewDialogVisible = visible;
+  }
+
+  closeDialog() {
+    this.isPreviewDialogVisible = false;
+  }
+
+  refreshDimensions(isRefresh: boolean) {
+    this.helperService.importAttributes(isRefresh);
+  }
+
+  saveFyleExpenseField(): void {
+    this.customField = {
+      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.value.attribute_type,
+      source_placeholder: this.customFieldForm.value.source_placeholder,
+      is_dependent: false
+    };
+
+    if (this.customFieldControl) {
+      this.fyleFields.pop();
+      this.fyleFields.push(this.customField);
+      this.fyleFields.push(this.customFieldOption[0]);
+      const expenseField = {
+        source_field: this.customField.attribute_type,
+        destination_field: this.customFieldControl.value.destination_field,
+        import_to_fyle: true,
+        is_custom: true,
+        source_placeholder: this.customField.source_placeholder
+      };
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+      this.customFieldForm.reset();
+      this.showCustomFieldDialog = false;
+    }
+  }
+
+  private initializeCustomFieldForm(shouldShowDialog: boolean) {
+    this.customFieldForm = this.formBuilder.group({
+      attribute_type: ['', Validators.required],
+      display_name: [''],
+      source_placeholder: ['', Validators.required]
+    });
+    this.showCustomFieldDialog = shouldShowDialog;
+  }
+
+  private importSettingWatcher(): void {
+    const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
+    expenseFieldArray.controls.forEach((control:any) => {
+      control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
+        if (value.source_field === 'custom_field') {
+          this.initializeCustomFieldForm(true);
+          this.customFieldType = '';
+          this.customFieldControl = control;
+          this.customFieldControl.patchValue({
+            source_field: '',
+            destination_field: control.value.destination_field,
+            import_to_fyle: control.value.import_to_fyle,
+            is_custom: control.value.is_custom,
+            source_placeholder: null
+          });
+        }
+      });
+    });
+  }
+
+  private setupFormWatchers() {
+    this.importSettingWatcher();
+  }
+
+  private setupPage(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
+    forkJoin([
+      this.importSettingService.getBusinessCentralImportSettings().pipe(catchError(() => of(null))),
+      this.mappingService.getFyleFields(),
+      this.mappingService.getIntegrationsFields(AppNameInService.BUSINESS_CENTRAL)
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, businessCentralFieldsResponse]) => {
+      this.importSettings = importSettingsResponse;
+      this.importSettingForm = BusinessCentralImportSettingsModel.mapAPIResponseToFormGroup(this.importSettings, businessCentralFieldsResponse);
+      this.fyleFields = fyleFieldsResponse;
+      this.businessCentralFields = businessCentralFieldsResponse;
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
+      this.setupFormWatchers();
+      this.initializeCustomFieldForm(false);
+      this.isLoading = false;
+    });
+  }
 
   ngOnInit(): void {
+    this.setupPage();
   }
 
 }
