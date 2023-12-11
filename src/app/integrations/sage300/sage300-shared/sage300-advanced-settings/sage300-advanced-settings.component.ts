@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
-import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, AppNameInService, ConfigurationCta, Page, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingValidatorRule, Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
+import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload, AdvancedSettingValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
+import { AppName, ConfigurationCta, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { expenseFilterCondition, adminEmails, expenseFiltersGet, sage300AdvancedSettingResponse, destinationAttributes } from '../fixture';
-import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -16,6 +15,7 @@ import { Router } from '@angular/router';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { brandingKbArticles } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
+import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 
 @Component({
   selector: 'app-sage300-advanced-settings',
@@ -68,7 +68,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     private advancedSettingsService: Sage300AdvancedSettingsService,
     private helper: HelperService,
     private helperService: Sage300HelperService,
-    private mappingService: MappingService,
+    private skipExportService: SkipExportService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
@@ -109,7 +109,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
   }
 
   deleteExpenseFilter(rank: number) {
-    this.advancedSettingsService.deleteExpenseFilter(rank).subscribe();
+    this.skipExportService.deleteExpenseFilter(rank).subscribe();
   }
 
   skipExportWatcher(): void {
@@ -181,9 +181,9 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
       valueField.value1 = [valueField.value1];
     }
     valueField.rank = 1;
-    const skipExportRank1: ExpenseFilterPayload = Sage300AdvancedSettingModel.constructExportFilterPayload(valueField);
-    const payload1 = Sage300AdvancedSettingModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
-    this.advancedSettingsService.postExpenseFilter(payload1).subscribe((skipExport1: ExpenseFilter) => {
+    const skipExportRank1: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
+    const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
+    this.skipExportService.postExpenseFilter(payload1).subscribe((skipExport1: ExpenseFilter) => {
       if (valueField.condition2 && valueField.operator2) {
         if (valueField.condition2.field_name === 'spent_at') {
           valueField.value2 = new Date(valueField.value2).toISOString().split('T')[0] + 'T17:00:00.000Z';
@@ -203,9 +203,9 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
           valueField.value2 = [valueField.value2];
         }
         valueField.rank = 2;
-        const skipExportRank2: ExpenseFilterPayload = Sage300AdvancedSettingModel.constructExportFilterPayload(valueField);
-        const payload2 = Sage300AdvancedSettingModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);
-        this.advancedSettingsService.postExpenseFilter(payload2).subscribe((skipExport2: ExpenseFilter) => {});
+        const skipExportRank2: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
+        const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);
+        this.skipExportService.postExpenseFilter(payload2).subscribe((skipExport2: ExpenseFilter) => {});
       }
     });
   }
@@ -264,8 +264,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
-      this.advancedSettingsService.getExpenseFilter(),
-      this.advancedSettingsService.getExpenseFilelds()
+      this.skipExportService.getExpenseFilter(),
+      this.skipExportService.getExpenseFields()
     ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
       this.expenseFilters = expenseFiltersGet;
