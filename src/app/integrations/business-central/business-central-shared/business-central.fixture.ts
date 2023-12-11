@@ -1,6 +1,8 @@
+import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsModel } from "src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model";
 import { BusinessCentralExportSettingGet } from "src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model";
 import { BusinessCentralDestinationAttributes } from "src/app/core/models/business-central/db/business-central-destination-attribute.model";
-import { BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType } from "src/app/core/models/enum/enum.model";
+import { ExpenseFilterResponse, ConditionField } from "src/app/core/models/common/advanced-settings.model";
+import { BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, JoinOption, Operator } from "src/app/core/models/enum/enum.model";
 
 export const exportSettingsResponse: BusinessCentralExportSettingGet = {
   "id": 38,
@@ -38,3 +40,116 @@ export const destinationAttributes: BusinessCentralDestinationAttributes[] = [
       "detail": null
     }
   ];
+
+export const businessCentralAdvancedSettingResponse: BusinessCentralAdvancedSettingsGet = {
+  "id": 37,
+  "created_at": new Date("2023-10-09T11:26:49.324649Z"),
+  "updated_at": new Date("2023-10-09T11:26:49.324649Z"),
+  "top_memo_structure": [
+    "employee_email"
+  ],
+  "expense_memo_structure": [
+    "employee_email",
+    "merchant",
+    "purpose",
+    "category",
+    "spent_on",
+    "report_number",
+    "expense_link"
+  ],
+  "schedule_is_enabled": true,
+  workspace: 1,
+  interval_hours: 1
+};
+
+export const expenseFiltersGet: ExpenseFilterResponse =
+{
+    "count": 2,
+    "next": null,
+    "previous": null,
+    "results": [
+        {
+            "id": 45,
+            "condition": "spent_at",
+            "operator": Operator.LessThan,
+            "values": [
+                "2023-10-16T17:00:00.000Z"
+            ],
+            "rank": 1,
+            "join_by": JoinOption.AND,
+            "is_custom": false,
+            "custom_field_type": null,
+            "created_at": new Date(),
+            "update_at": new Date(),
+            "workspace": 383
+        },
+        {
+            "id": 46,
+            "condition": "employee_email",
+            "operator": Operator.IExact,
+            "values": [
+                "aba@gamil.com"
+            ],
+            "rank": 2,
+            "join_by": null,
+            "is_custom": false,
+            "custom_field_type": null,
+            "created_at": new Date(),
+            "update_at": new Date(),
+            "workspace": 383
+        }
+    ]
+};
+
+export const expenseFilterCondition: ConditionField[] = [
+    {
+        "field_name": "employee_email",
+        "type": "SELECT",
+        "is_custom": false
+    },
+    {
+        "field_name": "claim_number",
+        "type": "TEXT",
+        "is_custom": false
+    },
+    {
+        "field_name": "report_title",
+        "type": "TEXT",
+        "is_custom": false
+    },
+    {
+        "field_name": "spent_at",
+        "type": "DATE",
+        "is_custom": false
+    },
+    {
+        "field_name": "Class",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "Fyle Categories",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "Operating System",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "User Dimension",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "Asdasdas",
+        "type": "SELECT",
+        "is_custom": true
+    },
+    {
+        "field_name": "Nilesh Custom Field",
+        "type": "SELECT",
+        "is_custom": true
+    }
+];

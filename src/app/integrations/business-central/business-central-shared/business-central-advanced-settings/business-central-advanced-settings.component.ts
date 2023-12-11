@@ -12,8 +12,9 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { environment } from 'src/environments/environment';
 import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model';
 import { FormGroup } from '@angular/forms';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
+import { businessCentralAdvancedSettingResponse, expenseFilterCondition, expenseFiltersGet } from '../business-central.fixture';
 
 @Component({
   selector: 'app-business-central-advanced-settings',
@@ -22,7 +23,7 @@ import { AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 })
 export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
-  isLoading: boolean = true;
+  isLoading: boolean = false;
 
   advancedSettingForm: FormGroup;
 
@@ -57,6 +58,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
   skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.SKIP_EXPORT;
 
   sessionStartTime: Date = new Date();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private advancedSettingsService: BusinessCentralAdvancedSettingsService,
@@ -119,12 +122,12 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
       this.hours.push({ label: `${i}`, value: i });
     }
     this.isOnboarding = this.router.url.includes('onboarding');
-    forkJoin([
-      this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
-      this.skipExportService.getExpenseFilter(),
-      this.skipExportService.getExpenseFields()
-    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition]) => {
-      this.advancedSetting = sage300AdvancedSettingResponse;
+    // ForkJoin([
+    //   This.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
+    //   This.skipExportService.getExpenseFilter(),
+    //   This.skipExportService.getExpenseFields()
+    // ]).subscribe(([businessCentralAdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition]) => {
+      this.advancedSetting = businessCentralAdvancedSettingResponse;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
@@ -132,7 +135,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
       this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
       this.formWatchers();
       this.isLoading = false;
-    });
+    // });
   }
 
   ngOnInit(): void {

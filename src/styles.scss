@@ -376,3 +376,11 @@ p {
 .p-dialog .p-dialog-header .p-dialog-title {
     @apply tw-text-20-px tw-font-500 #{!important};
 }
+
+.preview-text {
+    @apply tw-text-14-px tw-font-400 tw-text-faded-text-color tw-p-24-px #{!important} ;
+}
+
+.preview-box {
+    @apply tw-p-10-px tw-bg-disabled-bg-color tw-rounded-8-px #{!important} ;
+}
