@@ -8,7 +8,7 @@ import { AbstractControl, FormArray, FormGroup, ValidatorFn, Validators } from '
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { AdvancedSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';
+import { AdvancedSettingValidatorRule } from '../../models/common/advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
