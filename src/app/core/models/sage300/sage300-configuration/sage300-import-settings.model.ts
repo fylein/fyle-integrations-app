@@ -50,7 +50,7 @@ export class Sage300ImportSettingModel {
     }
 
     static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[]): FormGroup {
-        const expenseFieldsArray = ImportSettingsModel.constructFormArray(importSettings, sage300Fields);
+        const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsModel.constructFormArray(importSettings.mapping_settings, sage300Fields) : [] ;
         return new FormGroup({
             importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
             importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),

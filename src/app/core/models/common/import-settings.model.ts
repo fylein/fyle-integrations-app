@@ -46,14 +46,14 @@ export class ImportSettingsModel {
     });
   }
 
-  static constructFormArray(importSettings: null | BusinessCentralImportSettingsGet | Sage300ImportSettingGet, accountingAppFields: IntegrationField[]): FormGroup[] {
+  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] | [], accountingAppFields: IntegrationField[]): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();
 
     // First loop to populate mappedFieldMap
     accountingAppFields.forEach((accountingAppField) => {
-      const mappingSetting = importSettings?.mapping_settings.find(
+      const mappingSetting = importSettingsMappingSettings.find(
         (setting) => setting.destination_field === accountingAppField.attribute_type
       );
 

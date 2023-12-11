@@ -19,7 +19,7 @@ export interface BusinessCentralImportSettingsPost extends BusinessCentralImport
 export class BusinessCentralImportSettingsModel {
 
     static mapAPIResponseToFormGroup(importSettings: BusinessCentralImportSettingsGet | null, businessCentralFields: IntegrationField[]): FormGroup {
-        const expenseFieldsArray = ImportSettingsModel.constructFormArray(importSettings, businessCentralFields);
+        const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsModel.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;
         return new FormGroup({
             importCategories: new FormControl(importSettings?.import_categories ?? false),
             expenseFields: new FormArray(expenseFieldsArray)

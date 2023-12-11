@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { ImportSettingMappingRow, ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
+import { ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
@@ -62,7 +62,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       is_custom: false,
       source_placeholder: null
     };
-    expenseFields.push(Sage300ImportSettingModel.createFormGroup(defaultFieldData));
+    expenseFields.push(ImportSettingsModel.createFormGroup(defaultFieldData));
     this.showAddButton = this.showOrHideAddButton();
   }
 
