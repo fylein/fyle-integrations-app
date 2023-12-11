@@ -50,7 +50,39 @@ export type ExpenseFilterResponse = {
     results: ExpenseFilter[]
 };
 
+export type AdvancedSettingValidatorRule = {
+  condition1: string[];
+  condition2: string[];
+  operator1: string[];
+  operator2: string[];
+};
+
 export class SkipExportModel {
+
+  static constructExportFilterPayload(valueField: any): ExpenseFilterPayload {
+    return {
+      condition: valueField['condition'+valueField.rank] as ConditionField,
+      operator: valueField['operator'+valueField.rank] as Operator,
+      value: valueField['value'+valueField.rank],
+      join_by: valueField.join_by,
+      rank: valueField.rank
+    };
+  }
+
+  static constructSkipExportPayload(valueField: ExpenseFilterPayload, valueOption: any[]): ExpenseFilterPost {
+    return {
+      condition: valueField.condition.field_name,
+      operator: valueField.operator,
+      values:
+        valueField.condition.type === 'DATE' ||
+          valueField.operator === 'isnull' || valueField.condition.field_name === 'report_title' ? valueField.value : valueOption,
+      rank: valueField.rank,
+      join_by: valueField?.join_by ? JoinOption[valueField.join_by as JoinOption] : null,
+      is_custom: valueField.condition.is_custom,
+      custom_field_type: valueField.condition?.is_custom ? valueField.condition.type : null
+    };
+  }
+
   static setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
     response.results.forEach((element) => {
       const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name === element.condition);

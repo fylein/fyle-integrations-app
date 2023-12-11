@@ -36,23 +36,4 @@ export class BusinessCentralAdvancedSettingsService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_settings/`, advancedSettingsPayload);
   }
 
-  getExpenseFields(): Observable<ConditionField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_fields/`, {});
-  }
-
-  getAdminEmail(): Observable<EmailOption[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/admin`, {});
-  }
-
-  getExpenseFilter(): Observable<ExpenseFilterResponse> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, {});
-  }
-
-  postExpenseFilter(expenseFilter: ExpenseFilterPost): Observable<ExpenseFilter> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, expenseFilter);
-  }
-
-  deleteExpenseFilter(rank: number): Observable<{}> {
-    return this.apiService.delete(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, { rank });
-  }
 }
