@@ -39,7 +39,7 @@ export type ExpenseFilterPayload = {
 export interface ExpenseFilter extends ExpenseFilterPost {
     id: number,
     created_at: Date,
-    update_at: Date,
+    updated_at: Date,
     workspace: number
 }
 

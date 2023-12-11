@@ -58,8 +58,8 @@ export const businessCentralAdvancedSettingResponse: BusinessCentralAdvancedSett
     "expense_link"
   ],
   "schedule_is_enabled": true,
-  workspace: 1,
-  interval_hours: 1
+  "workspace": 1,
+  "interval_hours": 1
 };
 
 export const expenseFiltersGet: ExpenseFilterResponse =
@@ -80,7 +80,7 @@ export const expenseFiltersGet: ExpenseFilterResponse =
             "is_custom": false,
             "custom_field_type": null,
             "created_at": new Date(),
-            "update_at": new Date(),
+            "updated_at": new Date(),
             "workspace": 383
         },
         {
@@ -95,7 +95,7 @@ export const expenseFiltersGet: ExpenseFilterResponse =
             "is_custom": false,
             "custom_field_type": null,
             "created_at": new Date(),
-            "update_at": new Date(),
+            "updated_at": new Date(),
             "workspace": 383
         }
     ]
