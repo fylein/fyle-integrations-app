@@ -128,6 +128,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setupPage();
   }
 
 }

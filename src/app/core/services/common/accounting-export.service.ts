@@ -36,7 +36,7 @@ export class AccountingExportService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count`, apiParams);
   }
 
-  getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null): Observable<AccountingExportResponse> {
+  getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null): Observable<any> {
     const apiParams: AccountingExportGetParam = {
       type__in: [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
       status__in: status,
