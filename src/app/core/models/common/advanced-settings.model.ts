@@ -1,5 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { JoinOption, Operator } from "../enum/enum.model";
+import { environment } from "src/environments/environment";
 
 export type EmailOption = {
     email: string;
@@ -60,6 +61,40 @@ export type AdvancedSettingValidatorRule = {
   operator1: string[];
   operator2: string[];
 };
+
+export class AdvancedSettingsModel {
+
+  static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): string {
+    const time = Date.now();
+    const today = new Date(time);
+
+    const previewValues: { [key: string]: string } = {
+      employee_email: 'john.doe@acme.com',
+      category: 'Meals and Entertainment',
+      purpose: 'Client Meeting',
+      merchant: 'Pizza Hut',
+      report_number: 'C/2021/12/R/1',
+      spent_on: today.toLocaleDateString(),
+      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+    };
+    let memoPreviewText = '';
+    const memo: string[] = [];
+    memoStructure.forEach((field, index) => {
+      if (field in previewValues) {
+        const defaultIndex = defaultMemoOptions.indexOf(memoStructure[index]);
+        memo[defaultIndex] = previewValues[field];
+      }
+    });
+    memo.forEach((field, index) => {
+      memoPreviewText += field;
+      if (index + 1 !== memo.length) {
+        memoPreviewText = memoPreviewText + ' - ';
+      }
+    });
+    return memoPreviewText;
+  }
+
+}
 
 export class SkipExportModel {
 

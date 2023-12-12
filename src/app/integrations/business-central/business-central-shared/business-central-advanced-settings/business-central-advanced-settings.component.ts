@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin, catchError, of } from 'rxjs';
-import { AdvancedSettingValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
+import { AdvancedSettingValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, skipExportValidator, AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { BusinessCentralAdvancedSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-advanced-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -87,10 +87,10 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingForm.value.memoStructure;
-    this.memoPreviewText = this.helper.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
-      this.memoPreviewText = this.helper.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+      this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
     });
   }
 
