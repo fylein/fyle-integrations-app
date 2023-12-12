@@ -22,7 +22,7 @@ import { businessCentralAdvancedSettingResponse, expenseFilterCondition, expense
 })
 export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
-  isLoading: boolean = false;
+  isLoading: boolean = true;
 
   advancedSettingForm: FormGroup;
 
