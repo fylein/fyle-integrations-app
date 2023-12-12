@@ -30,6 +30,6 @@ export class DashboardService {
   }
 
   getExportErrors(): Observable<Error[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/errors/`, {is_resolved: false});
   }
 }
