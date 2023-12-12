@@ -116,58 +116,16 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     if (!this.skipExportForm.valid) {
       return;
     }
-    const valueField = this.skipExportForm.getRawValue();
+    let valueField = this.skipExportForm.getRawValue();
     if (!valueField.condition1.field_name) {
       return;
     }
-    if (valueField.condition1.field_name !== 'report_title' && valueField.operator1 === 'iexact') {
-      valueField.operator1 = 'in';
-    }
-    if (valueField.join_by) {
-      valueField.join_by = valueField.join_by.value;
-      if (valueField.condition2.field_name !== 'report_title' && valueField.operator2 === 'iexact') {
-        valueField.operator2 = 'in';
-      }
-    }
-    if (valueField.condition1.is_custom === true) {
-      if (valueField.operator1 === 'is_empty') {
-        valueField.value1 = ['True'];
-        valueField.operator1 = 'isnull';
-      } else if (valueField.operator1 === 'is_not_empty') {
-        valueField.value1 = ['False'];
-        valueField.operator1 = 'isnull';
-      }
-    }
-
-    if (valueField.condition1.field_name === 'spent_at') {
-      valueField.value1 = new Date(valueField.value1).toISOString().split('T')[0] + 'T17:00:00.000Z';
-    }
-
-    if (typeof valueField.value1 === 'string') {
-      valueField.value1 = [valueField.value1];
-    }
+    valueField = SkipExportModel.constructSkipExportValue(valueField);
     valueField.rank = 1;
     const skipExportRank1: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
     const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
     this.skipExportService.postExpenseFilter(payload1).subscribe((skipExport1: ExpenseFilter) => {
       if (valueField.condition2 && valueField.operator2) {
-        if (valueField.condition2.field_name === 'spent_at') {
-          valueField.value2 = new Date(valueField.value2).toISOString().split('T')[0] + 'T17:00:00.000Z';
-        }
-
-        if (valueField.condition2.is_custom === true) {
-          if (valueField.operator2 === 'is_empty') {
-            valueField.value2 = ['True'];
-            valueField.operator2 = 'isnull';
-          } else if (valueField.operator2 === 'is_not_empty') {
-            valueField.value2 = ['False'];
-            valueField.operator2 = 'isnull';
-          }
-        }
-
-        if (typeof valueField.value2 === 'string') {
-          valueField.value2 = [valueField.value2];
-        }
         valueField.rank = 2;
         const skipExportRank2: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
         const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);

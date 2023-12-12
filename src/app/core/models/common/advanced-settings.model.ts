@@ -59,12 +59,55 @@ export type AdvancedSettingValidatorRule = {
 
 export class SkipExportModel {
 
+  static constructSkipExportValue(valueField: any) {
+    if (valueField.condition1.field_name !== 'report_title' && valueField.operator1 === 'iexact') {
+      valueField.operator1 = 'in';
+    }
+    if (valueField.condition1.is_custom === true) {
+      if (valueField.operator1 === 'is_empty') {
+        valueField.value1 = ['True'];
+        valueField.operator1 = 'isnull';
+      } else if (valueField.operator1 === 'is_not_empty') {
+        valueField.value1 = ['False'];
+        valueField.operator1 = 'isnull';
+      }
+    }
+    if (valueField.condition1.field_name === 'spent_at') {
+      valueField.value1 = new Date(valueField.value1).toISOString().split('T')[0] + 'T17:00:00.000Z';
+    }
+    if (typeof valueField.value1 === 'string') {
+      valueField.value1 = [valueField.value1];
+    }
+
+    if (valueField.condition2 && valueField.operator2) {
+      if (valueField.condition2.field_name !== 'report_title' && valueField.operator2 === 'iexact') {
+        valueField.operator2 = 'in';
+      }
+      if (valueField.condition2.field_name === 'spent_at') {
+        valueField.value2 = new Date(valueField.value2).toISOString().split('T')[0] + 'T17:00:00.000Z';
+      }
+      if (valueField.condition2.is_custom === true) {
+        if (valueField.operator2 === 'is_empty') {
+          valueField.value2 = ['True'];
+          valueField.operator2 = 'isnull';
+        } else if (valueField.operator2 === 'is_not_empty') {
+          valueField.value2 = ['False'];
+          valueField.operator2 = 'isnull';
+        }
+      }
+      if (typeof valueField.value2 === 'string') {
+        valueField.value2 = [valueField.value2];
+      }
+    }
+    return valueField;
+  }
+
   static constructExportFilterPayload(valueField: any): ExpenseFilterPayload {
     return {
       condition: valueField['condition'+valueField.rank] as ConditionField,
       operator: valueField['operator'+valueField.rank] as Operator,
       value: valueField['value'+valueField.rank],
-      join_by: valueField.join_by,
+      join_by: valueField?.join_by && valueField.rank === 1 ? valueField?.join_by : null,
       rank: valueField.rank
     };
   }
