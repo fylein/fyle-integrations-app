@@ -11,6 +11,10 @@ export  interface HourOption {
   value: number;
 }
 
+export type skipExportValidator = {
+  isChanged: string[];
+  isNotChanged: string[];
+}
 
 export type ConditionField = {
   field_name: string;

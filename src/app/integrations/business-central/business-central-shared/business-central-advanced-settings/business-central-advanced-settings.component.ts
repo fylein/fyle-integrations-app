@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin, catchError, of } from 'rxjs';
-import { AdvancedSettingValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption } from 'src/app/core/models/common/advanced-settings.model';
+import { AdvancedSettingValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
 import { BusinessCentralAdvancedSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-advanced-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -78,15 +78,11 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
   }
 
   skipExportWatcher(): void {
-    this.advancedSettingForm.controls.skipExport.valueChanges.subscribe((isSelected) => {
-      if (isSelected) {
-        const fields = ['condition1', 'operator1', 'value1'];
-        this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, true);
-      } else {
-        const fields = ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by'];
-        this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, false);
-      }
-    });
+    const formWatcher: skipExportValidator = {
+      'isChanged': ['condition1', 'operator1', 'value1'],
+      'isNotChanged': ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by']
+    };
+    this.helper.handleSkipExportFormInAdvancedSettingsUpdates(this.skipExportForm, formWatcher, this.advancedSettingForm);
   }
 
   private createMemoStructureWatcher(): void {
@@ -123,8 +119,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
       this.advancedSettingsService.getAdvancedSettings().pipe(catchError(() => of(null))),
       this.skipExportService.getExpenseFilter(),
       this.skipExportService.getExpenseFields()
-    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition]) => {
-      this.advancedSetting = sage300AdvancedSettingResponse;
+    ]).subscribe(([businessCentralAdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition]) => {
+      this.advancedSetting = businessCentralAdvancedSettingResponse;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
