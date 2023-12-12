@@ -18,11 +18,11 @@ import { environment } from 'src/environments/environment';
 })
 export class BusinessCentralDashboardComponent implements OnInit {
 
-  isLoading: boolean = true;
+  isLoading: boolean;
 
   appName: AppName = AppName.BUSINESS_CENTRAL;
 
-  isImportInProgress: boolean = true;
+  isImportInProgress: boolean;
 
   isExportInProgress: boolean = false;
 
@@ -99,6 +99,13 @@ export class BusinessCentralDashboardComponent implements OnInit {
     });
   }
 
+  export() {
+    this.isExportInProgress = true;
+    this.dashboardService.triggerAccountingExport().subscribe(() => {
+      this.pollExportStatus(this.exportableAccountingExportIds);
+    });
+  }
+
   private setupPage(): void {
     forkJoin([
       this.getExportErrors$,
@@ -118,7 +125,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportableAccountingExportIds;
             this.isImportInProgress = false;
           });
         });
