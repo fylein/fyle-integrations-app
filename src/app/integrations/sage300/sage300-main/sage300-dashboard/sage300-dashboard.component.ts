@@ -124,7 +124,7 @@ export class Sage300DashboardComponent implements OnInit {
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
+            this.exportableAccountingExportIds = exportableAccountingExportIds.accounting_export_ids;
             this.isImportInProgress = false;
           });
         });

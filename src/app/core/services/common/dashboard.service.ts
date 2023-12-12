@@ -3,8 +3,8 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable } from 'rxjs';
 import { Error } from '../../models/db/error.model';
-import { ExportableExpenseGroup } from '../../models/si/db/expense-group.model';
 import { HelperService } from './helper.service';
+import { ExportableAccountingExports } from '../../models/db/accounting-export.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,8 @@ export class DashboardService {
     helper.setBaseApiURL();
   }
 
-  getExportableAccountingExportIds(): Observable<ExportableExpenseGroup> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/exportable_accounting_groups/`, {});
+  getExportableAccountingExportIds(): Observable<ExportableAccountingExports> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/exportable_accounting_exports/`, {});
   }
 
   triggerAccountingExport(): Observable<{}> {
