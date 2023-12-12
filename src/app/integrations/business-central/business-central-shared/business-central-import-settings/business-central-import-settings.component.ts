@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { BusinessCentralImportSettingsGet, BusinessCentralImportSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
-import { AppNameInService } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralImportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-import-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -13,6 +13,8 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { businessCentralFieldsResponse, fyleFieldsResponse, importSettingsResponse } from '../business-central.fixture';
 
 @Component({
   selector: 'app-business-central-import-settings',
@@ -46,6 +48,16 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
   customField: { attribute_type: any; display_name: any; source_placeholder: any; is_dependent: boolean; };
 
   customFieldOption: any;
+
+  readonly brandingConfig = brandingConfig;
+
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.SAGE300.IMPORT_SETTING;
+
+  appName: string = AppName.BUSINESS_CENTRAL;
+
+  isSaveInProgress: boolean;
+
+  ConfigurationCtaText = ConfigurationCta;
 
   constructor(
     private router: Router,
@@ -136,6 +148,10 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   private setupFormWatchers() {
     this.importSettingWatcher();
+  }
+
+  save() {
+    // Todo
   }
 
   private setupPage(): void {

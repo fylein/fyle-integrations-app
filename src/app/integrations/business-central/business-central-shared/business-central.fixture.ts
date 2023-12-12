@@ -1,5 +1,7 @@
 import { BusinessCentralExportSettingGet } from "src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model";
+import { BusinessCentralImportSettingsGet } from "src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model";
 import { BusinessCentralDestinationAttributes } from "src/app/core/models/business-central/db/business-central-destination-attribute.model";
+import { FyleField, IntegrationField } from "src/app/core/models/db/mapping.model";
 import { BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType } from "src/app/core/models/enum/enum.model";
 
 export const exportSettingsResponse: BusinessCentralExportSettingGet = {
@@ -37,4 +39,33 @@ export const destinationAttributes: BusinessCentralDestinationAttributes[] = [
       "workspace": 343,
       "detail": null
     }
-  ];
+];
+
+export const importSettingsResponse: BusinessCentralImportSettingsGet = {
+    "id": 123,
+    "import_categories": true,
+    "mapping_settings": [],
+    "workspace_id": 343,
+    "created_at": new Date("2023-10-09T08:18:29.080160Z"),
+    "updated_at": new Date("2023-10-09T08:18:29.080160Z")
+};
+
+export const fyleFieldsResponse: FyleField[] = [
+    {
+      "attribute_type": "CATEGORY",
+      "display_name": "Category",
+      "is_dependent": true
+    },
+    {
+      "attribute_type": "Employee",
+      "display_name": "Employee",
+      "is_dependent": true
+    }
+];
+
+export const businessCentralFieldsResponse: IntegrationField[] = [
+    {
+      "attribute_type": "LOCATION",
+      "display_name": "Location"
+    }
+];
