@@ -17,7 +17,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 })
 export class Sage300DashboardComponent implements OnInit {
 
-  isLoading: boolean = true;
+  isLoading: boolean;
 
   appName: AppName = AppName.SAGE300;
 
