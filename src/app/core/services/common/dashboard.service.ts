@@ -4,7 +4,7 @@ import { WorkspaceService } from './workspace.service';
 import { Observable } from 'rxjs';
 import { Error } from '../../models/db/error.model';
 import { HelperService } from './helper.service';
-import { ExportableAccountingExports } from '../../models/db/accounting-export.model';
+import { ExportableAccountingExport } from '../../models/db/accounting-export.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class DashboardService {
     helper.setBaseApiURL();
   }
 
-  getExportableAccountingExportIds(): Observable<ExportableAccountingExports> {
+  getExportableAccountingExportIds(): Observable<ExportableAccountingExport> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/exportable_accounting_exports/`, {});
   }
 

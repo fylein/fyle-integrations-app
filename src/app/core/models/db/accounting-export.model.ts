@@ -11,7 +11,7 @@ export interface AccountingExportCount {
     count: number;
 }
 
-export interface ExportableAccountingExports {
+export interface ExportableAccountingExport {
   accounting_export_ids: number[];
 }
 
