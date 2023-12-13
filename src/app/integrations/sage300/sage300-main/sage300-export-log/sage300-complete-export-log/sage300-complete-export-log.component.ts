@@ -26,7 +26,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   appName: AppName = AppName.SAGE300;
 
-  totalCount: number;
+  totalCount: number = 0;
 
   limit: number;
 

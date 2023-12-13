@@ -1,0 +1,32 @@
+.custom-search-field {
+    @apply tw-border-1-px tw-border-solid tw-border-stone-300 tw-border-r-4-px tw-items-center tw-inline-flex tw-w-354-px tw-h-40-px #{!important};
+}
+
+.custom-search-field i.pi-search {
+    color: grey;
+    @apply tw-mr-10-px;
+}
+
+.custom-search-field input[type="text"] {
+    width: 100%;
+    @apply tw-border-none tw-outline-none;
+}
+
+input.custom-focus:focus {
+    @apply tw-outline-none tw-border-1-px tw-border-solid tw-border-black;
+  }
+
+.clickable-row:hover {
+    @apply tw-cursor-pointer;
+    &:hover {
+        background: #FAFCFF;
+      }
+}
+
+:host ::ng-deep .drop-down .p-dropdown {
+    @apply tw-w-200-px tw-border-0 #{!important};
+}
+
+:host ::ng-deep .selectedItem  .p-dropdown-trigger {
+    @apply tw-hidden #{!important};
+}
