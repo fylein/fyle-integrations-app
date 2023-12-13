@@ -21,7 +21,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   isLoading: boolean;
 
-  totalCount: number;
+  totalCount: number = 0;
 
   skipExportLogForm: FormGroup;
 
@@ -138,6 +138,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSkippedExpensesAndSetupPage();
+    this.isLoading = false;
   }
 
 }

@@ -17,11 +17,11 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 })
 export class Sage300DashboardComponent implements OnInit {
 
-  isLoading: boolean = true;
+  isLoading: boolean;
 
   appName: AppName = AppName.SAGE300;
 
-  isImportInProgress: boolean = true;
+  isImportInProgress: boolean;
 
   isExportInProgress: boolean = false;
 
@@ -124,7 +124,7 @@ export class Sage300DashboardComponent implements OnInit {
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
+            this.exportableAccountingExportIds = exportableAccountingExportIds.accounting_export_ids;
             this.isImportInProgress = false;
           });
         });
