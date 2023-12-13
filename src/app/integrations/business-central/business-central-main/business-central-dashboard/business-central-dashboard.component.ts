@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
-import { BusinessCentralAccountingExport } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
+import { BusinessCentralAccountingExport, BusinessCentralAccountingExportResponse } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/error.model';
 import { AccountingErrorType, AccountingExportStatus, AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportResponse } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
@@ -61,12 +60,12 @@ export class BusinessCentralDashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(20000).pipe(
       switchMap(() => from(this.accountingExportService.getAccountingExports([], exportableAccountingExportIds, 500, 0))),
-      takeWhile((response: AccountingExportResponse) =>
+      takeWhile((response: BusinessCentralAccountingExportResponse) =>
         response.results.filter(task =>
           (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)
         ).length > 0, true
       )
-    ).subscribe((res: AccountingExportResponse) => {
+    ).subscribe((res: BusinessCentralAccountingExportResponse) => {
       this.processedCount = res.results.filter(task => (task.status !== AccountingExportStatus.IN_PROGRESS && task.status !== AccountingExportStatus.ENQUEUED && task.status !== AccountingExportStatus.EXPORT_QUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
@@ -125,7 +124,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportableAccountingExportIds;
+            this.exportableAccountingExportIds = exportableAccountingExportIds.accounting_export_ids;
             this.isImportInProgress = false;
           });
         });
