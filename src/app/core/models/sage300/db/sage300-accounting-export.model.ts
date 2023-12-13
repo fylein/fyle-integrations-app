@@ -1,3 +1,4 @@
+import { BusinessCentralAccountingExport } from "../../business-central/db/business-central-accounting-export.model";
 import { AccountingExport } from "../../db/accounting-export.model";
 import { PaginatedResponse } from "../../db/paginated-response.model";
 
@@ -8,6 +9,6 @@ export interface Sage300AccountingExport extends AccountingExport {
     sage_300_reimbursement: null | number;
 }
 
-export interface AccountingExportResponse extends PaginatedResponse {
-    results: Sage300AccountingExport[];
+export interface Sage300AccountingExportResponse extends PaginatedResponse {
+    results: Sage300AccountingExport[] | BusinessCentralAccountingExport[];
 }
