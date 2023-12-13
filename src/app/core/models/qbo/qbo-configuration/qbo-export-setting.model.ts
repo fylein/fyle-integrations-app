@@ -213,25 +213,24 @@ export class QBOExportSettingModel {
       'creditCardExpense': ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState']
     };
 
-    // TODO: use enum
     const exportModuleRule: ExportModuleRule[] = [
       {
-        'formController': 'reimbursableExportType',
-        'requiredValue': {
-          'BILL': ['accountsPayable'],
-          'CHECK': ['bankAccount'],
-          'JOURNAL ENTRY': ['accountsPayable'],
-          'EXPENSE': ['qboExpenseAccount']
+        formController: 'reimbursableExportType',
+        requiredValue: {
+          [QBOReimbursableExpensesObject.BILL]: ['accountsPayable'],
+          [QBOReimbursableExpensesObject.CHECK]: ['bankAccount'],
+          [QBOReimbursableExpensesObject.JOURNAL_ENTRY]: ['accountsPayable'],
+          [QBOReimbursableExpensesObject.EXPENSE]: ['qboExpenseAccount']
         }
       },
       {
-        'formController': 'creditCardExportType',
-        'requiredValue': {
-          'CREDIT CARD PURCHASE': ['defaultCCCAccount'],
-          'BILL': ['defaultCreditCardVendor', 'accountsPayable'],
-          'JOURNAL ENTRY': ['accountsPayable'],
-          'EXPENSE': ['qboExpenseAccount'],
-          'DEBIT CARD EXPENSE': ['defaultDebitCardAccount']
+        formController: 'creditCardExportType',
+        requiredValue: {
+          [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: ['defaultCCCAccount'],
+          [QBOCorporateCreditCardExpensesObject.BILL]: ['defaultCreditCardVendor', 'accountsPayable'],
+          [QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['accountsPayable'],
+          [QBOCorporateCreditCardExpensesObject.EXPENSE]: ['qboExpenseAccount'],
+          [QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE]: ['defaultDebitCardAccount']
         }
       }
     ];
