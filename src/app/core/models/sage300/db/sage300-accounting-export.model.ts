@@ -10,5 +10,5 @@ export interface Sage300AccountingExport extends AccountingExport {
 }
 
 export interface Sage300AccountingExportResponse extends PaginatedResponse {
-    results: Sage300AccountingExport[] | BusinessCentralAccountingExport[];
+    results: Sage300AccountingExport[];
 }

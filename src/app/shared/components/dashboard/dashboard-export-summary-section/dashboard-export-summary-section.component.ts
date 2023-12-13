@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { AccountingExportStatus, AppName, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
@@ -45,7 +45,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     this.selectedDateFilter = {startDate: new Date(this.accountingExportSummary.last_exported_at), endDate: new Date};
 
     this.accountingExportService.getAccountingExports([status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport =>
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
           AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
         );
         this.filteredAccountingExports = accountingExports;
