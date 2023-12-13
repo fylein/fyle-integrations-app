@@ -25,14 +25,14 @@ export class AccountingExportService {
   }
 
   getAccountingExportSummary(): Observable<AccountingExportSummary> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary/`, {});
   }
 
   getExportableAccountingExportCount(): Observable<AccountingExportCount> {
     const apiParams = {
       status__in: [AccountingExportStatus.READY, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL]
     };
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count`, apiParams);
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count/`, apiParams);
   }
 
   getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null): Observable<AccountingExportResponse> {
@@ -54,7 +54,7 @@ export class AccountingExportService {
       apiParams.exported_at__gte = `${exportedAtGte[2]}-${exportedAtGte[1]}-${exportedAtGte[0]}T23:59:59`;
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_exports/`, apiParams);
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
   }
 
   importExpensesFromFyle(): Observable<{}> {

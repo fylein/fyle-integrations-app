@@ -112,7 +112,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
       this.isContinueDisabled = false;
       this.isLoading = false;
 
-      if (!(exportSettings.workspace_general_settings?.reimbursable_expenses_object || exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object)) {
+      if (!(exportSettings?.reimbursable_expenses_export_type || exportSettings?.credit_card_expense_export_type)) {
         this.showDisconnectBusinessCentral = true;
       }
     }, () => {

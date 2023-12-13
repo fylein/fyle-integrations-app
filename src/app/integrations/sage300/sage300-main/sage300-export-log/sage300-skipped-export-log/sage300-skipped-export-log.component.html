@@ -27,10 +27,10 @@
             [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
         </app-zero-state-with-illustration>
 
-        <app-zero-state-with-illustration *ngIf="totalCount === 0"
-            [mainText]="'No records to show yet!'"
-            [subText]="'All your successful exports and their details will be stored here.'">
-        </app-zero-state-with-illustration>
-
     </div>
+
+    <app-zero-state-with-illustration *ngIf="totalCount === 0"
+    [mainText]="'No records to show yet!'"
+    [subText]="'All your expenses that were skipped from exporting will be stored here.'">
+    </app-zero-state-with-illustration>
 </div>
