@@ -1,4 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
+import { BusinessCentralAccountingExport, BusinessCentralAccountingExportResponse } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
+import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
+import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/error.model';
+import { AccountingErrorType, AccountingExportStatus, AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import { RefinerService } from 'src/app/core/services/integration/refiner.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-business-central-dashboard',
@@ -7,9 +17,124 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BusinessCentralDashboardComponent implements OnInit {
 
-  constructor() { }
+  isLoading: boolean;
+
+  appName: AppName = AppName.BUSINESS_CENTRAL;
+
+  isImportInProgress: boolean;
+
+  isExportInProgress: boolean = false;
+
+  exportableAccountingExportIds: number[] = [];
+
+  failedExpenseGroupCount: number = 0;
+
+  exportProgressPercentage: number = 0;
+
+  accountingExportSummary: AccountingExportSummary;
+
+  processedCount: number = 0;
+
+  errors: AccountingGroupedErrors;
+
+  groupedErrorStat: AccountingGroupedErrorStat = {
+    [AccountingErrorType.EMPLOYEE_MAPPING]: null,
+    [AccountingErrorType.CATEGORY_MAPPING]: null
+  };
+
+  readonly destinationFieldMap : DestinationFieldMap = {
+    'EMPLOYEE': 'VENDOR',
+    'CATEGORY': 'ACCOUNT'
+  };
+
+  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
+
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary();
+
+  constructor(
+    private refinerService: RefinerService,
+    private dashboardService: DashboardService,
+    private accountingExportService: AccountingExportService
+  ) { }
+
+  private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
+    interval(20000).pipe(
+      switchMap(() => from(this.accountingExportService.getAccountingExports([], exportableAccountingExportIds, 500, 0))),
+      takeWhile((response: BusinessCentralAccountingExportResponse) =>
+        response.results.filter(task =>
+          (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)
+        ).length > 0, true
+      )
+    ).subscribe((res: BusinessCentralAccountingExportResponse) => {
+      this.processedCount = res.results.filter(task => (task.status !== AccountingExportStatus.IN_PROGRESS && task.status !== AccountingExportStatus.ENQUEUED && task.status !== AccountingExportStatus.EXPORT_QUEUED)).length;
+      this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
+
+      if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
+        this.isLoading = true;
+        forkJoin([
+          this.getExportErrors$,
+          this.getAccountingExportSummary$
+        ]).subscribe(responses => {
+          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+          this.groupedErrorStat = {
+            EMPLOYEE_MAPPING: null,
+            CATEGORY_MAPPING: null
+          };
+          this.accountingExportSummary = responses[1];
+          this.isLoading = false;
+        });
+
+        this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
+        this.isExportInProgress = false;
+        this.exportProgressPercentage = 0;
+        this.processedCount = 0;
+
+        if (this.failedExpenseGroupCount === 0) {
+          this.refinerService.triggerSurvey(
+            AppName.SAGE300, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+          );
+        }
+      }
+    });
+  }
+
+  export() {
+    this.isExportInProgress = true;
+    this.dashboardService.triggerAccountingExport().subscribe(() => {
+      this.pollExportStatus(this.exportableAccountingExportIds);
+    });
+  }
+
+  private setupPage(): void {
+    forkJoin([
+      this.getExportErrors$,
+      this.getAccountingExportSummary$,
+      this.accountingExportService.getAccountingExports([AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0)
+    ]).subscribe((responses) => {
+      this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+      this.accountingExportSummary = responses[1];
+
+      const queuedTasks: BusinessCentralAccountingExport[] = responses[2].results.filter((accountingExport: BusinessCentralAccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS || accountingExport.status === AccountingExportStatus.EXPORT_QUEUED);
+      this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: BusinessCentralAccountingExport) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
+
+      if (queuedTasks.length) {
+        this.isImportInProgress = false;
+        this.isExportInProgress = true;
+        this.pollExportStatus();
+      } else {
+        this.accountingExportService.importExpensesFromFyle().subscribe(() => {
+          this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
+            this.exportableAccountingExportIds = exportableAccountingExportIds.accounting_export_ids;
+            this.isImportInProgress = false;
+          });
+        });
+      }
+      this.isLoading = false;
+    });
+  }
 
   ngOnInit(): void {
+    this.setupPage();
   }
 
 }

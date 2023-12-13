@@ -6,7 +6,6 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { HelperService } from './helper.service';
 import { AccountingExportCount, AccountingExportGetParam } from '../../models/db/accounting-export.model';
-import { AccountingExportResponse } from '../../models/sage300/db/sage300-accounting-export.model';
 import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
 
 @Injectable({
@@ -35,7 +34,7 @@ export class AccountingExportService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count/`, apiParams);
   }
 
-  getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null): Observable<AccountingExportResponse> {
+  getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null): Observable<any> {
     const apiParams: AccountingExportGetParam = {
       type__in: [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
       status__in: status,

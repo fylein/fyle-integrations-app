@@ -10,6 +10,7 @@ import { BusinessCentralMainComponent } from './business-central-main.component'
 import { BusinessCentralBaseMappingComponent } from './business-central-mapping/business-central-base-mapping/business-central-base-mapping.component';
 import { BusinessCentralCompleteExportLogComponent } from './business-central-export-log/business-central-complete-export-log/business-central-complete-export-log.component';
 import { BusinessCentralSkippedExportLogComponent } from './business-central-export-log/business-central-skipped-export-log/business-central-skipped-export-log.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { BusinessCentralSkippedExportLogComponent } from './business-central-exp
   ],
   imports: [
     CommonModule,
+    SharedModule,
     BusinessCentralMainRoutingModule
   ]
 })
