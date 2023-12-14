@@ -129,7 +129,6 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   closeDialog() {
     this.isPreviewDialogVisible = false;
-    this.isPreviewDialogVisible = false;
   }
 
   searchOptions(event: any) {
