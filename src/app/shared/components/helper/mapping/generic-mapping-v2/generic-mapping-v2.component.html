@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="tw-py-16-px tw-px-120-px">
+<div *ngIf="!isLoading">
         <div>
             <app-card-mapping-header (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceField" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees"></app-card-mapping-header>
         </div>
