@@ -7,7 +7,7 @@ import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
-import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -26,7 +26,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   appName: AppName = AppName.SAGE300;
 
-  totalCount: number;
+  totalCount: number = 0;
 
   limit: number;
 
@@ -103,7 +103,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
         if (!this.isDateSelected) {
           this.totalCount = accountingExportResponse.count;
         }
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport =>
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
           AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
         );
         this.filteredAccountingExports = accountingExports;

@@ -52,7 +52,15 @@ export class LoginComponent implements OnInit {
         'org_name': response.user.org_name
       };
       this.userService.storeUserProfile(user);
+
+      this.helperService.setBaseApiURL(AppUrl.QBD);
       this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
+
+      this.helperService.setBaseApiURL(AppUrl.SAGE300);
+      this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+
+      this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
+      this.businessCentralAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
 
       // Only local dev needs this, login happens via postMessage for prod/staging through webapp
       if (!environment.production) {
@@ -61,9 +69,6 @@ export class LoginComponent implements OnInit {
         this.qboAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.helperService.setBaseApiURL(AppUrl.INTACCT);
         this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
-        this.helperService.setBaseApiURL(AppUrl.SAGE300);
-        this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
-        this.businessCentralAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.redirect(redirectUri);
       } else {
         this.redirect(redirectUri);

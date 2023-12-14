@@ -1,1 +1,41 @@
-<p>business-central-complete-export-log works!</p>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+
+<div *ngIf="!isLoading" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-py-40-px">
+    <div *ngIf="totalCount > 0">
+        <app-export-log-filter 
+            [exportLogForm]="exportLogForm" 
+            (handleSimpleSearch)="handleSimpleSearch($event)">
+        </app-export-log-filter>
+
+        <app-export-log-table 
+            [filteredExpenseGroups]="filteredAccountingExports"
+            [appName]="appName"
+            [isExportLogTable]="true"
+            [isDashboardFailed]="false">
+        </app-export-log-table>
+
+        <div *ngIf="filteredAccountingExports.length > 0" class="tw-p-24-px tw-border-t-1-px">
+            <app-paginator 
+                [dropDownValue]="limit" 
+                [page]="currentPage" 
+                [totalCount]="totalCount" 
+                (pageSizeChangeEvent)="pageSizeChanges($event)" 
+                (pageOffsetChangeEvent)="pageChanges($event)">
+            </app-paginator>
+        </div>
+
+        <app-zero-state-with-illustration *ngIf="!filteredAccountingExports.length"
+            [mainText]="'Sorry, no results found!'"
+            [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
+        </app-zero-state-with-illustration>
+
+    </div>
+
+    <app-zero-state-with-illustration *ngIf="totalCount === 0"
+    [mainText]="'No records to show yet!'"
+    [subText]="'All your successful exports and their details will be stored here.'">
+    </app-zero-state-with-illustration>
+
+</div>
