@@ -270,7 +270,6 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   setupSkipExportForm(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
-    this.isLoading = true;
     this.showAddButton = response.count !== 2 ? true : false;
     this.showAdditionalCondition = response.count === 2 ? true : false;
     this.setConditionFields(response, conditionArray);
