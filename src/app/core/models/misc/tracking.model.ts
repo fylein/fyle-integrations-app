@@ -1,3 +1,4 @@
+import { BusinessCentralAdvancedSettingsGet } from "../business-central/business-central-configuration/business-central-advanced-settings.model";
 import { BusinessCentralExportSettingGet } from "../business-central/business-central-configuration/business-central-export-setting.model";
 import { AccountingErrorType, IntacctErrorType, ProgressPhase } from "../enum/enum.model";
 import { QBDAdvancedSettingsGet } from "../qbd/qbd-configuration/advanced-setting.model";
@@ -12,8 +13,8 @@ import { ImportSettingGet, ImportSettings } from "../si/si-configuration/import-
 
 export type UpdateEventAdditionalProperty = {
     phase: ProgressPhase,
-    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet,
-    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet
+    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralAdvancedSettingsGet,
+    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralAdvancedSettingsGet
   };
 
 export type UpdateIntacctEventAdditionalProperty = {
