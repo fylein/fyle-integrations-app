@@ -45,6 +45,7 @@
                                     [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                                     [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account'"
                                     [destinationAttributes]="bankAccounts"
+                                    [optionLabel]="'name'"
                                     [iconPath]="'expense'"
                                     [placeholder]="'Select bank account'"
                                     [formControllerName]="'bankAccount'">
@@ -59,6 +60,7 @@
                                     [label]="'To which Expense Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                                     [subLabel]="'The expenses exported will be added to the selected Expense Payment Account'"
                                     [destinationAttributes]="expenseAccounts"
+                                    [optionLabel]="'name'"
                                     [iconPath]="'expense'"
                                     [placeholder]="'Select Expense Account'"
                                     [formControllerName]="'qboExpenseAccount'">
@@ -69,6 +71,7 @@
                                 <app-configuration-select-field
                                     [form]="exportSettingForm"
                                     [destinationAttributes]="accountsPayables"
+                                    [optionLabel]="'name'"
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'accounts payable'"
                                     [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
@@ -167,6 +170,7 @@
                             <app-configuration-select-field
                               [form]="exportSettingForm"
                               [destinationAttributes]="cccAccounts"
+                              [optionLabel]="'name'"
                               [iconPath]="'expense'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'credit card account'"
@@ -181,6 +185,7 @@
                             <app-configuration-select-field
                               [form]="exportSettingForm"
                               [destinationAttributes]="bankAccounts"
+                              [optionLabel]="'name'"
                               [iconPath]="'expense'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'debit card account'"
@@ -195,6 +200,7 @@
                             <app-configuration-select-field
                               [form]="exportSettingForm"
                               [destinationAttributes]="vendors"
+                              [optionLabel]="'name'"
                               [iconPath]="'expense'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'corporate card vendor'"
@@ -209,6 +215,7 @@
                             <app-configuration-select-field
                               [form]="exportSettingForm"
                               [destinationAttributes]="accountsPayables"
+                              [optionLabel]="'name'"
                               [iconPath]="'expense'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'accounts payable'"
@@ -271,12 +278,12 @@
     </div>
 </div>
 
-<!-- <app-configuration-confirmation-dialog
-    (warningAccepted)="acceptWarning($event)"
+<app-configuration-confirmation-dialog
+    (warningAccepted)="constructPayloadAndSave($event)"
     [isWarningVisible]="isConfirmationDialogVisible"
     [headerText]="'Change in Configuration'"
     [contextText]="warningDialogText"
     [iconPath]="'assets/icons/alert_dialog.svg'"
     [confirmBtnText]="'Continue'"
     [showSecondaryCTA]="false">
-</app-configuration-confirmation-dialog> -->
+</app-configuration-confirmation-dialog>

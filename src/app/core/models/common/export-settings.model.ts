@@ -1,3 +1,4 @@
+import { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
 import { ExpenseGroupingFieldOption } from "../enum/enum.model";
 
 export type ExportSettingValidatorRule = {
@@ -19,5 +20,12 @@ export class ExportSettingModel {
             return exportGroup ? exportGroup : ExpenseGroupingFieldOption.CLAIM_NUMBER;
         }
         return '';
+    }
+
+    static formatGeneralMappingPayload(destinationAttribute: DestinationAttribute): DefaultDestinationAttribute {
+        return {
+            name: destinationAttribute.value,
+            id: destinationAttribute.destination_id,
+        };
     }
 }

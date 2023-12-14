@@ -25,8 +25,8 @@ export type DestinationAttribute = {
 };
 
 export type DefaultDestinationAttribute = {
-  id: string,
-  name: string,
+  id: string | null,
+  name: string | null,
 };
 
 export type GroupedDestinationAttribute = {
