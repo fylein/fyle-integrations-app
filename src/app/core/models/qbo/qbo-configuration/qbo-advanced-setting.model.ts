@@ -1,12 +1,12 @@
-import { FormControl, FormGroup } from "@angular/forms"
-import { EmailOption, SelectFormOption } from "../../common/select-form-option.model"
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model"
-import { QBOPaymentSyncDirection } from "../../enum/enum.model"
-import { ExportSettingValidatorRule } from "../../common/export-settings.model"
-import { AdvancedSettingValidatorRule } from "../../common/advanced-settings.model"
-import { HelperUtility } from "../../common/helper.model"
-import { AdvancedSettingModel } from "../../qbd/qbd-configuration/advanced-setting.model"
-import { brandingConfig } from "src/app/branding/branding-config"
+import { FormControl, FormGroup } from "@angular/forms";
+import { EmailOption, SelectFormOption } from "../../common/select-form-option.model";
+import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { QBOPaymentSyncDirection } from "../../enum/enum.model";
+import { ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { AdvancedSettingValidatorRule } from "../../common/advanced-settings.model";
+import { HelperUtility } from "../../common/helper.model";
+import { AdvancedSettingModel } from "../../qbd/qbd-configuration/advanced-setting.model";
+import { brandingConfig } from "src/app/branding/branding-config";
 
 
 export type QBOAdvancedSettingWorkspaceGeneralSetting = {
@@ -109,7 +109,7 @@ export class QBOAdvancedSettingModel extends HelperUtility {
       search: new FormControl(),
       emails: new FormControl(advancedSettings?.workspace_schedules?.emails_selected ? advancedSettings?.workspace_schedules?.emails_selected : []),
       addedEmail: new FormControl([]),
-      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : []),
+      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : [])
     });
   }
 

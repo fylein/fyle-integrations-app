@@ -132,7 +132,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
       this.skipExportService.getExpenseFields(),
       this.mappingService.getGroupedDestinationAttributes(['BANK_ACCOUNT'], 'v1', 'qbo'),
       this.configurationService.getAdditionalEmails(),
-      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.workspaceService.getWorkspaceGeneralSettings()
     ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, billPaymentAccounts, adminEmails, workspaceGeneralSettings]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
       this.expenseFilters = expenseFiltersGet;
