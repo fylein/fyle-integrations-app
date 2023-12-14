@@ -133,7 +133,6 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSkippedExpensesAndSetupPage();
-    this.isLoading = false;
   }
 
 }
