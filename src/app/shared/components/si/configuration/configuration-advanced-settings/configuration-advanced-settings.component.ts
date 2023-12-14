@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { AdvancedSettingModel, EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -181,16 +181,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
     const findObjectByDestinationId = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
-    const filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOptions[]) => {
-      const adminEmailsList: EmailOptions[] = [];
-      for (const email of emailToSearch) {
-        adminEmails.find(item => (item.email === email ? adminEmailsList.push(item) : null));
-      }
-      return adminEmailsList;
-    };
     this.advancedSettingsForm = this.formBuilder.group({
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
-      email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
+      email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingModel.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
       search: [],
       autoSyncPayments: [this.getPaymentSyncConfiguration(this.advancedSettings.configurations)],
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],

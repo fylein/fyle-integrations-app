@@ -1,4 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterResponse, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOPaymentSyncDirection, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
+import { QBOAdvancedSettingGet, QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
+import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
+import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
+import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
   selector: 'app-qbo-advanced-settings',
@@ -7,9 +24,138 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QboAdvancedSettingsComponent implements OnInit {
 
-  constructor() { }
+  isLoading: boolean = true;
+
+  isSaveInProgress: boolean;
+
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.QBO.ADVANCED_SETTING;
+
+  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.QBO.SKIP_EXPORT;
+
+  isOnboarding: boolean;
+
+  appName: string = AppName.QBO;
+
+  hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
+    return {
+      label: (day + 1).toString(),
+      value: day + 1
+    };
+  });
+
+  advancedSetting: QBOAdvancedSettingGet;
+
+  expenseFilters: ExpenseFilterResponse;
+
+  conditionFieldOptions: ConditionField[];
+
+  advancedSettingForm: FormGroup;
+
+  skipExportForm: FormGroup;
+
+  memoStructure: string[] = [];
+
+  billPaymentAccounts: DefaultDestinationAttribute[];
+
+  brandingConfig = brandingConfig;
+
+  adminEmails: EmailOption[] = [];
+
+  defaultMemoOptions: string[] = ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+
+  memoPreviewText: string = '';
+
+  workspaceGeneralSettings: QBOWorkspaceGeneralSetting;
+
+  paymentSyncOptions: SelectFormOption[] = QBOAdvancedSettingModel.getPaymentSyncOptions();
+
+  ConfigurationCtaText = ConfigurationCta;
+
+  constructor(
+    private advancedSettingsService: QboAdvancedSettingsService,
+    private configurationService: ConfigurationService,
+    private qboHelperService: QboHelperService,
+    private mappingService: MappingService,
+    private router: Router,
+    private skipExportService: SkipExportService,
+    private workspaceService: WorkspaceService
+  ) { }
+
+  save(): void {
+    // TODO
+  }
+
+  refreshDimensions() {
+    this.qboHelperService.refreshQBODimensions().subscribe();
+  }
+
+  deleteExpenseFilter(rank: number) {
+    this.skipExportService.deleteExpenseFilter(rank).subscribe();
+  }
+
+  isAutoCreateVendorsFieldVisible(): boolean {
+    return this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR && this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE;
+  }
+
+  isPaymentSyncFieldVisible(): boolean {
+    return this.workspaceGeneralSettings.reimbursable_expenses_object === QBOReimbursableExpensesObject.BILL;
+  }
+
+  isSingleCreditLineJEFieldVisible(): boolean {
+    return this.workspaceGeneralSettings.reimbursable_expenses_object === QBOReimbursableExpensesObject.JOURNAL_ENTRY || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
+  }
+
+  isAutoCreateMerchantsAsVendorsFieldVisible(): boolean {
+    return !this.workspaceGeneralSettings.import_vendors_as_merchants && (this.workspaceGeneralSettings.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE || this.workspaceGeneralSettings.name_in_journal_entry === NameInJournalEntry.MERCHANT);
+  }
+
+  private createMemoStructureWatcher(): void {
+    this.memoStructure = this.advancedSetting.workspace_general_settings.memo_structure;
+    this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
+       this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoOptions);
+    });
+  }
+
+  private setupFormWatchers() {
+    // TODO: skip export watchers
+    this.createMemoStructureWatcher();
+
+    QBOAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
+  }
+
+  private getSettingsAndSetupForm(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
+    forkJoin([
+      this.advancedSettingsService.getAdvancedSettings(),
+      this.skipExportService.getExpenseFilter(),
+      this.skipExportService.getExpenseFields(),
+      this.mappingService.getGroupedDestinationAttributes(['BANK_ACCOUNT'], 'v1', 'qbo'),
+      this.configurationService.getAdditionalEmails(),
+      this.workspaceService.getWorkspaceGeneralSettings(),
+    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, billPaymentAccounts, adminEmails, workspaceGeneralSettings]) => {
+      this.advancedSetting = sage300AdvancedSettingResponse;
+      this.expenseFilters = expenseFiltersGet;
+      this.conditionFieldOptions = expenseFilterCondition;
+
+      this.adminEmails = adminEmails;
+
+      this.workspaceGeneralSettings = workspaceGeneralSettings;
+
+      this.billPaymentAccounts = billPaymentAccounts.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+
+      const isSkipExportEnabled = expenseFiltersGet.count > 0;
+
+      this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSetting, isSkipExportEnabled, this.adminEmails);
+      this.skipExportForm = SkipExportModel.setupSkipExportForm(this.expenseFilters, [], this.conditionFieldOptions);
+
+      this.setupFormWatchers();
+      this.isLoading = false;
+    });
+  }
 
   ngOnInit(): void {
+    this.getSettingsAndSetupForm();
   }
 
 }

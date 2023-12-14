@@ -68,4 +68,12 @@ export class AdvancedSettingModel {
         };
         return advancedSettingPayload;
     }
+
+    static filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOptions[]) => {
+        const adminEmailsList: EmailOptions[] = [];
+        for (const email of emailToSearch) {
+          adminEmails.find(item => (item.email === email ? adminEmailsList.push(item) : null));
+        }
+        return adminEmailsList;
+    };
 }

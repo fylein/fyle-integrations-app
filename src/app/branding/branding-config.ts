@@ -53,7 +53,8 @@ const kbArticles: KbArticle = {
                 EMPLOYEE_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc',
                 EXPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686',
                 IMPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7'
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7',
+                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online'
             },
             // TODO: Update KB articles for MS Dynamics
             BUSINESS_CENTRAL: {

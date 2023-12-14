@@ -55,11 +55,16 @@ export type ExpenseFilterResponse = {
     results: ExpenseFilter[]
 };
 
-export type AdvancedSettingValidatorRule = {
+export type SkipExportValidatorRule = {
   condition1: string[];
   condition2: string[];
   operator1: string[];
   operator2: string[];
+};
+
+export type AdvancedSettingValidatorRule = {
+  paymentSync: string;
+  exportSchedule: string;
 };
 
 export class AdvancedSettingsModel {

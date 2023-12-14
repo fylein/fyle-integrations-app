@@ -35,15 +35,6 @@ export type QBOExportSettingGet = {
 
 
 export class QBOExportSettingModel extends ExportSettingModel {
-  static markControllerAsRequired(form: FormGroup, controllerName: string): void {
-    form.controls[controllerName].setValidators(Validators.required);
-  }
-
-  static clearValidatorAndResetValue(form: FormGroup, controllerName: string): void {
-    form.controls[controllerName].clearValidators();
-    form.controls[controllerName].setValue(null);
-  }
-
   static getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
     return {
       EMPLOYEE: [
