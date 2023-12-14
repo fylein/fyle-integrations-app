@@ -25,7 +25,7 @@ export class ExportSettingModel {
     static formatGeneralMappingPayload(destinationAttribute: DestinationAttribute): DefaultDestinationAttribute {
         return {
             name: destinationAttribute.value,
-            id: destinationAttribute.destination_id,
+            id: destinationAttribute.destination_id
         };
     }
 }
