@@ -55,8 +55,8 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     private paginatorService: PaginatorService
   ) { }
 
-  openExpenseinFyle(expense_id: string) {
-    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
+  openExpenseinFyle(expenseId: string) {
+    this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expenseId));
   }
 
   public handleSimpleSearch(event: any) {
