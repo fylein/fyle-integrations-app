@@ -3,7 +3,7 @@ import { Observable, filter, forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel } from 'src/app/core/models/db/error.model';
+import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { AccountingErrorType, AppName, ExportErrorSourceType, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
@@ -65,7 +65,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
+  getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors();
 
   constructor(
     private dashboardService: DashboardService,
@@ -142,7 +142,7 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   handleResolvedMappingStat(): void {
     this.getExportErrors$.subscribe((errors) => {
-      const newError: AccountingGroupedErrors = this.formatErrors(errors);
+      const newError: AccountingGroupedErrors = this.formatErrors(errors.results);
 
       if (this.errors.CATEGORY_MAPPING.length !== newError.CATEGORY_MAPPING.length) {
         const totalCount = this.groupedErrorStat.CATEGORY_MAPPING ? this.groupedErrorStat.CATEGORY_MAPPING.totalCount : this.errors.CATEGORY_MAPPING.length;

@@ -12,7 +12,7 @@ export interface AccountingExportCount {
 }
 
 export interface ExportableAccountingExport {
-  accounting_export_ids: number[];
+  exportable_accounting_export_ids: number[];
 }
 
 export interface AccountingExportList {

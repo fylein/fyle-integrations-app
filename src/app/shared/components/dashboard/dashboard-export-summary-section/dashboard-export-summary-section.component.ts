@@ -13,7 +13,7 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 })
 export class DashboardExportSummarySectionComponent implements OnInit {
 
-  @Input() accountingExportSummary: AccountingExportSummary;
+  @Input() accountingExportSummary: AccountingExportSummary | null;
 
   @Input() appName: AppName;
 
@@ -41,17 +41,19 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   ) { }
 
   getAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
-    this.isLoading = true;
-    this.selectedDateFilter = {startDate: new Date(this.accountingExportSummary.last_exported_at), endDate: new Date};
-
-    this.accountingExportService.getAccountingExports([status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
-        );
-        this.filteredAccountingExports = accountingExports;
-        this.accountingExports = [...this.filteredAccountingExports];
-        this.isLoading = false;
-      });
+    if (this.accountingExportSummary) {
+      this.isLoading = true;
+      this.selectedDateFilter = {startDate: new Date(this.accountingExportSummary.last_exported_at), endDate: new Date};
+  
+      this.accountingExportService.getAccountingExports([status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+          const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
+            AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
+          );
+          this.filteredAccountingExports = accountingExports;
+          this.accountingExports = [...this.filteredAccountingExports];
+          this.isLoading = false;
+        });
+    }
   }
 
   showExportLog(status: AccountingExportStatus) {

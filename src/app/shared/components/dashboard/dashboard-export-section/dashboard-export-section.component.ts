@@ -22,7 +22,7 @@ export class DashboardExportSectionComponent implements OnInit {
 
   @Input() exportProgressPercentage: number;
 
-  @Input() accountingExportSummary: AccountingExportSummary;
+  @Input() accountingExportSummary: AccountingExportSummary | null;
 
   @Input() processedCount: number;
 

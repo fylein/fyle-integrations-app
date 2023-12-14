@@ -2,6 +2,7 @@ import { AccountingErrorType } from "../enum/enum.model";
 import { AccountingExport } from "./accounting-export.model";
 import { ExpenseAttribute } from "./expense-attribute.model";
 import { ExtendedGenericMapping } from "./extended-generic-mapping.model";
+import { PaginatedResponse } from "./paginated-response.model";
 
 export interface DestinationAttributeDetail {
   user_id?: string;
@@ -11,6 +12,10 @@ export interface DestinationAttributeDetail {
   department_id?: string | null;
   employee_code?: string | null;
   department_code?: string | null;
+}
+
+export interface ErrorResponse extends PaginatedResponse {
+  results: Error[];
 }
 
 export interface Error {
