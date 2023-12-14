@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, Sage300OnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Sage300Workspace } from 'src/app/core/models/sage300/db/sage300-workspace.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -30,7 +31,8 @@ export class Sage300Component implements OnInit {
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
     private windowService: WindowService,
-    private mapping: Sage300MappingService
+    private mapping: Sage300MappingService,
+    private helperService: HelperService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -50,6 +52,7 @@ export class Sage300Component implements OnInit {
   }
 
   private setupWorkspace(): void {
+    this.helperService.setBaseApiURL(AppUrl.SAGE300);
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: Sage300Workspace[]) => {
       if (workspaces.length) {
         this.storeWorkspaceAndNavigate(workspaces[0]);

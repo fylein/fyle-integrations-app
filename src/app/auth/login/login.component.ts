@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit {
       };
       this.userService.storeUserProfile(user);
       this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
+      this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
 
       // Only local dev needs this, login happens via postMessage for prod/staging through webapp
       if (!environment.production) {
