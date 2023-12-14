@@ -13,6 +13,7 @@ import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -23,7 +24,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | HourOption[];
 
-  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[];
+  // TODO: kill app specific type
+  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[] | DestinationAttribute[] | DefaultDestinationAttribute[];
 
   @Input() form: FormGroup;
 
@@ -61,6 +63,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() isDisabled: boolean;
 
+  @Input() optionLabel: string = 'value';
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
@@ -91,10 +95,6 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     private trackingService: TrackingService,
     private router: Router
   ) { }
-
-  ngOnInit(): void {
-    this.isOnboarding = this.router.url.includes('onboarding');
-  }
 
   removeFilter(formField: AbstractControl) {
     (formField as FormGroup).reset();
@@ -129,10 +129,13 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   closeDialog() {
     this.isPreviewDialogVisible = false;
-    this.isPreviewDialogVisible = false;
   }
 
   searchOptions(event: any) {
     this.searchOptionsDropdown.emit({ searchTerm: event.filter, destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey });
+  }
+
+  ngOnInit(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
   }
 }

@@ -5,10 +5,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
-import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/si/si-configuration/export-settings.model';
+import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel as IntacctExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/si/si-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
@@ -201,16 +202,6 @@ export class ConfigurationExportSettingsComponent implements OnInit {
       }
 
       return new TitleCasePipe().transform(employeeFieldMappingLabel);
-    }
-
-    private getExportGroup(exportGroups: string[] | null): string {
-      if (exportGroups) {
-        const exportGroup = exportGroups.find((exportGroup) => {
-          return exportGroup === ExpenseGroupingFieldOption.EXPENSE_ID || exportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroup === ExpenseGroupingFieldOption.SETTLEMENT_ID;
-        });
-        return exportGroup ? exportGroup : ExpenseGroupingFieldOption.CLAIM_NUMBER;
-      }
-      return '';
     }
 
     getExportType(exportType: IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject | null): string {
@@ -430,13 +421,13 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private initializeExportSettingsFormWithData(): void {
       const configurations = this.exportSettings?.configurations;
       const generalMappings = this.exportSettings?.general_mappings;
-      const findObjectById = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
+      const findObjectById = (array: IntacctDestinationAttribute[], id: string | null) => array?.find(item => item.destination_id === id) || null;
 
       this.exportSettingsForm = this.formBuilder.group({
         reimbursableExpense: [Boolean(configurations?.reimbursable_expenses_object) || null, this.exportSelectionValidator()],
         reimbursableExportType: [configurations?.reimbursable_expenses_object || null],
         reimbursableExpensePaymentType: [findObjectById(this.destinationOptions.EXPENSE_PAYMENT_TYPE, generalMappings?.default_reimbursable_expense_payment_type.id)],
-        reimbursableExportGroup: [this.getExportGroup(this.exportSettings?.expense_group_settings.reimbursable_expense_group_fields) || null],
+        reimbursableExportGroup: [ExportSettingModel.getExportGroup(this.exportSettings?.expense_group_settings.reimbursable_expense_group_fields) || null],
         reimbursableExportDate: [this.exportSettings?.expense_group_settings.reimbursable_export_date_type || null],
         reimbursableExpenseState: [this.exportSettings?.expense_group_settings.expense_state || null],
         employeeFieldMapping: [configurations?.employee_field_mapping || null, Validators.required],
@@ -444,7 +435,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         glAccount: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_gl_account.id)],
         creditCardExpense: [Boolean(configurations?.corporate_credit_card_expenses_object), this.exportSelectionValidator()],
         cccExportType: [configurations?.corporate_credit_card_expenses_object || null],
-        cccExportGroup: [this.getExportGroup(this.exportSettings?.expense_group_settings.corporate_credit_card_expense_group_fields)],
+        cccExportGroup: [ExportSettingModel.getExportGroup(this.exportSettings?.expense_group_settings.corporate_credit_card_expense_group_fields)],
         cccExportDate: [this.exportSettings?.expense_group_settings.ccc_export_date_type || null],
         cccExpenseState: [this.exportSettings?.expense_group_settings.ccc_expense_state || null],
         cccExpensePaymentType: [findObjectById(this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE, generalMappings?.default_ccc_expense_payment_type.id)],
@@ -502,7 +493,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
 
     save(): void {
       this.saveInProgress = true;
-      const exportSettingPayload = ExportSettingModel.constructPayload(this.exportSettingsForm);
+      const exportSettingPayload = IntacctExportSettingModel.constructPayload(this.exportSettingsForm);
       this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: ExportSettingGet) => {
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
         this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_INTACCT, this.sessionStartTime);

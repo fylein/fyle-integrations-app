@@ -63,7 +63,7 @@ export class QBOOnboardingModel {
             height: '18px',
             width: '15px'
           },
-          styleClasses: ['step-name-import--text', 'step-name-import--icon']
+          styleClasses: ['step-name-import--text', 'step-name-export--icon']
         },
         {
           active: false,
