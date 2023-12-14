@@ -15,11 +15,11 @@
         </div>
         <div>
             <div class="p-field-checkbox tw-pl-34-px" *ngIf="destinationAttributes">
-                <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="value" class="!tw-w-300-px" 
+                <p-dropdown appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px" 
                     [formControlName]="formControllerName" 
                     [placeholder]="placeholder" 
                     [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']" 
-                    [filter]="true" filterBy="value" 
+                    [filter]="true" [filterBy]="optionLabel"
                     (onFilter)="searchOptions($event)" 
                     [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
                     [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'">

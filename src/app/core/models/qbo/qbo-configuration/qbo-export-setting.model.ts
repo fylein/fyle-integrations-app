@@ -34,7 +34,7 @@ export type QBOExportSettingGet = {
 }
 
 
-export class QBOExportSettingModel {
+export class QBOExportSettingModel extends ExportSettingModel {
   static markControllerAsRequired(form: FormGroup, controllerName: string): void {
     form.controls[controllerName].setValidators(Validators.required);
   }
@@ -244,20 +244,49 @@ export class QBOExportSettingModel {
       expenseState: new FormControl(exportSettings?.expense_group_settings?.expense_state),
       reimbursableExpense: new FormControl(exportSettings?.workspace_general_settings?.reimbursable_expenses_object ? true : false),
       reimbursableExportType: new FormControl(exportSettings?.workspace_general_settings?.reimbursable_expenses_object),
-      reimbursableExportGroup: new FormControl(ExportSettingModel.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields)),
+      reimbursableExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields)),
       reimbursableExportDate: new FormControl(exportSettings?.expense_group_settings?.reimbursable_export_date_type),
       cccExpenseState: new FormControl(exportSettings?.expense_group_settings?.ccc_expense_state),
       creditCardExpense: new FormControl(exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false),
       creditCardExportType: new FormControl(exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object),
-      creditCardExportGroup: new FormControl(ExportSettingModel.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
+      creditCardExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
       creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
-      bankAccount: new FormControl(exportSettings?.general_mappings?.bank_account?.id ? exportSettings?.general_mappings.bank_account : null),
-      defaultCCCAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings?.general_mappings.default_ccc_account : null),
-      accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings?.general_mappings.accounts_payable : null),
-      defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings?.general_mappings.default_ccc_vendor : null),
-      qboExpenseAccount: new FormControl(exportSettings?.general_mappings?.qbo_expense_account?.id ? exportSettings?.general_mappings.qbo_expense_account : null),
-      defaultDebitCardAccount: new FormControl(exportSettings?.general_mappings?.default_debit_card_account?.id ? exportSettings?.general_mappings.default_debit_card_account : null),
-      nameInJournalEntry: new FormControl(exportSettings?.workspace_general_settings.name_in_journal_entry ? exportSettings?.workspace_general_settings.name_in_journal_entry : NameInJournalEntry.EMPLOYEE )
+      bankAccount: new FormControl(exportSettings?.general_mappings?.bank_account?.id ? exportSettings.general_mappings.bank_account : null),
+      defaultCCCAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
+      accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
+      defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
+      qboExpenseAccount: new FormControl(exportSettings?.general_mappings?.qbo_expense_account?.id ? exportSettings.general_mappings.qbo_expense_account : null),
+      defaultDebitCardAccount: new FormControl(exportSettings?.general_mappings?.default_debit_card_account?.id ? exportSettings.general_mappings.default_debit_card_account : null),
+      nameInJournalEntry: new FormControl(exportSettings?.workspace_general_settings.name_in_journal_entry ? exportSettings.workspace_general_settings.name_in_journal_entry : NameInJournalEntry.EMPLOYEE )
     });
+  }
+
+  static constructPayload(exportSettingsForm: FormGroup): QBOExportSettingPost {
+    const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
+    const exportSettingPayload: QBOExportSettingPost = {
+      expense_group_settings: {
+        expense_state: exportSettingsForm.get('expenseState')?.value,
+        ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value,
+        reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.get('reimbursableExportGroup')?.value] : null,
+        reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value,
+        corporate_credit_card_expense_group_fields: exportSettingsForm.get('creditCardExportGroup')?.value ? [exportSettingsForm.get('creditCardExportGroup')?.value] : null,
+        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value
+      },
+      workspace_general_settings: {
+        reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,
+        corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value,
+        name_in_journal_entry: exportSettingsForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE
+      },
+      general_mappings: {
+        bank_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute,
+        default_ccc_account: exportSettingsForm.get('defaultCCCAccount')?.value ? exportSettingsForm.get('defaultCCCAccount')?.value : emptyDestinationAttribute,
+        accounts_payable: exportSettingsForm.get('accountsPayable')?.value ? exportSettingsForm.get('accountsPayable')?.value : emptyDestinationAttribute,
+        default_ccc_vendor: exportSettingsForm.get('defaultCreditCardVendor')?.value ? exportSettingsForm.get('defaultCreditCardVendor')?.value : emptyDestinationAttribute,
+        qbo_expense_account: exportSettingsForm.get('qboExpenseAccount')?.value ? exportSettingsForm.get('qboExpenseAccount')?.value : emptyDestinationAttribute,
+        default_debit_card_account: exportSettingsForm.get('defaultDebitCardAccount')?.value ? exportSettingsForm.get('defaultDebitCardAccount')?.value : emptyDestinationAttribute
+      }
+    };
+
+    return exportSettingPayload;
   }
 }
