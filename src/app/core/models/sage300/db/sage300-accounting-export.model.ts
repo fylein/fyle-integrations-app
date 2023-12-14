@@ -1,4 +1,3 @@
-import { BusinessCentralAccountingExport } from "../../business-central/db/business-central-accounting-export.model";
 import { AccountingExport } from "../../db/accounting-export.model";
 import { PaginatedResponse } from "../../db/paginated-response.model";
 
