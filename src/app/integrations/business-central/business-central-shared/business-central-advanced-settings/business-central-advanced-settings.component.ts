@@ -9,11 +9,11 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { environment } from 'src/environments/environment';
 import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model';
 import { FormGroup } from '@angular/forms';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { businessCentralAdvancedSettingResponse, expenseFilterCondition, expenseFiltersGet } from '../business-central.fixture';
 
 @Component({
   selector: 'app-business-central-advanced-settings',
@@ -57,6 +57,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
   skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.SKIP_EXPORT;
 
   sessionStartTime: Date = new Date();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private advancedSettingsService: BusinessCentralAdvancedSettingsService,
@@ -106,8 +108,72 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     this.helper.setConfigurationSettingValidatorsAndWatchers(skipExportFormWatcherFields, this.skipExportForm);
   }
 
+  saveSkipExportFields(): void {
+    if (!this.skipExportForm.valid) {
+      return;
+    }
+    let valueField = this.skipExportForm.getRawValue();
+    if (!valueField.condition1.field_name) {
+      return;
+    }
+    valueField = SkipExportModel.constructSkipExportValue(valueField);
+    valueField.rank = 1;
+    const skipExportRank1: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
+    const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
+    this.skipExportService.postExpenseFilter(payload1).subscribe((skipExport1: ExpenseFilter) => {
+      if (valueField.condition2 && valueField.operator2) {
+        valueField.rank = 2;
+        const skipExportRank2: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
+        const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);
+        this.skipExportService.postExpenseFilter(payload2).subscribe((skipExport2: ExpenseFilter) => {});
+      }
+    });
+  }
+
+  constructPayloadAndSave(){
+    this.isSaveInProgress = true;
+    if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.results.length > 0){
+      this.expenseFilters.results.forEach((value) => {
+        this.deleteExpenseFilter(value.rank);
+      });
+    }
+    if (this.advancedSettingForm.value.skipExport) {
+      this.saveSkipExportFields();
+    }
+    const advancedSettingPayload = BusinessCentralAdvancedSettingsModel.createAdvancedSettingPayload(this.advancedSettingForm);
+    this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: BusinessCentralAdvancedSettingsGet) => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.ADVANCED_SETTINGS) {
+        this.trackingService.onOnboardingStepCompletion(BusinessCentralOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
+          {
+            phase: this.helper.getPhase(this.isOnboarding),
+            oldState: this.advancedSetting,
+            newState: advancedSettingsResponse
+          }
+        );
+      }
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.COMPLETE);
+        this.router.navigate([`/integrations/business_central/onboarding/done`]);
+      }
+
+
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      });
+  }
+
   save(): void {
-    // TODO
+    if (this.advancedSettingForm.valid && this.skipExportForm.valid) {
+      this.constructPayloadAndSave();
+    }
   }
 
   private getSettingsAndSetupForm(): void {
