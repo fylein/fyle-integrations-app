@@ -14,7 +14,7 @@ export class Sage300AuthService {
     private apiService: ApiService,
     helper: HelperService
   ) {
-    helper.setBaseApiURL();
+    helper.setBaseApiURL(AppUrl.SAGE300);
   }
 
   loginWithRefreshToken(refresh_token: string): Observable<Token> {
