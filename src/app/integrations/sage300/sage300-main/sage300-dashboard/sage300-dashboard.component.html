@@ -6,7 +6,7 @@
 </div>
 
 <div *ngIf="!isLoading">
-    <app-dashboard-export-section *ngIf="!isImportInProgress"
+    <app-dashboard-export-section
         (export)="export()" 
         [appName]="appName"
         [isImportInProgress]="isImportInProgress" 
@@ -25,7 +25,7 @@
         >
     </app-zero-state>
     
-    <app-dashboard-export-summary-section 
+    <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
         [appName]="appName"
         [accountingExportSummary]="accountingExportSummary">
     </app-dashboard-export-summary-section>
