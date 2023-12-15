@@ -11,6 +11,10 @@ export interface AccountingExportCount {
     count: number;
 }
 
+export interface ExportableAccountingExport {
+  accounting_export_ids: number[];
+}
+
 export interface AccountingExportList {
     exportedAt: Date;
     employee: [string, string];

@@ -1,5 +1,4 @@
-import { brandingConfig } from "src/app/branding/branding-config";
-import { AutoMapEmployeeOptions, FyleField } from "../enum/enum.model";
+import { FyleField } from "../enum/enum.model";
 import { SelectFormOption } from "./select-form-option.model";
 
 export class EmployeeSettingModel {

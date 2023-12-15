@@ -13,6 +13,7 @@ import { Sage300ImportSettingPost } from '../../models/sage300/sage300-configura
 import { Sage300AdvancedSettingPost } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { BusinessCentralExportSettingPost } from '../../models/business-central/business-central-configuration/business-central-export-setting.model';
 import { BusinessCentralImportSettingsPost } from '../../models/business-central/business-central-configuration/business-central-import-settings.model';
+import { BusinessCentralAdvancedSettingsPost } from '../../models/business-central/business-central-configuration/business-central-advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -87,7 +88,7 @@ export class TrackingService {
     this.eventTrack(`Time Spent on ${page} page`, {durationInSeconds: differenceInMs / 1000});
   }
 
-  onOnboardingStepCompletion(eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost ): void {
+  onOnboardingStepCompletion(eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost |BusinessCentralAdvancedSettingsPost ): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
   }
 

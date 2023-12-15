@@ -112,7 +112,7 @@ export const expenseFiltersGet: ExpenseFilterResponse =
             "is_custom": false,
             "custom_field_type": null,
             "created_at": new Date(),
-            "update_at": new Date(),
+            "updated_at": new Date(),
             "workspace": 383
         },
         {
@@ -127,7 +127,7 @@ export const expenseFiltersGet: ExpenseFilterResponse =
             "is_custom": false,
             "custom_field_type": null,
             "created_at": new Date(),
-            "update_at": new Date(),
+            "updated_at": new Date(),
             "workspace": 383
         }
     ]

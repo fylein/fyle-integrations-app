@@ -10,6 +10,7 @@ import { BusinessCentralOnboardingImportSettingsComponent } from './business-cen
 import { BusinessCentralOnboardingComponent } from './business-central-onboarding.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BusinessCentralSharedModule } from '../business-central-shared/business-central-shared.module';
+import { BusinessCentralOnboardingDoneComponent } from './business-central-onboarding-done/business-central-onboarding-done.component';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { BusinessCentralSharedModule } from '../business-central-shared/business
     BusinessCentralOnboardingExportSettingsComponent,
     BusinessCentralOnboardingImportSettingsComponent,
     BusinessCentralOnboardingAdvancedSettingsComponent,
+    BusinessCentralOnboardingDoneComponent,
     BusinessCentralOnboardingComponent
   ],
   imports: [
