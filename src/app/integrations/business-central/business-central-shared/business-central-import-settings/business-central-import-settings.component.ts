@@ -54,7 +54,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   readonly supportArticleLink: string = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.IMPORT_SETTING;
 
-  appName: string = AppName.BUSINESS_CENTRAL;
+  readonly appName: string = AppName.BUSINESS_CENTRAL;
 
   isSaveInProgress: boolean;
 
