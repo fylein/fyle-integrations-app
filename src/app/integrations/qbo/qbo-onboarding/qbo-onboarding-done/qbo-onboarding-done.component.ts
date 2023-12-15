@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-qbo-onboarding-done',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QboOnboardingDoneComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
+
+  navigateToDashboard(): void {
+    this.router.navigate([`/integrations/qbo/main/dashboard`]);
+  }
 
   ngOnInit(): void {
   }
