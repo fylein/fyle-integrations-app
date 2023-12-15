@@ -6,11 +6,12 @@ import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-co
 import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterResponse, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOPaymentSyncDirection, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOPaymentSyncDirection, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { QBOAdvancedSettingGet, QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -78,11 +79,29 @@ export class QboAdvancedSettingsComponent implements OnInit {
     private mappingService: MappingService,
     private router: Router,
     private skipExportService: SkipExportService,
+    private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
 
   save(): void {
-    // TODO
+    // TODO, save skip export
+    const advancedSettingPayload = QBOAdvancedSettingModel.constructPayload(this.advancedSettingForm);
+    this.isSaveInProgress = true;
+
+    this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(QBOOnboardingState.COMPLETE);
+        this.router.navigate([`/integrations/qbo/onboarding/done`]);
+      } else {
+        this.router.navigate(['/integrations/qbo/main/dashboard']);
+      }
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
+    });
   }
 
   refreshDimensions() {
@@ -139,6 +158,9 @@ export class QboAdvancedSettingsComponent implements OnInit {
       this.conditionFieldOptions = expenseFilterCondition;
 
       this.adminEmails = adminEmails;
+      if (this.advancedSetting.workspace_schedules?.additional_email_options && this.advancedSetting.workspace_schedules?.additional_email_options.length > 0) {
+        this.adminEmails = this.adminEmails.concat(this.advancedSetting.workspace_schedules?.additional_email_options);
+      }
 
       this.workspaceGeneralSettings = workspaceGeneralSettings;
 

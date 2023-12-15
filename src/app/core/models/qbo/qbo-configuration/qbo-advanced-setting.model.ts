@@ -3,9 +3,8 @@ import { EmailOption, SelectFormOption } from "../../common/select-form-option.m
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { QBOPaymentSyncDirection } from "../../enum/enum.model";
 import { ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { AdvancedSettingValidatorRule } from "../../common/advanced-settings.model";
+import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
-import { AdvancedSettingModel } from "../../qbd/qbd-configuration/advanced-setting.model";
 import { brandingConfig } from "src/app/branding/branding-config";
 
 
@@ -26,7 +25,7 @@ export type QBOAdvancedSettingGeneralMapping = {
 export type QBOAdvancedSettingWorkspaceSchedule = {
   enabled: boolean,
   interval_hours: number,
-  emails_selected: string[],
+  emails_selected: string[] | null,
   additional_email_options: EmailOption[]
 }
 
@@ -107,9 +106,8 @@ export class QBOAdvancedSettingModel extends HelperUtility {
       skipExport: new FormControl(isSkipExportEnabled),
       searchOption: new FormControl(),
       search: new FormControl(),
-      emails: new FormControl(advancedSettings?.workspace_schedules?.emails_selected ? advancedSettings?.workspace_schedules?.emails_selected : []),
-      addedEmail: new FormControl([]),
-      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : [])
+      additionalEmails: new FormControl([]),
+      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : [])
     });
   }
 
@@ -131,8 +129,8 @@ export class QBOAdvancedSettingModel extends HelperUtility {
       workspace_schedules: {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
         interval_hours: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
-        emails_selected: advancedSettingsForm.get('emails')?.value ? advancedSettingsForm.get('emails')?.value : null,
-        additional_email_options: advancedSettingsForm.get('addedEmail')?.value ? advancedSettingsForm.get('addedEmail')?.value : null
+        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsModel.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : null,
+        additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value[0] : null
       }
     };
     return advancedSettingPayload;
