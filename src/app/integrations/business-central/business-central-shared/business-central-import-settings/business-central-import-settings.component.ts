@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { BusinessCentralImportSettingsGet, BusinessCentralImportSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
-import { AppNameInService } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppNameInService, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, DefaultImportFields, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralImportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-import-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -13,6 +13,9 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { businessCentralFieldsResponse, fyleFieldsResponse, importSettingsResponse } from '../business-central.fixture';
+import { ExpenseField } from 'src/app/core/models/common/import-settings.model';
 
 @Component({
   selector: 'app-business-central-import-settings',
@@ -25,7 +28,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   importSettings: BusinessCentralImportSettingsGet | null;
 
-  importSettingForm: any;
+  importSettingForm: FormGroup;
 
   fyleFields: FyleField[];
 
@@ -43,9 +46,21 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   customFieldControl: AbstractControl;
 
-  customField: { attribute_type: any; display_name: any; source_placeholder: any; is_dependent: boolean; };
+  customField: ExpenseField;
 
-  customFieldOption: any;
+  customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
+
+  readonly brandingConfig = brandingConfig;
+
+  readonly supportArticleLink: string = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.IMPORT_SETTING;
+
+  readonly appName: string = AppName.BUSINESS_CENTRAL;
+
+  isSaveInProgress: boolean;
+
+  ConfigurationCtaText = ConfigurationCta;
+
+  sessionStartTime: Date = new Date();
 
   constructor(
     private router: Router,
@@ -137,6 +152,45 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
   private setupFormWatchers() {
     this.importSettingWatcher();
   }
+
+  private constructPayloadAndSave() {
+    this.isSaveInProgress = true;
+    const importSettingPayload = BusinessCentralImportSettingsModel.createImportSettingPayload(this.importSettingForm);
+    this.importSettingService.postBusinessCentralImportSettings(importSettingPayload).subscribe((importSettingsResponse: BusinessCentralImportSettingsGet) => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+      this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
+      if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.IMPORT_SETTINGS) {
+        this.trackingService.onOnboardingStepCompletion(BusinessCentralOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
+      } else {
+        this.trackingService.onUpdateEvent(
+          BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
+          {
+            phase: this.helper.getPhase(this.isOnboarding),
+            oldState: this.importSettings,
+            newState: importSettingsResponse
+          }
+        );
+      }
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.ADVANCED_SETTINGS);
+        this.router.navigate([`/integrations/business_central/onboarding/advanced_settings`]);
+      }
+
+
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+      });
+  }
+
+  save(): void {
+    if (this.importSettingForm.valid) {
+      this.constructPayloadAndSave();
+    }
+  }
+
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');

@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -14,7 +15,7 @@ import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-s
 })
 export class ConfigurationImportFieldComponent implements OnInit {
 
-  @Input() appName: string = 'Sage 300 CRE';
+  @Input() appName: string;
 
   @Input() form: FormGroup;
 
@@ -22,7 +23,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() fyleFieldOptions: FyleField[];
 
-  @Input() defaultImportFields: Sage300DefaultFields[];
+  @Input() defaultImportFields: Sage300DefaultFields[] | ImportDefaultField[];
 
   @Input() costCategoryOption: ImportSettingsCustomFieldRow[];
 
@@ -31,6 +32,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   @Input() dependentImportFields: Sage300DependentImportFields[];
 
   @Input() dependentDestinationValue: string;
+
+  @Input() isDestinationFixedImport: boolean = false;
 
   @Output() showWarningForDependentFields = new EventEmitter();
 
