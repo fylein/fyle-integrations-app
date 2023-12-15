@@ -4,7 +4,7 @@ import { QboDashboardComponent } from './qbo-dashboard.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: QboDashboardComponent
   }
 ];
