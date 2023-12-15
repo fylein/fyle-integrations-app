@@ -43,9 +43,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor(
-    public helper: HelperService
-  ) { }
+  constructor() { }
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;

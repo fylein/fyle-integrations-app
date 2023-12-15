@@ -80,11 +80,6 @@ export class HelperService {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
 
-  getTitleCaseValue(value: string): string {
-    return new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(value));
-  }
-
-
   setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | AdvancedSettingValidatorRule, form: FormGroup) {
     const keys = Object.keys(validatorRule);
     Object.values(validatorRule).forEach((value, index) => {
