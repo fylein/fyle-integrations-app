@@ -456,7 +456,7 @@ export enum Sage300ExportType {
 
 export enum Sage300ExpenseDate {
   LAST_SPENT_AT = 'LAST_SPENT_AT',
-  CREATED_AT = 'CREATED_AT',
+  CURRENT_DATE = 'CURRENT_DATE',
   SPENT_AT = 'SPENT_AT',
   POSTED_AT = 'POSTED_AT'
 }

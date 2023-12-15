@@ -139,7 +139,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
       {
         'formController': 'reimbursableExportType',
         'requiredValue': {
-          'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName', 'defaultJobName']
+          'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName', 'defaultJobName'],
+          'PURCHASE_INVOICE': ['defaultVendorName']
         }
       },
       {
@@ -158,7 +159,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.vendorOptions = destinationAttributes.VENDOR;
       this.creditCardAccountOptions = this.debitCardAccountOptions = destinationAttributes.ACCOUNT;
       this.sage300Jobs = destinationAttributes.JOB;
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.sage300Jobs);
+      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, destinationAttributes );
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
