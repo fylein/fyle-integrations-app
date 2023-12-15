@@ -31,8 +31,6 @@ export class ConfigurationScheduleExportComponent implements OnInit {
 
   @Input() customErrorMessage: string;
 
-  @Input() showClearIcon: boolean;
-
   @Input() isEmailPresent: boolean = false;
 
   constructor() { }

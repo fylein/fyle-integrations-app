@@ -325,6 +325,11 @@ export enum PaymentSyncDirection {
   INTACCT_TO_FYLE = 'intacct_to_fyle'
 }
 
+export enum QBOPaymentSyncDirection {
+  FYLE_TO_QBO = 'fyle_to_qbo',
+  QBO_TO_FYLE = 'qbo_to_fyle'
+}
+
 export enum IntacctErrorType {
   EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
   CATEGORY_MAPPING = 'CATEGORY_MAPPING',

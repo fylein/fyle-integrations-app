@@ -5,6 +5,7 @@ import { ApiService } from '../../common/api.service';
 import { QBOExportSettingGet, QBOExportSettingModel, QBOExportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { ExportModuleRule } from 'src/app/core/models/common/export-settings.model';
 import { FormGroup } from '@angular/forms';
+import { HelperUtility } from 'src/app/core/models/common/helper.model';
 
 @Injectable({
   providedIn: 'root'
@@ -39,15 +40,15 @@ export class QboExportSettingsService {
           const isFieldMandatory = QBOExportSettingModel.getMandatoryField(form, formController);
           if (isFieldMandatory) {
             this.mandatoryFormController.push(formController);
-            QBOExportSettingModel.markControllerAsRequired(form, formController);
+            HelperUtility.markControllerAsRequired(form, formController);
           } else {
-            QBOExportSettingModel.clearValidatorAndResetValue(form, formController);
+            HelperUtility.clearValidatorAndResetValue(form, formController);
           }
         });
       } else {
         value.forEach((formController: string) => {
           if (this.mandatoryFormController.length && !this.mandatoryFormController.includes(formController)) {
-            QBOExportSettingModel.clearValidatorAndResetValue(form, formController);
+            HelperUtility.clearValidatorAndResetValue(form, formController);
           }
         });
       }

@@ -237,6 +237,7 @@ export class QboExportSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT', 'ACCOUNTS_PAYABLE', 'VENDOR'];
+
     forkJoin({
       exportSetting: this.exportSettingService.getExportSettings(),
       destinationAttributes: this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v1', 'qbo'),
