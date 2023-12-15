@@ -19,7 +19,7 @@
     </app-dashboard-export-section>
     
     <app-zero-state 
-        *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length" 
+        *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length && !errors" 
         [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'"
         [zeroStateCaption]="'There are no expenses to export at the moment!'"
         >
