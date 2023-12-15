@@ -37,7 +37,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService
   ) { }
-  
+
   handleDialogClose(){
     this.isExportLogVisible = false;
   }
