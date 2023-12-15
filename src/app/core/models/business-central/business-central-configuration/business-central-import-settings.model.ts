@@ -26,7 +26,7 @@ export class BusinessCentralImportSettingsModel {
         });
     }
 
-    static createImportSettingPayload(importSettingsForm: FormGroup, importSettings: BusinessCentralImportSettingsGet): BusinessCentralImportSettingsPost {
+    static createImportSettingPayload(importSettingsForm: FormGroup): BusinessCentralImportSettingsPost {
         const expenseFieldArray = importSettingsForm.value.expenseFields;
 
         // First filter out objects where import_to_fyle is false
