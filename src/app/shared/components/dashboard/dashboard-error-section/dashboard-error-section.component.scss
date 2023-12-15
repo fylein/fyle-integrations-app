@@ -1,0 +1,41 @@
+.container {
+    justify-content: center;
+}
+
+.inside-container {
+    border-radius: 8px;
+    border: 1px solid var(--grayscale-light-border, #ECECEE);
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    max-width: auto;
+}
+
+.sub-text-container {
+    border-radius: 8px;
+    border: 1px solid var(--grayscale-light-border, #ECECEE);
+    background: var(--grayscale-background, #FAFCFF);
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    max-width: auto;
+}
+
+.flex-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between
+}
+
+.sub-header {
+    font-size: 14px;
+    font-weight: 400;
+    color: grey;
+}
+
+:host  ::ng-deep .p-dialog {
+    max-height: 100% !important;
+    margin: 0rem !important;
+  }  
