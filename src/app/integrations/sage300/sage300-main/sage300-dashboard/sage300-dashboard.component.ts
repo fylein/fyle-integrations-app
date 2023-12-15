@@ -114,17 +114,14 @@ export class Sage300DashboardComponent implements OnInit {
       this.isLoading = false;
       const queuedTasks: Sage300AccountingExport[] = responses[2].results.filter((accountingExport: Sage300AccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS || accountingExport.status === AccountingExportStatus.EXPORT_QUEUED);
       this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: Sage300AccountingExport) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
-      console.log(queuedTasks.length);
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
         this.pollExportStatus();
       } else {
-        console.log('anish');
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
             this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_accounting_export_ids;
-            console.log(this.exportableAccountingExportIds);
             this.isImportInProgress = false;
           });
         });

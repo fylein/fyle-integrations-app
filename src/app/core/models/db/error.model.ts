@@ -14,22 +14,22 @@ export interface DestinationAttributeDetail {
   department_code?: string | null;
 }
 
+export interface Error {
+  id: number;
+  expense_attribute: ExpenseAttribute;
+  expense_group: AccountingExport;
+  type: AccountingErrorType;
+  is_resolved: boolean;
+  error_title: string;
+  error_detail: string;
+  created_at: Date;
+  updated_at: Date;
+  workspace: number;
+}
+
 export interface ErrorResponse extends PaginatedResponse {
   results: Error[];
 }
-
-export interface Error {
-    id: number;
-    expense_attribute: ExpenseAttribute;
-    expense_group: AccountingExport;
-    type: AccountingErrorType;
-    is_resolved: boolean;
-    error_title: string;
-    error_detail: string;
-    created_at: Date;
-    updated_at: Date;
-    workspace: number;
-  }
 
 export type ErrorStat = {
     resolvedCount: number;
