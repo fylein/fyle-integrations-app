@@ -52,7 +52,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  supportArticleLink: string = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.IMPORT_SETTING;
+  readonly supportArticleLink: string = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.IMPORT_SETTING;
 
   appName: string = AppName.BUSINESS_CENTRAL;
 
