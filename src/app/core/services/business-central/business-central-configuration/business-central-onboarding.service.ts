@@ -55,7 +55,7 @@ export class BusinessCentralOnboardingService {
         height: '18px',
         width: '15px'
       },
-      styleClasses: ['step-name-import--text', 'step-name-import--icon tw-pt-2-px tw-pl-4-px']
+      styleClasses: ['step-name-import--text', 'step-name-import--icon']
     },
     {
       active: false,
