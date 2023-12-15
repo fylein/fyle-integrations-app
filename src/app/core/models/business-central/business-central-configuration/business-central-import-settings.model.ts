@@ -22,8 +22,7 @@ export class BusinessCentralImportSettingsModel {
         const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsModel.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;
         return new FormGroup({
             importCategories: new FormControl(importSettings?.import_categories ?? false),
-            expenseFields: new FormArray(expenseFieldsArray),
-            importLocation: new FormControl(expenseFieldsArray.length > 0 ? true : false)
+            expenseFields: new FormArray(expenseFieldsArray)
         });
     }
 

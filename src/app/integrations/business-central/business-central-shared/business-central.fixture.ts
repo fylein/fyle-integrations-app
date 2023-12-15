@@ -67,5 +67,13 @@ export const businessCentralFieldsResponse: IntegrationField[] = [
     {
       "attribute_type": "LOCATION",
       "display_name": "Location"
+    },
+    {
+      "attribute_type": "CATEGORY",
+      "display_name": "Category"
+    },
+    {
+      "attribute_type": "Employee",
+      "display_name": "Employee"
     }
 ];

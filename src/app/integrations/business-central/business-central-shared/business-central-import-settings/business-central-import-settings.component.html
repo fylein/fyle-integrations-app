@@ -22,25 +22,14 @@
                         [iconPath]="'arrow-tail-up-down'">
                     </app-configuration-toggle-field>
                 </div>
-                
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-24-px tw-pb-24-px">
-                    <app-configuration-toggle-field 
-                        [form]="importSettingForm"
-                        [label]="'Import Location from Dynamics 365 Business Central'" 
-                        [subLabel]="'The imported Location from Dynamics 365 Business Central will be a selectable field while creating an expense.' " 
-                        [formControllerName]="'importLocation'"
-                        [isSectionHeader]="false"
-                        [iconPath]="'arrow_tail'">
-                    </app-configuration-toggle-field>
-                    <div *ngIf="importSettingForm.value.importLocation" class="tw-pl-14-px">
-                        <app-configuration-import-field 
-                            [form]="importSettingForm" 
-                            [appName]="appName" 
-                            [accountingFieldOptions]="businessCentralFields" 
-                            [fyleFieldOptions]="fyleFields"
-                            [isSingleDefaultImportField]="true">
-                        </app-configuration-import-field>
-                    </div>
+                <div>
+                    <app-configuration-import-field 
+                        [form]="importSettingForm" 
+                        [appName]="appName" 
+                        [accountingFieldOptions]="businessCentralFields" 
+                        [fyleFieldOptions]="fyleFields"
+                        [isDestinationFixedImport]="true">
+                    </app-configuration-import-field>
                 </div>
             </div>
             <div>

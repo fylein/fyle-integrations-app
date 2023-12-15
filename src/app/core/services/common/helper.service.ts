@@ -4,7 +4,7 @@ import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { AppUrl, ExpenseState, ProgressPhase, Sage300ExportType } from '../../models/enum/enum.model';
-import { AbstractControl, FormArray, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
@@ -79,6 +79,11 @@ export class HelperService {
   getExportType(exportType: string | null): string {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
+
+  getTitleCaseValue(value: string): string {
+    return new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(value));
+  }
+
 
   setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | AdvancedSettingValidatorRule, form: FormGroup) {
     const keys = Object.keys(validatorRule);

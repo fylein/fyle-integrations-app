@@ -6,6 +6,7 @@ import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.mode
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -14,7 +15,7 @@ import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-s
 })
 export class ConfigurationImportFieldComponent implements OnInit {
 
-  @Input() appName: string = 'Sage 300 CRE';
+  @Input() appName: string;
 
   @Input() form: FormGroup;
 
@@ -32,7 +33,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() dependentDestinationValue: string;
 
-  @Input() isSingleDefaultImportField: boolean = false;
+  @Input() isDestinationFixedImport: boolean = false;
 
   @Output() showWarningForDependentFields = new EventEmitter();
 
@@ -42,7 +43,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor() { }
+  constructor(
+    public helper: HelperService
+  ) { }
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
