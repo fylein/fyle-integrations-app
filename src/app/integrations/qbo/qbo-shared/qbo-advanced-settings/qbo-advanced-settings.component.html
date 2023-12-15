@@ -22,13 +22,14 @@
             </div>
             <div class="tw-mb-16-px">
                 <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
-                    <app-configuration-toggle-field 
+                    <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'Schedule automatic export'" 
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'" 
+                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calender'">
                     </app-configuration-toggle-field>
+
                     <div *ngIf="advancedSettingForm.value.exportSchedule">
                         <app-configuration-schedule-export
                             [form]="advancedSettingForm"
@@ -135,10 +136,10 @@
 
             <!-- TODO: Skip export test -->
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
-                <app-configuration-toggle-field 
+                <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'" 
-                    [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Online by setting up a conditional rule.'" 
+                    [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Online by setting up a conditional rule.'"
                     [formControllerName]="'skipExport'"
                     [iconPath]="'expense'"
                     [redirectLink]="skipExportRedirectLink">
