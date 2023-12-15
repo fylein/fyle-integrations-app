@@ -5,7 +5,7 @@ import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { AccountingErrorType, AppName, ExportErrorSourceType, MappingState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -83,7 +83,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.mappingService.getGroupedDestinationAttributes([this.destinationField])
     .subscribe(groupedDestinationResponse => {
       if (this.sourceField === 'EMPLOYEE') {
-        this.destinationOptions = this.destinationField ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
+        this.destinationOptions = this.destinationField === FyleField.EMPLOYEE ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
       } else if (this.sourceField === 'CATEGORY') {
         if (this.destinationField === 'EXPENSE_TYPE') {
           this.destinationOptions = groupedDestinationResponse.EXPENSE_TYPE;

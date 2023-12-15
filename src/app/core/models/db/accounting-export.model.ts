@@ -131,14 +131,15 @@ export class AccountingExportModel {
       return accountingExport.expenses[0].expense_number;
     } else if (referenceType === FyleReferenceType.PAYMENT) {
       return accountingExport.expenses[0].payment_number;
+    } else if (referenceType === FyleReferenceType.EXPENSE_REPORT) {
+      return accountingExport.expenses[0].claim_number;
     }
-    return '';
+    return accountingExport.expenses[0].claim_number;
   }
 
   static parseAPIResponseToExportLog(accountingExport: AccountingExport, exportLogService: ExportLogService): AccountingExportList {
     const referenceType = AccountingExportModel.getReferenceType(accountingExport.description);
     const referenceNumber = this.getFyleReferenceNumber(referenceType, accountingExport);
-
     return {
       exportedAt: accountingExport.exported_at,
       employee: [accountingExport.expenses[0].employee_name, accountingExport.description.employee_email],

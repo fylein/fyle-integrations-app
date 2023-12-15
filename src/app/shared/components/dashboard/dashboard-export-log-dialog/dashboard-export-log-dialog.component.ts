@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -20,6 +20,8 @@ export class DashboardExportLogDialogComponent implements OnInit {
 
   @Input() appName: AppName;
 
+  @Output() hideExportLogDialog = new EventEmitter<void>();
+
   constructor(
     private windowService: WindowService
   ) { }
@@ -27,6 +29,10 @@ export class DashboardExportLogDialogComponent implements OnInit {
   openUrl(event: any, url: string) {
     this.windowService.openInNewTab(url);
     event.stopPropagation();
+  }
+
+  handleDialogClose() {
+    this.hideExportLogDialog.emit();
   }
 
   ngOnInit(): void {

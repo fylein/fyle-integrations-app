@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { brandingConfig } from 'src/app/branding/branding-config';
+import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -17,6 +19,8 @@ export class ExportLogTableComponent implements OnInit {
   @Input() isExportLogTable: boolean;
 
   @Input() isDashboardFailed: boolean;
+
+  brandingConfig: BrandingConfiguration = brandingConfig;
 
   visible: boolean = false;
 

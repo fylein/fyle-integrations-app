@@ -29,6 +29,8 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() destinationOptions: DestinationAttribute[];
 
+  isMappingLoading: boolean = true;
+
   appName: AppName = AppName.SAGE300;
 
   isInitialSetupComplete: boolean = false;
@@ -77,12 +79,12 @@ export class GenericMappingV2Component implements OnInit {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = mappingResponse.count;
-      this.isLoading = false;
+      this.isMappingLoading = false;
     });
   }
 
   pageSizeChanges(limit: number): void {
-    this.isLoading = true;
+    this.isMappingLoading = true;
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.MAPPING, limit);
     }
@@ -93,14 +95,14 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   pageOffsetChanges(offset: number): void {
-    this.isLoading = true;
+    this.isMappingLoading = true;
     this.offset = offset;
     this.currentPage = Math.ceil(this.offset / this.limit)+1;
     this.getFilteredMappings();
   }
 
   mappingStateFilter(state: MappingState): void {
-    this.isLoading = true;
+    this.isMappingLoading = true;
     this.selectedMappingFilter = state;
     this.currentPage = 1;
     this.offset = 0;
@@ -119,7 +121,7 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   mappingFilterUpdate(alphabet: string) {
-    this.isLoading = true;
+    this.isMappingLoading = true;
     this.alphabetFilter = alphabet;
     this.currentPage = 1;
     this.offset = 0;
@@ -130,7 +132,7 @@ export class GenericMappingV2Component implements OnInit {
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
     this.limit = paginator.limit;
     this.offset = paginator.offset;
-    this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
+    this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
     forkJoin([
       this.mappingService.getGenericMappingsV2(10, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField),
       this.mappingService.getMappingStats(this.sourceField, this.destinationField, 'SAGE300')
@@ -144,7 +146,7 @@ export class GenericMappingV2Component implements OnInit {
         this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
         this.isInitialSetupComplete = true;
-        this.isLoading = false;
+        this.isMappingLoading = false;
       }
     );
   }
