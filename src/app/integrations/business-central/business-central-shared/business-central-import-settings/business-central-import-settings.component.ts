@@ -153,7 +153,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     this.importSettingWatcher();
   }
 
-  constructPayloadAndSave() {
+  private constructPayloadAndSave() {
     this.isSaveInProgress = true;
     const importSettingPayload = BusinessCentralImportSettingsModel.createImportSettingPayload(this.importSettingForm);
     this.importSettingService.postBusinessCentralImportSettings(importSettingPayload).subscribe((importSettingsResponse: BusinessCentralImportSettingsGet) => {
