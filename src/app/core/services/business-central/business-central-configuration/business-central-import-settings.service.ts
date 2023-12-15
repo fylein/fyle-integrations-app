@@ -33,7 +33,7 @@ export class BusinessCentralImportSettingsService {
   @CacheBuster({
     cacheBusterNotifier: businessCentralImportSettingGetCache$
   })
-  postImportSettings(importSettingsPayload: BusinessCentralImportSettingsPost): Observable<BusinessCentralImportSettingsGet> {
+  postBusinessCentralImportSettings(importSettingsPayload: BusinessCentralImportSettingsPost): Observable<BusinessCentralImportSettingsGet> {
     return this.apiService.put(`/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
   }
 

@@ -2,6 +2,13 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { RxwebValidators } from "@rxweb/reactive-form-validators";
 import { BusinessCentralImportSettingsGet } from "../business-central/business-central-configuration/business-central-import-settings.model";
 import { IntegrationField } from "../db/mapping.model";
+import { Sage300ImportSettingGet } from "../sage300/sage300-configuration/sage300-import-settings.model";
+
+export type ImportDefaultField = {
+  destination_field: string,
+  source_field: string,
+  formController: string
+}
 
 export type ExpenseField = {
     attribute_type: string;
@@ -45,14 +52,14 @@ export class ImportSettingsModel {
     });
   }
 
-  static constructFormArray(importSettings: null | BusinessCentralImportSettingsGet, accountingAppFields: IntegrationField[]): FormGroup[] {
+  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] | [], accountingAppFields: IntegrationField[]): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();
 
     // First loop to populate mappedFieldMap
     accountingAppFields.forEach((accountingAppField) => {
-      const mappingSetting = importSettings?.mapping_settings.find(
+      const mappingSetting = importSettingsMappingSettings.find(
         (setting) => setting.destination_field === accountingAppField.attribute_type
       );
 

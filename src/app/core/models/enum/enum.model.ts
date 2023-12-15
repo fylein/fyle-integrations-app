@@ -445,7 +445,8 @@ export enum QBDOnboardingState {
     CATEGORY = 'CATEGORY',
     ACCOUNT = 'ACCOUNT',
     VENDOR = 'VENDOR',
-    MERCHANTS = 'MERCHANTS'
+    MERCHANTS = 'MERCHANTS',
+    LOCATION = 'LOCATION'
   }
 
   export enum AccountingExportStatus {
