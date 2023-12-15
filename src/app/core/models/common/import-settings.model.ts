@@ -4,7 +4,7 @@ import { BusinessCentralImportSettingsGet } from "../business-central/business-c
 import { IntegrationField } from "../db/mapping.model";
 import { Sage300ImportSettingGet } from "../sage300/sage300-configuration/sage300-import-settings.model";
 
-export type AccountingAppDefaultFields = {
+export type ImportDefaultField = {
   destination_field: string,
   source_field: string,
   formController: string
