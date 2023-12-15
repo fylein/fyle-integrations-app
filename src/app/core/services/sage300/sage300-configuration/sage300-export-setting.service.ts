@@ -62,10 +62,6 @@ export class Sage300ExportSettingService {
   getCCCExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: 'Created At',
-        value: Sage300ExpenseDate.CREATED_AT
-      },
-      {
         label: 'Card Transaction Post date',
         value: Sage300ExpenseDate.POSTED_AT
       },
@@ -79,8 +75,8 @@ export class Sage300ExportSettingService {
   getReimbursableExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: 'Created At',
-        value: Sage300ExpenseDate.CREATED_AT
+        label: 'Current Date',
+        value: Sage300ExpenseDate.CURRENT_DATE
       },
       {
         label: 'Spent Date',
