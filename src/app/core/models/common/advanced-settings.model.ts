@@ -99,6 +99,17 @@ export class AdvancedSettingsModel {
     return memoPreviewText;
   }
 
+  static filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOption[]) => {
+    const adminEmailsList: EmailOption[] = [];
+    for (const email of emailToSearch) {
+      adminEmails.find(item => (item.email === email ? adminEmailsList.push(item) : null));
+    }
+    return adminEmailsList;
+};
+
+  static formatSelectedEmails(emails: EmailOption[]): string[] {
+    return emails.map((option: EmailOption) => option.email);
+  }
 }
 
 export class SkipExportModel {
