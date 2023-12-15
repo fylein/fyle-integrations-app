@@ -205,7 +205,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
       });
   }
 
