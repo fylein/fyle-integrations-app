@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
-import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload, AdvancedSettingValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
+import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
 import { AppName, ConfigurationCta, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -137,7 +137,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
   formWatchers() {
     this.skipExportWatcher();
     this.createMemoStructureWatcher();
-    const skipExportFormWatcherFields: AdvancedSettingValidatorRule = {
+    const skipExportFormWatcherFields: SkipExportValidatorRule = {
       condition1: ['operator1', 'value1'],
       condition2: ['operator2', 'value2'],
       operator1: ['value1'],
@@ -205,7 +205,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving export settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
       });
   }
 

@@ -81,7 +81,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     private exportSettingService: BusinessCentralExportSettingsService,
     private router: Router,
     private mappingService: MappingService,
-    private helperService: BusinessCentralHelperService,
+    private helperService: HelperService,
+    private businessCentralHelperService: BusinessCentralHelperService,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
@@ -134,12 +135,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   }
 
   refreshDimensions(isRefresh: boolean): void{
-    this.helperService.importAttributes(isRefresh);
-  }
-
-  addFormValidator(): void {
-    this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
-    this.exportSettingForm.controls.creditCardExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
+    this.businessCentralHelperService.importAttributes(isRefresh);
   }
 
   private setupPage(): void {
@@ -163,13 +159,13 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     ];
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT])
+      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT], 'v2')
     ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
       this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
-      this.addFormValidator();
+      this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
-      this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
+      this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
       this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
       this.bankOptions = destinationAttributes.ACCOUNT;
       this.isLoading = false;

@@ -32,7 +32,7 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
   }
 
-  getDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<any> {
+  getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean): Observable<any> {
     const params: {attribute_type__in: string | string[], account_type?: string, active?: boolean} = {
       attribute_type__in: attributeTypes
     };
@@ -44,11 +44,15 @@ export class MappingService {
       params.active = active;
     }
 
+    if (version === 'v1') {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/${apiPath}/destination_attributes/`, params);
+    }
+
     return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/destination_attributes/`, params);
   }
 
-  getGroupedDestinationAttributes(attributeTypes: string[]): Observable<GroupedDestinationAttribute> {
-    return from(this.getDestinationAttributes(attributeTypes).toPromise().then((response: any | undefined) => {
+  getGroupedDestinationAttributes(attributeTypes: string[], version: 'v1' | 'v2', apiPath?: string): Observable<GroupedDestinationAttribute> {
+    return from(this.getDestinationAttributes(attributeTypes, version, apiPath).toPromise().then((response: any | undefined) => {
       return response?.reduce((groupedAttributes: any, attribute: any) => {
         const group: any = groupedAttributes[attribute.attribute_type] || [];
         group.push(attribute);
@@ -62,7 +66,10 @@ export class MappingService {
         EMPLOYEE: [],
         CHARGE_CARD_NUMBER: [],
         TAX_DETAIL: [],
-        JOB: []
+        JOB: [],
+        BANK_ACCOUNT: [],
+        CREDIT_CARD_ACCOUNT: [],
+        ACCOUNTS_PAYABLE: []
       });
     }));
   }

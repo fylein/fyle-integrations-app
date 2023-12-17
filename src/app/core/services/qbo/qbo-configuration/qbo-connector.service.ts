@@ -5,6 +5,8 @@ import { QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
+import { HelperService } from '../../common/helper.service';
+import { AppUrl } from 'src/app/core/models/enum/enum.model';
 
 const qboCredentialsCache$ = new Subject<void>();
 
@@ -17,8 +19,11 @@ export class QboConnectorService {
 
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService
-  ) { }
+    private workspaceService: WorkspaceService,
+    private helperService: HelperService
+  ) {
+    helperService.setBaseApiURL(AppUrl.QBO);
+  }
 
   @CacheBuster({
     cacheBusterNotifier: qboCredentialsCache$

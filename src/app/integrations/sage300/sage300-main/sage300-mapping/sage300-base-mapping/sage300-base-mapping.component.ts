@@ -66,7 +66,7 @@ export class Sage300BaseMappingComponent implements OnInit {
       this.showAutoMapEmployee = response.auto_map_employees ? true : false;
 
       this.destinationField = this.getSourceType();
-      this.mappingService.getGroupedDestinationAttributes([this.destinationField]).subscribe((response: any) => {
+      this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe((response: any) => {
         if (this.sourceField===FyleField.EMPLOYEE) {
           this.destinationOptions = this.destinationField===FyleField.EMPLOYEE ? response.EMPLOYEE : response.VENDOR;
         }

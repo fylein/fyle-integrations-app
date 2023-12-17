@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { Observable, Subject } from 'rxjs';
-import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
+import { BusinessCentralExportSettingGet, BusinessCentralExportSettingPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
 import { HelperService } from '../../common/helper.service';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { BusinessCentralDestinationAttributes } from 'src/app/core/models/business-central/db/business-central-destination-attribute.model';
-import { BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType } from 'src/app/core/models/enum/enum.model';
 
 const businessCentralExportSettingCache$ = new Subject<void>();
 

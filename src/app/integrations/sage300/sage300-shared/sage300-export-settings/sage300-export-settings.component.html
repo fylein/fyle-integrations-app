@@ -40,6 +40,19 @@
                             [exportTypeIconPathArray]="previewImagePaths"
                             [isDisabled]="true">
                         </app-configuration-select-field>
+                        <div *ngIf="exportSettingForm.value.reimbursableExportType===Sage300ExportType.PURCHASE_INVOICE">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Default Vendor Name'"
+                                [label]="'Set the Default Vendor as?'"
+                                [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the vendor selected here.'"
+                                [destinationAttributes]="vendorOptions"
+                                [iconPath]="'expense'"
+                                [placeholder]="'Select default vendor'"
+                                [formControllerName]="'defaultVendorName'">
+                            </app-configuration-select-field>
+                        </div>
                         <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -178,7 +191,7 @@
                                 </app-configuration-select-field>
                             </div>
                         </div>
-                        <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE">
+                        <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE && exportSettingForm.value.reimbursableExportType!==Sage300ExportType.PURCHASE_INVOICE">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"

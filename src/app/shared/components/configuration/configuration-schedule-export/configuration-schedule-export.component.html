@@ -12,15 +12,19 @@
         <div>
             <div class="tw-pl-30-px tw-flex tw-justify-end tw-items-end">
                 <div class="tw-flex">
-                    <p-dropdown appendTo="body" [options]="options" class="dropdown-size-schedule" 
-                        [formControlName]="formControllerName" [placeholder]="placeholder"
+                    <p-dropdown
+                        class="dropdown-size-schedule"
+                        appendTo="body"
+                        [options]="options"
+                        [formControlName]="formControllerName"
+                        [placeholder]="placeholder"
+                        [autoDisplayFirst]="false"
                         [ngClass]="{
                             'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
                             'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
                             'selectedItem': form.controls[formControllerName].value,
                             'filterDropdown': !form.controls[formControllerName].value
-                        }"
-                        >
+                        }">
                         <ng-template let-option pTemplate="item">
                             <div #textElement 
                                 [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
@@ -33,12 +37,12 @@
                                 <span>
                                     {{ item.label }}
                                 </span>
-                                <i class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                                <i class="pi pi-chevron-down"></i>
                             </div>
                         </ng-template>
                     </p-dropdown>
                     <div class="tw-ml-16-px">
-                        <input type="text" class="tw-border-box-color !tw-w-100-px !tw-h-40-px !tw-bg-disabled-bg-color tw-text-slightly-normal-text-color" pInputText disabled value="Hours">
+                        <input type="text" class="tw-border-box-color !tw-w-100-px !tw-h-40-px !tw-bg-disabled-bg-color tw-text-slightly-normal-text-color" pInputText disabled [value]="form.value[formControllerName] > 1 ? 'Hours' : 'Hour'">
                     </div>
                 </div>
             </div>

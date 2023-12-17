@@ -32,6 +32,7 @@ export type KbArticle = {
                 EXPORT_SETTING: string;
                 IMPORT_SETTING: string;
                 ADVANCED_SETTING: string;
+                SKIP_EXPORT: string;
             }
             BUSINESS_CENTRAL: {
                 IMPORT_SETTING: string;

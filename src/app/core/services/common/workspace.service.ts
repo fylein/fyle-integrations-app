@@ -66,4 +66,8 @@ export class WorkspaceService {
   getConfiguration(): any {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }
+
+  getWorkspaceGeneralSettings(): Observable<any> {
+    return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
+  }
 }

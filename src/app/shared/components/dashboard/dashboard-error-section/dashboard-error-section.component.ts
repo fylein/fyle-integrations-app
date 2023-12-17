@@ -78,9 +78,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   private getOptions(errorType: AccountingErrorType) {
-    const groupedDestinationAttributes$ = this.mappingService.getGroupedDestinationAttributes([this.destinationField]);
-
-    this.mappingService.getGroupedDestinationAttributes([this.destinationField])
+    this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2')
     .subscribe(groupedDestinationResponse => {
       if (this.sourceField === 'EMPLOYEE') {
         this.destinationOptions = this.destinationField === FyleField.EMPLOYEE ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;

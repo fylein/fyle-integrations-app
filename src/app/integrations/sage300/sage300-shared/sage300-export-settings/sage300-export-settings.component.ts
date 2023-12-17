@@ -77,7 +77,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
   constructor(
     private exportSettingService: Sage300ExportSettingService,
     private router: Router,
-    private helperService: Sage300HelperService,
+    private helperService: HelperService,
+    private sage300HelperService: Sage300HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
@@ -86,12 +87,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
-    this.helperService.importAttributes(isRefresh);
-  }
-
-  addFormValidator(): void {
-    this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
-    this.exportSettingForm.controls.creditCardExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
+    this.sage300HelperService.importAttributes(isRefresh);
   }
 
   private constructPayloadAndSave(): void {
@@ -143,7 +139,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
       {
         'formController': 'reimbursableExportType',
         'requiredValue': {
-          'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName', 'defaultJobName']
+          'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName', 'defaultJobName'],
+          'PURCHASE_INVOICE': ['defaultVendorName']
         }
       },
       {
@@ -156,16 +153,16 @@ export class Sage300ExportSettingsComponent implements OnInit {
     ];
     forkJoin([
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT, Sage300Field.JOB])
+      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT, Sage300Field.JOB], 'v2')
     ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
       this.vendorOptions = destinationAttributes.VENDOR;
       this.creditCardAccountOptions = this.debitCardAccountOptions = destinationAttributes.ACCOUNT;
       this.sage300Jobs = destinationAttributes.JOB;
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.sage300Jobs);
-      this.addFormValidator();
+      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, destinationAttributes );
+      this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
-      this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
+      this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
       this.isLoading = false;
     });
   }
