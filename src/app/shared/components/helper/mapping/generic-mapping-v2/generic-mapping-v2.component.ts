@@ -29,8 +29,6 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() destinationOptions: DestinationAttribute[];
 
-  isMappingLoading: boolean = true;
-
   appName: AppName = AppName.SAGE300;
 
   isInitialSetupComplete: boolean = false;
@@ -79,12 +77,12 @@ export class GenericMappingV2Component implements OnInit {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = mappingResponse.count;
-      this.isMappingLoading = false;
+      this.isLoading = false;
     });
   }
 
   pageSizeChanges(limit: number): void {
-    this.isMappingLoading = true;
+    this.isLoading = true;
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.MAPPING, limit);
     }
@@ -95,14 +93,14 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   pageOffsetChanges(offset: number): void {
-    this.isMappingLoading = true;
+    this.isLoading = true;
     this.offset = offset;
     this.currentPage = Math.ceil(this.offset / this.limit)+1;
     this.getFilteredMappings();
   }
 
   mappingStateFilter(state: MappingState): void {
-    this.isMappingLoading = true;
+    this.isLoading = true;
     this.selectedMappingFilter = state;
     this.currentPage = 1;
     this.offset = 0;
@@ -121,7 +119,7 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   mappingFilterUpdate(alphabet: string) {
-    this.isMappingLoading = true;
+    this.isLoading = true;
     this.alphabetFilter = alphabet;
     this.currentPage = 1;
     this.offset = 0;
@@ -146,7 +144,7 @@ export class GenericMappingV2Component implements OnInit {
         this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
         this.isInitialSetupComplete = true;
-        this.isMappingLoading = false;
+        this.isLoading = false;
       }
     );
   }
