@@ -3,17 +3,17 @@ import { SelectFormOption } from "../../common/select-form-option.model";
 import { brandingConfig } from "src/app/branding/branding-config";
 import { FormGroup } from "@angular/forms";
 
-export type EmployeeSettingWorkspaceGeneralSetting = {
+export type QBOEmployeeSettingWorkspaceGeneralSetting = {
   employee_field_mapping: FyleField,
   auto_map_employees: AutoMapEmployeeOptions
 }
 
-export type EmployeeSettingPost = {
-  workspace_general_settings: EmployeeSettingWorkspaceGeneralSetting;
+export type QBOEmployeeSettingPost = {
+  workspace_general_settings: QBOEmployeeSettingWorkspaceGeneralSetting;
 }
 
-export type EmployeeSettingGet = {
-  workspace_general_settings: EmployeeSettingWorkspaceGeneralSetting,
+export type QBOEmployeeSettingGet = {
+  workspace_general_settings: QBOEmployeeSettingWorkspaceGeneralSetting,
   workspace_id: number
 }
 
@@ -35,8 +35,8 @@ export class QBOEmployeeSettingModel {
       ];
 }
 
-static constructPayload(employeeSettingsForm: FormGroup): EmployeeSettingPost {
-    const employeeSettingPayload: EmployeeSettingPost = {
+static constructPayload(employeeSettingsForm: FormGroup): QBOEmployeeSettingPost {
+    const employeeSettingPayload: QBOEmployeeSettingPost = {
       workspace_general_settings: {
         employee_field_mapping: employeeSettingsForm.get('employeeMapping')?.value,
         auto_map_employees: employeeSettingsForm.get('autoMapEmployee')?.value

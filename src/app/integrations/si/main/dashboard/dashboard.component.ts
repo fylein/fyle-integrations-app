@@ -4,7 +4,7 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
-import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
+import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';

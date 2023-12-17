@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin, catchError, of } from 'rxjs';
-import { AdvancedSettingValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, skipExportValidator, AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
+import { SkipExportValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, skipExportValidator, AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { BusinessCentralAdvancedSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-advanced-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -13,7 +13,6 @@ import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsMode
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { businessCentralAdvancedSettingResponse, expenseFilterCondition, expenseFiltersGet } from '../business-central.fixture';
 
 @Component({
   selector: 'app-business-central-advanced-settings',
@@ -99,7 +98,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
   formWatchers() {
     this.skipExportWatcher();
     this.createMemoStructureWatcher();
-    const skipExportFormWatcherFields: AdvancedSettingValidatorRule = {
+    const skipExportFormWatcherFields: SkipExportValidatorRule = {
       condition1: ['operator1', 'value1'],
       condition2: ['operator2', 'value2'],
       operator1: ['value1'],

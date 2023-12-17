@@ -16,6 +16,7 @@ import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destinati
 import { Configuration } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
+import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 
 @Component({
   selector: 'app-configuration-advanced-settings',
@@ -181,16 +182,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
 
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
     const findObjectByDestinationId = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
-    const filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOptions[]) => {
-      const adminEmailsList: EmailOptions[] = [];
-      for (const email of emailToSearch) {
-        adminEmails.find(item => (item.email === email ? adminEmailsList.push(item) : null));
-      }
-      return adminEmailsList;
-    };
     this.advancedSettingsForm = this.formBuilder.group({
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
-      email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
+      email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
       search: [],
       autoSyncPayments: [this.getPaymentSyncConfiguration(this.advancedSettings.configurations)],
       autoCreateEmployeeVendor: [this.advancedSettings.configurations.auto_create_destination_entity],
