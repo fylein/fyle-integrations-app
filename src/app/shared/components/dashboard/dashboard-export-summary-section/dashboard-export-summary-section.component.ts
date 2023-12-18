@@ -17,6 +17,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   @Input() appName: AppName;
 
+  @Input() accountingExportType: string[];
+
   filteredAccountingExports: AccountingExportList[] = [];
 
   accountingExports: AccountingExportList[];
@@ -46,7 +48,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     if (this.accountingExportSummary) {
       this.selectedDateFilter = {startDate: new Date(this.accountingExportSummary.last_exported_at), endDate: new Date};
 
-      this.accountingExportService.getAccountingExports([status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+      this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
           const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
             AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
           );
