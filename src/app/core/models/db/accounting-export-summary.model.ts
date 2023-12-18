@@ -24,6 +24,6 @@ export class AccountingExportSummaryModel {
             created_at: response.created_at,
             updated_at: response.updated_at,
             workspace: response.workspace
-        }
+        };
     }
 }
