@@ -13,15 +13,13 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 })
 export class DashboardExportSummarySectionComponent implements OnInit {
 
-  @Input() accountingExportSummary: AccountingExportSummary;
+  @Input() accountingExportSummary: AccountingExportSummary | null;
 
   @Input() appName: AppName;
 
-  filteredAccountingExports: AccountingExportList[];
+  filteredAccountingExports: AccountingExportList[] = [];
 
   accountingExports: AccountingExportList[];
-
-  isLoading: boolean;
 
   exportLogHeader: string;
 
@@ -40,18 +38,22 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     private exportLogService: ExportLogService
   ) { }
 
-  getAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
-    this.isLoading = true;
-    this.selectedDateFilter = {startDate: new Date(this.accountingExportSummary.last_exported_at), endDate: new Date};
+  handleDialogClose(){
+    this.isExportLogVisible = false;
+  }
 
-    this.accountingExportService.getAccountingExports([status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
-        );
-        this.filteredAccountingExports = accountingExports;
-        this.accountingExports = [...this.filteredAccountingExports];
-        this.isLoading = false;
-      });
+  getAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
+    if (this.accountingExportSummary) {
+      this.selectedDateFilter = {startDate: new Date(this.accountingExportSummary.last_exported_at), endDate: new Date};
+
+      this.accountingExportService.getAccountingExports([status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+          const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
+            AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
+          );
+          this.filteredAccountingExports = accountingExports;
+          this.accountingExports = [...this.filteredAccountingExports];
+        });
+    }
   }
 
   showExportLog(status: AccountingExportStatus) {

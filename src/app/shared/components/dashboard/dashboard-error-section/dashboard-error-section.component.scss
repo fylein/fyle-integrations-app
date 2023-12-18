@@ -1,0 +1,30 @@
+.container {
+    @apply tw-justify-center;
+}
+
+.inside-container {
+    @apply tw-border-r-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
+    border: 1px solid var(--grayscale-light-border, #ECECEE);
+    max-width: auto;
+}
+
+.sub-text-container {
+    @apply tw-border-r-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
+    border: 1px solid var(--grayscale-light-border, #ECECEE);
+    background: var(--grayscale-background, #FAFCFF);
+    max-width: auto;
+}
+
+.flex-wrapper {
+    @apply tw-flex tw-items-start tw-justify-between;
+}
+
+.sub-header {
+    @apply tw-text-14-px tw-font-400;
+    color: grey;
+}
+
+:host  ::ng-deep .p-dialog {
+    max-height: 100% !important;
+    margin: 0rem !important;
+  }  
