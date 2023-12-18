@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AccountingField, EmployeeFieldMapping, FyleField, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
+import { AccountingField, AppName, FyleField, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -29,6 +31,8 @@ export class QboBaseMappingComponent implements OnInit {
 
   cccExpenseObject: QBOCorporateCreditCardExpensesObject | null;
 
+  AppName = AppName;
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
@@ -39,28 +43,30 @@ export class QboBaseMappingComponent implements OnInit {
     // TODO
   }
 
-  private getDestinationField(workspaceGeneralSetting: QBOWorkspaceGeneralSetting): string {
+  private getDestinationField(workspaceGeneralSetting: QBOWorkspaceGeneralSetting, mappingSettings: MappingSetting[]): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return workspaceGeneralSetting.employee_field_mapping;
-    }
-
-    if (this.sourceField === FyleField.CATEGORY) {
+    } else if (this.sourceField === FyleField.CATEGORY) {
       return AccountingField.ACCOUNT;
     }
 
-    return '';
+    return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
   }
 
   private setupPage(): void {
-    this.sourceField = this.route.snapshot.params.source_field;
-    this.workspaceService.getWorkspaceGeneralSettings().subscribe((response: QBOWorkspaceGeneralSetting) => {
-      this.reimbursableExpenseObject = response.reimbursable_expenses_object;
-      this.cccExpenseObject = response.corporate_credit_card_expenses_object;
-      this.showAutoMapEmployee = response.auto_map_employees ? true : false;
+    this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
+    forkJoin([
+      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.mappingService.getMappingSettings()
+    ]).subscribe((responses) => {
+      this.reimbursableExpenseObject = responses[0].reimbursable_expenses_object;
+      this.cccExpenseObject = responses[0].corporate_credit_card_expenses_object;
+      this.employeeFieldMapping = (responses[0].employee_field_mapping as unknown as FyleField);
+      this.showAutoMapEmployee = responses[0].auto_map_employees ? true : false;
 
-      this.destinationField = this.getDestinationField(response);
+      this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
-      this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined, true).subscribe((response: any) => {
+      this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined).subscribe((response: any) => {
         this.destinationOptions = response;
         this.isLoading = false;
       });

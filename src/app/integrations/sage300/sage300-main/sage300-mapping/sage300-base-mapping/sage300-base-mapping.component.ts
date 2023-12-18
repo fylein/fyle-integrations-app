@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { FyleField, IntegrationName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, FyleField, IntegrationName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 
@@ -27,6 +27,8 @@ export class Sage300BaseMappingComponent implements OnInit {
   employeeFieldMapping: FyleField = FyleField.VENDOR;
 
   destinationOptions: DestinationAttribute[];
+
+  AppName = AppName;
 
   constructor(
     private route: ActivatedRoute,
