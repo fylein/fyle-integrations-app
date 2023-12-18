@@ -32,7 +32,7 @@ export class QboBaseMappingComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
-    private workspaceService: WorkspaceService,
+    private workspaceService: WorkspaceService
   ) { }
 
   triggerAutoMapEmployees(): void {
