@@ -105,7 +105,7 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   decrementUnmappedCountIfNeeded(mapping: any): void {
-    if (!mapping?.length) {
+    if (!mapping?.length && !this.isDashboardMappingResolve) {
       this.mappingStats.unmapped_attributes_count -= 1;
     }
   }

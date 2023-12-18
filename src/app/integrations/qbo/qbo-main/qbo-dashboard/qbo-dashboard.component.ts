@@ -3,7 +3,7 @@ import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWh
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AppName, QBOTaskLogType, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName, AppUrl, QBOTaskLogType, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { QBOTaskLog, QBOTaskResponse } from 'src/app/core/models/qbo/db/qbo-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -49,6 +49,8 @@ export class QboDashboardComponent implements OnInit {
 
   accountingExportType: QBOTaskLogType[] = [QBOTaskLogType.FETCHING_EXPENSE, QBOTaskLogType.CREATING_BILL, QBOTaskLogType.CREATING_EXPENSE, QBOTaskLogType.CREATING_CHECK, QBOTaskLogType.CREATING_CREDIT_CARD_PURCHASE, QBOTaskLogType.CREATING_JOURNAL_ENTRY, QBOTaskLogType.CREATING_CREDIT_CARD_CREDIT, QBOTaskLogType.CREATING_DEBIT_CARD_EXPENSE];
 
+  AppUrl = AppUrl;
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
@@ -64,7 +66,7 @@ export class QboDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType))),
+      switchMap(() => from(this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], exportableAccountingExportIds, this.accountingExportType))),
       takeWhile((response: QBOTaskResponse) =>
         response.results.filter(task =>
           (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
