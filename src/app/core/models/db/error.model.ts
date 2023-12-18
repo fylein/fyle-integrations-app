@@ -2,6 +2,7 @@ import { AccountingErrorType } from "../enum/enum.model";
 import { AccountingExport } from "./accounting-export.model";
 import { ExpenseAttribute } from "./expense-attribute.model";
 import { ExtendedGenericMapping } from "./extended-generic-mapping.model";
+import { PaginatedResponse } from "./paginated-response.model";
 
 export interface DestinationAttributeDetail {
   user_id?: string;
@@ -14,17 +15,21 @@ export interface DestinationAttributeDetail {
 }
 
 export interface Error {
-    id: number;
-    expense_attribute: ExpenseAttribute;
-    expense_group: AccountingExport;
-    type: AccountingErrorType;
-    is_resolved: boolean;
-    error_title: string;
-    error_detail: string;
-    created_at: Date;
-    updated_at: Date;
-    workspace: number;
-  }
+  id: number;
+  expense_attribute: ExpenseAttribute;
+  expense_group: AccountingExport;
+  type: AccountingErrorType;
+  is_resolved: boolean;
+  error_title: string;
+  error_detail: string;
+  created_at: Date;
+  updated_at: Date;
+  workspace: number;
+}
+
+export interface ErrorResponse extends PaginatedResponse {
+  results: Error[];
+}
 
 export type ErrorStat = {
     resolvedCount: number;

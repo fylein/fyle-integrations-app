@@ -1,6 +1,7 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption, CorporateCreditCardExpensesObject } from "../../enum/enum.model";
 import { Sage300DestinationAttributes } from "../db/sage300-destination-attribuite.model";
+import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
 
 export type Sage300ExportSettingFormOption = {
     label: string,
@@ -49,7 +50,7 @@ export interface Sage300ExportSettingPost extends Sage300ExportSetting {}
 
 export class ExportSettingModel {
 
-  static mapAPIResponseToFormGroup(exportSettings: Sage300ExportSettingGet | null, jobDestinationAttribute: Sage300DestinationAttributes[]): FormGroup {
+  static mapAPIResponseToFormGroup(exportSettings: Sage300ExportSettingGet | null, destinationAttribute: GroupedDestinationAttribute): FormGroup {
     const findObjectByDestinationId = (array: Sage300DestinationAttributes[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
       reimbursableExpense: new FormControl(exportSettings?.reimbursable_expenses_export_type ? true : false),
@@ -63,10 +64,10 @@ export class ExportSettingModel {
       cccExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
       cccExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : null),
       cccExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by: null),
-      defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_credit_card_account_name ? exportSettings?.default_ccc_credit_card_account_name : null),
-      defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? exportSettings?.default_vendor_name : null),
-      defaultDebitCardAccountName: new FormControl(exportSettings?.default_debit_card_account_name ? exportSettings?.default_debit_card_account_name : null),
-      defaultJobName: new FormControl(exportSettings?.default_job_name ? findObjectByDestinationId(jobDestinationAttribute, exportSettings?.default_job_id) : null)
+      defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_credit_card_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_ccc_credit_card_account_id) : null),
+      defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? findObjectByDestinationId(destinationAttribute.VENDOR, exportSettings?.default_vendor_id) : null),
+      defaultDebitCardAccountName: new FormControl(exportSettings?.default_debit_card_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_debit_card_account_id) : null),
+      defaultJobName: new FormControl(exportSettings?.default_job_name ? findObjectByDestinationId(destinationAttribute.JOB, exportSettings?.default_job_id) : null)
     });
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable } from 'rxjs';
-import { Error } from '../../models/db/error.model';
+import { Error, ErrorResponse } from '../../models/db/error.model';
 import { HelperService } from './helper.service';
 import { ExportableAccountingExport } from '../../models/db/accounting-export.model';
 
@@ -29,7 +29,7 @@ export class DashboardService {
     return this.apiService.post(`/workspaces/${this.workspaceId}/exports/trigger/`, {});
   }
 
-  getExportErrors(): Observable<Error[]> {
+  getExportErrors(): Observable<ErrorResponse> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/errors/`, {is_resolved: false});
   }
 }

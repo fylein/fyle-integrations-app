@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
-import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/error.model';
+import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, FyleField, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
@@ -17,11 +17,11 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 })
 export class Sage300DashboardComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   appName: AppName = AppName.SAGE300;
 
-  isImportInProgress: boolean;
+  isImportInProgress: boolean = true;
 
   isExportInProgress: boolean = false;
 
@@ -31,7 +31,7 @@ export class Sage300DashboardComponent implements OnInit {
 
   exportProgressPercentage: number = 0;
 
-  accountingExportSummary: AccountingExportSummary;
+  accountingExportSummary: AccountingExportSummary | null;
 
   processedCount: number = 0;
 
@@ -47,7 +47,7 @@ export class Sage300DashboardComponent implements OnInit {
     [AccountingErrorType.CATEGORY_MAPPING]: null
   };
 
-  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
+  getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors();
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary();
 
@@ -70,18 +70,16 @@ export class Sage300DashboardComponent implements OnInit {
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
       if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
-        this.isLoading = true;
         forkJoin([
           this.getExportErrors$,
           this.getAccountingExportSummary$
         ]).subscribe(responses => {
-          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
           this.groupedErrorStat = {
             EMPLOYEE_MAPPING: null,
             CATEGORY_MAPPING: null
           };
           this.accountingExportSummary = responses[1];
-          this.isLoading = false;
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
@@ -108,15 +106,14 @@ export class Sage300DashboardComponent implements OnInit {
   private setupPage(): void {
     forkJoin([
       this.getExportErrors$,
-      this.getAccountingExportSummary$,
+      this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.accountingExportService.getAccountingExports([AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0)
     ]).subscribe((responses) => {
-      this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+      this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.accountingExportSummary = responses[1];
-
+      this.isLoading = false;
       const queuedTasks: Sage300AccountingExport[] = responses[2].results.filter((accountingExport: Sage300AccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS || accountingExport.status === AccountingExportStatus.EXPORT_QUEUED);
       this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: Sage300AccountingExport) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
-
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
@@ -124,12 +121,11 @@ export class Sage300DashboardComponent implements OnInit {
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.accounting_export_ids;
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_accounting_export_ids;
             this.isImportInProgress = false;
           });
         });
       }
-      this.isLoading = false;
     });
   }
 
