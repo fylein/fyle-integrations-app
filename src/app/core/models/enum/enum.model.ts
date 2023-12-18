@@ -459,18 +459,19 @@ export enum Sage300ExportType {
   DIRECT_COST = 'DIRECT_COST'
 }
 
-export enum Sage300ExpenseDate {
-  LAST_SPENT_AT = 'LAST_SPENT_AT',
-  CREATED_AT = 'CREATED_AT',
-  SPENT_AT = 'SPENT_AT',
-  POSTED_AT = 'POSTED_AT'
-}
-
 export enum DefaultImportFields {
   CATEGORY = 'CATEGORY',
   ACCOUNT = 'ACCOUNT',
   VENDOR = 'VENDOR',
-  MERCHANTS = 'MERCHANTS'
+  MERCHANTS = 'MERCHANTS',
+  LOCATION = 'LOCATION'
+}
+
+export enum Sage300ExpenseDate {
+  LAST_SPENT_AT = 'LAST_SPENT_AT',
+  CURRENT_DATE = 'CURRENT_DATE',
+  SPENT_AT = 'SPENT_AT',
+  POSTED_AT = 'POSTED_AT'
 }
 
 export enum AccountingExportStatus {

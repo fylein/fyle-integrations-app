@@ -90,8 +90,12 @@
     @apply tw-text-14-px #{!important};
   }
   
-  :host ::ng-deep .selectedItem  .p-dropdown-trigger {
+  :host ::ng-deep .selectedItem  .p-dropdown-trigger, :host ::ng-deep .selectedAccItem .p-dropdown-trigger{
     @apply tw-hidden #{!important};
+  }
+
+  :host ::ng-deep .selectedAccItem .p-dropdown.p-disabled {
+    @apply tw-bg-disabled-bg-color tw-border tw-border-box-color #{!important}
   }
   
   .error-box {

@@ -1,7 +1,9 @@
-.pointer {
-    @apply tw-cursor-pointer;
+.inside-container {
+    @apply tw-border-r-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
+    border: 1px solid var(--grayscale-light-border, #ECECEE);
+    max-width: auto;
 }
 
-.inside-container {
-    @apply tw-rounded-lg tw-border-1-px tw-border-gray-300 tw-flex-col tw-p-24-px tw-items-start tw-gap-14-px tw-max-w-max;
+.pointer {
+    @apply tw-cursor-pointer;
 }

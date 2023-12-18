@@ -6,7 +6,7 @@
 </div>
 
 <div *ngIf="!isLoading">
-    <app-dashboard-export-section 
+    <app-dashboard-export-section
         (export)="export()" 
         [appName]="appName"
         [isImportInProgress]="isImportInProgress" 
@@ -19,17 +19,18 @@
     </app-dashboard-export-section>
     
     <app-zero-state 
-        *ngIf="!accountingExportSummary" 
-        [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'">
+        *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length" 
+        [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'"
+        [zeroStateCaption]="'There are no expenses to export at the moment!'"
+        >
     </app-zero-state>
     
-    <app-dashboard-export-summary-section 
-        *ngIf="accountingExportSummary"
+    <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
         [appName]="appName"
         [accountingExportSummary]="accountingExportSummary">
     </app-dashboard-export-summary-section>
     
-    <app-dashboard-error-section 
+    <app-dashboard-error-section *ngIf="errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length"
         [appName]="appName" 
         [errors]="errors" 
         [groupedErrorStat]="groupedErrorStat"
