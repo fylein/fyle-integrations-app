@@ -50,11 +50,11 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
 
   connectBusinessCentral(): void {
     this.businessCentralConnectionInProgress = true;
-    const url = `${environment.business_central_authorize_uri}?client_id=${environment.business_central_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect`;
+    const url = `${environment.business_central_authorize_uri}?client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
 
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
       const code = callbackURL.split('code=')[1].split('&')[0];
-      this.checkProgressAndRedirect(code);
+      this.postBusinessCentralCredentials(code);
     });
 
     this.helperService.oauthHandler(url);
