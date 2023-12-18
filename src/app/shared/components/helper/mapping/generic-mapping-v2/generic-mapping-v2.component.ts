@@ -6,7 +6,6 @@ import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/mod
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { AppName, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 
@@ -29,7 +28,9 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() destinationOptions: DestinationAttribute[];
 
-  appName: AppName = AppName.SAGE300;
+  @Input() appName: AppName;
+
+  @Input() isCategoryMappingGeneric: boolean;
 
   isInitialSetupComplete: boolean = false;
 
@@ -64,8 +65,7 @@ export class GenericMappingV2Component implements OnInit {
   constructor(
     private mappingService: MappingService,
     private paginatorService: PaginatorService,
-    private route: ActivatedRoute,
-    private toastService: IntegrationsToastService
+    private route: ActivatedRoute
   ) { }
 
   triggerAutoMapEmployees() {
@@ -73,7 +73,7 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   private getFilteredMappings() {
-    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField).subscribe((mappingResponse: GenericMappingResponse) => {
+    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric).subscribe((mappingResponse: GenericMappingResponse) => {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = mappingResponse.count;
@@ -132,8 +132,8 @@ export class GenericMappingV2Component implements OnInit {
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
     forkJoin([
-      this.mappingService.getGenericMappingsV2(10, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField),
-      this.mappingService.getMappingStats(this.sourceField, this.destinationField, 'SAGE300')
+      this.mappingService.getGenericMappingsV2(10, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric),
+      this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
     ]).subscribe(
       ([mappingResponse, mappingStat]) => {
         this.totalCount = mappingResponse.count;

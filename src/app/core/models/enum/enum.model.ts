@@ -243,7 +243,8 @@ export enum ExportDateType {
 
 export enum FyleField {
   EMPLOYEE = 'EMPLOYEE',
-  VENDOR = 'VENDOR'
+  VENDOR = 'VENDOR',
+  CATEGORY = 'CATEGORY',
 }
 
 export enum ExpenseGroupingFieldOption {
@@ -347,6 +348,10 @@ export enum MappingState {
   MAPPED = 'MAPPED',
   UNMAPPED = 'UNMAPPED',
   ALL = 'ALL'
+}
+
+export enum AccountingField {
+  ACCOUNT = 'ACCOUNT',
 }
 
 export enum Sage300Field {
