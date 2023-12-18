@@ -1,37 +1,26 @@
 .container {
-    justify-content: center;
+    @apply tw-justify-center;
 }
 
 .inside-container {
-    border-radius: 8px;
+    @apply tw-border-r-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
     border: 1px solid var(--grayscale-light-border, #ECECEE);
-    padding: 24px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
     max-width: auto;
 }
 
 .sub-text-container {
-    border-radius: 8px;
+    @apply tw-border-r-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
     border: 1px solid var(--grayscale-light-border, #ECECEE);
     background: var(--grayscale-background, #FAFCFF);
-    padding: 24px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
     max-width: auto;
 }
 
 .flex-wrapper {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between
+    @apply tw-flex tw-items-start tw-justify-between;
 }
 
 .sub-header {
-    font-size: 14px;
-    font-weight: 400;
+    @apply tw-text-14-px tw-font-400;
     color: grey;
 }
 
