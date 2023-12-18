@@ -105,14 +105,14 @@ export class MappingService {
     }
   }
 
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string, mappingPage: string): Observable<GenericMappingResponse> {
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, mappingPage: string): Observable<GenericMappingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = mappingState === MappingState.UNMAPPED ? false : true;
     const params: GenericMappingApiParams = {
       limit: pageLimit,
       offset: pageOffset,
       mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
-      destination_type: sourceType
+      destination_type: destinationType
     };
 
     if (alphabetsFilter && alphabetsFilter !== 'All') {

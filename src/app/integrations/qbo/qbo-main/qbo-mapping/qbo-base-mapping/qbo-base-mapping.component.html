@@ -1,1 +1,9 @@
-<p>qbo-base-mapping works!</p>
+<app-generic-mapping-v2
+    [isLoading]="isLoading"
+    [destinationOptions]="destinationOptions"
+    [employeeFieldMapping]="employeeFieldMapping"
+    [sourceField]="sourceField"
+    [destinationField]="destinationField"
+    [showAutoMapEmployee]="showAutoMapEmployee"
+    (triggerAutoMapEmployee)="triggerAutoMapEmployees()">
+</app-generic-mapping-v2>
