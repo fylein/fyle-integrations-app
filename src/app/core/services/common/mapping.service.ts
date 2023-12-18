@@ -33,8 +33,8 @@ export class MappingService {
   }
 
   getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean): Observable<any> {
-    const params: {attribute_types: string | string[], account_type?: string, active?: boolean} = {
-      attribute_types: attributeTypes
+    const params: {attribute_type__in: string | string[], account_type?: string, active?: boolean} = {
+      attribute_type__in: attributeTypes
     };
 
     if (accountType) {

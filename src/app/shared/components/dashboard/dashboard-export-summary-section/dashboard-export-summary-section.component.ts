@@ -17,11 +17,9 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   @Input() appName: AppName;
 
-  filteredAccountingExports: AccountingExportList[];
+  filteredAccountingExports: AccountingExportList[] = [];
 
   accountingExports: AccountingExportList[];
-
-  isLoading: boolean;
 
   exportLogHeader: string;
 
@@ -40,9 +38,12 @@ export class DashboardExportSummarySectionComponent implements OnInit {
     private exportLogService: ExportLogService
   ) { }
 
+  handleDialogClose(){
+    this.isExportLogVisible = false;
+  }
+
   getAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
     if (this.accountingExportSummary) {
-      this.isLoading = true;
       this.selectedDateFilter = {startDate: new Date(this.accountingExportSummary.last_exported_at), endDate: new Date};
 
       this.accountingExportService.getAccountingExports([status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
@@ -51,7 +52,6 @@ export class DashboardExportSummarySectionComponent implements OnInit {
           );
           this.filteredAccountingExports = accountingExports;
           this.accountingExports = [...this.filteredAccountingExports];
-          this.isLoading = false;
         });
     }
   }

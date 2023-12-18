@@ -58,7 +58,7 @@ export class Sage300BaseMappingComponent implements OnInit {
   }
 
   setupPage(): void {
-    this.sourceField = this.route.snapshot.params.source_field;
+    this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
     this.mappingService.getExportSettings().subscribe((response) => {
       this.reimbursableExpenseObject = response.reimbursable_expenses_object;
       this.cccExpenseObject = response.corporate_credit_card_expenses_object;
@@ -66,11 +66,9 @@ export class Sage300BaseMappingComponent implements OnInit {
       this.showAutoMapEmployee = response.auto_map_employees ? true : false;
 
       this.destinationField = this.getSourceType();
-
-
       this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe((response: any) => {
-        if (this.sourceField==='EMPLOYEE') {
-          this.destinationOptions = this.destinationField ? response.EMPLOYEE : response.VENDOR;
+        if (this.sourceField===FyleField.EMPLOYEE) {
+          this.destinationOptions = this.destinationField===FyleField.EMPLOYEE ? response.EMPLOYEE : response.VENDOR;
         }
         if (this.sourceField==='CATEGORY') {
           if (this.destinationField === 'EXPENSE_TYPE') {

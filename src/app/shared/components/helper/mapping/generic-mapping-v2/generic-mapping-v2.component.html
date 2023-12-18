@@ -16,7 +16,10 @@
                 <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
             </div>
             <div *ngIf="!filteredMappingCount">
-                <app-zero-state-with-illustration [mainText]="'No search result to show yet!'" [subText]="'Looks like your search term does not match any of Employee mappings'"></app-zero-state-with-illustration>
+                <app-zero-state-with-illustration 
+                [mainText]="'No search result to show yet!'" 
+                [subText]="'Looks like your search term does not match any of ' + this.sourceField.toLowerCase() + ' mappings'">
+              </app-zero-state-with-illustration>              
             </div>
         </div>
 </div>
