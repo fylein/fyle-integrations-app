@@ -57,8 +57,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
       this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
-      this.workspaceService.importFyleAttributes(false).subscribe();
-      this.mappingService.importSage300Attributes(false).subscribe();
+      this.mappingService.importSage300Attributes(true).subscribe();
       this.router.navigate([this.onboardingSteps[1].route]);
     }, () => {
       this.isLoading = false;
