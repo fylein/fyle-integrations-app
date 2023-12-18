@@ -13,7 +13,7 @@ export type TaskLog = {
 
 export interface TaskResponse extends PaginatedResponse {
   results: TaskLog[];
-};
+}
 
 export type TaskLogGetParams = {
   limit?: number;

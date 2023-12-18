@@ -12,8 +12,8 @@ export type QuickbooksError = {
 export interface QBOTaskLog extends TaskLog {
   quickbooks_errors: QuickbooksError[];
   type: QBOTaskLogType;
-};
+}
 
 export interface QBOTaskResponse extends PaginatedResponse {
   results: QBOTaskLog[];
-};
+}
