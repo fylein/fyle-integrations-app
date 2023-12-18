@@ -12,7 +12,7 @@
     </ng-template>
 
     <ng-template pTemplate="body" let-rowData>
-        <tr class="clickable-row">
+        <tr class="clickable-row" (click)="displayChildTable(rowData.index)">
             <td *ngIf="!isDashboardFailed">
                 <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
                 <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>

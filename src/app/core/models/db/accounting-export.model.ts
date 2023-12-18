@@ -16,6 +16,7 @@ export interface ExportableAccountingExport {
 }
 
 export interface AccountingExportList {
+    index?: number;
     exportedAt: Date;
     employee: [string, string];
     expenseType: string;
