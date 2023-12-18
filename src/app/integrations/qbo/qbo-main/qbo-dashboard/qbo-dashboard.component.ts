@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
-import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { AccountingErrorType, AppName, QBOTaskLogType, TaskLogState } from 'src/app/core/models/enum/enum.model';
@@ -55,8 +55,11 @@ export class QboDashboardComponent implements OnInit {
     private workspaceService: WorkspaceService
   ) { }
 
-  export(): void {
-    // TODO
+  export() {
+    this.isExportInProgress = true;
+    this.dashboardService.triggerAccountingExport().subscribe(() => {
+      this.pollExportStatus(this.exportableAccountingExportIds);
+    });
   }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
@@ -81,7 +84,7 @@ export class QboDashboardComponent implements OnInit {
             EMPLOYEE_MAPPING: null,
             CATEGORY_MAPPING: null
           };
-          this.accountingExportSummary = responses[1];
+          this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
@@ -100,7 +103,7 @@ export class QboDashboardComponent implements OnInit {
       this.workspaceService.getWorkspaceGeneralSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.accountingExportSummary = responses[1];
+      this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
         CATEGORY: 'ACCOUNT'

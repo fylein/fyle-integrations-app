@@ -576,3 +576,8 @@ export enum QBOTaskLogType {
   CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
   FETCHING_EXPENSE = 'FETCHING_EXPENSE'
 }
+
+export enum LoaderType {
+  DETERMINATE = 'determinate',
+  INDETERMINATE = 'indeterminate'
+}
