@@ -14,4 +14,4 @@ export type MappingSetting = {
 
 export interface MappingSettingResponse extends PaginatedResponse {
   results: MappingSetting[];
-};
+}
