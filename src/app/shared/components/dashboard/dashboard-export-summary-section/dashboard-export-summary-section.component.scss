@@ -1,13 +1,9 @@
 .inside-container {
-    border-radius: 8px;
+    @apply tw-border-r-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
     border: 1px solid var(--grayscale-light-border, #ECECEE);
-    padding: 24px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
     max-width: auto;
 }
 
 .pointer {
-    cursor: pointer;
+    @apply tw-cursor-pointer;
 }

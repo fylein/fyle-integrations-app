@@ -1,4 +1,4 @@
 :host  ::ng-deep .p-dialog {
-    max-height: 100% !important;
+    @apply tw-max-h-full;
     margin: 0rem !important;
   }  
