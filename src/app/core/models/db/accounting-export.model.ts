@@ -32,7 +32,6 @@ export interface AccountingExport {
     type: string;
     description: ExpenseGroupDescription;
     status: AccountingExportStatus;
-    expense_group: number;
     mapping_errors: {
         type: string;
         value: string;

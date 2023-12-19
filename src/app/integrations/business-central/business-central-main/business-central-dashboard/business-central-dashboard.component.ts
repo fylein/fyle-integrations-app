@@ -62,14 +62,14 @@ export class BusinessCentralDashboardComponent implements OnInit {
       switchMap(() => from(this.accountingExportService.getAccountingExports([], exportableAccountingExportIds, 500, 0))),
       takeWhile((response: BusinessCentralAccountingExportResponse) =>
         response.results.filter(task =>
-          (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)
+          (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)
         ).length > 0, true
       )
     ).subscribe((res: BusinessCentralAccountingExportResponse) => {
       this.processedCount = res.results.filter(task => (task.status !== AccountingExportStatus.IN_PROGRESS && task.status !== AccountingExportStatus.ENQUEUED && task.status !== AccountingExportStatus.EXPORT_QUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
-      if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
+      if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)).length === 0) {
         this.isLoading = true;
         forkJoin([
           this.getExportErrors$,
