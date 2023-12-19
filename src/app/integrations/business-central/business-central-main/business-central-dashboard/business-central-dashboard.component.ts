@@ -4,7 +4,7 @@ import { BusinessCentralAccountingExport, BusinessCentralAccountingExportRespons
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AccountingExportStatus, AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
@@ -47,6 +47,8 @@ export class BusinessCentralDashboardComponent implements OnInit {
     'CATEGORY': 'ACCOUNT'
   };
 
+  readonly accountingExportType: BusinessCentralExportType[] = [BusinessCentralExportType.PURCHASE_INVOICE, BusinessCentralExportType.JOURNAL_ENTRY];
+
   getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors();
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary();
@@ -59,7 +61,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(20000).pipe(
-      switchMap(() => from(this.accountingExportService.getAccountingExports([], exportableAccountingExportIds, 500, 0))),
+      switchMap(() => from(this.accountingExportService.getAccountingExports(this.accountingExportType, [], exportableAccountingExportIds, 500, 0))),
       takeWhile((response: BusinessCentralAccountingExportResponse) =>
         response.results.filter(task =>
           (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)
@@ -109,7 +111,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.accountingExportService.getAccountingExports([AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0)
+      this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0)
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.accountingExportSummary = responses[1];

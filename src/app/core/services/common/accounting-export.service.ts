@@ -23,7 +23,11 @@ export class AccountingExportService {
     helper.setBaseApiURL();
   }
 
-  getAccountingExportSummary(): Observable<AccountingExportSummary> {
+  getAccountingExportSummary(version?: 'v1'): Observable<AccountingExportSummary> {
+    if (version === 'v1') {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/export_detail/`, {});
+    }
+
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary/`, {});
   }
 
@@ -34,9 +38,9 @@ export class AccountingExportService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count/`, apiParams);
   }
 
-  getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null): Observable<any> {
+  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null): Observable<any> {
     const apiParams: AccountingExportGetParam = {
-      type__in: [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
+      type__in: type,
       status__in: status,
       limit: limit,
       offset: offset
@@ -56,7 +60,7 @@ export class AccountingExportService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
   }
 
-  importExpensesFromFyle(): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/accounting_exports/sync/`, {});
+  importExpensesFromFyle(version?: 'v1'): Observable<{}> {
+    return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`, {});
   }
 }

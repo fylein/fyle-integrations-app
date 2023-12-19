@@ -47,8 +47,8 @@ export interface AccountingExport {
 }
 
 export type AccountingExportGetParam = {
-    type__in: AccountingExportType[],
-    status__in: AccountingExportStatus[],
+    type__in: string[],
+    status__in: string[],
     id__in?: number[],
     limit: number,
     offset: number,

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { GenericMapping, MappingClass, MinimalMappingSetting } from 'src/app/core/models/db/generic-mapping.model';
+import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { AppName, CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -36,8 +36,6 @@ export class GenericMappingTableComponent implements OnInit {
   @Input() cccExpenseObject?: CorporateCreditCardExpensesObject;
 
   @Input() destinationOptions: DestinationAttribute[];
-
-  @Input() mappingSetting: MinimalMappingSetting;
 
   @Input() isDashboardMappingResolve: boolean;
 
@@ -94,7 +92,7 @@ export class GenericMappingTableComponent implements OnInit {
         this.displayErrorToast();
       });
     } else {
-      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, this.mappingSetting);
+      const genericMappingPayload = MappingClass.constructGenericMappingPayload(selectedRow, event, {source_field: this.sourceField, destination_field: this.destinationField});
 
       this.mappingService.postMapping(genericMappingPayload).subscribe((response: GenericMapping) => {
         this.decrementUnmappedCountIfNeeded(selectedRow.mapping);
@@ -107,7 +105,7 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   decrementUnmappedCountIfNeeded(mapping: any): void {
-    if (!mapping?.length) {
+    if (!mapping?.length && !this.isDashboardMappingResolve) {
       this.mappingStats.unmapped_attributes_count -= 1;
     }
   }
