@@ -87,7 +87,7 @@
                     </app-configuration-skip-export>
                 </div>
             </div>
-            <div class="tw-mb-16-px">
+            <!-- <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'Other Preferences'"
                     [subLabel]="'Based on your preference, you can choose whether you want to create any new records in Sage 300 CRE from Fyle. (when there is no employee record found, or when the accounting period is closed)'">
@@ -101,7 +101,7 @@
                     [formControllerName]="'autoCreateVendor'"
                     [iconPath]="'people'">
                 </app-configuration-toggle-field>
-            </div>
+            </div> -->
         </div>
         <div>
             <app-configuration-step-footer [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingForm.valid"></app-configuration-step-footer>

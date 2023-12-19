@@ -31,7 +31,6 @@ export interface AccountingExport {
     type: string;
     description: ExpenseGroupDescription;
     status: AccountingExportStatus;
-    expense_group: number;
     mapping_errors: {
         type: string;
         value: string;
@@ -47,8 +46,8 @@ export interface AccountingExport {
 }
 
 export type AccountingExportGetParam = {
-    type__in: AccountingExportType[],
-    status__in: AccountingExportStatus[],
+    type__in: string[],
+    status__in: string[],
     id__in?: number[],
     limit: number,
     offset: number,

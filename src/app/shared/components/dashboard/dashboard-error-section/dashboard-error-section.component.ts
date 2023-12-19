@@ -5,7 +5,7 @@ import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { AccountingErrorType, AppName, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -32,6 +32,14 @@ export class DashboardErrorSectionComponent implements OnInit {
   @Input() isExportLogFetchInProgress: boolean;
 
   @Input() exportLogHeader: string;
+
+  @Input() apiModuleUrl: AppUrl;
+
+  @Input() destinationOptionsVersion: 'v1' | 'v2' = 'v2';
+
+  @Input() errorsVersion: 'v1';
+
+  @Input() isCategoryMappingGeneric: boolean;
 
   filteredMappings: ExtendedGenericMapping[];
 
@@ -65,8 +73,6 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors();
-
   constructor(
     private dashboardService: DashboardService,
     private mappingService: MappingService,
@@ -77,9 +83,22 @@ export class DashboardErrorSectionComponent implements OnInit {
     return this.destinationFieldMap[this.sourceField];
   }
 
-  private getOptions(errorType: AccountingErrorType) {
-    this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2')
-    .subscribe(groupedDestinationResponse => {
+  getDestinationOptionsV1(errorType: AccountingErrorType): void {
+    this.mappingService.getDestinationAttributes(this.destinationField, 'v1', this.apiModuleUrl, undefined).subscribe((response: any) => {
+      this.destinationOptions = response;
+
+      this.setErrors(errorType);
+    });
+  }
+
+  private setErrors(errorType: AccountingErrorType): void {
+    this.errors[errorType][0].expense_attribute;
+    this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, this.isCategoryMappingGeneric);
+    this.isLoading = false;
+  }
+
+  private getDestinationOptionsV2(errorType: AccountingErrorType) {
+    this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe(groupedDestinationResponse => {
       if (this.sourceField === 'EMPLOYEE') {
         this.destinationOptions = this.destinationField === FyleField.EMPLOYEE ? groupedDestinationResponse.EMPLOYEE : groupedDestinationResponse.VENDOR;
       } else if (this.sourceField === 'CATEGORY') {
@@ -90,9 +109,7 @@ export class DashboardErrorSectionComponent implements OnInit {
         }
       }
 
-      this.errors[errorType][0].expense_attribute;
-      this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType);
-      this.isLoading = false;
+      this.setErrors(errorType);
     });
 
   }
@@ -102,8 +119,14 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.errorType = errorType;
     this.groupedError = groupedError;
     this.sourceField = sourceField;
-    this.getOptions(errorType);
     this.destinationField = this.destinationFieldMap[this.sourceField];
+
+    if (this.destinationOptionsVersion === 'v1') {
+      this.getDestinationOptionsV1(errorType);
+    } else {
+      this.getDestinationOptionsV2(errorType);
+    }
+
     this.isMappingResolveVisible = true;
   }
 
@@ -139,8 +162,9 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   handleResolvedMappingStat(): void {
-    this.getExportErrors$.subscribe((errors) => {
-      const newError: AccountingGroupedErrors = this.formatErrors(errors.results);
+    this.dashboardService.getExportErrors(this.errorsVersion).subscribe((errors) => {
+      const argument = this.errorsVersion === 'v1' ? errors : (errors as ErrorResponse).results;
+      const newError: AccountingGroupedErrors = this.formatErrors(argument);
 
       if (this.errors.CATEGORY_MAPPING.length !== newError.CATEGORY_MAPPING.length) {
         const totalCount = this.groupedErrorStat.CATEGORY_MAPPING ? this.groupedErrorStat.CATEGORY_MAPPING.totalCount : this.errors.CATEGORY_MAPPING.length;
