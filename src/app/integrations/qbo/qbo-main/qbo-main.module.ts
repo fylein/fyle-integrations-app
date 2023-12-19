@@ -10,6 +10,7 @@ import { QboSkippedExportLogComponent } from './qbo-export-log/qbo-skipped-expor
 import { QboMappingComponent } from './qbo-mapping/qbo-mapping.component';
 import { QboBaseMappingComponent } from './qbo-mapping/qbo-base-mapping/qbo-base-mapping.component';
 import { QboConfigurationComponent } from './qbo-configuration/qbo-configuration.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { QboConfigurationComponent } from './qbo-configuration/qbo-configuration
   ],
   imports: [
     CommonModule,
-    QboMainRoutingModule
+    QboMainRoutingModule,
+    SharedModule
   ]
 })
 export class QboMainModule { }

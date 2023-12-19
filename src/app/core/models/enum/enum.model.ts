@@ -243,7 +243,8 @@ export enum ExportDateType {
 
 export enum FyleField {
   EMPLOYEE = 'EMPLOYEE',
-  VENDOR = 'VENDOR'
+  VENDOR = 'VENDOR',
+  CATEGORY = 'CATEGORY',
 }
 
 export enum ExpenseGroupingFieldOption {
@@ -347,6 +348,10 @@ export enum MappingState {
   MAPPED = 'MAPPED',
   UNMAPPED = 'UNMAPPED',
   ALL = 'ALL'
+}
+
+export enum AccountingField {
+  ACCOUNT = 'ACCOUNT',
 }
 
 export enum Sage300Field {
@@ -484,6 +489,10 @@ export enum AccountingExportType {
   DIRECT_COSTS = 'DIRECT_COSTS'
 }
 
+export enum BusinessCentralAccountingExportType {
+
+}
+
 export enum AccountingErrorType {
   EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
   CATEGORY_MAPPING = 'CATEGORY_MAPPING',
@@ -543,7 +552,7 @@ export enum FundSource {
 
 export enum BusinessCentralExportType {
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
-  PURCHASE_INVOICE = 'JOURNAL_ENTRY'
+  PURCHASE_INVOICE = 'PURCHASE_INVOICE'
 }
 
 export enum ExportErrorSourceType {
@@ -554,4 +563,21 @@ export enum ExportErrorSourceType {
 export enum EmployeeFieldMapping {
   EMPLOYEE = 'EMPLOYEE',
   VENDOR = 'VENDOR'
+}
+
+export enum QBOTaskLogType {
+  CREATING_BILL = 'CREATING_BILL',
+  CREATING_EXPENSE = 'CREATING_EXPENSE',
+  CREATING_CHECK = 'CREATING_CHECK',
+  CREATING_JOURNAL_ENTRY = 'CREATING_JOURNAL_ENTRY',
+  CREATING_CREDIT_CARD_PURCHASE = 'CREATING_CREDIT_CARD_PURCHASE',
+  CREATING_CREDIT_CARD_CREDIT = 'CREATING_CREDIT_CARD_CREDIT',
+  CREATING_DEBIT_CARD_EXPENSE = 'CREATING_DEBIT_CARD_EXPENSE',
+  CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
+  FETCHING_EXPENSE = 'FETCHING_EXPENSE'
+}
+
+export enum LoaderType {
+  DETERMINATE = 'determinate',
+  INDETERMINATE = 'indeterminate'
 }

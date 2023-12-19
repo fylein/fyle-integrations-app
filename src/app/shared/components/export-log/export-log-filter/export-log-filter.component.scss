@@ -71,8 +71,7 @@ input.custom-focus:focus {
 }
 
 :host ::ng-deep .p-dialog {
-    max-height: 100% !important;
-    margin: 0rem !important;
+    @apply tw-max-h-full tw-m-0 #{!important};
 }
 
 :host ::ng-deep .selectedItem  .p-dropdown-trigger {

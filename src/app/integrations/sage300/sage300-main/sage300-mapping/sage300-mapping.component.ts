@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
@@ -24,7 +25,7 @@ export class Sage300MappingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private mappingService: SiMappingsService
+    private mappingService: MappingService
   ) { }
 
   private setupPage(): void {

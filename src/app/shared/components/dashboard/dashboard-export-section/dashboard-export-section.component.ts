@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AppName, LoaderType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-dashboard-export-section',
@@ -25,6 +25,8 @@ export class DashboardExportSectionComponent implements OnInit {
   @Input() accountingExportSummary: AccountingExportSummary | null;
 
   @Input() processedCount: number;
+
+  @Input() loaderType: LoaderType = LoaderType.DETERMINATE;
 
   @Output() export = new EventEmitter<boolean>();
 

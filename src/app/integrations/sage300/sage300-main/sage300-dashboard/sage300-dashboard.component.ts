@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, FyleField, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, FyleField, LoaderType, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { environment } from 'src/environments/environment';
@@ -42,6 +42,8 @@ export class Sage300DashboardComponent implements OnInit {
     'CATEGORY': 'ACCOUNT'
   };
 
+  readonly accountingExportType: AccountingExportType[] = [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE];
+
   groupedErrorStat: AccountingGroupedErrorStat = {
     [AccountingErrorType.EMPLOYEE_MAPPING]: null,
     [AccountingErrorType.CATEGORY_MAPPING]: null
@@ -51,6 +53,8 @@ export class Sage300DashboardComponent implements OnInit {
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary();
 
+  LoaderType = LoaderType;
+
   constructor(
     private refinerService: RefinerService,
     private dashboardService: DashboardService,
@@ -59,7 +63,7 @@ export class Sage300DashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(20000).pipe(
-      switchMap(() => from(this.accountingExportService.getAccountingExports([], exportableAccountingExportIds, 500, 0))),
+      switchMap(() => from(this.accountingExportService.getAccountingExports(this.accountingExportType, [], exportableAccountingExportIds, 500, 0))),
       takeWhile((response: Sage300AccountingExportResponse) =>
         response.results.filter(task =>
           (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)
@@ -107,7 +111,7 @@ export class Sage300DashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.accountingExportService.getAccountingExports([AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0)
+      this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0)
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.accountingExportSummary = responses[1];
