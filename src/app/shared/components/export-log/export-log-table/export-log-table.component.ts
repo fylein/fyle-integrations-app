@@ -36,8 +36,10 @@ export class ExportLogTableComponent implements OnInit {
   }
 
   displayChildTable(rowData: AccountingExportList) {
-    this.expenses = rowData.expenses;
-    this.isChildTableVisible = true;
+    if (this.isExportLogTable) {
+      this.expenses = rowData.expenses;
+      this.isChildTableVisible = true;
+    }
   }
 
   openUrl(url: string) {

@@ -5,7 +5,7 @@ import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { AccountingErrorType, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -40,6 +40,8 @@ export class DashboardErrorSectionComponent implements OnInit {
   @Input() errorsVersion: 'v1';
 
   @Input() isCategoryMappingGeneric: boolean;
+
+  @Input() isImportItemsEnabled: boolean;
 
   filteredMappings: ExtendedGenericMapping[];
 
@@ -86,7 +88,12 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   getDestinationOptionsV1(errorType: AccountingErrorType): void {
-    this.mappingService.getDestinationAttributes(this.destinationField, 'v1', this.apiModuleUrl, undefined).subscribe((response: any) => {
+    let displayName;
+    if (this.destinationField === AccountingField.ACCOUNT) {
+      displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+    }
+
+    this.mappingService.getDestinationAttributes(this.destinationField, 'v1', this.apiModuleUrl, undefined, undefined, displayName).subscribe((response: any) => {
       this.destinationOptions = response;
 
       this.setErrors(errorType);
