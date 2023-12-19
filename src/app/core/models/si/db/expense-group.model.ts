@@ -64,7 +64,7 @@ export type SkipExportLog = {
 
 export interface SkipExportLogResponse extends PaginatedResponse {
   results: SkipExportLog[];
-};
+}
 
 export type ExportableExpenseGroup = {
   exportable_expense_group_ids: number[];
