@@ -32,7 +32,7 @@ export class ExportLogService {
   generateFyleUrl(accountingExport: AccountingExport, referenceType: FyleReferenceType) : string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
-      url += `main/#/view_expense/${accountingExport.expenses[0].expense_id}`;
+      url += `admin/#/view_expense/${accountingExport.expenses[0].expense_id}`;
     } else if (referenceType === FyleReferenceType.EXPENSE_REPORT) {
       url += `admin/#/reports/${accountingExport.expenses[0].report_id}`;
     } else if (referenceType === FyleReferenceType.PAYMENT) {
