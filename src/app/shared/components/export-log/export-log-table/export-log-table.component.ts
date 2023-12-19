@@ -27,16 +27,19 @@ export class ExportLogTableComponent implements OnInit {
 
   brandingConfig: BrandingConfiguration = brandingConfig;
 
-  visible: boolean = false;
+  isChildTableVisible: boolean = false;
 
   constructor(
     private windowService: WindowService
   ) { }
 
-  displayChildTable(index: number) {
-    this.clickedExportLogIndex = index;
-    this.expenses = this.filteredExpenseGroups[this.clickedExportLogIndex].expenses;
-    this.visible = true;
+  handleDialogClose(){
+    this.isChildTableVisible = false;
+  }
+
+  displayChildTable(rowData: AccountingExportList) {
+    this.expenses = rowData.expenses;
+    this.isChildTableVisible = true;
   }
 
   openUrl(url: string) {
