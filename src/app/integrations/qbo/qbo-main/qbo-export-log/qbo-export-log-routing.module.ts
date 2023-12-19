@@ -6,7 +6,7 @@ import { QboSkippedExportLogComponent } from './qbo-skipped-export-log/qbo-skipp
 
 const routes: Routes = [
   {
-    path: 'export_log',
+    path: '',
     component: QboExportLogComponent,
     children: [
       {

@@ -42,6 +42,7 @@ export class ExportLogTableComponent implements OnInit {
 
   openUrl(url: string) {
     this.windowService.openInNewTab(url);
+    event?.stopPropagation();
   }
 
   ngOnInit(): void {

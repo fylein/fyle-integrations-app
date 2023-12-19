@@ -5,6 +5,7 @@ import { AccountingExportStatus, AppName, TaskLogState } from 'src/app/core/mode
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-dashboard-export-summary-section',
@@ -35,9 +36,11 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   isExportLogVisible: boolean;
 
+  private org_id: string = this.userService.getUserProfile('user').org_id;
+
   constructor(
     private accountingExportService: AccountingExportService,
-    private exportLogService: ExportLogService
+    private userService: UserService
   ) { }
 
   handleDialogClose(){
@@ -50,7 +53,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
       this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
           const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-            AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
+            AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
           );
           this.filteredAccountingExports = accountingExports;
           this.accountingExports = [...this.filteredAccountingExports];
