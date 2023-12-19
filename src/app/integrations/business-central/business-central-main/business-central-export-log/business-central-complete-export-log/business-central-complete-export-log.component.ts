@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { AccountingExportStatus, AppName, PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
@@ -88,7 +88,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+    this.accountingExportService.getAccountingExports([BusinessCentralExportType.PURCHASE_INVOICE, BusinessCentralExportType.JOURNAL_ENTRY], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
         if (!this.isDateSelected) {
           this.totalCount = accountingExportResponse.count;
         }

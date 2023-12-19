@@ -26,4 +26,5 @@ export type GenericMappingApiParams = {
     mapped: boolean | MappingState;
     destination_type: string;
     mapping_source_alphabets?: string
+    source_type: string;
 };

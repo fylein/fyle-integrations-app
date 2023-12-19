@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
+import { AppName } from 'src/app/core/models/enum/enum.model';
+import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
   selector: 'app-qbo-main',
@@ -7,9 +11,33 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QboMainComponent implements OnInit {
 
-  constructor() { }
+  appName: AppName = AppName.QBO;
+
+  modules: MenuItem[] = [
+    {label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard'},
+    {label: 'Export Log', routerLink: '/integrations/qbo/main/export_log'},
+    {label: 'Mapping', routerLink: '/integrations/qbo/main/mapping'},
+    {label: 'Configuration', routerLink: '/integrations/qbo/main/configuration'}
+  ];
+
+  activeModule: MenuItem;
+
+  constructor(
+    private qboHelperService: QboHelperService,
+    private router: Router
+  ) { }
+
+  refreshDimensions() {
+    this.qboHelperService.refreshFyleDimensions().subscribe();
+  }
+
+  private setupPage() {
+    this.activeModule = this.modules[0];
+    this.router.navigateByUrl(this.modules[0].routerLink);
+  }
 
   ngOnInit(): void {
+    this.setupPage();
   }
 
 }

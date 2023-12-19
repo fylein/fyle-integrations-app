@@ -48,7 +48,7 @@
                             <span>
                                 {{ item.label }}
                             </span>
-                            <i class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                            <i *ngIf="!isDisabled" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
                         </div>
                     </ng-template>
                 </p-dropdown>

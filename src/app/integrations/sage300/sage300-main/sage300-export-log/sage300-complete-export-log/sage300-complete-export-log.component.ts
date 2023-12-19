@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExportStatus, AppName, FundSource, FyleReferenceType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
@@ -99,7 +99,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+    this.accountingExportService.getAccountingExports([AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
         if (!this.isDateSelected) {
           this.totalCount = accountingExportResponse.count;
         }

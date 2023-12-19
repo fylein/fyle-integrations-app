@@ -18,7 +18,7 @@
             <div *ngIf="!filteredMappingCount">
                 <app-zero-state-with-illustration 
                 [mainText]="'No search result to show yet!'" 
-                [subText]="'Looks like your search term does not match any of ' + this.sourceField.toLowerCase() + ' mappings'">
+                [subText]="'Looks like your search term does not match any of ' + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings'">
               </app-zero-state-with-illustration>              
             </div>
         </div>
