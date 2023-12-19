@@ -19,7 +19,7 @@ export class ExportLogFilterComponent implements OnInit {
 
   @Output() handleSimpleSearch = new EventEmitter<any>();
 
-  isCalendarVisible: boolean;
+  isCalendarVisible: boolean = false;
 
   presentDate = new Date().toLocaleDateString();
 
@@ -45,8 +45,8 @@ export class ExportLogFilterComponent implements OnInit {
   }
 
   showCalendar(event: Event) {
-    event.stopPropagation();
     this.isCalendarVisible = true;
+    event.stopPropagation();
   }
 
   getDates() {
