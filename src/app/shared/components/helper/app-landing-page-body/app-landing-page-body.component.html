@@ -1,7 +1,7 @@
 <div class="tw-pt-40-px tw-flex tw-justify-center tw-text-center tw-flex-col">
     <p *ngIf="!headlineText" class="tw-text-normal-text-color tw-text-20-px tw-font-500">How does the integration work?</p>
     <p *ngIf="headlineText" class="tw-text-normal-text-color tw-text-20-px tw-font-500">{{ headlineText }}</p>
-    <p class="tw-text-faded-text-color tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
+    <p class="tw-text-slightly-normal-text-color tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
         {{headerText}}
         <span *ngIf="redirectLink" class="tw-text-hyperlink-color tw-flex tw-pl-4-px tw-cursor-pointer" (click)="windowService.openInNewTab(redirectLink)">
             Read More

@@ -11,11 +11,11 @@
         <div *ngFor="let defaultField of defaultImportFields">
             <div class="tw-flex tw-pt-18-px">
                 <div>
-                    <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{defaultField.destination_field| snakeCaseToSpaceCase | titlecase}}" disabled>
+                    <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{ defaultField.destination_field | snakeCaseToSpaceCase | titlecase }}" disabled>
                 </div>
                 <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
                 <div class="tw-w-30-vw">
-                    <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{defaultField.source_field| snakeCaseToSpaceCase | titlecase}}" disabled>
+                    <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{ defaultField.source_field | snakeCaseToSpaceCase | titlecase }}" disabled>
                 </div>
                 <div class="input-toggle-section tw-w-10-vw tw-pt-10-px">
                     <p-inputSwitch [formControlName]="defaultField.formController"></p-inputSwitch>
@@ -49,13 +49,13 @@
                         optionLabel="display_name" optionValue="attribute_type" [disabled]="isDestinationFixedImport" [ngClass]="{'selectedAccItem !tw-text-slightly-normal-text-color': isDestinationFixedImport}">
                         <ng-template let-option pTemplate="item">
                             <div>
-                                {{ option.display_name | snakeCaseToSpaceCase }}
+                                {{ option.display_name | snakeCaseToSpaceCase | titlecase }}
                             </div>
                         </ng-template>
                         <ng-template pTemplate="selectedItem" let-item>
                             <div class="tw-flex tw-justify-between tw-items-center">
                                 <span>
-                                    {{ item.display_name | snakeCaseToSpaceCase }}
+                                    {{ item.display_name | snakeCaseToSpaceCase | titlecase }}
                                 </span>
                             </div>
                         </ng-template>
