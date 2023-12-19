@@ -581,3 +581,8 @@ export enum LoaderType {
   DETERMINATE = 'determinate',
   INDETERMINATE = 'indeterminate'
 }
+
+export enum AccountingDisplayName {
+  ACCOUNT = 'Account',
+  ITEM = 'Item',
+}

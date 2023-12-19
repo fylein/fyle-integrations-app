@@ -109,6 +109,6 @@
         <p-header>
             <p>{{errorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
           </p-header>
-          <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="true" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
+          <app-generic-mapping-table [employeeFieldMapping]="employeeFieldMapping" [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="true" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
     </p-dialog>
 </div>

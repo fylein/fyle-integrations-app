@@ -73,6 +73,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  employeeFieldMapping: FyleField;
+
   constructor(
     private dashboardService: DashboardService,
     private mappingService: MappingService,
@@ -93,7 +95,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   private setErrors(errorType: AccountingErrorType): void {
     this.errors[errorType][0].expense_attribute;
-    this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, this.isCategoryMappingGeneric);
+    const isCategoryMappingGeneric = FyleField.CATEGORY === (this.sourceField as unknown as FyleField) ? this.isCategoryMappingGeneric : false;
+    this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, isCategoryMappingGeneric);
     this.isLoading = false;
   }
 
@@ -190,6 +193,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.employeeFieldMapping = this.destinationFieldMap.EMPLOYEE as unknown as FyleField;
   }
 
 }

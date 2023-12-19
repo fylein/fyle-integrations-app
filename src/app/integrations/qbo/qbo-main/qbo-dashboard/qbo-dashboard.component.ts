@@ -105,7 +105,9 @@ export class QboDashboardComponent implements OnInit {
       this.workspaceService.getWorkspaceGeneralSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
+      if (responses[1]) {
+        this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
+      }
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
         CATEGORY: 'ACCOUNT'
