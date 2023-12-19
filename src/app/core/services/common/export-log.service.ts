@@ -4,9 +4,11 @@ import { UserService } from '../misc/user.service';
 import { WorkspaceService } from './workspace.service';
 import { environment } from 'src/environments/environment';
 import { SkipExportLogResponse } from '../../models/si/db/expense-group.model';
-import { FyleReferenceType } from '../../models/enum/enum.model';
+import { FyleReferenceType, TaskLogState } from '../../models/enum/enum.model';
 import { Observable } from 'rxjs';
 import { AccountingExport } from '../../models/db/accounting-export.model';
+import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
+import { ExpenseGroupParam, ExpenseGroupResponse } from '../../models/db/expense-group.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +17,8 @@ export class ExportLogService {
 
   workspaceId: string = this.workspaceService.getWorkspaceId();
 
-  private org_id: string = this.userService.getUserProfile('user').org_id;
-
   constructor(
     private apiService: ApiService,
-    private userService: UserService,
     private workspaceService: WorkspaceService
   ) { }
 
@@ -29,16 +28,24 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
   }
 
-  generateFyleUrl(accountingExport: AccountingExport, referenceType: FyleReferenceType) : string {
-    let url = `${environment.fyle_app_url}/app/`;
-    if (referenceType === FyleReferenceType.EXPENSE) {
-      url += `admin/#/view_expense/${accountingExport.expenses[0].expense_id}`;
-    } else if (referenceType === FyleReferenceType.EXPENSE_REPORT) {
-      url += `admin/#/reports/${accountingExport.expenses[0].report_id}`;
-    } else if (referenceType === FyleReferenceType.PAYMENT) {
-      url += `admin/#/settlements/${accountingExport.expenses[0].settlement_id}`;
-    }
-    return `${url}/?org_id=${this.org_id}`;
-  }
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null): Observable<ExpenseGroupResponse> {
+    const params: ExpenseGroupParam = {
+      limit,
+      offset,
+      tasklog__status: state
+    };
 
+    if (selectedDateFilter) {
+      const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
+      const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
+      params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
+      params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+    }
+
+    if (exportedAt) {
+      params.exported_at__gte = exportedAt;
+    }
+
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
+  }
 }
