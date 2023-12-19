@@ -86,7 +86,7 @@ export class AccountingExportModel {
   }
 
   static getFyleExpenseUrl(expense_id: string): string {
-    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+    const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}`;
     return url;
   }
 
@@ -172,7 +172,7 @@ export class SkippedAccountingExportModel {
       claim_number: skippedExpenses.claim_number,
       employee: [skippedExpenses.employee_name, skippedExpenses.employee_email],
       expenseType: skippedExpenses.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
-      fyleUrl: `${environment.fyle_app_url}/app/main/#/view_expense/${skippedExpenses.expense_id}`
+      fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpenses.expense_id}`
     };
   }
 }
