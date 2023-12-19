@@ -165,6 +165,9 @@ export class AccountingExportModel {
   }
 
   static generateExportTypeAndId(expenseGroup: ExpenseGroup) {
+    if (!expenseGroup.response_logs) {
+      return [null, null, null];
+    }
     let exportRedirection = null;
     let exportType = null;
     let exportId = null;
