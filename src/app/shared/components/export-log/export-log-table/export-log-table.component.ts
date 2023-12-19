@@ -21,8 +21,6 @@ export class ExportLogTableComponent implements OnInit {
 
   @Input() isDashboardFailed: boolean;
 
-  clickedExportLogIndex: number = 0;
-
   expenses: Expense [] = [];
 
   brandingConfig: BrandingConfiguration = brandingConfig;
