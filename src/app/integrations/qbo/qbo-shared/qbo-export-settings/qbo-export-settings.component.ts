@@ -124,7 +124,7 @@ export class QboExportSettingsComponent implements OnInit {
         } else if (this.isAdvancedSettingAffected()) {
           this.router.navigate(['/integrations/qbo/main/configuration/advanced_settings']);
         } else {
-          this.router.navigate(['/integrations/main/dashboard']);
+          this.router.navigate(['/integrations/qbo/main/dashboard']);
         }
       }, () => {
         this.isSaveInProgress = false;

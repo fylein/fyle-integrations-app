@@ -6,11 +6,11 @@ import { HelperService } from './helper.service';
 import { GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
-import { MappingSettingResponse } from '../../models/si/db/mapping-setting.model';
 import { MappingState } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
+import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
 
 
 @Injectable({
@@ -94,7 +94,11 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
   }
 
-  private getEndpoint(mappingPage: string): string {
+  private getEndpoint(mappingPage: string, isCategoryMappingGeneric?: boolean): string {
+    if (isCategoryMappingGeneric) {
+      return 'expense_attributes';
+    }
+
     switch (mappingPage) {
       case 'EMPLOYEE':
         return 'employee_attributes';
@@ -105,21 +109,22 @@ export class MappingService {
     }
   }
 
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string, mappingPage: string): Observable<GenericMappingResponse> {
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean): Observable<GenericMappingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = mappingState === MappingState.UNMAPPED ? false : true;
     const params: GenericMappingApiParams = {
       limit: pageLimit,
       offset: pageOffset,
       mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
-      destination_type: sourceType
+      destination_type: destinationType,
+      source_type: sourceType
     };
 
     if (alphabetsFilter && alphabetsFilter !== 'All') {
       params.mapping_source_alphabets = alphabetsFilter;
     }
 
-    const endpoint = this.getEndpoint(mappingPage);
+    const endpoint = this.getEndpoint(sourceType, isCategoryMappingGeneric);
 
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/${endpoint}/`, params);
   }
