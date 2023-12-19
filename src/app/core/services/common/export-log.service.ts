@@ -38,7 +38,7 @@ export class ExportLogService {
     } else if (referenceType === FyleReferenceType.PAYMENT) {
       url += `admin/#/settlements/${accountingExport.expenses[0].settlement_id}`;
     }
-    return `${url}?org_id=${this.org_id}`;
+    return `${url}/?org_id=${this.org_id}`;
   }
 
 }
