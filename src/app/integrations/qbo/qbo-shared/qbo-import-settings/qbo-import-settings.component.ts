@@ -4,12 +4,16 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, QBOCorporateCreditCardExpensesObject, QBOField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
+import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QBOImportSettingGet, QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
@@ -60,10 +64,25 @@ export class QboImportSettingsComponent implements OnInit {
 
   customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
 
+  chartOfAccountTypesList: string[] = QBOImportSettingModel.getChartOfAccountTypesList();
+
+  workspaceGeneralSettings: QBOWorkspaceGeneralSetting;
+
+  QBOReimbursableExpensesObject = QBOReimbursableExpensesObject;
+
+  QBOCorporateCreditCardExpensesObject = QBOCorporateCreditCardExpensesObject;
+
+  isTaxGroupSyncAllowed: boolean;
+
+  taxCodes: DefaultDestinationAttribute[];
+
+  isImportMerchantsAllowed: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private helperService: QboHelperService,
     private importSettingService: QboImportSettingsService,
+    private qboConnectorService: QboConnectorService,
     private mappingService: MappingService,
     private router: Router,
     private toastService: IntegrationsToastService,
@@ -87,7 +106,7 @@ export class QboImportSettingsComponent implements OnInit {
     this.helperService.refreshQBODimensions().subscribe();
   }
 
-  private constructPayloadAndSave() {
+  save(): void {
     this.isSaveInProgress = true;
     const importSettingPayload = QBOImportSettingModel.constructImportSettingPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
@@ -102,11 +121,6 @@ export class QboImportSettingsComponent implements OnInit {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
     });
-  }
-
-  save(): void {
-    // TODO: add warning
-    this.constructPayloadAndSave();
   }
 
   saveFyleExpenseField(): void {
@@ -140,7 +154,19 @@ export class QboImportSettingsComponent implements OnInit {
     this.showCustomFieldDialog = shouldShowDialog;
   }
 
+  private createTaxCodeWatcher(): void {
+    this.importSettingForm.controls.taxCode.valueChanges.subscribe((isTaxCodeEnabled) => {
+      if (isTaxCodeEnabled) {
+        this.importSettingForm.controls.defaultTaxCode.setValidators(Validators.required);
+      } else {
+        this.importSettingForm.controls.defaultTaxCode.clearValidators();
+        this.importSettingForm.controls.defaultTaxCode.setValue(null);
+      }
+    });
+  }
+
   private setupFormWatchers(): void {
+    this.createTaxCodeWatcher();
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
@@ -164,10 +190,21 @@ export class QboImportSettingsComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.importSettingService.getImportSettings(),
-      this.mappingService.getFyleFields('v1')
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse]) => {
+      this.mappingService.getFyleFields('v1'),
+      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.qboConnectorService.getQBOCredentials(),
+      this.mappingService.getDestinationAttributes(QBOField.TAX_CODE, 'v1', 'qbo')
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboCredentials, taxCodes]) => {
       this.qboFields = QBOImportSettingModel.getQBOFields();
       this.importSettings = importSettingsResponse;
+      this.workspaceGeneralSettings = workspaceGeneralSettings;
+      this.taxCodes = taxCodes.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+      this.isImportMerchantsAllowed = !workspaceGeneralSettings.auto_create_merchants_as_vendors;
+
+      if (qboCredentials && qboCredentials.country !== 'US') {
+        this.isTaxGroupSyncAllowed = true;
+      }
+
       this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });

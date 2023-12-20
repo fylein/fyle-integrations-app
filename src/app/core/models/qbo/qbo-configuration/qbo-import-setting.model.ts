@@ -1,16 +1,16 @@
-import { FormArray, FormControl, FormGroup } from "@angular/forms"
-import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model"
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model"
-import { MappingSetting } from "../../db/mapping-setting.model"
-import { IntegrationField } from "../../db/mapping.model"
-import { QBOField } from "../../enum/enum.model"
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { MappingSetting } from "../../db/mapping-setting.model";
+import { IntegrationField } from "../../db/mapping.model";
+import { QBOField } from "../../enum/enum.model";
 
 export type QBOImportSettingWorkspaceGeneralSetting = {
   import_categories: boolean,
-  // import_items: boolean,
-  // import_vendors_as_merchants: boolean,
-  // charts_of_accounts: string[],
-  // import_tax_codes: boolean
+  import_items: boolean,
+  import_vendors_as_merchants: boolean,
+  charts_of_accounts: string[],
+  import_tax_codes: boolean
 }
 
 export type QBOImportSettingGeneralMapping = {
@@ -19,7 +19,7 @@ export type QBOImportSettingGeneralMapping = {
 
 export type QBOImportSettingPost = {
   workspace_general_settings: QBOImportSettingWorkspaceGeneralSetting,
-  // general_mappings: QBOImportSettingGeneralMapping,
+  general_mappings: QBOImportSettingGeneralMapping,
   mapping_settings: ImportSettingMappingRow[] | []
 }
 
@@ -51,15 +51,28 @@ export class QBOImportSettingModel extends ImportSettingsModel {
     ];
   }
 
+  static getChartOfAccountTypesList(): string[] {
+    return [
+      'Expense', 'Other Expense', 'Fixed Asset', 'Cost of Goods Sold', 'Current Liability', 'Equity',
+      'Other Current Asset', 'Other Current Liability', 'Long Term Liability', 'Current Asset', 'Income', 'Other Income'
+    ];
+  }
+
   static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null): FormGroup {
     const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, this.getQBOFields()) : [];
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
-      expenseFields: new FormArray(expenseFieldsArray)
+      expenseFields: new FormArray(expenseFieldsArray),
+      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts : []),
+      importItems: new FormControl(importSettings?.workspace_general_settings.import_items ?? false),
+      taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
+      importVendorsAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_vendors_as_merchants ?? false),
+      defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null)
     });
   }
 
   static constructImportSettingPayload(importSettingsForm: FormGroup): QBOImportSettingPost {
+    const emptyDestinationAttribute = {id: null, name: null};
     const expenseFieldArray = importSettingsForm.value.expenseFields;
 
     // First filter out objects where import_to_fyle is false
@@ -75,11 +88,19 @@ export class QBOImportSettingModel extends ImportSettingsModel {
         source_placeholder: field.source_placeholder
       };
     });
+
     return {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('importCategories')?.value,
+        import_items: importSettingsForm.get('importItems')?.value,
+        charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value,
+        import_tax_codes: importSettingsForm.get('taxCode')?.value,
+        import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value
       },
-      mapping_settings: mappingSettings
+      mapping_settings: mappingSettings,
+      general_mappings: {
+        default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? importSettingsForm.get('defaultTaxCode')?.value : emptyDestinationAttribute
+      }
     };
   }
 }
