@@ -85,20 +85,19 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
 
   connectBusinessCentral(): void {
     this.businessCentralConnectionInProgress = true;
-    const url = `${environment.business_central_authorize_uri}?client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
+    const url = `${environment.business_central_authorize_uri}client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
 
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
       const code = callbackURL.split('code=')[1].split('&')[0];
       this.postBusinessCentralCredentials(code);
     });
-
     this.helperService.oauthHandler(url);
   }
 
   acceptWarning(isWarningAccepted: boolean): void {
     this.isIncorrectBusinessCentralConnectedDialogVisible = false;
     if (isWarningAccepted) {
-      this.router.navigate([`/integrations/business_central/onboarding/landing`]);
+      this.router.navigate([`/integrations/business_central/onboarding/connector`]);
     }
   }
 
@@ -119,7 +118,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
   }
 
   private postBusinessCentralCredentials(code: string): void {
-    const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(code);
+    const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(code, +this.workspaceService.getWorkspaceId());
 
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe((businessCentralCredential: BusinessCentralCredential) => {
       this.businessCentralConnectorService.getBusinessCentralCompany().subscribe((businessCentralCompanyDetails: BusinessCentralCompanyDetails) => {
@@ -133,7 +132,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
         });
       });
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
+      console.log(error)
+      const errorMessage = 'message' in error ? error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
       if (errorMessage === 'Please choose the correct Dynamic 360 Business Central account') {
         this.isIncorrectBusinessCentralConnectedDialogVisible = true;
       } else {

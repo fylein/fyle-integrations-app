@@ -25,14 +25,15 @@ export class BusinessCentralConnectorService {
   })
   connectBusinessCentral(businessCentralConnector: BusinessCentralConnectorPost): Observable<BusinessCentralCredential> {
     globalCacheBusterNotifier.next();
-    return this.apiService.post(`/workspaces/${this.workspaceId}/business_central/credentials/`, businessCentralConnector);
+    console.log(businessCentralConnector)
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/business_central/`, businessCentralConnector);
   }
 
   @Cacheable({
     cacheBusterObserver: businessCentralCredentialsCache$
   })
   getBusinessCentralCredentials(): Observable<BusinessCentralCredential> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/credentials/business_central/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/business_central/`, {});
   }
 
   @Cacheable({
