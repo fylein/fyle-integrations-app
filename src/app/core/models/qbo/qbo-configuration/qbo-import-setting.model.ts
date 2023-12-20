@@ -1,9 +1,9 @@
-import { FormArray, FormControl, FormGroup } from "@angular/forms"
-import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model"
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model"
-import { MappingSetting } from "../../db/mapping-setting.model"
-import { IntegrationField } from "../../db/mapping.model"
-import { QBOField } from "../../enum/enum.model"
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { MappingSetting } from "../../db/mapping-setting.model";
+import { IntegrationField } from "../../db/mapping.model";
+import { QBOField } from "../../enum/enum.model";
 
 export type QBOImportSettingWorkspaceGeneralSetting = {
   import_categories: boolean,
@@ -100,7 +100,7 @@ export class QBOImportSettingModel extends ImportSettingsModel {
       mapping_settings: mappingSettings,
       general_mappings: {
         default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? importSettingsForm.get('defaultTaxCode')?.value : emptyDestinationAttribute
-      },
+      }
     };
   }
 }

@@ -16,7 +16,7 @@ export class QboImportSettingsService {
 
   constructor(
     private apiService: ApiService,
-    private workspaceService: WorkspaceService,
+    private workspaceService: WorkspaceService
   ) { }
 
   @Cacheable({
