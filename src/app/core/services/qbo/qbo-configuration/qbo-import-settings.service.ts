@@ -30,6 +30,6 @@ export class QboImportSettingsService {
     cacheBusterNotifier: qboImportSettingGetCache$
   })
   postImportSettings(importSettingsPayload: QBOImportSettingPost): Observable<QBOImportSettingGet> {
-    return this.apiService.put(`v2/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
+    return this.apiService.put(`/v2/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
   }
 }

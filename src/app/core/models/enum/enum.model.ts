@@ -591,4 +591,5 @@ export enum QBOField {
   CLASS = 'CLASS',
   DEPARTMENT = 'DEPARTMENT',
   CUSTOMER = 'CUSTOMER',
+  TAX_CODE = 'TAX_CODE'
 }
