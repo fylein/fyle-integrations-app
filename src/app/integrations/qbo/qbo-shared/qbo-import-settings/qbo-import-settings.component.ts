@@ -106,7 +106,7 @@ export class QboImportSettingsComponent implements OnInit {
     this.helperService.refreshQBODimensions().subscribe();
   }
 
-  private constructPayloadAndSave() {
+  save(): void {
     this.isSaveInProgress = true;
     const importSettingPayload = QBOImportSettingModel.constructImportSettingPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
@@ -121,11 +121,6 @@ export class QboImportSettingsComponent implements OnInit {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
     });
-  }
-
-  save(): void {
-    // TODO: add warning
-    this.constructPayloadAndSave();
   }
 
   saveFyleExpenseField(): void {
