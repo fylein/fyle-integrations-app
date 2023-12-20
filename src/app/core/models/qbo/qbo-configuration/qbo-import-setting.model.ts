@@ -1,0 +1,85 @@
+import { FormArray, FormControl, FormGroup } from "@angular/forms"
+import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model"
+import { DefaultDestinationAttribute } from "../../db/destination-attribute.model"
+import { MappingSetting } from "../../db/mapping-setting.model"
+import { IntegrationField } from "../../db/mapping.model"
+import { QBOField } from "../../enum/enum.model"
+
+export type QBOImportSettingWorkspaceGeneralSetting = {
+  import_categories: boolean,
+  // import_items: boolean,
+  // import_vendors_as_merchants: boolean,
+  // charts_of_accounts: string[],
+  // import_tax_codes: boolean
+}
+
+export type QBOImportSettingGeneralMapping = {
+  default_tax_code: DefaultDestinationAttribute
+}
+
+export type QBOImportSettingPost = {
+  workspace_general_settings: QBOImportSettingWorkspaceGeneralSetting,
+  // general_mappings: QBOImportSettingGeneralMapping,
+  mapping_settings: ImportSettingMappingRow[] | []
+}
+
+
+export type QBOImportSettingGet = {
+  workspace_general_settings: QBOImportSettingWorkspaceGeneralSetting,
+  general_mappings: QBOImportSettingGeneralMapping,
+  mapping_settings: MappingSetting[],
+  workspace_id: number
+}
+
+
+
+export class QBOImportSettingModel extends ImportSettingsModel {
+  static getQBOFields(): IntegrationField[] {
+    return [
+      {
+        attribute_type: QBOField.CLASS,
+        display_name: 'Class'
+      },
+      {
+        attribute_type: QBOField.DEPARTMENT,
+        display_name: 'Department'
+      },
+      {
+        attribute_type: QBOField.CUSTOMER,
+        display_name: 'Customer'
+      }
+    ];
+  }
+
+  static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null): FormGroup {
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, this.getQBOFields()) : [];
+    return new FormGroup({
+      importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
+      expenseFields: new FormArray(expenseFieldsArray)
+    });
+  }
+
+  static constructImportSettingPayload(importSettingsForm: FormGroup): QBOImportSettingPost {
+    const expenseFieldArray = importSettingsForm.value.expenseFields;
+
+    // First filter out objects where import_to_fyle is false
+    const filteredExpenseFieldArray = expenseFieldArray.filter((field: ImportSettingMappingRow) => field.destination_field && field.source_field);
+
+    // Then map over the filtered array
+    const mappingSettings = filteredExpenseFieldArray.map((field: ImportSettingMappingRow) => {
+      return {
+        source_field: field.source_field.toUpperCase(),
+        destination_field: field.destination_field,
+        import_to_fyle: field.import_to_fyle,
+        is_custom: (field.source_field.toUpperCase() === 'PROJECT' || field.source_field.toUpperCase() === 'COST_CENTER') ? false : true,
+        source_placeholder: field.source_placeholder
+      };
+    });
+    return {
+      workspace_general_settings: {
+        import_categories: importSettingsForm.get('importCategories')?.value,
+      },
+      mapping_settings: mappingSettings
+    };
+  }
+}

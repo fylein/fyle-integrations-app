@@ -42,6 +42,10 @@ export type ImportSettingsCustomFieldRow = {
 
 export class ImportSettingsModel {
 
+  static getCustomFieldOption(): ExpenseField[] {
+    return [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
+  }
+
   static createFormGroup(data: ImportSettingMappingRow): FormGroup {
     return new FormGroup ({
       source_field: new FormControl(data.source_field || '', RxwebValidators.unique()),

@@ -586,3 +586,9 @@ export enum AccountingDisplayName {
   ACCOUNT = 'Account',
   ITEM = 'Item',
 }
+
+export enum QBOField {
+  CLASS = 'CLASS',
+  DEPARTMENT = 'DEPARTMENT',
+  CUSTOMER = 'CUSTOMER',
+}
