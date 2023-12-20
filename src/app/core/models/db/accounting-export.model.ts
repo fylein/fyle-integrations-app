@@ -217,7 +217,7 @@ export class AccountingExportModel {
       referenceNumber: referenceNumber,
       exportedAs: exportType,
       fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-      integrationUrl: `${environment.qbo_api_url}/app/${type}?txnId=${id}`,
+      integrationUrl: `${environment.qbo_app_url}/app/${type}?txnId=${id}`,
       expenses: expenseGroup.expenses
     };
   }
