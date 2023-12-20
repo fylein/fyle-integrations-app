@@ -101,4 +101,22 @@ export class ImportSettingsModel {
     }
     return expenseFieldFormArray;
   }
+
+  static constructMappingSettingPayload(expenseFieldArray: ImportSettingMappingRow[]): ImportSettingMappingRow[] {
+    // First filter out objects where import_to_fyle is false
+    const filteredExpenseFieldArray = expenseFieldArray.filter((field: ImportSettingMappingRow) => field.destination_field && field.source_field);
+
+    // Then map over the filtered array
+    const mappingSettings = filteredExpenseFieldArray.map((field: ImportSettingMappingRow) => {
+      return {
+        source_field: field.source_field.toUpperCase(),
+        destination_field: field.destination_field,
+        import_to_fyle: field.import_to_fyle,
+        is_custom: (field.source_field.toUpperCase() === 'PROJECT' || field.source_field.toUpperCase() === 'COST_CENTER') ? false : true,
+        source_placeholder: field.source_placeholder
+      };
+    });
+
+    return mappingSettings;
+  }
 }
