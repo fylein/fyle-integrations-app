@@ -26,11 +26,11 @@
                 </h5>
             </td>
             <td *ngIf="isExportLogTable">{{rowData.expenseType | titlecase}}</td>
-            <td class="tw-underline" (click)="openUrl(rowData.export_url)">{{rowData.referenceNumber}}</td>
+            <td class="tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
             <td *ngIf="!isDashboardFailed">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
             <td *ngIf="!isDashboardFailed">
                 <div>
-                  <button (click)="openUrl(rowData.export_url)" pTooltip="Open in New Tab" tooltipPosition="top">
+                  <button (click)="openUrl(rowData.integrationUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
                     <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
                   </button>
                 </div>

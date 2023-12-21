@@ -12,7 +12,7 @@ export class ExportLogChildTableDialogComponent implements OnInit {
 
   @Input() isDialogOpen: boolean;
 
-  @Input() expenses: Expense [] = [];
+  @Input() expenses: Expense[] = [];
 
   @Output() hideChildTable = new EventEmitter<void>();
 
@@ -20,8 +20,8 @@ export class ExportLogChildTableDialogComponent implements OnInit {
     private windowService: WindowService
   ) { }
 
-  openExpenseinFyle(expense_id: string) {
-    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+  openExpenseinFyle(expense_id: string, org_id: string) {
+    const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}/?org_id=${org_id}`;
     this.windowService.openInNewTab(url);
   }
 

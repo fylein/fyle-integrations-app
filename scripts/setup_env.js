@@ -27,6 +27,7 @@ const environment = {
   business_central_oauth_redirect_uri: `${process.env.BUSINESS_CENTRAL_OAUTH_REDIRECT_URI ? process.env.BUSINESS_CENTRAL_OAUTH_REDIRECT_URI : '{{BUSINESS_CENTRAL_OAUTH_REDIRECT_URI}}'}`,
   business_central_authorize_uri: `${process.env.BUSINESS_CENTRAL_AUTHORIZE_URI ? process.env.BUSINESS_CENTRAL_AUTHORIZE_URI : '{{BUSINESS_CENTRAL_AUTHORIZE_URI}}'}`,
   business_central_oauth_client_id: `${process.env.BUSINESS_CENTRAL_OAUTH_CLIENT_ID ? process.env.BUSINESS_CENTRAL_OAUTH_CLIENT_ID : '{{BUSINESS_CENTRAL_OAUTH_CLIENT_ID}}'}`,
+  qbo_app_url: `${process.env.QBO_APP_URL ? process.env.QBO_APP_URL : '{{QBO_APP_URL}}'}`,
   qbo_oauth_redirect_uri: `${process.env.QBO_OAUTH_REDIRECT_URI ? process.env.QBO_OAUTH_REDIRECT_URI : '{{QBO_OAUTH_REDIRECT_URI}}'}`,
   qbo_authorize_uri: `${process.env.QBO_AUTHORIZE_URI ? process.env.QBO_AUTHORIZE_URI : '{{QBO_AUTHORIZE_URI}}'}`,
   qbo_oauth_client_id: `${process.env.QBO_OAUTH_CLIENT_ID ? process.env.QBO_OAUTH_CLIENT_ID : '{{QBO_OAUTH_CLIENT_ID}}'}`,

@@ -1,3 +1,4 @@
+import { PaginatedResponse } from "../../db/paginated-response.model";
 import { FyleReferenceType } from "../../enum/enum.model";
 import { Expense } from "./expense.model";
 
@@ -58,14 +59,12 @@ export type SkipExportLog = {
   updated_at: Date;
   fund_source: string;
   expense_id: string;
+  org_id: string;
 };
 
-export type SkipExportLogResponse = {
-  count: number;
-  next: string;
-  previous: string;
+export interface SkipExportLogResponse extends PaginatedResponse {
   results: SkipExportLog[];
-};
+}
 
 export type ExportableExpenseGroup = {
   exportable_expense_group_ids: number[];

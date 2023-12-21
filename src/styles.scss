@@ -204,7 +204,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-h-54-px tw-px-16-px tw-py-8-px #{!important};
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-h-54-px tw-px-16-px tw-py-8-px #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
@@ -216,7 +216,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
-    @apply tw-bg-disabled-bg-color tw-rounded-4-px #{!important};
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-4-px #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
@@ -366,7 +366,7 @@ p {
 }
 
 .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
-    @apply tw-min-w-fit #{!important};
+    @apply tw-min-w-fit tw-top-[50%] tw-left-[50%] #{!important};
 }
 
 .p-dropdown-filter {

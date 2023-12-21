@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { MultiSelectModule } from 'primeng/multiselect';
+
 import { QboEmployeeSettingsComponent } from './qbo-employee-settings/qbo-employee-settings.component';
 import { QboExportSettingsComponent } from './qbo-export-settings/qbo-export-settings.component';
 import { QboImportSettingsComponent } from './qbo-import-settings/qbo-import-settings.component';
@@ -22,7 +24,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MultiSelectModule
   ],
   exports: [
     QboEmployeeSettingsComponent,
