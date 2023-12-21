@@ -21,20 +21,4 @@ export type QBOCloneSettingPost = {
 }
 
 export class QBOCloneSettingModel {
-    // static constructPayload(cloneSettingsForm: FormGroup, customMappingSettings: MappingSetting[]): QBOCloneSettingPost {
-
-        // const exportSettingPayload = QBOExportSettingModel.constructPayload(cloneSettingsForm);
-        // const importSettingPayload = QBOImportSettingModel.constructPayload(cloneSettingsForm, customMappingSettings);
-        // const advancedSettingPayload = QBOAdvancedSettingModel.constructPayload(cloneSettingsForm);
-        // const employeeMappingPayload = QBOEmployeeSettingModel.constructPayload(cloneSettingsForm);
-
-        // const cloneSettingPayload: QBOCloneSettingPost = {
-        //     export_settings: exportSettingPayload,
-        //     import_settings: importSettingPayload,
-        //     advanced_configurations: advancedSettingPayload,
-        //     employee_mappings: employeeMappingPayload
-        // };
-
-        // return cloneSettingPayload;
-    // }
 }

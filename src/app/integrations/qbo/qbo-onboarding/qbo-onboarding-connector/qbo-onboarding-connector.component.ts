@@ -127,8 +127,6 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
   private checkCloneSettingsAvailablity(): void {
     this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
-      response.is_available = true;
-      response.workspace_name = 'ar'
       if (response.is_available) {
         this.warningHeaderText = 'Your settings are pre-filled';
         this.warningContextText = `Your previous organization's settings <b>(${response.workspace_name})</b> have been copied over to the current organization
