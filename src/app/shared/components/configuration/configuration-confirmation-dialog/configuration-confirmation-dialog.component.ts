@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
+import { CongfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
   selector: 'app-configuration-confirmation-dialog',
@@ -19,12 +21,14 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   @Input() showSecondaryCTA: boolean = true;
 
-  @Output() warningAccepted = new EventEmitter<boolean>();
+  @Input() event: ConfigurationWarningEvent;
+
+  @Output() warningAccepted = new EventEmitter<CongfigurationWarningOut>();
 
   constructor() { }
 
   acceptWarning(isWarningAccepted: boolean) {
-    this.warningAccepted.emit(isWarningAccepted);
+    this.warningAccepted.emit({hasAccepted: isWarningAccepted, event: this.event});
   }
 
   ngOnInit(): void {

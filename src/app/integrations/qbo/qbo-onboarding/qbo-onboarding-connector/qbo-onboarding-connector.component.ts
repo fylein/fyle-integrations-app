@@ -1,13 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
-import { ConfigurationCta, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
+import { ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { CongfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
 import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
+import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -44,7 +48,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
   showDisconnectQBO: boolean = false;
 
-  isIncorrectQBOConnectedDialogVisible: boolean = false;
+  isWarningDialogVisible: boolean = false;
 
   qboTokenExpired: boolean = false;
 
@@ -54,7 +58,18 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
   readonly fyleOrgName: string = this.userService.getUserProfile().org_name;
 
+  private isCloneSettingsDisabled: boolean;
+
+  warningHeaderText: string;
+
+  warningContextText: string;
+
+  primaryButtonText: string;
+
+  warningEvent: ConfigurationWarningEvent;
+
   constructor(
+    private cloneSettingService: CloneSettingService,
     private helperService: HelperService,
     private qboConnectorService: QboConnectorService,
     private qboHelperService: QboHelperService,
@@ -82,15 +97,22 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   continueToNextStep(): void {
     if (this.isContinueDisabled) {
       return;
+    } else if (this.isCloneSettingsDisabled) {
+      this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
+      return;
     }
 
-    this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
+    this.checkCloneSettingsAvailablity();
   }
 
-  acceptWarning(isWarningAccepted: boolean): void {
-    this.isIncorrectQBOConnectedDialogVisible = false;
-    if (isWarningAccepted) {
-      this.router.navigate([`/integrations/qbo/onboarding/landing`]);
+  acceptWarning(data: CongfigurationWarningOut): void {
+    this.isWarningDialogVisible = false;
+    if (data.hasAccepted) {
+      if (data.event === ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED) {
+        this.router.navigate([`/integrations/qbo/onboarding/landing`]);
+      } else if (data.event === ConfigurationWarningEvent.CLONE_SETTINGS) {
+        this.router.navigate(['/integrations/qbo/onboarding/clone_settings']);
+      }
     }
   }
 
@@ -100,6 +122,25 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
       this.showDisconnectQBO = false;
       this.qboCompanyName = null;
       this.getSettings();
+    });
+  }
+
+  private checkCloneSettingsAvailablity(): void {
+    this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
+      response.is_available = true;
+      response.workspace_name = 'ar'
+      if (response.is_available) {
+        this.warningHeaderText = 'Your settings are pre-filled';
+        this.warningContextText = `Your previous organization's settings <b>(${response.workspace_name})</b> have been copied over to the current organization
+        <br><br>You can change the settings or reset the configuration to restart the process from the beginning<br>`;
+        this.primaryButtonText = 'Continue';
+        this.warningEvent = ConfigurationWarningEvent.CLONE_SETTINGS;
+        this.isWarningDialogVisible = true;
+        this.isContinueDisabled = false;
+        this.isCloneSettingsDisabled = true;
+      } else {
+        this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
+      }
     });
   }
 
@@ -134,7 +175,11 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to QuickBooks Online. Please try again';
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
-        this.isIncorrectQBOConnectedDialogVisible = true;
+        this.warningHeaderText = 'Incorrect account selected';
+        this.warningContextText = 'You had previously set up the integration with a different QuickBooks Online account. Please choose the same to restore the settings';
+        this.primaryButtonText = 'Re connect';
+        this.warningEvent = ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED;
+        this.isWarningDialogVisible = true;
       } else {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
         this.router.navigate([`/integrations/qbo/onboarding/landing`]);

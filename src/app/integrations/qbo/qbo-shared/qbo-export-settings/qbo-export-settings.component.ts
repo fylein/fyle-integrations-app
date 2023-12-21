@@ -5,7 +5,8 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { CongfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -110,8 +111,8 @@ export class QboExportSettingsComponent implements OnInit {
     this.windowReference = this.windowService.nativeWindow;
   }
 
-  constructPayloadAndSave(hasAcceptedWarning: boolean): void {
-    if (hasAcceptedWarning) {
+  constructPayloadAndSave(data: CongfigurationWarningOut): void {
+    if (data.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = QBOExportSettingModel.constructPayload(this.exportSettingForm);
       this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((response: QBOExportSettingGet) => {
@@ -140,7 +141,7 @@ export class QboExportSettingsComponent implements OnInit {
       return;
     }
 
-    this.constructPayloadAndSave(true);
+    this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS});
   }
 
   private replaceContentBasedOnConfiguration(updatedConfiguration: string, existingConfiguration: string, exportType: 'reimbursable' | 'credit card'): string {

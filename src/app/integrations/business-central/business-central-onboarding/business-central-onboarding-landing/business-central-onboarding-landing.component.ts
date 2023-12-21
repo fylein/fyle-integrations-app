@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BusinessCentralConnectorPost, BusinessCentralConnectorModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
 import { BusinessCentralOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { CongfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { BusinessCentralConnectorService } from 'src/app/core/services/business-central/business-central-configuration/business-central-connector.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -41,9 +42,9 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     private workspaceService: WorkspaceService
   ) { }
 
-  acceptWarning(isWarningAccepted: boolean): void {
+  acceptWarning(data: CongfigurationWarningOut): void {
     this.isIncorrectQBOConnectedDialogVisible = false;
-    if (isWarningAccepted) {
+    if (data.hasAccepted) {
       this.router.navigate([`/integrations/qbo/onboarding/landing`]);
     }
   }
