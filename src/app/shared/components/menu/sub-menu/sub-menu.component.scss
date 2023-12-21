@@ -18,9 +18,9 @@
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav {
     background-color: transparent;
-    @apply tw-border-b tw-border-b-box-color #{!important};
+    @apply tw-border-b tw-border-b-box-color tw-transparent #{!important};
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
-    margin-right: -12px;
+    @apply -tw-mr-12-px #{!important};
 }
