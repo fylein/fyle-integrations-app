@@ -23,15 +23,12 @@ export type QBOImportSettingPost = {
   mapping_settings: ImportSettingMappingRow[] | []
 }
 
-
 export type QBOImportSettingGet = {
   workspace_general_settings: QBOImportSettingWorkspaceGeneralSetting,
   general_mappings: QBOImportSettingGeneralMapping,
   mapping_settings: MappingSetting[],
   workspace_id: number
 }
-
-
 
 export class QBOImportSettingModel extends ImportSettingsModel {
   static getQBOFields(): IntegrationField[] {

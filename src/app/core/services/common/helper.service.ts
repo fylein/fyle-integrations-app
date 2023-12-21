@@ -8,7 +8,7 @@ import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/fo
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
+import { SkipExportValidatorRule, SkipExportValidator } from '../../models/common/advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -156,7 +156,7 @@ export class HelperService {
     return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
   }
 
-  handleSkipExportFormInAdvancedSettingsUpdates(skipExportForm: FormGroup, fields: skipExportValidator, advancedSettingForm: FormGroup): void {
+  handleSkipExportFormInAdvancedSettingsUpdates(skipExportForm: FormGroup, fields: SkipExportValidator, advancedSettingForm: FormGroup): void {
     advancedSettingForm.controls.skipExport.valueChanges.subscribe((isChanged) => {
       if (isChanged) {
         fields.isChanged.forEach((value: string) => {

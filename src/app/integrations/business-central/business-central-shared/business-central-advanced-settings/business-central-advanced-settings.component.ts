@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { forkJoin, catchError, of } from 'rxjs';
-import { SkipExportValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, skipExportValidator, AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
+import { SkipExportValidatorRule, ExpenseFilterPayload, SkipExportModel, ExpenseFilter, ExpenseFilterResponse, ConditionField, HourOption, SkipExportValidator, AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { BusinessCentralAdvancedSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-advanced-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -79,7 +79,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
   }
 
   skipExportWatcher(): void {
-    const formWatcher: skipExportValidator = {
+    const formWatcher: SkipExportValidator = {
       'isChanged': ['condition1', 'operator1', 'value1'],
       'isNotChanged': ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by']
     };

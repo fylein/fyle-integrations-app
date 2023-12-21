@@ -3,7 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterResponse, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
+import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilter, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, SkipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOPaymentSyncDirection, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -11,6 +11,7 @@ import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace
 import { QBOAdvancedSettingGet, QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
@@ -75,6 +76,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
   constructor(
     private advancedSettingsService: QboAdvancedSettingsService,
     private configurationService: ConfigurationService,
+    private helperService: HelperService,
     private qboHelperService: QboHelperService,
     private mappingService: MappingService,
     private router: Router,
@@ -84,7 +86,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
   ) { }
 
   save(): void {
-    // TODO, save skip export
+    this.saveOrDeleteSkipExport();
     const advancedSettingPayload = QBOAdvancedSettingModel.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
@@ -128,6 +130,39 @@ export class QboAdvancedSettingsComponent implements OnInit {
     return !this.workspaceGeneralSettings.import_vendors_as_merchants && (this.workspaceGeneralSettings.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE || this.workspaceGeneralSettings.name_in_journal_entry === NameInJournalEntry.MERCHANT);
   }
 
+  private saveSkipExportFields(): void {
+    if (!this.skipExportForm.valid) {
+      return;
+    }
+    let valueField = this.skipExportForm.getRawValue();
+    if (!valueField.condition1.field_name) {
+      return;
+    }
+    valueField = SkipExportModel.constructSkipExportValue(valueField);
+    valueField.rank = 1;
+    const skipExportRank1: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
+    const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
+    this.skipExportService.postExpenseFilter(payload1).subscribe(() => {
+      if (valueField.condition2 && valueField.operator2) {
+        valueField.rank = 2;
+        const skipExportRank2: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
+        const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);
+        this.skipExportService.postExpenseFilter(payload2).subscribe(() => {});
+      }
+    });
+  }
+
+  private saveOrDeleteSkipExport(): void {
+    if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.results.length > 0){
+      this.expenseFilters.results.forEach((value) => {
+        this.deleteExpenseFilter(value.rank);
+      });
+    }
+    if (this.advancedSettingForm.value.skipExport) {
+      this.saveSkipExportFields();
+    }
+  }
+
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSetting.workspace_general_settings.memo_structure;
     this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
@@ -136,8 +171,16 @@ export class QboAdvancedSettingsComponent implements OnInit {
     });
   }
 
+  private setupSkipExportWatchers(): void {
+    const formWatcher: SkipExportValidator = {
+      'isChanged': ['condition1', 'operator1', 'value1'],
+      'isNotChanged': ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by']
+    };
+    this.helperService.handleSkipExportFormInAdvancedSettingsUpdates(this.skipExportForm, formWatcher, this.advancedSettingForm);
+  }
+
   private setupFormWatchers() {
-    // TODO: skip export watchers
+    this.setupSkipExportWatchers();
     this.createMemoStructureWatcher();
 
     QBOAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);

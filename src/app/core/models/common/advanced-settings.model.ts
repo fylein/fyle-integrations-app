@@ -12,7 +12,7 @@ export  interface HourOption {
   value: number;
 }
 
-export type skipExportValidator = {
+export type SkipExportValidator = {
   isChanged: string[];
   isNotChanged: string[];
 }
