@@ -6,7 +6,7 @@ import { HelperService } from './helper.service';
 import { GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
-import { MappingState } from '../../models/enum/enum.model';
+import { AccountingDisplayName, MappingState } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
@@ -32,8 +32,8 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
   }
 
-  getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean): Observable<any> {
-    const params: {attribute_type__in: string | string[], account_type?: string, active?: boolean} = {
+  getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean, displayName?: string): Observable<any> {
+    const params: {attribute_type__in: string | string[], account_type?: string, active?: boolean, display_name__in?: string} = {
       attribute_type__in: attributeTypes
     };
 
@@ -42,6 +42,10 @@ export class MappingService {
     }
     if (active) {
       params.active = active;
+    }
+
+    if (displayName) {
+      params.display_name__in = displayName;
     }
 
     if (version === 'v1') {
@@ -78,8 +82,8 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/fields/`, {});
   }
 
-  getFyleFields(): Observable<FyleField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/fields/`, {});
+  getFyleFields(version?: 'v1'): Observable<FyleField[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {

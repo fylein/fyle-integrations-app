@@ -14,6 +14,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { TitleCasePipe } from '@angular/common';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-sage300-complete-export-log',
@@ -50,13 +51,15 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   isDateSelected: boolean = false;
 
+  private org_id: string = this.userService.getUserProfile('user').org_id;
+
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
-    private exportLogService: ExportLogService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
-    private paginatorService: PaginatorService
+    private paginatorService: PaginatorService,
+    private userService: UserService
   ) { }
 
   openExpenseinFyle(expense_id: string) {
@@ -104,7 +107,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
           this.totalCount = accountingExportResponse.count;
         }
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
+          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];

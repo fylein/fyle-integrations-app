@@ -23,6 +23,8 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   @Input() iconPath: string;
 
+  @Input() hasDependentFields: boolean;
+
   constructor(
     public windowService: WindowService
   ) { }

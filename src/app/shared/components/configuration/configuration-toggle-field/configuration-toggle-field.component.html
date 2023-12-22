@@ -1,4 +1,4 @@
-<div [formGroup]="form" class="tw-p-24-px tw-flex tw-justify-between tw-items-center">
+<div [formGroup]="form" class="tw-p-24-px tw-flex tw-justify-between tw-items-center" [ngClass]="{'tw-pb-0': hasDependentFields && form.value[formControllerName]}">
     <div class="tw-w-3/4 tw-flex tw-items-start">
       <div *ngIf="iconPath" [ngClass]="[iconPath ? 'tw-pr-16-px' : '']">
         <svg-icon-sprite [src]="iconPath" width="20px" height="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>

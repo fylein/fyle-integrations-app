@@ -10,6 +10,7 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-business-central-complete-export-log',
@@ -46,13 +47,15 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   isDateSelected: boolean = false;
 
+  private org_id: string = this.userService.getUserProfile('user').org_id;
+
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
-    private exportLogService: ExportLogService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
-    private paginatorService: PaginatorService
+    private paginatorService: PaginatorService,
+    private userService: UserService
   ) { }
 
   openExpenseinFyle(expenseId: string) {
@@ -93,7 +96,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
           this.totalCount = accountingExportResponse.count;
         }
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
+          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];

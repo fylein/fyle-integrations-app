@@ -38,7 +38,7 @@ export interface  Sage300ImportSettingGet extends Sage300ImportSetting {
 
 export interface  Sage300ImportSettingPost extends Sage300ImportSetting {}
 
-export class Sage300ImportSettingModel {
+export class Sage300ImportSettingModel extends ImportSettingsModel {
 
     static generateDependentFieldValue(attribute_type: string, source_placeholder: string): ExpenseField {
         return {
@@ -50,7 +50,7 @@ export class Sage300ImportSettingModel {
     }
 
     static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[]): FormGroup {
-        const expenseFieldsArray = importSettings?.mapping_settings ? ImportSettingsModel.constructFormArray(importSettings.mapping_settings, sage300Fields) : [] ;
+        const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, sage300Fields) : [] ;
         return new FormGroup({
             importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
             importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),
@@ -64,20 +64,8 @@ export class Sage300ImportSettingModel {
 
     static createImportSettingPayload(importSettingsForm: FormGroup, importSettings: Sage300ImportSettingGet): Sage300ImportSettingPost {
         const expenseFieldArray = importSettingsForm.value.expenseFields;
+        const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
-        // First filter out objects where import_to_fyle is false
-        const filteredExpenseFieldArray = expenseFieldArray.filter((field: ImportSettingMappingRow) => field.destination_field && field.source_field);
-
-        // Then map over the filtered array
-        const mappingSettings = filteredExpenseFieldArray.map((field: ImportSettingMappingRow) => {
-          return {
-            source_field: field.source_field.toUpperCase(),
-            destination_field: field.destination_field,
-            import_to_fyle: field.import_to_fyle,
-            is_custom: (field.source_field.toUpperCase() === 'PROJECT' || field.source_field.toUpperCase() === 'COST_CENTER') ? false : true,
-            source_placeholder: field.source_placeholder
-          };
-        });
         return {
             import_settings: {
                 import_categories: importSettingsForm.get('importCategories')?.value,
