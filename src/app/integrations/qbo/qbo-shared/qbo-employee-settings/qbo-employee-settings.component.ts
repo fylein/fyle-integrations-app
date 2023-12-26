@@ -7,7 +7,7 @@ import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settin
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ConfigurationCta, FyleField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { CongfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOEmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -84,7 +84,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
     }
   }
 
-  acceptWarning(data: CongfigurationWarningOut): void {
+  acceptWarning(data: ConfigurationWarningOut): void {
     if (data.hasAccepted) {
       this.isConfirmationDialogVisible = false;
       this.constructPayloadAndSave();

@@ -16,7 +16,7 @@ import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-co
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { environment } from 'src/environments/environment';
 import { HelperService } from 'src/app/core/services/common/helper.service';
-import { CongfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
   selector: 'app-business-central-onboarding-connector',
@@ -100,7 +100,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     // TODO
   }
 
-  acceptWarning(data: CongfigurationWarningOut): void {
+  acceptWarning(data: ConfigurationWarningOut): void {
     this.isIncorrectBusinessCentralConnectedDialogVisible = false;
     if (data.hasAccepted) {
       this.router.navigate([`/integrations/business_central/onboarding/landing`]);

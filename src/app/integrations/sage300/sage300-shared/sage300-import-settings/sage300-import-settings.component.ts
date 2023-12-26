@@ -15,7 +15,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { CongfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
   selector: 'app-sage300-import-settings',
@@ -121,7 +121,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.showCustomFieldDialog = false;
   }
 
-  acceptDependentFieldWarning(data: CongfigurationWarningOut): void {
+  acceptDependentFieldWarning(data: ConfigurationWarningOut): void {
     this.showDependentFieldWarning = false;
     if (!data.hasAccepted) {
       this.expenseFieldsGetter.controls.forEach((control) => {

@@ -6,7 +6,7 @@ import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-co
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { CongfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
@@ -105,7 +105,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     this.checkCloneSettingsAvailablity();
   }
 
-  acceptWarning(data: CongfigurationWarningOut): void {
+  acceptWarning(data: ConfigurationWarningOut): void {
     this.isWarningDialogVisible = false;
     if (data.hasAccepted) {
       if (data.event === ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED) {
