@@ -156,6 +156,10 @@ export class HelperService {
     return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
   }
 
+  resetForm(form: FormGroup): void {
+    form.reset();
+  }
+
   handleSkipExportFormInAdvancedSettingsUpdates(skipExportForm: FormGroup, fields: skipExportValidator, advancedSettingForm: FormGroup): void {
     advancedSettingForm.controls.skipExport.valueChanges.subscribe((isChanged) => {
       if (isChanged) {

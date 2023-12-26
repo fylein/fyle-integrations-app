@@ -6,7 +6,7 @@ import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-co
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, FyleField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, EmployeeFieldMapping, FyleField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOEmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -38,7 +38,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
 
   employeeSetting: QBOEmployeeSettingGet;
 
-  existingEmployeeFieldMapping: FyleField;
+  existingEmployeeFieldMapping: EmployeeFieldMapping;
 
   liveEntityExample: {[FyleField.EMPLOYEE]: string | undefined, [FyleField.VENDOR]: string | undefined};
 

@@ -14,5 +14,14 @@
                 {{ item[displayKey] }}
             </div>
         </ng-template>
+
+
+        <ng-template pTemplate="selectedItem" let-item>
+            <div class="tw-flex tw-justify-between tw-items-center">
+                <span>
+                    {{ item[displayKey] }}
+                </span>
+            </div>
+        </ng-template>
     </p-dropdown>
 </form>
