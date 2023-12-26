@@ -12,6 +12,8 @@ export class OnboardingSteppersComponent implements OnInit {
 
   @Input() onboardingSteps: OnboardingStepper[];
 
+  @Input() isCloneSettingView: boolean;
+
   constructor(
     private router: Router
   ) { }
