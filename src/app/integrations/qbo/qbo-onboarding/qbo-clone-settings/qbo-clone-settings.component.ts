@@ -56,7 +56,7 @@ export class QboCloneSettingsComponent implements OnInit {
     this.setupOnboardingSteps();
 
     forkJoin([
-      this.cloneSettingService.getCloneSettings(),
+      this.cloneSettingService.getCloneSettings()
     ]).subscribe(([cloneSetting]) => {
       this.employeeSettingForm = QBOEmployeeSettingModel.parseAPIResponseToFormGroup(cloneSetting.employee_mappings);
       this.isLoading = false;
