@@ -1,1 +1,18 @@
-<p-dropdown></p-dropdown>
+<form [formGroup]="form">
+    <p-dropdown
+        appendTo="body"
+        [placeholder]="placeholder"
+        [options]="options"
+        [formControlName]="formControllerName">
+        <ng-template pTemplate="item" let-item>
+            <div
+                #textElement
+                class="tw-flex tw-justify-between tw-items-center"
+                [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                [pTooltip]="textElement.offsetWidth < textElement.scrollWidth ? item[displayKey] : null"
+                tooltipPosition="top">
+                {{ item[displayKey] }}
+            </div>
+        </ng-template>
+    </p-dropdown>
+</form>

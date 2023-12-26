@@ -10,14 +10,26 @@
         <div class="clone-setting--field">
             <app-clone-setting-field
                 [iconSource]="'user-two'"
-                [label]="'How are your Employee represented in QuickBooks Online'">
+                [label]="'How are your Employees represented in QuickBooks Online?'"
+                [options]="employeeMappingOptions"
+                [placeholder]="'Select representation'"
+                [form]="employeeSettingForm"
+                [isFieldMandatory]="true"
+                [formControllerName]="'employeeMapping'"
+                [dropdownDisplayKey]="'label'">
             </app-clone-setting-field>
         </div>
 
         <div class="clone-setting--field">
             <app-clone-setting-field
                 [iconSource]="'question-square-outline'"
-                [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'">
+                [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
+                [options]="autoMapEmployeeOptions"
+                [placeholder]="'Select representation'"
+                [form]="employeeSettingForm"
+                [isFieldMandatory]="false"
+                [formControllerName]="'autoMapEmployee'"
+                [dropdownDisplayKey]="'label'">
             </app-clone-setting-field>
         </div>
     </div>
