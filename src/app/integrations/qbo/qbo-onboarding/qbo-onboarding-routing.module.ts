@@ -9,6 +9,7 @@ import { QboOnboardingImportSettingsComponent } from './qbo-onboarding-import-se
 import { QboOnboardingAdvancedSettingsComponent } from './qbo-onboarding-advanced-settings/qbo-onboarding-advanced-settings.component';
 import { QboOnboardingDoneComponent } from './qbo-onboarding-done/qbo-onboarding-done.component';
 import { QboTokenGuard } from 'src/app/core/guard/qbo-token.guard';
+import { QboCloneSettingsComponent } from './qbo-clone-settings/qbo-clone-settings.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,11 @@ const routes: Routes = [
       {
         path: 'done',
         component: QboOnboardingDoneComponent,
+        canActivate: [QboTokenGuard]
+      },
+      {
+        path: 'clone_settings',
+        component: QboCloneSettingsComponent,
         canActivate: [QboTokenGuard]
       }
     ]

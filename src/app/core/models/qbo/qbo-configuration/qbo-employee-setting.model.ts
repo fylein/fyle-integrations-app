@@ -1,7 +1,7 @@
 import { AutoMapEmployeeOptions, FyleField } from "../../enum/enum.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { brandingConfig } from "src/app/branding/branding-config";
-import { FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
 export type QBOEmployeeSettingWorkspaceGeneralSetting = {
   employee_field_mapping: FyleField,
@@ -33,7 +33,14 @@ export class QBOEmployeeSettingModel {
           label: `${brandingConfig.brandName} Employee Code to QuickBooks Online Display name`
         }
       ];
-}
+  }
+
+  static parseAPIResponseToFormGroup(employee_settings: QBOEmployeeSettingGet): FormGroup {
+    return new FormGroup({
+        employeeMapping: new FormControl(employee_settings.workspace_general_settings?.employee_field_mapping),
+        autoMapEmployee: new FormControl(employee_settings.workspace_general_settings?.auto_map_employees)
+    });
+  }
 
 static constructPayload(employeeSettingsForm: FormGroup): QBOEmployeeSettingPost {
     const employeeSettingPayload: QBOEmployeeSettingPost = {

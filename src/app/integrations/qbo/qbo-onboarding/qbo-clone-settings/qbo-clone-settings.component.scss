@@ -1,0 +1,9 @@
+.clone-setting {
+    &--field-section {
+        @apply tw-px-24-px;
+    }
+
+    &--field {
+        @apply tw-p-24-px;
+    }
+}

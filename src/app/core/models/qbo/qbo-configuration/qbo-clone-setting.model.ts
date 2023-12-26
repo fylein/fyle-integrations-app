@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MappingSetting } from "../../db/mapping-setting.model";
 import { QBOExportSettingGet, QBOExportSettingPost } from "./qbo-export-setting.model";
 import { QBOImportSettingGet, QBOImportSettingPost } from "./qbo-import-setting.model";

@@ -1,0 +1,18 @@
+<div class="clone-setting-field--field-row">
+    <div class="clone-setting-field--description-section">
+        <svg-icon-sprite width="24px" height="24px" src="{{iconSource}}" class="tw-text-faded-text-color"></svg-icon-sprite>
+        <span class="clone-setting-field--label-text">
+            {{ label }}
+            <app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field>
+        </span>
+    </div>
+    <div>
+        <app-dropdown
+            [placeholder]="placeholder"
+            [options]="options"
+            [form]="form"
+            [formControllerName]="formControllerName"
+            [displayKey]="dropdownDisplayKey">
+        </app-dropdown>
+    </div>
+</div>

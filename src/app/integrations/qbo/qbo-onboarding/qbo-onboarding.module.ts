@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IconSpriteModule } from 'ng-svg-icon-sprite';
 
 import { QboOnboardingRoutingModule } from './qbo-onboarding-routing.module';
 import { QboOnboardingComponent } from './qbo-onboarding.component';
@@ -12,7 +13,7 @@ import { QboOnboardingAdvancedSettingsComponent } from './qbo-onboarding-advance
 import { QboOnboardingDoneComponent } from './qbo-onboarding-done/qbo-onboarding-done.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { QboSharedModule } from '../qbo-shared/qbo-shared.module';
-
+import { QboCloneSettingsComponent } from './qbo-clone-settings/qbo-clone-settings.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +24,15 @@ import { QboSharedModule } from '../qbo-shared/qbo-shared.module';
     QboOnboardingExportSettingsComponent,
     QboOnboardingImportSettingsComponent,
     QboOnboardingAdvancedSettingsComponent,
-    QboOnboardingDoneComponent
+    QboOnboardingDoneComponent,
+    QboCloneSettingsComponent
   ],
   imports: [
     CommonModule,
     QboOnboardingRoutingModule,
     SharedModule,
-    QboSharedModule
+    QboSharedModule,
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
 export class QboOnboardingModule { }
