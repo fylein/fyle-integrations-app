@@ -73,7 +73,8 @@ export class MappingService {
         JOB: [],
         BANK_ACCOUNT: [],
         CREDIT_CARD_ACCOUNT: [],
-        ACCOUNTS_PAYABLE: []
+        ACCOUNTS_PAYABLE: [],
+        TAX_CODE: [],
       });
     }));
   }
