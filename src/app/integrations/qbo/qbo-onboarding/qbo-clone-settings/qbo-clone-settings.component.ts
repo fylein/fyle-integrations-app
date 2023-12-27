@@ -5,6 +5,7 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AdvancedSettingsModel, EmailOption } from 'src/app/core/models/common/advanced-settings.model';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
+import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
@@ -62,6 +63,12 @@ export class QboCloneSettingsComponent implements OnInit {
   customFieldType: string;
 
   customFieldControl: AbstractControl;
+
+  customField: ExpenseField;
+
+  customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
+
+  isPreviewDialogVisible: boolean;
 
   bankAccounts: DefaultDestinationAttribute[];
 
@@ -181,6 +188,45 @@ export class QboCloneSettingsComponent implements OnInit {
 
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/qbo/onboarding/connector`]);
+  }
+
+  closeModel() {
+    this.customFieldForm.reset();
+    this.showCustomFieldDialog = false;
+  }
+
+  showPreviewDialog(visible: boolean) {
+    this.isPreviewDialogVisible = visible;
+  }
+
+  closeDialog() {
+    this.isPreviewDialogVisible = false;
+  }
+
+  saveFyleExpenseField(): void {
+    this.customField = {
+      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.value.attribute_type,
+      source_placeholder: this.customFieldForm.value.source_placeholder,
+      is_dependent: false
+    };
+
+    if (this.customFieldControl) {
+      this.fyleFields.pop();
+      this.fyleFields.push(this.customField);
+      this.fyleFields.push(this.customFieldOption[0]);
+      const expenseField = {
+        source_field: this.customField.attribute_type,
+        destination_field: this.customFieldControl.value.destination_field,
+        import_to_fyle: true,
+        is_custom: true,
+        source_placeholder: this.customField.source_placeholder
+      };
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0] as FormGroup).controls.import_to_fyle.disable();
+      this.customFieldForm.reset();
+      this.showCustomFieldDialog = false;
+    }
   }
 
   save(): void {

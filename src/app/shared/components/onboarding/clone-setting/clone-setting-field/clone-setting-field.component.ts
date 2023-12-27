@@ -29,6 +29,8 @@ export class CloneSettingFieldComponent {
 
   @Input() additionalClasses: string;
 
+  @Input() tooltipText: string;
+
   @Input() inputType: InputType = InputType.DROPDOWN;
 
   InputType = InputType;
