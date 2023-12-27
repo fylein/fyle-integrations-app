@@ -58,7 +58,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
 
     return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
   }
-  
+
   setupPage(): void {
     this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
 
@@ -67,11 +67,11 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
       this.mappingService.getExportSettings()
     ]).subscribe(([mappingSettingsResponse, exportSettingsResponse]) => {
       this.destinationField = this.getDestinationField(exportSettingsResponse, mappingSettingsResponse.results);
-  
+
       this.reimbursableExpenseObject = exportSettingsResponse.reimbursable_expenses_object;
       this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
-  
+
       this.mappingService
         .getDestinationAttributes(this.destinationField, 'v2', undefined, undefined, undefined, undefined
         )
@@ -81,7 +81,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
         });
     });
   }
-  
+
 
   ngOnInit(): void {
     this.route.params.subscribe(() => {
