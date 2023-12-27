@@ -13,6 +13,10 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   @Input() showBackButton: boolean;
 
+  @Input() showResetButton: boolean;
+
+  @Output() resetCloneSetting = new EventEmitter();
+
   @Output() save = new EventEmitter();
 
   @Output() navigateToPreviousStep = new EventEmitter();
@@ -23,6 +27,10 @@ export class ConfigurationStepFooterComponent implements OnInit {
 
   navigate(): void {
     this.navigateToPreviousStep.emit();
+  }
+
+  resetConfiguration(): void {
+    this.resetCloneSetting.emit();
   }
 
   saveChanges(): void {

@@ -464,4 +464,17 @@
             </div>
         </div>
     </div>
+
+    <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? (ConfigurationCtaText.SAVE_AND_CONTINUE) : ConfigurationCtaText.SAVING" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!employeeSettingForm.valid || !exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
 </div>
+
+<app-configuration-confirmation-dialog
+    (warningAccepted)="acceptWarning($event)"
+    [isWarningVisible]="isWarningDialogVisible"
+    [event]="warningEvent"
+    [headerText]="warningHeaderText"
+    [contextText]="warningContextText"
+    [iconPath]="'assets/icons/alert_dialog.svg'"
+    [confirmBtnText]="primaryButtonText"
+    [showSecondaryCTA]="true">
+</app-configuration-confirmation-dialog>

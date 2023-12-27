@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AdvancedSettingsModel, EmailOption } from 'src/app/core/models/common/advanced-settings.model';
@@ -7,7 +8,8 @@ import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settin
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, AutoMapEmployeeOptions, EmployeeFieldMapping, ExpenseGroupingFieldOption, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
 import { QBOCloneSetting } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
@@ -112,17 +114,31 @@ export class QboCloneSettingsComponent implements OnInit {
 
   memoPreviewText: string = '';
 
+  isSaveInProgress: boolean;
+
   defaultMemoOptions: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
 
   paymentSyncOptions: SelectFormOption[] = QBOAdvancedSettingModel.getPaymentSyncOptions();
 
   adminEmails: EmailOption[] = [];
 
+  warningHeaderText: string;
+
+  warningContextText: string;
+
+  primaryButtonText: string;
+
+  warningEvent: ConfigurationWarningEvent;
+
+  isWarningDialogVisible: boolean;
+
   QBOReimbursableExpensesObject = QBOReimbursableExpensesObject;
 
   EmployeeFieldMapping = EmployeeFieldMapping;
 
   QBOCorporateCreditCardExpensesObject = QBOCorporateCreditCardExpensesObject;
+
+  ConfigurationCtaText = ConfigurationCta;
 
   InputType = InputType;
 
@@ -141,8 +157,33 @@ export class QboCloneSettingsComponent implements OnInit {
     public helperService: HelperService,
     private mappingService: MappingService,
     private qboConnectorService: QboConnectorService,
+    private router: Router,
     private workspaceService: WorkspaceService
   ) { }
+
+  resetCloneSetting(): void {
+    this.warningHeaderText = 'Are you sure?';
+    this.warningContextText = `By resetting the configuration, you will be configuring each setting individually from the beginning.<br><br>Would you like to continue?`;
+    this.primaryButtonText = 'Yes';
+    this.warningEvent = ConfigurationWarningEvent.RESET_CONFIGURATION;
+
+    this.isWarningDialogVisible = true;
+  }
+
+  acceptWarning(data: ConfigurationWarningOut): void {
+    this.isWarningDialogVisible = false;
+    if (data.hasAccepted) {
+      this.router.navigate([`/integrations/qbo/onboarding/employee_settings`]);
+    }
+  }
+
+  navigateToPreviousStep(): void {
+    this.router.navigate([`/integrations/qbo/onboarding/connector`]);
+  }
+
+  save(): void {
+
+  }
 
   isAutoCreateVendorsFieldVisible(): boolean {
     return this.cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping === EmployeeFieldMapping.VENDOR && this.cloneSetting.employee_mappings.workspace_general_settings.auto_map_employees !== null && this.cloneSetting.employee_mappings.workspace_general_settings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE;
