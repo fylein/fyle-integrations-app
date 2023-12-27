@@ -249,7 +249,7 @@
         </div>
     </div>
 
-    <app-clone-setting-header [headerText]="'Import Settings'" [subHeaderText]="'In this section, you can configure how the dimensions you import from QuickBooks Online should be mapped in ' + brandingConfig.brandName "></app-clone-setting-header>
+    <app-clone-setting-header [headerText]="'Import Settings'" [subHeaderText]="'In this section, you can configure how the dimensions you import from QuickBooks Online should be mapped in ' + brandingConfig.brandName"></app-clone-setting-header>
 
     <div class="clone-setting--field-section">
         <div class="clone-setting--field">
@@ -315,6 +315,144 @@
                 [formControllerName]="'importVendorsAsMerchants'"
                 [inputType]="InputType.TOGGLE">
             </app-clone-setting-field>
+        </div>
+    </div>
+
+    <app-clone-setting-header [headerText]="'Advanced Settings'" [subHeaderText]="'In this section,  you can configure settings to automate and customize your expense exports'"></app-clone-setting-header>
+    <div class="clone-setting--field-section">
+        <div class="clone-setting--field">
+            <app-clone-setting-field
+                [iconSource]="'calendar'"
+                [label]="'Schedule automatic export'"
+                [form]="advancedSettingForm"
+                [formControllerName]="'exportSchedule'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+
+            <div class="clone-setting--dependent-field tw-flex" *ngIf="advancedSettingForm.value.exportSchedule">
+                <app-clone-setting-field class="tw-flex-auto"
+                    [label]="'Set up export frequency'"
+                    [isFieldMandatory]="true"
+                    [options]="scheduleIntervalHours"
+                    [form]="advancedSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'exportScheduleFrequency'"
+                    [dropdownDisplayKey]="'label'"
+                    [additionalClasses]="'dropdown-size-schedule'">
+                </app-clone-setting-field>
+                <div class="tw-ml-16-px">
+                    <input type="text" class="tw-border-box-color !tw-w-100-px !tw-h-40-px !tw-bg-disabled-bg-color tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
+                </div>
+            </div>
+
+            <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.value.exportSchedule">
+                <p class="tw-pl-40-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">Send Error Notification to</p>
+                <app-email-multi-select-field
+                    [form]="advancedSettingForm"
+                    [label]="'Send Error Notification to'"
+                    [isFieldMandatory]="false"
+                    [mandatoryErrorListName]="'email for error notification'"
+                    [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
+                    [options]="adminEmails"
+                    [iconPath]="'expense'"
+                    [placeholder]="'Select email address'"
+                    [formControllerName]="'email'"
+                    [isCloneSettingView]="true">
+                </app-email-multi-select-field>
+            </div>
+        </div>
+
+        <div class="clone-setting--field">
+            <app-clone-setting-field
+                [iconSource]="'calendar'"
+                [label]="'Post entries in the next open accounting period'"
+                [form]="advancedSettingForm"
+                [formControllerName]="'changeAccountingPeriod'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+        </div>
+
+        <div class="clone-setting--field" *ngIf="isAutoCreateVendorsFieldVisible()">
+            <app-clone-setting-field
+                [iconSource]="'user-plus'"
+                [label]="'Auto-Create Vendors'"
+                [form]="advancedSettingForm"
+                [formControllerName]="'autoCreateVendors'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+        </div>
+
+        <div class="clone-setting--field" *ngIf="isPaymentSyncFieldVisible()">
+            <app-clone-setting-field
+                [iconSource]="'arrow-rotate'"
+                [label]="'Auto Sync payment status for reimbursable expenses'"
+                [form]="advancedSettingForm"
+                [formControllerName]="'paymentSync'"
+                [options]="paymentSyncOptions"
+                [placeholder]="'Select how payments should be synced for reimbursable expenses'"
+                [dropdownDisplayKey]="'label'">
+            </app-clone-setting-field>
+
+            <div class="clone-setting--dependent-field" *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_qbo'">
+                <app-clone-setting-field
+                    [label]="'To which Payment account should the payment entries be posted?'"
+                    [options]="billPaymentAccounts"
+                    [placeholder]="'Select a Payment Account'"
+                    [form]="advancedSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'billPaymentAccount'"
+                    [dropdownDisplayKey]="'name'">
+                </app-clone-setting-field>
+            </div>
+        </div>
+
+        <div class="clone-setting--field" *ngIf="isSingleCreditLineJEFieldVisible()">
+            <app-clone-setting-field
+                [iconSource]="'list'"
+                [label]="'Create a single itemized offset credit entry for Journal'"
+                [form]="advancedSettingForm"
+                [formControllerName]="'singleCreditLineJE'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+        </div>
+
+        <div class="clone-setting--field" *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()">
+            <app-clone-setting-field
+                [iconSource]="'user-plus'"
+                [label]="'Auto-create Merchants as Vendors'"
+                [form]="advancedSettingForm"
+                [formControllerName]="'autoCreateMerchantsAsVendors'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+        </div>
+
+        <div class="clone-setting--field">
+            <div class="tw-flex tw-justify-between">
+                <div class="tw-flex">
+                    <svg-icon-sprite width="24px" height="24px" src="list" class="tw-text-menu-inactive-text-color"></svg-icon-sprite>
+                    <p class="tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
+                        Set the Description Field in QuickBooks Online
+                    </p>
+                </div>
+                <app-configuration-multi-select
+                    [form]="advancedSettingForm"
+                    [isFieldMandatory]="false"
+                    [mandatoryErrorListName]="'Item level description'"
+                    [label]="'Set the line item-level Description Field in QuickBooks Online'"
+                    [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'"
+                    [options]="defaultMemoOptions"
+                    [iconPath]="'expense'"
+                    [placeholder]="'Set description'"
+                    [formControllerName]="'memoStructure'"
+                    [isCloneSettingView]="true">
+                </app-configuration-multi-select>
+            </div>
+            <div class="clone-setting--dependent-field tw-text-14-px tw-font-400 tw-text-faded-text-color !tw-pl-40-px">
+                <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
+                <div class="preview-box">
+                    {{memoPreviewText}}
+                </div>
+            </div>
         </div>
     </div>
 </div>

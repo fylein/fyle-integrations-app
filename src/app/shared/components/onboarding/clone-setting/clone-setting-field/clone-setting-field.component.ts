@@ -27,6 +27,8 @@ export class CloneSettingFieldComponent {
 
   @Input() disabledOption: string;
 
+  @Input() additionalClasses: string;
+
   @Input() inputType: InputType = InputType.DROPDOWN;
 
   InputType = InputType;

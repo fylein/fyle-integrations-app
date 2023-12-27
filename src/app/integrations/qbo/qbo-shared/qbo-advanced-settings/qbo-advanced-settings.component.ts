@@ -62,7 +62,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[] = [];
 
-  defaultMemoOptions: string[] = ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+  defaultMemoOptions: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
 
   memoPreviewText: string = '';
 
