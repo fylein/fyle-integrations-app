@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
-import { AppUrl, ExpenseState, ProgressPhase } from '../../models/enum/enum.model';
-import { AbstractControl, FormArray, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AppUrl, ExpenseState, ProgressPhase, Sage300ExportType } from '../../models/enum/enum.model';
+import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { AdvancedSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';
+import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -55,13 +55,21 @@ export class HelperService {
     return appName;
   }
 
+  isFieldRequired(form: FormGroup, controllerName: string): boolean {
+    return form.controls[controllerName].hasValidator(Validators.required);
+  }
+
   markControllerAsRequired(form: FormGroup, controllerName: string): void {
-    form.controls[controllerName].setValidators(Validators.required);
+    form.controls[controllerName].addValidators(Validators.required);
   }
 
   clearValidatorAndResetValue(form: FormGroup, controllerName: string): void {
     form.controls[controllerName].clearValidators();
     form.controls[controllerName].setValue(null);
+  }
+
+  setSage300ExportTypeControllerValue(form: FormGroup, controllerName: string): void {
+    form.controls[controllerName].setValue(Sage300ExportType.PURCHASE_INVOICE);
   }
 
   enableFormField(form: FormGroup, controllerName: string): void {
@@ -76,24 +84,28 @@ export class HelperService {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
 
-  setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | AdvancedSettingValidatorRule, form: FormGroup) {
+  setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | SkipExportValidatorRule, form: FormGroup) {
     const keys = Object.keys(validatorRule);
     Object.values(validatorRule).forEach((value, index) => {
-      form.controls[keys[index]].valueChanges.subscribe((isSelected) => {
-        if (isSelected) {
-          value.forEach((element: string) => {
-            this.markControllerAsRequired(form, element);
+      form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
+        if (selectedValue) {
+          value.forEach((controllerName: string) => {
+            this.markControllerAsRequired(form, controllerName);
+            const urlSplit = this.router.url.split('/');
+            if (urlSplit[2] === AppUrl.SAGE300 && (controllerName === 'cccExportType' || controllerName === 'reimbursableExportType')) {
+              this.setSage300ExportTypeControllerValue(form, controllerName);
+            }
           });
         } else {
-          value.forEach((element: string) => {
-            this.clearValidatorAndResetValue(form, element);
+          value.forEach((controllerName: string) => {
+            this.clearValidatorAndResetValue(form, controllerName);
           });
         }
       });
     });
   }
 
-  setExportTypeValidatoresAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
+  setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
       form.controls[values.formController].valueChanges.subscribe((isSelected) => {
         Object.entries(values.requiredValue).forEach(([key, value]) => {
@@ -144,13 +156,31 @@ export class HelperService {
     return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
   }
 
+  resetForm(form: FormGroup): void {
+    form.reset();
+  }
+
+  handleSkipExportFormInAdvancedSettingsUpdates(skipExportForm: FormGroup, fields: skipExportValidator, advancedSettingForm: FormGroup): void {
+    advancedSettingForm.controls.skipExport.valueChanges.subscribe((isChanged) => {
+      if (isChanged) {
+        fields.isChanged.forEach((value: string) => {
+          this.markControllerAsRequired(skipExportForm, value);
+        });
+      } else {
+        fields.isNotChanged.forEach((value: string) => {
+          this.clearValidatorAndResetValue(skipExportForm, value);
+        });
+      }
+    });
+  }
+
   handleSkipExportFormUpdates(skipExportForm: FormGroup, fields: string[], isChanged: boolean): void {
     if (isChanged) {
-      fields.forEach((value) => {
+      fields.forEach((value: string) => {
         this.markControllerAsRequired(skipExportForm, value);
       });
     } else {
-      fields.forEach((value) => {
+      fields.forEach((value: string) => {
         this.clearValidatorAndResetValue(skipExportForm, value);
       });
     }
@@ -172,5 +202,9 @@ export class HelperService {
       clearInterval(activePopup);
     }, 500);
   }
-}
 
+  addExportSettingFormValidator(form: FormGroup): void {
+    form.controls.reimbursableExpense.setValidators(this.exportSelectionValidator(form));
+    form.controls.creditCardExpense.setValidators(this.exportSelectionValidator(form));
+  }
+}

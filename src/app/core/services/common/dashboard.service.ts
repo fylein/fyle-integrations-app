@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
-import { Observable } from 'rxjs';
-import { Error } from '../../models/db/error.model';
-import { ExportableExpenseGroup } from '../../models/si/db/expense-group.model';
+import { Observable, from } from 'rxjs';
+import { Error, ErrorResponse } from '../../models/db/error.model';
 import { HelperService } from './helper.service';
+import { ExportableAccountingExport } from '../../models/db/accounting-export.model';
+import { TaskLogState } from '../../models/enum/enum.model';
+import { TaskLogGetParams, TaskResponse } from '../../models/db/task-log.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +23,82 @@ export class DashboardService {
     helper.setBaseApiURL();
   }
 
-  getExportableAccountingExportIds(): Observable<ExportableExpenseGroup> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/exportable_accounting_groups/`, {});
+  getExportableAccountingExportIds(version?: 'v1'): Observable<any> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'exportable_expense_groups' : 'exportable_accounting_exports'}/`, {});
   }
 
   triggerAccountingExport(): Observable<{}> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/exports/trigger/`, {});
   }
 
-  getExportErrors(): Observable<Error[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
+  getExportErrors(version?: 'v1'): Observable<any> {
+    if (version === 'v1') {
+      return this.apiService.get(`/v2/workspaces/${this.workspaceId}/errors/`, {is_resolved: false});
+    }
+
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/errors/`, {is_resolved: false});
+  }
+
+  private getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null): Observable<any> {
+    const offset = 0;
+    const apiParams: TaskLogGetParams = {
+      limit: limit,
+      offset: offset
+    };
+    if (status.length) {
+      const statusKey = 'status__in';
+      apiParams[statusKey] = status;
+    }
+
+    if (expenseGroupIds.length) {
+      const expenseKey = 'expense_group_id__in';
+      apiParams[expenseKey] = expenseGroupIds;
+    }
+
+    if (taskType) {
+      const typeKey = 'type__in';
+      apiParams[typeKey] = taskType;
+    }
+
+    if (next) {
+      return this.apiService.get(next.split('/api')[1], {});
+    }
+
+    return this.apiService.get(
+      `/workspaces/${this.workspaceId}/tasks/all/`, apiParams
+    );
+  }
+
+  private getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: TaskResponse): Promise<TaskResponse> {
+    const that = this;
+    return that.getTasks(limit, status, expenseGroupIds, taskType, allTasks.next).toPromise().then((taskResponse) => {
+
+      if (allTasks.count === 0) {
+        allTasks = taskResponse;
+      } else {
+        allTasks.count = taskResponse.count;
+        allTasks.next = taskResponse.next;
+        allTasks.previous = taskResponse.previous;
+        allTasks.results = allTasks.results.concat(taskResponse.results);
+      }
+
+      if (taskResponse.next) {
+        return that.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks);
+      }
+
+      return allTasks;
+    });
+  }
+
+  getAllTasks(status: TaskLogState[], expenseGroupIds: number[] = [], taskType: string[] = []): Observable<any> {
+    const limit = 500;
+    const allTasks = {
+      count: 0,
+      next: null,
+      previous: null,
+      results: []
+    };
+
+    return from(this.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks));
   }
 }

@@ -83,8 +83,6 @@ export const sage300AdvancedSettingResponse: Sage300AdvancedSettingGet = {
     created_at: new Date(),
     update_at: new Date(),
     workspace: 1,
-    default_job_name: "",
-    default_job_id: '0',
     auto_create_vendor: false,
     interval_hours: 1
 };
@@ -114,7 +112,7 @@ export const expenseFiltersGet: ExpenseFilterResponse =
             "is_custom": false,
             "custom_field_type": null,
             "created_at": new Date(),
-            "update_at": new Date(),
+            "updated_at": new Date(),
             "workspace": 383
         },
         {
@@ -129,7 +127,7 @@ export const expenseFiltersGet: ExpenseFilterResponse =
             "is_custom": false,
             "custom_field_type": null,
             "created_at": new Date(),
-            "update_at": new Date(),
+            "updated_at": new Date(),
             "workspace": 383
         }
     ]

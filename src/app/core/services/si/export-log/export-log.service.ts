@@ -8,7 +8,7 @@ import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { FyleReferenceType, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
-import { ExpenseGroupSetting } from 'src/app/core/models/si/db/expense-group-setting.model';
+import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 
 @Injectable({
@@ -75,13 +75,13 @@ export class ExportLogService {
   generateFyleUrl(expenseGroup: ExpenseGroup, referenceType: FyleReferenceType) : string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
-      url += `main/#/view_expense/${expenseGroup.expenses[0].expense_id}`;
+      url += `admin/#/view_expense/${expenseGroup.expenses[0].expense_id}`;
     } else if (referenceType === FyleReferenceType.EXPENSE_REPORT) {
       url += `admin/#/reports/${expenseGroup.expenses[0].report_id}`;
     } else if (referenceType === FyleReferenceType.PAYMENT) {
       url += `admin/#/settlements/${expenseGroup.expenses[0].settlement_id}`;
     }
 
-    return `${url}?org_id=${this.org_id}`;
+    return `${url}/?org_id=${this.org_id}`;
   }
 }

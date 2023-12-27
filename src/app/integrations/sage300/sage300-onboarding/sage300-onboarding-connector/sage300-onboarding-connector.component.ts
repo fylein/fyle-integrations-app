@@ -9,6 +9,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Sage300ConnectorService } from 'src/app/core/services/sage300/sage300-configuration/sage300-connector.service';
 import { Sage300OnboardingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-onboarding.service';
+import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
 
 @Component({
   selector: 'app-sage300-onboarding-connector',
@@ -37,7 +38,8 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private formBuilder: FormBuilder,
     private connectorService: Sage300ConnectorService,
-    private toastService: IntegrationsToastService
+    private toastService: IntegrationsToastService,
+    private mappingService: Sage300MappingService
   ) { }
 
   save() {
@@ -55,6 +57,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
       this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
+      this.mappingService.importSage300Attributes(true).subscribe();
       this.router.navigate([this.onboardingSteps[1].route]);
     }, () => {
       this.isLoading = false;

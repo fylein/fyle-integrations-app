@@ -6,7 +6,6 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { HelperService } from './helper.service';
 import { AccountingExportCount, AccountingExportGetParam } from '../../models/db/accounting-export.model';
-import { AccountingExportResponse } from '../../models/sage300/db/sage300-accounting-export.model';
 import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
 
 @Injectable({
@@ -24,20 +23,24 @@ export class AccountingExportService {
     helper.setBaseApiURL();
   }
 
-  getAccountingExportSummary(): Observable<AccountingExportSummary> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary`, {});
+  getAccountingExportSummary(version?: 'v1'): Observable<AccountingExportSummary> {
+    if (version === 'v1') {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/export_detail/`, {});
+    }
+
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/summary/`, {});
   }
 
   getExportableAccountingExportCount(): Observable<AccountingExportCount> {
     const apiParams = {
       status__in: [AccountingExportStatus.READY, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL]
     };
-    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count`, apiParams);
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count/`, apiParams);
   }
 
-  getAccountingExports(status: AccountingExportStatus[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null): Observable<AccountingExportResponse> {
+  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null): Observable<any> {
     const apiParams: AccountingExportGetParam = {
-      type__in: [AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE],
+      type__in: type,
       status__in: status,
       limit: limit,
       offset: offset
@@ -54,10 +57,14 @@ export class AccountingExportService {
       apiParams.exported_at__gte = `${exportedAtGte[2]}-${exportedAtGte[1]}-${exportedAtGte[0]}T23:59:59`;
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/accounting_exports/`, apiParams);
+    if (exportedAt) {
+      apiParams.exported_at__gte = exportedAt;
+    }
+
+    return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
   }
 
-  importExpensesFromFyle(): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/accounting_exports/sync/`, {});
+  importExpensesFromFyle(version?: 'v1'): Observable<{}> {
+    return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`, {});
   }
 }

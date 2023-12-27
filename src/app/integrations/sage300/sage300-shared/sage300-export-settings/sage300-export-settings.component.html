@@ -37,8 +37,22 @@
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [exportTypeIconPathArray]="previewImagePaths">
+                            [exportTypeIconPathArray]="previewImagePaths"
+                            [isDisabled]="true">
                         </app-configuration-select-field>
+                        <div *ngIf="exportSettingForm.value.reimbursableExportType===Sage300ExportType.PURCHASE_INVOICE">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Default Vendor Name'"
+                                [label]="'Set the Default Vendor as?'"
+                                [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the vendor selected here.'"
+                                [destinationAttributes]="vendorOptions"
+                                [iconPath]="'expense'"
+                                [placeholder]="'Select default vendor'"
+                                [formControllerName]="'defaultVendorName'">
+                            </app-configuration-select-field>
+                        </div>
                         <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -62,6 +76,18 @@
                                 [placeholder]="'Select default debit card account'"
                                 [formControllerName]="'defaultDebitCardAccountName'">
                             </app-configuration-select-field>
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Default Job Name'"
+                                [label]="'Set the Default Job as'"
+                                [destinationAttributes]="sage300Jobs"
+                                [subLabel]="'The integration will assign the account to the selected Default Job.'"
+                                [showClearIcon]="true"
+                                [iconPath]="'expense'"
+                                [placeholder]="'Select default Job'"
+                                [formControllerName]="'defaultJobName'">
+                            </app-configuration-select-field>
                         </div>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -82,7 +108,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
-                        [subLabel]="'The selected type of date will reflect in the expenses exported from Fyle to Sage 300 CRE. Click here for more details.'"
+                        [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
                         [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calender'"
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
@@ -107,7 +133,7 @@
                     <app-configuration-toggle-field 
                     [form]="exportSettingForm"
                     [label]="'Export Corporate Card Expenses'" 
-                    [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage Intacct.'" 
+                    [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage 300 CRE.'" 
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -124,7 +150,8 @@
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [exportTypeIconPathArray]="previewImagePaths">
+                            [exportTypeIconPathArray]="previewImagePaths"
+                            [isDisabled]="true">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
@@ -140,19 +167,31 @@
                             </app-configuration-select-field>
                             <div *ngIf="exportSettingForm?.value.reimbursableExportType!==Sage300ExportType.DIRECT_COST">
                                 <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Default Debit Card Account Name'"
-                                [label]="'Set the Default Debit Card Account as?'"
-                                [subLabel]="'The integration will debit the account selected here for All Expenses exported as Direct Cost.'"
-                                [destinationAttributes]="debitCardAccountOptions"
-                                [iconPath]="'expense'"
-                                [placeholder]="'Select default debit card account'"
-                                [formControllerName]="'defaultDebitCardAccountName'">
-                            </app-configuration-select-field>
+                                    [form]="exportSettingForm"
+                                    [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'Default Debit Card Account Name'"
+                                    [label]="'Set the Default Debit Card Account as?'"
+                                    [subLabel]="'The integration will debit the account selected here for All Expenses exported as Direct Cost.'"
+                                    [destinationAttributes]="debitCardAccountOptions"
+                                    [iconPath]="'expense'"
+                                    [placeholder]="'Select default debit card account'"
+                                    [formControllerName]="'defaultDebitCardAccountName'">
+                                </app-configuration-select-field>
+                                <app-configuration-select-field
+                                    [form]="exportSettingForm"
+                                    [isFieldMandatory]="true"
+                                    [mandatoryErrorListName]="'Default Job Name'"
+                                    [label]="'Set the Default Job as'"
+                                    [destinationAttributes]="sage300Jobs"
+                                    [subLabel]="'The integration will assign the account to the selected Job.'"
+                                    [showClearIcon]="true"
+                                    [iconPath]="'expense'"
+                                    [placeholder]="'Select Default Job'"
+                                    [formControllerName]="'defaultJobName'">
+                                </app-configuration-select-field>
                             </div>
                         </div>
-                        <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE">
+                        <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE && exportSettingForm.value.reimbursableExportType!==Sage300ExportType.PURCHASE_INVOICE">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -184,7 +223,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from Fyle to Sage Intacct. Click here for more details.'"
+                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calender'"
                         [placeholder]="'Select date'"

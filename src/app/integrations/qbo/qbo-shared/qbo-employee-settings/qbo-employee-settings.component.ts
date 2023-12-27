@@ -6,8 +6,9 @@ import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-co
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, FyleField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { EmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
+import { ConfigurationCta, EmployeeFieldMapping, FyleField, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
+import { QBOEmployeeSettingGet, QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -35,9 +36,9 @@ export class QboEmployeeSettingsComponent implements OnInit {
 
   windowReference: Window;
 
-  employeeSetting: EmployeeSettingGet;
+  employeeSetting: QBOEmployeeSettingGet;
 
-  existingEmployeeFieldMapping: FyleField;
+  existingEmployeeFieldMapping: EmployeeFieldMapping;
 
   liveEntityExample: {[FyleField.EMPLOYEE]: string | undefined, [FyleField.VENDOR]: string | undefined};
 
@@ -83,8 +84,8 @@ export class QboEmployeeSettingsComponent implements OnInit {
     }
   }
 
-  acceptWarning(isWarningAccepted: boolean): void {
-    if (isWarningAccepted) {
+  acceptWarning(data: ConfigurationWarningOut): void {
+    if (data.hasAccepted) {
       this.isConfirmationDialogVisible = false;
       this.constructPayloadAndSave();
     }
@@ -94,7 +95,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
     const employeeSettingPayload = QBOEmployeeSettingModel.constructPayload(this.employeeSettingForm);
     this.isSaveInProgress = true;
 
-    this.employeeSettingService.postEmployeeSettings(employeeSettingPayload).subscribe((response: EmployeeSettingGet) => {
+    this.employeeSettingService.postEmployeeSettings(employeeSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee settings saved successfully');
       if (this.isOnboarding) {

@@ -6,11 +6,11 @@ import { HelperService } from './helper.service';
 import { GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
-import { MappingSettingResponse } from '../../models/si/db/mapping-setting.model';
-import { MappingState } from '../../models/enum/enum.model';
+import { AccountingDisplayName, MappingState } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
+import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
 
 
 @Injectable({
@@ -32,9 +32,9 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
   }
 
-  getDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<any> {
-    const params: {attribute_types: string | string[], account_type?: string, active?: boolean} = {
-      attribute_types: attributeTypes
+  getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean, displayName?: string): Observable<any> {
+    const params: {attribute_type__in: string | string[], account_type?: string, active?: boolean, display_name__in?: string} = {
+      attribute_type__in: attributeTypes
     };
 
     if (accountType) {
@@ -44,11 +44,19 @@ export class MappingService {
       params.active = active;
     }
 
+    if (displayName) {
+      params.display_name__in = displayName;
+    }
+
+    if (version === 'v1') {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/${apiPath}/destination_attributes/`, params);
+    }
+
     return this.apiService.get(`/workspaces/${this.workspaceId}/mappings/destination_attributes/`, params);
   }
 
-  getGroupedDestinationAttributes(attributeTypes: string[]): Observable<GroupedDestinationAttribute> {
-    return from(this.getDestinationAttributes(attributeTypes).toPromise().then((response: any | undefined) => {
+  getGroupedDestinationAttributes(attributeTypes: string[], version: 'v1' | 'v2', apiPath?: string): Observable<GroupedDestinationAttribute> {
+    return from(this.getDestinationAttributes(attributeTypes, version, apiPath).toPromise().then((response: any | undefined) => {
       return response?.reduce((groupedAttributes: any, attribute: any) => {
         const group: any = groupedAttributes[attribute.attribute_type] || [];
         group.push(attribute);
@@ -61,7 +69,12 @@ export class MappingService {
         VENDOR: [],
         EMPLOYEE: [],
         CHARGE_CARD_NUMBER: [],
-        TAX_DETAIL: []
+        TAX_DETAIL: [],
+        JOB: [],
+        BANK_ACCOUNT: [],
+        CREDIT_CARD_ACCOUNT: [],
+        ACCOUNTS_PAYABLE: [],
+        TAX_CODE: []
       });
     }));
   }
@@ -70,8 +83,8 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/fields/`, {});
   }
 
-  getFyleFields(): Observable<FyleField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/fields/`, {});
+  getFyleFields(version?: 'v1'): Observable<FyleField[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
@@ -86,7 +99,11 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/auto_map_employees/trigger/`, {});
   }
 
-  private getEndpoint(mappingPage: string): string {
+  private getEndpoint(mappingPage: string, isCategoryMappingGeneric?: boolean): string {
+    if (isCategoryMappingGeneric) {
+      return 'expense_attributes';
+    }
+
     switch (mappingPage) {
       case 'EMPLOYEE':
         return 'employee_attributes';
@@ -97,21 +114,22 @@ export class MappingService {
     }
   }
 
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, sourceType: string, mappingState: MappingState, alphabetsFilter: string, mappingPage: string): Observable<GenericMappingResponse> {
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean): Observable<GenericMappingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = mappingState === MappingState.UNMAPPED ? false : true;
     const params: GenericMappingApiParams = {
       limit: pageLimit,
       offset: pageOffset,
       mapped: mappingState === MappingState.ALL ? MappingState.ALL : isMapped,
-      destination_type: sourceType
+      destination_type: destinationType,
+      source_type: sourceType
     };
 
     if (alphabetsFilter && alphabetsFilter !== 'All') {
       params.mapping_source_alphabets = alphabetsFilter;
     }
 
-    const endpoint = this.getEndpoint(mappingPage);
+    const endpoint = this.getEndpoint(sourceType, isCategoryMappingGeneric);
 
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/${endpoint}/`, params);
   }

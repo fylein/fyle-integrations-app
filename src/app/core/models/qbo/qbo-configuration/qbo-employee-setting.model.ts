@@ -1,19 +1,19 @@
-import { AutoMapEmployeeOptions, FyleField } from "../../enum/enum.model";
+import { AutoMapEmployeeOptions, EmployeeFieldMapping, FyleField } from "../../enum/enum.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { brandingConfig } from "src/app/branding/branding-config";
-import { FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 
-export type EmployeeSettingWorkspaceGeneralSetting = {
-  employee_field_mapping: FyleField,
+export type QBOEmployeeSettingWorkspaceGeneralSetting = {
+  employee_field_mapping: EmployeeFieldMapping,
   auto_map_employees: AutoMapEmployeeOptions
 }
 
-export type EmployeeSettingPost = {
-  workspace_general_settings: EmployeeSettingWorkspaceGeneralSetting;
+export type QBOEmployeeSettingPost = {
+  workspace_general_settings: QBOEmployeeSettingWorkspaceGeneralSetting;
 }
 
-export type EmployeeSettingGet = {
-  workspace_general_settings: EmployeeSettingWorkspaceGeneralSetting,
+export type QBOEmployeeSettingGet = {
+  workspace_general_settings: QBOEmployeeSettingWorkspaceGeneralSetting,
   workspace_id: number
 }
 
@@ -33,10 +33,17 @@ export class QBOEmployeeSettingModel {
           label: `${brandingConfig.brandName} Employee Code to QuickBooks Online Display name`
         }
       ];
-}
+  }
 
-static constructPayload(employeeSettingsForm: FormGroup): EmployeeSettingPost {
-    const employeeSettingPayload: EmployeeSettingPost = {
+  static parseAPIResponseToFormGroup(employee_settings: QBOEmployeeSettingGet): FormGroup {
+    return new FormGroup({
+        employeeMapping: new FormControl(employee_settings.workspace_general_settings?.employee_field_mapping),
+        autoMapEmployee: new FormControl(employee_settings.workspace_general_settings?.auto_map_employees)
+    });
+  }
+
+static constructPayload(employeeSettingsForm: FormGroup): QBOEmployeeSettingPost {
+    const employeeSettingPayload: QBOEmployeeSettingPost = {
       workspace_general_settings: {
         employee_field_mapping: employeeSettingsForm.get('employeeMapping')?.value,
         auto_map_employees: employeeSettingsForm.get('autoMapEmployee')?.value

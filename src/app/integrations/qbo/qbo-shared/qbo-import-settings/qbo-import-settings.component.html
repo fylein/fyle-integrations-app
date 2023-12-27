@@ -1,1 +1,114 @@
-<p>qbo-import-settings works!</p>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+    <div>
+        <app-configuration-step-header [headerText]="'Import Settings'"
+            [contentText]="'In this section, you can choose the fields required to be imported from QuickBooks Online to ' + brandingConfig.brandName + '. '"
+            [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
+            (refreshDimension)="refreshDimensions()">
+        </app-configuration-step-header>
+    </div>
+    <div>
+        <form [formGroup]="importSettingForm">
+            <div class="tw-p-24-px">
+                <div class="tw-rounded-lg tw-border-separator tw-border">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName"
+                        [subLabel]="'Imported account will be available as Categories in ' + brandingConfig.brandName"
+                        [formControllerName]="'importCategories'"
+                        [isSectionHeader]="false"
+                        [iconPath]="'arrow-tail-up-down'">
+                    </app-configuration-toggle-field>
+
+                    <div class="tw-p-24-px tw-pl-60-px tw-pt-0" *ngIf="importSettingForm.value.importCategories">
+                        <div class="tw-flex tw-justify-between tw-items-center">
+                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
+                                Select the accounts from QuickBooks to import as categories in Fyle
+                                <p class="tw-pt-8-px tw-text-faded-text-color">
+                                    By default expense will be selected. Open the dropdown to select more as per your requirements
+                                </p>
+                            </h5>
+                            <div class="p-field-checkbox tw-pl-34-px">
+                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select Chart of Accouts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2" [formControlName]="'chartOfAccountTypes'">
+                                </p-multiSelect>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                    <app-configuration-toggle-field
+                      [form]="importSettingForm"
+                      [label]="'Import Products/Services from QuickBooks Online'"
+                      [subLabel]="'Products/services from QuickBooks Online will be imported as Categories in ' + brandingConfig.brandName"
+                      [formControllerName]="'importItems'"
+                      [iconPath]="'arrow-tail-up-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed">
+                    <app-configuration-toggle-field
+                      [form]="importSettingForm"
+                      [label]="'Import Tax from QuickBooks Online'"
+                      [subLabel]="'The imported Tax codes from QuickBooks Online will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'"
+                      [formControllerName]="'taxCode'"
+                      [iconPath]="'arrow-tail-up-down'"
+                      [hasDependentFields]="true">
+                    </app-configuration-toggle-field>
+
+                    <app-configuration-select-field *ngIf="importSettingForm.value.taxCode"
+                        [form]="importSettingForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'tax code'"
+                        [label]="'Select Default Tax Code'"
+                        [subLabel]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'"
+                        [destinationAttributes]="taxCodes"
+                        [optionLabel]="'name'"
+                        [placeholder]="'Select tax code'"
+                        [formControllerName]="'defaultTaxCode'">
+                    </app-configuration-select-field>
+                  </div>
+
+                  <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="'Import Vendors from QuickBooks Online'"
+                        [subLabel]="'Vendors from QuickBooks Online will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [formControllerName]="'importVendorsAsMerchants'"
+                        [iconPath]="'arrow-tail-up-down'">
+                    </app-configuration-toggle-field>
+                  </div>
+
+                <div>
+                    <app-configuration-import-field
+                        [form]="importSettingForm"
+                        [appName]="appName"
+                        [accountingFieldOptions]="qboFields"
+                        [fyleFieldOptions]="fyleFields"
+                        [isDestinationFixedImport]="true">
+                    </app-configuration-import-field>
+                </div>
+            </div>
+            <div>
+                <app-configuration-step-footer [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!importSettingForm.valid"></app-configuration-step-footer>
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <app-configuration-custom-field-creation-dialog
+        [customFieldForm]="customFieldForm"
+        [showCustomFieldCreationDialog]="showCustomFieldDialog"
+        (saveCustomFieldFn)="saveFyleExpenseField()"
+        (closeModelFn)="closeModel()">
+    </app-configuration-custom-field-creation-dialog>
+</div>
+<div *ngIf="isPreviewDialogVisible">
+    <app-preview-dialog
+        [isPreviewDialogVisible]="true"
+        [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+        [header]="'Preview'">
+    </app-preview-dialog>
+</div>

@@ -1,3 +1,4 @@
+import { BusinessCentralDestinationAttributes } from "../business-central/db/business-central-destination-attribute.model";
 import { Sage300DestinationAttributes } from "../sage300/db/sage300-destination-attribuite.model";
 
 export type DestinationAttributeDetail = {
@@ -24,22 +25,27 @@ export type DestinationAttribute = {
 };
 
 export type DefaultDestinationAttribute = {
-  id: string,
-  name: string,
+  id: string | null,
+  name: string | null,
 };
 
 export type GroupedDestinationAttribute = {
-  ACCOUNT: Sage300DestinationAttributes[],
+  ACCOUNT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
   EXPENSE_TYPE: Sage300DestinationAttributes[],
-  EXPENSE_PAYMENT_TYPE: Sage300DestinationAttributes[],
-  VENDOR: Sage300DestinationAttributes[],
-  CHARGE_CARD_NUMBER: Sage300DestinationAttributes[],
-  TAX_DETAIL: Sage300DestinationAttributes[],
-  LOCATION: Sage300DestinationAttributes[],
-  DEPARTMENT: Sage300DestinationAttributes[],
-  PROJECT: Sage300DestinationAttributes[],
-  CLASS: Sage300DestinationAttributes[],
-  ITEM: Sage300DestinationAttributes[],
-  PAYMENT_ACCOUNT: Sage300DestinationAttributes[],
-  EMPLOYEE: Sage300DestinationAttributes[]
+  EXPENSE_PAYMENT_TYPE: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  VENDOR: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  CHARGE_CARD_NUMBER: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  TAX_DETAIL: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  LOCATION: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  DEPARTMENT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  PROJECT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  CLASS: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  ITEM: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  PAYMENT_ACCOUNT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  EMPLOYEE: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  JOB: Sage300DestinationAttributes[],
+  BANK_ACCOUNT: DestinationAttribute[],
+  CREDIT_CARD_ACCOUNT: DestinationAttribute[],
+  ACCOUNTS_PAYABLE: DestinationAttribute[],
+  TAX_CODE: DestinationAttribute[],
 };

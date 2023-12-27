@@ -1,15 +1,9 @@
-<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [modal]="true" [draggable]="false" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
+<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [modal]="true" [draggable]="false" [(visible)]="isExportLogVisible" (onHide)="handleDialogClose()" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <app-export-log-table [appName]="appName" [filteredExpenseGroups]="accountingExports" [isDashboardFailed]="exportLogHeader==='Successful' ? false : true" [isExportLogTable]="false"></app-export-log-table>
     </div>
 </p-dialog>
 
 <ng-template #shimmers>
-    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress && exportLogHeader==='Successful'"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress && exportLogHeader==='Successful'"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-    </tr>
+    <app-shimmers [isExportLogFetchInProgress]="isExportLogFetchInProgress" [exportLogHeader]="exportLogHeader"></app-shimmers>
 </ng-template>

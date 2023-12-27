@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExportStatus, AppName, FundSource, FyleReferenceType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
-import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { TitleCasePipe } from '@angular/common';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-sage300-complete-export-log',
@@ -26,7 +27,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   appName: AppName = AppName.SAGE300;
 
-  totalCount: number;
+  totalCount: number = 0;
 
   limit: number;
 
@@ -50,13 +51,15 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   isDateSelected: boolean = false;
 
+  private org_id: string = this.userService.getUserProfile('user').org_id;
+
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
-    private exportLogService: ExportLogService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
-    private paginatorService: PaginatorService
+    private paginatorService: PaginatorService,
+    private userService: UserService
   ) { }
 
   openExpenseinFyle(expense_id: string) {
@@ -99,12 +102,12 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
+    this.accountingExportService.getAccountingExports([AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
         if (!this.isDateSelected) {
           this.totalCount = accountingExportResponse.count;
         }
-        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map(accountingExport =>
-          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.exportLogService)
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
+          AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
         );
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];

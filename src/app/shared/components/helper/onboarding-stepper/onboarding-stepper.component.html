@@ -1,10 +1,17 @@
 <div class="tw-absolute tw-bg-header-1 tw-h-168-px tw-w-[100%] tw-z-[-1]"></div>
 <div class="tw-absolute tw-bg-header-2 tw-h-168-px tw-w-[100%] tw-z-[-1]"></div>
 
-<div class="tw-py-60-px tw-text-slightly-normal-text-color">
+<div class="tw-py-60-px tw-text-normal-text-color">
     <div>
         <div class="tw-text-center tw-pb-38-px">
-            <p class="tw-font-500">Configure the following settings to set up your integration</p>
+            <p class="tw-font-500">
+                <span *ngIf="!isCloneSettingView">
+                    Configure the following settings to set up your integration
+                </span>
+                <span *ngIf="isCloneSettingView">
+                    Fill in the below fields to complete your integration set up
+                </span>
+            </p>
         </div>
         <div class="tw-flex tw-justify-center">
             <div *ngFor="let onboardingStep of onboardingSteps">
@@ -13,7 +20,7 @@
                         <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-text-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-text-white tw-border-success-toast !tw-cursor-pointer':'',]">
                             <svg-icon-sprite *ngIf="onboardingStep.active" src='{{ onboardingStep.icon }}' [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[1] : ''" ></svg-icon-sprite>
                             <svg-icon-sprite *ngIf="!onboardingStep.active && onboardingStep.completed" src="tick" class="tick-icon"></svg-icon-sprite>
-                            <svg-icon-sprite *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ onboardingStep.icon }}' class="tw-text-placeholder" [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[1] : ''"></svg-icon-sprite>
+                            <svg-icon-sprite *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ onboardingStep.icon }}-inactive' class="tw-text-placeholder" [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[1] : ''"></svg-icon-sprite>
                         </div>
                         <div *ngIf="onboardingStep.number < onboardingSteps.length" >
                             <div *ngIf="!onboardingStep.completed">

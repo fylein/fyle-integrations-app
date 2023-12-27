@@ -1,5 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { JoinOption, Operator } from "../enum/enum.model";
+import { environment } from "src/environments/environment";
 
 export type EmailOption = {
     email: string;
@@ -11,6 +12,10 @@ export  interface HourOption {
   value: number;
 }
 
+export type skipExportValidator = {
+  isChanged: string[];
+  isNotChanged: string[];
+}
 
 export type ConditionField = {
   field_name: string;
@@ -39,7 +44,7 @@ export type ExpenseFilterPayload = {
 export interface ExpenseFilter extends ExpenseFilterPost {
     id: number,
     created_at: Date,
-    update_at: Date,
+    updated_at: Date,
     workspace: number
 }
 
@@ -50,7 +55,135 @@ export type ExpenseFilterResponse = {
     results: ExpenseFilter[]
 };
 
+export type SkipExportValidatorRule = {
+  condition1: string[];
+  condition2: string[];
+  operator1: string[];
+  operator2: string[];
+};
+
+export type AdvancedSettingValidatorRule = {
+  paymentSync: string;
+  exportSchedule: string;
+};
+
+export class AdvancedSettingsModel {
+  static getDefaultMemoOptions(): string[] {
+    return ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+  }
+
+  static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): string {
+    const time = Date.now();
+    const today = new Date(time);
+
+    const previewValues: { [key: string]: string } = {
+      employee_email: 'john.doe@acme.com',
+      category: 'Meals and Entertainment',
+      purpose: 'Client Meeting',
+      merchant: 'Pizza Hut',
+      report_number: 'C/2021/12/R/1',
+      spent_on: today.toLocaleDateString(),
+      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
+    };
+    let memoPreviewText = '';
+    const memo: string[] = [];
+    memoStructure.forEach((field, index) => {
+      if (field in previewValues) {
+        const defaultIndex = defaultMemoOptions.indexOf(memoStructure[index]);
+        memo[defaultIndex] = previewValues[field];
+      }
+    });
+    memo.forEach((field, index) => {
+      memoPreviewText += field;
+      if (index + 1 !== memo.length) {
+        memoPreviewText = memoPreviewText + ' - ';
+      }
+    });
+    return memoPreviewText;
+  }
+
+  static filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOption[]) => {
+    const adminEmailsList: EmailOption[] = [];
+    for (const email of emailToSearch) {
+      adminEmails.find(item => (item.email === email ? adminEmailsList.push(item) : null));
+    }
+    return adminEmailsList;
+};
+
+  static formatSelectedEmails(emails: EmailOption[]): string[] {
+    return emails.map((option: EmailOption) => option.email);
+  }
+}
+
 export class SkipExportModel {
+
+  static constructSkipExportValue(valueField: any) {
+    if (valueField.condition1.field_name !== 'report_title' && valueField.operator1 === 'iexact') {
+      valueField.operator1 = 'in';
+    }
+    if (valueField.condition1.is_custom === true) {
+      if (valueField.operator1 === 'is_empty') {
+        valueField.value1 = ['True'];
+        valueField.operator1 = 'isnull';
+      } else if (valueField.operator1 === 'is_not_empty') {
+        valueField.value1 = ['False'];
+        valueField.operator1 = 'isnull';
+      }
+    }
+    if (valueField.condition1.field_name === 'spent_at') {
+      valueField.value1 = new Date(valueField.value1).toISOString().split('T')[0] + 'T17:00:00.000Z';
+    }
+    if (typeof valueField.value1 === 'string') {
+      valueField.value1 = [valueField.value1];
+    }
+
+    if (valueField.condition2 && valueField.operator2) {
+      if (valueField.condition2.field_name !== 'report_title' && valueField.operator2 === 'iexact') {
+        valueField.operator2 = 'in';
+      }
+      if (valueField.condition2.field_name === 'spent_at') {
+        valueField.value2 = new Date(valueField.value2).toISOString().split('T')[0] + 'T17:00:00.000Z';
+      }
+      if (valueField.condition2.is_custom === true) {
+        if (valueField.operator2 === 'is_empty') {
+          valueField.value2 = ['True'];
+          valueField.operator2 = 'isnull';
+        } else if (valueField.operator2 === 'is_not_empty') {
+          valueField.value2 = ['False'];
+          valueField.operator2 = 'isnull';
+        }
+      }
+      if (typeof valueField.value2 === 'string') {
+        valueField.value2 = [valueField.value2];
+      }
+    }
+    return valueField;
+  }
+
+  static constructExportFilterPayload(valueField: any): ExpenseFilterPayload {
+    return {
+      condition: valueField['condition'+valueField.rank] as ConditionField,
+      operator: valueField['operator'+valueField.rank] as Operator,
+      value: valueField['value'+valueField.rank],
+      join_by: valueField?.join_by && valueField.rank === 1 ? valueField?.join_by : null,
+      rank: valueField.rank
+    };
+  }
+
+  static constructSkipExportPayload(valueField: ExpenseFilterPayload, valueOption: any[]): ExpenseFilterPost {
+    return {
+      condition: valueField.condition.field_name,
+      operator: valueField.operator,
+      values:
+        valueField.condition.type === 'DATE' ||
+          valueField.operator === 'isnull' || valueField.condition.field_name === 'report_title' ? valueField.value : valueOption,
+      rank: valueField.rank,
+      join_by: valueField?.join_by ? JoinOption[valueField.join_by as JoinOption] : null,
+      is_custom: valueField.condition.is_custom,
+      custom_field_type: valueField.condition?.is_custom ? valueField.condition.type : null
+    };
+  }
+
   static setConditionFields(response: ExpenseFilterResponse, conditionArray: ConditionField[], conditionFieldOptions: ConditionField[]) {
     response.results.forEach((element) => {
       const type = conditionFieldOptions?.filter( (fieldOption) => fieldOption.field_name === element.condition);

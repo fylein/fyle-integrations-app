@@ -1,18 +1,19 @@
 <p-table *ngIf="filteredExpenseGroups.length > 0" #dt1 [value]="filteredExpenseGroups">
     <ng-template pTemplate="header">
         <tr>
-            <th>Date and Time of Export</th>
+            <th *ngIf="!isDashboardFailed">Date and Time of Export</th>
             <th>Employee Name and ID</th>
             <th *ngIf="isExportLogTable">Expense Type</th>
             <th>Reference ID</th>
             <th *ngIf="!isDashboardFailed">Exported As</th>
             <th *ngIf="!isDashboardFailed">Link to {{appName}}</th>
+            <th *ngIf="isDashboardFailed">Link to {{ brandingConfig.brandName }}</th>
         </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-rowData>
-        <tr class="clickable-row">
-            <td>
+        <tr class="clickable-row" (click)="displayChildTable(rowData)">
+            <td *ngIf="!isDashboardFailed">
                 <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
                 <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>
             </td>
@@ -25,11 +26,18 @@
                 </h5>
             </td>
             <td *ngIf="isExportLogTable">{{rowData.expenseType | titlecase}}</td>
-            <td *ngIf="!isDashboardFailed" class="tw-underline" (click)="openUrl(rowData.export_url)">{{rowData.referenceNumber}}</td>
+            <td class="tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
             <td *ngIf="!isDashboardFailed">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
-            <td>
-                <div *ngIf="rowData.intacctUrl">
-                  <button (click)="openUrl(rowData.export_url)" pTooltip="Open in New Tab" tooltipPosition="top">
+            <td *ngIf="!isDashboardFailed">
+                <div>
+                  <button (click)="openUrl(rowData.integrationUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
+                    <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
+                  </button>
+                </div>
+            </td>
+            <td *ngIf="isDashboardFailed">
+                <div>
+                  <button (click)="openUrl(rowData.fyleUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
                     <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
                   </button>
                 </div>
@@ -37,3 +45,5 @@
         </tr>
     </ng-template>
 </p-table>
+
+<app-export-log-child-table-dialog [isDialogOpen]="isChildTableVisible" [expenses]="expenses" (hideChildTable)="handleDialogClose()"></app-export-log-child-table-dialog>

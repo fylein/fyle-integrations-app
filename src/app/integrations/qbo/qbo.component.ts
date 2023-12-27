@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { QBOOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, QBOOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QBOWorkspace } from 'src/app/core/models/qbo/db/qbo-workspace.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -25,6 +26,7 @@ export class QboComponent implements OnInit {
   windowReference: Window;
 
   constructor(
+    private helperService: HelperService,
     private qboHelperService: QboHelperService,
     private router: Router,
     private storageService: StorageService,
@@ -62,6 +64,7 @@ export class QboComponent implements OnInit {
   }
 
   private setupWorkspace(): void {
+    this.helperService.setBaseApiURL(AppUrl.QBO);
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: QBOWorkspace[]) => {
       if (workspaces.length) {
         this.storeWorkspaceAndNavigate(workspaces[0]);

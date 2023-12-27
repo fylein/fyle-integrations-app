@@ -1,11 +1,10 @@
-import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, AppNameInService, ConfigurationCta, FyleField, Page, ProgressPhase, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
-import { Sage300DestinationAttributes, Sage300GroupedDestinationAttribute } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import { AppName, ConfigurationCta, FyleField, Page, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -14,8 +13,6 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
-import { Sage300MappingService } from 'src/app/core/services/sage300/sage300-mapping/sage300-mapping.service';
-import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
   selector: 'app-sage300-export-settings',
@@ -62,6 +59,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   debitCardAccountOptions: Sage300DestinationAttributes[];
 
+  sage300Jobs: Sage300DestinationAttributes[];
+
   previewImagePaths =[
     {
       'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
@@ -78,7 +77,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
   constructor(
     private exportSettingService: Sage300ExportSettingService,
     private router: Router,
-    private helperService: Sage300HelperService,
+    private helperService: HelperService,
+    private sage300HelperService: Sage300HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
@@ -87,12 +87,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
-    this.helperService.importAttributes(isRefresh);
-  }
-
-  addFormValidator(): void {
-    this.exportSettingForm.controls.reimbursableExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
-    this.exportSettingForm.controls.creditCardExpense.setValidators(this.helper.exportSelectionValidator(this.exportSettingForm));
+    this.sage300HelperService.importAttributes(isRefresh);
   }
 
   private constructPayloadAndSave(): void {
@@ -144,28 +139,30 @@ export class Sage300ExportSettingsComponent implements OnInit {
       {
         'formController': 'reimbursableExportType',
         'requiredValue': {
-          'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName']
+          'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName', 'defaultJobName'],
+          'PURCHASE_INVOICE': ['defaultVendorName']
         }
       },
       {
         'formController': 'cccExportType',
         'requiredValue': {
-          'DIRECT_COST': ['defaultCreditCardCCCAccountName', 'defaultDebitCardAccountName'],
+          'DIRECT_COST': ['defaultCreditCardCCCAccountName', 'defaultDebitCardAccountName', 'defaultJobName'],
           'PURCHASE_INVOICE': ['defaultVendorName']
         }
       }
     ];
     forkJoin([
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT])
+      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT, Sage300Field.JOB], 'v2')
     ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
-      this.addFormValidator();
-      this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
-      this.helper.setExportTypeValidatoresAndWatchers(exportModuleRule, this.exportSettingForm);
       this.vendorOptions = destinationAttributes.VENDOR;
       this.creditCardAccountOptions = this.debitCardAccountOptions = destinationAttributes.ACCOUNT;
+      this.sage300Jobs = destinationAttributes.JOB;
+      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, destinationAttributes );
+      this.helperService.addExportSettingFormValidator(this.exportSettingForm);
+      this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
+      this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
       this.isLoading = false;
     });
   }

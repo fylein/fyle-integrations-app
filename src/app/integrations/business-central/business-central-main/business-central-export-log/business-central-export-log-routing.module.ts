@@ -10,11 +10,11 @@ const routes: Routes = [
     component: BusinessCentralExportLogComponent,
     children: [
       {
-        path: 'complete',
+        path: 'complete_export_log',
         component: BusinessCentralCompleteExportLogComponent
       },
       {
-        path: 'skipped',
+        path: 'skip_export_log',
         component: BusinessCentralSkippedExportLogComponent
       }
     ]

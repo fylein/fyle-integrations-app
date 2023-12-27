@@ -37,7 +37,6 @@
                             [label]="'Set up export frequency'"
                             [subLabel]="'Set a frequency based on how often you want your expenses in Fyle to be exported to Sage 300 CRE'"
                             [options]="hours"
-                            [showClearIcon]="true"
                             [placeholder]="'Set Schedule'"
                             [formControllerName]="'scheduleAutoExportFrequency'">
                         </app-configuration-schedule-export>
@@ -62,7 +61,7 @@
                     [placeholder]="'Set description'"
                     [formControllerName]="'memoStructure'">
                 </app-configuration-multi-select>
-                <div class="preview-text preview-section">
+                <div class="preview-text">
                     <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
                     <div class="preview-box">
                         {{memoPreviewText}}
@@ -88,7 +87,7 @@
                     </app-configuration-skip-export>
                 </div>
             </div>
-            <div class="tw-mb-16-px">
+            <!-- <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'Other Preferences'"
                     [subLabel]="'Based on your preference, you can choose whether you want to create any new records in Sage 300 CRE from Fyle. (when there is no employee record found, or when the accounting period is closed)'">
@@ -102,26 +101,7 @@
                     [formControllerName]="'autoCreateVendor'"
                     [iconPath]="'people'">
                 </app-configuration-toggle-field>
-            </div>
-            <div>
-                <app-configuration-step-sub-header
-                    [label]="'Default Field Values'"
-                    [subLabel]="'If you\'ve made a field mandatory in Sage 300 CRE but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.'">
-                </app-configuration-step-sub-header>
-            </div>
-            <div>
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'Job'"
-                    [label]="'Default Job'"
-                    [destinationAttributes]="sageIntacctJobs"
-                    [isDefaultFields]="true"
-                    [showClearIcon]="true"
-                    [placeholder]="'Select Job'"
-                    [formControllerName]="'defaultJobName'">
-                </app-configuration-select-field>
-            </div>
+            </div> -->
         </div>
         <div>
             <app-configuration-step-footer [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingForm.valid"></app-configuration-step-footer>

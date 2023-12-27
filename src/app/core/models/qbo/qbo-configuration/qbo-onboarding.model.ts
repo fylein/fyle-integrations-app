@@ -57,13 +57,13 @@ export class QBOOnboardingModel {
           completed: false,
           number: 4,
           step: 'Import Settings',
-          icon: 'import-setting',
+          icon: 'export-setting',
           route: '/integrations/qbo/onboarding/import_settings',
           size: {
             height: '18px',
             width: '15px'
           },
-          styleClasses: ['step-name-import--text', 'step-name-import--icon']
+          styleClasses: ['step-name-export--text', 'step-name-export--icon']
         },
         {
           active: false,

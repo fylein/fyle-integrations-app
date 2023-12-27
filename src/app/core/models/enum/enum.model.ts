@@ -49,14 +49,21 @@ export enum IntacctUpdateEvent {
   CONNECT_INTACCT = 'Connect Sage Intacct',
   EXPORT_SETTING_INTACCT = 'Export Settings Intacct',
   IMPORT_SETTINGS_INTACCT = 'Import Settings Intacct',
-  ADVANCED_SETTINGS_INTACCT= 'Advanced Settings Intacct',
+  ADVANCED_SETTINGS_INTACCT = 'Advanced Settings Intacct',
 }
 
 export enum Sage300UpdateEvent {
   CONNECT_SAGE300 = 'Connect Sage300',
   EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
   IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
-  ADVANCED_SETTINGS_SAGE300= 'Advanced Settings Sage300',
+  ADVANCED_SETTINGS_SAGE300 = 'Advanced Settings Sage300',
+}
+
+export enum BusinessCentralUpdateEvent {
+  CONNECT_BUSINESS_CENTRAL = 'Connect Business Central',
+  EXPORT_SETTING_BUSINESS_CENTRAL = 'Export Settings Business Central',
+  IMPORT_SETTINGS_BUSINESS_CENTRAL = 'Import Settings Business Central',
+  ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings Business Central',
 }
 
 export enum AppName {
@@ -99,6 +106,9 @@ export enum Page {
   EXPORT_SETTING_SAGE300 = 'Export Settings Sage300',
   IMPORT_SETTINGS_SAGE300 = 'Import Settings Sage300',
   ADVANCED_SETTINGS_SAGE300 = 'Advanced Settings Sage300',
+  EXPORT_SETTING_BUSINESS_CENTRAL = 'Export Settings BusinessCentral',
+  IMPORT_SETTINGS_BUSINESS_CENTRAL = 'Import Settings BusinessCentral',
+  ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings BusinessCentral',
 }
 
 export enum ClickEvent {
@@ -124,10 +134,11 @@ export enum ClickEvent {
   ADD_EMAIL_MANUALLY = 'Add Email Manually',
   ADD_CUSTOM_FIELD = 'Add Custom Field',
   QBD_EXPORT = 'Export IIF files',
-  CONNECT_INTACCT  = 'Connect Sage Intacct',
+  CONNECT_INTACCT = 'Connect Sage Intacct',
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
   INTACCT_EXPORT = 'Export Sage Intacct',
-  CONNECT_SAGE300 = 'Connect Sage 300 CRE'
+  CONNECT_SAGE300 = 'Connect Sage 300 CRE',
+  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 360 Business Central'
 }
 
 export enum ProgressPhase {
@@ -182,6 +193,19 @@ export enum QBOReimbursableExpensesObject {
   EXPENSE = 'EXPENSE'
 }
 
+export enum QBOCorporateCreditCardExpensesObject {
+  CREDIT_CARD_PURCHASE = 'CREDIT CARD PURCHASE',
+  BILL = 'BILL',
+  JOURNAL_ENTRY = 'JOURNAL ENTRY',
+  EXPENSE = 'EXPENSE',
+  DEBIT_CARD_EXPENSE = 'DEBIT CARD EXPENSE'
+}
+
+export enum NameInJournalEntry {
+  EMPLOYEE = 'EMPLOYEE',
+  MERCHANT = 'MERCHANT'
+}
+
 export enum CorporateCreditCardExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
@@ -213,11 +237,14 @@ export enum ExportDateType {
   CURRENT_DATE = 'current_date',
   VERIFIED_DATE = 'verified_at',
   APPROVAL_DATE = 'approved_at',
+  VERIFIED_AT = 'verified_at',
+  APPROVED_AT = 'approved_at',
 }
 
 export enum FyleField {
   EMPLOYEE = 'EMPLOYEE',
-  VENDOR = 'VENDOR'
+  VENDOR = 'VENDOR',
+  CATEGORY = 'CATEGORY',
 }
 
 export enum ExpenseGroupingFieldOption {
@@ -234,267 +261,352 @@ export enum QBDOnboardingState {
   FIELD_MAPPINGS = 'FIELD_MAPPINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
-  }
+}
 
-  export enum ConfigurationCta {
+export enum ConfigurationCta {
   SAVE = 'Save',
   SAVE_AND_CONTINUE = 'Save and Continue',
   CONTINUE = 'Continue',
   SAVING = 'Saving',
   SYNCING = 'Syncing'
-  }
+}
 
-  export enum QBDReimbursableExpensesObject {
+export enum QBDReimbursableExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
-  }
+}
 
-  export enum QBDCorporateCreditCardExpensesObject {
+export enum QBDCorporateCreditCardExpensesObject {
   CREDIT_CARD_PURCHASE = 'CREDIT_CARD_PURCHASE',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
-  }
+}
 
-  export enum QBDExpenseGroupedBy {
+export enum QBDExpenseGroupedBy {
   EXPENSE = 'EXPENSE',
   REPORT = 'REPORT'
-  }
+}
 
-  export enum QBDExportDateType {
+export enum QBDExportDateType {
   LAST_SPENT_AT = 'last_spent_at',
   SPENT_AT = 'spent_at',
   POSTED_AT = 'posted_at'
-  }
+}
 
-  export enum QBDEntity {
+export enum QBDEntity {
   EMPLOYEE = 'EMPLOYEE',
   VENDOR = 'VENDOR'
-  }
+}
 
-  export enum QBDScheduleFrequency {
+export enum QBDScheduleFrequency {
   DAILY = 'DAILY',
   WEEKLY = 'WEEKLY',
   MONTHLY = 'MONTHLY'
-  }
-  export enum QBDFyleField {
+}
+export enum QBDFyleField {
   PROJECT = 'PROJECT',
   COST_CENTER = 'COST_CENTER'
-  }
+}
 
-  export enum QBDAccountingExportsState {
+export enum QBDAccountingExportsState {
   COMPLETE = 'COMPLETE',
   ENQUEUED = 'ENQUEUED',
   IN_PROGRESS = 'IN_PROGRESS',
-  }
+}
 
-  export enum QBDAccountingExportsType {
-    EXPORT_BILLS = 'EXPORT_BILLS',
-    REIMBURSABLE = 'REIMBURSABLE',
-    CREDIT_CARD = 'CREDIT_CARD',
-    EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
-    EXPORT_JOURNALS = 'EXPORT_JOURNALS'
-  }
+export enum QBDAccountingExportsType {
+  EXPORT_BILLS = 'EXPORT_BILLS',
+  REIMBURSABLE = 'REIMBURSABLE',
+  CREDIT_CARD = 'CREDIT_CARD',
+  EXPORT_CREDIT_CARD_PURCHASES = 'EXPORT_CREDIT_CARD_PURCHASES',
+  EXPORT_JOURNALS = 'EXPORT_JOURNALS'
+}
 
-  export enum PaymentSyncDirection {
-    FYLE_TO_INTACCT = 'fyle_to_intacct',
-    INTACCT_TO_FYLE = 'intacct_to_fyle'
-  }
+export enum PaymentSyncDirection {
+  FYLE_TO_INTACCT = 'fyle_to_intacct',
+  INTACCT_TO_FYLE = 'intacct_to_fyle'
+}
 
-  export enum IntacctErrorType {
-    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
-    CATEGORY_MAPPING = 'CATEGORY_MAPPING',
-    INTACCT_ERROR = 'INTACCT_ERROR'
-  }
+export enum QBOPaymentSyncDirection {
+  FYLE_TO_QBO = 'fyle_to_qbo',
+  QBO_TO_FYLE = 'qbo_to_fyle'
+}
 
-  export enum FyleReferenceType {
-    REPORT_ID = 'report_id',
-    EXPENSE_REPORT = 'claim_number',
-    PAYMENT = 'settlement_id',
-    EXPENSE = 'expense_id'
-  }
+export enum IntacctErrorType {
+  EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+  CATEGORY_MAPPING = 'CATEGORY_MAPPING',
+  INTACCT_ERROR = 'INTACCT_ERROR'
+}
 
-  export enum MappingState {
-    MAPPED = 'MAPPED',
-    UNMAPPED = 'UNMAPPED',
-    ALL = 'ALL'
-  }
+export enum FyleReferenceType {
+  REPORT_ID = 'report_id',
+  EXPENSE_REPORT = 'claim_number',
+  PAYMENT = 'settlement_id',
+  EXPENSE = 'expense_id'
+}
 
-  export enum Sage300Field {
-    ACCOUNT = 'ACCOUNT',
-    CUSTOMER = 'CUSTOMER',
-    DEPARTMENT = 'DEPARTMENT',
-    CLASS = 'CLASS',
-    TAX_DETAIL = 'TAX_DETAIL',
-    JOB = 'JOB'
-  }
+export enum MappingState {
+  MAPPED = 'MAPPED',
+  UNMAPPED = 'UNMAPPED',
+  ALL = 'ALL'
+}
 
-  export enum SageIntacctField {
-    ACCOUNT = 'ACCOUNT',
-    CUSTOMER = 'CUSTOMER',
-    DEPARTMENT = 'DEPARTMENT',
-    CLASS = 'CLASS',
-    TAX_CODE = 'TAX_CODE'
-  }
+export enum AccountingField {
+  ACCOUNT = 'ACCOUNT',
+}
 
-  export enum MappingSourceField {
-    PROJECT = 'PROJECT',
-    COST_CENTER = 'COST_CENTER',
-    TAX_GROUP = 'TAX_GROUP'
-  }
+export enum Sage300Field {
+  ACCOUNT = 'ACCOUNT',
+  CUSTOMER = 'CUSTOMER',
+  DEPARTMENT = 'DEPARTMENT',
+  CLASS = 'CLASS',
+  TAX_DETAIL = 'TAX_DETAIL',
+  JOB = 'JOB'
+}
 
-  export enum MappingDestinationField {
-    CUSTOMER = 'CUSTOMER',
-    CLASS = 'CLASS',
-    DEPARTMENT = 'DEPARTMENT',
-    TAX_CODE = 'TAX_CODE'
-  }
+export enum BusinessCentralField {
+  ACCOUNT = 'ACCOUNT',
+  CUSTOMER = 'CUSTOMER',
+  DEPARTMENT = 'DEPARTMENT',
+  CLASS = 'CLASS',
+  TAX_DETAIL = 'TAX_DETAIL',
+  JOB = 'JOB'
+}
 
-  export enum TaskLogType {
-    CREATING_AP_PAYMENT = 'CREATING_AP_PAYMENT',
-    CREATING_EXPENSE_REPORTS = 'CREATING_EXPENSE_REPORTS',
-    CREATING_CHARGE_CARD_TRANSACTIONS = 'CREATING_CHARGE_CARD_TRANSACTIONS',
-    CREATING_JOURNAL_ENTRIES = 'CREATING_JOURNAL_ENTRIES',
-    FETCHING_EXPENSES = 'FETCHING_EXPENSES',
-    CREATING_BILLS = 'CREATING_BILLS',
-    CREATING_REIMBURSEMENT = 'CREATING_REIMBURSEMENT'
-  }
+export enum SageIntacctField {
+  ACCOUNT = 'ACCOUNT',
+  CUSTOMER = 'CUSTOMER',
+  DEPARTMENT = 'DEPARTMENT',
+  CLASS = 'CLASS',
+  TAX_CODE = 'TAX_CODE'
+}
 
-  export enum TaskLogState {
-    ENQUEUED = 'ENQUEUED',
-    IN_PROGRESS = 'IN_PROGRESS',
-    FAILED = 'FAILED',
-    FATAL = 'FATAL',
-    COMPLETE = 'COMPLETE',
-  }
+export enum MappingSourceField {
+  PROJECT = 'PROJECT',
+  COST_CENTER = 'COST_CENTER',
+  TAX_GROUP = 'TAX_GROUP'
+}
 
-  export enum ExportMode {
-    MANUAL = 'MANUAL',
-    AUTO = 'AUTO'
-  }
+export enum MappingDestinationField {
+  CUSTOMER = 'CUSTOMER',
+  CLASS = 'CLASS',
+  DEPARTMENT = 'DEPARTMENT',
+  TAX_CODE = 'TAX_CODE'
+}
 
-  export enum ExportState {
-    SUCCESS = 'SUCCESS',
-    FAILED = 'FAILED'
-  }
+export enum TaskLogType {
+  CREATING_AP_PAYMENT = 'CREATING_AP_PAYMENT',
+  CREATING_EXPENSE_REPORTS = 'CREATING_EXPENSE_REPORTS',
+  CREATING_CHARGE_CARD_TRANSACTIONS = 'CREATING_CHARGE_CARD_TRANSACTIONS',
+  CREATING_JOURNAL_ENTRIES = 'CREATING_JOURNAL_ENTRIES',
+  FETCHING_EXPENSES = 'FETCHING_EXPENSES',
+  CREATING_BILLS = 'CREATING_BILLS',
+  CREATING_REIMBURSEMENT = 'CREATING_REIMBURSEMENT'
+}
 
-  export enum PaginatorPage {
-    MAPPING = 'mapping',
-    DASHBOARD = 'dashboard',
-    EXPORT_LOG = 'export-log'
-  }
+export enum TaskLogState {
+  ENQUEUED = 'ENQUEUED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  FAILED = 'FAILED',
+  FATAL = 'FATAL',
+  COMPLETE = 'COMPLETE',
+}
 
-  export enum FieldType {
-    TEXT = 'TEXT',
-    SELECT = 'SELECT'
-  }
+export enum ExportMode {
+  MANUAL = 'MANUAL',
+  AUTO = 'AUTO'
+}
 
-  export enum OperatingSystem {
-    WIN = 'Win',
-    MAC = 'Mac'
-  }
+export enum ExportState {
+  SUCCESS = 'SUCCESS',
+  FAILED = 'FAILED'
+}
 
-  export enum RefinerSurveyType {
-    ONBOARDING_DONE = 'Onboarding Done',
-    EXPORT_DONE = 'Export Done'
-  }
+export enum PaginatorPage {
+  MAPPING = 'mapping',
+  DASHBOARD = 'dashboard',
+  EXPORT_LOG = 'export-log'
+}
 
-  export enum AppUrl {
-    BAMBOO_HR = 'bamboo_hr',
-    QBD = 'qbd',
-    TRAVELPERK = 'travelperk',
-    GUSTO = 'gusto',
-    INTACCT = 'intacct',
-    SAGE300 = 'sage300',
-    BUSINESS_CENTRAL = 'business_central',
-    INTEGRATION = 'integration',
-    QBO = 'qbo'
-  }
+export enum FieldType {
+  TEXT = 'TEXT',
+  SELECT = 'SELECT'
+}
 
-  export enum Sage300ExportType {
-    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
-    DIRECT_COST = 'DIRECT_COST'
-  }
+export enum OperatingSystem {
+  WIN = 'Win',
+  MAC = 'Mac'
+}
 
-  export enum Sage300ExpenseDate {
-    LAST_SPENT_AT = 'LAST_SPENT_AT',
-    CREATED_AT = 'CREATED_AT',
-    SPENT_AT = 'SPENT_AT',
-    POSTED_AT = 'POSTED_AT'
-  }
+export enum RefinerSurveyType {
+  ONBOARDING_DONE = 'Onboarding Done',
+  EXPORT_DONE = 'Export Done'
+}
 
-  export enum DefaultImportFields {
-    CATEGORY = 'CATEGORY',
-    ACCOUNT = 'ACCOUNT',
-    VENDOR = 'VENDOR',
-    MERCHANTS = 'MERCHANTS'
-  }
+export enum AppUrl {
+  BAMBOO_HR = 'bamboo_hr',
+  QBD = 'qbd',
+  TRAVELPERK = 'travelperk',
+  GUSTO = 'gusto',
+  INTACCT = 'intacct',
+  SAGE300 = 'sage300',
+  BUSINESS_CENTRAL = 'business_central',
+  INTEGRATION = 'integration',
+  QBO = 'qbo'
+}
 
-  export enum AccountingExportStatus {
-    READY = 'READY',
-    FAILED = 'FAILED',
-    FATAL = 'FATAL',
-    COMPLETE = 'COMPLETE',
-    IN_PROGRESS = 'IN_PROGRESS',
-    ENQUEUED = 'ENQUEUED',
-    EXPORT_QUEUED = 'EXPORT_QUEUED'
-  }
+export enum Sage300ExportType {
+  PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+  DIRECT_COST = 'DIRECT_COST'
+}
 
-  export enum AccountingExportType {
-    PURCHASE_INVOICE = 'PURCHASE_INVOICE',
-    DIRECT_COSTS = 'DIRECT_COSTS'
-  }
+export enum DefaultImportFields {
+  CATEGORY = 'CATEGORY',
+  ACCOUNT = 'ACCOUNT',
+  VENDOR = 'VENDOR',
+  MERCHANTS = 'MERCHANTS',
+  LOCATION = 'LOCATION'
+}
 
-  export enum AccountingErrorType {
-    EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
-    CATEGORY_MAPPING = 'CATEGORY_MAPPING'
-  }
+export enum Sage300ExpenseDate {
+  LAST_SPENT_AT = 'LAST_SPENT_AT',
+  CURRENT_DATE = 'CURRENT_DATE',
+  SPENT_AT = 'SPENT_AT',
+  POSTED_AT = 'POSTED_AT'
+}
 
-  export enum AccountingExport{
-    CREATING_DIRECT_COST = 'CREATING_DIRECT_COST',
-    CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
-  }
+export enum AccountingExportStatus {
+  READY = 'READY',
+  FAILED = 'FAILED',
+  FATAL = 'FATAL',
+  COMPLETE = 'COMPLETE',
+  IN_PROGRESS = 'IN_PROGRESS',
+  ENQUEUED = 'ENQUEUED',
+  EXPORT_QUEUED = 'EXPORT_QUEUED'
+}
 
-  export enum Operator {
-    IsNull = "isnull",
-    IExact = "iexact",
-    IContains = "icontains",
-    LessThan = "lt",
-    LessThanOrEqual = "lte"
-  }
+export enum AccountingExportType {
+  PURCHASE_INVOICE = 'PURCHASE_INVOICE',
+  DIRECT_COSTS = 'DIRECT_COSTS'
+}
 
-  export enum JoinOption {
-    AND = "AND",
-    OR = "OR"
-  }
+export enum BusinessCentralAccountingExportType {
 
-  export enum CustomOperatorOption {
-    Is = "iexact",
-    IsEmpty = "is_empty",
-    IsNotEmpty = "is_not_empty"
-  }
+}
 
-  export enum IntacctExportSettingDestinationOptionKey {
-    VENDOR = 'VENDOR',
-    ACCOUNT = 'ACCOUNT',
-    EXPENSE_PAYMENT_TYPE = 'EXPENSE_PAYMENT_TYPE',
-    CCC_EXPENSE_PAYMENT_TYPE = 'CCC_EXPENSE_PAYMENT_TYPE',
-    CHARGE_CARD = 'CHARGE_CARD'
-  }
+export enum AccountingErrorType {
+  EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
+  CATEGORY_MAPPING = 'CATEGORY_MAPPING',
+  ACCOUNTING_ERROR = 'ACCOUNTING_ERROR'
+}
 
- export enum IntegrationName {
+export enum AccountingExport {
+  CREATING_DIRECT_COST = 'CREATING_DIRECT_COST',
+  CREATING_PURCHASE_INVOICE = 'CREATING_PURCHASE_INVOICE'
+}
+
+export enum Operator {
+  IsNull = "isnull",
+  IExact = "iexact",
+  IContains = "icontains",
+  LessThan = "lt",
+  LessThanOrEqual = "lte"
+}
+
+export enum JoinOption {
+  AND = "AND",
+  OR = "OR"
+}
+
+export enum CustomOperatorOption {
+  Is = "iexact",
+  IsEmpty = "is_empty",
+  IsNotEmpty = "is_not_empty"
+}
+
+export enum IntacctExportSettingDestinationOptionKey {
+  VENDOR = 'VENDOR',
+  ACCOUNT = 'ACCOUNT',
+  EXPENSE_PAYMENT_TYPE = 'EXPENSE_PAYMENT_TYPE',
+  CCC_EXPENSE_PAYMENT_TYPE = 'CCC_EXPENSE_PAYMENT_TYPE',
+  CHARGE_CARD = 'CHARGE_CARD'
+}
+
+export enum IntegrationName {
   SAGE300 = 'SAGE300'
- }
+}
 
- export enum BusinessCentralOnboardingState {
+export enum BusinessCentralOnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
- }
+}
 
- export enum FundSource {
+export enum FundSource {
   PERSONAL = 'PERSONAL',
   CCC = 'CCC',
   REIMBURSABLE = 'Reimbursable',
   CORPORATE_CARD = 'Corporate Card'
- }
+}
+
+export enum BusinessCentralExportType {
+  JOURNAL_ENTRY = 'JOURNAL_ENTRY',
+  PURCHASE_INVOICE = 'PURCHASE_INVOICE'
+}
+
+export enum ExportErrorSourceType {
+  EMPLOYEE = 'EMPLOYEE',
+  CATEGORY = 'CATEGORY'
+}
+
+export enum EmployeeFieldMapping {
+  EMPLOYEE = 'EMPLOYEE',
+  VENDOR = 'VENDOR'
+}
+
+export enum QBOTaskLogType {
+  CREATING_BILL = 'CREATING_BILL',
+  CREATING_EXPENSE = 'CREATING_EXPENSE',
+  CREATING_CHECK = 'CREATING_CHECK',
+  CREATING_JOURNAL_ENTRY = 'CREATING_JOURNAL_ENTRY',
+  CREATING_CREDIT_CARD_PURCHASE = 'CREATING_CREDIT_CARD_PURCHASE',
+  CREATING_CREDIT_CARD_CREDIT = 'CREATING_CREDIT_CARD_CREDIT',
+  CREATING_DEBIT_CARD_EXPENSE = 'CREATING_DEBIT_CARD_EXPENSE',
+  CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
+  FETCHING_EXPENSE = 'FETCHING_EXPENSE'
+}
+
+export enum LoaderType {
+  DETERMINATE = 'determinate',
+  INDETERMINATE = 'indeterminate'
+}
+
+export enum AccountingDisplayName {
+  ACCOUNT = 'Account',
+  ITEM = 'Item',
+}
+
+export enum QBOField {
+  CLASS = 'CLASS',
+  DEPARTMENT = 'DEPARTMENT',
+  CUSTOMER = 'CUSTOMER',
+  TAX_CODE = 'TAX_CODE',
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
+  VENDOR = 'VENDOR',
+}
+
+export enum ConfigurationWarningEvent {
+  CLONE_SETTINGS = 'CLONE_SETTINGS',
+  INCORRECT_QBO_ACCOUNT_CONNECTED = 'INCORRECT_QBO_ACCOUNT_CONNECTED',
+  QBO_EXPORT_SETTINGS = 'QBO_EXPORT_SETTINGS',
+  RESET_CONFIGURATION = 'RESET_CONFIGURATION'
+}
+
+export enum InputType {
+  DROPDOWN = 'DROPDOWN',
+  TOGGLE = 'TOGGLE',
+  MULTI_SELECT = 'MULTI_SELECT',
+}

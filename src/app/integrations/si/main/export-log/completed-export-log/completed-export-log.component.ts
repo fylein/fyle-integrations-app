@@ -100,7 +100,7 @@ export class CompletedExportLogComponent implements OnInit {
   }
 
   openExpenseinFyle(expense_id: string) {
-    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+    const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}`;
     window.open(url, '_blank');
   }
 

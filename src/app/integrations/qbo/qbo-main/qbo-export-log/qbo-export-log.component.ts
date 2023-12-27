@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-qbo-export-log',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QboExportLogComponent implements OnInit {
 
-  constructor() { }
+  modules: MenuItem[] = [
+    {label: 'Completed', routerLink: '/integrations/qbo/main/export_log/complete'},
+    {label: 'Skipped', routerLink: '/integrations/qbo/main/export_log/skipped'}
+  ];
+
+  activeModule: MenuItem;
+
+  constructor(
+    private router: Router
+  ) { }
+
 
   ngOnInit(): void {
+    this.activeModule = this.modules[0];
+    this.router.navigateByUrl(this.modules[0].routerLink);
   }
 
 }

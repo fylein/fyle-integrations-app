@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { ImportSettingMappingRow, ImportSettingsCustomFieldRow } from 'src/app/core/models/common/import-settings.model';
+import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -14,7 +15,7 @@ import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-s
 })
 export class ConfigurationImportFieldComponent implements OnInit {
 
-  @Input() appName: string = 'Sage 300 CRE';
+  @Input() appName: string;
 
   @Input() form: FormGroup;
 
@@ -22,7 +23,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() fyleFieldOptions: FyleField[];
 
-  @Input() defaultImportFields: Sage300DefaultFields[];
+  @Input() defaultImportFields: Sage300DefaultFields[] | ImportDefaultField[];
 
   @Input() costCategoryOption: ImportSettingsCustomFieldRow[];
 
@@ -31,6 +32,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
   @Input() dependentImportFields: Sage300DependentImportFields[];
 
   @Input() dependentDestinationValue: string;
+
+  @Input() isDestinationFixedImport: boolean = false;
+
+  @Input() isCloneSettingView: boolean;
 
   @Output() showWarningForDependentFields = new EventEmitter();
 
@@ -62,7 +67,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       is_custom: false,
       source_placeholder: null
     };
-    expenseFields.push(Sage300ImportSettingModel.createFormGroup(defaultFieldData));
+    expenseFields.push(ImportSettingsModel.createFormGroup(defaultFieldData));
     this.showAddButton = this.showOrHideAddButton();
   }
 
@@ -84,12 +89,15 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
       // Get the 'import_to_fyle' control at the specified index and disable it
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
+    } else {
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
   }
 
   removeFilter(expenseField: AbstractControl) {
-    (expenseField as FormGroup).value[0].source_field.patchValue('');
-    (expenseField as FormGroup).value[0].import_to_fyle.patchValue(false);
+    (expenseField as FormGroup).controls.source_field.patchValue('');
+    (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
+    (expenseField as FormGroup).controls.import_to_fyle.enable();
     event?.stopPropagation();
   }
 
