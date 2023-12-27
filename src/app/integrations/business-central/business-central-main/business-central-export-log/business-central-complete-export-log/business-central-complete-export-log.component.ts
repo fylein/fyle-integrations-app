@@ -47,7 +47,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   isDateSelected: boolean = false;
 
-  private org_id: string = this.userService.getUserProfile('user').org_id;
+  private org_id: string = this.userService.getUserProfile().org_id;
 
   constructor(
     private formBuilder: FormBuilder,

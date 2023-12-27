@@ -35,7 +35,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   isExportLogVisible: boolean;
 
-  private org_id: string = this.userService.getUserProfile('user').org_id;
+  private org_id: string = this.userService.getUserProfile().org_id;
 
   constructor(
     private accountingExportService: AccountingExportService,
