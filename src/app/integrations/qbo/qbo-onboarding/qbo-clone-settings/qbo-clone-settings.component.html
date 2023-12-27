@@ -94,7 +94,7 @@
 
         <div class="clone-setting--field">
             <app-clone-setting-field *ngIf="exportSettingForm.value.reimbursableExportType"
-                [iconSource]="'list'"
+                [iconSource]="'question-square-outline'"
                 [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                 [options]="expenseStateOptions"
                 [placeholder]="'Select export state'"
@@ -107,7 +107,7 @@
 
         <div class="clone-setting--field">
             <app-clone-setting-field *ngIf="exportSettingForm.value.reimbursableExportType"
-                [iconSource]="'list'"
+                [iconSource]="'question-square-outline'"
                 [label]="'How should the expenses be grouped?'"
                 [options]="expenseGroupByOptions"
                 [placeholder]="'Select expense grouping'"
@@ -120,7 +120,7 @@
 
         <div class="clone-setting--field">
             <app-clone-setting-field *ngIf="exportSettingForm.value.reimbursableExportType"
-                [iconSource]="'list'"
+                [iconSource]="'calendar'"
                 [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
                 [options]="reimbursableExpenseGroupingDateOptions"
                 [placeholder]="'Select export date'"
@@ -211,7 +211,7 @@
 
         <div class="clone-setting--field">
             <app-clone-setting-field *ngIf="exportSettingForm.value.creditCardExportType"
-                [iconSource]="'list'"
+                [iconSource]="'question-square-outline'"
                 [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                 [options]="expenseStateOptions"
                 [placeholder]="'Select CCC expense state'"
@@ -224,7 +224,7 @@
 
         <div class="clone-setting--field">
             <app-clone-setting-field *ngIf="exportSettingForm.value.creditCardExportType"
-                [iconSource]="'list'"
+                [iconSource]="'question-square-outline'"
                 [label]="'How should the expenses be grouped?'"
                 [options]="expenseGroupByOptions"
                 [placeholder]="'Select expense grouping'"
@@ -237,7 +237,7 @@
 
         <div class="clone-setting--field">
             <app-clone-setting-field *ngIf="exportSettingForm.value.creditCardExportType"
-                [iconSource]="'list'"
+                [iconSource]="'calendar'"
                 [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
                 [options]="cccExpenseGroupingDateOptions"
                 [placeholder]="'Select export date'"
@@ -254,7 +254,7 @@
     <div class="clone-setting--field-section">
         <div class="clone-setting--field">
             <app-clone-setting-field
-                [iconSource]="'arrow-tail-up-down'"
+                [iconSource]="'arrow-tail-down'"
                 [label]="'Import Charts of Accounts from QuickBooks Online'"
                 [form]="importSettingForm"
                 [formControllerName]="'importCategories'"
@@ -277,7 +277,7 @@
 
         <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
             <app-clone-setting-field
-                [iconSource]="'arrow-tail-up-down'"
+                [iconSource]="'arrow-tail-down'"
                 [label]="'Import Products/Services from QuickBooks Online'"
                 [form]="importSettingForm"
                 [formControllerName]="'importItems'"
@@ -287,7 +287,7 @@
 
         <div class="clone-setting--field" *ngIf="isTaxGroupSyncAllowed">
             <app-clone-setting-field
-                [iconSource]="'arrow-tail-up-down'"
+                [iconSource]="'arrow-tail-down'"
                 [label]="'Import Tax from QuickBooks Online'"
                 [form]="importSettingForm"
                 [formControllerName]="'taxCode'"
@@ -309,7 +309,7 @@
 
         <div class="clone-setting--field" *ngIf="isImportMerchantsAllowed">
             <app-clone-setting-field
-                [iconSource]="'arrow-tail-up-down'"
+                [iconSource]="'arrow-tail-down'"
                 [label]="'Import Vendors from QuickBooks Online'"
                 [form]="importSettingForm"
                 [formControllerName]="'importVendorsAsMerchants'"
