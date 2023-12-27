@@ -108,7 +108,7 @@ export class QboImportSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const importSettingPayload = QBOImportSettingModel.constructImportSettingPayload(this.importSettingForm);
+    const importSettingPayload = QBOImportSettingModel.constructPayload(this.importSettingForm);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
