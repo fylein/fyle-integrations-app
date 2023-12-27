@@ -316,6 +316,15 @@
                 [inputType]="InputType.TOGGLE">
             </app-clone-setting-field>
         </div>
+
+        <app-configuration-import-field
+            [form]="importSettingForm"
+            [appName]="appName"
+            [accountingFieldOptions]="qboFields"
+            [fyleFieldOptions]="fyleFields"
+            [isDestinationFixedImport]="true"
+            [isCloneSettingView]="true">
+        </app-configuration-import-field>
     </div>
 
     <app-clone-setting-header [headerText]="'Advanced Settings'" [subHeaderText]="'In this section,  you can configure settings to automate and customize your expense exports'"></app-clone-setting-header>

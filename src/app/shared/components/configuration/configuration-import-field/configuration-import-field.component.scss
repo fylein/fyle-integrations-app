@@ -66,10 +66,6 @@
     @apply tw-flex tw-items-center tw-pt-7 tw-pl-40-px ;
   }
   
-  svg-icon-sprite {
-    @apply tw-ml-10-px ;/* Adds some space between the icon and the text */
-  }
-  
   .add-row-text {
     @apply tw-cursor-pointer tw-text-mandatory-field-color ; /* Changes the cursor to a hand when hovering */
   }
