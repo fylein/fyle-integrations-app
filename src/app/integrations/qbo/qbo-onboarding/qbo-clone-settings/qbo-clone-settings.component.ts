@@ -8,11 +8,11 @@ import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settin
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
-import { QBOCloneSetting } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
+import { QBOCloneSetting, QBOCloneSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-clone-setting.model';
 import { QBOEmployeeSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-employee-setting.model';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
@@ -20,6 +20,7 @@ import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qb
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
@@ -158,6 +159,7 @@ export class QboCloneSettingsComponent implements OnInit {
     private mappingService: MappingService,
     private qboConnectorService: QboConnectorService,
     private router: Router,
+    private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
 
@@ -182,6 +184,17 @@ export class QboCloneSettingsComponent implements OnInit {
   }
 
   save(): void {
+    this.isSaveInProgress = true;
+    const cloneSettingPayload = QBOCloneSettingModel.constructPayload(this.employeeSettingForm, this.exportSettingForm, this.importSettingForm, this.advancedSettingForm);
+
+    this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Cloned settings successfully');
+      this.router.navigate([`/integrations/qbo/onboarding/done`]);
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to clone settings');
+    });
 
   }
 
