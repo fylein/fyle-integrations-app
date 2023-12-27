@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
+import { AccountingField, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 
@@ -45,17 +47,27 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
     });
   }
 
-  getSourceType() {
-    if (this.sourceField==='EMPLOYEE') {
-      return 'VENDOR';
+  private getDestinationField(mappingSettings: MappingSetting[]): string {
+    if (this.sourceField === FyleField.EMPLOYEE) {
+      return workspaceGeneralSetting.employee_field_mapping;
+    } else if (this.sourceField === FyleField.CATEGORY) {
+      return AccountingField.ACCOUNT;
     }
 
-    if (this.sourceField==='CATEGORY') {
-      return 'ACCOUNT';
-    }
-
-    return '';
+    return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
   }
+
+  // getSourceType() {
+  //   if (this.sourceField==='EMPLOYEE') {
+  //     return 'VENDOR';
+  //   }
+
+  //   if (this.sourceField==='CATEGORY') {
+  //     return 'ACCOUNT';
+  //   }
+
+  //   return '';
+  // }
 
   setupPage(): void {
     this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
@@ -65,19 +77,23 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
 
       this.showAutoMapEmployee = response.auto_map_employees ? true : false;
 
-      this.destinationField = this.getSourceType();
-      this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe((response: any) => {
-        if (this.sourceField===FyleField.EMPLOYEE) {
-          this.destinationOptions = this.destinationField===FyleField.EMPLOYEE ? response.EMPLOYEE : response.VENDOR;
-        }
-        if (this.sourceField==='CATEGORY') {
-          if (this.destinationField === 'EXPENSE_TYPE') {
-            this.destinationOptions = response.EXPENSE_TYPE;
-          } else {
-            this.destinationOptions = response.ACCOUNT;
-          }
-        }
+      this.destinationField = this.getDestinationField();
+      // this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe((response: any) => {
+      //   if (this.sourceField===FyleField.EMPLOYEE) {
+      //     this.destinationOptions = this.destinationField===FyleField.EMPLOYEE ? response.EMPLOYEE : response.VENDOR;
+      //   }
+      //   if (this.sourceField==='CATEGORY') {
+      //     if (this.destinationField === 'EXPENSE_TYPE') {
+      //       this.destinationOptions = response.EXPENSE_TYPE;
+      //     } else {
+      //       this.destinationOptions = response.ACCOUNT;
+      //     }
+      //   }
 
+      //   this.isLoading = false;
+      // });
+      this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined, undefined, displayName).subscribe((response: any) => {
+        this.destinationOptions = response;
         this.isLoading = false;
       });
     });
