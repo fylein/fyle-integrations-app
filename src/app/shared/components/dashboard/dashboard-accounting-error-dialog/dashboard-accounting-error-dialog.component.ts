@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 })
 export class DashboardAccountingErrorDialogComponent implements OnInit {
 
+  @Input() isLoading: boolean;
+
   @Input() errorExpenses: Expense[];
 
   constructor() { }
