@@ -264,7 +264,7 @@ export class QboCloneSettingsComponent implements OnInit {
       this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v1', 'qbo'),
       this.mappingService.getFyleFields('v1'),
       this.qboConnectorService.getQBOCredentials(),
-      this.configurationService.getAdditionalEmails(),
+      this.configurationService.getAdditionalEmails()
     ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, qboCredentials, adminEmails]) => {
       this.cloneSetting = cloneSetting;
 
