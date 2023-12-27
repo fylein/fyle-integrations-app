@@ -24,7 +24,7 @@
         </div>
     </div>
     <div formArrayName="expenseFields" [ngClass]="[isDestinationFixedImport ? '' : 'tw-pl-48-px tw-mt-18px']">
-        <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="{'tw-mt-24-px tw-pb-24-px': isDestinationFixedImport, 'tw-rounded-lg tw-border-separator tw-border': isDestinationFixedImport && !isCloneSettingView}">
+        <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="{'tw-mt-24-px tw-pb-24-px': isDestinationFixedImport, 'tw-rounded-lg tw-border-separator tw-border': isDestinationFixedImport && !isCloneSettingView, 'tw-pr-24-px': isCloneSettingView}">
             <div *ngIf="isDestinationFixedImport">
                 <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">
                     <div class="tw-w-3/4 tw-flex tw-items-start">

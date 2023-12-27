@@ -4,6 +4,7 @@
         <span class="clone-setting-field--label-text">
             {{ label }}
             <app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field>
+            <svg-icon-sprite width="16px" height="16px" src="info-circle-fill" class="tw-text-placeholder tw-ml-8-px tw-pb-4-px" [pTooltip]="tooltipText" tooltipPosition="top"></svg-icon-sprite>
         </span>
     </div>
     <div>
