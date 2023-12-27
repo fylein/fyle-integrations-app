@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { InputType } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-clone-setting-field',
@@ -23,6 +24,12 @@ export class CloneSettingFieldComponent {
   @Input() formControllerName: string;
 
   @Input() dropdownDisplayKey: string;
+
+  @Input() disabledOption: string;
+
+  @Input() inputType: InputType = InputType.DROPDOWN;
+
+  InputType = InputType;
 
   constructor() { }
 

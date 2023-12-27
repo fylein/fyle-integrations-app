@@ -46,5 +46,6 @@ export type GroupedDestinationAttribute = {
   JOB: Sage300DestinationAttributes[],
   BANK_ACCOUNT: DestinationAttribute[],
   CREDIT_CARD_ACCOUNT: DestinationAttribute[],
-  ACCOUNTS_PAYABLE: DestinationAttribute[]
+  ACCOUNTS_PAYABLE: DestinationAttribute[],
+  TAX_CODE: DestinationAttribute[],
 };

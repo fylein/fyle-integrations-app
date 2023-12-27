@@ -88,6 +88,8 @@ import { ShimmersComponent } from './components/helper/shimmers/shimmers.compone
 import { CloneSettingHeaderComponent } from './components/onboarding/clone-setting/clone-setting-header/clone-setting-header.component';
 import { DropdownComponent } from './components/input/dropdown/dropdown.component';
 import { CloneSettingFieldComponent } from './components/onboarding/clone-setting/clone-setting-field/clone-setting-field.component';
+import { ToggleComponent } from './components/input/toggle/toggle.component';
+import { MultiSelectComponent } from './components/input/multi-select/multi-select.component';
 
 
 @NgModule({
@@ -158,7 +160,9 @@ import { CloneSettingFieldComponent } from './components/onboarding/clone-settin
     ShimmersComponent,
     CloneSettingHeaderComponent,
     DropdownComponent,
-    CloneSettingFieldComponent
+    CloneSettingFieldComponent,
+    ToggleComponent,
+    MultiSelectComponent
   ],
   imports: [
     CommonModule,
@@ -251,7 +255,9 @@ import { CloneSettingFieldComponent } from './components/onboarding/clone-settin
     ShimmersComponent,
     CloneSettingHeaderComponent,
     DropdownComponent,
-    CloneSettingFieldComponent
+    CloneSettingFieldComponent,
+    ToggleComponent,
+    MultiSelectComponent
   ]
 })
 export class SharedModule { }

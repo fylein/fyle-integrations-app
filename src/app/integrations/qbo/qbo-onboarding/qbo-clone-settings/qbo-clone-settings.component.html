@@ -248,4 +248,73 @@
             </app-clone-setting-field>
         </div>
     </div>
+
+    <app-clone-setting-header [headerText]="'Import Settings'" [subHeaderText]="'In this section, you can configure how the dimensions you import from QuickBooks Online should be mapped in ' + brandingConfig.brandName "></app-clone-setting-header>
+
+    <div class="clone-setting--field-section">
+        <div class="clone-setting--field">
+            <app-clone-setting-field
+                [iconSource]="'arrow-tail-up-down'"
+                [label]="'Import Charts of Accounts from QuickBooks Online'"
+                [form]="importSettingForm"
+                [formControllerName]="'importCategories'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+
+            <div class="clone-setting--dependent-field">
+                <app-clone-setting-field *ngIf="importSettingForm.value.importCategories"
+                    [label]="'Select the accounts from QuickBooks Online to import as categories'"
+                    [options]="chartOfAccountTypesList"
+                    [placeholder]="'Select Chart of Accouts'"
+                    [form]="importSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'chartOfAccountTypes'"
+                    [disabledOption]="'Expense'"
+                    [inputType]="InputType.MULTI_SELECT">
+                </app-clone-setting-field>
+            </div>
+        </div>
+
+        <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+            <app-clone-setting-field
+                [iconSource]="'arrow-tail-up-down'"
+                [label]="'Import Products/Services from QuickBooks Online'"
+                [form]="importSettingForm"
+                [formControllerName]="'importItems'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+        </div>
+
+        <div class="clone-setting--field" *ngIf="isTaxGroupSyncAllowed">
+            <app-clone-setting-field
+                [iconSource]="'arrow-tail-up-down'"
+                [label]="'Import Tax from QuickBooks Online'"
+                [form]="importSettingForm"
+                [formControllerName]="'taxCode'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+
+            <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.taxCode">
+                <app-clone-setting-field *ngIf="importSettingForm.value.importCategories"
+                    [label]="'Select Default Tax Code'"
+                    [options]="taxCodes"
+                    [placeholder]="'Select tax code'"
+                    [form]="importSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'defaultTaxCode'"
+                    [dropdownDisplayKey]="'name'">
+                </app-clone-setting-field>
+            </div>
+        </div>
+
+        <div class="clone-setting--field" *ngIf="isImportMerchantsAllowed">
+            <app-clone-setting-field
+                [iconSource]="'arrow-tail-up-down'"
+                [label]="'Import Vendors from QuickBooks Online'"
+                [form]="importSettingForm"
+                [formControllerName]="'importVendorsAsMerchants'"
+                [inputType]="InputType.TOGGLE">
+            </app-clone-setting-field>
+        </div>
+    </div>
 </div>
