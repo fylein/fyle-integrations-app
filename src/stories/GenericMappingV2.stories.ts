@@ -53,7 +53,7 @@ const meta: Meta<GenericMappingV2Component> = {
           useValue: {
             snapshot: {
               params: {
-                source_field: 'employee',
+                source_field: 'employee'
               }
             }
           }
@@ -82,7 +82,7 @@ export const simple: Story = {
         active: true,
         created_at: new Date(),
         updated_at: new Date(),
-        workspace: 1 
+        workspace: 1
       },
       {
         id: 2,
@@ -93,7 +93,7 @@ export const simple: Story = {
         active: true,
         created_at: new Date(),
         updated_at: new Date(),
-        workspace: 1 
+        workspace: 1
       }
     ],
     employeeFieldMapping: FyleField.EMPLOYEE,

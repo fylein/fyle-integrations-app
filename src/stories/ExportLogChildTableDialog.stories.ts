@@ -74,6 +74,6 @@ export const simple: Story = {
         is_skipped: false,
         report_title: 'Fyle'
       }
-    ],
+    ]
   }
 };
