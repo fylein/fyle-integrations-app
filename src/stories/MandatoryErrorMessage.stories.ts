@@ -5,7 +5,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { MandatoryErrorMessageComponent } from 'src/app/shared/components/helper/mandatory-error-message/mandatory-error-message.component';
 
 const meta: Meta<MandatoryErrorMessageComponent> = {
-  title: 'Components/MandatoryErrorMessage',
+  title: 'Core/MandatoryErrorMessage',
   component: MandatoryErrorMessageComponent,
   tags: ['autodocs'],
   render: (args: MandatoryErrorMessageComponent) => ({
@@ -25,4 +25,14 @@ const meta: Meta<MandatoryErrorMessageComponent> = {
 export default meta;
 type Story = StoryObj<MandatoryErrorMessageComponent>;
 
-export const simple: Story = {};
+export const simple: Story = {
+  args: {
+    listName: 'project'
+  }
+};
+
+export const project: Story = {
+  args: {
+    customErrorMessage: 'Project is mandatory'
+  }
+};

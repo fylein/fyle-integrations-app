@@ -2,10 +2,11 @@
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
+import { TableModule } from 'primeng/table';
 import { SkippedExportLogTableComponent } from 'src/app/shared/components/export-log/skipped-export-log-table/skipped-export-log-table.component';
 
 const meta: Meta<SkippedExportLogTableComponent> = {
-  title: 'Components/SkippedExportLogTable',
+  title: 'ExportLog/SkippedExportLogTable',
   component: SkippedExportLogTableComponent,
   tags: ['autodocs'],
   render: (args: SkippedExportLogTableComponent) => ({
@@ -14,7 +15,7 @@ const meta: Meta<SkippedExportLogTableComponent> = {
   decorators: [
     moduleMetadata({
       declarations: [SkippedExportLogTableComponent],
-      imports: [CommonModule]
+      imports: [CommonModule, TableModule]
     })
   ],
   argTypes: {
@@ -25,4 +26,16 @@ const meta: Meta<SkippedExportLogTableComponent> = {
 export default meta;
 type Story = StoryObj<SkippedExportLogTableComponent>;
 
-export const simple: Story = {};
+export const simple: Story = {
+  args: {
+    filteredExpense: [
+      {
+        updated_at: new Date(),
+        employee: ['Ashwin', 'ashwin.t@fyle.in'],
+        expenseType: 'Reimbursable',
+        claim_number: 'C/2020/05/28',
+        fyleUrl: 'https://www.fylehq.com'
+      }
+    ]
+  }
+};

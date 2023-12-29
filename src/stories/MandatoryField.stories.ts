@@ -5,7 +5,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { MandatoryFieldComponent } from 'src/app/shared/components/helper/mandatory-field/mandatory-field.component';
 
 const meta: Meta<MandatoryFieldComponent> = {
-  title: 'Components/MandatoryField',
+  title: 'Core/MandatoryField',
   component: MandatoryFieldComponent,
   tags: ['autodocs'],
   render: (args: MandatoryFieldComponent) => ({

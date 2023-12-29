@@ -5,7 +5,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { ConfigurationSkipExportComponent } from 'src/app/shared/components/configuration/configuration-skip-export/configuration-skip-export.component';
 
 const meta: Meta<ConfigurationSkipExportComponent> = {
-  title: 'Components/ConfigurationSkipExport',
+  title: 'Configuration/AdvancedSetting/ConfigurationSkipExport',
   component: ConfigurationSkipExportComponent,
   tags: ['autodocs'],
   render: (args: ConfigurationSkipExportComponent) => ({

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const componentsDir = path.join(__dirname, 'src/app/shared/components');
-const storiesDir = path.join(__dirname, 'src/stories');
+const componentsDir = path.join('src/app/shared/components');
+const storiesDir = path.join('src/stories');
 
 function generateStory(componentName, componentPath, hyphenSeparatedComponentName) {
   const content = `
@@ -62,4 +62,5 @@ function generateStories(directory) {
   });
 }
 
+console.log(componentsDir)
 generateStories(componentsDir);

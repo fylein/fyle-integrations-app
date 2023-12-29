@@ -6,7 +6,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoaderComponent } from 'src/app/shared/components/core/loader/loader.component';
 
 const meta: Meta<LoaderComponent> = {
-  title: 'Components/Loader',
+  title: 'Core/Loader',
   component: LoaderComponent,
   tags: ['autodocs'],
   render: (args: LoaderComponent) => ({

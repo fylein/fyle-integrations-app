@@ -5,7 +5,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { PreviewDialogComponent } from 'src/app/shared/components/configuration/preview-dialog/preview-dialog.component';
 
 const meta: Meta<PreviewDialogComponent> = {
-  title: 'Components/PreviewDialog',
+  title: 'Configuration/PreviewDialog',
   component: PreviewDialogComponent,
   tags: ['autodocs'],
   render: (args: PreviewDialogComponent) => ({
@@ -25,4 +25,10 @@ const meta: Meta<PreviewDialogComponent> = {
 export default meta;
 type Story = StoryObj<PreviewDialogComponent>;
 
-export const simple: Story = {};
+export const simple: Story = {
+  args: {
+    isPreviewDialogVisible: true,
+    iconPath: 'assets/illustrations/sageIntacct/IntacctImportSettings.png',
+    header: 'Preview'
+  }
+};
