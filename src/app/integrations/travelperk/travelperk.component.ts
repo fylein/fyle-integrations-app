@@ -57,10 +57,10 @@ export class TravelperkComponent implements OnInit, OnDestroy {
   }
 
   disconnect(): void {
-    this.isLoading = true;
+    this.isConnectionInProgress = true;
     this.travelperkService.disconnect().subscribe(() => {
       this.isIntegrationConnected = false;
-      this.isLoading = false;
+      this.isConnectionInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Travelperk successfully');
     });
   }
