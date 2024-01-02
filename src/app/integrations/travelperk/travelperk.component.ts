@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { concat, toArray } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -17,7 +17,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './travelperk.component.html',
   styleUrls: ['./travelperk.component.scss']
 })
-export class TravelperkComponent implements OnInit {
+export class TravelperkComponent implements OnInit, OnDestroy {
   brandingKbArticles = brandingKbArticles;
 
   AppName = AppName;
@@ -35,6 +35,8 @@ export class TravelperkComponent implements OnInit {
   isConnectionInProgress: boolean;
 
   org: Org = this.orgService.getCachedOrg();
+
+  private routeWatcher$: Subscription;
 
   readonly brandingConfig = brandingConfig;
 
@@ -69,7 +71,7 @@ export class TravelperkComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.routeWatcher$ = this.route.queryParams.subscribe(params => {
       if (params.code) {
         this.travelperkService.connect(params.code).subscribe(() => {
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
@@ -81,5 +83,11 @@ export class TravelperkComponent implements OnInit {
         this.setupPage();
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.routeWatcher$) {
+      this.routeWatcher$.unsubscribe();
+    }
   }
 }
