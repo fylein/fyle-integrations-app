@@ -1,5 +1,5 @@
-<div [formGroup]="form" class="tw-p-24-px tw-flex tw-flex-row tw-justify-between">
-    <div class="tw-w-3/5 tw-flex tw-items-start">
+<div [formGroup]="form" [ngClass]="!isCloneSettingView ? 'tw-p-24-px': ''" class="tw-flex tw-flex-row tw-justify-between">
+    <div *ngIf="!isCloneSettingView" class="tw-w-3/5 tw-flex tw-items-start">
         <div [ngClass]="[iconPath ? 'tw-pr-20-px tw-mt-4-px' : 'tw-pr-40-px']">
             <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
         </div>

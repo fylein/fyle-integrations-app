@@ -37,6 +37,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
 
   @Input() customErrorMessage: string;
 
+  @Input() isCloneSettingView: boolean;
+
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],
     name: [null, Validators.required]

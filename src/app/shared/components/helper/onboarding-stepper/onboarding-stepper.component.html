@@ -4,7 +4,14 @@
 <div class="tw-py-60-px tw-text-normal-text-color">
     <div>
         <div class="tw-text-center tw-pb-38-px">
-            <p class="tw-font-500">Configure the following settings to set up your integration</p>
+            <p class="tw-font-500">
+                <span *ngIf="!isCloneSettingView">
+                    Configure the following settings to set up your integration
+                </span>
+                <span *ngIf="isCloneSettingView">
+                    Fill in the below fields to complete your integration set up
+                </span>
+            </p>
         </div>
         <div class="tw-flex tw-justify-center">
             <div *ngFor="let onboardingStep of onboardingSteps">

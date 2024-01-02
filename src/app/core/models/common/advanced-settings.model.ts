@@ -68,6 +68,9 @@ export type AdvancedSettingValidatorRule = {
 };
 
 export class AdvancedSettingsModel {
+  static getDefaultMemoOptions(): string[] {
+    return ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+  }
 
   static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): string {
     const time = Date.now();

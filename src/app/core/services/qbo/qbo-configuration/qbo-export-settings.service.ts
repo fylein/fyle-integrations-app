@@ -47,7 +47,7 @@ export class QboExportSettingsService {
         });
       } else {
         value.forEach((formController: string) => {
-          if (this.mandatoryFormController.length && !this.mandatoryFormController.includes(formController)) {
+          if (!this.mandatoryFormController.includes(formController)) {
             HelperUtility.clearValidatorAndResetValue(form, formController);
           }
         });

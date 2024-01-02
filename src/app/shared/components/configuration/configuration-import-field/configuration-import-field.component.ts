@@ -35,6 +35,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() isDestinationFixedImport: boolean = false;
 
+  @Input() isCloneSettingView: boolean;
+
   @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;

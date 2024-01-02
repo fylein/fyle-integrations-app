@@ -1,0 +1,31 @@
+<div class="clone-setting-field--field-row">
+    <div class="clone-setting-field--description-section">
+        <svg-icon-sprite width="24px" height="24px" src="{{iconSource}}" class="tw-text-menu-inactive-text-color"></svg-icon-sprite>
+        <span class="clone-setting-field--label-text">
+            {{ label }}
+            <app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field>
+            <svg-icon-sprite width="16px" height="16px" src="info-circle-fill" class="tw-text-placeholder tw-ml-8-px tw-pb-4-px" [pTooltip]="tooltipText" tooltipPosition="top"></svg-icon-sprite>
+        </span>
+    </div>
+    <div>
+        <app-dropdown *ngIf="inputType === InputType.DROPDOWN"
+            [placeholder]="placeholder"
+            [options]="options"
+            [form]="form"
+            [formControllerName]="formControllerName"
+            [displayKey]="dropdownDisplayKey"
+            [additionalClasses]="additionalClasses">
+        </app-dropdown>
+        <app-toggle *ngIf="inputType === InputType.TOGGLE"
+            [form]="form"
+            [formControllerName]="formControllerName">
+        </app-toggle>
+        <app-multi-select *ngIf="inputType === InputType.MULTI_SELECT"
+            [form]="form"
+            [formControllerName]="formControllerName"
+            [disabledOption]="disabledOption"
+            [placeholder]="placeholder"
+            [options]="options">
+        </app-multi-select>
+    </div>
+</div>
