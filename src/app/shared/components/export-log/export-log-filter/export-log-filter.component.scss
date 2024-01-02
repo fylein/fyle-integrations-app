@@ -31,29 +31,6 @@ input.custom-focus:focus {
       }
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    background-color: transparent;
-    @apply tw-px-24-px tw-py-12-px tw-mx-10-px tw-mt-0 tw-border-x-box-color tw-border-t-box-color tw-border-t tw-border-x tw-rounded-t-lg #{!important};
-}
-
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link:not(.p-disabled):hover {
-    @apply tw-text-slightly-normal-text-color tw-border-b-transparent tw-bg-white #{!important};
-}
-
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover .p-menuitem-link{
-    background-color: transparent !important;
-    @apply tw-border-b-transparent tw-font-500 #{!important};
-}
-
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-highlight):hover{
-    @apply tw-border-b-transparent tw-font-500 tw-bg-disabled-bg-color #{!important};
-}
-
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav {
-    background-color: transparent;
-    @apply tw-border-b tw-border-b-box-color #{!important};
-}
-
 :host ::ng-deep .drop-down .p-dropdown {
     @apply tw-w-200-px tw-border-0 #{!important};
 }
@@ -70,27 +47,34 @@ input.custom-focus:focus {
     @apply tw-pl-48-px #{!important};
 }
 
-:host ::ng-deep .p-progressbar {
-    @apply tw-h-1.5 tw-bg-progress-bar-bg #{!important};
+:host ::ng-deep .selectedItem  .p-dropdown-trigger {
+    @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .p-progressbar .p-progressbar-value {
-    @apply tw-bg-mandatory-field-color tw-rounded-50  #{!important};
+:host ::ng-deep .p-datepicker table td > span.p-highlight {
+    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
 }
 
-:host ::ng-deep .p-progressbar-determinate .p-progressbar-value {
-    content: none #{!important};
+:host ::ng-deep .p-datepicker table td > span:focus {
+    @apply tw-shadow-none #{!important};
 }
 
-.export-btn:disabled {
-    @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
+:host ::ng-deep .p-datepicker table th {
+    @apply tw-text-center ;
+}
+
+:host ::ng-deep .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
+    @apply tw-min-w-fit tw-top-2/3 #{!important};
+}
+
+:host ::ng-deep .p-calendar ::placeholder {
+    @apply tw-text-sub-text-color #{!important};
+}
+
+:host ::ng-deep .p-calendar .p-inputtext {
+    @apply tw-p-0 tw-bg-white tw-border-0 tw-cursor-pointer tw-transition-none	;
 }
 
 :host ::ng-deep .p-dialog {
     @apply tw-max-h-full tw-m-0 #{!important};
 }
-
-:host ::ng-deep .selectedItem  .p-dropdown-trigger {
-    @apply tw-hidden #{!important};
-}
-
