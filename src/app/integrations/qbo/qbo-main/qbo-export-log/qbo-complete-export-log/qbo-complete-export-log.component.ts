@@ -82,13 +82,6 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  dateFilter(event: any): void {
-    this.isLoading = true;
-    this.isDateSelected = true;
-    this.selectedDateFilter = event.value;
-    this.getAccountingExports(this.limit, this.offset);
-  }
-
   private getAccountingExports(limit: number, offset:number) {
     this.isLoading = true;
 
@@ -100,7 +93,6 @@ export class QboCompleteExportLogComponent implements OnInit {
       if (!this.isDateSelected) {
         this.totalCount = accountingExportResponse.count;
       }
-
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id)
       );

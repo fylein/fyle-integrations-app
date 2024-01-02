@@ -59,26 +59,27 @@ export type AccountingExportGetParam = {
 export class AccountingExportModel {
 
   static getDateOptions(): DateFilter[] {
+    const currentDateTime = new Date();
     const dateOptions: DateFilter[] = [
       {
         dateRange: 'This Month',
-        startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-        endDate: new Date()
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
+        endDate: currentDateTime
       },
       {
         dateRange: 'This Week',
-        startDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay()),
-        endDate: new Date()
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay()),
+        endDate: currentDateTime
       },
       {
         dateRange: 'Today',
-        startDate: new Date(),
-        endDate: new Date()
+        startDate: currentDateTime,
+        endDate: currentDateTime
       },
       {
-        dateRange: new Date().toLocaleDateString(),
-        startDate: new Date(),
-        endDate: new Date()
+        dateRange: currentDateTime.toLocaleDateString(),
+        startDate: currentDateTime,
+        endDate: currentDateTime
       }
     ];
 
