@@ -23,7 +23,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() iconPath: string;
 
-  @Input() isIntegrationConnected: boolean | undefined;
+  @Input() isIntegrationConnected: boolean;
 
   @Input() isIntegrationSetupInProgress: boolean;
 

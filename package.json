@@ -12,7 +12,9 @@
     "setup:branding": "node scripts/setup_branding_config.js",
     "lint": "ng lint",
     "generate:svg-sprite": "svg2sprite ./src/assets/icons ./src/assets/sprites/sprite.svg --stripAttrs fill --stripAttrs stroke --stripAttrs id",
-    "stop": "kill $(lsof -t -i:4200) || true"
+    "stop": "kill $(lsof -t -i:4200) || true",
+    "storybook": "ng run fyle-integrations-app:storybook",
+    "build-storybook": "npm run setup:env && npm run setup:branding && ng run fyle-integrations-app:build-storybook"
   },
   "private": true,
   "dependencies": {
@@ -45,11 +47,20 @@
     "@angular-eslint/eslint-plugin-template": "14.1.2",
     "@angular-eslint/schematics": "14.1.2",
     "@angular-eslint/template-parser": "14.1.2",
+    "@compodoc/compodoc": "^1.1.23",
+    "@storybook/addon-docs": "^7.6.3",
+    "@storybook/addon-essentials": "^7.6.3",
+    "@storybook/addon-interactions": "^7.6.3",
+    "@storybook/addon-links": "^7.6.3",
+    "@storybook/angular": "^7.6.3",
+    "@storybook/blocks": "^7.6.3",
+    "@storybook/test": "^7.6.3",
     "@types/jasmine": "~4.0.0",
     "@typescript-eslint/eslint-plugin": "5.37.0",
     "@typescript-eslint/parser": "5.37.0",
     "autoprefixer": "^10.4.13",
     "eslint": "^8.23.1",
+    "eslint-plugin-storybook": "^0.6.15",
     "husky": "^8.0.3",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
@@ -58,6 +69,9 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "postcss": "^8.4.18",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.6.3",
     "svg2sprite-cli": "^2.0.1"
   }
 }
