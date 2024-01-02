@@ -125,7 +125,7 @@ export class LandingComponent implements OnInit {
           'org_id': token.user.org_id,
           'org_name': token.user.org_name
         };
-        this.storageService.set('si.user', user);
+        this.storageService.set('user', user);
         intacctLogin$.unsubscribe();
         this.openInAppIntegration(InAppIntegration.INTACCT);
       });
