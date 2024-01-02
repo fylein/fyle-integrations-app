@@ -5,6 +5,7 @@ export type Travelperk = {
     folder_id: string;
     package_id: string;
     is_fyle_connected: boolean;
+    is_travelperk_connected: boolean;
     is_s3_connected: boolean;
     org: number;
     travelperk_connection_id: number;
