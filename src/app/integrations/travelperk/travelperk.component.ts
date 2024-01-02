@@ -43,7 +43,7 @@ export class TravelperkComponent implements OnInit {
     private travelperkService: TravelperkService,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
-    private windowService: WindowService,
+    private windowService: WindowService
   ) { }
 
   private setupPage(): void {
@@ -65,20 +65,19 @@ export class TravelperkComponent implements OnInit {
     this.isConnectionInProgress = true;
     const url = `${environment.travelperk_base_url}/oauth2/authorize?client_id=${environment.travelperk_client_id}&redirect_uri=${environment.travelperk_redirect_uri}&scope=expenses:read&response_type=code&state=${environment.production ? 'none' : 'travelperk_local_redirect'}`;
 
-    this.windowService.redirect(url);    
+    this.windowService.redirect(url);
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params.code) {
         this.travelperkService.connect(params.code).subscribe(() => {
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
-          this.isIntegrationConnected = true;
-          this.isConnectionInProgress = false;
-          this.isLoading = false;
-        });
-      }
-      else {
+            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+            this.isIntegrationConnected = true;
+            this.isConnectionInProgress = false;
+            this.isLoading = false;
+          });
+        } else {
         this.setupPage();
       }
     });
