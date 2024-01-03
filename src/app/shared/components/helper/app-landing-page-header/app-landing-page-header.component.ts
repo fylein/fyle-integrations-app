@@ -81,7 +81,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   connect(): void {
 
-    if (this.appName == 'Travelperk') {
+    if (this.appName == this.AppName.TRAVELPERK) {
       return this.initiateOAuth();
     }
       else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {

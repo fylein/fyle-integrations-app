@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -43,6 +44,7 @@ export class TravelperkComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
     private travelperkService: TravelperkService,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
@@ -74,16 +76,8 @@ export class TravelperkComponent implements OnInit, OnDestroy {
   }
 
   removeQueryParams() {
-    // Get the current URL and remove query parameters
-    const currentUrl = this.router.url.split('?')[0];
-
-    // Create a NavigationExtras object with an empty queryParams object
-    const navigationExtras: NavigationExtras = {
-      queryParams: {}
-    };
-
-    // Navigate to the current URL with empty query parameters
-    this.router.navigate([currentUrl], navigationExtras);
+    // Use Location to replace the state of the history with the same path but without query parameters
+    this.location.replaceState(this.router.url.split('?')[0]);
   }
 
   ngOnInit(): void {
@@ -91,7 +85,7 @@ export class TravelperkComponent implements OnInit, OnDestroy {
       if (params.code) {
         this.travelperkService.connect(params.code).subscribe(() => {
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
-            this.removeQueryParams()
+            this.removeQueryParams();
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
             this.isLoading = false;
