@@ -148,13 +148,6 @@ export class CompletedExportLogComponent implements OnInit {
     this.getExpenseGroups(this.limit, offset);
   }
 
-  dateFilter(event: any): void {
-    this.isLoading = true;
-    this.isDateSelected = true;
-    this.selectedDateFilter = event.value;
-    this.getExpenseGroups(this.limit, this.offset);
-  }
-
   dropDownWatcher() {
     if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
       this.isCalendarVisible = false;

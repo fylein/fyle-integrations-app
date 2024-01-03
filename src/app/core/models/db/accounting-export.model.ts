@@ -59,26 +59,27 @@ export type AccountingExportGetParam = {
 export class AccountingExportModel {
 
   static getDateOptions(): DateFilter[] {
+    const currentDateTime = new Date();
     const dateOptions: DateFilter[] = [
       {
         dateRange: 'This Month',
-        startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-        endDate: new Date()
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
+        endDate: currentDateTime
       },
       {
         dateRange: 'This Week',
-        startDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay()),
-        endDate: new Date()
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay()),
+        endDate: currentDateTime
       },
       {
         dateRange: 'Today',
-        startDate: new Date(),
-        endDate: new Date()
+        startDate: currentDateTime,
+        endDate: currentDateTime
       },
       {
-        dateRange: new Date().toLocaleDateString(),
-        startDate: new Date(),
-        endDate: new Date()
+        dateRange: currentDateTime.toLocaleDateString(),
+        startDate: currentDateTime,
+        endDate: currentDateTime
       }
     ];
 
@@ -146,7 +147,7 @@ export class AccountingExportModel {
     } else if (referenceType === FyleReferenceType.PAYMENT) {
       url += `admin/#/settlements/${expense.settlement_id}`;
     }
-    return `${url}/?org_id=${org_id}`;
+    return `${url}?org_id=${org_id}`;
   }
 
   static parseAPIResponseToExportLog(accountingExport: AccountingExport, org_id: string): AccountingExportList {
@@ -242,7 +243,7 @@ export class SkippedAccountingExportModel {
       claim_number: skippedExpense.claim_number,
       employee: [skippedExpense.employee_name, skippedExpense.employee_email],
       expenseType: skippedExpense.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
-      fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpense.expense_id}/?org_id=${skippedExpense.org_id}`
+      fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpense.expense_id}?org_id=${skippedExpense.org_id}`
     };
   }
 }

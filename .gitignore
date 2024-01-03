@@ -67,3 +67,5 @@ cypress/screenshots
 .nyc_output/
 cypress/coverage/*
 !cypress/coverage/coverage-summary.json
+storybook-static/
+documentation.json

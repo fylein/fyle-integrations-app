@@ -23,7 +23,7 @@
     [isRecipeRunning]="bambooHrConfiguration?.recipe_status ? true : false"
     [isIntegrationSetupInProgress]="isBambooSetupInProgress" 
     [isIntegrationConnected]="isBambooConnected" 
-    (openDialog)="openDialog()" 
+    (connectIntegration)="openDialog()"
     (disconnectIntegration)="disconnectBambooHr()" 
     (syncEmployees)="syncEmployees()"
 ></app-landing-page-header>

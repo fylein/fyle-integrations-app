@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
@@ -23,12 +24,14 @@ export class QboMainComponent implements OnInit {
   activeModule: MenuItem;
 
   constructor(
+    private accountingExportService: AccountingExportService,
     private qboHelperService: QboHelperService,
     private router: Router
   ) { }
 
   refreshDimensions() {
     this.qboHelperService.refreshFyleDimensions().subscribe();
+    this.accountingExportService.importExpensesFromFyle('v1').subscribe();
   }
 
   private setupPage() {
