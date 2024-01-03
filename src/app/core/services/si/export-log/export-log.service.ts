@@ -82,6 +82,6 @@ export class ExportLogService {
       url += `admin/#/settlements/${expenseGroup.expenses[0].settlement_id}`;
     }
 
-    return `${url}/?org_id=${this.org_id}`;
+    return `${url}?org_id=${this.org_id}`;
   }
 }
