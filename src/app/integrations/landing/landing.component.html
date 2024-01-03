@@ -8,9 +8,9 @@
             Accounting
             <p *ngIf="integrationTabs.ACCOUNTING" class="landing--active-tag"></p>
         </div>
-        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.HRMS)">
-            HRMS
-            <p *ngIf="integrationTabs.HRMS" class="landing--active-tag"></p>
+        <div class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.Human Resources Management System)">
+            Human Resources Management System
+            <p *ngIf="integrationTabs.Human Resources Management System" class="landing--active-tag"></p>
         </div>
         <div *ngIf="isTravelperkAllowed" class="tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.TRAVEL)">
             Travel
@@ -85,10 +85,10 @@
             </div>
         </div>
 
-        <div *ngIf="integrationTabs.ALL || integrationTabs.HRMS">
+        <div *ngIf="integrationTabs.ALL || integrationTabs.Human Resources Management System">
             <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing--section-divider"></p>
             <p class="landing--section-heading">
-                HRMS
+                Human Resources Management System
             </p>
             <p class="landing--section-caption">
                 If your company uses any of the HR Management Systems below, you can easily integrate your {{ brandingConfig.brandName }} account with it.
