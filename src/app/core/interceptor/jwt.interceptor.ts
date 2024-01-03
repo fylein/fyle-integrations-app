@@ -65,8 +65,7 @@ export class JwtInterceptor implements HttpInterceptor {
    * Reference: https://stackoverflow.com/a/57638101
    */
   private getAccessToken(url: string): Observable<string | null> {
-    const keyName = url.includes('sage-intacct') ? 'si.user': 'user';
-    const accessToken = this.authService.getAccessToken(keyName);
+    const accessToken = this.authService.getAccessToken();
 
     if (accessToken && !this.isTokenExpiring(accessToken)) {
       return of(accessToken);
@@ -87,7 +86,7 @@ export class JwtInterceptor implements HttpInterceptor {
     return this.refreshTokenSubject.pipe(
       filter((result) => result !== null),
       take(1),
-      map(() => this.authService.getAccessToken(keyName))
+      map(() => this.authService.getAccessToken())
     );
   }
 
@@ -107,15 +106,12 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   private refreshAccessToken(url: string): Observable<string | null> {
-    const keyName = url.includes('sage-intacct') ? 'si.user': 'user';
-    const refreshToken = this.authService.getRefreshToken(keyName);
+    const refreshToken = this.authService.getRefreshToken();
 
     if (refreshToken) {
-      const refreshToken$ = keyName === 'user' ? this.authService.refreshAccessToken(refreshToken) : this.siAuthService.refreshAccessToken(refreshToken);
-
-      return refreshToken$.pipe(
+      return this.authService.refreshAccessToken(refreshToken).pipe(
         catchError((error) => this.handleError(error)),
-        map((token: Token) => this.authService.updateAccessToken(token.access_token, keyName))
+        map((token: Token) => this.authService.updateAccessToken(token.access_token))
       );
     }
 

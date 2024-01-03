@@ -110,6 +110,56 @@
               "src/**/*.html"
             ]
           }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": ".storybook",
+            "browserTarget": "fyle-integrations-app:build",
+            "compodoc": true,
+            "styles": [
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
+            ],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "."
+            ],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "styles": [
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css"
+            ],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "configDir": ".storybook",
+            "browserTarget": "fyle-integrations-app:build",
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "."
+            ],
+            "outputDir": "storybook-static"
+          }
         }
       }
     }

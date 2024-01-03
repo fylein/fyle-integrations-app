@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 
       // Only local dev needs this, login happens via postMessage for prod/staging through webapp
       if (!environment.production) {
-        this.userService.storeUserProfile(user, 'si.user');
+        this.userService.storeUserProfile(user);
         this.helperService.setBaseApiURL(AppUrl.QBO);
         this.qboAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
         this.helperService.setBaseApiURL(AppUrl.INTACCT);
