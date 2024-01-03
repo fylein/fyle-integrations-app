@@ -10,7 +10,7 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
 import { environment } from 'src/environments/environment';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-travelperk',
@@ -41,6 +41,7 @@ export class TravelperkComponent implements OnInit, OnDestroy {
   readonly brandingConfig = brandingConfig;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private travelperkService: TravelperkService,
     private orgService: OrgService,
@@ -72,11 +73,25 @@ export class TravelperkComponent implements OnInit, OnDestroy {
     this.windowService.redirect(url);
   }
 
+  removeQueryParams() {
+    // Get the current URL and remove query parameters
+    const currentUrl = this.router.url.split('?')[0];
+
+    // Create a NavigationExtras object with an empty queryParams object
+    const navigationExtras: NavigationExtras = {
+      queryParams: {}
+    };
+
+    // Navigate to the current URL with empty query parameters
+    this.router.navigate([currentUrl], navigationExtras);
+  }
+
   ngOnInit(): void {
     this.routeWatcher$ = this.route.queryParams.subscribe(params => {
       if (params.code) {
         this.travelperkService.connect(params.code).subscribe(() => {
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+            this.removeQueryParams()
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
             this.isLoading = false;
