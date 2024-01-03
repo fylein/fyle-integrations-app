@@ -80,7 +80,11 @@ export class AppLandingPageHeaderComponent implements OnInit {
   }
 
   connect(): void {
-    if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
+
+    if (this.appName === this.AppName.TRAVELPERK) {
+      this.initiateOAuth();
+      return;
+    } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
     } else if (this.postConnectionRoute === 'intacct/onboarding/connector') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_INTACCT);

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Location } from '@angular/common';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
@@ -10,7 +11,7 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
 import { environment } from 'src/environments/environment';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-travelperk',
@@ -41,7 +42,9 @@ export class TravelperkComponent implements OnInit, OnDestroy {
   readonly brandingConfig = brandingConfig;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
+    private location: Location,
     private travelperkService: TravelperkService,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
@@ -57,8 +60,10 @@ export class TravelperkComponent implements OnInit, OnDestroy {
   }
 
   disconnect(): void {
-    this.travelperkService.patchConfigurations(false).subscribe(() => {
+    this.isConnectionInProgress = true;
+    this.travelperkService.disconnect().subscribe(() => {
       this.isIntegrationConnected = false;
+      this.isConnectionInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Travelperk successfully');
     });
   }
@@ -70,11 +75,17 @@ export class TravelperkComponent implements OnInit, OnDestroy {
     this.windowService.redirect(url);
   }
 
+  removeQueryParams() {
+    // Use Location to replace the state of the history with the same path but without query parameters
+    this.location.replaceState(this.router.url.split('?')[0]);
+  }
+
   ngOnInit(): void {
     this.routeWatcher$ = this.route.queryParams.subscribe(params => {
       if (params.code) {
         this.travelperkService.connect(params.code).subscribe(() => {
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+            this.removeQueryParams();
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
             this.isLoading = false;
