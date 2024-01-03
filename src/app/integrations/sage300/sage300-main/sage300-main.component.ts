@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 
 @Component({
@@ -23,12 +24,14 @@ export class Sage300MainComponent implements OnInit {
   activeModule: MenuItem;
 
   constructor(
+    private accountingExportService: AccountingExportService,
     private router: Router,
     private helperService: Sage300HelperService
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
     this.helperService.importAttributes(isRefresh);
+    this.accountingExportService.importExpensesFromFyle().subscribe();
   }
 
   private setupPage() {

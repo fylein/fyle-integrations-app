@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SkipExportList } from 'src/app/core/models/si/db/expense-group.model';
-import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({

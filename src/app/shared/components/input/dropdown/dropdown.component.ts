@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dropdown',
@@ -22,7 +22,7 @@ export class DropdownComponent {
   /**
    * The form group that this dropdown is a part of.
    */
-  @Input() form: FormGroup;
+  @Input() form: FormGroup = new FormGroup({number: new FormControl(3)});
 
   /**
    * The name of the form control within the FormGroup that this
