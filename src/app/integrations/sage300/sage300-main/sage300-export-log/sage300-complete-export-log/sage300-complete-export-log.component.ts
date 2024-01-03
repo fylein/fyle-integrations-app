@@ -88,13 +88,6 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  dateFilter(event: any): void {
-    this.isLoading = true;
-    this.isDateSelected = true;
-    this.selectedDateFilter = event.value;
-    this.getAccountingExports(this.limit, this.offset);
-  }
-
   private getAccountingExports(limit: number, offset:number) {
     this.isLoading = true;
 
