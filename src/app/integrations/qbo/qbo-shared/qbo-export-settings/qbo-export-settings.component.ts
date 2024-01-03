@@ -271,12 +271,12 @@ export class QboExportSettingsComponent implements OnInit {
 
       if (this.exportSettings.workspace_general_settings.reimbursable_expenses_object) {
         this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.workspace_general_settings.reimbursable_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm)
+        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
       }
 
       if (this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object) {
         this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm)
+        this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
