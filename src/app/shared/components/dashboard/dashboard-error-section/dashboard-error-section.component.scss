@@ -3,13 +3,13 @@
 }
 
 .inside-container {
-    @apply tw-border-r-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
+    @apply tw-rounded-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
     border: 1px solid var(--grayscale-light-border, #ECECEE);
     max-width: auto;
 }
 
 .sub-text-container {
-    @apply tw-border-r-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
+    @apply tw-rounded-8-px tw-p-24-px tw-flex-col tw-items-start tw-gap-4;
     border: 1px solid var(--grayscale-light-border, #ECECEE);
     background: var(--grayscale-background, #FAFCFF);
     max-width: auto;
