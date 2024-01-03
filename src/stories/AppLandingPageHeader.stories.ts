@@ -29,7 +29,7 @@ export default meta;
 type Story = StoryObj<AppLandingPageHeaderComponent>;
 
 
-export const simple: Story = {
+export const qbo: Story = {
   args: {
     appName: AppName.QBO,
     iconPath: 'assets/logos/qbo.svg',
@@ -39,6 +39,21 @@ export const simple: Story = {
     isIntegrationConnected: false,
     redirectLink: 'qbo/onboarding/connector',
     buttonText: 'Connect',
-    postConnectionRoute: 'qbo/onboarding/connector'
+    postConnectionRoute: 'qbo/onboarding/connector',
+    showQBOButton: true
+  }
+};
+
+export const QBD: Story = {
+  args: {
+    appName: AppName.QBD,
+    iconPath: 'assets/logos/quickbooks-desktop.svg',
+    appDescription: 'Import data from QBD to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QBD. ',
+    isLoading: false,
+    isIntegrationSetupInProgress: false,
+    isIntegrationConnected: false,
+    redirectLink: 'qbd/onboarding/connector',
+    buttonText: 'Connect',
+    postConnectionRoute: 'qbd/onboarding/connector'
   }
 };

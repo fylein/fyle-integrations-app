@@ -145,6 +145,10 @@
               "node_modules/primeng/resources/themes/lara-light-blue/theme.css",
               "node_modules/primeng/resources/primeng.min.css"
             ],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "configDir": ".storybook",
             "browserTarget": "fyle-integrations-app:build",
             "compodoc": true,
