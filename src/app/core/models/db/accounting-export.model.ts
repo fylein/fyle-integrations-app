@@ -147,7 +147,7 @@ export class AccountingExportModel {
     } else if (referenceType === FyleReferenceType.PAYMENT) {
       url += `admin/#/settlements/${expense.settlement_id}`;
     }
-    return `${url}/?org_id=${org_id}`;
+    return `${url}?org_id=${org_id}`;
   }
 
   static parseAPIResponseToExportLog(accountingExport: AccountingExport, org_id: string): AccountingExportList {
@@ -243,7 +243,7 @@ export class SkippedAccountingExportModel {
       claim_number: skippedExpense.claim_number,
       employee: [skippedExpense.employee_name, skippedExpense.employee_email],
       expenseType: skippedExpense.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
-      fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpense.expense_id}/?org_id=${skippedExpense.org_id}`
+      fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpense.expense_id}?org_id=${skippedExpense.org_id}`
     };
   }
 }
