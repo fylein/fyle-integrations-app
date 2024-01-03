@@ -6,7 +6,11 @@ export class HelperUtility {
     }
 
     static clearValidatorAndResetValue(form: FormGroup, controllerName: string): void {
-    form.controls[controllerName].clearValidators();
-    form.controls[controllerName].setValue(null);
+        form.controls[controllerName].clearValidators();
+
+        // Temporary hack: Don't reset value for fields that are used in reimbursable + ccc section
+        if (controllerName !== 'accountsPayable') {
+            form.controls[controllerName].setValue(null);
+        }
     }
 }

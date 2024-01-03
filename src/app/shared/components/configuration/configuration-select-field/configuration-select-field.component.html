@@ -29,6 +29,7 @@
                 <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
                     <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px"
                     [formControlName]="formControllerName" [placeholder]="placeholder"
+                    dropdownIcon="pi pi-chevron-down"
                     [ngClass]="{
                         'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
                         'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
@@ -48,7 +49,8 @@
                             <span>
                                 {{ item.label }}
                             </span>
-                            <i *ngIf="!isDisabled" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                            <i *ngIf="!showClearIcon && !isDisabled" class="pi pi-chevron-down"></i>
+                            <i *ngIf="showClearIcon && !isDisabled" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
                         </div>
                     </ng-template>
                 </p-dropdown>
