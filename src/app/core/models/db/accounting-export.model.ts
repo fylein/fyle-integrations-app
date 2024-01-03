@@ -146,7 +146,7 @@ export class AccountingExportModel {
     } else if (referenceType === FyleReferenceType.PAYMENT) {
       url += `admin/#/settlements/${expense.settlement_id}`;
     }
-    return `${url}/?org_id=${org_id}`;
+    return `${url}?org_id=${org_id}`;
   }
 
   static parseAPIResponseToExportLog(accountingExport: AccountingExport, org_id: string): AccountingExportList {
