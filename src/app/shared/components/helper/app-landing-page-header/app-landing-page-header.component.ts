@@ -49,6 +49,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() postConnectionRoute: string;
 
+  @Input() showQBOButton: boolean;
+
   @Input() logoWidth: string = '140px';
 
   @Input() logoStyleClasses: string = 'tw-py-10-px tw-px-20-px';
