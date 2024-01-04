@@ -66,6 +66,10 @@ export class QboEmployeeSettingsComponent implements OnInit {
     this.windowReference = this.windowService.nativeWindow;
   }
 
+  navigateToPreviousStep(): void {
+    this.router.navigate([`/integrations/qbo/onboarding/connector`]);
+  }
+
   save(): void {
     if (this.employeeSettingForm.valid && !this.isSaveInProgress) {
       if (this.exportSettingAffected()) {

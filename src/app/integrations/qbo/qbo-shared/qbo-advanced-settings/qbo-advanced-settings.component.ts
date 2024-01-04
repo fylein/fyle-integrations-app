@@ -83,6 +83,11 @@ export class QboAdvancedSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService
   ) { }
 
+
+  navigateToPreviousStep(): void {
+    this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
+  }
+
   save(): void {
     // TODO, save skip export
     const advancedSettingPayload = QBOAdvancedSettingModel.constructPayload(this.advancedSettingForm);
