@@ -37,7 +37,6 @@ export class TravelperkComponent implements OnInit {
 
   org: Org = this.orgService.getCachedOrg();
 
-
   readonly brandingConfig = brandingConfig;
 
   constructor(
@@ -71,7 +70,7 @@ export class TravelperkComponent implements OnInit {
 
   connectTravelperk(): void {
     this.isConnectionInProgress = true;
-    const url = `${environment.travelperk_base_url}/oauth2/authorize?client_id=${environment.travelperk_client_id}&redirect_uri=https://staging1.fyle.tech/app/settings/#/integrations/native_apps?integrationIframeTarget=integrations/travelperk&scope=expenses:read&response_type=code&state=${environment.production ? 'none' : 'travelperk_local_redirect'}`;
+    const url = `${environment.travelperk_base_url}/oauth2/authorize?client_id=${environment.travelperk_client_id}&redirect_uri=${environment.travelperk_redirect_uri}&scope=expenses:read&response_type=code&state=${environment.production ? this.org.id : `${this.org.id}_travelperk_local_redirect`}`;
 
     const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
 
@@ -86,7 +85,7 @@ export class TravelperkComponent implements OnInit {
         clearInterval(activePopup);
       } catch (error) {
         if (error instanceof DOMException && error.message.includes('An attempt was made to break through the security policy of the user agent')) {
-          this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
+          this.travelperkService.getTravelperkData().subscribe(() => {
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
@@ -99,14 +98,6 @@ export class TravelperkComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      if (params.code) {
-        this.travelperkService.connect(params.code).subscribe(() => {
-          window.close();
-        });
-      } else {
-        this.setupPage();
-      }
-    });
+    this.setupPage();
   }
 }
