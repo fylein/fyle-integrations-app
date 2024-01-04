@@ -67,8 +67,8 @@ export class TravelperkService {
     });
   }
 
-  connect(code: string): Observable<{}> {
-    return this.apiService.post(`/orgs/${this.orgId}/travelperk/connect/`, { code });
+  connect(code: string, orgId: string): Observable<{}> {
+    return this.apiService.post(`/orgs/${orgId}/travelperk/connect/`, { code });
   }
 
   disconnect(): Observable<{}> {
