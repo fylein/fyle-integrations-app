@@ -26,20 +26,21 @@ export class ApiService {
     API_BASE_URL = url;
   }
 
-  private handleError(error: HttpErrorResponse, httpMethod: string) {
+  private handleError(error: HttpErrorResponse, httpMethod: string, url: string) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
     } else {
       console.error(
-        `Backend returned code ${error.status}, method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
+        `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
       );
     }
     return throwError(error);
   }
 
   post(endpoint: string, body: {}): Observable<any> {
-    return this.http.post(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
-      return this.handleError(error, 'POST');
+    const url = API_BASE_URL + endpoint;
+    return this.http.post(url, body, httpOptions).pipe(catchError(error => {
+      return this.handleError(error, 'POST', url);
     }));
   }
 
@@ -48,27 +49,31 @@ export class ApiService {
     Object.keys(apiParams).forEach(key => {
       params = params.set(key, apiParams[key]);
     });
-    return this.http.get(API_BASE_URL + endpoint, { params }).pipe(catchError(error => {
-      return this.handleError(error, 'GET');
+    const url = API_BASE_URL + endpoint;
+    return this.http.get(url, { params }).pipe(catchError(error => {
+      return this.handleError(error, 'GET', url);
     }));
   }
 
   patch(endpoint: string, body: {}): Observable<any> {
-    return this.http.patch(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
-      return this.handleError(error, 'PATCH');
+    const url = API_BASE_URL + endpoint;
+    return this.http.patch(url, body, httpOptions).pipe(catchError(error => {
+      return this.handleError(error, 'PATCH', url);
     }));
   }
 
   put(endpoint: string, body: {}): Observable<any> {
-    return this.http.put(API_BASE_URL + endpoint, body, httpOptions).pipe(catchError(error => {
-      return this.handleError(error, 'PUT');
+    const url = API_BASE_URL + endpoint;
+    return this.http.put(url, body, httpOptions).pipe(catchError(error => {
+      return this.handleError(error, 'PUT', url);
     }));
   }
 
   delete(endpoint: string, body: {}): Observable<any> {
     httpOptions.body = body;
-    return this.http.delete(API_BASE_URL + endpoint, httpOptions).pipe(catchError(error => {
-      return this.handleError(error, 'DELETE');
+    const url = API_BASE_URL + endpoint;
+    return this.http.delete(url, httpOptions).pipe(catchError(error => {
+      return this.handleError(error, 'DELETE', url);
     }));
   }
 }
