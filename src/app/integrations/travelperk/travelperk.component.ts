@@ -56,6 +56,8 @@ export class TravelperkComponent implements OnInit, OnDestroy {
       this.travelperkData = travelperkData;
       this.isIntegrationConnected = travelperkData.is_travelperk_connected;
       this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
     });
   }
 
