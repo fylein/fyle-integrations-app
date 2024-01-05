@@ -4,7 +4,9 @@
         <div class="fields-header-text tw-w-30-vw">{{brandingConfig.brandName}} Fields</div>
         <div class="fields-header-text tw-flex tw-w-[10vw] tw-whitespace-nowrap">
             Import to {{brandingConfig.brandName}}
-            <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-faded-text-color" [pTooltip]="'Importing a dimension syncs active values from ' + appName + ' every 24 hours. Deactivated values in ' + appName + ' will also be disabled in ' + brandingConfig.brandName + ''"></svg-icon-sprite>
+            <svg-icon-sprite src="info" width="20px" hight="20px" class="tw-text-faded-text-color" tooltipPosition="top"
+                [pTooltip]="'Importing a dimension syncs active values from ' + appName + ' every 24 hours. Deactivated values in ' + appName + ' will also be disabled in ' + brandingConfig.brandName + ''">
+            </svg-icon-sprite>
         </div>
     </div>
     <div class="tw-pl-48-px tw-mt-18px">
@@ -23,8 +25,9 @@
             </div>
         </div>
     </div>
-    <div formArrayName="expenseFields" [ngClass]="[isDestinationFixedImport ? '' : 'tw-pl-48-px tw-mt-18px']">
+    <div formArrayName="expenseFields" [ngClass]="[isDestinationFixedImport ? '' : 'tw-pl-24-px tw-mt-18px']">
         <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="{'tw-mt-24-px tw-pb-24-px': isDestinationFixedImport, 'tw-rounded-lg tw-border-separator tw-border': isDestinationFixedImport && !isCloneSettingView, 'tw-pr-24-px': isCloneSettingView}">
+            <div class="tw-pl-24-px tw-mt-18-px" [ngClass]="{'tw-bg-configuration-bg tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px':expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue}">
             <div *ngIf="isDestinationFixedImport">
                 <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">
                     <div class="tw-w-3/4 tw-flex tw-items-start">
@@ -45,9 +48,9 @@
                     </div>
                 </div>
             </div>
-            <div class="tw-flex tw-mt-24-px" [ngClass]="[isDestinationFixedImport ? 'tw-pl-60-px' : '']">
+            <div class="tw-flex" [ngClass]="[isDestinationFixedImport ? 'tw-pl-60-px' : '']">
                 <div>
-                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field"
+                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field" dropdownIcon="pi pi-chevron-down"
                         optionLabel="display_name" optionValue="attribute_type" [disabled]="isDestinationFixedImport" [ngClass]="{'selectedAccItem !tw-text-slightly-normal-text-color': isDestinationFixedImport}">
                         <ng-template let-option pTemplate="item">
                             <div>
@@ -69,7 +72,7 @@
                     <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
                     <div class="tw-w-28-vw">
                         <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFieldOptions" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
-                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
+                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}" dropdownIcon="pi pi-chevron-down">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
                                 <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
@@ -93,33 +96,41 @@
             </div>
             <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex">
-                    <div>
-                        <input formControlName="isDependentImportEnabled" type="checkbox"/>
-                    </div>
-                    <label class="tw-pl-2 tw-text-14-px" for="checkbox">Import Cost Code and Cost Type from {{appName}} as dependent fields</label>
+                    <label class="container tw-pl-24-px tw-text-14-px">Import Cost Code and Cost Type from {{appName}} as dependent fields
+                        <input type="checkbox" formControlName="isDependentImportEnabled">
+                        <span class="checkmark"></span>
+                    </label>
                 </div>
                 <div *ngIf="form.value.isDependentImportEnabled && dependentImportFields">
-                    <div *ngFor="let dependentField of dependentImportFields" class="tw-flex tw-pt-4">
+                    <div *ngFor="let dependentField of dependentImportFields; index as i" class="tw-flex tw-items-center tw-pt-4" [ngClass]="getDynamicPadding(i)">
                         <div>
-                            <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{dependentField.source_field}}" disabled>
+                            <svg-icon-sprite src="Line" width="20px" height="48px"></svg-icon-sprite>
                         </div>
-                        <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-16-px tw-text-box-color"></svg-icon-sprite>
-                        <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" placeholder="Select Expense Field" [disabled]="dependentField.isDisabled">
-                            <ng-template let-option pTemplate="item">
-                                <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
-                                  <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
-                                  {{ option.display_name }}
-                                </div>
-                              </ng-template>
-                        </p-dropdown>
-                        <p-inputSwitch class="tw-pl-32-px input-toggle-section tw-pt-10-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                        <div>
+                            <p class="tw-pl-20-px tw-mb-8-px tw-text-14-px tw-text-sub-text-color !tw-font-400">Dependent Field <app-mandatory-field></app-mandatory-field> </p>
+                            <input type="text" [ngClass]="getDynamicWidth(i)" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-20-px !tw-font-500 !tw-h-36-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{dependentField.source_field}}" disabled>
+                        </div>
+                        <svg-icon-sprite src="arrow-line" height="10px" width="100px" class="!tw-ml-0 tw-pt-34-px tw-text-box-color"></svg-icon-sprite>
+                        <div>
+                            <p class="tw-mb-8-px tw-text-14-px tw-text-sub-text-color !tw-font-400">Fyle Field <app-mandatory-field></app-mandatory-field> </p>
+                            <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" placeholder="Select Expense Field" [disabled]="dependentField.isDisabled" dropdownIcon="pi pi-chevron-down">
+                                <ng-template let-option pTemplate="item">
+                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
+                                      <svg-icon-sprite *ngIf="option.attribute_type === 'custom_field'" src="add" width="20px" height="20px" class="icon-align"></svg-icon-sprite>
+                                      {{ option.display_name }}
+                                    </div>
+                                  </ng-template>
+                            </p-dropdown>
+                        </div>
+                        <p-inputSwitch class="tw-pl-128-px input-toggle-section tw-pt-30-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                     </div>
                 </div>
             </div>                      
             <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="form.get('expenseFields')?.hasError('duplicatefyleFieldOptions') || form.get('expenseFields')?.hasError('duplicateaccountingFieldOptions')">
                 *{{brandingConfig.brandName}} and {{appName}} Fields should be unique.
             </div> 
-        </div>                 
+        </div>  
+    </div>               
     </div>
     <div *ngIf="showOrHideAddButton() && !isDestinationFixedImport" class="add-button-container">
         <svg-icon-sprite src="add" width="20px" height="20px" class="add-row-text" (click)="addExpenseField()"></svg-icon-sprite>

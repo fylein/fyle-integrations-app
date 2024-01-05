@@ -24,6 +24,10 @@ export class ConfigurationTextFieldComponent implements OnInit {
 
   constructor() { }
 
+  changeFormControllerType(state: boolean) {
+    this.type = state ? 'text' : 'password';
+  }
+
   ngOnInit(): void {
   }
 

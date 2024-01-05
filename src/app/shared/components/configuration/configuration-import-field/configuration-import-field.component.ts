@@ -51,6 +51,16 @@ export class ConfigurationImportFieldComponent implements OnInit {
     return this.form.get('expenseFields') as FormArray;
   }
 
+  getDynamicWidth(index: number): string {
+    const length = 260 - (index * 20);
+    return `tw-w-${length}-px`;
+  }
+
+  getDynamicPadding(index: number): string{
+    const padding = index * 20;
+    return `tw-pl-${padding}-px`;
+  }
+
   showOrHideAddButton() {
     if (this.form.controls.expenseFields.value.length === this.accountingFieldOptions.length) {
       return false;

@@ -8,7 +8,7 @@
 
 html,
 body {
-    @apply tw-h-[100%];
+    @apply tw-h-[100%] tw-leading-19;
 }
 
 body {
@@ -17,6 +17,14 @@ body {
 
 p {
     @apply tw-m-0-px;
+}
+
+.pi-chevron-down:before {
+    content: url('./assets/icons/arrow-down.svg') #{!important};
+}
+
+.pi-times:before {
+    @apply tw-text-12-px tw-text-placeholder #{!important}
 }
 
 // Button CTA
