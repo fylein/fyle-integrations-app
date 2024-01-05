@@ -48,7 +48,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() customErrorMessage: string;
 
-  @Input() showClearIcon: boolean;
+  @Input() showClearIcon: boolean = false;
 
   @Input() appName: string;
 
@@ -62,7 +62,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() isOptionSearchInProgress: boolean;
 
-  @Input() isDisabled: boolean;
+  @Input() isDisabled: boolean = false;
 
   @Input() optionLabel: string = 'value';
 
