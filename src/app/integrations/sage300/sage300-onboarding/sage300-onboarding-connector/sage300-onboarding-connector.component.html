@@ -17,10 +17,10 @@
                 <div class="tw-p-24-px">
                     <form [formGroup]="connectSage300Form">
                         <div class="tw-mb-16-px">
-                            <app-configuration-text-field [customErrorMessage]="'Invalid User ID. Please enter valid User ID'" [form]="connectSage300Form" [formControllerName]="'userID'" [isFieldMandatory]="true" [label]="'HH2 User ID'" [placeholder]="'Enter HH2 User ID'"></app-configuration-text-field>
+                            <app-configuration-text-field [customErrorMessage]="'Please enter a valid HH2 Identifier.'" [form]="connectSage300Form" [formControllerName]="'companyID'" [isFieldMandatory]="true" [label]="'HH2 Identifier'" [placeholder]="'Enter HH2 Identifier'"></app-configuration-text-field>
                         </div>
                         <div class="tw-mb-16-px">
-                            <app-configuration-text-field [customErrorMessage]="'Invalid Company ID. Please enter valid Company ID'" [form]="connectSage300Form" [formControllerName]="'companyID'" [isFieldMandatory]="true" [label]="'HH2 Identifier'" [placeholder]="'Enter HH2 Identifier'"></app-configuration-text-field>
+                            <app-configuration-text-field [customErrorMessage]="'Please enter valid HH2 User ID.'" [form]="connectSage300Form" [formControllerName]="'userID'" [isFieldMandatory]="true" [label]="'HH2 User ID'" [placeholder]="'Enter HH2 User ID'"></app-configuration-text-field>
                         </div>
                         <div>
                             <app-configuration-text-field [customErrorMessage]="'Incorrect Password. Please enter correct password'" [form]="connectSage300Form" [formControllerName]="'userPassword'" [isFieldMandatory]="true" [label]="'HH2 User Password'" [placeholder]="'Enter HH2 User Password'" [type]="'password'"></app-configuration-text-field>

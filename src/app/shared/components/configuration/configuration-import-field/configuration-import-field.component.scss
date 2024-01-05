@@ -99,64 +99,33 @@
   }
 
 .container {
-  display: block;
-  position: relative;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  @apply tw-relative tw-cursor-pointer tw-select-none tw-block #{!important};
 }
 
 /* Hide the browser's default checkbox */
 .container input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+  @apply tw-absolute tw-opacity-0 tw-cursor-pointer tw-h-0 tw-w-0
 }
+
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 18px;
-  width: 18px;
-  background-color: #eee;
-  border-radius: 4px;
+  @apply tw-absolute tw-top-0 tw-left-0 tw-h-18-px tw-w-18-px tw-bg-white tw-rounded-md tw-border tw-border-faded-text-color
 }
 
-/* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
-  background-color: #ccc;
-}
-
-/* When the checkbox is checked, add a blue background */
 .container input:checked ~ .checkmark {
-  background-color: #5A5D72;
+  @apply tw-bg-faded-text-color
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
+  @apply tw-content-empty tw-absolute tw-hidden
 }
 
 /* Show the checkmark when checked */
 .container input:checked ~ .checkmark:after {
-  display: block;
+  @apply tw-block ;
 }
 
 /* Style the checkmark/indicator */
 .container .checkmark:after {
-  left: 6px;
-  top: 3px;
-  width: 6px;
-  height: 10px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
+  @apply tw-left-2 tw-top-0.5 tw-w-6-px tw-h-10-px tw-border-t-0-px tw-border-r-3-px tw-border-b-3-px tw-border-l-0-px tw-border-white tw-rotate-45;
 }

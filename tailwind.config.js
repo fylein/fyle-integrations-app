@@ -235,6 +235,7 @@ module.exports = {
       },
       width: {
         '1-px': '1px',
+        '6-px': '6px',
         '8-px': '8px',
         '10-px': '10px',
         '12-px': '12px',
@@ -333,9 +334,11 @@ module.exports = {
         '50': '50%'
       },
       borderWidth: {
+        '0-px': '0px',
         '0.5-px': '0.5px',
         '1-px': '1px',
         '2-px': '2px',
+        '3-px': '3px',
         '4-px': '4px',
         '6-px': '6px',
         '8-px': '8px',
@@ -383,12 +386,16 @@ module.exports = {
       top: {
         '70': '70%'
       },
+      inset: {
+        '2': '0.28rem'
+      },
       lineHeight: {
         '16-px': '16px'
       },
       content: {
         'no': "'No'",
-        'yes': "'Yes'"
+        'yes': "'Yes'",
+        'empty': "''"
       }
     },
   },
