@@ -106,6 +106,10 @@ export class QboImportSettingsComponent implements OnInit {
     this.helperService.refreshQBODimensions().subscribe();
   }
 
+  navigateToPreviousStep(): void {
+    this.router.navigate([`/integrations/qbo/onboarding/export_settings`]);
+  }
+
   save(): void {
     this.isSaveInProgress = true;
     const importSettingPayload = QBOImportSettingModel.constructPayload(this.importSettingForm);

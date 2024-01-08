@@ -19,13 +19,15 @@ export class ExportLogService {
 
   constructor(
     private apiService: ApiService,
+    private userService: UserService,
     private workspaceService: WorkspaceService
   ) { }
 
   getSkippedExpenses(limit: number, offset: number): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
+    const org_id = this.userService.getUserProfile().org_id;
 
-    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset});
+    return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, {limit, offset, org_id: org_id, is_skipped: true});
   }
 
   getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null): Observable<ExpenseGroupResponse> {
