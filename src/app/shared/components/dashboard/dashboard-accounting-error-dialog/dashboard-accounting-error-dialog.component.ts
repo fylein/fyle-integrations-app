@@ -8,6 +8,8 @@ import { Expense, ExpenseModel } from 'src/app/core/models/si/db/expense.model';
 })
 export class DashboardAccountingErrorDialogComponent implements OnInit {
 
+  @Input() isLoading: boolean;
+
   @Input() errorExpenses: Expense[];
 
   constructor() { }
