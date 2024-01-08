@@ -120,7 +120,6 @@ export class GenericMappingTableComponent implements OnInit {
 
 
   getTableSourceData() {
-    console.log(this.isLoading);
     if (this.filteredMappings) {
       return this.filteredMappings;
     } else if (this.mappingError) {
