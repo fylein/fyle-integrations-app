@@ -108,7 +108,7 @@
 }
 
 .checkmark {
-  @apply tw-absolute tw-top-0 tw-left-0 tw-h-18-px tw-w-18-px tw-bg-white tw-rounded-md tw-border tw-border-faded-text-color
+  @apply tw-absolute tw-top-0 tw-left-0 tw-h-18-px tw-w-18-px tw-bg-white tw-rounded-md tw-border tw-border-box-color
 }
 
 .container input:checked ~ .checkmark {
