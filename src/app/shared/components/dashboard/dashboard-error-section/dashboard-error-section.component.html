@@ -94,7 +94,7 @@
             <p>{{appName}} Error</p>
             <h3 class="sub-header">{{errorDetail}}</h3>
         </p-header>
-        <app-dashboard-accounting-error-dialog [errorExpenses]="errorExpenses"></app-dashboard-accounting-error-dialog>
+        <app-dashboard-accounting-error-dialog  [isLoading]="isLoading" [errorExpenses]="errorExpenses"></app-dashboard-accounting-error-dialog>
     </p-dialog>
 </div>
 
