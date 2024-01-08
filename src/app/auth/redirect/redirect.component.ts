@@ -29,7 +29,7 @@ export class RedirectComponent implements OnInit {
       } else if (this.route.snapshot.queryParams?.state === 'qbo_local_redirect' || this.route.snapshot.queryParams?.state === 'business_central_local_redirect') {
         const url = `http://localhost:4200/integrations/oauth_callback?code=${this.route.snapshot.queryParams.code}&realmId=${this.route.snapshot.queryParams.realmId}`;
         this.windowService.redirect(url);
-      } 
+      }
     } else {
       this.redirectToFyleOAuth();
     }
