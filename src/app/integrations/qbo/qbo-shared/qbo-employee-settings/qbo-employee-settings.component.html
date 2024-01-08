@@ -43,7 +43,9 @@
                 <app-configuration-step-footer
                     [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                     [isButtonDisabled]="!employeeSettingForm.valid"
-                    (save)="save()">
+                    [showBackButton]="true"
+                    (save)="save()"
+                    (navigateToPreviousStep)="navigateToPreviousStep()">
                 </app-configuration-step-footer>
             </div>
         </form>

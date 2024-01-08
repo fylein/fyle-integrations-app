@@ -13,15 +13,13 @@ import { globalCacheBusterNotifier } from 'ts-cacheable';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Token } from '../models/misc/token.model';
 import { AuthService } from '../services/common/auth.service';
-import { SiAuthService } from '../services/si/si-core/si-auth.service';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
 
   constructor(
     private authService: AuthService,
-    private jwtHelpter: JwtHelperService,
-    private siAuthService: SiAuthService
+    private jwtHelpter: JwtHelperService
   ) { }
 
   private refreshTokenInProgress = false;
@@ -46,7 +44,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   // Certain api's do not require token in headers.
   private isTokenMandatory(url: string): boolean {
-    const endpointWithoutToken = url.includes('/api/auth/');
+    const endpointWithoutToken = url.includes('/api/auth/') || url.includes('/travelperk/connect');
     return !endpointWithoutToken;
   }
 

@@ -200,8 +200,8 @@ export class QBOExportSettingModel extends ExportSettingModel {
 
   static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
-      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
-      'creditCardExpense': ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState']
+      reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
+      creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState']
     };
 
     const exportModuleRule: ExportModuleRule[] = [
@@ -210,7 +210,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
         requiredValue: {
           [QBOReimbursableExpensesObject.BILL]: ['accountsPayable'],
           [QBOReimbursableExpensesObject.CHECK]: ['bankAccount'],
-          [QBOReimbursableExpensesObject.JOURNAL_ENTRY]: ['accountsPayable'],
+          [QBOReimbursableExpensesObject.JOURNAL_ENTRY]: ['accountsPayable', 'bankAccount'],
           [QBOReimbursableExpensesObject.EXPENSE]: ['qboExpenseAccount']
         }
       },
@@ -219,8 +219,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
         requiredValue: {
           [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE]: ['defaultCCCAccount'],
           [QBOCorporateCreditCardExpensesObject.BILL]: ['defaultCreditCardVendor', 'accountsPayable'],
-          [QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['accountsPayable'],
-          [QBOCorporateCreditCardExpensesObject.EXPENSE]: ['qboExpenseAccount'],
+          [QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['accountsPayable', 'defaultCCCAccount'],
           [QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE]: ['defaultDebitCardAccount']
         }
       }

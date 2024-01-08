@@ -6,6 +6,6 @@
     [destinationField]="destinationField"
     [showAutoMapEmployee]="showAutoMapEmployee"
     [appName]="AppName.QBO"
-    [isCategoryMappingGeneric]="true"
+    [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
     (triggerAutoMapEmployee)="triggerAutoMapEmployees()">
 </app-generic-mapping-v2>

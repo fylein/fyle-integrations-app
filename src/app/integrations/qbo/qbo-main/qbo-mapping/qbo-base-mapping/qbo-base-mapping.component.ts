@@ -34,6 +34,8 @@ export class QboBaseMappingComponent implements OnInit {
 
   AppName = AppName;
 
+  FyleField = FyleField;
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
