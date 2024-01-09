@@ -32,7 +32,7 @@ export class BusinessCentralConnectorService {
     cacheBusterObserver: businessCentralCredentialsCache$
   })
   getBusinessCentralCredentials(): Observable<BusinessCentralCredential> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/credentials/business_central/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/business_central/`, {});
   }
 
   @Cacheable({
