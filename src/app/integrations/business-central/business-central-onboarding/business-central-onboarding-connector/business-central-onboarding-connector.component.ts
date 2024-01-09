@@ -133,7 +133,6 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
         });
       });
     }, (error) => {
-      console.log(error)
       const errorMessage = 'message' in error ? error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
       if (errorMessage === 'Please choose the correct Dynamic 360 Business Central account') {
         this.isIncorrectBusinessCentralConnectedDialogVisible = true;
