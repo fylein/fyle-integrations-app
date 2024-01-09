@@ -630,11 +630,14 @@ video {
 .\!tw-ml-0 {
   margin-left: 0px !important;
 }
+.tw-mt-18-px {
+  margin-top: 18px;
+}
 .tw-ml-0 {
   margin-left: 0px;
 }
-.\!tw-ml-40-px {
-  margin-left: 40px !important;
+.\!tw-ml-20-px {
+  margin-left: 20px !important;
 }
 .tw-mr-18-px {
   margin-right: 18px;
@@ -666,17 +669,23 @@ video {
 .tw-mr-4 {
   margin-right: 1rem;
 }
-.tw-mt-8 {
-  margin-top: 2rem;
+.tw-mt-80-px {
+  margin-top: 80px;
 }
 .tw-mb-14 {
   margin-bottom: 3.5rem;
+}
+.tw-mb-30-px {
+  margin-bottom: 30px;
 }
 .tw-mr-10-px {
   margin-right: 10px;
 }
 .tw-mt-12-px {
   margin-top: 12px;
+}
+.\!tw-ml-40-px {
+  margin-left: 40px !important;
 }
 .\!tw-ml-60-px {
   margin-left: 60px !important;
@@ -874,6 +883,9 @@ video {
 .tw-w-28-vw {
   width: 28vw;
 }
+.tw-w-240-px {
+  width: 240px;
+}
 .tw-w-200-px {
   width: 200px;
 }
@@ -904,6 +916,9 @@ video {
 .tw-w-30-px {
   width: 30px;
 }
+.tw-w-6-px {
+  width: 6px;
+}
 .tw-w-32-px {
   width: 32px;
 }
@@ -918,9 +933,6 @@ video {
 }
 .tw-w-404-px {
   width: 404px;
-}
-.tw-w-240-px {
-  width: 240px;
 }
 .tw-w-400-px {
   width: 400px;
@@ -1346,6 +1358,10 @@ video {
   padding-left: 20px;
   padding-right: 20px;
 }
+.tw-py-20-px {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 .tw-py-60-px {
   padding-top: 60px;
   padding-bottom: 60px;
@@ -1478,6 +1494,9 @@ video {
 .tw-pb-44-px {
   padding-bottom: 44px;
 }
+.tw-pb-48-px {
+  padding-bottom: 48px;
+}
 .tw-pl-10-px {
   padding-left: 10px;
 }
@@ -1568,14 +1587,23 @@ video {
 .tw-pl-32-px {
   padding-left: 32px;
 }
-.tw-pl-2 {
-  padding-left: 0.5rem;
-}
 .tw-pt-4 {
   padding-top: 1rem;
 }
+.tw-pl-20-px {
+  padding-left: 20px;
+}
+.tw-pl-128-px {
+  padding-left: 128px;
+}
+.tw-pt-30-px {
+  padding-top: 30px;
+}
 .tw-pl-1 {
   padding-left: 0.25rem;
+}
+.tw-pl-2 {
+  padding-left: 0.5rem;
 }
 .tw-pr-40-px {
   padding-right: 40px;
@@ -1777,6 +1805,7 @@ video {
 html,
 body {
   height: 100%;
+  line-height: 19.6px;
 }
 body {
   margin: 0px;
@@ -1786,6 +1815,19 @@ body {
 }
 p {
   margin: 0px;
+}
+.pi-chevron-down:before {
+  content: url('arrow-down.879e35110a96c3d1.svg') !important;
+}
+.pi-eye:before {
+  content: url('eye.d0c70ef0f7b7f40b.svg') !important;
+}
+.pi-eye-slash:before {
+  content: url('eye-slash.10786947f7c90c0e.svg') !important;
+}
+.pi-times:before {
+  font-size: 12px !important;
+  color: var(--placeholder) !important;
 }
 .p-button {
   width: 100% !important;
