@@ -95,9 +95,9 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     this.helperService.oauthHandler(url);
   }
 
-  acceptWarning(isWarningAccepted: boolean): void {
+  acceptWarning(data: ConfigurationWarningOut): void {
     this.isIncorrectBusinessCentralConnectedDialogVisible = false;
-    if (isWarningAccepted) {
+    if (data.hasAccepted) {
       this.router.navigate([`/integrations/business_central/onboarding/connector`]);
     }
   }
