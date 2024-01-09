@@ -72,7 +72,7 @@ export enum AppName {
   TRAVELPERK = 'Travelperk',
   GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
-  SAGE300 = 'Sage 300 CRE',
+  SAGE300 = 'SAGE300',
   QBO = 'QuickBooks Online',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central'
 }
