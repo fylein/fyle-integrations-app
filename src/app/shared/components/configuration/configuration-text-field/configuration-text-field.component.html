@@ -7,7 +7,11 @@
     </div>
 
     <div class="tw-mt-8-px">
-        <input [type]="type" class="tw-border-box-color" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"  pInputText [formControlName]="formControllerName" [placeholder]="placeholder" [required]="isFieldMandatory">
+        <span class="p-input-icon-right">
+            <i *ngIf="type === 'password'" class="pi pi-eye tw-cursor-pointer" (click)="changeFormControllerType(true)"></i>
+            <i *ngIf="type !== 'password' && formControllerName === 'userPassword'" class="pi pi-eye-slash tw-cursor-pointer" (click)="changeFormControllerType(false)"></i>
+            <input [type]="type" class="tw-border-box-color" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"  pInputText [formControlName]="formControllerName" [placeholder]="placeholder" [required]="isFieldMandatory">
+        </span>
         <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
     </div>
 </div>

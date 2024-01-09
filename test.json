@@ -1,0 +1,188 @@
+{
+    "serial_number":"INV-04-00069",
+    "profile_id":"a72eccb0-85da-4ca3-ac8b-59242889eff8",
+    "profile_name":"Nilesh Pant",
+    "billing_information":{
+       "legal_name":"Fyle",
+       "vat_number":"",
+       "address_line_1":"B-48 GM Complex",
+       "address_line_2":"",
+       "city":"Barcelona",
+       "postal_code":"480551",
+       "country_name":"Spain"
+    },
+    "mode":"us-reseller",
+    "status":"open",
+    "issuing_date":"2023-04-18",
+    "billing_period":"instant",
+    "from_date":"2023-04-18",
+    "to_date":"2023-04-18",
+    "due_date":"2023-04-18",
+    "currency":"USD",
+    "total":"142.25",
+    "taxes_summary":[
+       {
+          "tax_regime":"US-G-VAT-R-0",
+          "subtotal":"142.25",
+          "tax_percentage":"0.00",
+          "tax_amount":"0.00",
+          "total":"142.25"
+       }
+    ],
+    "reference":"Trip #4667",
+    "travelperk_bank_account":null,
+    "pdf":"https://tk-sandbox-new-invoicing.s3.amazonaws.com/invoices-v2/INV-04-00069.pdf?AWSAccessKeyId=ASIA5MFYTLYHY32OP3WB&Signature=Oz5EcfPyNSRNsluUD%2B5qEhygftg%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEGMaCWV1LXdlc3QtMSJIMEYCIQDreSjEBfcWx%2F80SACezPSpkEFO%2FQpxrVZsstX%2Bsa8gggIhAP2M8LoMUMdSxE9cMelLfKeHu0jnymMmZ9ullAH7KVATKuUDCFwQARoMOTE5NTEwMTQ2NTc1IgyGxk3FwGC1I9M9B90qwgPWChdw9wBGoL048GS85mmn3%2B%2BxEZ%2F4o9pCkCtKyY0fis7TxRFnJAP%2BZAKl5YxkUVxcH0fXqYJ0nGajxHyAK78Vi2ruapiZ1oPfh1kgQLfb1UnlbBzCqXUBDRu3bBrJ6yeDIbumpiLBaasJa0lmrsHiCuhasWyI4lsQh%2B2E0Hru%2BXgvc10ctX%2BFU2BPEQeMkuR3rQPyRDjFUDZxoShACC41Wxr5QAlE9zeuinXEr34Jxdyc4TwnOZdnhobPPk0uKcK87dEkVFdz%2FnXqFoQXB0Cd%2FA%2BukpbLkWiEigATFVvOb80R72g6XrRrQ3NkRRWqWWOU8gnlauUN%2BArxPHQiBECOHRgkF0SkVuW7KCMJORinYVQXhn%2FmZbJNimBQPav4XTD4wHvPlqUPlSTSrMiWRkPARlR4ZpQx53I2Z36aJKcKahLC8oKp8f344mr3zVdjF%2BecN8NsjsZ9xJKeRgEakvukjRr3xJEzoWfFznJgvmVp3H2Osrr6E%2FFtXOlIixtTwHYacFcajSeXZL3XGaYmmysa4mmzZEB7S73h9VVq7%2Blh1hkfjeFg5tv4u6mNybIdDj9wAyFldoATOZlZr8b3W07fmpEw7%2Bb5oQY6pAGLYISh7%2FES6ye4rlK4f%2Fl0aHMioD9LtgwB7QF1yrXcutWjWk3xRNzwgyjebzlZmKxoRNUIpItIQqg7sevtN6F0ZcwCMfIpZ%2FcqEP9n5DBNmLOQWPC2kvnLai4233MpSw%2B4D%2F57cXcGQyWWQsA7WWny1So55Yus%2FJzMDHx8QjDJvYjCGPcEKXRnqqJRKV20iIrMAyT7v24aTD2MY1BxctQqkTppVw%3D%3D&Expires=1681819227",
+    "lines":[
+        {
+            "id":"e875badc-281c-4505-8e54-86277b474c88",
+            "expense_date":"2023-03-15",
+            "description":"FLIGHT for Trip ID 8660276",
+            "quantity":2,
+            "unit_price":"114.55",
+            "non_taxable_unit_price":"0.00",
+            "tax_percentage":"0.00",
+            "tax_amount":"0.00",
+            "tax_regime":"US-G-VAT-R-0",
+            "total_amount":"229.10",
+            "metadata":{
+               "trip_id":8660276,
+               "trip_name":"Flight to San Francisco, Mar 22",
+               "service":"flight",
+               "travelers":[
+                  {
+                     "name":"yashwanth madhusudan",
+                     "email":"yash@fylehq.com",
+                     "external_id":null
+                  },
+                  {
+                     "name":"Vikram Pothnis",
+                     "email":"vikram.pothnis@fylehq.com",
+                     "external_id":null
+                  }
+               ],
+               "booker":{
+                  "name":"Vikram Pothnis",
+                  "email":"vikram.pothnis@fylehq.com",
+                  "external_id":null
+               },
+               "start_date":"2023-03-22",
+               "end_date":"2023-03-22",
+               "cost_center":"",
+               "labels":[
+                  
+               ],
+               "vendor":{
+                  "code":"WN",
+                  "name":"Southwest Airlines"
+               },
+               "out_of_policy":false,
+               "approvers":[
+                  
+               ],
+               "service_location":{
+                  "origin":{
+                     "city":"Las Vegas",
+                     "code":"LAS",
+                     "name":"Harry Reid International Airport",
+                     "country":"United States",
+                     "latitude":"36.08010101",
+                     "longitude":"-115.1520004",
+                     "country_code":"US"
+                  },
+                  "destination":{
+                     "city":"San Francisco",
+                     "code":"SFO",
+                     "name":"San Francisco Intl",
+                     "country":"United States",
+                     "latitude":"37.61899948120117",
+                     "longitude":"-122.375",
+                     "country_code":"US"
+                  }
+               },
+               "include_breakfast":null,
+               "credit_card_last_4_digits":"8486"
+            },
+            "invoice_serial_number":"INV-04-630904",
+            "profile_id":"d32bfaf5-6174-4bf2-81c6-82ae11bf8a82",
+            "profile_name":"Fyle",
+            "invoice_mode":"us-reseller",
+            "invoice_status":"paid",
+            "issuing_date":"2023-03-15",
+            "due_date":"2023-03-15",
+            "currency":"USD"
+        },
+        {
+            "id":"ab26c4eb-0540-47b9-8b69-d7e849bda051",
+            "expense_date":"2023-03-08",
+            "description":"FLIGHT for Trip ID 8492240",
+            "quantity":1,
+            "unit_price":"0.00",
+            "non_taxable_unit_price":"0.00",
+            "tax_percentage":"0.00",
+            "tax_amount":"0.00",
+            "tax_regime":"US-G-VAT-R-0",
+            "total_amount":"0.00",
+            "metadata":{
+               "trip_id":8492240,
+               "trip_name":"Flight to Las Vegas, Mar 18",
+               "service":"seat",
+               "travelers":[
+                  {
+                     "name":"yashwanth madhusudan",
+                     "email":"yash@fylehq.com",
+                     "external_id":null
+                  }
+               ],
+               "booker":{
+                  "name":"Vikram Pothnis",
+                  "email":"vikram.pothnis@fylehq.com",
+                  "external_id":null
+               },
+               "start_date":"2023-03-18",
+               "end_date":"2023-03-18",
+               "cost_center":"",
+               "labels":[
+                  
+               ],
+               "vendor":{
+                  "code":"UA",
+                  "name":"United Airlines"
+               },
+               "out_of_policy":false,
+               "approvers":[
+                  
+               ],
+               "service_location":{
+                  "origin":{
+                     "city":"New York",
+                     "code":"EWR",
+                     "name":"New York Newark",
+                     "country":"United States",
+                     "latitude":"40.692501068115234",
+                     "longitude":"-74.168701171875",
+                     "country_code":"US"
+                  },
+                  "destination":{
+                     "city":"Las Vegas",
+                     "code":"LAS",
+                     "name":"Harry Reid International Airport",
+                     "country":"United States",
+                     "latitude":"36.08010101",
+                     "longitude":"-115.1520004",
+                     "country_code":"US"
+                  }
+               },
+               "include_breakfast":null,
+               "credit_card_last_4_digits":"8486"
+            },
+            "invoice_serial_number":"INV-04-628360",
+            "profile_id":"d32bfaf5-6174-4bf2-81c6-82ae11bf8a82",
+            "profile_name":"Fyle",
+            "invoice_mode":"us-reseller",
+            "invoice_status":"paid",
+            "issuing_date":"2023-03-08",
+            "due_date":"2023-03-08",
+            "currency":"USD"
+        }
+    ]
+ }

@@ -125,6 +125,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   showMappingResolve(errorType: AccountingErrorType, groupedError: Error[], sourceField: ExportErrorSourceType) {
+    this.isLoading = true;
     this.eventStartTime = new Date();
     this.errorType = errorType;
     this.groupedError = groupedError;
