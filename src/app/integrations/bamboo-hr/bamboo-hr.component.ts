@@ -123,45 +123,6 @@ export class BambooHrComponent implements OnInit {
     });
   }
 
-  private setupBambooHr(): void {
-    const syncData = [];
-
-    if (!this.org.managed_user_id) {
-      syncData.push(this.orgService.createWorkatoWorkspace());
-    }
-
-    if (!this.bambooHrData || !this.bambooHrData.folder_id) {
-      syncData.push(this.bambooHrService.createFolder());
-    }
-
-    if (!this.bambooHrData || !this.bambooHrData.package_id) {
-      syncData.push(this.bambooHrService.uploadPackage());
-    }
-
-    if (!this.org.is_fyle_connected) {
-      syncData.push(this.orgService.connectFyle());
-    }
-
-    if (!this.org.is_sendgrid_connected) {
-      syncData.push(this.orgService.connectSendgrid());
-    }
-
-    if (syncData.length) {
-      this.isBambooSetupInProgress = true;
-      concat(...syncData).pipe(
-        toArray()
-      ).subscribe(() => {
-        this.isLoading = false;
-        this.isBambooSetupInProgress = false;
-      }, () => {
-        this.isLoading = false;
-        this.isBambooSetupInProgress = false;
-        this.showErrorScreen = true;
-      });
-    } else {
-      this.isLoading = false;
-    }
-  }
 
   private getBambooHrConfiguration(): void {
     const data = merge(
@@ -169,6 +130,8 @@ export class BambooHrComponent implements OnInit {
       this.bambooHrService.getConfigurations().pipe(catchError(() => of(null)))
     );
 
+    this.isBambooSetupInProgress = false;
+    this.isLoading = true;
     data.pipe(toArray()).subscribe((responses) => {
       responses.forEach((response: any) => {
         if (Array.isArray(response) && response.length) {
@@ -177,7 +140,8 @@ export class BambooHrComponent implements OnInit {
           this.bambooHrConfiguration = response;
         }
       });
-      this.setupBambooHr();
+      this.isLoading = false;
+      this.isBambooSetupInProgress = false;
     });
   }
 
