@@ -97,3 +97,35 @@
   .error-box {
     @apply tw-bg-alert-toast tw-border tw-border-alert-toast tw-rounded-4-px ;
   }
+
+.container {
+  @apply tw-relative tw-cursor-pointer tw-select-none tw-block #{!important};
+}
+
+/* Hide the browser's default checkbox */
+.container input {
+  @apply tw-absolute tw-opacity-0 tw-cursor-pointer tw-h-0 tw-w-0
+}
+
+.checkmark {
+  @apply tw-absolute tw-top-0 tw-left-0 tw-h-18-px tw-w-18-px tw-bg-white tw-rounded-md tw-border tw-border-box-color
+}
+
+.container input:checked ~ .checkmark {
+  @apply tw-bg-faded-text-color
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  @apply tw-content-empty tw-absolute tw-hidden
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  @apply tw-block ;
+}
+
+/* Style the checkmark/indicator */
+.container .checkmark:after {
+  @apply tw-left-2 tw-top-0.5 tw-w-6-px tw-h-10-px tw-border-t-0-px tw-border-r-3-px tw-border-b-3-px tw-border-l-0-px tw-border-white tw-rotate-45;
+}

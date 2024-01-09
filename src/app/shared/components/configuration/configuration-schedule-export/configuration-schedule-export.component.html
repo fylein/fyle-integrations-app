@@ -1,8 +1,8 @@
 <div [formGroup]="form">
-    <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
+    <div class="tw-px-24-px tw-pb-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
         <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
             <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
-                <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" hight="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" height="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
             </div>
             <div>
                 <h5 class="tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
