@@ -25,8 +25,7 @@ export class BusinessCentralConnectorService {
   })
   connectBusinessCentral(businessCentralConnector: BusinessCentralConnectorPost): Observable<BusinessCentralCredential> {
     globalCacheBusterNotifier.next();
-    console.log(businessCentralConnector)
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/business_central/`, businessCentralConnector);
+    return this.apiService.post(`/workspaces/${this.workspaceId}/connect_business_central/authorization_code/`, businessCentralConnector);
   }
 
   @Cacheable({

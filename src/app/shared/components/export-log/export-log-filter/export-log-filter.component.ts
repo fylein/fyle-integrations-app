@@ -13,6 +13,8 @@ export class ExportLogFilterComponent implements OnInit {
 
   @Input() exportLogForm: FormGroup;
 
+  @Input() dateOptions: DateFilter[];
+
   isSearchFocused: boolean;
 
   isDateFieldFocused: boolean;
@@ -22,8 +24,6 @@ export class ExportLogFilterComponent implements OnInit {
   isCalendarVisible: boolean;
 
   presentDate = new Date().toLocaleDateString();
-
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptions();
 
   constructor() { }
 

@@ -18,7 +18,7 @@ export class ExportLogService {
 
   workspaceId: string = this.workspaceService.getWorkspaceId();
 
-  private org_id: string = this.userService.getUserProfile('si.user').org_id;
+  private org_id: string = this.userService.getUserProfile().org_id;
 
   constructor(
     private apiService: SiApiService,
@@ -75,7 +75,7 @@ export class ExportLogService {
   generateFyleUrl(expenseGroup: ExpenseGroup, referenceType: FyleReferenceType) : string {
     let url = `${environment.fyle_app_url}/app/`;
     if (referenceType === FyleReferenceType.EXPENSE) {
-      url += `main/#/view_expense/${expenseGroup.expenses[0].expense_id}`;
+      url += `admin/#/view_expense/${expenseGroup.expenses[0].expense_id}`;
     } else if (referenceType === FyleReferenceType.EXPENSE_REPORT) {
       url += `admin/#/reports/${expenseGroup.expenses[0].report_id}`;
     } else if (referenceType === FyleReferenceType.PAYMENT) {

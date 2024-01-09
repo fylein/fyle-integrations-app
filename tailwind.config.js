@@ -77,7 +77,8 @@ module.exports = {
       '1.5': '1.5',
       '1.6': '1.6',
       '1.7': '1.7',
-      '1.8': '1.8'
+      '1.8': '1.8',
+      '19': '19.6px'
     },
     extend: {
       animation: {
@@ -126,6 +127,9 @@ module.exports = {
         '48-px': '48px',
         '56-px': '56px',
         '60-px': '60px',
+        '62-px': '62px',
+        '64-px': '64px',
+        '66-px': '66px',
         '70-px': '70px',
         '74-px': '74px',
         '76-px': '76px',
@@ -133,6 +137,7 @@ module.exports = {
         '100-px': '100px',
         '110-px': '110px',
         '120-px': '120px',
+        '128-px': '128px',
         '130-px': '130px',
         '168-px': '168px',
       },
@@ -230,6 +235,7 @@ module.exports = {
       },
       width: {
         '1-px': '1px',
+        '6-px': '6px',
         '8-px': '8px',
         '10-px': '10px',
         '12-px': '12px',
@@ -328,9 +334,11 @@ module.exports = {
         '50': '50%'
       },
       borderWidth: {
+        '0-px': '0px',
         '0.5-px': '0.5px',
         '1-px': '1px',
         '2-px': '2px',
+        '3-px': '3px',
         '4-px': '4px',
         '6-px': '6px',
         '8-px': '8px',
@@ -378,12 +386,16 @@ module.exports = {
       top: {
         '70': '70%'
       },
+      inset: {
+        '2': '0.28rem'
+      },
       lineHeight: {
         '16-px': '16px'
       },
       content: {
         'no': "'No'",
-        'yes': "'Yes'"
+        'yes': "'Yes'",
+        'empty': "''"
       }
     },
   },

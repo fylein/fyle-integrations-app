@@ -15,7 +15,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   AppName = AppName;
 
-  @Output() openDialog = new EventEmitter<void>();
+  @Output() connectIntegration = new EventEmitter<void>();
 
   @Output() disconnectIntegration = new EventEmitter<void>();
 
@@ -23,7 +23,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() iconPath: string;
 
-  @Input() isIntegrationConnected: boolean | undefined;
+  @Input() isIntegrationConnected: boolean;
 
   @Input() isIntegrationSetupInProgress: boolean;
 
@@ -49,11 +49,15 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() postConnectionRoute: string;
 
+  @Input() showQBOButton: boolean;
+
   @Input() logoWidth: string = '140px';
 
   @Input() logoStyleClasses: string = 'tw-py-10-px tw-px-20-px';
 
   @Input() logoSectionStyleClasses: string = 'tw-rounded-4-px tw-border-1-px tw-border-box-color tw-bg-white tw-w-176-px';
+
+  qboConnectButtonSource: string = 'assets/icons/buttons/connect-to-qbo.svg';
 
   readonly brandingConfig = brandingConfig;
 
@@ -67,23 +71,27 @@ export class AppLandingPageHeaderComponent implements OnInit {
     this.syncEmployees.emit();
   }
 
-  connect(): void {
-    this.openDialog.emit();
+  initiateOAuth(): void {
+    this.connectIntegration.emit();
   }
 
   disconnect(): void {
     this.disconnectIntegration.emit();
   }
 
-  connectIntegration(): void {
-    if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
+  connect(): void {
+
+    if (this.appName === this.AppName.TRAVELPERK) {
+      this.initiateOAuth();
+      return;
+    } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
     } else if (this.postConnectionRoute === 'intacct/onboarding/connector') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_INTACCT);
     } else if (this.postConnectionRoute === 'sage300/onboarding/connector') {
       this.trackingService.onClickEvent(ClickEvent.CONNECT_SAGE300);
     } else if (this.postConnectionRoute === 'business_central/onboarding/connector') {
-      this.connect();
+      this.initiateOAuth();
       this.trackingService.onClickEvent(ClickEvent.CONNECT_BUSINESS_CENTRAL);
     }
     this.router.navigate([`/integrations/${this.postConnectionRoute}`]);

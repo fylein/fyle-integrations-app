@@ -49,6 +49,8 @@ export class QboDashboardComponent implements OnInit {
 
   accountingExportType: QBOTaskLogType[] = [QBOTaskLogType.FETCHING_EXPENSE, QBOTaskLogType.CREATING_BILL, QBOTaskLogType.CREATING_EXPENSE, QBOTaskLogType.CREATING_CHECK, QBOTaskLogType.CREATING_CREDIT_CARD_PURCHASE, QBOTaskLogType.CREATING_JOURNAL_ENTRY, QBOTaskLogType.CREATING_CREDIT_CARD_CREDIT, QBOTaskLogType.CREATING_DEBIT_CARD_EXPENSE];
 
+  isImportItemsEnabled: boolean;
+
   AppUrl = AppUrl;
 
   constructor(
@@ -105,7 +107,10 @@ export class QboDashboardComponent implements OnInit {
       this.workspaceService.getWorkspaceGeneralSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
+      this.isImportItemsEnabled = responses[3].import_items;
+      if (responses[1]) {
+        this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
+      }
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
         CATEGORY: 'ACCOUNT'

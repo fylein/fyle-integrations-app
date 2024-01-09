@@ -35,6 +35,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() isDestinationFixedImport: boolean = false;
 
+  @Input() isCloneSettingView: boolean;
+
   @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;
@@ -87,12 +89,15 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
       // Get the 'import_to_fyle' control at the specified index and disable it
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
+    } else {
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
   }
 
   removeFilter(expenseField: AbstractControl) {
-    (expenseField as FormGroup).value[0].source_field.patchValue('');
-    (expenseField as FormGroup).value[0].import_to_fyle.patchValue(false);
+    (expenseField as FormGroup).controls.source_field.patchValue('');
+    (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
+    (expenseField as FormGroup).controls.import_to_fyle.enable();
     event?.stopPropagation();
   }
 

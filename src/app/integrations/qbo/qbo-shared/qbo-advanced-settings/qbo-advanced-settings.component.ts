@@ -62,7 +62,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[] = [];
 
-  defaultMemoOptions: string[] = ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+  defaultMemoOptions: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
 
   memoPreviewText: string = '';
 
@@ -82,6 +82,11 @@ export class QboAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
+
+
+  navigateToPreviousStep(): void {
+    this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
+  }
 
   save(): void {
     // TODO, save skip export

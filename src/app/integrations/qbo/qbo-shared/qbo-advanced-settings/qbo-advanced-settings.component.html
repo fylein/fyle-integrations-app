@@ -126,7 +126,7 @@
                     [placeholder]="'Set description'"
                     [formControllerName]="'memoStructure'">
                 </app-configuration-multi-select>
-                <div class="preview-text preview-section">
+                <div class="preview-text">
                     <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
                     <div class="preview-box">
                         {{memoPreviewText}}
@@ -156,7 +156,12 @@
             </div>
         </div>
         <div>
-            <app-configuration-step-footer [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingForm.valid"></app-configuration-step-footer>
+            <app-configuration-step-footer
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+                [isButtonDisabled]="!advancedSettingForm.valid"
+                [showBackButton]="true"
+                (save)="save()"
+                (navigateToPreviousStep)="navigateToPreviousStep()"></app-configuration-step-footer>
         </div>
     </form>
 </div>

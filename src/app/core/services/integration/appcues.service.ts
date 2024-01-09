@@ -10,7 +10,7 @@ import { IntacctWorkspace } from '../../models/si/db/workspaces.model';
 })
 export class AppcuesService {
 
-  user: MinimalUser = this.userService.getUserProfile('si.user');
+  user: MinimalUser = this.userService.getUserProfile();
 
   constructor(
     private userService: UserService

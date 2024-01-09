@@ -22,5 +22,5 @@
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
-    margin-right: -10px;
+    @apply -tw-mr-12-px #{!important};
 }

@@ -85,6 +85,11 @@ import { ExportLogFilterComponent } from './components/export-log/export-log-fil
 import { ExportLogChildTableDialogComponent } from './components/export-log/export-log-dialog/export-log-child-table-dialog.component';
 import { SkippedExportLogTableComponent } from './components/export-log/skipped-export-log-table/skipped-export-log-table.component';
 import { ShimmersComponent } from './components/helper/shimmers/shimmers.component';
+import { CloneSettingHeaderComponent } from './components/onboarding/clone-setting/clone-setting-header/clone-setting-header.component';
+import { DropdownComponent } from './components/input/dropdown/dropdown.component';
+import { CloneSettingFieldComponent } from './components/onboarding/clone-setting/clone-setting-field/clone-setting-field.component';
+import { ToggleComponent } from './components/input/toggle/toggle.component';
+import { MultiSelectComponent } from './components/input/multi-select/multi-select.component';
 
 
 @NgModule({
@@ -152,7 +157,12 @@ import { ShimmersComponent } from './components/helper/shimmers/shimmers.compone
     ExportLogFilterComponent,
     ExportLogChildTableDialogComponent,
     SkippedExportLogTableComponent,
-    ShimmersComponent
+    ShimmersComponent,
+    CloneSettingHeaderComponent,
+    DropdownComponent,
+    CloneSettingFieldComponent,
+    ToggleComponent,
+    MultiSelectComponent
   ],
   imports: [
     CommonModule,
@@ -242,7 +252,12 @@ import { ShimmersComponent } from './components/helper/shimmers/shimmers.compone
     ExportLogFilterComponent,
     ExportLogChildTableDialogComponent,
     SkippedExportLogTableComponent,
-    ShimmersComponent
+    ShimmersComponent,
+    CloneSettingHeaderComponent,
+    DropdownComponent,
+    CloneSettingFieldComponent,
+    ToggleComponent,
+    MultiSelectComponent
   ]
 })
 export class SharedModule { }

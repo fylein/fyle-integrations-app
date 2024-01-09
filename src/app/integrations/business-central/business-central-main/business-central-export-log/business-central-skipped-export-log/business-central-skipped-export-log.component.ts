@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
@@ -21,6 +21,8 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
   totalCount: number = 0;
 
   skipExportLogForm: FormGroup;
+
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptions();
 
   expenses: SkipExportList[];
 

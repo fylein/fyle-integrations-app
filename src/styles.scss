@@ -8,7 +8,7 @@
 
 html,
 body {
-    @apply tw-h-[100%];
+    @apply tw-h-[100%] tw-leading-19;
 }
 
 body {
@@ -17,6 +17,22 @@ body {
 
 p {
     @apply tw-m-0-px;
+}
+
+.pi-chevron-down:before {
+    content: url('./assets/icons/arrow-down.svg') #{!important};
+}
+
+.pi-eye:before {
+    content: url('./assets/icons/eye.svg') #{!important};
+}
+
+.pi-eye-slash:before {
+    content: url('./assets/icons/eye-slash.svg') #{!important};
+}
+
+.pi-times:before {
+    @apply tw-text-12-px tw-text-placeholder #{!important}
 }
 
 // Button CTA
@@ -204,7 +220,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-h-54-px tw-px-16-px tw-py-8-px #{!important};
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-h-54-px tw-px-16-px tw-py-8-px #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
@@ -216,7 +232,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
-    @apply tw-bg-disabled-bg-color tw-rounded-4-px #{!important};
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-4-px #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
@@ -305,7 +321,7 @@ p {
     }
   
     &--contents {
-        @apply tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
+        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
     }
 }
 
@@ -366,7 +382,7 @@ p {
 }
 
 .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
-    @apply tw-min-w-fit #{!important};
+    @apply tw-min-w-fit tw-top-[50%] tw-left-[50%] #{!important};
 }
 
 .p-dropdown-filter {

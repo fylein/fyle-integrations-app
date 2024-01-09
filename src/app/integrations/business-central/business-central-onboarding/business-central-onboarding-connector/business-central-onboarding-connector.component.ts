@@ -16,6 +16,7 @@ import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-co
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { environment } from 'src/environments/environment';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
 @Component({
   selector: 'app-business-central-onboarding-connector',

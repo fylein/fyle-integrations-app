@@ -84,23 +84,27 @@ export class HelperService {
     return exportType ? new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)): 'expense';
   }
 
+  setOrClearValidators(selectedValue: string, value: string[], form: FormGroup): void {
+    if (selectedValue) {
+      value.forEach((controllerName: string) => {
+        this.markControllerAsRequired(form, controllerName);
+        const urlSplit = this.router.url.split('/');
+        if (urlSplit[2] === AppUrl.SAGE300 && (controllerName === 'cccExportType' || controllerName === 'reimbursableExportType')) {
+          this.setSage300ExportTypeControllerValue(form, controllerName);
+        }
+      });
+    } else {
+      value.forEach((controllerName: string) => {
+        this.clearValidatorAndResetValue(form, controllerName);
+      });
+    }
+  }
+
   setConfigurationSettingValidatorsAndWatchers(validatorRule: ExportSettingValidatorRule | SkipExportValidatorRule, form: FormGroup) {
     const keys = Object.keys(validatorRule);
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
-        if (selectedValue) {
-          value.forEach((controllerName: string) => {
-            this.markControllerAsRequired(form, controllerName);
-            const urlSplit = this.router.url.split('/');
-            if (urlSplit[2] === AppUrl.SAGE300 && (controllerName === 'cccExportType' || controllerName === 'reimbursableExportType')) {
-              this.setSage300ExportTypeControllerValue(form, controllerName);
-            }
-          });
-        } else {
-          value.forEach((controllerName: string) => {
-            this.clearValidatorAndResetValue(form, controllerName);
-          });
-        }
+        this.setOrClearValidators(selectedValue, value, form);
       });
     });
   }
@@ -154,6 +158,10 @@ export class HelperService {
 
   getPhase(isOnboarding: boolean): ProgressPhase {
     return isOnboarding ? ProgressPhase.ONBOARDING : ProgressPhase.POST_ONBOARDING;
+  }
+
+  resetForm(form: FormGroup): void {
+    form.reset();
   }
 
   handleSkipExportFormInAdvancedSettingsUpdates(skipExportForm: FormGroup, fields: skipExportValidator, advancedSettingForm: FormGroup): void {

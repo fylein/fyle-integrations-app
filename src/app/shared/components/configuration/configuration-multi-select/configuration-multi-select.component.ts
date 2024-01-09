@@ -28,6 +28,8 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 
   @Input() customErrorMessage: string;
 
+  @Input() isCloneSettingView: boolean;
+
   currentlyDragging: string | null;
 
   selected: any[];

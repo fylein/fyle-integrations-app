@@ -5,7 +5,7 @@ import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
-import { AccountingErrorType, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -41,6 +41,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() isCategoryMappingGeneric: boolean;
 
+  @Input() isImportItemsEnabled: boolean;
+
   filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];
@@ -73,6 +75,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  employeeFieldMapping: FyleField;
+
   constructor(
     private dashboardService: DashboardService,
     private mappingService: MappingService,
@@ -84,7 +88,12 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   getDestinationOptionsV1(errorType: AccountingErrorType): void {
-    this.mappingService.getDestinationAttributes(this.destinationField, 'v1', this.apiModuleUrl, undefined).subscribe((response: any) => {
+    let displayName;
+    if (this.destinationField === AccountingField.ACCOUNT) {
+      displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+    }
+
+    this.mappingService.getDestinationAttributes(this.destinationField, 'v1', this.apiModuleUrl, undefined, undefined, displayName).subscribe((response: any) => {
       this.destinationOptions = response;
 
       this.setErrors(errorType);
@@ -93,7 +102,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   private setErrors(errorType: AccountingErrorType): void {
     this.errors[errorType][0].expense_attribute;
-    this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, this.isCategoryMappingGeneric);
+    const isCategoryMappingGeneric = FyleField.CATEGORY === (this.sourceField as unknown as FyleField) ? this.isCategoryMappingGeneric : false;
+    this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, isCategoryMappingGeneric);
     this.isLoading = false;
   }
 
@@ -115,6 +125,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   showMappingResolve(errorType: AccountingErrorType, groupedError: Error[], sourceField: ExportErrorSourceType) {
+    this.isLoading = true;
     this.eventStartTime = new Date();
     this.errorType = errorType;
     this.groupedError = groupedError;
@@ -190,6 +201,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.employeeFieldMapping = this.destinationFieldMap.EMPLOYEE as unknown as FyleField;
   }
 
 }

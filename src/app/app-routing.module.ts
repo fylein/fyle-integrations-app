@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
+    path: 'oauth',
+    loadChildren: () => import('./oauth/oauth.module').then(m => m.OauthModule)
+  },
+  {
     path: 'integrations',
     loadChildren: () => import('./integrations/integrations.module').then(m => m.IntegrationsModule),
     canActivate: [AuthGuard]

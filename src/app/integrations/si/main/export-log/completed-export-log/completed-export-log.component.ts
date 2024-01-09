@@ -100,7 +100,7 @@ export class CompletedExportLogComponent implements OnInit {
   }
 
   openExpenseinFyle(expense_id: string) {
-    const url = `${environment.fyle_app_url}/app/main/#/view_expense/${expense_id}`;
+    const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}`;
     window.open(url, '_blank');
   }
 
@@ -146,13 +146,6 @@ export class CompletedExportLogComponent implements OnInit {
     this.currentPage = Math.ceil(offset / this.limit) + 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(this.limit, offset);
-  }
-
-  dateFilter(event: any): void {
-    this.isLoading = true;
-    this.isDateSelected = true;
-    this.selectedDateFilter = event.value;
-    this.getExpenseGroups(this.limit, this.offset);
   }
 
   dropDownWatcher() {

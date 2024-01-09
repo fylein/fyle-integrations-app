@@ -581,3 +581,32 @@ export enum LoaderType {
   DETERMINATE = 'determinate',
   INDETERMINATE = 'indeterminate'
 }
+
+export enum AccountingDisplayName {
+  ACCOUNT = 'Account',
+  ITEM = 'Item',
+}
+
+export enum QBOField {
+  CLASS = 'CLASS',
+  DEPARTMENT = 'DEPARTMENT',
+  CUSTOMER = 'CUSTOMER',
+  TAX_CODE = 'TAX_CODE',
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
+  VENDOR = 'VENDOR',
+}
+
+export enum ConfigurationWarningEvent {
+  CLONE_SETTINGS = 'CLONE_SETTINGS',
+  INCORRECT_QBO_ACCOUNT_CONNECTED = 'INCORRECT_QBO_ACCOUNT_CONNECTED',
+  QBO_EXPORT_SETTINGS = 'QBO_EXPORT_SETTINGS',
+  RESET_CONFIGURATION = 'RESET_CONFIGURATION'
+}
+
+export enum InputType {
+  DROPDOWN = 'DROPDOWN',
+  TOGGLE = 'TOGGLE',
+  MULTI_SELECT = 'MULTI_SELECT',
+}

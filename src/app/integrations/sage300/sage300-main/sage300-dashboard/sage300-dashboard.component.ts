@@ -66,14 +66,14 @@ export class Sage300DashboardComponent implements OnInit {
       switchMap(() => from(this.accountingExportService.getAccountingExports(this.accountingExportType, [], exportableAccountingExportIds, 500, 0))),
       takeWhile((response: Sage300AccountingExportResponse) =>
         response.results.filter(task =>
-          (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)
+          (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)
         ).length > 0, true
       )
     ).subscribe((res: Sage300AccountingExportResponse) => {
       this.processedCount = res.results.filter(task => (task.status !== AccountingExportStatus.IN_PROGRESS && task.status !== AccountingExportStatus.ENQUEUED && task.status !== AccountingExportStatus.EXPORT_QUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
-
-      if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED) && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
+      this.exportableAccountingExportIds = res.results.map(accountingExport => accountingExport.id);
+      if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)).length === 0) {
         forkJoin([
           this.getExportErrors$,
           this.getAccountingExportSummary$
@@ -111,10 +111,12 @@ export class Sage300DashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0)
+      this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0),
+      this.dashboardService.getExportableAccountingExportIds()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.accountingExportSummary = responses[1];
+      this.exportableAccountingExportIds = responses[3].exportable_accounting_export_ids;
       this.isLoading = false;
       const queuedTasks: Sage300AccountingExport[] = responses[2].results.filter((accountingExport: Sage300AccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS || accountingExport.status === AccountingExportStatus.EXPORT_QUEUED);
       this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: Sage300AccountingExport) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
@@ -124,10 +126,7 @@ export class Sage300DashboardComponent implements OnInit {
         this.pollExportStatus();
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
-          this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_accounting_export_ids;
-            this.isImportInProgress = false;
-          });
+          this.isImportInProgress = false;
         });
       }
     });

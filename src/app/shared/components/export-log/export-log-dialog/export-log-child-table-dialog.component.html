@@ -1,4 +1,4 @@
-<p-dialog header="Expenses" [(visible)]="isDialogOpen" [position]="'top-right'" [modal]="true" [draggable]="false" [dismissableMask]="true" [style]="{ width: '50vw', height: '100vh' }">
+<p-dialog header="Expenses" [(visible)]="isDialogOpen" [position]="'top-right'" [modal]="true" [draggable]="false" [dismissableMask]="true" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
         <p-table #dt2 [value]="expenses">
             <ng-template pTemplate="header">
@@ -11,7 +11,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData>
                 <tr *ngFor="let expense of expenses">
-                    <td class="tw-underline tw-cursor-pointer" (click)="openExpenseinFyle(rowData.expense_id)">{{expense.expense_number}}</td>
+                    <td class="tw-underline tw-cursor-pointer" (click)="openExpenseinFyle(rowData.expense_id, rowData.org_id)">{{expense.expense_number}}</td>
                     <td>{{ expense.vendor ? expense.vendor : '-' }}</td>
                     <td>{{ expense.category }}</td>
                     <td>{{ expense.amount }}</td>
