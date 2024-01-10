@@ -8,5 +8,12 @@ export interface BusinessCentralWorkspace extends Workspace {
     source_synced_at: Date,
     destination_synced_at: Date,
     business_central_accounts_last_synced_at: Date,
-    onboarding_state: BusinessCentralOnboardingState
+    onboarding_state: BusinessCentralOnboardingState,
+    business_central_company_name: string,
+    business_central_company_id: string
+}
+
+export type BusinessCentralCompanyPost = {
+    company_id: string,
+    company_name: string
 }

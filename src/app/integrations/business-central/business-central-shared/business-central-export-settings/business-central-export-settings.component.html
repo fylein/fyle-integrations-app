@@ -36,7 +36,6 @@
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
-                            [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
                             [exportTypeIconPathArray]="previewImagePaths"
                             [isDisabled]="false">
                         </app-configuration-select-field>
@@ -49,6 +48,7 @@
                             [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
                             [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                             [options]="entityName"
+                            [placeholder]="'Select representation'"
                             [iconPath]="'people'"
                             [formControllerName]="'entityNamePreference'">
                         </app-configuration-select-field>
@@ -58,6 +58,7 @@
                             [mandatoryErrorListName]="'export date'"
                             [label]="'How should Employees in  ' + brandingConfig.brandName + ' be mapped to Employees in Dynamics 365 Business Central ?'"
                             [subLabel]="'Automatically map the employees in  ' + brandingConfig.brandName + ' to their corresponding records in Dynamics 365 Business Central based on a unique parameter'"
+                            [placeholder]="'Select representation'"
                             [options]="employeeMapOptions"
                             [iconPath]="'questionmark'"
                             [formControllerName]="'reimbursableEmployeeMapping'">
@@ -83,6 +84,7 @@
                             [mandatoryErrorListName]="'export date'"
                             [label]="'Set the date of the transaction as?'"
                             [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
+                            [placeholder]="'Select date type'"
                             [options]="getExportDate(reimbursableExpenseGroupingDateOptions)"
                             [iconPath]="'calender'"
                             [formControllerName]="'reimbursableExportDate'">
@@ -98,7 +100,9 @@
                             [options]="expenseGroupByOptions"
                             [iconPath]="'questionmark'"
                             [placeholder]="'Select expense grouping'"
-                            [formControllerName]="'reimbursableExportGroup'">
+                            [formControllerName]="'reimbursableExportGroup'"
+                            [appName]="appName"
+                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
                         </app-configuration-select-field>
                     </div>
                 </div>
@@ -126,8 +130,7 @@
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [exportTypeIconPathArray]="previewImagePaths"
-                            [isDisabled]="true">
+                            [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -192,7 +195,9 @@
                             [options]="expenseGroupByOptions"
                             [iconPath]="'questionmark'"
                             [placeholder]="'Select expense grouping'"
-                            [formControllerName]="'cccExportGroup'">
+                            [formControllerName]="'cccExportGroup'"
+                            [appName]="appName"
+                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
                         </app-configuration-select-field>
                     </div>
                 </div>

@@ -74,16 +74,17 @@ export class MappingService {
         BANK_ACCOUNT: [],
         CREDIT_CARD_ACCOUNT: [],
         ACCOUNTS_PAYABLE: [],
-        TAX_CODE: []
+        TAX_CODE: [],
+        COMPANY: []
       });
     }));
   }
 
-  getIntegrationsFields(app_name: string): Observable<IntegrationField[]> {
+  getIntegrationsFields(app_name: string): Observable<any> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/fields/`, {});
   }
 
-  getFyleFields(version?: 'v1'): Observable<FyleField[]> {
+  getFyleFields(version?: 'v1'): Observable<any> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
   }
 

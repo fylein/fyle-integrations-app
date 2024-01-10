@@ -19,7 +19,7 @@ export class BusinessCentralMainComponent implements OnInit {
     {label: 'Dashboard', routerLink: '/integrations/business_central/main/dashboard'},
     {label: 'Export Log', routerLink: '/integrations/business_central/main/export_log'},
     {label: 'Mapping', routerLink: '/integrations/business_central/main/mapping'},
-    {label: 'Configuration', routerLink: '/integrations/business_central/main/configuration'}
+    {label: 'Configuration', routerLink: '/integrations/business_central/main/configuration/export_settings'}
   ];
 
   activeModule: MenuItem;

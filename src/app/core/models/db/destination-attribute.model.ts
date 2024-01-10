@@ -48,4 +48,5 @@ export type GroupedDestinationAttribute = {
   CREDIT_CARD_ACCOUNT: DestinationAttribute[],
   ACCOUNTS_PAYABLE: DestinationAttribute[],
   TAX_CODE: DestinationAttribute[],
+  COMPANY: BusinessCentralDestinationAttributes[]
 };

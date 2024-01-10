@@ -200,9 +200,9 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
       this.mappingService.getIntegrationsFields(AppNameInService.BUSINESS_CENTRAL)
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, businessCentralFieldsResponse]) => {
       this.importSettings = importSettingsResponse;
-      this.importSettingForm = BusinessCentralImportSettingsModel.mapAPIResponseToFormGroup(this.importSettings, businessCentralFieldsResponse);
-      this.fyleFields = fyleFieldsResponse;
-      this.businessCentralFields = businessCentralFieldsResponse;
+      this.importSettingForm = BusinessCentralImportSettingsModel.mapAPIResponseToFormGroup(this.importSettings, businessCentralFieldsResponse.results);
+      this.fyleFields = fyleFieldsResponse.results;
+      this.businessCentralFields = businessCentralFieldsResponse?.results ? businessCentralFieldsResponse?.results : [];
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);

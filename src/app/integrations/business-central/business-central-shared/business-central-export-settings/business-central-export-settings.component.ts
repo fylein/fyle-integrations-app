@@ -35,13 +35,24 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  previewImagePaths =[
+  previewImagePaths = [
     {
       'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
       'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg'
     },
     {
       'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC Bill.jpg'
+    }
+  ];
+
+  previewExpenseGroupTypeImagePath = [
+    {
+      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
+    },
+    {
+      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
     }
   ];
 
@@ -57,9 +68,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   expenseGroupByOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getReimbursableExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
 
   reimbursableExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getReimbursableExpensesExportTypeOptions();
 

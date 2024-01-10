@@ -17,17 +17,30 @@
         <h3 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyName" class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
             {{ accountingCompanyName }}
         </h3>
+        <h3 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyName" class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
+            <p-dropdown appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'" class="!tw-w-300-px" 
+                [(ngModel)]="companyName" (onChange)="connect()"
+                placeholder="Select a Company">
+                <ng-template let-option pTemplate="item">
+                    <div
+                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}">
+                        {{option.value}}
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="selectedItem" let-item>
+                    <div class="tw-flex tw-justify-between tw-items-center">
+                        <span>
+                            {{ item.value }}
+                        </span>
+                    </div>
+                </ng-template>
+            </p-dropdown>
+        </h3>
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px">
             <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
         </div>
         <div class="tw-text-14-px tw-font-500">
-            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" class="tw-text-faded-text-color ">
-                No {{ accountingAppTitle }} is connected yet.
-            </h4>
-            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
-                Connect to {{ accountingAppTitle }}
-            </h4>
-            <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect" class="tw-text-faded-text-color">
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect && accountingCompanyName" class="tw-text-faded-text-color">
                 Not the company that you wish to connect with?
             </h4>
             <h4 *ngIf="accountingCompanyConnectionInProgress" class="tw-text-faded-text-color tw-max-w-300-px tw-overflow-hidden tw-break-all">
@@ -39,7 +52,7 @@
             <h4 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
                 Re-Connect to {{ accountingAppTitle }}
             </h4>
-            <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect" (click)="disconnect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect && accountingCompanyName" (click)="disconnect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
                 {{ switchLinkText }}
             </h4>
         </div>

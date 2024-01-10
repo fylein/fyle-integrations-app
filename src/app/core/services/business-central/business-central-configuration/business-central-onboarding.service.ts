@@ -11,6 +11,7 @@ export class BusinessCentralOnboardingService {
 
   onboardingStateStepMap: BusinessCentralOnboardingStepperMap = {
     [BusinessCentralOnboardingState.CONNECTION]: 1,
+    [BusinessCentralOnboardingState.COMPANY_SELECTION]: 1,
     [BusinessCentralOnboardingState.EXPORT_SETTINGS]: 2,
     [BusinessCentralOnboardingState.IMPORT_SETTINGS]: 3,
     [BusinessCentralOnboardingState.ADVANCED_SETTINGS]: 4,

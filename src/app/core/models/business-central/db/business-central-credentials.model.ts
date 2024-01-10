@@ -9,7 +9,3 @@ export type BusinessCentralCredential = {
     updated_at: Date;
     workspace: number;
 }
-
-export interface BusinessCentralCompanyDetails extends BusinessCentralWorkspace {
-    business_central_company: string;
-}

@@ -47,25 +47,38 @@ export class BusinessCentralExportSettingModel {
         ];
     }
 
-    static getExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
-        return [
-          {
-            label: 'Current Date',
-            value: ExportDateType.CURRENT_DATE
-          },
-          {
-            label: 'Approval Date',
-            value: ExportDateType.APPROVAL_DATE
-          },
-          {
-            label: 'Last Spent At',
-            value: ExportDateType.LAST_SPENT_AT
-          },
-          {
-            label: 'Spent Date',
-            value: ExportDateType.SPENT_AT
-          }
-        ];
+    static getCCCExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
+      return [
+        {
+          label: 'Card Transaction Post date',
+          value: ExportDateType.POSTED_AT
+        },
+        {
+          label: 'Last Spent Date',
+          value: ExportDateType.LAST_SPENT_AT
+        },
+        {
+          label: 'Created At',
+          value: ExportDateType.CREATED_AT
+        }
+      ];
+    }
+
+    static getReimbursableExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
+      return [
+        {
+          label: 'Created At',
+          value: ExportDateType.CREATED_AT
+        },
+        {
+          label: 'Spent Date',
+          value: ExportDateType.SPENT_AT
+        },
+        {
+          label: 'Last Spent Date',
+          value: ExportDateType.LAST_SPENT_AT
+        }
+      ];
     }
 
     static getReimbursableExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
@@ -147,12 +160,12 @@ export class BusinessCentralExportSettingModel {
         return {
             reimbursable_expenses_export_type: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
             reimbursable_expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value ? exportSettingsForm.get('reimbursableExpenseState')?.value : null,
-            reimbursable_expense_date: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
+            reimbursable_expense_date: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value.toUpperCase() : null,
             reimbursable_expense_grouped_by: exportSettingsForm.get('reimbursableExportGroup')?.value ? exportSettingsForm.get('reimbursableExportGroup')?.value : null,
             credit_card_expense_export_type: exportSettingsForm.get('cccExportType')?.value ? exportSettingsForm.get('cccExportType')?.value : null,
             credit_card_expense_state: exportSettingsForm.get('cccExpenseState')?.value ? exportSettingsForm.get('cccExpenseState')?.value : null,
             credit_card_expense_grouped_by: exportSettingsForm.get('cccExportGroup')?.value ? exportSettingsForm.get('cccExportGroup')?.value : null,
-            credit_card_expense_date: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : null,
+            credit_card_expense_date: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value.toUpperCase() : null,
             default_credit_card_account_name: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.value : null,
             default_credit_card_account_id: exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value ? exportSettingsForm.get('defaultCreditCardCCCAccountName')?.value.destination_id : null,
             default_bank_account_name: exportSettingsForm.get('defaultBankName')?.value ? exportSettingsForm.get('defaultBankName')?.value.value : null,

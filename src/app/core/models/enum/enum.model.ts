@@ -239,6 +239,7 @@ export enum ExportDateType {
   APPROVAL_DATE = 'approved_at',
   VERIFIED_AT = 'verified_at',
   APPROVED_AT = 'approved_at',
+  CREATED_AT = 'created_at'
 }
 
 export enum FyleField {
@@ -535,12 +536,14 @@ export enum IntegrationName {
   SAGE300 = 'SAGE300'
 }
 
+
 export enum BusinessCentralOnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
-  COMPLETE = 'COMPLETE'
+  COMPLETE = 'COMPLETE',
+  COMPANY_SELECTION = 'COMPANY_SELECTION'
 }
 
 export enum FundSource {

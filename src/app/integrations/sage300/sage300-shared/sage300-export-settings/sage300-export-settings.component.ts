@@ -72,6 +72,17 @@ export class Sage300ExportSettingsComponent implements OnInit {
     }
   ];
 
+  previewExpenseGroupTypeImagePath = [
+    {
+      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
+    },
+    {
+      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
+    }
+  ];
+
   readonly brandingConfig = brandingConfig;
 
   constructor(
