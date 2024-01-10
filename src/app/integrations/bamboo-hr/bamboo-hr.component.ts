@@ -130,7 +130,6 @@ export class BambooHrComponent implements OnInit {
       this.bambooHrService.getConfigurations().pipe(catchError(() => of(null)))
     );
 
-    this.isBambooSetupInProgress = false;
     this.isLoading = true;
     data.pipe(toArray()).subscribe((responses) => {
       responses.forEach((response: any) => {
@@ -141,7 +140,6 @@ export class BambooHrComponent implements OnInit {
         }
       });
       this.isLoading = false;
-      this.isBambooSetupInProgress = false;
     });
   }
 
