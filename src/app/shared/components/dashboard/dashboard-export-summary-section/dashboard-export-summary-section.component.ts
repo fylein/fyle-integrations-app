@@ -87,7 +87,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   showExportLog(status: AccountingExportStatus) {
     this.isExportLogFetchInProgress = true;
     this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? 'Successful' : 'Failed';
-    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your Sage 300 CRE.' : 'These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again';
+    this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your ' + this.appName +'.' : 'These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again';
     this.setupAccountingExports(500, 0, status);
     this.isExportLogVisible = true;
   }
