@@ -104,7 +104,9 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.errors[errorType][0].expense_attribute;
     const isCategoryMappingGeneric = FyleField.CATEGORY === (this.sourceField as unknown as FyleField) ? this.isCategoryMappingGeneric : false;
     this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, isCategoryMappingGeneric);
-    this.isLoading = false;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 100);
   }
 
   private getDestinationOptionsV2(errorType: AccountingErrorType) {

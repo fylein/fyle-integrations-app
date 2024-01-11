@@ -19,6 +19,10 @@ p {
     @apply tw-m-0-px;
 }
 
+.pi-times:before {
+    content: url('./assets/icons/cross.svg') #{!important};
+}
+
 .pi-chevron-down:before {
     content: url('./assets/icons/arrow-down.svg') #{!important};
 }
