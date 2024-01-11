@@ -1,3 +1,7 @@
 :host  ::ng-deep .p-dialog {
   @apply tw-max-h-full tw-m-0 #{!important};
   }  
+
+.sub-header {
+    @apply tw-text-14-px tw-font-400 tw-text-faded-text-color;
+}
