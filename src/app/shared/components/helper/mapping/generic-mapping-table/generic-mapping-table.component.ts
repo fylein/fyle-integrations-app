@@ -13,7 +13,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
   templateUrl: './generic-mapping-table.component.html',
   styleUrls: ['./generic-mapping-table.component.scss']
 })
-export class GenericMappingTableComponent implements OnInit,OnChanges {
+export class GenericMappingTableComponent implements OnInit {
 
   @Input() isLoading: boolean;
 
@@ -129,11 +129,6 @@ export class GenericMappingTableComponent implements OnInit,OnChanges {
   }
 
   ngOnInit(): void {
-    console.log(this.isLoading);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
   }
 
 }
