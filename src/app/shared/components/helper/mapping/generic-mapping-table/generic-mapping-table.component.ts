@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
@@ -13,7 +13,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
   templateUrl: './generic-mapping-table.component.html',
   styleUrls: ['./generic-mapping-table.component.scss']
 })
-export class GenericMappingTableComponent implements OnInit {
+export class GenericMappingTableComponent implements OnInit,OnChanges {
 
   @Input() isLoading: boolean;
 
@@ -129,6 +129,11 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.isLoading);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
   }
 
 }
