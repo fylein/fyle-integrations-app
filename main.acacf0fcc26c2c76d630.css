@@ -786,6 +786,9 @@ video {
 .tw-h-6-px {
   height: 6px;
 }
+.tw-h-70-px {
+  height: 70px;
+}
 .tw-h-4 {
   height: 1rem;
 }
@@ -1815,6 +1818,9 @@ body {
 }
 p {
   margin: 0px;
+}
+.pi-times:before {
+  content: url('cross.c3c9cd687cc8d5b5.svg') !important;
 }
 .pi-chevron-down:before {
   content: url('arrow-down.879e35110a96c3d1.svg') !important;
