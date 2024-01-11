@@ -107,7 +107,7 @@
 <div>
     <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'top-right'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="handleResolvedMappingStat()">
         <p-header>
-            <p>{{errorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
+            <p class="tw-line-height-20">{errorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
             <p class="dialog-sub-header">Resolve the following mapping errors to export your failed expenses successfully to {{appName}}</p>
         </p-header>
           <app-generic-mapping-table [employeeFieldMapping]="employeeFieldMapping" [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="true" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
