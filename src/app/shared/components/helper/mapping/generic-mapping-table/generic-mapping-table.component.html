@@ -16,6 +16,7 @@
             </td>
             <td>
                 <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
+                [ngClass]="{'dropdown-width': isDashboardMappingResolve}"
                 [ngModel]="getDropdownValue(mapping)" 
                 [options]="destinationOptions" 
                 optionLabel="value" 
