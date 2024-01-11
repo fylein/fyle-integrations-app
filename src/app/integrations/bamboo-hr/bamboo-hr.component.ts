@@ -130,7 +130,6 @@ export class BambooHrComponent implements OnInit {
       this.bambooHrService.getConfigurations().pipe(catchError(() => of(null)))
     );
 
-    this.isLoading = true;
     data.pipe(toArray()).subscribe((responses) => {
       responses.forEach((response: any) => {
         if (Array.isArray(response) && response.length) {
