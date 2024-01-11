@@ -206,7 +206,7 @@
         <div>
             <app-configuration-step-footer 
                 [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
-                (save)="save()" 
+                (save)="save()" [showBackButton] = "isOnboarding"
                 [isButtonDisabled]="!exportSettingForm.valid">
             </app-configuration-step-footer>
         </div>
