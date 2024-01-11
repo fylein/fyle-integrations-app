@@ -20,8 +20,7 @@
 }
 
 .sub-header {
-    @apply tw-text-14-px tw-font-400;
-    color: grey;
+    @apply tw-text-14-px tw-font-400 tw-text-faded-text-color;
 }
 
 :host  ::ng-deep .p-dialog {
@@ -29,5 +28,5 @@
   }
 
 .dialog-sub-header {
-    @apply tw-text-14-px tw-font-400 tw-w-400-px;
+    @apply tw-text-14-px tw-font-400 tw-w-400-px tw-mt-8-px tw-text-faded-text-color;
 }
