@@ -214,4 +214,8 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     this.setupPage();
   }
 
+  navigateBack(): void {
+    this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
+  }
+
 }

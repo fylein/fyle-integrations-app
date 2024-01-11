@@ -196,16 +196,21 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
 
   save(): void {
     this.saveInProgress = true;
-    const data: BusinessCentralCompanyPost = {
-      company_id: this.businessCentralCompanyselected.destination_id,
-      company_name: this.businessCentralCompanyselected.value
-    };
-    this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
+    if (!this.businessCentralCompanyName) {
+      const data: BusinessCentralCompanyPost = {
+        company_id: this.businessCentralCompanyselected.destination_id,
+        company_name: this.businessCentralCompanyselected.value
+      };
+      this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
+        this.saveInProgress = false;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
+        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
+        this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
+      });
+    } else {
       this.saveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
-      this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
       this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
-    });
+    }
   }
 
   private setupPage(): void {

@@ -187,4 +187,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     this.setupPage();
   }
 
+  navigateBack(): void {
+    this.router.navigate([`/integrations/business_central/onboarding/connector`]);
+  }
+
 }
