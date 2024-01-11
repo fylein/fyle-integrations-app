@@ -1,3 +1,7 @@
+:host ::ng-deep .dropdown-width {
+    @apply tw-w-220-px #{!important};
+}
+
 :host ::ng-deep .prevBtn:disabled > .pi-chevron-left,:host ::ng-deep .nextBtn:disabled > .pi-chevron-right,
 :host ::ng-deep .prevBtn:disabled > .pi-minus, :host ::ng-deep .nextBtn:disabled > .pi-minus {
     @apply tw-text-placeholder #{!important};
