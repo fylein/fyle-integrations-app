@@ -18,7 +18,11 @@ export class SkipExportService {
     helper.setBaseApiURL();
   }
 
-  getExpenseFields(): Observable<ConditionField[]> {
+  getExpenseFields(version?: 'v1'): Observable<ConditionField[]> {
+    if (version === 'v1') {
+      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/custom_fields/`, {});
+    }
+
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_fields/`, {});
   }
 
