@@ -19,11 +19,7 @@ export class SkipExportService {
   }
 
   getExpenseFields(version?: 'v1'): Observable<ConditionField[]> {
-    if (version === 'v1') {
-      return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/custom_fields/`, {});
-    }
-
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_fields/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'custom_fields': 'expense_fields'}/`, {});
   }
 
   getAdminEmail(): Observable<EmailOption[]> {
