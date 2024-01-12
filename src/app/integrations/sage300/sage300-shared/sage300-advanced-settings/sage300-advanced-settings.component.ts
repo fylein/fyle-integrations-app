@@ -104,6 +104,18 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     });
   }
 
+  getSkipExportValue() {
+    if (this.advancedSettingForm.controls.skipExport) {
+      if (this.skipExportForm.controls.condition1.value) {
+        if (this.skipExportForm.controls.condition2.value) {
+          return this.skipExportForm.controls.value2.value && this.skipExportForm.controls.value1.value ? true : false;
+        }
+        return this.skipExportForm.controls.value1.value ? true : false;
+      }
+    }
+    return true;
+  }
+
   refreshDimensions(isRefresh: boolean) {
     this.helperService.importAttributes(isRefresh);
   }

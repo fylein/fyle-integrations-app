@@ -32,6 +32,8 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  isSage300Connected: boolean = false;
+
   constructor(
     private onboardingService: Sage300OnboardingService,
     private router: Router,
@@ -42,7 +44,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
     private mappingService: Sage300MappingService
   ) { }
 
-  save() {
+  private saveConnection() {
     const userID = this.connectSage300Form.value.userID;
     const companyID = this.connectSage300Form.value.companyID;
     const userPassword = this.connectSage300Form.value.userPassword;
@@ -54,24 +56,35 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
       password: userPassword,
       workspace: this.workspaceService.getWorkspaceId()
     }).subscribe((response) => {
-      this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
-      this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
-      this.mappingService.importSage300Attributes(true).subscribe();
-      this.router.navigate([this.onboardingSteps[1].route]);
+      this.mappingService.importSage300Attributes(true).subscribe(() => {
+        this.isLoading = false;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
+        this.workspaceService.setOnboardingState(Sage300OnboardingState.EXPORT_SETTINGS);
+        this.router.navigate([this.onboardingSteps[1].route]);
+      });
     }, () => {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
     });
   }
 
+  save() {
+    if (this.isSage300Connected) {
+      this.router.navigate([this.onboardingSteps[1].route]);
+    } else {
+      this.saveConnection();
+    }
+  }
+
+
   private setupPage(): void {
     this.connectorService.getSage300Credential().subscribe((sage300Cred: Sage300Credential) => {
       this.connectSage300Form = this.formBuilder.group({
         userID: [sage300Cred.username, Validators.required],
         companyID: [sage300Cred.identifier, Validators.required],
-        userPassword: ['', Validators.required]
+        userPassword: [{value: 'sage300', disabled: true}]
       });
+      this.isSage300Connected = true;
       this.isLoading = false;
     }, () => {
       this.connectSage300Form = this.formBuilder.group({

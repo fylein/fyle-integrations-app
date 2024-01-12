@@ -89,6 +89,8 @@
               </p-dropdown>                            
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
               [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
+              <app-mandatory-error-message *ngIf="checkValidationCondition()"
+              [customErrorMessage]="'Condition selected should be distinct.'"></app-mandatory-error-message>
             </div>
             <div class="tw-mr-24-px">
               <p-dropdown appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" placeholder="Select Operator"></p-dropdown>
@@ -106,9 +108,6 @@
               <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
             <img class="delete-icon" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
-          </div>
-          <div class=" tw-text-mandatory-field-color" *ngIf="checkValidationCondition()">
-            <p>*Condition selected should be distinct.</p>
           </div>
         </div>
         <div class="tw-flex items-center tw-text-mandatory-field-color tw-pt-12-px tw-pb-24-px" *ngIf="showAddButton">

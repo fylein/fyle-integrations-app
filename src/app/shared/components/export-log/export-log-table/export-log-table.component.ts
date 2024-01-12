@@ -27,6 +27,8 @@ export class ExportLogTableComponent implements OnInit {
 
   isChildTableVisible: boolean = false;
 
+  AppName = AppName;
+
   constructor(
     private windowService: WindowService
   ) { }

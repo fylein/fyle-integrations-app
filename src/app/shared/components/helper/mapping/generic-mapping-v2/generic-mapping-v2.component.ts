@@ -44,7 +44,7 @@ export class GenericMappingV2Component implements OnInit {
 
   sourceType: string;
 
-  limit: number;
+  limit: number = 10;
 
   offset: number = 0;
 

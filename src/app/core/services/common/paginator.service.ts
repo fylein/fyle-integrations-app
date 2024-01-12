@@ -11,7 +11,7 @@ export class PaginatorService {
   constructor(private storageService: StorageService) { }
 
   getPageSize(module: PaginatorPage): Paginator {
-    const defaultPageSize = 50;
+    const defaultPageSize = 10;
 
     return {
       limit: this.storageService.get(`page-size.${module}`) || defaultPageSize,
