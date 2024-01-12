@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty } from 'src/app/core/models/misc/tracking.model';
-import { Mapping } from 'src/app/core/models/qbd/db/mapping.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
@@ -37,6 +35,8 @@ export class MappingFilterComponent implements OnInit {
   form: UntypedFormGroup;
 
   @Input() selectedAlphabeticalFilter: string;
+
+  selectedAlphabets:string[] = [];
 
   isSearchBoxActive: boolean = false;
 
@@ -106,12 +106,21 @@ export class MappingFilterComponent implements OnInit {
   }
 
   filterOptionUpdateHandler(alphabet: string): void {
-    this.selectedAlphabeticalFilter = alphabet;
+    if (alphabet === 'All' || this.selectedAlphabets.indexOf('All') > -1) {
+      this.selectedAlphabets = [];
+      this.selectedAlphabets.push(alphabet);
+    } else if (this.selectedAlphabets.indexOf(alphabet) > -1) {
+      this.selectedAlphabets.splice(this.selectedAlphabets.indexOf(alphabet), 1);
+    } else {
+      this.selectedAlphabets.push(alphabet);
+    }
+    alphabet = this.selectedAlphabets.toString();
     this.mappingFilterUpdateHandler.emit(alphabet);
     this.trackAlphabeticalFilter();
   }
 
   private setupFilter(): void {
+    this.selectedAlphabets = this.selectedAlphabeticalFilter.split(',');
     this.form = this.formBuilder.group({
       searchOption: [],
       filterOption: []
