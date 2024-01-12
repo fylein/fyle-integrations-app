@@ -66,6 +66,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() optionLabel: string = 'value';
 
+  @Input() displayType: number = 1;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
@@ -98,6 +100,26 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     private trackingService: TrackingService,
     private router: Router
   ) { }
+
+  getOptions(): any {
+    if (this.options) {
+      return this.options;
+    } else if (this.destinationAttributes) {
+      return this.destinationAttributes;
+    }
+      return this.simpleOptions;
+
+  }
+
+  getDisplayKey() {
+    if (this.options) {
+      return 'label';
+    } else if (this.destinationAttributes) {
+      return 'value';
+    }
+      return null;
+
+  }
 
   removeFilter(formField: AbstractControl) {
     (formField as FormGroup).reset();

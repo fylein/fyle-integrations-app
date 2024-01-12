@@ -34,9 +34,13 @@ export class DropdownComponent {
    * The key in the option objects used to display the text in the
    * dropdown options.
    */
-  @Input() displayKey: string;
+  @Input() displayKey: string | null;
 
   @Input() additionalClasses: string;
+
+  @Input() dropDownType: number = 1;
+
+  @Input() isDisabled: boolean = false;
 
   constructor() { }
 
