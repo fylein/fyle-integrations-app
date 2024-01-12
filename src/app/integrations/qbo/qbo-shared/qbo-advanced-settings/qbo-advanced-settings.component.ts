@@ -3,7 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterResponse, SkipExportModel } from 'src/app/core/models/common/advanced-settings.model';
+import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, SkipExportValidatorRule, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOPaymentSyncDirection, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -11,6 +11,7 @@ import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace
 import { QBOAdvancedSettingGet, QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { ConfigurationService } from 'src/app/core/services/common/configuration.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
@@ -75,6 +76,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
   constructor(
     private advancedSettingsService: QboAdvancedSettingsService,
     private configurationService: ConfigurationService,
+    private helper: HelperService,
     private qboHelperService: QboHelperService,
     private mappingService: MappingService,
     private router: Router,
@@ -88,8 +90,41 @@ export class QboAdvancedSettingsComponent implements OnInit {
     this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
   }
 
+  private saveSkipExportFields(): void {
+    if (!this.skipExportForm.valid) {
+      return;
+    }
+    let valueField = this.skipExportForm.getRawValue();
+    if (!valueField.condition1.field_name) {
+      return;
+    }
+    valueField = SkipExportModel.constructSkipExportValue(valueField);
+    valueField.rank = 1;
+    const skipExportRank1: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
+    const payload1 = SkipExportModel.constructSkipExportPayload(skipExportRank1, this.skipExportForm.value.value1);
+    this.skipExportService.postExpenseFilter(payload1).subscribe(() => {
+      if (valueField.condition2 && valueField.operator2) {
+        valueField.rank = 2;
+        const skipExportRank2: ExpenseFilterPayload = SkipExportModel.constructExportFilterPayload(valueField);
+        const payload2 = SkipExportModel.constructSkipExportPayload(skipExportRank2, this.skipExportForm.value.value2);
+        this.skipExportService.postExpenseFilter(payload2).subscribe(() => {});
+      }
+    });
+  }
+
+  private saveSkipExport(): void {
+    if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.results.length > 0){
+      this.expenseFilters.results.forEach((value) => {
+        this.deleteExpenseFilter(value.rank);
+      });
+    }
+    if (this.advancedSettingForm.value.skipExport) {
+      this.saveSkipExportFields();
+    }
+  }
+
   save(): void {
-    // TODO, save skip export
+    this.saveSkipExport();
     const advancedSettingPayload = QBOAdvancedSettingModel.constructPayload(this.advancedSettingForm);
     this.isSaveInProgress = true;
 
@@ -141,11 +176,27 @@ export class QboAdvancedSettingsComponent implements OnInit {
     });
   }
 
+  skipExportWatcher(): void {
+    const skipExportFormWatcherFields: SkipExportValidatorRule = {
+      condition1: ['operator1', 'value1'],
+      condition2: ['operator2', 'value2'],
+      operator1: ['value1'],
+      operator2: ['value2']
+    };
+    this.helper.setConfigurationSettingValidatorsAndWatchers(skipExportFormWatcherFields, this.skipExportForm);
+
+    const formWatcher: skipExportValidator = {
+      'isChanged': ['condition1', 'operator1', 'value1'],
+      'isNotChanged': ['condition1', 'operator1', 'value1', 'condition2', 'operator2', 'value2', 'join_by']
+    };
+    this.helper.handleSkipExportFormInAdvancedSettingsUpdates(this.skipExportForm, formWatcher, this.advancedSettingForm);
+  }
+
   private setupFormWatchers() {
-    // TODO: skip export watchers
     this.createMemoStructureWatcher();
 
     QBOAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
+    this.skipExportWatcher();
   }
 
   private getSettingsAndSetupForm(): void {
