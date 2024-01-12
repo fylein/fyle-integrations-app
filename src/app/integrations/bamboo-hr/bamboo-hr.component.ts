@@ -145,7 +145,6 @@ export class BambooHrComponent implements OnInit {
   private setupPage(): void {
     this.bambooHrService.getBambooHRData().subscribe((bambooHrData: BambooHr) => {
       this.isBambooConnected = bambooHrData.sub_domain && bambooHrData.api_token ? true : false;
-      console.log('isBambooConnected',this.isBambooConnected);
       this.bambooHrData = bambooHrData;
       this.getBambooHrConfiguration();
     }, () => {
