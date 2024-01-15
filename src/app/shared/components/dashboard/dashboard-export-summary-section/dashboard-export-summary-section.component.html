@@ -15,7 +15,7 @@
                                 </span>  
                             <a *ngIf="accountingExportSummary?.successful_accounting_export_count" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-text-pink pointer">View</a>
                         </div>
-                        <div class="tw-flex tw-flex-col">
+                        <div class="tw-flex tw-flex-col" *ngIf="accountingExportSummary">
                             <span class="tw-w-260-px tw-text-left">
                                 <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Last Export at: </span>
                                 <span class="tw-text-14-px tw-font-500">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
