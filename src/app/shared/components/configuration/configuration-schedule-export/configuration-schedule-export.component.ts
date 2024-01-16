@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 
 @Component({
@@ -10,6 +11,8 @@ import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced
 export class ConfigurationScheduleExportComponent implements OnInit {
 
   @Input() form: FormGroup;
+
+  @Input() appName: AppName;
 
   @Input() iconPath: string;
 

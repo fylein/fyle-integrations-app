@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { ExportSettingFormOption, ExportSettingOptionSearch } from 'src/app/core/models/si/si-configuration/export-settings.model';
-import { AppName, ClickEvent, CorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, CorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
@@ -127,7 +127,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
       intacctCCC: creditCardExportType
     };
 
-    this.trackingService.onClickEvent(ClickEvent.PREVIEW_INTACCT_EXPORT);
+    this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.PREVIEW_INTACCT_EXPORT);
   }
 
   closeDialog() {

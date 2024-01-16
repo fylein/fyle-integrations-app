@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -95,6 +95,8 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
   ];
 
   readonly brandingConfig = brandingConfig;
+
+  readonly AppName = AppName;
 
   constructor(
     private router: Router,
@@ -289,9 +291,9 @@ export class ConfigurationAdvancedSettingsComponent implements OnInit {
         this.advancedSettingsService.deleteExpenseFilter(2).subscribe();
       }
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
-      this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.INTACCT, Page.IMPORT_SETTINGS_INTACCT, this.sessionStartTime);
       if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.ADVANCED_CONFIGURATION) {
-        this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.ADVANCED_CONFIGURATION, 3, advancedSettingsPayload);
+        this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.ADVANCED_CONFIGURATION, 3, advancedSettingsPayload);
       } else {
         this.trackingService.intacctUpdateEvent(
           IntacctUpdateEvent.ADVANCED_SETTINGS_INTACCT,

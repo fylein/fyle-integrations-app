@@ -157,6 +157,8 @@ export class QboCloneSettingsComponent implements OnInit {
     };
   });
 
+  readonly AppName = AppName;
+
   constructor(
     private cloneSettingService: CloneSettingService,
     private configurationService: ConfigurationService,

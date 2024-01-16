@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
@@ -109,7 +109,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
       filterType,
       ...selectedDateFilter
     };
-    this.trackingService.onDateFilter(trackingProperty);
+    this.trackingService.onDateFilter(TrackingApp.BUSINESS_CENTRAL, trackingProperty);
   }
 
   private setupForm(): void {

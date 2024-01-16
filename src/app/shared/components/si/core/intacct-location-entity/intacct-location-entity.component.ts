@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
@@ -105,7 +105,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   private setOnboardingStateAndRedirect(locationEntityMappingPayload: LocationEntityPost): void {
     if (this.workspaceService.getIntacctOnboardingState() === IntacctOnboardingState.CONNECTION) {
-      this.trackingService.integrationsOnboardingCompletion(IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
+      this.trackingService.integrationsOnboardingCompletion(TrackingApp.INTACCT, IntacctOnboardingState.CONNECTION, 2, locationEntityMappingPayload);
     }
 
     if (this.isOnboarding) {

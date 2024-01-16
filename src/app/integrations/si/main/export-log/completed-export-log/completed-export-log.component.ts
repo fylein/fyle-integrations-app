@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { FyleReferenceType, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { FyleReferenceType, PaginatorPage, TaskLogState, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/si/db/expense-group.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
@@ -250,7 +250,7 @@ export class CompletedExportLogComponent implements OnInit {
       filterType,
       ...selectedDateFilter
     };
-    this.trackingService.onDateFilter(trackingProperty);
+    this.trackingService.onDateFilter(TrackingApp.INTACCT, trackingProperty);
   }
 
   ngOnInit(): void {

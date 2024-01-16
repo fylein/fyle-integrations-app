@@ -36,7 +36,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   isOnboarding: boolean;
 
-  appName: string = AppName.QBO;
+  appName: AppName = AppName.QBO;
 
   hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
     return {
