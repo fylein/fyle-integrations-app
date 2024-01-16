@@ -81,7 +81,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   connect(): void {
 
-    if (this.appName === this.AppName.TRAVELPERK) {
+    if (this.appName === this.AppName.TRAVELPERK || this.appName === this.AppName.BAMBOO_HR) {
       this.initiateOAuth();
       return;
     } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
