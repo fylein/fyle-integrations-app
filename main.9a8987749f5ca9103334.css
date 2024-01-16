@@ -928,6 +928,9 @@ video {
 .tw-w-36-px {
   width: 36px;
 }
+.\!tw-w-260-px {
+  width: 260px !important;
+}
 .tw-w-18-px {
   width: 18px;
 }
