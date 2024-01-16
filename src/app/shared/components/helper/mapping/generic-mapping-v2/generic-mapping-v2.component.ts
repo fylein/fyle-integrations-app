@@ -127,6 +127,7 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   setupPage() {
+    this.isLoading = true;
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
     this.limit = paginator.limit;
     this.offset = paginator.offset;

@@ -37,7 +37,7 @@
             </div>
         </div>
         <div  *ngIf="isExportInProgress">
-            <p-progressBar class="!tw-h-6-px" [showValue]='false' [mode]="loaderType"></p-progressBar>
+            <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]='false' [mode]="loaderType"></p-progressBar>
         </div>
     </div>
     
