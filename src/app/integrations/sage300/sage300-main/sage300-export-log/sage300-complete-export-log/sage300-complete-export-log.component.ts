@@ -45,7 +45,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   accountingExports: AccountingExportList [];
 
-  filteredAccountingExports: AccountingExportList [];
+  filteredAccountingExports: AccountingExportList [] = [];
 
   expenses: Expense [] = [];
 
