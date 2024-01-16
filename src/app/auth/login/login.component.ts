@@ -53,6 +53,9 @@ export class LoginComponent implements OnInit {
       };
       this.userService.storeUserProfile(user);
 
+      this.helperService.setBaseApiURL(AppUrl.QBO);
+      this.qboAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
+
       this.helperService.setBaseApiURL(AppUrl.QBD);
       this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
 
