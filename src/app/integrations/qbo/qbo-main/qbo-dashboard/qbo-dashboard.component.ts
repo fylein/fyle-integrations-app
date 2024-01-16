@@ -104,7 +104,8 @@ export class QboDashboardComponent implements OnInit {
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
-      this.workspaceService.getWorkspaceGeneralSettings()
+      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.dashboardService.getExportableAccountingExportIds('v1')
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -121,16 +122,15 @@ export class QboDashboardComponent implements OnInit {
       const queuedTasks: QBOTaskLog[] = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
       this.failedExpenseGroupCount = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
+      this.exportableAccountingExportIds = responses[3].exportable_expense_group_ids;
+
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
         this.pollExportStatus();
       } else {
         this.accountingExportService.importExpensesFromFyle('v1').subscribe(() => {
-          this.dashboardService.getExportableAccountingExportIds('v1').subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
-            this.isImportInProgress = false;
-          });
+          this.isImportInProgress = false;
         });
       }
     });
