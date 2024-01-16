@@ -27,7 +27,7 @@ export class BambooHrComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  hideRefreshIcon: boolean;
+  hideRefreshIcon: boolean = true;
 
   isConfigurationSaveInProgress: boolean;
 
@@ -98,6 +98,7 @@ export class BambooHrComponent implements OnInit {
     this.isConfigurationSaveInProgress = true;
     this.bambooHrService.postConfigurations(payload).subscribe((updatedConfiguration: BambooHRConfiguration) => {
       this.bambooHrConfiguration = updatedConfiguration;
+      this.hideRefreshIcon = false;
       this.isConfigurationSaveInProgress = false;
       this.displayToastMessage(ToastSeverity.SUCCESS, 'Configuration saved successfully');
       this.trackingService.trackTimeSpent(Page.CONFIGURE_BAMBOO_HR, this.sessionStartTime);
@@ -136,9 +137,11 @@ export class BambooHrComponent implements OnInit {
           this.additionalEmails = response;
         } else if (response?.hasOwnProperty('additional_email_options')) {
           this.bambooHrConfiguration = response;
+          this.hideRefreshIcon = false;
         }
       });
       this.isLoading = false;
+
     });
   }
 
