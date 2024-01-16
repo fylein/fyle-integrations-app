@@ -111,7 +111,8 @@ export class BusinessCentralDashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0)
+      this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0),
+      this.dashboardService.getExportableAccountingExportIds()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.accountingExportSummary = responses[1];
@@ -119,16 +120,15 @@ export class BusinessCentralDashboardComponent implements OnInit {
       const queuedTasks: BusinessCentralAccountingExport[] = responses[2].results.filter((accountingExport: BusinessCentralAccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS || accountingExport.status === AccountingExportStatus.EXPORT_QUEUED);
       this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: BusinessCentralAccountingExport) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
 
+      this.exportableAccountingExportIds = responses[3].exportable_accounting_export_ids;
+
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
         this.pollExportStatus();
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
-          this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
-            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_accounting_export_ids;
-            this.isImportInProgress = false;
-          });
+          this.isImportInProgress = false;
         });
       }
       this.isLoading = false;
