@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
-import { ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
@@ -178,7 +178,7 @@ export class DashboardComponent implements OnInit {
 
   triggerExports(): void {
     this.exportInProgress = true;
-    this.trackingService.onClickEvent(ClickEvent.QBD_EXPORT);
+    this.trackingService.onClickEvent(TrackingApp.QBD, ClickEvent.QBD_EXPORT);
     setTimeout(() => {
       this.exportProgressPercentage = 15;
     }, 500);

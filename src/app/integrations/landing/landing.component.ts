@@ -88,7 +88,6 @@ export class LandingComponent implements OnInit {
 
   switchView(clickedView: IntegrationView): void {
     const initialState = Object.create(this.integrationTabsInitialState);
-    this.trackingService.onClickEvent(ClickEvent.INTEGRATION_TABS);
 
     // Resetting to initial state and setting clicked view to true
     this.integrationTabs = initialState;
@@ -96,9 +95,6 @@ export class LandingComponent implements OnInit {
   }
 
   openAccountingIntegrationApp(accountingIntegrationApp: AccountingIntegrationApp): void {
-    this.trackingService.trackTimeSpent(Page.LANDING, this.sessionStartTime);
-    this.trackingService.onClickEvent(this.accountingIntegrationEventMap[accountingIntegrationApp]);
-
     const payload = {
       callbackUrl: this.integrationCallbackUrlMap[accountingIntegrationApp][0],
       clientId: this.integrationCallbackUrlMap[accountingIntegrationApp][1]
@@ -108,7 +104,6 @@ export class LandingComponent implements OnInit {
   }
 
   openInAppIntegration(inAppIntegration: InAppIntegration): void {
-    this.trackingService.trackTimeSpent(Page.LANDING, this.sessionStartTime);
     this.router.navigate([this.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 

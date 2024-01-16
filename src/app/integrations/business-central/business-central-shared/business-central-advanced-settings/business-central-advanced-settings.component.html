@@ -33,6 +33,7 @@
                         <div *ngIf="advancedSettingForm.value.scheduleEnabled">
                             <app-configuration-schedule-export
                                 [form]="advancedSettingForm"
+                                [appName]="appName"
                                 [isFieldMandatory]="false"
                                 [mandatoryErrorListName]="'automatic export method'"
                                 [label]="'Set up export frequency'"

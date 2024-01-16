@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { ClickEvent, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -61,7 +61,7 @@ export class BambooHrComponent implements OnInit {
   ) { }
 
   openDialog(): void {
-    this.trackingService.onClickEvent(ClickEvent.CONNECT_BAMBOO_HR);
+    this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.CONNECT_BAMBOO_HR);
     this.showDialog = true;
   }
 
@@ -81,7 +81,7 @@ export class BambooHrComponent implements OnInit {
       this.isBambooConnectionInProgress = false;
       this.showDialog = false;
       this.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Bamboo HR Successfully');
-      this.trackingService.trackTimeSpent(Page.BAMBOO_HR_LANDING, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.BAMBOO_HR, Page.BAMBOO_HR_LANDING, this.sessionStartTime);
       this.sessionStartTime = new Date();
     }, () => {
       this.displayToastMessage(ToastSeverity.ERROR, 'Connecting Bamboo HR Failed', 5000);
@@ -94,19 +94,19 @@ export class BambooHrComponent implements OnInit {
   }
 
   configurationUpdatesHandler(payload: BambooHRConfigurationPost): void {
-    this.trackingService.onClickEvent(ClickEvent.CONFIGURE_BAMBOO_HR);
+    this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.CONFIGURE_BAMBOO_HR);
     this.isConfigurationSaveInProgress = true;
     this.bambooHrService.postConfigurations(payload).subscribe((updatedConfiguration: BambooHRConfiguration) => {
       this.bambooHrConfiguration = updatedConfiguration;
       this.hideRefreshIcon = false;
       this.isConfigurationSaveInProgress = false;
       this.displayToastMessage(ToastSeverity.SUCCESS, 'Configuration saved successfully');
-      this.trackingService.trackTimeSpent(Page.CONFIGURE_BAMBOO_HR, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.BAMBOO_HR, Page.CONFIGURE_BAMBOO_HR, this.sessionStartTime);
     });
   }
 
   syncEmployees(): void {
-    this.trackingService.onClickEvent(ClickEvent.SYNC_BAMBOO_HR_EMPLOYEES);
+    this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.SYNC_BAMBOO_HR_EMPLOYEES);
     this.hideRefreshIcon = true;
     this.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing Employees Started');
     this.bambooHrService.syncEmployees().subscribe(() => {
@@ -115,7 +115,7 @@ export class BambooHrComponent implements OnInit {
   }
 
   disconnectBambooHr(): void {
-    this.trackingService.onClickEvent(ClickEvent.DISCONNECT_BAMBOO_HR);
+    this.trackingService.onClickEvent(TrackingApp.BAMBOO_HR, ClickEvent.DISCONNECT_BAMBOO_HR);
     this.isLoading = true;
     this.bambooHrService.disconnectBambooHr().subscribe(() => {
       this.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Bamboo HR Successfully');

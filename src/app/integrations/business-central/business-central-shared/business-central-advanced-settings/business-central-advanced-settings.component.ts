@@ -12,7 +12,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model';
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-business-central-advanced-settings',
@@ -39,7 +39,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   isOnboarding: boolean;
 
-  appName: string = AppName.BUSINESS_CENTRAL;
+  appName: AppName = AppName.BUSINESS_CENTRAL;
 
   hours: HourOption[] = [];
 
@@ -143,11 +143,12 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: BusinessCentralAdvancedSettingsGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
-      this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.ADVANCED_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(BusinessCentralOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
+        this.trackingService.onOnboardingStepCompletion(TrackingApp.BUSINESS_CENTRAL, BusinessCentralOnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
       } else {
         this.trackingService.onUpdateEvent(
+          TrackingApp.BUSINESS_CENTRAL,
           BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
           {
             phase: this.helper.getPhase(this.isOnboarding),

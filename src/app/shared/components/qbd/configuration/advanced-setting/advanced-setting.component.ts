@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ClickEvent, Page, ConfigurationCta, QBDOnboardingState, ProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { ClickEvent, Page, ConfigurationCta, QBDOnboardingState, ProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent, TrackingApp, AppName } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSettingModel, QBDAdvancedSettingsGet, EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -69,6 +69,8 @@ export class AdvancedSettingComponent implements OnInit {
   private sessionStartTime = new Date();
 
   readonly brandingConfig = brandingConfig;
+
+  readonly AppName = AppName;
 
   constructor(
     private router: Router,
@@ -236,11 +238,12 @@ export class AdvancedSettingComponent implements OnInit {
     this.advancedSettingService.postQbdAdvancedSettings(advancedSettingPayload).subscribe((response: QBDAdvancedSettingsGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
-      this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);
+        this.trackingService.onOnboardingStepCompletion(TrackingApp.QBD, QBDOnboardingState.ADVANCED_SETTINGS, 4, advancedSettingPayload);
       } else {
         this.trackingService.onUpdateEvent(
+          TrackingApp.QBD,
           UpdateEvent.ADVANCED_SETTINGS_QBD,
           {
             phase: this.getPhase(),

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
 import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
@@ -269,7 +269,7 @@ export class DashboardComponent implements OnInit {
           errorType: this.intacctErrorType
         };
 
-        this.trackingService.onErrorResolve(properties);
+        this.trackingService.onErrorResolve(TrackingApp.INTACCT, properties);
       }
     }
   }
@@ -324,7 +324,7 @@ export class DashboardComponent implements OnInit {
   export(): void {
     if (!this.exportInProgress && this.exportableExpenseGroupIds.length) {
       this.exportInProgress = true;
-      this.trackingService.onClickEvent(ClickEvent.INTACCT_EXPORT);
+      this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.INTACCT_EXPORT);
       this.dashboardService.exportExpenseGroups().subscribe(() => {
         this.pollExportStatus(this.exportableExpenseGroupIds);
       });
