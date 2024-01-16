@@ -122,7 +122,7 @@ export class QboDashboardComponent implements OnInit {
       const queuedTasks: QBOTaskLog[] = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
       this.failedExpenseGroupCount = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
-      this.exportableAccountingExportIds = responses[3].exportable_expense_group_ids;
+      this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
