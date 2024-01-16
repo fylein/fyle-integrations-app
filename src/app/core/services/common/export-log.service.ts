@@ -25,14 +25,11 @@ export class ExportLogService {
 
   getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const org_id = this.userService.getUserProfile().org_id;
     const params: SkipExportParam = {
       limit,
       offset,
-      org_id
+      org_id: this.userService.getUserProfile().org_id
     };
-    params.limit = limit;
-    params.offset = offset;
     params.org_id = this.userService.getUserProfile().org_id;;
 
     if (selectedDateFilter) {
