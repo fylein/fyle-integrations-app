@@ -35,7 +35,7 @@ export class SkipExportService {
   }
 
   deleteExpenseFilter(rank: number): Observable<{}> {
-    return this.apiService.delete(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/${rank}/`,{});
+    return this.apiService.delete(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/${rank}/`, {});
   }
 
 }

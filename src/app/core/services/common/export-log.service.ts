@@ -30,7 +30,7 @@ export class ExportLogService {
       offset,
       org_id: this.userService.getUserProfile().org_id
     };
-    params.org_id = this.userService.getUserProfile().org_id;;
+    params.org_id = this.userService.getUserProfile().org_id;
 
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
