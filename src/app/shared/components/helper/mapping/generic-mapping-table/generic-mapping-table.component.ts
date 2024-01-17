@@ -1,4 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Subject, debounceTime } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
@@ -39,11 +40,57 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() isDashboardMappingResolve: boolean;
 
+  private optionsMap: {[key: string]: boolean} = {};
+
+  private optionSearchUpdate = new Subject<any>();
+
   constructor(
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
+
+  sortDropdownOptions() {
+    this.destinationOptions.sort((a, b) => a.value.localeCompare(b.value));
+  }
+
+  optionSearchWatcher() {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+      ).subscribe((event: any) => {
+      const existingOptions = this.destinationOptions.concat();
+      const newOptions: DestinationAttribute[] = [];
+
+      this.mappingService.getPaginatedDestinationAttributes(this.getAttributesFilteredByConfig()[0], event.searchTerm).subscribe((response) => {
+        response.results.forEach((option) => {
+          // If option is not already present in the list, add it
+          if (!this.optionsMap[option.id.toString()]) {
+            this.optionsMap[option.id.toString()] = true;
+            newOptions.push(option);
+          }
+        });
+
+        this.destinationOptions = existingOptions.concat(newOptions);
+        this.sortDropdownOptions();
+        event.employeeMapping.isOptionSearchInProgress = false;
+      });
+    });
+  }
+
+  searchOptions(event: any, mapping: any) {
+    if (event.filter) {
+      mapping.isOptionSearchInProgress = true;
+      this.optionSearchUpdate.next({searchTerm: event.filter, mapping});
+    }
+  }
+
+  private addMissingOption(dropdownOption: DestinationAttribute): void {
+    const option = this.destinationOptions.find(attribute => attribute.id === dropdownOption.id);
+
+    if (!option) {
+      this.destinationOptions.push(dropdownOption);
+    }
+  }
 
   tableDropdownWidth() {
     const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
