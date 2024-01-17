@@ -115,7 +115,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
   private saveSkipExport(): void {
     if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.results.length > 0){
       this.expenseFilters.results.forEach((value) => {
-        this.deleteExpenseFilter(value.rank);
+        this.deleteExpenseFilter(value.id);
       });
     }
     if (this.advancedSettingForm.value.skipExport) {
@@ -148,8 +148,8 @@ export class QboAdvancedSettingsComponent implements OnInit {
     this.qboHelperService.refreshQBODimensions().subscribe();
   }
 
-  deleteExpenseFilter(rank: number) {
-    this.skipExportService.deleteExpenseFilter(rank).subscribe();
+  deleteExpenseFilter(id: number) {
+    this.skipExportService.deleteExpenseFilter(id).subscribe();
   }
 
   isAutoCreateVendorsFieldVisible(): boolean {
