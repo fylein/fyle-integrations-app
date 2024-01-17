@@ -27,7 +27,7 @@
                         [label]="'Schedule automatic export'" 
                         [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'"
                         [formControllerName]="'exportSchedule'"
-                        [iconPath]="'calender'">
+                        [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
 
                     <div *ngIf="advancedSettingForm.value.exportSchedule">
@@ -56,7 +56,7 @@
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
-                    [iconPath]="'calender'"
+                    [iconPath]="'calendar'"
                     [label]="'Post entries in the next open accounting period'"
                     [subLabel]="'If the accounting period in QuickBooks Online is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'"
                     [formControllerName]="'changeAccountingPeriod'">
@@ -94,7 +94,7 @@
 
                 <app-configuration-toggle-field *ngIf="isSingleCreditLineJEFieldVisible()"
                     [form]="advancedSettingForm"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [label]="'Create a single itemized offset credit entry for Journal'"
                     [subLabel]="'Merge all Credits in a Journal to create a single entry.'"
                     [formControllerName]="'singleCreditLineJE'">
@@ -123,7 +123,7 @@
                     [label]="'Set the line item-level Description Field in QuickBooks Online'"
                     [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'"
                     [options]="defaultMemoOptions"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [placeholder]="'Set description'"
                     [formControllerName]="'memoStructure'">
                 </app-configuration-multi-select>
@@ -142,7 +142,7 @@
                     [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'" 
                     [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to QuickBooks Online by setting up a conditional rule.'"
                     [formControllerName]="'skipExport'"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [redirectLink]="skipExportRedirectLink">
                 </app-configuration-toggle-field>
                 <div *ngIf="advancedSettingForm.value.skipExport">
