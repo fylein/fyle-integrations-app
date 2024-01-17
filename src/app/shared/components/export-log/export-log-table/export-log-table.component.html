@@ -6,7 +6,7 @@
             <th *ngIf="isExportLogTable">Expense Type</th>
             <th>Reference ID</th>
             <th *ngIf="!isDashboardFailed">Exported As</th>
-            <th *ngIf="!isDashboardFailed && appName !== AppName.SAGE300">Link to {{appName}}</th>
+            <th *ngIf="!isDashboardFailed">Link to {{appName}}</th>
             <th *ngIf="isDashboardFailed">Link to {{ brandingConfig.brandName }}</th>
         </tr>
     </ng-template>

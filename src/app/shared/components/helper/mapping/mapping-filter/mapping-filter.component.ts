@@ -38,8 +38,6 @@ export class MappingFilterComponent implements OnInit {
 
   @Input() selectedAlphabeticalFilter: string;
 
-  selectedAlphabets:string[] = [];
-
   isSearchBoxActive: boolean = false;
 
   @Output() mappingFilterUpdateHandler = new EventEmitter<string>();
@@ -108,21 +106,12 @@ export class MappingFilterComponent implements OnInit {
   }
 
   filterOptionUpdateHandler(alphabet: string): void {
-    if (alphabet === 'All' || this.selectedAlphabets.indexOf('All') > -1) {
-      this.selectedAlphabets = [];
-      this.selectedAlphabets.push(alphabet);
-    } else if (this.selectedAlphabets.indexOf(alphabet) > -1) {
-      this.selectedAlphabets.splice(this.selectedAlphabets.indexOf(alphabet), 1);
-    } else {
-      this.selectedAlphabets.push(alphabet);
-    }
-    alphabet = this.selectedAlphabets.toString();
+    this.selectedAlphabeticalFilter = alphabet;
     this.mappingFilterUpdateHandler.emit(alphabet);
     this.trackAlphabeticalFilter();
   }
 
   private setupFilter(): void {
-    this.selectedAlphabets = this.selectedAlphabeticalFilter.split(',');
     this.form = this.formBuilder.group({
       searchOption: [],
       filterOption: []
