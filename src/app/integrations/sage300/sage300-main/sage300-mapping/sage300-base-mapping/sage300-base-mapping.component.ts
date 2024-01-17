@@ -70,18 +70,7 @@ export class Sage300BaseMappingComponent implements OnInit {
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
       this.destinationField = this.getSourceType(mappingSettingsResponse.results);
       this.mappingService.getDestinationAttributes([this.destinationField], 'v2').subscribe((response: any) => {
-        if (this.sourceField===FyleField.EMPLOYEE) {
-          this.destinationOptions = this.destinationField===FyleField.EMPLOYEE ? response.EMPLOYEE : response.VENDOR;
-        }
-        if (this.sourceField==='CATEGORY') {
-          if (this.destinationField === 'EXPENSE_TYPE') {
-            this.destinationOptions = response.EXPENSE_TYPE;
-          } else {
-            this.destinationOptions = response.ACCOUNT;
-          }
-        } else {
-          this.destinationOptions = response[this.destinationField];
-        }
+        this.destinationOptions = response;
         this.isLoading = false;
       });
     });
