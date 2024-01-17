@@ -110,8 +110,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.helperService.importAttributes(isRefresh);
   }
 
-  deleteExpenseFilter(rank: number) {
-    this.skipExportService.deleteExpenseFilter(rank).subscribe();
+  deleteExpenseFilter(id: number) {
+    this.skipExportService.deleteExpenseFilter(id).subscribe();
   }
 
   skipExportWatcher(): void {
@@ -174,7 +174,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.isSaveInProgress = true;
     if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.results.length > 0){
       this.expenseFilters.results.forEach((value) => {
-        this.deleteExpenseFilter(value.rank);
+        this.deleteExpenseFilter(value.id);
       });
     }
     if (this.advancedSettingForm.value.skipExport) {

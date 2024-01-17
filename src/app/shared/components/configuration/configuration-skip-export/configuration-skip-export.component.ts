@@ -182,7 +182,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.showAdditionalCondition = false;
     this.showAddButton = true;
     this.resetAdditionalFilter();
-    const isDelete = this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(2) : '';
+    const isDelete = this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(this.expenseFilter.results[1].id) : '';
     const fields = ['join_by', 'condition2', 'operator2', 'value2'];
     this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, false);
   }
