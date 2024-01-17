@@ -226,11 +226,13 @@ export class AccountingExportModel {
 
 export class SkippedAccountingExportModel {
   static getfilteredSkippedAccountingExports(query: string, group: SkipExportList): boolean {
+    const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';
     const referenceNumber = group.claim_number ? group.claim_number : '';
 
     return (
+      employeeName.toLowerCase().includes(query) ||
       employeeID.toLowerCase().includes(query) ||
       expenseType.toLowerCase().includes(query) ||
       referenceNumber.toLowerCase().includes(query)
