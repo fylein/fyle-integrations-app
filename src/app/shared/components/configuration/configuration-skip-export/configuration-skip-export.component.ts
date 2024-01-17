@@ -81,13 +81,14 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   private setOperatorFieldOptions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
+    console.log(response);
     if (conditionArray.length) {
       if (response.results[0].is_custom) {
         this.setCustomOperatorOptions(response.results[0].rank, response.results[0].custom_field_type);
       } else {
         this.operatorFieldOptions1 = this.setDefaultOperatorOptions(response.results[0].condition);
       }
-      if (response.results[0].join_by !== null) {
+      if (response.results[1]) {
         if (response.results[1].is_custom) {
           this.setCustomOperatorOptions(response.results[1].rank, response.results[1].custom_field_type);
         } else {
