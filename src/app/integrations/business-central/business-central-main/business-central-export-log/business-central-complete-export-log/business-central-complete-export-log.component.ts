@@ -131,6 +131,8 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
         this.trackDateFilter('existing', this.selectedDateFilter);
         this.getAccountingExports(paginator.limit, paginator.offset);
       } else {
+        this.dateOptions = AccountingExportModel.getDateOptions();
+        this.exportLogForm.controls.start.patchValue([]);
         this.selectedDateFilter = null;
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
