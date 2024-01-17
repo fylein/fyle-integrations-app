@@ -81,7 +81,6 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   private setOperatorFieldOptions(response: ExpenseFilterResponse, conditionArray: ConditionField[]) {
-    console.log(response);
     if (conditionArray.length) {
       if (response.results[0].is_custom) {
         this.setCustomOperatorOptions(response.results[0].rank, response.results[0].custom_field_type);
