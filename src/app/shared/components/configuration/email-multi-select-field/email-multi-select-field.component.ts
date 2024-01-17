@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { EmailOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -38,6 +39,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   @Input() customErrorMessage: string;
 
   @Input() isCloneSettingView: boolean;
+
+  @Input() appName: AppName;
 
   addEmailForm: FormGroup = this.formBuilder.group({
     email: [null, Validators.compose([Validators.email, Validators.required])],
@@ -76,7 +79,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   }
 
   addEmail(): void {
-    this.trackingService.onClickEvent(ClickEvent.ADD_EMAIL_MANUALLY);
+    this.trackingService.onClickEvent(trackingAppMap[this.appName], ClickEvent.ADD_EMAIL_MANUALLY);
     const selectedEmails = this.form.value.email;
     selectedEmails.push(this.addEmailForm.value);
     this.emails.push(this.addEmailForm.value);

@@ -18,8 +18,8 @@ export class SkipExportService {
     helper.setBaseApiURL();
   }
 
-  getExpenseFields(): Observable<ConditionField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_fields/`, {});
+  getExpenseFields(version?: 'v1'): Observable<ConditionField[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/${version === 'v1' ? 'custom_fields': 'expense_fields'}/`, {});
   }
 
   getAdminEmail(): Observable<EmailOption[]> {
@@ -34,8 +34,8 @@ export class SkipExportService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, expenseFilter);
   }
 
-  deleteExpenseFilter(rank: number): Observable<{}> {
-    return this.apiService.delete(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/`, { rank });
+  deleteExpenseFilter(id: number): Observable<{}> {
+    return this.apiService.delete(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/expense_filters/${id}/`, {});
   }
 
 }

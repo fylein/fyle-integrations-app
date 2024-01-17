@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { catchError, concat, merge, Observable, of, toArray } from 'rxjs';
-import { AppName, ClickEvent, InAppIntegration, Page, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, InAppIntegration, Page, ConfigurationCta, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { EmailOption, Gusto, GustoConfiguration, GustoConfigurationPost } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { WorkatoConnectionStatus } from 'src/app/core/models/travelperk/travelperk.model';
@@ -82,7 +82,7 @@ export class GustoComponent implements OnInit {
   }
 
   syncEmployees(): void {
-    this.trackingService.onClickEvent(ClickEvent.SYNC_GUSTO_EMPLOYEES);
+    this.trackingService.onClickEvent(TrackingApp.GUSTO, ClickEvent.SYNC_GUSTO_EMPLOYEES);
     this.hideRefreshIcon = true;
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing Employees Started');
     this.gustoService.syncEmployees().subscribe(() => {
@@ -91,13 +91,13 @@ export class GustoComponent implements OnInit {
   }
 
   configurationUpdatesHandler(payload: GustoConfigurationPost): void {
-    this.trackingService.onClickEvent(ClickEvent.CONFIGURE_GUSTO);
+    this.trackingService.onClickEvent(TrackingApp.GUSTO, ClickEvent.CONFIGURE_GUSTO);
     this.isConfigurationSaveInProgress = true;
     this.gustoService.postConfigurations(payload).subscribe((updatedConfiguration: GustoConfiguration) => {
       this.gustoConfiguration = updatedConfiguration;
       this.isConfigurationSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Configuration saved successfully');
-      this.trackingService.trackTimeSpent(Page.CONFIGURE_GUSTO, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.GUSTO, Page.CONFIGURE_GUSTO, this.sessionStartTime);
     });
   }
 

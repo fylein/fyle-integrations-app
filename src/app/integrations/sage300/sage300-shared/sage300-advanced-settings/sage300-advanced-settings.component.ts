@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
 import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, ConfigurationCta, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
@@ -64,6 +64,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
 
   sageIntacctJobs: Sage300DestinationAttributes[];
 
+  readonly AppName = AppName;
+
   constructor(
     private advancedSettingsService: Sage300AdvancedSettingsService,
     private helper: HelperService,
@@ -120,8 +122,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.helperService.importAttributes(isRefresh);
   }
 
-  deleteExpenseFilter(rank: number) {
-    this.skipExportService.deleteExpenseFilter(rank).subscribe();
+  deleteExpenseFilter(id: number) {
+    this.skipExportService.deleteExpenseFilter(id).subscribe();
   }
 
   skipExportWatcher(): void {
@@ -184,7 +186,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.isSaveInProgress = true;
     if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.results.length > 0){
       this.expenseFilters.results.forEach((value) => {
-        this.deleteExpenseFilter(value.rank);
+        this.deleteExpenseFilter(value.id);
       });
     }
     if (this.advancedSettingForm.value.skipExport) {
@@ -195,11 +197,12 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe((advancedSettingsResponse: Sage300AdvancedSettingGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
-      this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_SAGE300, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.ADVANCED_SETTINGS_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.ADVANCED_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(Sage300OnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
+        this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.ADVANCED_SETTINGS, 3, advancedSettingPayload);
       } else {
         this.trackingService.onUpdateEvent(
+          TrackingApp.SAGE300,
           Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
           {
             phase: this.helper.getPhase(this.isOnboarding),

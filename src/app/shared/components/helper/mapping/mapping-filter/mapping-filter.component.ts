@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { MappingState } from 'src/app/core/models/enum/enum.model';
-import { MappingAlphabeticalFilterAdditionalProperty } from 'src/app/core/models/misc/tracking.model';
+import { AppName, MappingState } from 'src/app/core/models/enum/enum.model';
+import { MappingAlphabeticalFilterAdditionalProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
 @Component({
@@ -11,6 +11,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
   styleUrls: ['./mapping-filter.component.scss']
 })
 export class MappingFilterComponent implements OnInit {
+
+  @Input() appName: AppName;
 
   @Input() mappingFilter: MappingState;
 
@@ -102,7 +104,7 @@ export class MappingFilterComponent implements OnInit {
       allSelected: allSelected,
       page: this.page
     };
-    this.trackingService.onMappingsAlphabeticalFilter(properties);
+    this.trackingService.onMappingsAlphabeticalFilter(trackingAppMap[this.appName], properties);
   }
 
   filterOptionUpdateHandler(alphabet: string): void {

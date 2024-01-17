@@ -32,6 +32,7 @@
                     <div *ngIf="advancedSettingForm.value.scheduleEnabled">
                         <app-configuration-schedule-export
                             [form]="advancedSettingForm"
+                            [appName]="AppName.SAGE300"
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'automatic export method'"
                             [label]="'Set up export frequency'"
