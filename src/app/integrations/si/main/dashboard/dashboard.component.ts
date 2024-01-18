@@ -110,6 +110,8 @@ export class DashboardComponent implements OnInit {
 
   illustrationsAllowed: boolean = brandingFeatureConfig.illustrationsAllowed;
 
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
   constructor(
     private dashboardService: DashboardService,
     private exportLogService: ExportLogService,

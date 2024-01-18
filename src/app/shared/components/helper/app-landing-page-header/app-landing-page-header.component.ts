@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -60,6 +60,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
   qboConnectButtonSource: string = 'assets/icons/buttons/connect-to-qbo.svg';
 
   readonly brandingConfig = brandingConfig;
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router,

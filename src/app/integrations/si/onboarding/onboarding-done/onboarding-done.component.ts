@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { environment } from 'src/environments/environment';
@@ -10,6 +11,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./onboarding-done.component.scss']
 })
 export class OnboardingDoneComponent implements OnInit {
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private refinerService: RefinerService,

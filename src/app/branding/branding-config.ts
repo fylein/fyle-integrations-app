@@ -9,11 +9,13 @@ export const brandingConfig: BrandingConfiguration = config;
 const featureConfigs: FeatureConfiguration = {
     fyle: {
         reimbursableExpenses: true,
-        illustrationsAllowed: true
+        illustrationsAllowed: true,
+        isGradientAllowed: true
     },
     co: {
         reimbursableExpenses: true,
-        illustrationsAllowed: false
+        illustrationsAllowed: false,
+        isGradientAllowed: false
     }
 };
 

@@ -83,6 +83,8 @@ export class DashboardComponent implements OnInit {
 
   readonly illustrationsAllowed: boolean = brandingFeatureConfig.illustrationsAllowed;
 
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
   constructor(
     private iifLogsService: QbdIifLogsService,
     private formBuilder: FormBuilder,
