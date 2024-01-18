@@ -61,7 +61,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset).subscribe((skippedExpenses: SkipExportLogResponse) => {
+    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter).subscribe((skippedExpenses: SkipExportLogResponse) => {
       if (!this.isDateSelected) {
         this.totalCount = skippedExpenses.count;
       }
@@ -109,6 +109,8 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
         this.trackDateFilter('existing', this.selectedDateFilter);
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       } else {
+        this.dateOptions = AccountingExportModel.getDateOptions();
+        this.skipExportLogForm.controls.start.patchValue([]);
         this.selectedDateFilter = null;
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       }

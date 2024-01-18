@@ -158,17 +158,23 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     });
   }
 
+  private handlePostQBOConnection(qboCredential: QBOCredential): void {
+    this.workspaceService.setOnboardingState(QBOOnboardingState.MAP_EMPLOYEES);
+    this.qboConnectionInProgress = false;
+    this.qboCompanyName = qboCredential.company_name;
+    this.isQboConnected = true;
+    this.qboTokenExpired = false;
+    this.showOrHideDisconnectQBO();
+  }
+
   private postQboCredentials(code: string, realmId: string): void {
     const payload: QBOConnectorPost = QBOConnectorModel.constructPayload(code, realmId);
 
     this.qboConnectorService.connectQBO(payload).subscribe((qboCredential: QBOCredential) => {
       this.qboHelperService.refreshQBODimensions().subscribe(() => {
-        this.workspaceService.setOnboardingState(QBOOnboardingState.MAP_EMPLOYEES);
-        this.qboConnectionInProgress = false;
-        this.qboCompanyName = qboCredential.company_name;
-        this.isQboConnected = true;
-        this.qboTokenExpired = false;
-        this.showOrHideDisconnectQBO();
+        this.handlePostQBOConnection(qboCredential);
+      }, () => {
+        this.handlePostQBOConnection(qboCredential);
       });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to QuickBooks Online. Please try again';

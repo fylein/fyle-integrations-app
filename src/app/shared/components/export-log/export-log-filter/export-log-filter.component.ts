@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 
 @Component({
@@ -53,7 +53,7 @@ export class ExportLogFilterComponent implements OnInit {
     this.dateOptions[3].dateRange = this.exportLogForm.value.start[0].toLocaleDateString() + '-' + this.exportLogForm.value.start[1].toLocaleDateString();
     this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
     this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
-    this.presentDate = this.dateOptions[3].dateRange;
+    this.presentDate = new Date().toLocaleDateString();
     this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
   }
 

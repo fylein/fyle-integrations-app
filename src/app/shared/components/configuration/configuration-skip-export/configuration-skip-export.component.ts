@@ -87,7 +87,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
       } else {
         this.operatorFieldOptions1 = this.setDefaultOperatorOptions(response.results[0].condition);
       }
-      if (response.results[0].join_by !== null) {
+      if (response.results[1]) {
         if (response.results[1].is_custom) {
           this.setCustomOperatorOptions(response.results[1].rank, response.results[1].custom_field_type);
         } else {
@@ -182,7 +182,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     this.showAdditionalCondition = false;
     this.showAddButton = true;
     this.resetAdditionalFilter();
-    const isDelete = this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(2) : '';
+    const isDelete = this.expenseFilter.results.length > 1 ? this.deleteSkipExportForm.emit(this.expenseFilter.results[1].id) : '';
     const fields = ['join_by', 'condition2', 'operator2', 'value2'];
     this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, false);
   }

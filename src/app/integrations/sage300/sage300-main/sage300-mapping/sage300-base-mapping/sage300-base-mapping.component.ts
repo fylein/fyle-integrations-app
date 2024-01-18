@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AppName, FyleField, IntegrationName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -47,39 +49,28 @@ export class Sage300BaseMappingComponent implements OnInit {
     });
   }
 
-  getSourceType() {
+  getSourceType(results: MappingSetting[]) {
     if (this.sourceField==='EMPLOYEE') {
       return 'VENDOR';
-    }
-
-    if (this.sourceField==='CATEGORY') {
+    } else if (this.sourceField==='CATEGORY') {
       return 'ACCOUNT';
     }
-
-    return '';
+    const destinationField = results.find((field) => field.source_field === this.sourceField)?.destination_field;
+    return destinationField ? destinationField : '';
   }
 
   setupPage(): void {
     this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
-    this.mappingService.getExportSettings().subscribe((response) => {
-      this.reimbursableExpenseObject = response.reimbursable_expenses_object;
-      this.cccExpenseObject = response.corporate_credit_card_expenses_object;
-
-      this.showAutoMapEmployee = response.auto_map_employees ? true : false;
-
-      this.destinationField = this.getSourceType();
-      this.mappingService.getGroupedDestinationAttributes([this.destinationField], 'v2').subscribe((response: any) => {
-        if (this.sourceField===FyleField.EMPLOYEE) {
-          this.destinationOptions = this.destinationField===FyleField.EMPLOYEE ? response.EMPLOYEE : response.VENDOR;
-        }
-        if (this.sourceField==='CATEGORY') {
-          if (this.destinationField === 'EXPENSE_TYPE') {
-            this.destinationOptions = response.EXPENSE_TYPE;
-          } else {
-            this.destinationOptions = response.ACCOUNT;
-          }
-        }
-
+    forkJoin(
+      this.mappingService.getExportSettings(),
+      this.mappingService.getMappingSettings()
+    ).subscribe(([exportSettingsResponse, mappingSettingsResponse]) => {
+      this.reimbursableExpenseObject = exportSettingsResponse.reimbursable_expenses_object;
+      this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
+      this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
+      this.destinationField = this.getSourceType(mappingSettingsResponse.results);
+      this.mappingService.getDestinationAttributes([this.destinationField], 'v2').subscribe((response: any) => {
+        this.destinationOptions = response;
         this.isLoading = false;
       });
     });

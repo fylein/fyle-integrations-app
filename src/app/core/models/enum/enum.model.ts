@@ -249,6 +249,7 @@ export enum FyleField {
 
 export enum ExpenseGroupingFieldOption {
   CLAIM_NUMBER = 'claim_number',
+  REPORT_ID = 'report_id',
   SETTLEMENT_ID = 'settlement_id',
   EXPENSE_ID = 'expense_id',
   EXPENSE = 'EXPENSE',

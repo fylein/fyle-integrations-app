@@ -141,7 +141,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
         'formController': 'reimbursableExportType',
         'requiredValue': {
           'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName', 'defaultJobName'],
-          'PURCHASE_INVOICE': ['defaultVendorName']
+          'PURCHASE_INVOICE': []
         }
       },
       {

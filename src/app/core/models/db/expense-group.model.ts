@@ -34,3 +34,11 @@ export type ExpenseGroupParam = {
   exported_at__gte?: string;
   exported_at__lte?: string;
 }
+
+export type SkipExportParam = {
+  limit: number;
+  offset: number;
+  org_id: string;
+  updated_at__gte?: string;
+  updated_at__lte?: string;
+}

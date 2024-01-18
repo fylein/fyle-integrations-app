@@ -29,6 +29,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export module'"
                                 [label]="'How should the expenses be exported?'"
+                                [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                                 [options]="reimbursableExportTypes"
                                 [iconPath]="'list'"
                                 [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
@@ -144,6 +145,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
+                            [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
@@ -272,7 +274,7 @@
                 <app-configuration-step-footer
                     [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                     [isButtonDisabled]="!exportSettingForm.valid"
-                    [showBackButton]="true"
+                    [showBackButton]="isOnboarding ? true : false"
                     (save)="save()"
                     (navigateToPreviousStep)="navigateToPreviousStep()">
                 </app-configuration-step-footer>

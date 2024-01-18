@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { catchError, forkJoin, of } from 'rxjs';
 import { ConditionField, EmailOption, ExpenseFilterResponse, ExpenseFilter, HourOption, SkipExportModel, ExpenseFilterPayload, SkipExportValidatorRule } from 'src/app/core/models/common/advanced-settings.model';
-import { AppName, ConfigurationCta, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, CustomOperatorOption, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Sage300AdvancedSettingGet, Sage300AdvancedSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { Sage300AdvancedSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-advanced-settings.service';
@@ -106,12 +106,24 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     });
   }
 
+  getSkipExportValue() {
+    if (this.advancedSettingForm.controls.skipExport) {
+      if (this.skipExportForm.controls.condition1.value) {
+        if (this.skipExportForm.controls.condition2.value) {
+          return (this.skipExportForm.controls.value1.value || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsEmpty) && (this.skipExportForm.controls.value2.value || this.skipExportForm.controls.operator2.value === CustomOperatorOption.IsEmpty) ? true : false;
+        }
+        return this.skipExportForm.controls.value1.value || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsEmpty ? true : false;
+      }
+    }
+    return true;
+  }
+
   refreshDimensions(isRefresh: boolean) {
     this.helperService.importAttributes(isRefresh);
   }
 
-  deleteExpenseFilter(rank: number) {
-    this.skipExportService.deleteExpenseFilter(rank).subscribe();
+  deleteExpenseFilter(id: number) {
+    this.skipExportService.deleteExpenseFilter(id).subscribe();
   }
 
   skipExportWatcher(): void {
@@ -174,7 +186,7 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.isSaveInProgress = true;
     if (!this.advancedSettingForm.value.skipExport && this.expenseFilters.results.length > 0){
       this.expenseFilters.results.forEach((value) => {
-        this.deleteExpenseFilter(value.rank);
+        this.deleteExpenseFilter(value.id);
       });
     }
     if (this.advancedSettingForm.value.skipExport) {
