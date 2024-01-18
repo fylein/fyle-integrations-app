@@ -4,22 +4,28 @@
         [ngClass]="additionalClasses ? additionalClasses : ''"
         [placeholder]="placeholder"
         [options]="options"
+        [disabled]="isDisabled"
         [formControlName]="formControllerName">
         <ng-template pTemplate="item" let-item>
-            <div
+            <div 
                 #textElement
                 class="tw-flex tw-justify-between tw-items-center"
                 [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                [pTooltip]="textElement.offsetWidth < textElement.scrollWidth ? item[displayKey] : null"
+                [pTooltip]="textElement.offsetWidth < textElement.scrollWidth && displayKey ? item[displayKey] : textElement.offsetWidth < textElement.scrollWidth && !displayKey ? item : null"
                 tooltipPosition="top">
-                {{ item[displayKey] }}
+                <p *ngIf="displayKey">{{ item[displayKey] }}</p>
+                <p *ngIf="!displayKey">{{ item | snakeCaseToSpaceCase | titlecase }}</p>
+                <p *ngIf="dropDownType === 2">{{item.lable}}</p>
             </div>
         </ng-template>
 
         <ng-template pTemplate="selectedItem" let-item>
             <div class="tw-flex tw-justify-between tw-items-center">
-                <span>
+                <span *ngIf="displayKey">
                     {{ item[displayKey] }}
+                </span>
+                <span *ngIf="!displayKey">
+                    {{ item | snakeCaseToSpaceCase | titlecase }}
                 </span>
             </div>
         </ng-template>
