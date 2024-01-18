@@ -87,8 +87,8 @@ module.exports = {
       },
       keyframes: {
         'p-progress-spinner-color': {
-          '0%': { 'stroke': '#ff3863'},
-          '100%': { 'stroke': '#ff3863'}
+          '0%': { 'stroke': 'var(--mandatory-field-color)'},
+          '100%': { 'stroke': 'var(--mandatory-field-color)'}
         },
         'p-progress-spinner-cta-color': {
           '0%': { 'stroke': '#ffffff'},
