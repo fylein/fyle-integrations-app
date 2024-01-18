@@ -1794,6 +1794,9 @@ video {
 .tw-text-info {
   color: var(--info);
 }
+.\!tw-text-placeholder {
+  color: var(--placeholder) !important;
+}
 .\!tw-text-alert-toast {
   color: var(--alert-toast) !important;
 }
@@ -2055,7 +2058,7 @@ p {
   display: none !important;
 }
 .p-multiselect-panel {
-  width: 320px;
+  width: 300px;
 }
 .p-dropdown .p-dropdown-label.p-placeholder {
   color: var(--placeholder) !important;
