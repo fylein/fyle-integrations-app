@@ -31,7 +31,7 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   ) { }
 
   refreshDimensions() {
-    this.refreshDimension.emit(false);
+    this.refreshDimension.emit(true);
   }
 
   ngOnInit(): void {

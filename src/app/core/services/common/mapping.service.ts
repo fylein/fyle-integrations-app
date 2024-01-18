@@ -80,11 +80,11 @@ export class MappingService {
     }));
   }
 
-  getIntegrationsFields(app_name: string): Observable<any> {
+  getIntegrationsFields(app_name: string): Observable<IntegrationField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/${app_name}/fields/`, {});
   }
 
-  getFyleFields(version?: 'v1'): Observable<any> {
+  getFyleFields(version?: 'v1'): Observable<FyleField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
   }
 

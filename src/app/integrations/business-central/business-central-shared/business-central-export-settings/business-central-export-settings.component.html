@@ -41,27 +41,43 @@
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.PURCHASE_INVOICE">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Employees representation'"
+                                [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                                [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                                [options]="getEmployeeSettingOptions(exportSettingForm.value.reimbursableExportType)"
+                                [placeholder]="'Select representation'"
+                                [iconPath]="'people'"
+                                [formControllerName]="'reimbursableEmployeeMapping'"
+                                [isDisabled]="true">
+                            </app-configuration-select-field>
+                        </div>
+                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.JOURNAL_ENTRY">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Employees representation'"
+                                [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                                [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                                [options]="entityName"
+                                [placeholder]="'Select representation'"
+                                [iconPath]="'people'"
+                                [formControllerName]="'reimbursableEmployeeMapping'">
+                            </app-configuration-select-field>
+                        </div>
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
-                            [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
-                            [options]="entityName"
-                            [placeholder]="'Select representation'"
-                            [iconPath]="'people'"
-                            [formControllerName]="'entityNamePreference'">
-                        </app-configuration-select-field>
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
+                            [mandatoryErrorListName]="'Employees representation'"
                             [label]="'How should Employees in  ' + brandingConfig.brandName + ' be mapped to Employees in Dynamics 365 Business Central ?'"
                             [subLabel]="'Automatically map the employees in  ' + brandingConfig.brandName + ' to their corresponding records in Dynamics 365 Business Central based on a unique parameter'"
                             [placeholder]="'Select representation'"
                             [options]="employeeMapOptions"
                             [iconPath]="'questionmark'"
-                            [formControllerName]="'reimbursableEmployeeMapping'">
+                            [formControllerName]="'autoMapEmployee'">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -137,19 +153,6 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Default Credit Account Name'"
-                            [label]="'To which GL Account should the expenses be credited to?'"
-                            [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
-                            [destinationAttributes]="creditCardAccountOptions"
-                            [iconPath]="'expense'"
-                            [placeholder]="'Select default credit account'"
-                            [formControllerName]="'defaultCreditCardCCCAccountName'">
-                        </app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Default Bank Account Name'"
                             [label]="'Set the Default Bank Account as?'"
                             [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the Bank Account selected here.'"
@@ -157,6 +160,45 @@
                             [iconPath]="'expense'"
                             [placeholder]="'Select default Bank Account'"
                             [formControllerName]="'defaultBankName'">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Default Vendor Name'"
+                            [label]="'Set the Default Vendor as?'"
+                            [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the Vendor selected here.'"
+                            [destinationAttributes]="vendorOptions"
+                            [iconPath]="'expense'"
+                            [placeholder]="'Select default Vendor'"
+                            [formControllerName]="'defaultVendorName'">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="!exportSettingForm.value?.reimbursableExpense && exportSettingForm.value.cccExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Employees representation'"
+                            [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                            [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                            [options]="entityName"
+                            [placeholder]="'Select representation'"
+                            [iconPath]="'people'"
+                            [formControllerName]="'reimbursableEmployeeMapping'">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Employees representation'"
+                            [label]="'Employees Name in Journal Entry?'"
+                            [subLabel]="'Select What should be the employee Name in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                            [options]="nameReferenceInCCC"
+                            [placeholder]="'Select representation'"
+                            [iconPath]="'people'"
+                            [formControllerName]="'journalEntryNamePreference'">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

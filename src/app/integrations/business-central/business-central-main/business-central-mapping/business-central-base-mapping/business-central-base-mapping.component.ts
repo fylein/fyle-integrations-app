@@ -51,7 +51,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
 
   private getDestinationField(exportSetting: BusinessCentralExportSettingGet, mappingSettings: MappingSetting[]): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
-      return exportSetting.employee_mapping;
+      return exportSetting.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
       return AccountingField.ACCOUNT;
     }

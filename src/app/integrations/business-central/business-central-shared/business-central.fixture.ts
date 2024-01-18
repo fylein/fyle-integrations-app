@@ -17,14 +17,15 @@ export const exportSettingsResponse: BusinessCentralExportSettingGet = {
   "reimbursable_expense_grouped_by": ExpenseGroupedBy.EXPENSE,
   "credit_card_expense_export_type": BusinessCentralExportType.JOURNAL_ENTRY,
   "credit_card_expense_state": CCCExpenseState.PAYMENT_PROCESSING,
-  "default_credit_card_account_name": "ASSS",
-  "default_credit_card_account_id": "212",
   "credit_card_expense_grouped_by": ExpenseGroupedBy.EXPENSE,
   "credit_card_expense_date": ExportDateType.LAST_SPENT_AT,
   "updated_at": new Date("2023-10-09T08:18:29.080160Z"),
   "workspace": 1,
-  "credit_card_entity_name_preference": "EMPLOYEE",
-  "employee_mapping": "EMAIL"
+  "name_in_journal_entry": "",
+  "employee_field_mapping": "",
+  "auto_map_employees": "",
+  "default_vendor_name": "",
+  "default_vendor_id": ""
 };
 
 export const destinationAttributes: BusinessCentralDestinationAttributes[] = [

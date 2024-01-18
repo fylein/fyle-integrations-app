@@ -33,6 +33,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   bankOptions: BusinessCentralDestinationAttributes[];
 
+  vendorOptions: BusinessCentralDestinationAttributes[];
+
   isLoading: boolean = true;
 
   previewImagePaths = [
@@ -84,6 +86,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   employeeMapOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEmployeeMappingOptions();
 
+  nameReferenceInCCC: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCEntityOptions();
+
   sessionStartTime = new Date();
 
   isSaveInProgress: boolean;
@@ -99,6 +103,14 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     public helper: HelperService
   ) { }
+
+  getEmployeeSettingOptions(entity: string):BusinessCentralExportSettingFormOption[] {
+    if (entity === BusinessCentralExportType.PURCHASE_INVOICE) {
+      this.exportSettingForm.controls.reimbursableEmployeeMapping.patchValue(this.entityName[1].value);
+      return [this.entityName[1]];
+    }
+    return this.entityName;
+  }
 
   private constructPayloadAndSave(): void {
     this.isSaveInProgress = true;
@@ -153,7 +165,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
       'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'entityNamePreference', 'reimbursableEmployeeMapping'],
-      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
+      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'entityNamePreference']
     };
 
     const exportModuleRule: ExportModuleRule[] = [
@@ -164,21 +176,22 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       {
         'formController': 'cccExportType',
         'requiredValue': {
-          'JOURNAL_ENTRY': ['defaultCreditCardCCCAccountName', 'defaultBankName']
+          'JOURNAL_ENTRY': ['defaultCreditCardCCCAccountName', 'defaultBankName', 'journalEntryNamePreference']
         }
       }
     ];
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT], 'v2')
+      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT, FyleField.VENDOR], 'v2')
     ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
-      this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
+      this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, destinationAttributes);
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
       this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
       this.bankOptions = destinationAttributes.ACCOUNT;
+      this.vendorOptions = destinationAttributes.VENDOR;
       this.isLoading = false;
     });
   }

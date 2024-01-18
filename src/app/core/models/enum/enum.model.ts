@@ -546,6 +546,11 @@ export enum BusinessCentralOnboardingState {
   COMPANY_SELECTION = 'COMPANY_SELECTION'
 }
 
+export enum BusinessCentralField {
+  COMPANY = 'COMPANY',
+  MERCHANT = 'MERCHANT',
+}
+
 export enum FundSource {
   PERSONAL = 'PERSONAL',
   CCC = 'CCC',

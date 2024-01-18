@@ -1,6 +1,6 @@
-import { Component, EventEmitter, INJECTOR, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { BusinessCentralDestinationAttributes } from 'src/app/core/models/business-central/db/business-central-destination-attribute.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-configuration-connector',
@@ -25,7 +25,7 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   @Input() showDisconnect: boolean;
 
-  @Input() accountingCompanyList: BusinessCentralDestinationAttributes[];
+  @Input() accountingCompanyList: DestinationAttribute[];
 
   @Output() switchCompany = new EventEmitter();
 
@@ -33,7 +33,7 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  companyName: BusinessCentralDestinationAttributes;
+  companyName: DestinationAttribute;
 
   constructor() { }
 

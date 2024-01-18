@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { BusinessCentralConnectorModel, BusinessCentralConnectorPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
 import { BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
-import { BusinessCentralOnboardingState, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { BusinessCentralField, BusinessCentralOnboardingState, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { BusinessCentralConnectorService } from 'src/app/core/services/business-central/business-central-configuration/business-central-connector.service';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
@@ -65,7 +65,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
 
   fyleOrgName: string = this.user.org_name;
 
-  businessCentralCompanyList: BusinessCentralDestinationAttributes[];
+  businessCentralCompanyOptions: BusinessCentralDestinationAttributes[];
 
   businessCentralCompanyselected: BusinessCentralDestinationAttributes;
 
@@ -87,9 +87,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     this.isLoading = true;
     this.showDisconnectBusinessCentral = false;
     this.businessCentralCompanyName = null;
-    this.getCompanyList();
-    this.isContinueDisabled = true;
-    this.isLoading = false;
+    this.getCompanyOptions();
   }
 
   connectBusinessCentralCompany(companyDetails: BusinessCentralDestinationAttributes): void {
@@ -131,12 +129,14 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     });
   }
 
-  getCompanyList() {
-    this.mappingService.getGroupedDestinationAttributes(['COMPANY'], 'v2', 'business_central').subscribe((businessCentralCompanyDetails: GroupedDestinationAttribute) => {
+  private getCompanyOptions() {
+    this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.COMPANY], 'v2', 'business_central').subscribe((businessCentralCompanyDetails: GroupedDestinationAttribute) => {
       this.businessCentralConnectionInProgress = false;
-      this.businessCentralCompanyList = businessCentralCompanyDetails.COMPANY;
+      this.businessCentralCompanyOptions = businessCentralCompanyDetails.COMPANY;
       this.isBusinessCentralConnected = false;
       this.businessCentralTokenExpired = false;
+      this.isContinueDisabled = true;
+      this.isLoading = false;
     });
   }
 
@@ -149,10 +149,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
         this.businessCentralConnectionInProgress = false;
         this.isContinueDisabled = false;
       } else {
-        this.businessCentralHelperService.refreshBusinessCentralDimensions(false).subscribe(() => {
-
-          this.getCompanyList();
-        });
+        this.getCompanyOptions();
       }
       this.showOrHideDisconnectBusinessCentral();
     });
@@ -197,10 +194,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
   save(): void {
     this.saveInProgress = true;
     if (!this.businessCentralCompanyName) {
-      const data: BusinessCentralCompanyPost = {
-        company_id: this.businessCentralCompanyselected.destination_id,
-        company_name: this.businessCentralCompanyselected.value
-      };
+      const data: BusinessCentralCompanyPost = BusinessCentralConnectorModel.constructCompanyPost(this.businessCentralCompanyselected.destination_id, this.businessCentralCompanyselected.value);
       this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
         this.saveInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
