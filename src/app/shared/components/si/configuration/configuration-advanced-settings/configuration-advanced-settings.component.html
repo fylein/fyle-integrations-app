@@ -44,7 +44,7 @@
                     [mandatoryErrorListName]="'email for error notification'"
                     [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
                     [options]="adminEmails"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [placeholder]="'Select email address'"
                     [formControllerName]="'email'">
                 </app-email-multi-select-field>
@@ -68,7 +68,7 @@
                     [label]="'Select Payment Account'"
                     [subLabel]="'Select a Payment Account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
                     [destinationAttributes]="sageIntacctPaymentAccount"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [placeholder]="'Select Payment Account'"
                     [formControllerName]="'defaultPaymentAccount'"></app-configuration-select-field>
                 </div>
@@ -115,7 +115,7 @@
                 [label]="'Set the Description Field in Sage Intacct'"
                 [subLabel]="'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.'"
                 [options]="defaultMemoFields"
-                [iconPath]="'expense'"
+                [iconPath]="'list'"
                 [placeholder]="'Select Description'"
                 [formControllerName]="'setDescriptionField'"></app-configuration-multi-select>
                 <div class="tw-pl-60-px tw-pr-24-px tw-pb-24-px">
