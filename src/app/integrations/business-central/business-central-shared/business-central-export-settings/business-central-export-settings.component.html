@@ -70,8 +70,7 @@
                         </div>
                         <app-configuration-select-field
                             [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Employees representation'"
+                            [isFieldMandatory]="false"
                             [label]="'How should Employees in  ' + brandingConfig.brandName + ' be mapped to Employees in Dynamics 365 Business Central ?'"
                             [subLabel]="'Automatically map the employees in  ' + brandingConfig.brandName + ' to their corresponding records in Dynamics 365 Business Central based on a unique parameter'"
                             [placeholder]="'Select representation'"
