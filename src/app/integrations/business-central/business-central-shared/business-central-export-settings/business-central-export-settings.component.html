@@ -32,7 +32,7 @@
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
                             [options]="reimbursableExpensesExportTypeOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
@@ -87,7 +87,7 @@
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                             [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
                             [options]="reimbursableExpenseState"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select export state'"
                             [formControllerName]="'reimbursableExpenseState'">
                         </app-configuration-select-field>
@@ -101,7 +101,7 @@
                             [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
                             [placeholder]="'Select date type'"
                             [options]="getExportDate(reimbursableExpenseGroupingDateOptions)"
-                            [iconPath]="'calender'"
+                            [iconPath]="'calendar'"
                             [formControllerName]="'reimbursableExportDate'">
                         </app-configuration-select-field>
                     </div>
@@ -140,12 +140,26 @@
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
                             [options]="cccExpensesExportTypeOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [exportTypeIconPathArray]="previewImagePaths">
+                            [exportTypeIconPathArray]="previewImagePaths"
+                            [isDisabled]="true">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Default Credit Account Name'"
+                            [label]="'To which GL Account should the expenses be credited to?'"
+                            [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
+                            [destinationAttributes]="creditCardAccountOptions"
+                            [iconPath]="'list'"
+                            [placeholder]="'Select default credit account'"
+                            [formControllerName]="'defaultCreditCardCCCAccountName'">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -156,7 +170,7 @@
                             [label]="'Set the Default Bank Account as?'"
                             [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the Bank Account selected here.'"
                             [destinationAttributes]="bankOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select default Bank Account'"
                             [formControllerName]="'defaultBankName'">
                         </app-configuration-select-field>
@@ -208,7 +222,7 @@
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                             [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
                             [options]="cccExpenseState"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select export state'"
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
@@ -221,7 +235,7 @@
                             [label]="'Set the date of the transaction as?'"
                             [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
                             [options]="getExportDate(cccExpenseGroupingDateOptions)"
-                            [iconPath]="'calender'"
+                            [iconPath]="'calendar'"
                             [placeholder]="'Select date'"
                             [formControllerName]="'cccExportDate'">
                         </app-configuration-select-field>

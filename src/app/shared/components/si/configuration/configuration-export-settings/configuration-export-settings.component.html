@@ -30,7 +30,7 @@
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
                             [options]="reimbursableExportTypes"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
@@ -47,7 +47,7 @@
                                 [destinationAttributes]="this.destinationOptions['ACCOUNT']"
                                 [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select GL account'"
                                 [formControllerName]="'glAccount'"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -62,7 +62,7 @@
                                 [destinationAttributes]="this.destinationOptions['EXPENSE_PAYMENT_TYPE']"
                                 [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE"
                                 [isOptionSearchInProgress]="isOptionSearchInProgress"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select expense payment type'"
                                 [formControllerName]="'reimbursableExpensePaymentType'"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -104,7 +104,7 @@
                         [label]="'Set the ' + getExportType(exportSettingsForm.value.reimbursableExportType ? exportSettingsForm.value.reimbursableExportType : IntacctReimbursableExpensesObject.EXPENSE_REPORT) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct. Click here for more details.'"
                         [options]="reimbursableExpenseGroupingDateOptions"
-                        [iconPath]="'calender'"
+                        [iconPath]="'calendar'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
@@ -139,7 +139,7 @@
                         [mandatoryErrorListName]="'export module'"
                         [label]="'How should the expenses be exported?'"
                         [options]="creditCardExportTypes"
-                        [iconPath]="'expense'"
+                        [iconPath]="'list'"
                         [placeholder]="'Select expense export module'"
                         [formControllerName]="'cccExportType'"
                         [exportConfigurationIconPath]="'assets/illustrations/sageIntacct/cccExportTypeTable.svg'"
@@ -154,7 +154,7 @@
                             [destinationAttributes]="this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense payment type'"
                             [formControllerName]="'cccExpensePaymentType'"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -169,7 +169,7 @@
                             [destinationAttributes]="this.destinationOptions['VENDOR']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.VENDOR"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select credit card vendor'"
                             [formControllerName]="'creditCardVendor'"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -184,7 +184,7 @@
                             [destinationAttributes]="this.destinationOptions['ACCOUNT']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select GL account'"
                             [formControllerName]="'creditCard'"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -199,7 +199,7 @@
                             [destinationAttributes]="this.destinationOptions['CHARGE_CARD']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CHARGE_CARD"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select Charge Corporate Card'"
                             [formControllerName]="'chargeCard'"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
@@ -228,7 +228,7 @@
                         [label]="'Set the ' + getExportType(exportSettingsForm.value.cccExportType) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct. Click here for more details.'"
                         [options]="cccExpenseGroupingDateOptions"
-                        [iconPath]="'calender'"
+                        [iconPath]="'calendar'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     </div>
@@ -246,7 +246,7 @@
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
                                 <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
-                                    <svg-icon-sprite src="expense" width="20px" height="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                                    <svg-icon-sprite src="list" width="20px" height="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
                                         <h4 class="!tw-text-14-px !tw-font-500">How should the expenses be grouped?<app-mandatory-field></app-mandatory-field></h4>
                                         <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)</h5>
@@ -284,7 +284,7 @@
         <div *ngIf="exportSettingsForm.controls.employeeFieldMapping.disabled">
             <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
                 <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
-                    <svg-icon-sprite src="expense" width="20px" height="20px" class="tw-text-mandatory-field-color tw-pr-16-px tw-mt-4-px"></svg-icon-sprite>
+                    <svg-icon-sprite src="list" width="20px" height="20px" class="tw-text-mandatory-field-color tw-pr-16-px tw-mt-4-px"></svg-icon-sprite>
                     <div>
                         <h4 class="!tw-text-14-px !tw-font-500">How are your Employees represented in Sage Intacct?<app-mandatory-field></app-mandatory-field></h4>
                         <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct</h5>

@@ -14,7 +14,6 @@ const customColors = {
   'mandatory-field-color': 'var(--mandatory-field-color)',
   'disabled-bg-color': 'var(--disabled-bg-color)',
   'configuration-bg': 'var(--configuration-bg)',
-  'dropdown-hover': 'var(--dropdown-hover)',
   'check-box': 'var(--check-box)',
   'info-section': 'var(--info-section)',
   'info': 'var(--info)',
@@ -29,6 +28,7 @@ const customColors = {
   'unmapped-red-bg': 'var(--unmapped-red-bg)',
   'pink': 'var(--pink)',
   'pink-box-border': 'var(--pink-box-border)',
+  'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
 }
 
 module.exports = {
@@ -364,7 +364,7 @@ module.exports = {
         ...customColors
       },
       backgroundImage: {
-        'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
+        'btn-cta': 'linear-gradient(162.38deg, var(--mandatory-field-color) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
         'header-1': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)',
         'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)'
       },

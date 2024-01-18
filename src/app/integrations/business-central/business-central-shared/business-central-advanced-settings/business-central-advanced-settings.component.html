@@ -28,7 +28,7 @@
                             [label]="'Schedule automatic export'" 
                             [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central.'" 
                             [formControllerName]="'scheduleEnabled'"
-                            [iconPath]="'calender'">
+                            [iconPath]="'calendar'">
                         </app-configuration-toggle-field>
                         <div *ngIf="advancedSettingForm.value.scheduleEnabled">
                             <app-configuration-schedule-export
@@ -59,7 +59,7 @@
                         [label]="'Set the line item-level Description Field in Dynamics 365 Business Central'"
                         [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Dynamics 365 Business Central and re-order them as per your requirement.'"
                         [options]="defaultMemoOptions"
-                        [iconPath]="'expense'"
+                        [iconPath]="'list'"
                         [placeholder]="'Set description'"
                         [formControllerName]="'memoStructure'">
                     </app-configuration-multi-select>
@@ -76,7 +76,7 @@
                         [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central'" 
                         [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central by setting up a conditional rule.'" 
                         [formControllerName]="'skipExport'"
-                        [iconPath]="'expense'"
+                        [iconPath]="'list'"
                         [redirectLink]="skipExportRedirectLink">
                     </app-configuration-toggle-field>
                     <div *ngIf="advancedSettingForm.value.skipExport">
