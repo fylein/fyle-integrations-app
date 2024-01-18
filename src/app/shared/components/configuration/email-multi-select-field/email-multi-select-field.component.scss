@@ -40,3 +40,8 @@
 :host ::ng-deep .normal-box, :host ::ng-deep .error-box{
     @apply tw-w-full #{!important};
 }
+
+:host ::ng-deep .pi-times:before {
+    content: "\e90b" !important;
+    font-size: 16px;
+}
