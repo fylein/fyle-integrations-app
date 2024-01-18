@@ -8,10 +8,12 @@ export const brandingConfig: BrandingConfiguration = config;
 
 const featureConfigs: FeatureConfiguration = {
     fyle: {
-        reimbursableExpenses: true
+        reimbursableExpenses: true,
+        illustrationsAllowed: true
     },
     co: {
-        reimbursableExpenses: true
+        reimbursableExpenses: true,
+        illustrationsAllowed: false
     }
 };
 

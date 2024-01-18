@@ -27,7 +27,7 @@
     </div>
     <div formArrayName="expenseFields" [ngClass]="[isDestinationFixedImport ? '' : 'tw-pl-24-px tw-mt-18px']">
         <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="{'tw-mt-24-px tw-pb-24-px': isDestinationFixedImport, 'tw-rounded-lg tw-border-separator tw-border': isDestinationFixedImport && !isCloneSettingView, 'tw-pr-24-px': isCloneSettingView}">
-            <div class="tw-pl-24-px tw-mt-18-px" [ngClass]="{'tw-bg-configuration-bg tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px':expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue}">
+            <div class="tw-pl-24-px tw-mt-18-px" [ngClass]="{'tw-bg-configuration-bg tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px': expenseField.value.source_field === 'PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue, 'tw-pl-0': isCloneSettingView}">
             <div *ngIf="isDestinationFixedImport">
                 <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">
                     <div class="tw-w-3/4 tw-flex tw-items-start">
@@ -48,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tw-flex" [ngClass]="[isDestinationFixedImport ? 'tw-pl-60-px' : '']">
+            <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView}">
                 <div>
                     <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field" dropdownIcon="pi pi-chevron-down"
                         optionLabel="display_name" optionValue="attribute_type" [disabled]="isDestinationFixedImport" [ngClass]="{'selectedAccItem !tw-text-slightly-normal-text-color': isDestinationFixedImport}">
