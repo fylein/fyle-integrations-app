@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
 import { MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
@@ -66,6 +66,8 @@ export class GenericMappingComponent implements OnInit {
   alphabetFilter: string = 'All';
 
   readonly brandingConfig = brandingConfig;
+
+  readonly AppName = AppName;
 
   constructor(
     private paginatorService: PaginatorService,

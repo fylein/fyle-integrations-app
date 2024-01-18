@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject, debounce, debounceTime, forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AutoMapEmployeeOptions, FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, FieldType, FyleField, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
 import { DropdownOptionSearch, EmployeeMapping, EmployeeMappingPost, EmployeeMappingResult, EmployeeMappingsResponse } from 'src/app/core/models/si/db/employee-mapping.model';
 import { MappingDestination } from 'src/app/core/models/si/db/mapping-destination.model';
@@ -74,6 +74,8 @@ export class EmployeeMappingComponent implements OnInit {
   alphabetFilter: string = 'All';
 
   readonly brandingConfig = brandingConfig;
+
+  readonly AppName = AppName;
 
   constructor(
     private mappingService: SiMappingsService,

@@ -12,6 +12,8 @@ export class DashboardExportLogDialogComponent implements OnInit {
 
   @Input() exportLogHeader: string;
 
+  @Input() exportLogSubHeader: string;
+
   @Input() isExportLogVisible: boolean;
 
   @Input() accountingExports: AccountingExportList[];

@@ -127,12 +127,13 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   setupPage() {
+    this.isLoading = true;
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
     this.limit = paginator.limit;
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
     forkJoin([
-      this.mappingService.getGenericMappingsV2(10, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric),
+      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric),
       this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
     ]).subscribe(
       ([mappingResponse, mappingStat]) => {

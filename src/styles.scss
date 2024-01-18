@@ -19,6 +19,10 @@ p {
     @apply tw-m-0-px;
 }
 
+.pi-times:before {
+    content: url('./assets/icons/cross.svg') #{!important};
+}
+
 .pi-chevron-down:before {
     content: url('./assets/icons/arrow-down.svg') #{!important};
 }
@@ -213,7 +217,7 @@ p {
 }
 
 .p-multiselect-panel {
-    @apply tw-w-320-px ;
+    @apply tw-w-300-px ;
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {

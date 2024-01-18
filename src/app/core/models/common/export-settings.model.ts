@@ -15,9 +15,9 @@ export class ExportSettingModel {
     static getExportGroup(exportGroups: string[] | null | undefined): string {
         if (exportGroups) {
             const exportGroup = exportGroups.find((exportGroup) => {
-                return exportGroup === ExpenseGroupingFieldOption.EXPENSE_ID || exportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroup === ExpenseGroupingFieldOption.SETTLEMENT_ID;
+                return exportGroup === ExpenseGroupingFieldOption.EXPENSE_ID || exportGroup === ExpenseGroupingFieldOption.REPORT_ID || exportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroup === ExpenseGroupingFieldOption.SETTLEMENT_ID;
             });
-            return exportGroup ? exportGroup : ExpenseGroupingFieldOption.CLAIM_NUMBER;
+            return exportGroup && exportGroup !== ExpenseGroupingFieldOption.REPORT_ID ? exportGroup : ExpenseGroupingFieldOption.CLAIM_NUMBER;
         }
         return '';
     }

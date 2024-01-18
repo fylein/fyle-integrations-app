@@ -233,6 +233,11 @@ module.exports = {
       maxHeight: {
         '20-px': '20px'
       },
+      lineHeight: {
+        'normal': 'normal',
+        '19': '19.6px',
+        '20': '20px'
+      },
       width: {
         '1-px': '1px',
         '6-px': '6px',

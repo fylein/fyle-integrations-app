@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { AppName, ClickEvent } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 
@@ -81,15 +81,15 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   connect(): void {
 
-    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL) {
+    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR) {
       this.initiateOAuth();
       return;
     } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
-      this.trackingService.onClickEvent(ClickEvent.CONNECT_QBD);
+      this.trackingService.onClickEvent(TrackingApp.QBD, ClickEvent.CONNECT_QBD);
     } else if (this.postConnectionRoute === 'intacct/onboarding/connector') {
-      this.trackingService.onClickEvent(ClickEvent.CONNECT_INTACCT);
+      this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.CONNECT_INTACCT);
     } else if (this.postConnectionRoute === 'sage300/onboarding/connector') {
-      this.trackingService.onClickEvent(ClickEvent.CONNECT_SAGE300);
+      this.trackingService.onClickEvent(TrackingApp.SAGE300, ClickEvent.CONNECT_SAGE300);;
     }
     this.router.navigate([`/integrations/${this.postConnectionRoute}`]);
   }

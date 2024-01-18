@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, UpdateEvent } from '../../models/enum/enum.model';
+import { BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, UpdateEvent } from '../../models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
@@ -52,14 +52,14 @@ export class TrackingService {
     return (window as any).analytics;
   }
 
-  eventTrack(action: string, properties: any = {}): void {
+  eventTrack(action: string, trackingApp?: TrackingApp, properties: any = {}): void {
     const flattenedObject = this.flattenObject(properties);
     properties = {
       ...flattenedObject,
       Asset: 'Integration Settings Web'
     };
     if (this.tracking) {
-      this.tracking.track(action, properties);
+      this.tracking.track(`${trackingApp ? trackingApp : 'Integration Settings Web'}: ${action}`, properties);
     }
   }
 
@@ -75,44 +75,40 @@ export class TrackingService {
     this.eventTrack('Opened Landing Page');
   }
 
-  onClickEvent(eventName: ClickEvent): void {
-    this.eventTrack(`Click event: ${eventName}`);
+  onClickEvent(trackingApp: TrackingApp, eventName: ClickEvent): void {
+    this.eventTrack(`Click event: ${eventName}`, trackingApp, {});
   }
 
-  onErrorPage(): void {
-    this.eventTrack('Error Page shown');
-  }
-
-  trackTimeSpent(page: Page, sessionStartTime: Date): void {
+  trackTimeSpent(trackingApp: TrackingApp, page: Page, sessionStartTime: Date): void {
     const differenceInMs = new Date().getTime() - sessionStartTime.getTime();
-    this.eventTrack(`Time Spent on ${page} page`, {durationInSeconds: differenceInMs / 1000});
+    this.eventTrack(`Time Spent on ${page} page`, trackingApp, {durationInSeconds: differenceInMs / 1000});
   }
 
-  onOnboardingStepCompletion(eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost |BusinessCentralAdvancedSettingsPost ): void {
-    this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
+  onOnboardingStepCompletion(trackingApp: TrackingApp, eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost |BusinessCentralAdvancedSettingsPost ): void {
+    this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 
-  integrationsOnboardingCompletion(eventName: IntacctOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | AdvancedSettingsPost | void): void {
-    this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, additionalProperties);
+  integrationsOnboardingCompletion(trackingApp: TrackingApp, eventName: IntacctOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | AdvancedSettingsPost | void): void {
+    this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 
-  onUpdateEvent(eventName: UpdateEvent | Sage300UpdateEvent | BusinessCentralUpdateEvent, additionalProperties: Partial<UpdateEventAdditionalProperty> | void): void {
-    this.eventTrack(`Update event: ${eventName}`, additionalProperties);
+  onUpdateEvent(trackingApp: TrackingApp, eventName: UpdateEvent | Sage300UpdateEvent | BusinessCentralUpdateEvent, additionalProperties: Partial<UpdateEventAdditionalProperty> | void): void {
+    this.eventTrack(`Update event: ${eventName}`, trackingApp, additionalProperties);
   }
 
   intacctUpdateEvent (eventName: IntacctUpdateEvent, additionalProperties: Partial<UpdateIntacctEventAdditionalProperty> | void): void {
-    this.eventTrack(`Update event: ${eventName}`, additionalProperties);
+    this.eventTrack(`Update event: ${eventName}`, TrackingApp.INTACCT, additionalProperties);
   }
 
-  onDateFilter(properties: {filterType: 'existing' | 'custom', startDate: Date, endDate: Date}): void {
-    this.eventTrack('Date filter', properties);
+  onDateFilter(trackingApp: TrackingApp, properties: {filterType: 'existing' | 'custom', startDate: Date, endDate: Date}): void {
+    this.eventTrack('Date filter', trackingApp, properties);
   }
 
-  onMappingsAlphabeticalFilter(properties: MappingAlphabeticalFilterAdditionalProperty): void {
-    this.eventTrack('Mappings Alphabetical Filter', properties);
+  onMappingsAlphabeticalFilter(trackingApp: TrackingApp, properties: MappingAlphabeticalFilterAdditionalProperty): void {
+    this.eventTrack('Mappings Alphabetical Filter', trackingApp, properties);
   }
 
-  onErrorResolve(properties: ResolveMappingErrorProperty): void {
-    this.eventTrack('Resolve Mapping Error', properties);
+  onErrorResolve(trackingApp: TrackingApp, properties: ResolveMappingErrorProperty): void {
+    this.eventTrack('Resolve Mapping Error', trackingApp, properties);
   }
 }

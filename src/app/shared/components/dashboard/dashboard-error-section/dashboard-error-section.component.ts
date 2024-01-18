@@ -6,7 +6,7 @@ import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
-import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
+import { ResolveMappingErrorProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -104,7 +104,9 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.errors[errorType][0].expense_attribute;
     const isCategoryMappingGeneric = FyleField.CATEGORY === (this.sourceField as unknown as FyleField) ? this.isCategoryMappingGeneric : false;
     this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, isCategoryMappingGeneric);
-    this.isLoading = false;
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 100);
   }
 
   private getDestinationOptionsV2(errorType: AccountingErrorType) {
@@ -167,7 +169,7 @@ export class DashboardErrorSectionComponent implements OnInit {
           errorType: this.errorType
         };
 
-        this.trackingService.onErrorResolve(properties);
+        this.trackingService.onErrorResolve(trackingAppMap[this.appName], properties);
       }
     }
   }

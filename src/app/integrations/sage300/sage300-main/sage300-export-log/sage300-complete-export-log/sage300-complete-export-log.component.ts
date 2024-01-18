@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType, PaginatorPage } from 'src/app/core/models/enum/enum.model';
+import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
@@ -45,7 +45,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   accountingExports: AccountingExportList [];
 
-  filteredAccountingExports: AccountingExportList [];
+  filteredAccountingExports: AccountingExportList [] = [];
 
   expenses: Expense [] = [];
 
@@ -127,6 +127,8 @@ export class Sage300CompleteExportLogComponent implements OnInit {
         this.trackDateFilter('existing', this.selectedDateFilter);
         this.getAccountingExports(paginator.limit, paginator.offset);
       } else {
+        this.dateOptions = AccountingExportModel.getDateOptions();
+        this.exportLogForm.controls.start.patchValue([]);
         this.selectedDateFilter = null;
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
@@ -148,7 +150,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       filterType,
       ...selectedDateFilter
     };
-    this.trackingService.onDateFilter(trackingProperty);
+    this.trackingService.onDateFilter(TrackingApp.SAGE300, trackingProperty);
   }
 
   ngOnInit(): void {

@@ -7,7 +7,7 @@
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-mapping>
-        <tr *ngIf="!isLoading">
+        <tr *ngIf="!isLoading" [ngClass]="{'tw-h-70-px': isDashboardMappingResolve}">
             <td>
                 <div class="tw-flex tw-items-center">
                     <svg-icon-sprite *ngIf="mapping.auto_mapped && !isDashboardMappingResolve" pTooltip="Auto-mapped" tooltipPosition="top" src="flash" width="12px" height="12px" class="tw-mr-12-px tw-text-placeholder"></svg-icon-sprite>
@@ -16,14 +16,24 @@
             </td>
             <td>
                 <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                [ngModel]="getDropdownValue(mapping)" 
-                [options]="destinationOptions" 
-                optionLabel="value" 
-                placeholder="Select an Option" 
-                (onChange)="save(mapping, $event); getDropdownValue(mapping)"
-                [filter]="true"
-                filterBy="value">
-                </p-dropdown>                
+                    [ngClass]="{'dropdown-width': isDashboardMappingResolve}"
+                    [ngModel]="getDropdownValue(mapping)" 
+                    [options]="destinationOptions" 
+                    optionLabel="value" 
+                    placeholder="Select an Option" 
+                    (onChange)="save(mapping, $event); getDropdownValue(mapping)"
+                    [filter]="true"
+                    filterBy="value">
+                    <ng-template pTemplate="filter" let-options="options">
+                        <div class="p-inputgroup">
+                            <div class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input type="text" class="!tw-h-32-px !tw-w-260-px" 
+                                (keyup)="options.filter($event)" pInputText formControlName="search" />
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dropdown>
             </td>
             <td *ngIf="!isDashboardMappingResolve">
                 <p *ngIf="getDropdownValue(mapping)" class="mapped">MAPPED</p>
@@ -35,5 +45,8 @@
 </p-table>
 
 <ng-template #shimmers>
-    <app-shimmers [isMappingTableShimmers]="isLoading"></app-shimmers>
+    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
+        <td *ngIf="isLoading"><p-skeleton width="150px" height="28px" shape="rectangle"></p-skeleton></td>
+        <td *ngIf="isLoading"><p-skeleton width="250px" height="28px" shape="rectangle"></p-skeleton></td>
+    </tr>
 </ng-template>

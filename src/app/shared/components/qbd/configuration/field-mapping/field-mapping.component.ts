@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfigurationCta, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -72,11 +72,12 @@ export class FieldMappingComponent implements OnInit {
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');
-      this.trackingService.trackTimeSpent(Page.FIELD_MAPPING_QBD, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.QBD, Page.FIELD_MAPPING_QBD, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === QBDOnboardingState.FIELD_MAPPINGS) {
-        this.trackingService.onOnboardingStepCompletion(QBDOnboardingState.FIELD_MAPPINGS, 3, fieldMappingPayload);
+        this.trackingService.onOnboardingStepCompletion(TrackingApp.QBD, QBDOnboardingState.FIELD_MAPPINGS, 3, fieldMappingPayload);
       } else {
         this.trackingService.onUpdateEvent(
+          TrackingApp.QBD,
           UpdateEvent.ADVANCED_SETTINGS_QBD,
           {
             phase: this.getPhase(),

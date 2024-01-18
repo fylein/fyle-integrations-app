@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
 import { forkJoin } from 'rxjs/internal/observable/forkJoin';
 import { BusinessCentralImportSettingsGet, BusinessCentralImportSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-import-settings.model';
-import { AppName, AppNameInService, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, DefaultImportFields, Page, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppNameInService, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, DefaultImportFields, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralImportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-import-settings.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -159,11 +159,12 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
     this.importSettingService.postBusinessCentralImportSettings(importSettingPayload).subscribe((importSettingsResponse: BusinessCentralImportSettingsGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
-      this.trackingService.trackTimeSpent(Page.IMPORT_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.BUSINESS_CENTRAL, Page.IMPORT_SETTINGS_BUSINESS_CENTRAL, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === BusinessCentralOnboardingState.IMPORT_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(BusinessCentralOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
+        this.trackingService.onOnboardingStepCompletion(TrackingApp.BUSINESS_CENTRAL, BusinessCentralOnboardingState.IMPORT_SETTINGS, 3, importSettingPayload);
       } else {
         this.trackingService.onUpdateEvent(
+          TrackingApp.BUSINESS_CENTRAL,
           BusinessCentralUpdateEvent.ADVANCED_SETTINGS_BUSINESS_CENTRAL,
           {
             phase: this.helper.getPhase(this.isOnboarding),

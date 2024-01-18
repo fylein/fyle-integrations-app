@@ -32,6 +32,7 @@
                     <div *ngIf="advancedSettingForm.value.scheduleEnabled">
                         <app-configuration-schedule-export
                             [form]="advancedSettingForm"
+                            [appName]="AppName.SAGE300"
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'automatic export method'"
                             [label]="'Set up export frequency'"
@@ -105,12 +106,11 @@
         </div>
         <div>
             <app-configuration-step-footer 
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
-                [showBackButton] = "isOnboarding"
-                [isButtonDisabled]="!advancedSettingForm.valid"
-                (navigateToPreviousStep)="navigateBack()"
-                (save)="save()">
-            </app-configuration-step-footer>
+            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+            (save)="save()" 
+            [showBackButton] = "isOnboarding"
+            (navigateToPreviousStep)="navigateBack()"
+            [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue()"></app-configuration-step-footer>
         </div>
     </form>
 </div>

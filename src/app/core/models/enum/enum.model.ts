@@ -250,6 +250,7 @@ export enum FyleField {
 
 export enum ExpenseGroupingFieldOption {
   CLAIM_NUMBER = 'claim_number',
+  REPORT_ID = 'report_id',
   SETTLEMENT_ID = 'settlement_id',
   EXPENSE_ID = 'expense_id',
   EXPENSE = 'EXPENSE',
@@ -617,4 +618,17 @@ export enum InputType {
   DROPDOWN = 'DROPDOWN',
   TOGGLE = 'TOGGLE',
   MULTI_SELECT = 'MULTI_SELECT',
+}
+
+export enum TrackingApp {
+  QBO = 'QBO',
+  NETSUITE = 'NS',
+  XERO = 'XERO',
+  INTACCT = 'SI',
+  SAGE300 = 'SAGE300',
+  BUSINESS_CENTRAL = 'BC',
+  QBD = 'QBD',
+  BAMBOO_HR = 'BHR',
+  TRAVELPERK = 'TP',
+  GUSTO = 'GUSTO'
 }

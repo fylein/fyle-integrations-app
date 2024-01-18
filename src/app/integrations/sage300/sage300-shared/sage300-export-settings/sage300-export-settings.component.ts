@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, FyleField, Page, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, FyleField, Page, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -107,11 +107,12 @@ export class Sage300ExportSettingsComponent implements OnInit {
     this.exportSettingService.postExportSettings(exportSettingPayload).subscribe((exportSettingResponse: Sage300ExportSettingGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Export settings saved successfully');
-      this.trackingService.trackTimeSpent(Page.EXPORT_SETTING_SAGE300, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.EXPORT_SETTING_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.EXPORT_SETTINGS) {
-        this.trackingService.onOnboardingStepCompletion(Sage300OnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
+        this.trackingService.onOnboardingStepCompletion(TrackingApp.SAGE300, Sage300OnboardingState.EXPORT_SETTINGS, 2, exportSettingPayload);
       } else {
         this.trackingService.onUpdateEvent(
+          TrackingApp.SAGE300,
           Sage300UpdateEvent.ADVANCED_SETTINGS_SAGE300,
           {
             phase: this.helper.getPhase(this.isOnboarding),
@@ -151,7 +152,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
         'formController': 'reimbursableExportType',
         'requiredValue': {
           'DIRECT_COST': ['defaultReimbursableCCCAccountName', 'defaultDebitCardAccountName', 'defaultJobName'],
-          'PURCHASE_INVOICE': ['defaultVendorName']
+          'PURCHASE_INVOICE': []
         }
       },
       {

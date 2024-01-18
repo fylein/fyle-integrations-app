@@ -1,7 +1,7 @@
 import { BusinessCentralAdvancedSettingsGet } from "../business-central/business-central-configuration/business-central-advanced-settings.model";
 import { BusinessCentralExportSettingGet } from "../business-central/business-central-configuration/business-central-export-setting.model";
 import { BusinessCentralImportSettingsGet } from "../business-central/business-central-configuration/business-central-import-settings.model";
-import { AccountingErrorType, IntacctErrorType, ProgressPhase } from "../enum/enum.model";
+import { AccountingErrorType, AppName, IntacctErrorType, ProgressPhase, TrackingApp } from "../enum/enum.model";
 import { QBDAdvancedSettingsGet } from "../qbd/qbd-configuration/advanced-setting.model";
 import { QBDExportSettingGet } from "../qbd/qbd-configuration/export-setting.model";
 import { QBDFieldMappingGet } from "../qbd/qbd-configuration/field-mapping.model";
@@ -39,4 +39,26 @@ export type ResolveMappingErrorProperty = {
   endTime: Date,
   durationInSeconds: number,
   errorType: IntacctErrorType | AccountingErrorType
+};
+
+export type TrackingAppMap = {
+  [AppName.BUSINESS_CENTRAL]: TrackingApp.BUSINESS_CENTRAL,
+  [AppName.SAGE300]: TrackingApp.SAGE300,
+  [AppName.QBD]: TrackingApp.QBD,
+  [AppName.BAMBOO_HR]: TrackingApp.BAMBOO_HR,
+  [AppName.INTACCT]: TrackingApp.INTACCT,
+  [AppName.QBO]: TrackingApp.QBO,
+  [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
+  [AppName.GUSTO]: TrackingApp.GUSTO,
+}
+
+export const trackingAppMap: TrackingAppMap = {
+  [AppName.BUSINESS_CENTRAL]: TrackingApp.BUSINESS_CENTRAL,
+  [AppName.SAGE300]: TrackingApp.SAGE300,
+  [AppName.QBD]: TrackingApp.QBD,
+  [AppName.BAMBOO_HR]: TrackingApp.BAMBOO_HR,
+  [AppName.INTACCT]: TrackingApp.INTACCT,
+  [AppName.QBO]: TrackingApp.QBO,
+  [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
+  [AppName.GUSTO]: TrackingApp.GUSTO
 };

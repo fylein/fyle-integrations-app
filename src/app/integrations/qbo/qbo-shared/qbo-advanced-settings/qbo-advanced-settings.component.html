@@ -33,6 +33,7 @@
                     <div *ngIf="advancedSettingForm.value.exportSchedule">
                         <app-configuration-schedule-export
                             [form]="advancedSettingForm"
+                            [appName]="appName"
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'automatic export method'"
                             [label]="'Set up export frequency'"
@@ -159,7 +160,7 @@
             <app-configuration-step-footer
                 [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [isButtonDisabled]="!advancedSettingForm.valid"
-                [showBackButton]="true"
+                [showBackButton]="isOnboarding ? true : false"
                 (save)="save()"
                 (navigateToPreviousStep)="navigateToPreviousStep()"></app-configuration-step-footer>
         </div>

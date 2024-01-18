@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AppName, Page, ConfigurationCta, QBDOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, Page, ConfigurationCta, QBDOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { EmailOption, GustoConfiguration, GustoConfigurationPost, GustoModel } from 'src/app/core/models/gusto/gusto.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { GustoService } from 'src/app/core/services/gusto/gusto.service';
@@ -36,6 +36,8 @@ export class GustoConfigurationComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly AppName = AppName;
+
   constructor(
     private gustoService: GustoService,
     private formBuilder: FormBuilder,
@@ -50,7 +52,7 @@ export class GustoConfigurationComponent implements OnInit {
     this.gustoService.postConfigurations(configurationPayload).subscribe((response: GustoConfiguration) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Your configurations have been saved successfully');
-      this.trackingService.trackTimeSpent(Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
+      this.trackingService.trackTimeSpent(TrackingApp.GUSTO, Page.ADVANCED_SETTINGS_QBD, this.sessionStartTime);
     }, () => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while saving your configuration, please try again later');
