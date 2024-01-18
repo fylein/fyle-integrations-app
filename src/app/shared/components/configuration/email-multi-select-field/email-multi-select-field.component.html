@@ -31,10 +31,10 @@
             <ng-template pTemplate="filter" let-options="options">
                 <div *ngIf="emails.length" class="p-inputgroup">
                     <div class="p-input-icon-left p-input-icon-right">
-                        <i class="pi pi-search"></i>
+                        <i class="pi pi-search !tw-text-placeholder"></i>
                         <input type="text" class="!tw-h-32-px !tw-w-270-px" (keyup)="options.filter($event)"
                             pInputText placeholder="Search by Name / Email" formControlName="search" />
-                        <i class="pi pi-times tw-cursor-pointer tw-pt-2-px" style="font-size: 14px" (click)="clearSearch(options)"></i>
+                        <i class="pi pi-times tw-cursor-pointer tw-text-16-px" (click)="clearSearch(options)"></i>
                     </div>
                 </div>
             </ng-template>
