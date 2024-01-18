@@ -27,7 +27,7 @@ export class BusinessCentralExportSettingsService {
     cacheBusterObserver: businessCentralExportSettingCache$
   })
   getExportSettings(): Observable<BusinessCentralExportSettingGet> {
-    return this.apiService.get(`workspaces/${this.workspaceId}/export_settings/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
   }
 
   @CacheBuster({
