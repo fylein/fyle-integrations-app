@@ -145,21 +145,7 @@
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [exportTypeIconPathArray]="previewImagePaths"
-                            [isDisabled]="true">
-                        </app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Default Credit Account Name'"
-                            [label]="'To which GL Account should the expenses be credited to?'"
-                            [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
-                            [destinationAttributes]="creditCardAccountOptions"
-                            [iconPath]="'list'"
-                            [placeholder]="'Select default credit account'"
-                            [formControllerName]="'defaultCreditCardCCCAccountName'">
+                            [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
