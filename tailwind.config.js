@@ -368,7 +368,7 @@ module.exports = {
         'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)'
       },
       fontFamily: {
-        'aktiv-grotesk': '"aktiv-grotesk", sans-serif'
+        'primary': 'var(--font-primary)',
       },
       boxShadow: {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',

@@ -31,6 +31,8 @@
         --gradient-vibrant-lg-end: #fe5196;
 
         --pink-box-border: rgba(255, 51, 102, 0.16);
+
+        --font-primary: "aktiv-grotesk", sans-serif;
     }
     [data-theme='co'] {
         --mandatory-field-color: #0070a8;
@@ -64,5 +66,7 @@
         --gradient-vibrant-lg-end: #0070A8;
 
         --check-box: #ced4da;
+
+        --font-primary: "Optimist";
     }
 }
