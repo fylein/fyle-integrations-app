@@ -54,6 +54,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     const url = `${environment.business_central_authorize_uri}client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
     console.log(url,'url')
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
+      console.log('callback', callbackURL)
       const code = callbackURL.split('code=')[1].split('&')[0];
       console.log(code,'code')
       this.postBusinessCentralCredentials(code);
