@@ -1,5 +1,5 @@
-<div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
-<div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
@@ -20,7 +20,8 @@
 
     <app-zero-state *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length"
         [zeroStateImageURL]="'assets/icons/dashboard-illustration.svg'"
-        [zeroStateCaption]="'There are no expenses to export at the moment!'">
+        [headerText]="'Looks like you have'"
+        [subHeaderText]="'0 expenses to export right now'">
     </app-zero-state>
 
     <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"

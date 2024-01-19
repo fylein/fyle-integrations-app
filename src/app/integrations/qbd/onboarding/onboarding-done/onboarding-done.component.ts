@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-onboarding-done',
@@ -7,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./onboarding-done.component.scss']
 })
 export class OnboardingDoneComponent implements OnInit {
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router

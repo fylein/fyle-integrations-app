@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-sage300-export-log',
@@ -17,6 +18,8 @@ export class Sage300ExportLogComponent implements OnInit {
   ];
 
   activeModule: MenuItem;
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router
