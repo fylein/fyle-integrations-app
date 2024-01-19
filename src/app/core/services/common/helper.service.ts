@@ -92,9 +92,6 @@ export class HelperService {
         if (urlSplit[2] === AppUrl.SAGE300 && (controllerName === 'cccExportType' || controllerName === 'reimbursableExportType')) {
           this.setSage300ExportTypeControllerValue(form, controllerName);
         }
-        if (urlSplit[2] === AppUrl.BUSINESS_CENTRAL && controllerName === 'reimbursableExportType' && selectedValue === BusinessCentralExportType.PURCHASE_INVOICE) {
-          form.controls.reimbursableEmployeeMapping.patchValue(FyleField.VENDOR);
-        }
       });
     } else {
       value.forEach((controllerName: string) => {
@@ -115,6 +112,10 @@ export class HelperService {
   setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
       form.controls[values.formController].valueChanges.subscribe((isSelected) => {
+        const urlSplit = this.router.url.split('/');
+        if (urlSplit[2] === AppUrl.BUSINESS_CENTRAL && values.formController === 'reimbursableExportType' && isSelected === BusinessCentralExportType.PURCHASE_INVOICE) {
+          form.controls.reimbursableEmployeeMapping.patchValue(FyleField.VENDOR);
+        }
         Object.entries(values.requiredValue).forEach(([key, value]) => {
           if (key === isSelected) {
             value.forEach((element: any) => {
