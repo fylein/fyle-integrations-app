@@ -67,7 +67,8 @@
     <div *ngIf="!isLoading && !isImportInProgress && !exportableExpenseGroupIds.length && !lastExport" class="tw-flex tw-justify-center tw-items-center tw-mt-130-px">
         <div class="tw-text-center">
             <img *ngIf="illustrationsAllowed" class="tw-pr-4" src="assets/icons/dashboard-illustration.svg" alt="">
-            <p class="tw-pt-8 tw-font-400 tw-text-14-px">There are no expenses to export at the moment!</p>
+            <p class="tw-pt-8 tw-font-400 tw-text-14-px">Looks like you have</p>
+            <p class="tw-pt-4-px tw-font-600 tw-text-14-px">0 expenses to export right now</p>
         </div>
     </div>
     <div *ngIf="lastExport || exportableExpenseGroupIds.length" class="tw-mt-24-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">

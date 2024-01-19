@@ -10,7 +10,9 @@ export class ZeroStateComponent implements OnInit {
 
   @Input() zeroStateImageURL: string;
 
-  @Input() zeroStateCaption: string;
+  @Input() headerText: string;
+
+  @Input() subHeaderText: string;
 
   illustrationsAllowed: boolean = brandingFeatureConfig.illustrationsAllowed;
 
