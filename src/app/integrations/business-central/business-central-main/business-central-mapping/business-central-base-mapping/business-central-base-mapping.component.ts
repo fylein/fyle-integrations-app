@@ -31,7 +31,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
 
   destinationOptions: DestinationAttribute[];
 
-  appName = AppName
+  appName = AppName;
 
   constructor(
     private route: ActivatedRoute,

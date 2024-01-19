@@ -87,7 +87,7 @@ export class BusinessCentralExportSettingModel {
     static getReimbursableExpensesExportTypeOptions(): BusinessCentralExportSettingFormOption[] {
         return [
           {
-            label: 'Accounts Payable Invoice',
+            label: 'Purchase Invoice',
             value: BusinessCentralExportType.PURCHASE_INVOICE
           },
           {
