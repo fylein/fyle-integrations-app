@@ -255,4 +255,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
     this.getSettingsAndSetupForm();
   }
 
+  navigateBack(): void {
+    this.router.navigate([`/integrations/sage300/onboarding/import_settings`]);
+  }
+
 }

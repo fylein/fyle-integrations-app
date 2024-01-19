@@ -1,4 +1,4 @@
-<div class="tw-border-gray-300 tw-rounded tw-flex tw-items-center tw-justify-between">
+<div class="tw-border-normal-text-color tw-rounded tw-flex tw-items-center tw-justify-between">
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
     <div class="tw-flex tw-items-center">
@@ -11,7 +11,7 @@
             </span>
         </button>
 
-    <p-dropdown *ngIf="isDropdrownRequired" [(ngModel)]="moreDropdown" (onChange)="null" appendTo="body" class="tw-mr-26-px" [options]="['Submit Feedback']" placeholder="More">
+    <p-dropdown *ngIf="isDropdrownRequired" [(ngModel)]="moreDropdown" (onChange)="null" appendTo="body" class="tw-mr-26-px tw-w-fit" [options]="['Submit Feedback']" placeholder="More">
             <ng-template let-option pTemplate="item">
                 <div class="tw-flex tw-justify-center">
                     <svg-icon-sprite src="open-in-new-tab" width="20px" height="20px" class="tw-pt-4-px tw-pr-8-px tw-text-mandatory-field-color"></svg-icon-sprite>

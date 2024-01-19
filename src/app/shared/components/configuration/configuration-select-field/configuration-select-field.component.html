@@ -34,7 +34,8 @@
                         'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
                         'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
                         'selectedItem': form.controls[formControllerName].value,
-                        'filterDropdown': !form.controls[formControllerName].value
+                        'filterDropdown': !form.controls[formControllerName].value,
+                        'showClearIcon': showClearIcon && !isDisabled
                     }" [disabled]="isDisabled"
                     >
                     <ng-template let-option pTemplate="item">
@@ -49,12 +50,11 @@
                             <span>
                                 {{ item.label }}
                             </span>
-                            <i *ngIf="!showClearIcon && !isDisabled" class="pi pi-chevron-down"></i>
                             <i *ngIf="showClearIcon && !isDisabled" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
                         </div>
                     </ng-template>
                 </p-dropdown>
-                    <div *ngIf="appName !== AppName.SAGE300 && ['JOURNAL_ENTRY', 'EXPENSE_REPORT', 'BILL', 'CHARGE_CARD_TRANSACTION', 'PURCHASE_INVOICE', 'DIRECT_COST', 'EXPENSE', 'JOURNAL ENTRY', 'CHECK', 'CREDIT CARD PURCHASE', 'DEBIT CARD EXPENSE'].includes(form.controls[formControllerName].value)" class="sub-text tw-pt-3-px">
+                    <div *ngIf="['JOURNAL_ENTRY', 'EXPENSE_REPORT', 'BILL', 'CHARGE_CARD_TRANSACTION', 'PURCHASE_INVOICE', 'DIRECT_COST', 'EXPENSE', 'JOURNAL ENTRY', 'CHECK', 'CREDIT CARD PURCHASE', 'DEBIT CARD EXPENSE'].includes(form.controls[formControllerName].value)" class="sub-text tw-pt-3-px">
                         <span>Click </span>
                         <a class="tw-text-hyperlink-color !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
                         <span> to preview how it looks on {{appName}}</span>

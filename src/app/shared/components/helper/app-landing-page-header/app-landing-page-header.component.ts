@@ -83,7 +83,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   connect(): void {
 
-    if (this.appName === this.AppName.TRAVELPERK || this.appName === this.AppName.BAMBOO_HR) {
+    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR) {
       this.initiateOAuth();
       return;
     } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
@@ -92,9 +92,6 @@ export class AppLandingPageHeaderComponent implements OnInit {
       this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.CONNECT_INTACCT);
     } else if (this.postConnectionRoute === 'sage300/onboarding/connector') {
       this.trackingService.onClickEvent(TrackingApp.SAGE300, ClickEvent.CONNECT_SAGE300);
-    } else if (this.postConnectionRoute === 'business_central/onboarding/connector') {
-      this.initiateOAuth();
-      this.trackingService.onClickEvent(TrackingApp.BUSINESS_CENTRAL, ClickEvent.CONNECT_BUSINESS_CENTRAL);
     }
     this.router.navigate([`/integrations/${this.postConnectionRoute}`]);
   }

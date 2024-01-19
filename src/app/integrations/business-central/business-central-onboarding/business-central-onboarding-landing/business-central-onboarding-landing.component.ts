@@ -64,9 +64,11 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(code, +this.workspaceService.getWorkspaceId());
 
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe(() => {
+      this.businessCentralHelperService.refreshBusinessCentralDimensions(true).subscribe(() => {
         this.businessCentralConnectionInProgress = false;
         this.isIntegrationConnected = true;
-        this.router.navigate([`/integrations/business_central/main/dashboard`]);
+        this.checkProgressAndRedirect(code);
+      });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
       if (errorMessage === 'Please choose the correct Dynamic 360 Business Central account') {
@@ -80,14 +82,8 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
 
   private checkProgressAndRedirect(code: string): void {
     const onboardingState: BusinessCentralOnboardingState = this.workspaceService.getOnboardingState();
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        code
-      }
-    };
-
     if (onboardingState !== BusinessCentralOnboardingState.COMPLETE) {
-      this.router.navigate(['integrations/qbo/onboarding/connector'], navigationExtras);
+      this.router.navigate(['integrations/business_central/onboarding/connector']);
     } else {
       this.postBusinessCentralCredentials(code);
     }

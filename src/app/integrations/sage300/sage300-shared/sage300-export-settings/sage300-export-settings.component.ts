@@ -72,6 +72,17 @@ export class Sage300ExportSettingsComponent implements OnInit {
     }
   ];
 
+  previewExpenseGroupTypeImagePath = [
+    {
+      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
+    },
+    {
+      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
+      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
+    }
+  ];
+
   readonly brandingConfig = brandingConfig;
 
   constructor(
@@ -170,6 +181,10 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupPage();
+  }
+
+  navigateBack(): void {
+    this.router.navigate([`/integrations/sage300/onboarding/connector`]);
   }
 
 }

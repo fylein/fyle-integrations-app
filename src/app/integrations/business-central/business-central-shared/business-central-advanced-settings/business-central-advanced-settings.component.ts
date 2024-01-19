@@ -201,4 +201,8 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     this.getSettingsAndSetupForm();
   }
 
+  navigateBack(): void {
+    this.router.navigate([`/integrations/business_central/onboarding/import_settings`]);
+  }
+
 }

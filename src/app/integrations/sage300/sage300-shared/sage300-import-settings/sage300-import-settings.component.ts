@@ -400,4 +400,8 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.setupPage();
   }
 
+  navigateBack(): void {
+    this.router.navigate([`/integrations/sage300/onboarding/export_settings`]);
+  }
+
 }

@@ -280,6 +280,7 @@ module.exports = {
         '220-px': '220px',
         '226-px': '226px',
         '240-px': '240px',
+        '242-px': '242px',
         '246-px': '246px',
         '260-px': '260px',
         '270-px': '270px',
@@ -324,7 +325,8 @@ module.exports = {
       },
       maxWidth: {
         '20-px': '20px',
-        '300-px': '300px'
+        '300-px': '300px',
+        '600-px': '600px'
       },
       borderRadius: {
         '0-px': '0px',
