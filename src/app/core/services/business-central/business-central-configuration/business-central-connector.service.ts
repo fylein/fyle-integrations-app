@@ -44,7 +44,7 @@ export class BusinessCentralConnectorService {
   }
 
   getBusinessCentralCompany(): Observable<BusinessCentralCompanyDetails> {
-    return this.apiService.get(`/workspace/${this.workspaceId}/business_central/company/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/business_central/company/`, {});
   }
 
 }
