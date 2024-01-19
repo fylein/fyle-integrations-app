@@ -12,7 +12,7 @@ body {
 }
 
 body {
-    @apply tw-m-0-px tw-text-normal-text-color tw-font-aktiv-grotesk tw-text-16-px;
+    @apply tw-m-0-px tw-text-normal-text-color tw-font-primary tw-text-16-px;
 }
 
 p {
@@ -37,6 +37,10 @@ p {
 
 .pi-times:before {
     @apply tw-text-12-px tw-text-placeholder #{!important}
+}
+
+.p-component {
+    @apply tw-font-primary #{!important};
 }
 
 // Button CTA
@@ -67,7 +71,7 @@ p {
 
 // Input text
 .p-inputtext {
-    @apply tw-text-14-px tw-border-box-color #{!important};
+    @apply tw-font-primary tw-text-14-px tw-border-box-color #{!important};
 }
 
 .p-inputtext:enabled:focus-visible {
@@ -335,7 +339,7 @@ p {
 }
 
 .p-tabmenu {
-    @apply tw-font-aktiv-grotesk tw-font-500 #{!important};
+    @apply tw-font-primary tw-font-500 #{!important};
 }
 
 .p-tabmenu .p-tabmenu-nav {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWhile } from 'rxjs';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { BusinessCentralAccountingExport, BusinessCentralAccountingExportResponse } from 'src/app/core/models/business-central/db/business-central-accounting-export.model';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
@@ -52,6 +53,8 @@ export class BusinessCentralDashboardComponent implements OnInit {
   getExportErrors$: Observable<ErrorResponse> = this.dashboardService.getExportErrors();
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary();
+
+  isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private refinerService: RefinerService,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api/menuitem';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-sage300-configuration',
@@ -15,6 +16,8 @@ export class Sage300ConfigurationComponent implements OnInit {
   ];
 
   activeModule: MenuItem = this.modules[0];
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor() { }
 

@@ -31,6 +31,8 @@
         --gradient-vibrant-lg-end: #fe5196;
 
         --pink-box-border: rgba(255, 51, 102, 0.16);
+
+        --font-primary: "aktiv-grotesk", sans-serif;
     }
     [data-theme='co'] {
         --mandatory-field-color: #0070a8;
@@ -51,7 +53,7 @@
         --success-toast: #24A148;
         --alert-toast: #DA1E28;
         --line-inactive: #CCCDD7;
-        --progress-bar-bg: #FFF0F5;
+        --progress-bar-bg: #015884;
         --mapped-green-border: #D9EBE1;
         --mapped-green-bg: #EEF8F2;
         --unmapped-red-border: #F5C0C3;
@@ -64,5 +66,7 @@
         --gradient-vibrant-lg-end: #0070A8;
 
         --check-box: #ced4da;
+
+        --font-primary: "Optimist";
     }
 }

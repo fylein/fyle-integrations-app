@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, IntacctOnboardingState, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 
@@ -13,6 +14,8 @@ export class OnboardingSteppersComponent implements OnInit {
   @Input() onboardingSteps: OnboardingStepper[];
 
   @Input() isCloneSettingView: boolean;
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router
