@@ -82,7 +82,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   cccExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseState();
 
-  entityName: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEntityOptions();
+  employeeFieldMappingOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEntityOptions();
 
   employeeMapOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEmployeeMappingOptions();
 
@@ -103,13 +103,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     public helper: HelperService
   ) { }
-
-  getEmployeeSettingOptions(entity: string):BusinessCentralExportSettingFormOption[] {
-    if (entity === BusinessCentralExportType.PURCHASE_INVOICE) {
-      return [this.entityName[1]];
-    }
-    return this.entityName;
-  }
 
   private constructPayloadAndSave(): void {
     this.isSaveInProgress = true;

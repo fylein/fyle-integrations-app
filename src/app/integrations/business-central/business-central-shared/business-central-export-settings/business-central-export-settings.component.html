@@ -48,7 +48,7 @@
                                 [mandatoryErrorListName]="'Employees representation'"
                                 [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
-                                [options]="getEmployeeSettingOptions(exportSettingForm.value.reimbursableExportType)"
+                                [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
                                 [iconPath]="'people'"
                                 [formControllerName]="'reimbursableEmployeeMapping'"
@@ -62,7 +62,7 @@
                                 [mandatoryErrorListName]="'Employees representation'"
                                 [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
-                                [options]="entityName"
+                                [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
                                 [iconPath]="'people'"
                                 [formControllerName]="'reimbursableEmployeeMapping'">
@@ -181,7 +181,7 @@
                             [mandatoryErrorListName]="'Employees representation'"
                             [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
                             [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
-                            [options]="entityName"
+                            [options]="employeeFieldMappingOptions"
                             [placeholder]="'Select representation'"
                             [iconPath]="'people'"
                             [formControllerName]="'reimbursableEmployeeMapping'">

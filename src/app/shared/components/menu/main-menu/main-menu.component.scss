@@ -19,7 +19,7 @@
 }
 
 :host ::ng-deep .p-dropdown {
-    @apply tw-w-80-px tw-h-32-px #{!important};
+    @apply tw-w-fit tw-h-32-px #{!important};
 }
 
 :host ::ng-deep .p-dropdown-label {

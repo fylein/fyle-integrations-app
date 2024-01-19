@@ -119,8 +119,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
 
       const queuedTasks: BusinessCentralAccountingExport[] = responses[2].results.filter((accountingExport: BusinessCentralAccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS || accountingExport.status === AccountingExportStatus.EXPORT_QUEUED);
       this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: BusinessCentralAccountingExport) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
-
-      this.exportableAccountingExportIds = responses[3].exportable_accounting_export_ids;
+      this.exportableAccountingExportIds = responses[3].exportable_accounting_export_ids ?? [];
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
@@ -129,9 +128,9 @@ export class BusinessCentralDashboardComponent implements OnInit {
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.isImportInProgress = false;
+          this.isLoading = false;
         });
       }
-      this.isLoading = false;
     });
   }
 

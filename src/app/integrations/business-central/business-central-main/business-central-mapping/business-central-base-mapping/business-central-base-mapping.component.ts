@@ -5,7 +5,6 @@ import { BusinessCentralExportSettingGet } from 'src/app/core/models/business-ce
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
 import { AccountingField, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 
