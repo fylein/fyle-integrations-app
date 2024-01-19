@@ -22,6 +22,16 @@
                         [iconPath]="'arrow-tail-up-down'">
                     </app-configuration-toggle-field>
                 </div>
+                <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
+                    <app-configuration-toggle-field 
+                        [form]="importSettingForm"
+                        [label]="'Import Vendor as Merchant in ' + brandingConfig.brandName " 
+                        [subLabel]="'Imported Vendor will be available as Merchants in ' + brandingConfig.brandName " 
+                        [formControllerName]="'importVendorAsMerchant'"
+                        [isSectionHeader]="false"
+                        [iconPath]="'arrow-tail-up-down'">
+                    </app-configuration-toggle-field>
+                </div>
                 <div>
                     <app-configuration-import-field 
                         [form]="importSettingForm" 

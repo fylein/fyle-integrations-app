@@ -1,5 +1,5 @@
 import { FormGroup, FormControl } from "@angular/forms";
-import { AutoMapEmployeeOptions, BusinessCentralExportType, BusinessCentralField, CCCExpenseState, DefaultImportFields, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField } from "../../enum/enum.model";
+import { AutoMapEmployeeOptions, BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField, NameInJEField } from "../../enum/enum.model";
 import { BusinessCentralDestinationAttributes } from "../db/business-central-destination-attribute.model";
 import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
 
@@ -32,7 +32,7 @@ export interface BusinessCentralExportSettingPost extends BusinessCentralExportS
 
 export type BusinessCentralExportSettingFormOption = {
     label: string,
-    value: ExpenseState | CCCExpenseState | FyleField | ExpenseGroupedBy | BusinessCentralExportType | ExportDateType | AutoMapEmployeeOptions | BusinessCentralField;
+    value: ExpenseState | CCCExpenseState | FyleField | ExpenseGroupedBy | BusinessCentralExportType | ExportDateType | AutoMapEmployeeOptions | NameInJEField;
 }
 
 export class BusinessCentralExportSettingModel {
@@ -132,7 +132,7 @@ export class BusinessCentralExportSettingModel {
         ];
     }
 
-    static getCCCEntityOptions(): BusinessCentralExportSettingFormOption[] {
+    static getNameInJEOptions(): BusinessCentralExportSettingFormOption[] {
       return [
           {
             label: 'Employee',
@@ -140,7 +140,7 @@ export class BusinessCentralExportSettingModel {
           },
           {
             label: 'Merchant',
-            value: BusinessCentralField.MERCHANT
+            value: NameInJEField.MERCHANT
           }
       ];
   }

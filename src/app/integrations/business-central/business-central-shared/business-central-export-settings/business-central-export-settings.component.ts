@@ -86,7 +86,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   employeeMapOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEmployeeMappingOptions();
 
-  nameReferenceInCCC: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCEntityOptions();
+  nameReferenceInCCC: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getNameInJEOptions();
 
   sessionStartTime = new Date();
 
@@ -106,7 +106,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   getEmployeeSettingOptions(entity: string):BusinessCentralExportSettingFormOption[] {
     if (entity === BusinessCentralExportType.PURCHASE_INVOICE) {
-      this.exportSettingForm.controls.reimbursableEmployeeMapping.patchValue(this.entityName[1].value);
       return [this.entityName[1]];
     }
     return this.entityName;

@@ -3,7 +3,10 @@ import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/impor
 import { IntegrationField } from "../../db/mapping.model";
 
 export type BusinessCentralImportSettings = {
-    import_categories: boolean,
+    import_settings: {
+        import_categories: boolean,
+        import_vendors_as_merchants: boolean
+    }
     mapping_settings: ImportSettingMappingRow[] | []
 }
 
@@ -21,7 +24,8 @@ export class BusinessCentralImportSettingsModel extends ImportSettingsModel {
     static mapAPIResponseToFormGroup(importSettings: BusinessCentralImportSettingsGet | null, businessCentralFields: IntegrationField[]): FormGroup {
         const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, businessCentralFields) : [] ;
         return new FormGroup({
-            importCategories: new FormControl(importSettings?.import_categories ?? false),
+            importCategories: new FormControl(importSettings?.import_settings.import_categories ?? false),
+            importVendorAsMerchant: new FormControl(importSettings?.import_settings.import_vendors_as_merchants ?? false ),
             expenseFields: new FormArray(expenseFieldsArray)
         });
     }
@@ -30,7 +34,10 @@ export class BusinessCentralImportSettingsModel extends ImportSettingsModel {
         const expenseFieldArray = importSettingsForm.value.expenseFields;
         const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
         return {
-            import_categories: importSettingsForm.get('importCategories')?.value,
+            import_settings: {
+                import_categories: importSettingsForm.get('importCategories')?.value,
+                import_vendors_as_merchants: importSettingsForm.get('importVendorAsMerchant')?.value
+            },
             mapping_settings: mappingSettings
         };
     }

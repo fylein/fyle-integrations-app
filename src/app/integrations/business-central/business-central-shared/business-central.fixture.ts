@@ -46,7 +46,10 @@ export const destinationAttributes: BusinessCentralDestinationAttributes[] = [
 
 export const importSettingsResponse: BusinessCentralImportSettingsGet = {
   "id": 123,
-  "import_categories": true,
+  "import_settings": {
+    "import_categories": true,
+    "import_vendors_as_merchants": true
+  },
   "mapping_settings": [],
   "workspace_id": 343,
   "created_at": new Date("2023-10-09T08:18:29.080160Z"),

@@ -371,7 +371,8 @@ export enum BusinessCentralField {
   DEPARTMENT = 'DEPARTMENT',
   CLASS = 'CLASS',
   TAX_DETAIL = 'TAX_DETAIL',
-  JOB = 'JOB'
+  JOB = 'JOB',
+  COMPANY = 'COMPANY',
 }
 
 export enum SageIntacctField {
@@ -547,8 +548,7 @@ export enum BusinessCentralOnboardingState {
   COMPANY_SELECTION = 'COMPANY_SELECTION'
 }
 
-export enum BusinessCentralField {
-  COMPANY = 'COMPANY',
+export enum NameInJEField {
   MERCHANT = 'MERCHANT',
 }
 
