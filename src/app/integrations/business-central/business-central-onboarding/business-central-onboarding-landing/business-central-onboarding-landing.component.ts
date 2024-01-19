@@ -52,25 +52,17 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
   connectBusinessCentral(): void {
     this.businessCentralConnectionInProgress = true;
     const url = `https://login.microsoftonline.com/organizations/oauth2/authorize?resource=https://api.businesscentral.dynamics.com&client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
-    console.log(url,'url')
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
-      console.log('callback', callbackURL.split('code=')[1]?.split('&')[0])
       const code = callbackURL.split('code=')[1]?.split('&')[0];
-      console.log(code,'code')
       this.postBusinessCentralCredentials(code);
     });
-    console.log(url,'url2')
     this.helperService.oauthHandler(url);
   }
 
   private postBusinessCentralCredentials(code: string): void {
-    console.log("payloada")
     const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(code, +this.workspaceService.getWorkspaceId());
-    console.log(payload,'payload')
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe(() => {
-      console.log("connect")
       this.businessCentralHelperService.refreshBusinessCentralDimensions(true).subscribe(() => {
-        console.log("refresh")
         this.businessCentralConnectionInProgress = false;
         this.isIntegrationConnected = true;
         this.checkProgressAndRedirect(code);
