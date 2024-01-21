@@ -13,7 +13,7 @@
             <div class="tw-flex tw-mr-4"></div>
             <span [ngClass]="{'tw-border-black': isDateFieldFocused}" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-12-px tw-rounded-4-px drop-down">
                 <div>
-                    <svg-icon-sprite src="calendar" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
+                    <svg-icon-sprite src="calendar" width="24px" height="24px" class="tw-text-placeholder"></svg-icon-sprite>
                 </div>
                 <p-dropdown placeholder="Select date range" appendTo="body" [options]="dateOptions"
                 formControlName="dateRange" (click)="dropDownWatcher()" (onFocus)="isDateFieldFocused = true" (onBlur)="isDateFieldFocused = false"
@@ -79,7 +79,7 @@
                     <td>
                         <div *ngIf="rowData.intacctUrl">
                           <button (click)="openUrl($event, rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
-                            <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab" width="20px" height="20px"></svg-icon-sprite>
+                            <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab-standard" width="24px" height="24px"></svg-icon-sprite>
                           </button>
                         </div>
                     </td>

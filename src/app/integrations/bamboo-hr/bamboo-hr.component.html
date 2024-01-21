@@ -2,12 +2,12 @@
     <ng-template let-message pTemplate="message">
         <div class="tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px" [ngClass]="message.severity === 'success' ? 'tw-bg-success-toast' : 'tw-bg-alert-toast'">
             <div class="tw-flex">
-                <svg-icon-sprite *ngIf="message.severity === 'success'" src="check-done" width="18px" height="18px" class="tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px"></svg-icon-sprite>
-                <svg-icon-sprite *ngIf="message.severity !== 'success'" src="alert" width="18px" height="18px" class="tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px"></svg-icon-sprite>
+                <svg-icon-sprite *ngIf="message.severity === 'success'" src="check-circle-outline" width="20px" height="20px" class="tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px"></svg-icon-sprite>
+                <svg-icon-sprite *ngIf="message.severity !== 'success'" src="warning-outline" width="20px" height="20px" class="tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px"></svg-icon-sprite>
                 {{ message.summary }}
             </div>
             <div class="tw-flex tw-items-center tw-cursor-pointer">
-                <svg-icon-sprite (click)="closeToast()" src="close" width="10px" height="10px" class="tw-pr-22-px tw-text-white"></svg-icon-sprite>
+            <svg-icon-sprite (click)="closeToast()" src="cross-medium" width="16px" height="16px" class="tw-pr-22-px tw-text-white"></svg-icon-sprite>
             </div>
         </div>
     </ng-template>
