@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
+import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
-import { HelperService } from 'src/app/core/services/common/helper.service';
-import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 
 @Component({
   selector: 'app-business-central-main',
@@ -27,7 +26,7 @@ export class BusinessCentralMainComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private router: Router,
-    private helperService: Sage300HelperService
+    private helperService: BusinessCentralHelperService
   ) { }
 
   refreshDimensions(isRefresh: boolean) {
