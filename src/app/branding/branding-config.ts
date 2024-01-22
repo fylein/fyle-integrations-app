@@ -10,12 +10,14 @@ const featureConfigs: FeatureConfiguration = {
     fyle: {
         reimbursableExpenses: true,
         illustrationsAllowed: true,
-        isGradientAllowed: true
+        isGradientAllowed: true,
+        exposeOnlyQBOApp: false
     },
     co: {
         reimbursableExpenses: true,
         illustrationsAllowed: false,
-        isGradientAllowed: false
+        isGradientAllowed: false,
+        exposeOnlyQBOApp: true
     }
 };
 

@@ -1,5 +1,5 @@
 <div class="tw-text-slightly-normal-text-color">
-    <div class="tw-flex tw-text-14-px tw-h-56-px">
+    <div *ngIf="!exposeOnlyQBOApp" class="tw-flex tw-text-14-px tw-h-56-px">
         <div class="tw-pl-24-px tw-pr-48-px landing--tab" (click)="switchView(IntegrationsView.ALL)">
             All
             <p *ngIf="integrationTabs.ALL" class="landing--active-tag"></p>
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <p class="tw-mt-1-px landing--divider"></p>
+    <p *ngIf="!exposeOnlyQBOApp" class="tw-mt-1-px landing--divider"></p>
 
     <div class="tw-pt-40-px tw-ml-126-px tw-mr-126-px">
         <div *ngIf="integrationTabs.ALL || integrationTabs.ACCOUNTING">
@@ -30,7 +30,7 @@
             </p>
 
             <div class="tw-flex">
-                <div>
+                <div *ngIf="!exposeOnlyQBOApp">
                     <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
                         <img src="assets/logos/netsuite-logo.png" width="110px" height="60px" />
                         <span class="landing--accounting-app-name">
@@ -45,7 +45,7 @@
                         </span>
                     </div>
                 </div>
-                <div>
+                <div *ngIf="!exposeOnlyQBOApp">
                     <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
                         <img src="assets/logos/intacct-logo.png" width="110px" height="60px" />
                         <span class="landing--accounting-app-name">
@@ -65,7 +65,7 @@
                         <img src="assets/logos/quickbooks-logo.png" width="110px" height="60px" />
                         <span class="landing--accounting-app-name">
                             QuickBooks Online
-                            <svg-icon-sprite src="open-in-new-tab" width="16px" height="16px" class="landing--accounting-app-open"></svg-icon-sprite>
+                            <svg-icon-sprite *ngIf="!exposeOnlyQBOApp" src="open-in-new-tab" width="16px" height="16px" class="landing--accounting-app-open"></svg-icon-sprite>
                         </span>
                     </div>
                     <!-- <div class="landing--accounting-app tw-mr-20-px tw-mt-20-px" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
@@ -75,7 +75,7 @@
                         </span>
                     </div> -->
                 </div>
-                <div class="landing--accounting-app" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+                <div *ngIf="!exposeOnlyQBOApp" class="landing--accounting-app" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
                     <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="50px" height="60px" />
                     <span class="landing--accounting-app-name">
                         Xero
@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <div *ngIf="integrationTabs.ALL || integrationTabs.HRMS">
+        <div *ngIf="(integrationTabs.ALL || integrationTabs.HRMS) && !exposeOnlyQBOApp">
             <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing--section-divider"></p>
             <p class="landing--section-heading">
                 HRMS
@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <div *ngIf="isTravelperkAllowed">
+        <div *ngIf="isTravelperkAllowed && !exposeOnlyQBOApp">
             <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing--section-divider"></p>
             <p class="landing--section-heading">
                 Travel
@@ -129,7 +129,7 @@
             </div>
         </div>
 
-        <div *ngIf="integrationTabs.ALL" class="tw-pb-100-px">
+        <div *ngIf="integrationTabs.ALL && !exposeOnlyQBOApp" class="tw-pb-100-px">
             <p class="tw-my-40-px landing--divider"></p>
 
             <p class="landing--section-heading">

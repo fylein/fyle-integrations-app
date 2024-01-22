@@ -11,7 +11,8 @@ import { SiAuthService } from 'src/app/core/services/si/si-core/si-auth.service'
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { Token } from 'src/app/core/models/misc/token.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 
 @Component({
   selector: 'app-landing',
@@ -34,6 +35,8 @@ export class LandingComponent implements OnInit {
 
   exposeIntacctNewApp: boolean = EXPOSE_INTACCT_NEW_APP;
 
+  readonly exposeOnlyQBOApp = brandingFeatureConfig.exposeOnlyQBOApp;
+
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
     [IntegrationView.HRMS]: false,
@@ -50,7 +53,7 @@ export class LandingComponent implements OnInit {
 
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
     [AccountingIntegrationApp.NETSUITE]: [environment.ns_callback_url, environment.ns_client_id],
-    [AccountingIntegrationApp.QBO]: [environment.qbo_callback_url, environment.qbo_client_id],
+    [AccountingIntegrationApp.QBO]: [this.exposeOnlyQBOApp ? `${environment.fyle_app_url}/quickbooks` : environment.qbo_callback_url, environment.qbo_client_id],
     [AccountingIntegrationApp.SAGE_INTACCT]: [environment.si_callback_url, environment.si_client_id],
     [AccountingIntegrationApp.XERO]: [environment.xero_callback_url, environment.xero_client_id]
   };
@@ -61,27 +64,19 @@ export class LandingComponent implements OnInit {
     [InAppIntegration.TRAVELPERK]: '/integrations/travelperk/',
     [InAppIntegration.GUSTO]: '/integrations/gusto/',
     [InAppIntegration.INTACCT]: '/integrations/intacct',
+    [InAppIntegration.QBO]: '/integrations/qbo',
     [InAppIntegration.SAGE300]: '/integrations/sage300',
     [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central'
   };
-
-  private readonly accountingIntegrationEventMap: AccountingIntegrationEvent = {
-    [AccountingIntegrationApp.NETSUITE]: ClickEvent.OPEN_NETSUITE_INTEGRATION,
-    [AccountingIntegrationApp.QBO]: ClickEvent.OPEN_QBO_INTEGRATION,
-    [AccountingIntegrationApp.SAGE_INTACCT]: ClickEvent.OPEN_SAGE_INTACCT_INTEGRATION,
-    [AccountingIntegrationApp.XERO]: ClickEvent.OPEN_XERO_INTEGRATION
-  };
-
-  private readonly sessionStartTime = new Date();
 
   readonly brandingConfig = brandingConfig;
 
   constructor(
     private eventsService: EventsService,
+    private qboAuthService: QboAuthService,
     private router: Router,
     private siAuthService: SiAuthService,
     private storageService: StorageService,
-    private trackingService: TrackingService,
     private orgService: OrgService
   ) { }
 
@@ -107,23 +102,32 @@ export class LandingComponent implements OnInit {
     this.router.navigate([this.inAppIntegrationUrlMap[inAppIntegration]]);
   }
 
+  private loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegration: InAppIntegration): void {
+    const authCode = redirectUri.split('code=')[1].split('&')[0];
+    const login$ = inAppIntegration === InAppIntegration.INTACCT ? this.siAuthService.loginWithAuthCode(authCode) : this.qboAuthService.loginWithAuthCode(authCode);
+
+    login$.subscribe((token: Token) => {
+      const user: MinimalUser = {
+        'email': token.user.email,
+        'access_token': token.access_token,
+        'refresh_token': token.refresh_token,
+        'full_name': token.user.full_name,
+        'user_id': token.user.user_id,
+        'org_id': token.user.org_id,
+        'org_name': token.user.org_name
+      };
+      this.storageService.set('user', user);
+      this.openInAppIntegration(inAppIntegration);
+    });
+  }
+
   private setupLoginWatcher(): void {
-    const intacctLogin$ = this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
-      const authCode = redirectUri.split('code=')[1].split('&')[0];
-      this.siAuthService.loginWithAuthCode(authCode).subscribe((token: Token) => {
-        const user: MinimalUser = {
-          'email': token.user.email,
-          'access_token': token.access_token,
-          'refresh_token': token.refresh_token,
-          'full_name': token.user.full_name,
-          'user_id': token.user.user_id,
-          'org_id': token.user.org_id,
-          'org_name': token.user.org_name
-        };
-        this.storageService.set('user', user);
-        intacctLogin$.unsubscribe();
-        this.openInAppIntegration(InAppIntegration.INTACCT);
-      });
+    this.eventsService.sageIntacctLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.INTACCT);
+    });
+
+    this.eventsService.qboLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.QBO);
     });
   }
 
