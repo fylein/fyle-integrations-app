@@ -256,7 +256,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
     const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
     let nameInJournalEntry = NameInJournalEntry.EMPLOYEE;
 
-    if (brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
+    if (!brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
       nameInJournalEntry = NameInJournalEntry.MERCHANT;
     } else {
       nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value;
