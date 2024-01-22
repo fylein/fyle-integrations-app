@@ -29,7 +29,7 @@
             <div *ngIf="!exportPresent" class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-flex tw-items-start">
                     <div class="tw-pr-14-px">
-                        <img *ngIf="illustrationsAllowed" src="assets/icons/pinktick.svg" >
+                        <img *ngIf="illustrationsAllowed" src="assets/illustrations/pinktick.svg" >
                     </div>
                     <div>
                         <h3 class="tw-text-20-px tw-font-400 tw-text-normal-text-color">You are all caught up!</h3>
@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div>
-                    <img src="assets/icons/export.svg" alt="">
+                    <img src="assets/illustrations/export.svg" alt="">
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
                             <td>{{getExpenseType(exports.fund_source)| titlecase }}</td>
                             <td>
                                 <div *ngIf="!downloadingExportId[i]">
-                                    <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" height="20px"></svg-icon-sprite></button>
+                                    <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><svg-icon-sprite class="tw-pt-5-px" src="download" width="24px" height="24px"></svg-icon-sprite></button>
                                 </div>
                                 <div *ngIf="downloadingExportId[i]" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>

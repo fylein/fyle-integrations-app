@@ -28,6 +28,7 @@ const customColors = {
   'unmapped-red-bg': 'var(--unmapped-red-bg)',
   'pink': 'var(--pink)',
   'pink-box-border': 'var(--pink-box-border)',
+  'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
 }
 
