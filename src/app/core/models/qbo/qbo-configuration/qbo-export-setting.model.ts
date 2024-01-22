@@ -4,6 +4,7 @@ import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expens
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { brandingFeatureConfig } from "src/app/branding/branding-config";
 
 export type QBOExportSettingWorkspaceGeneralSettingPost = {
   reimbursable_expenses_object: QBOReimbursableExpensesObject | null,
@@ -253,6 +254,14 @@ export class QBOExportSettingModel extends ExportSettingModel {
 
   static constructPayload(exportSettingsForm: FormGroup): QBOExportSettingPost {
     const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
+    let nameInJournalEntry = NameInJournalEntry.EMPLOYEE;
+
+    if (!brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
+      nameInJournalEntry = NameInJournalEntry.MERCHANT;
+    } else {
+      nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value;
+    }
+
     const exportSettingPayload: QBOExportSettingPost = {
       expense_group_settings: {
         expense_state: exportSettingsForm.get('expenseState')?.value,
@@ -265,7 +274,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,
         corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value,
-        name_in_journal_entry: exportSettingsForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE
+        name_in_journal_entry: nameInJournalEntry
       },
       general_mappings: {
         bank_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute,

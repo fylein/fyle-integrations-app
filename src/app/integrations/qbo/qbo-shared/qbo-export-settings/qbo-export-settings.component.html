@@ -12,7 +12,7 @@
         </div>
         <form [formGroup]="exportSettingForm">
             <div class="tw-p-24-px">
-                <div class="tw-mb-16-px">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
                     <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                         <app-configuration-toggle-field
                             [form]="exportSettingForm"
@@ -154,7 +154,7 @@
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
 
-                        <div *ngIf="showNameInJournalOption">
+                        <div *ngIf="showNameInJournalOption && brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="false"

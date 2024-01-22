@@ -42,6 +42,9 @@ export class QboMappingComponent implements OnInit {
           }
         });
       }
+      if (!brandingFeatureConfig.featureFlags.mapEmployees) {
+        this.mappingPages.splice(0, 1);
+      }
       this.router.navigateByUrl(this.mappingPages[0].routerLink);
       this.isLoading = false;
     });

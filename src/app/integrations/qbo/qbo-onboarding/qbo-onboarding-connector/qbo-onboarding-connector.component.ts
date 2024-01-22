@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -102,7 +102,11 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.checkCloneSettingsAvailablity();
+    if (!brandingFeatureConfig.featureFlags.cloneSettings) {
+      this.router.navigate(['/integrations/qbo/onboarding/export_settings']);
+    } else {
+      this.checkCloneSettingsAvailablity();
+    }
   }
 
   acceptWarning(data: ConfigurationWarningOut): void {
@@ -159,7 +163,12 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   }
 
   private handlePostQBOConnection(qboCredential: QBOCredential): void {
-    this.workspaceService.setOnboardingState(QBOOnboardingState.MAP_EMPLOYEES);
+    if (brandingFeatureConfig.featureFlags.mapEmployees) {
+      this.workspaceService.setOnboardingState(QBOOnboardingState.MAP_EMPLOYEES);
+    } else {
+      this.workspaceService.setOnboardingState(QBOOnboardingState.EXPORT_SETTINGS);
+    }
+
     this.qboConnectionInProgress = false;
     this.qboCompanyName = qboCredential.company_name;
     this.isQboConnected = true;

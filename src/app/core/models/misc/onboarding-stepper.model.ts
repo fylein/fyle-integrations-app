@@ -1,6 +1,5 @@
 export type OnboardingStepper = {
     active: boolean,
-    number: number,
     completed: boolean,
     step: string,
     icon: string,
