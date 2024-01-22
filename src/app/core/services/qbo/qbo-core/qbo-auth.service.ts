@@ -17,4 +17,8 @@ export class QboAuthService {
   loginWithRefreshToken(refresh_token: string): Observable<Token> {
     return this.apiService.post('/auth/login_with_refresh_token/', { refresh_token });
   }
+
+  loginWithAuthCode(code: string): Observable<Token> {
+    return this.apiService.post('/auth/login/', { code });
+  }
 }

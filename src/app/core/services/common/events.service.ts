@@ -19,6 +19,8 @@ export class EventsService {
 
   @Output() redirectToOldIntacctApp: EventEmitter<string> = new EventEmitter();
 
+  @Output() qboLogin: EventEmitter<string> = new EventEmitter();
+
   history: string[] = [];
 
   constructor(
@@ -52,7 +54,10 @@ export class EventsService {
         if (EXPOSE_INTACCT_NEW_APP && message.data.redirectUri.includes('sage-intacct')) {
           this.sageIntacctLogin.emit(message.data.redirectUri);
           this.redirectToOldIntacctApp.emit(message.data.redirectUri);
-        } else {
+        } else if (message.data.redirectUri.includes('quickbooks')) {
+          this.qboLogin.emit();
+        }
+        else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }
       } else if (message.data && message.data.navigateBack) {
