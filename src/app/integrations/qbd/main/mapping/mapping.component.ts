@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-mapping',
@@ -14,6 +15,8 @@ export class MappingComponent implements OnInit {
   ];
 
   activeModule: MenuItem;
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router

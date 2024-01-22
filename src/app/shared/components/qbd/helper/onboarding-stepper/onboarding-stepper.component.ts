@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
@@ -22,7 +23,6 @@ export class OnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 2,
       step: 'Export Settings',
       icon: 'export-setting',
       route: 'export_settings',
@@ -34,7 +34,6 @@ export class OnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 3,
       step: 'Field Mapping',
       icon: 'field-mapping',
       route: 'field_mappings',
@@ -46,7 +45,6 @@ export class OnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 4,
       step: 'Advanced',
       icon: 'advanced-setting',
       route: 'advanced_settings',
@@ -56,6 +54,8 @@ export class OnboardingStepperComponent implements OnInit {
       }
     }
   ];
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   private updateActiveAndCompletedSteps(): void {
     this.onboardingSteps.forEach(step => {

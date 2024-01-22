@@ -9,7 +9,7 @@ import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif
 import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-dashboard',
@@ -80,6 +80,10 @@ export class DashboardComponent implements OnInit {
   currentPage: number = 1;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly illustrationsAllowed: boolean = brandingFeatureConfig.illustrationsAllowed;
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private iifLogsService: QbdIifLogsService,

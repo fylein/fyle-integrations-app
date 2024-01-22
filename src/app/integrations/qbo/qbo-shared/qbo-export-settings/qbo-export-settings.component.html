@@ -12,7 +12,7 @@
         </div>
         <form [formGroup]="exportSettingForm">
             <div class="tw-p-24-px">
-                <div class="tw-mb-16-px">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
                     <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                         <app-configuration-toggle-field
                             [form]="exportSettingForm"
@@ -29,8 +29,9 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export module'"
                                 [label]="'How should the expenses be exported?'"
+                                [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                                 [options]="reimbursableExportTypes"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                                 [formControllerName]="'reimbursableExportType'"
                                 [appName]="appName"
@@ -46,7 +47,7 @@
                                     [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account'"
                                     [destinationAttributes]="bankAccounts"
                                     [optionLabel]="'name'"
-                                    [iconPath]="'expense'"
+                                    [iconPath]="'list'"
                                     [placeholder]="'Select bank account'"
                                     [formControllerName]="'bankAccount'">
                                 </app-configuration-select-field>
@@ -61,7 +62,7 @@
                                     [subLabel]="'The expenses exported will be added to the selected Expense Payment Account'"
                                     [destinationAttributes]="expenseAccounts"
                                     [optionLabel]="'name'"
-                                    [iconPath]="'expense'"
+                                    [iconPath]="'list'"
                                     [placeholder]="'Select Expense Account'"
                                     [formControllerName]="'qboExpenseAccount'">
                                 </app-configuration-select-field>
@@ -76,7 +77,7 @@
                                     [mandatoryErrorListName]="'accounts payable'"
                                     [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                                     [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'"
-                                    [iconPath]="'expense'"
+                                    [iconPath]="'list'"
                                     [placeholder]="'Select accounts payable'"
                                     [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
@@ -91,7 +92,7 @@
                                 [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                                 [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Processing) or when the payment has been settled (Closed).'"
                                 [options]="expenseStateOptions"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select export state'"
                                 [formControllerName]="'expenseState'">
                             </app-configuration-select-field>
@@ -121,7 +122,7 @@
                                 [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Online.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
-                                [iconPath]="'calender'"
+                                [iconPath]="'calendar'"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
                         </div>
@@ -144,15 +145,16 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
+                            [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                             [options]="creditCardExportTypes"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
 
-                        <div *ngIf="showNameInJournalOption">
+                        <div *ngIf="showNameInJournalOption && brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="false"
@@ -160,7 +162,7 @@
                                 [label]="'Name in Journal Entry (CCC)'"
                                 [subLabel]="'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries'"
                                 [options]="nameInJournalOptions"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select a name'"
                                 [formControllerName]="'nameInJournalEntry'">
                             </app-configuration-select-field>
@@ -171,7 +173,7 @@
                               [form]="exportSettingForm"
                               [destinationAttributes]="cccAccounts"
                               [optionLabel]="'name'"
-                              [iconPath]="'expense'"
+                              [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'credit card account'"
                               [label]="'Set Default Credit Card Account as'"
@@ -186,7 +188,7 @@
                               [form]="exportSettingForm"
                               [destinationAttributes]="bankAccounts"
                               [optionLabel]="'name'"
-                              [iconPath]="'expense'"
+                              [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'debit card account'"
                               [label]="'Set Default Debit Card Account as'"
@@ -201,7 +203,7 @@
                               [form]="exportSettingForm"
                               [destinationAttributes]="vendors"
                               [optionLabel]="'name'"
-                              [iconPath]="'expense'"
+                              [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'corporate card vendor'"
                               [label]="'Set default corporate Card Vendor as'"
@@ -216,7 +218,7 @@
                               [form]="exportSettingForm"
                               [destinationAttributes]="accountsPayables"
                               [optionLabel]="'name'"
-                              [iconPath]="'expense'"
+                              [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'accounts payable'"
                               [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
@@ -235,7 +237,7 @@
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                             [subLabel]="'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out'"
                             [options]="cccExpenseStateOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select CCC expense state'"
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
@@ -263,7 +265,7 @@
                             [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'"
                             [options]="cccExpenseGroupingDateOptions"
-                            [iconPath]="'calender'"
+                            [iconPath]="'calendar'"
                             [placeholder]="'Select the date of the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase)"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
@@ -272,7 +274,7 @@
                 <app-configuration-step-footer
                     [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                     [isButtonDisabled]="!exportSettingForm.valid"
-                    [showBackButton]="true"
+                    [showBackButton]="isOnboarding ? true : false"
                     (save)="save()"
                     (navigateToPreviousStep)="navigateToPreviousStep()">
                 </app-configuration-step-footer>

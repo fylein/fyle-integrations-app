@@ -36,6 +36,6 @@ export const simple: Story = {
       label: 'Expense',
       value: QBDExpenseGroupedBy.EXPENSE
     },
-    iconPath: 'copy-v2'
+    iconPath: 'tabs'
   }
 };

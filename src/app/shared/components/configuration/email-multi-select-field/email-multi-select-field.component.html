@@ -1,7 +1,7 @@
 <div [formGroup]="form" [ngClass]="!isCloneSettingView ? 'tw-p-24-px': ''" class="tw-flex tw-flex-row tw-justify-between">
     <div *ngIf="!isCloneSettingView" class="tw-w-3/5 tw-flex tw-items-start">
         <div [ngClass]="[iconPath ? 'tw-pr-20-px tw-mt-4-px' : 'tw-pr-40-px']">
-            <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="20px" height="20px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+            <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="24px" height="24px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
         </div>
         <div>
             <h5 class="tw-text-14-px !tw-font-500">{{ label }}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
@@ -16,7 +16,7 @@
                     class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
                     <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px">{{ selectedEmail }}</p>
                     <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
-                    <svg-icon-sprite (click)="removeEmail()" src="close" width="10px" height="10px"
+                    <svg-icon-sprite (click)="removeEmail()" src="cross-small" width="12px" height="12px"
                         class="tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color"></svg-icon-sprite>
                 </div>
                 <div *ngIf="selectedEmail && form.value.email.length > 1" class="tw-pl-8-px">
@@ -31,10 +31,10 @@
             <ng-template pTemplate="filter" let-options="options">
                 <div *ngIf="emails.length" class="p-inputgroup">
                     <div class="p-input-icon-left p-input-icon-right">
-                        <i class="pi pi-search"></i>
+                        <i class="pi pi-search !tw-text-placeholder"></i>
                         <input type="text" class="!tw-h-32-px !tw-w-270-px" (keyup)="options.filter($event)"
                             pInputText placeholder="Search by Name / Email" formControlName="search" />
-                        <i class="pi pi-times tw-cursor-pointer tw-pt-2-px" style="font-size: 14px" (click)="clearSearch(options)"></i>
+                        <i class="pi pi-times tw-cursor-pointer tw-text-16-px" (click)="clearSearch(options)"></i>
                     </div>
                 </div>
             </ng-template>

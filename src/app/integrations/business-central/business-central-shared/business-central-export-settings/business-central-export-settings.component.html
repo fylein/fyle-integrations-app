@@ -32,60 +32,51 @@
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
                             [options]="reimbursableExpensesExportTypeOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
-                            [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
                             [exportTypeIconPathArray]="previewImagePaths"
                             [isDisabled]="false">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.PURCHASE_INVOICE">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Employees representation'"
+                                [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                                [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                                [options]="employeeFieldMappingOptions"
+                                [placeholder]="'Select representation'"
+                                [iconPath]="'people'"
+                                [formControllerName]="'reimbursableEmployeeMapping'"
+                                [isDisabled]="true">
+                            </app-configuration-select-field>
+                        </div>
+                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.JOURNAL_ENTRY">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Employees representation'"
+                                [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                                [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                                [options]="employeeFieldMappingOptions"
+                                [placeholder]="'Select representation'"
+                                [iconPath]="'people'"
+                                [formControllerName]="'reimbursableEmployeeMapping'">
+                            </app-configuration-select-field>
+                        </div>
                         <app-configuration-select-field
                             [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
-                            [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
-                            [options]="entityName"
-                            [iconPath]="'people'"
-                            [formControllerName]="'entityNamePreference'">
-                        </app-configuration-select-field>
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
+                            [isFieldMandatory]="false"
                             [label]="'How should Employees in  ' + brandingConfig.brandName + ' be mapped to Employees in Dynamics 365 Business Central ?'"
                             [subLabel]="'Automatically map the employees in  ' + brandingConfig.brandName + ' to their corresponding records in Dynamics 365 Business Central based on a unique parameter'"
+                            [placeholder]="'Select representation'"
                             [options]="employeeMapOptions"
                             [iconPath]="'questionmark'"
-                            [formControllerName]="'reimbursableEmployeeMapping'">
-                        </app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
-                            [options]="reimbursableExpenseState"
-                            [iconPath]="'expense'"
-                            [placeholder]="'Select export state'"
-                            [formControllerName]="'reimbursableExpenseState'">
-                        </app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]="'Set the date of the transaction as?'"
-                            [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
-                            [options]="getExportDate(reimbursableExpenseGroupingDateOptions)"
-                            [iconPath]="'calender'"
-                            [formControllerName]="'reimbursableExportDate'">
+                            [formControllerName]="'autoMapEmployee'">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -98,9 +89,38 @@
                             [options]="expenseGroupByOptions"
                             [iconPath]="'questionmark'"
                             [placeholder]="'Select expense grouping'"
-                            [formControllerName]="'reimbursableExportGroup'">
+                            [formControllerName]="'reimbursableExportGroup'"
+                            [appName]="appName"
+                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
                         </app-configuration-select-field>
                     </div>
+                    <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'expense state'"
+                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
+                            [options]="reimbursableExpenseState"
+                            [iconPath]="'list'"
+                            [placeholder]="'Select export state'"
+                            [formControllerName]="'reimbursableExpenseState'">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'export date'"
+                            [label]="'Set the date of the transaction as?'"
+                            [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
+                            [placeholder]="'Select date type'"
+                            [options]="getExportDate(reimbursableExpenseGroupingDateOptions)"
+                            [iconPath]="'calendar'"
+                            [formControllerName]="'reimbursableExportDate'">
+                        </app-configuration-select-field>
+                    </div>
+                    
                 </div>
             </div>
             <div>
@@ -121,26 +141,12 @@
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
                             [options]="cccExpensesExportTypeOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
-                            [exportTypeIconPathArray]="previewImagePaths"
-                            [isDisabled]="true">
-                        </app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Default Credit Account Name'"
-                            [label]="'To which GL Account should the expenses be credited to?'"
-                            [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Journal Entries.'"
-                            [destinationAttributes]="creditCardAccountOptions"
-                            [iconPath]="'expense'"
-                            [placeholder]="'Select default credit account'"
-                            [formControllerName]="'defaultCreditCardCCCAccountName'">
+                            [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -151,7 +157,7 @@
                             [label]="'Set the Default Bank Account as?'"
                             [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the Bank Account selected here.'"
                             [destinationAttributes]="bankOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select default Bank Account'"
                             [formControllerName]="'defaultBankName'">
                         </app-configuration-select-field>
@@ -160,26 +166,13 @@
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
-                            [options]="cccExpenseState"
+                            [mandatoryErrorListName]="'Default Vendor Name'"
+                            [label]="'Set the Default Vendor as?'"
+                            [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the Vendor selected here.'"
+                            [destinationAttributes]="vendorOptions"
                             [iconPath]="'expense'"
-                            [placeholder]="'Select export state'"
-                            [formControllerName]="'cccExpenseState'">
-                        </app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'export date'"
-                            [label]="'Set the date of the transaction as?'"
-                            [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
-                            [options]="getExportDate(cccExpenseGroupingDateOptions)"
-                            [iconPath]="'calender'"
-                            [placeholder]="'Select date'"
-                            [formControllerName]="'cccExportDate'">
+                            [placeholder]="'Select default Vendor'"
+                            [formControllerName]="'defaultVendorName'">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -192,7 +185,61 @@
                             [options]="expenseGroupByOptions"
                             [iconPath]="'questionmark'"
                             [placeholder]="'Select expense grouping'"
-                            [formControllerName]="'cccExportGroup'">
+                            [formControllerName]="'cccExportGroup'"
+                            [appName]="appName"
+                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="!exportSettingForm.value?.reimbursableExpense && exportSettingForm.value.cccExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Employees representation'"
+                            [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                            [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                            [options]="employeeFieldMappingOptions"
+                            [placeholder]="'Select representation'"
+                            [iconPath]="'people'"
+                            [formControllerName]="'reimbursableEmployeeMapping'">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Employees representation'"
+                            [label]="'Employees Name in Journal Entry?'"
+                            [subLabel]="'Select What should be the employee Name in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
+                            [options]="nameReferenceInCCC"
+                            [placeholder]="'Select representation'"
+                            [iconPath]="'people'"
+                            [formControllerName]="'journalEntryNamePreference'">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'expense state'"
+                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
+                            [options]="cccExpenseState"
+                            [iconPath]="'list'"
+                            [placeholder]="'Select export state'"
+                            [formControllerName]="'cccExpenseState'">
+                        </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'export date'"
+                            [label]="'Set the date of the transaction as?'"
+                            [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
+                            [options]="getExportDate(cccExpenseGroupingDateOptions)"
+                            [iconPath]="'calendar'"
+                            [placeholder]="'Select date'"
+                            [formControllerName]="'cccExportDate'">
                         </app-configuration-select-field>
                     </div>
                 </div>
@@ -201,8 +248,10 @@
         <div>
             <app-configuration-step-footer 
                 [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
-                (save)="save()" 
-                [isButtonDisabled]="!exportSettingForm.valid">
+                [showBackButton] = "isOnboarding"
+                [isButtonDisabled]="!exportSettingForm.valid"
+                (navigateToPreviousStep)="navigateBack()"
+                (save)="save()">
             </app-configuration-step-footer>
         </div>
     </form>

@@ -29,7 +29,7 @@
                             [label]="'How should the expenses be exported?'"
                             [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName + ' expenses.'"
                             [options]="reimbursableExportTypes"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [formControllerName]="'reimbursableExportType'"></app-configuration-radio-field>
 
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType">
@@ -66,7 +66,7 @@
                             [label]="'How would you like to group your expenses?'"
                             [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
                             [options]="expenseGroupingFieldOptions"
-                            [iconPath]="'copy-v2'"
+                            [iconPath]="'tabs'"
                             [formControllerName]="'reimbursableExportGroup'"></app-configuration-radio-field>
                         </div>
                         <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -78,7 +78,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'transaction date'"
                                 [options]="reimbursableExpenseGroupingDateOptionsFn()"
-                                [iconPath]="'calender'"
+                                [iconPath]="'calendar'"
                                 [placeholder]="'Select date type'"
                                 [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                             </div>
@@ -90,7 +90,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'transaction date'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
-                                [iconPath]="'calender'"
+                                [iconPath]="'calendar'"
                                 [placeholder]="'Select date type'"
                                 [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                             </div>
@@ -127,7 +127,7 @@
                             [label]="'How should the expenses be exported?'"
                             [subLabel]="'Choose the type of transaction in QuickBooks Desktop to export your ' + brandingConfig.brandName + ' expenses.'"
                             [options]="creditCardExportTypes"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [formControllerName]="'cccExportType'"></app-configuration-radio-field>
 
                             <div *ngIf="exportSettingsForm.value.cccExportType">
@@ -176,7 +176,7 @@
                                 [label]="'How would you like to group your expenses?'"
                                 [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
                                 [labelValue]="expenseGroupingFieldOptions[1]"
-                                [iconPath]="'copy-v2'"></app-configuration-label>
+                                [iconPath]="'tabs'"></app-configuration-label>
                             </div>
                             <div *ngIf="exportSettingsForm.value.cccExportType !== creditCardExportTypes[0].value">
                                 <app-configuration-radio-field
@@ -186,7 +186,7 @@
                                 [label]="'How would you like to group your expenses?'"
                                 [subLabel]="'Grouping reflects how the expense entries are posted in QuickBooks Desktop.'"
                                 [options]="expenseGroupingFieldOptions"
-                                [iconPath]="'copy-v2'"
+                                [iconPath]="'tabs'"
                                 [formControllerName]="'cccExportGroup'"></app-configuration-radio-field>
                             </div>
                         </div>
@@ -198,7 +198,7 @@
                                 [label]="'Set the transaction date'"
                                 [subLabel]="'The selected date will reflect in expenses exported to QuickBooks Desktop'"
                                 [options]="cccExpenseGroupingDateOptions"
-                                [iconPath]="'calender'"
+                                [iconPath]="'calendar'"
                                 [placeholder]="'Select date type'"
                                 [formControllerName]="'cccExportDate'">
                             </app-configuration-select-field>

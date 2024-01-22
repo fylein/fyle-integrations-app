@@ -4,8 +4,7 @@ import { forkJoin } from 'rxjs';
 import { BusinessCentralExportSettingGet } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingField, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
+import { AccountingField, AppName, FyleField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 
@@ -32,6 +31,8 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
 
   destinationOptions: DestinationAttribute[];
 
+  appName = AppName;
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
@@ -51,7 +52,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
 
   private getDestinationField(exportSetting: BusinessCentralExportSettingGet, mappingSettings: MappingSetting[]): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
-      return exportSetting.employee_mapping;
+      return exportSetting.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
       return AccountingField.ACCOUNT;
     }
@@ -67,7 +68,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
       this.mappingService.getExportSettings()
     ]).subscribe(([mappingSettingsResponse, exportSettingsResponse]) => {
       this.destinationField = this.getDestinationField(exportSettingsResponse, mappingSettingsResponse.results);
-      this.employeeFieldMapping = (exportSettingsResponse.employee_mapping as unknown as FyleField);
+      this.employeeFieldMapping = (exportSettingsResponse.employee_field_mapping as unknown as FyleField);
       this.reimbursableExpenseObject = exportSettingsResponse.reimbursable_expenses_object;
       this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;

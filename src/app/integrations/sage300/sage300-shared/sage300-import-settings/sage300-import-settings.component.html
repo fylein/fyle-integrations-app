@@ -27,27 +27,33 @@
                     </div>
                     <div class="tw-pt-16-px">
                         <app-configuration-info-label
-                            [infoText]="'If you\'d like to use only selective data from Sage Intacct, map a Sage Intacct dimension to a field in ' + brandingConfig.brandName + ' and turn off the import, as importing the data will sync in all the active values in Sage Intacct. You can add the required values in ' + brandingConfig.brandName + ' and map them later in the integration mapping section.'">
+                            [infoText]="'If you\'d like to use only selective data from Sage 300 CRE, map a Sage 300 CRE dimension to a field in ' + brandingConfig.brandName + ' and turn off the import, as importing the data will sync in all the active values in Sage 300 CRE. You can add the required values in ' + brandingConfig.brandName + ' and map them later in the integration mapping section.'">
                         </app-configuration-info-label>
                     </div>
                 </div>
                 <div>
                     <app-configuration-import-field 
-                    [form]="importSettingForm" 
-                    [appName]="appName" 
-                    [defaultImportFields]="defaultImportFields" 
-                    [costCategoryOption]="costCategoryOption" 
-                    [costCodeFieldOption]="costCodeFieldOption" 
-                    [accountingFieldOptions]="sage300Fields" 
-                    [fyleFieldOptions]="fyleFields" 
-                    [dependentImportFields]="dependentImportFields" 
-                    [dependentDestinationValue] = "'JOB'"
-                    (showWarningForDependentFields)="showWarningForDependentFields()">
+                        [form]="importSettingForm" 
+                        [appName]="appName" 
+                        [defaultImportFields]="defaultImportFields" 
+                        [costCategoryOption]="costCategoryOption" 
+                        [costCodeFieldOption]="costCodeFieldOption" 
+                        [accountingFieldOptions]="sage300Fields" 
+                        [fyleFieldOptions]="fyleFields" 
+                        [dependentImportFields]="dependentImportFields" 
+                        [dependentDestinationValue] = "'JOB'"
+                        (showWarningForDependentFields)="showWarningForDependentFields()">
                     </app-configuration-import-field>
                 </div>
             </div>
             <div>
-                <app-configuration-step-footer [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!importSettingForm.valid"></app-configuration-step-footer>
+                <app-configuration-step-footer 
+                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                    [showBackButton] = "isOnboarding"
+                    [isButtonDisabled]="!importSettingForm.valid"
+                    (navigateToPreviousStep)="navigateBack()"
+                    (save)="save()">
+                </app-configuration-step-footer>
             </div>
         </form>
     </div>
@@ -65,7 +71,7 @@
         (warningAccepted)="acceptDependentFieldWarning($event)"
         [isWarningVisible]="showDependentFieldWarning" 
         [headerText]="'Warning'"
-        [contextText]="'You have imported Cost codes and Cost Types from Sage Intacct by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
+        [contextText]="'You have imported Cost codes and Cost Types from Sage 300 CRE by mapping them to fields in ' + brandingConfig.brandName + '. By turning off the import, you would lose the mappings you\'ve established for these fields.'"
         [iconPath]="'assets/icons/alert_dialog.svg'" 
         [confirmBtnText]="'Continue'">
     </app-configuration-confirmation-dialog>

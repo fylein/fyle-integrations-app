@@ -2,6 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
@@ -22,6 +23,8 @@ export class MappingComponent implements OnInit {
 
   activeModule: MenuItem;
 
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService
@@ -31,7 +34,7 @@ export class MappingComponent implements OnInit {
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
-          if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY') {
+          if (item.source_field!==FyleField.EMPLOYEE && item.source_field!==FyleField.CATEGORY) {
           this.mappingPages.push({
             label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
             routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`

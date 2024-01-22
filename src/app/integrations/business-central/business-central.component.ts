@@ -40,6 +40,7 @@ export class BusinessCentralComponent implements OnInit {
     if (pathName === '/integrations/business_central') {
       const onboardingStateComponentMap = {
         [BusinessCentralOnboardingState.CONNECTION]: '/integrations/business_central/onboarding/landing',
+        [BusinessCentralOnboardingState.COMPANY_SELECTION]: '/integrations/business_central/onboarding/landing',
         [BusinessCentralOnboardingState.EXPORT_SETTINGS]: '/integrations/business_central/onboarding/export_settings',
         [BusinessCentralOnboardingState.IMPORT_SETTINGS]: '/integrations/business_central/onboarding/import_settings',
         [BusinessCentralOnboardingState.ADVANCED_SETTINGS]: '/integrations/business_central/onboarding/advanced_settings',
@@ -50,9 +51,9 @@ export class BusinessCentralComponent implements OnInit {
   }
 
   private setupWorkspace(): void {
-    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: BusinessCentralWorkspace[]) => {
-      if (workspaces.length) {
-        this.storeWorkspaceAndNavigate(workspaces[0]);
+    this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: BusinessCentralWorkspace) => {
+      if (workspaces?.id) {
+        this.storeWorkspaceAndNavigate(workspaces);
       }
     }, () => {
       this.workspaceService.postWorkspace().subscribe((workspaces: any) => {

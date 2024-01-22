@@ -109,6 +109,8 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
         this.trackDateFilter('existing', this.selectedDateFilter);
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       } else {
+        this.dateOptions = AccountingExportModel.getDateOptions();
+        this.skipExportLogForm.controls.start.patchValue([]);
         this.selectedDateFilter = null;
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       }

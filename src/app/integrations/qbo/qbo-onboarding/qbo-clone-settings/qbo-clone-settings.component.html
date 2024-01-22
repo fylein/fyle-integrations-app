@@ -63,7 +63,7 @@
                 [tooltipText]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'">
             </app-clone-setting-field>
 
-            <div class="clone-setting--dependent-field">
+            <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.reimbursableExportType">
                 <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')"
                     [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                     [options]="bankAccounts"
@@ -99,8 +99,8 @@
             </div>
         </div>
 
-        <div class="clone-setting--field">
-            <app-clone-setting-field *ngIf="exportSettingForm.value.reimbursableExportType"
+        <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+            <app-clone-setting-field
                 [iconSource]="'question-square-outline'"
                 [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                 [options]="expenseStateOptions"
@@ -113,8 +113,8 @@
             </app-clone-setting-field>
         </div>
 
-        <div class="clone-setting--field">
-            <app-clone-setting-field *ngIf="exportSettingForm.value.reimbursableExportType"
+        <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+            <app-clone-setting-field
                 [iconSource]="'question-square-outline'"
                 [label]="'How should the expenses be grouped?'"
                 [options]="expenseGroupByOptions"
@@ -127,8 +127,8 @@
             </app-clone-setting-field>
         </div>
 
-        <div class="clone-setting--field">
-            <app-clone-setting-field *ngIf="exportSettingForm.value.reimbursableExportType"
+        <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+            <app-clone-setting-field
                 [iconSource]="'calendar'"
                 [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
                 [options]="reimbursableExpenseGroupingDateOptions"
@@ -168,7 +168,7 @@
                 [tooltipText]="'Select expense export type'">
             </app-clone-setting-field>
 
-            <div class="clone-setting--dependent-field">
+            <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.creditCardExportType">
                 <app-clone-setting-field *ngIf="showNameInJournalOption"
                     [label]="'Name in Journal Entry (CCC)'"
                     [options]="nameInJournalOptions"
@@ -226,8 +226,8 @@
             </div>
         </div>
 
-        <div class="clone-setting--field">
-            <app-clone-setting-field *ngIf="exportSettingForm.value.creditCardExportType"
+        <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+            <app-clone-setting-field
                 [iconSource]="'question-square-outline'"
                 [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                 [options]="expenseStateOptions"
@@ -240,8 +240,8 @@
             </app-clone-setting-field>
         </div>
 
-        <div class="clone-setting--field">
-            <app-clone-setting-field *ngIf="exportSettingForm.value.creditCardExportType"
+        <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+            <app-clone-setting-field
                 [iconSource]="'question-square-outline'"
                 [label]="'How should the expenses be grouped?'"
                 [options]="expenseGroupByOptions"
@@ -254,8 +254,8 @@
             </app-clone-setting-field>
         </div>
 
-        <div class="clone-setting--field">
-            <app-clone-setting-field *ngIf="exportSettingForm.value.creditCardExportType"
+        <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+            <app-clone-setting-field
                 [iconSource]="'calendar'"
                 [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
                 [options]="cccExpenseGroupingDateOptions"
@@ -282,8 +282,8 @@
                 [tooltipText]="'Imported account will be available as Categories in ' + brandingConfig.brandName">
             </app-clone-setting-field>
 
-            <div class="clone-setting--dependent-field">
-                <app-clone-setting-field *ngIf="importSettingForm.value.importCategories"
+            <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.importCategories">
+                <app-clone-setting-field
                     [label]="'Select the accounts from QuickBooks Online to import as categories'"
                     [options]="chartOfAccountTypesList"
                     [placeholder]="'Select Chart of Accouts'"
@@ -395,7 +395,7 @@
                     [mandatoryErrorListName]="'email for error notification'"
                     [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
                     [options]="adminEmails"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [placeholder]="'Select email address'"
                     [formControllerName]="'email'"
                     [isCloneSettingView]="true">
@@ -489,7 +489,7 @@
                     [label]="'Set the line item-level Description Field in QuickBooks Online'"
                     [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'"
                     [options]="defaultMemoOptions"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [placeholder]="'Set description'"
                     [formControllerName]="'memoStructure'"
                     [isCloneSettingView]="true">

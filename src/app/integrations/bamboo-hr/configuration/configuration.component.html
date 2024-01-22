@@ -14,7 +14,7 @@
                 <div class="tw-p-24-px">
                     <div class="tw-flex tw-justify-between">
                         <div class="tw-flex">
-                            <svg-icon-sprite src="document" width="18px" height="20px" class="tw-text-mandatory-field-color tw-mr-20-px"></svg-icon-sprite>
+                            <svg-icon-sprite src="envelope" width="24px" height="24px" class="tw-text-mandatory-field-color tw-mr-20-px"></svg-icon-sprite>
                             <div class="tw-text-14-px tw-w-360-px max-lg:tw-w-260-px">
                                 <p class="tw-text-slightly-normal-text-color">
                                     Send email notification to
@@ -33,7 +33,7 @@
                                         class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
                                         <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px">{{ selectedEmail }}</p>
                                         <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
-                                        <svg-icon-sprite (click)="removeEmail()" src="close" width="10px" height="10px"
+                                        <svg-icon-sprite (click)="removeEmail()" src="cross-small" width="12px" height="12px"
                                             class="tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color"></svg-icon-sprite>
                                     </div>
                                     <div *ngIf="selectedEmail && cofigurationForm.value.emails.length > 1" class="tw-pl-8-px">
@@ -51,7 +51,7 @@
                                             <i class="pi pi-search"></i>
                                             <input type="text" class="!tw-h-32-px !tw-w-300-px" (keyup)="options.filter($event)"
                                                 pInputText placeholder="Search by Name / Email" formControlName="search" />
-                                            <svg-icon-sprite *ngIf="10 > 0" src="clear" width="16px" height="16px"
+                                            <svg-icon-sprite src="cross" width="24px" height="24px"
                                                 class="tw-text-faded-text-color tw-absolute tw-top-10-px tw-right-12-px tw-cursor-pointer"
                                                 (click)="clearSearch(options)">
                                             </svg-icon-sprite>

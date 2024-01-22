@@ -19,8 +19,8 @@ export class BusinessCentralHelperService {
     private toastService: IntegrationsToastService
   ) { }
 
-  refreshBusinessCentralDimensions(): Observable<{}> {
-    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/Business_Central/import_attribut/`, {});
+  refreshBusinessCentralDimensions(refresh: boolean): Observable<{}> {
+    return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/import_attributes/`, {refresh});
   }
 
   importAttributes(isRefresh: boolean): void {

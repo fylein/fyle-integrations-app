@@ -30,6 +30,7 @@ export class QboMainComponent implements OnInit {
   ) { }
 
   refreshDimensions() {
+    this.qboHelperService.refreshQBODimensions().subscribe();
     this.qboHelperService.refreshFyleDimensions().subscribe();
     this.accountingExportService.importExpensesFromFyle('v1').subscribe();
   }

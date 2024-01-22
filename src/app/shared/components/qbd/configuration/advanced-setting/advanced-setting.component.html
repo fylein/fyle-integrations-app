@@ -77,7 +77,7 @@
                             [mandatoryErrorListName]="'email for export'"
                             [subLabel]="'You can select the email address from the given list, or add new one to receive the IIF file via email.'"
                             [options]="adminEmails"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select email address'"
                             [formControllerName]="'email'">
                         </app-email-multi-select-field>
@@ -91,7 +91,7 @@
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'top level memo'"
                     [simpleOptions]="defaultTopMemoOptions"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [placeholder]="'Select Top Memo Type'"
                     [formControllerName]="'topMemoStructure'"></app-configuration-select-field>
                 </div>
@@ -103,7 +103,7 @@
                     [label]="'Set the Line-Item level MEMO field data for QuickBooks Desktop.*'"
                     [subLabel]="'You can customize the data set you would like to export to QuickBooks Desktop\’s <b>Transaction Line-Item level MEMO</b> field while exporting expenses from ' + brandingConfig.brandName + '.'"
                     [options]="defaultMemoFields"
-                    [iconPath]="'expense'"
+                    [iconPath]="'list'"
                     [placeholder]="'Select Memo Types'"
                     [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
                     <div class="tw-p-24-px">

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ClickEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -61,6 +61,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
   constructor(
     private router: Router,
     private trackingService: TrackingService,
@@ -81,7 +83,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   connect(): void {
 
-    if (this.appName === this.AppName.TRAVELPERK || this.appName === this.AppName.BAMBOO_HR) {
+    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR) {
       this.initiateOAuth();
       return;
     } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
@@ -90,9 +92,6 @@ export class AppLandingPageHeaderComponent implements OnInit {
       this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.CONNECT_INTACCT);
     } else if (this.postConnectionRoute === 'sage300/onboarding/connector') {
       this.trackingService.onClickEvent(TrackingApp.SAGE300, ClickEvent.CONNECT_SAGE300);
-    } else if (this.postConnectionRoute === 'business_central/onboarding/connector') {
-      this.initiateOAuth();
-      this.trackingService.onClickEvent(TrackingApp.BUSINESS_CENTRAL, ClickEvent.CONNECT_BUSINESS_CENTRAL);
     }
     this.router.navigate([`/integrations/${this.postConnectionRoute}`]);
   }

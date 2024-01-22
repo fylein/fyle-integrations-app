@@ -4,6 +4,7 @@ import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.mode
 import { WindowService } from './window.service';
 import { NavigationStart, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 export const EXPOSE_INTACCT_NEW_APP = true;
 const MODULE_PATHS = ['mapping', 'export_log', 'configuration', 'intacct', 'qbd'];
@@ -18,6 +19,8 @@ export class EventsService {
   @Output() sageIntacctLogin: EventEmitter<string> = new EventEmitter();
 
   @Output() redirectToOldIntacctApp: EventEmitter<string> = new EventEmitter();
+
+  @Output() qboLogin: EventEmitter<string> = new EventEmitter();
 
   history: string[] = [];
 
@@ -52,6 +55,8 @@ export class EventsService {
         if (EXPOSE_INTACCT_NEW_APP && message.data.redirectUri.includes('sage-intacct')) {
           this.sageIntacctLogin.emit(message.data.redirectUri);
           this.redirectToOldIntacctApp.emit(message.data.redirectUri);
+        } else if (brandingFeatureConfig.exposeOnlyQBOApp && message.data.redirectUri.includes('quickbooks')) {
+          this.qboLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }

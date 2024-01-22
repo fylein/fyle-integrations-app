@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
@@ -26,6 +26,10 @@ export class ExportLogTableComponent implements OnInit {
   brandingConfig: BrandingConfiguration = brandingConfig;
 
   isChildTableVisible: boolean = false;
+
+  AppName = AppName;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     private windowService: WindowService

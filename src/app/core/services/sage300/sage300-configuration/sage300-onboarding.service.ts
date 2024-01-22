@@ -21,7 +21,6 @@ export class Sage300OnboardingService {
     {
       active: false,
       completed: false,
-      number: 1,
       step: 'Connect to Sage 300 CRE',
       icon: 'connector',
       route: '/integrations/sage300/onboarding/connector',
@@ -34,7 +33,6 @@ export class Sage300OnboardingService {
     {
       active: false,
       completed: false,
-      number: 2,
       step: 'Export Settings',
       icon: 'export-setting',
       route: '/integrations/sage300/onboarding/export_settings',
@@ -47,7 +45,6 @@ export class Sage300OnboardingService {
     {
       active: false,
       completed: false,
-      number: 3,
       step: 'Import Settings',
       icon: 'import-setting',
       route: '/integrations/sage300/onboarding/import_settings',
@@ -60,7 +57,6 @@ export class Sage300OnboardingService {
     {
       active: false,
       completed: false,
-      number: 4,
       step: 'Advanced Settings',
       icon: 'advanced-setting',
       route: '/integrations/sage300/onboarding/advanced_settings',

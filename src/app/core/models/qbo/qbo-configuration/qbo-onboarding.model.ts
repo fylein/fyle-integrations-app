@@ -1,3 +1,4 @@
+import { brandingFeatureConfig } from "src/app/branding/branding-config";
 import { QBOOnboardingState } from "../../enum/enum.model";
 import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
@@ -12,11 +13,10 @@ type QBOOnboardingStepperMap = {
 }
 
 export class QBOOnboardingModel {
-    private readonly onboardingSteps: OnboardingStepper[] = [
+    private onboardingSteps: OnboardingStepper[] = [
         {
           active: false,
           completed: false,
-          number: 1,
           step: 'Connect to QuickBooks Online',
           icon: 'connector',
           route: '/integrations/qbo/onboarding/connector',
@@ -29,7 +29,6 @@ export class QBOOnboardingModel {
         {
             active: false,
             completed: false,
-            number: 2,
             step: 'Map Employees',
             icon: 'export-setting',
             route: '/integrations/qbo/onboarding/employee_settings',
@@ -42,7 +41,6 @@ export class QBOOnboardingModel {
         {
           active: false,
           completed: false,
-          number: 3,
           step: 'Export Settings',
           icon: 'export-setting',
           route: '/integrations/qbo/onboarding/export_settings',
@@ -55,7 +53,6 @@ export class QBOOnboardingModel {
         {
           active: false,
           completed: false,
-          number: 4,
           step: 'Import Settings',
           icon: 'export-setting',
           route: '/integrations/qbo/onboarding/import_settings',
@@ -68,7 +65,6 @@ export class QBOOnboardingModel {
         {
           active: false,
           completed: false,
-          number: 5,
           step: 'Advanced Settings',
           icon: 'advanced-setting',
           route: '/integrations/qbo/onboarding/advanced_settings',
@@ -101,6 +97,10 @@ export class QBOOnboardingModel {
 
         for (let index = this.onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {
           this.onboardingSteps[index - 1].completed = true;
+        }
+
+        if (!brandingFeatureConfig.featureFlags.mapEmployees) {
+          this.onboardingSteps.splice(1, 1);
         }
 
         return this.onboardingSteps;

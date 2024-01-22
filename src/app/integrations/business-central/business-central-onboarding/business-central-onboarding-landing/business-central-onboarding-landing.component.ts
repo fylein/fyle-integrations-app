@@ -51,10 +51,9 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
 
   connectBusinessCentral(): void {
     this.businessCentralConnectionInProgress = true;
-    const url = `${environment.business_central_authorize_uri}client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
-
+    const url = `https://login.microsoftonline.com/organizations/oauth2/authorize?resource=https://api.businesscentral.dynamics.com&client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
-      const code = callbackURL.split('code=')[1].split('&')[0];
+      const code = callbackURL.split('code=')[1]?.split('&')[0];
       this.postBusinessCentralCredentials(code);
     });
     this.helperService.oauthHandler(url);
@@ -62,11 +61,12 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
 
   private postBusinessCentralCredentials(code: string): void {
     const payload: BusinessCentralConnectorPost = BusinessCentralConnectorModel.constructPayload(code, +this.workspaceService.getWorkspaceId());
-
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe(() => {
+      this.businessCentralHelperService.refreshBusinessCentralDimensions(true).subscribe(() => {
         this.businessCentralConnectionInProgress = false;
         this.isIntegrationConnected = true;
-        this.router.navigate([`/integrations/business_central/main/dashboard`]);
+        this.checkProgressAndRedirect(code);
+      });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
       if (errorMessage === 'Please choose the correct Dynamic 360 Business Central account') {
@@ -80,14 +80,8 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
 
   private checkProgressAndRedirect(code: string): void {
     const onboardingState: BusinessCentralOnboardingState = this.workspaceService.getOnboardingState();
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        code
-      }
-    };
-
     if (onboardingState !== BusinessCentralOnboardingState.COMPLETE) {
-      this.router.navigate(['integrations/qbo/onboarding/connector'], navigationExtras);
+      this.router.navigate(['integrations/business_central/onboarding/connector']);
     } else {
       this.postBusinessCentralCredentials(code);
     }

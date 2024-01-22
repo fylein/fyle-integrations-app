@@ -12,7 +12,7 @@ body {
 }
 
 body {
-    @apply tw-m-0-px tw-text-normal-text-color tw-font-aktiv-grotesk tw-text-16-px;
+    @apply tw-m-0-px tw-text-normal-text-color tw-font-primary tw-text-16-px;
 }
 
 p {
@@ -37,6 +37,10 @@ p {
 
 .pi-times:before {
     @apply tw-text-12-px tw-text-placeholder #{!important}
+}
+
+.p-component {
+    @apply tw-font-primary #{!important};
 }
 
 // Button CTA
@@ -67,7 +71,7 @@ p {
 
 // Input text
 .p-inputtext {
-    @apply tw-text-14-px tw-border-box-color #{!important};
+    @apply tw-font-primary tw-text-14-px tw-border-box-color #{!important};
 }
 
 .p-inputtext:enabled:focus-visible {
@@ -141,6 +145,11 @@ p {
 .p-dropdown {
     @apply lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] #{!important};
 }
+
+.p-dropdown:disabled {
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-border #{!important} ;
+}
+
 .p-dropdown .p-dropdown-label {
     &.p-inputtext {
         @apply tw-px-3 tw-py-2 #{!important};
@@ -212,7 +221,7 @@ p {
 }
 
 .p-multiselect-panel {
-    @apply tw-w-320-px ;
+    @apply tw-w-300-px ;
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {
@@ -330,7 +339,7 @@ p {
 }
 
 .p-tabmenu {
-    @apply tw-font-aktiv-grotesk tw-font-500 #{!important};
+    @apply tw-font-primary tw-font-500 #{!important};
 }
 
 .p-tabmenu .p-tabmenu-nav {

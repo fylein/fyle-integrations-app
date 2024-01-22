@@ -105,14 +105,14 @@
             <div *ngIf="showDateField2()" class="tw-w-296-px">
               <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
-            <img class="delete-icon" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
+            <svg-icon-sprite src="bin" width="24px" height="24px" class="tw-text-sub-text-color delete-icon" [pTooltip]="'Remove Condition'" (click)="remCondition()"></svg-icon-sprite>
           </div>
           <div class=" tw-text-mandatory-field-color" *ngIf="checkValidationCondition()">
             <p>*Condition selected should be distinct.</p>
           </div>
         </div>
         <div class="tw-flex items-center tw-text-mandatory-field-color tw-pt-12-px tw-pb-24-px" *ngIf="showAddButton">
-          <img src="assets/icons/add.svg" (click)="updateAdditionalFilterVisibility(true)">
+          <svg-icon-sprite src="add" width="18px" height="18px" (click)="updateAdditionalFilterVisibility(true)"></svg-icon-sprite>
           <a class="add-row-text tw-cursor-pointer tw-pl-8-px tw-text-14-px" (click)="updateAdditionalFilterVisibility(true)">
             Add More Fields
           </a>

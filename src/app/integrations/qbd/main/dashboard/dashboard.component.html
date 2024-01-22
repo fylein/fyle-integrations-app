@@ -1,5 +1,5 @@
-<div class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
-<div class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-1 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
+<div *ngIf="isGradientAllowed" class="tw-absolute tw-bg-header-2 tw-h-110-px tw-w-[100%] tw-z-[-1]"></div>
 
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
@@ -29,15 +29,15 @@
             <div *ngIf="!exportPresent" class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-flex tw-items-start">
                     <div class="tw-pr-14-px">
-                        <img src="assets/icons/pinktick.svg" >
+                        <img *ngIf="illustrationsAllowed" src="assets/illustrations/pinktick.svg" >
                     </div>
                     <div>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-normal-text-color">You are all caught up!</h3>
-                        <h5 class="tw-text-14-px tw-font-400 tw-text-faded-text-color tw-pt-2-px"> There are no expense in {{ brandingConfig.brandName }} as per the configuration setup to export.</h5>
+                        <h3 class="tw-text-20-px tw-font-400 tw-text-normal-text-color">You are all caught up!</h3>
+                        <h5 class="tw-text-14-px tw-font-600 tw-text-faded-text-color tw-pt-4-px"> There are no expense in {{ brandingConfig.brandName }} as per the configuration setup to export.</h5>
                     </div>
                 </div>
                 <div>
-                    <img src="assets/icons/export.svg" alt="">
+                    <img src="assets/illustrations/export.svg" alt="">
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
             </div>
             <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-16-px tw-rounded-4-px drop-down">
                 <div>
-                    <svg-icon-sprite src="calender" width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
+                    <svg-icon-sprite src="calendar" width="24px" height="24px" class="tw-text-placeholder"></svg-icon-sprite>
                 </div>
                 <p-dropdown appendTo="body" [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
                     <ng-template let-item pTemplate="selectedItem">
@@ -100,7 +100,7 @@
                             <td>{{getExpenseType(exports.fund_source)| titlecase }}</td>
                             <td>
                                 <div *ngIf="!downloadingExportId[i]">
-                                    <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><svg-icon-sprite class="tw-pt-5-px" src="download" width="20px" height="20px"></svg-icon-sprite></button>
+                                    <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><svg-icon-sprite class="tw-pt-5-px" src="download" width="24px" height="24px"></svg-icon-sprite></button>
                                 </div>
                                 <div *ngIf="downloadingExportId[i]" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>

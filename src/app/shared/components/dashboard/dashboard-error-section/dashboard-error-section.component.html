@@ -27,7 +27,7 @@
                                     Resolve
                                 </button>
                                 <div class="tw-flex" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
-                                    <svg-icon-sprite src="green-tick" width="18px" height="18px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
+                                    <svg-icon-sprite src="check-circle-outline-standard" width="24px" height="24px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
                                     <p class="tw-text-faded-text-color tw-text-14-px">
                                     Resolved
                                     </p>
@@ -49,7 +49,7 @@
                                     Resolve
                                 </button>
                                 <div class="tw-flex" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
-                                    <svg-icon-sprite src="green-tick" width="18px" height="18px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
+                                    <svg-icon-sprite src="check-circle-outline-standard" width="24px" height="24px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
                                     <p class="tw-text-faded-text-color tw-text-14-px">
                                     Resolved
                                     </p>
@@ -92,7 +92,7 @@
     <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="isAccountingErrorDialogVisible" [position]="'top-right'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
         <p-header>
             <p class="tw-line-height-20">{{appName}} Error</p>
-            <h3 class="sub-header">{{errorDetail}}</h3>
+            <h3 class="dialog-sub-header">{{errorDetail}}</h3>
         </p-header>
         <app-dashboard-accounting-error-dialog  [isLoading]="isLoading" [errorExpenses]="errorExpenses"></app-dashboard-accounting-error-dialog>
     </p-dialog>

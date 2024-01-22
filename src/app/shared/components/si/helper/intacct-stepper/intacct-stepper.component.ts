@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
@@ -22,7 +23,6 @@ export class IntacctStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 1,
       step: 'Connect to Sage Intacct',
       icon: 'connector',
       route: 'connector',
@@ -34,7 +34,6 @@ export class IntacctStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 2,
       step: 'Export Settings',
       icon: 'export-setting',
       route: 'export_settings',
@@ -46,7 +45,6 @@ export class IntacctStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 3,
       step: 'Import Settings',
       icon: 'import-setting',
       route: 'import_settings',
@@ -58,7 +56,6 @@ export class IntacctStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 4,
       step: 'Advanced Settings',
       icon: 'advanced-setting',
       route: 'advanced_settings',
@@ -68,6 +65,8 @@ export class IntacctStepperComponent implements OnInit {
       }
     }
   ];
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   private updateActiveAndCompletedSteps(): void {
     this.onboardingSteps.forEach(step => {

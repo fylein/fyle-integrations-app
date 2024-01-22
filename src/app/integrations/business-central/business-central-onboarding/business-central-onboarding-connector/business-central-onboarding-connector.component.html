@@ -16,14 +16,15 @@
             <div>
                 <app-configuration-connector
                     [accountingAppTitle]="'Dynamics 365 Business Central'"
-                    [accountingCompanyName]="'Dynamics 365 Business Central'"
-                    [fyleOrgName]="'Fyle Testing Org'"
+                    [accountingCompanyName]="businessCentralCompanyName"
+                    [accountingCompanyList] = "businessCentralCompanyOptions"
+                    [fyleOrgName]="fyleOrgName"
                     [accountingCompanyTokenExpired]="businessCentralTokenExpired"
                     [isAccountingCompanyConnected]="isBusinessCentralConnected"
                     [showDisconnect]="showDisconnectBusinessCentral"
                     [accountingCompanyConnectionInProgress]="businessCentralConnectionInProgress"
                     [switchLinkText]="'Switch Entity'"
-                    (connectCompany)="connectBusinessCentral()"
+                    (connectCompany)="connectBusinessCentralCompany($event)"
                     (switchCompany)="disconnectBusinessCentral()">
                 </app-configuration-connector>
                 <app-configuration-confirmation-dialog
@@ -37,7 +38,7 @@
                 </app-configuration-confirmation-dialog>
             </div>
             <div>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()" ></app-configuration-step-footer>
+                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="save()" ></app-configuration-step-footer>
              </div>
         </div>
     </div>

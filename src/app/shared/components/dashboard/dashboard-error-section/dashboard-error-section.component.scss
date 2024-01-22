@@ -19,14 +19,10 @@
     @apply tw-flex tw-items-start tw-justify-between;
 }
 
-.sub-header {
-    @apply tw-text-14-px tw-mt-8-px tw-font-400 tw-text-faded-text-color;
-}
-
 :host  ::ng-deep .p-dialog {
     @apply tw-max-h-full tw-m-0 #{!important};
   }
 
 .dialog-sub-header {
-    @apply tw-text-14-px tw-font-400 tw-w-400-px tw-mt-8-px tw-text-faded-text-color;
+    @apply tw-text-14-px tw-font-400 tw-w-674-px tw-mt-8-px tw-text-faded-text-color #{!important};
 }

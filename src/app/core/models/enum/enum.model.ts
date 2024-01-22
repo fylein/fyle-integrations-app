@@ -24,6 +24,7 @@ export enum AccountingIntegrationApp {
 }
 
 export enum InAppIntegration {
+  QBO = 'QuickBooks Online',
   BAMBOO_HR = 'Bamboo HR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'TravelPerk',
@@ -239,6 +240,7 @@ export enum ExportDateType {
   APPROVAL_DATE = 'approved_at',
   VERIFIED_AT = 'verified_at',
   APPROVED_AT = 'approved_at',
+  CREATED_AT = 'created_at'
 }
 
 export enum FyleField {
@@ -249,6 +251,7 @@ export enum FyleField {
 
 export enum ExpenseGroupingFieldOption {
   CLAIM_NUMBER = 'claim_number',
+  REPORT_ID = 'report_id',
   SETTLEMENT_ID = 'settlement_id',
   EXPENSE_ID = 'expense_id',
   EXPENSE = 'EXPENSE',
@@ -369,7 +372,8 @@ export enum BusinessCentralField {
   DEPARTMENT = 'DEPARTMENT',
   CLASS = 'CLASS',
   TAX_DETAIL = 'TAX_DETAIL',
-  JOB = 'JOB'
+  JOB = 'JOB',
+  COMPANY = 'COMPANY',
 }
 
 export enum SageIntacctField {
@@ -535,12 +539,18 @@ export enum IntegrationName {
   SAGE300 = 'SAGE300'
 }
 
+
 export enum BusinessCentralOnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
-  COMPLETE = 'COMPLETE'
+  COMPLETE = 'COMPLETE',
+  COMPANY_SELECTION = 'COMPANY_SELECTION'
+}
+
+export enum NameInJEField {
+  MERCHANT = 'MERCHANT',
 }
 
 export enum FundSource {

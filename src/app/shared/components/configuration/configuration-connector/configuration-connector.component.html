@@ -1,33 +1,53 @@
-<div class="tw-flex tw-justify-center tw-items-center">
-    <div class="tw-text-center tw-py-80-px tw-pr-130-px tw-border-r-1-px  right-margin-style tw-items-center">
+<div class="tw-flex tw-justify-around tw-items-center">
+    <div class="tw-text-center tw-py-32-px tw-px-70-px tw-items-center">
         <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-18-px">
-            {{brandingConfig.brandName}}
+            {{brandingConfig.brandName | uppercase}}
         </h5>
         <h3 class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
             {{ fyleOrgName }}
         </h3>
     </div>
     <div>
-        <img src="assets/gifs/disconnect.gif" height="100px" width="100px"/>
+        <img src="assets/illustrations/vertical-divider.svg"/>
     </div>
-    <div class="tw-text-center tw-py-70-px tw-pl-130-px left-margin-style tw-items-center">
-        <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-18-px">
-            {{ accountingAppTitle }}
+    <div class="tw-py-32-px tw-px-70-px tw-items-center">
+        <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-16-px tw-text-center ">
+            {{ accountingAppTitle | uppercase }}
         </h5>
-        <h3 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyName" class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px">
+        <h3 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyName" class="tw-text-18-px tw-text-normal-text-color tw-font-500 tw-pb-16-px tw-text-center ">
             {{ accountingCompanyName }}
         </h3>
+        <div *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyName" class="tw-flex tw-items-center tw-justify-center">
+            <div>
+                <div class="tw-flex tw-items-center tw-justify-center">
+                    <p-dropdown appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'" 
+                        [(ngModel)]="companyName" (onChange)="connect()"
+                        placeholder="Select Entity">
+                        <ng-template let-option pTemplate="item">
+                            <div
+                                [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}">
+                                {{option.value}}
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center">
+                                <span>
+                                    {{ item.value }}
+                                </span>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                </div>
+                <div class="tw-w-300-px tw-break-words tw-text-center tw-py-16-px">
+                    <span class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Please select a Location (Entity) from {{accountingAppTitle}} to proceed further.</span>
+                </div>
+            </div>
+        </div>
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px">
             <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
         </div>
-        <div class="tw-text-14-px tw-font-500">
-            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" class="tw-text-faded-text-color ">
-                No {{ accountingAppTitle }} is connected yet.
-            </h4>
-            <h4 *ngIf="!isAccountingCompanyConnected && !accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
-                Connect to {{ accountingAppTitle }}
-            </h4>
-            <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect" class="tw-text-faded-text-color">
+        <div class="tw-text-14-px tw-font-500 tw-text-center">
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect && accountingCompanyName" class="tw-text-faded-text-color">
                 Not the company that you wish to connect with?
             </h4>
             <h4 *ngIf="accountingCompanyConnectionInProgress" class="tw-text-faded-text-color tw-max-w-300-px tw-overflow-hidden tw-break-all">
@@ -39,7 +59,7 @@
             <h4 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" (click)="connect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
                 Re-Connect to {{ accountingAppTitle }}
             </h4>
-            <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect" (click)="disconnect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
+            <h4 *ngIf="!accountingCompanyConnectionInProgress && showDisconnect && accountingCompanyName" (click)="disconnect()" class="tw-text-mandatory-field-color tw-cursor-pointer">
                 {{ switchLinkText }}
             </h4>
         </div>

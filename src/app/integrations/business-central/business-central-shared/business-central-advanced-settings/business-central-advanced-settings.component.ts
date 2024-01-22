@@ -12,7 +12,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { BusinessCentralAdvancedSettingsGet, BusinessCentralAdvancedSettingsModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-advanced-settings.model';
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, CustomOperatorOption, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-business-central-advanced-settings',
@@ -69,6 +69,18 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private router: Router
   ) { }
+
+  getSkipExportValue() {
+    if (this.advancedSettingForm.controls.skipExport) {
+      if (this.skipExportForm.controls.condition1.value) {
+        if (this.skipExportForm.controls.condition2.value) {
+          return (this.skipExportForm.controls.value1.value || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsEmpty) && (this.skipExportForm.controls.value2.value || this.skipExportForm.controls.operator2.value === CustomOperatorOption.IsEmpty) ? true : false;
+        }
+        return this.skipExportForm.controls.value1.value || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsEmpty ? true : false;
+      }
+    }
+    return true;
+  }
 
   refreshDimensions(isRefresh: boolean) {
     this.helperService.importAttributes(isRefresh);
@@ -199,6 +211,10 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSettingsAndSetupForm();
+  }
+
+  navigateBack(): void {
+    this.router.navigate([`/integrations/business_central/onboarding/import_settings`]);
   }
 
 }

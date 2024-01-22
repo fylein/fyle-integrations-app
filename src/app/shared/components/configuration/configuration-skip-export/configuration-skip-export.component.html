@@ -89,6 +89,8 @@
               </p-dropdown>                            
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
               [customErrorMessage]="'Please select the condition'"></app-mandatory-error-message>
+              <app-mandatory-error-message *ngIf="checkValidationCondition()"
+              [customErrorMessage]="'Condition selected should be distinct.'"></app-mandatory-error-message>
             </div>
             <div class="tw-mr-24-px">
               <p-dropdown appendTo="body" [options]="operatorFieldOptions2" formControlName="operator2" placeholder="Select Operator"></p-dropdown>
@@ -105,14 +107,11 @@
             <div *ngIf="showDateField(2)" class="tw-w-296-px">
               <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
-            <img class="delete-icon" src="assets/icons/delete.svg" (click)="remCondition()" p-tooltip="Remove Condition">
-          </div>
-          <div class=" tw-text-mandatory-field-color" *ngIf="checkValidationCondition()">
-            <p>*Condition selected should be distinct.</p>
+            <svg-icon-sprite src="bin" width="24px" height="24px" class="tw-text-sub-text-color delete-icon" [pTooltip]="'Remove Condition'" (click)="remCondition()"></svg-icon-sprite>
           </div>
         </div>
         <div class="tw-flex items-center tw-text-mandatory-field-color tw-pt-12-px tw-pb-24-px" *ngIf="showAddButton">
-          <img src="assets/icons/add.svg" (click)="updateAdditionalFilterVisibility(true)">
+          <svg-icon-sprite src="add" width="18px" height="18px" (click)="updateAdditionalFilterVisibility(true)"></svg-icon-sprite>
           <a class="add-row-text tw-cursor-pointer tw-pl-8-px tw-text-14-px" (click)="updateAdditionalFilterVisibility(true)">
             Add More Fields
           </a>

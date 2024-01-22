@@ -2,6 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
@@ -16,11 +17,13 @@ export class BusinessCentralMappingComponent implements OnInit {
   isLoading: boolean;
 
   mappingPages: MenuItem[] = [
-    {label: 'Employee', routerLink: '/integrations/business-central/main/mapping/employee'},
-    {label: 'Category', routerLink: '/integrations/business-central/main/mapping/category'}
+    {label: 'Employee', routerLink: '/integrations/business_central/main/mapping/employee'},
+    {label: 'Category', routerLink: '/integrations/business_central/main/mapping/category'}
   ];
 
   activeModule: MenuItem;
+
+  readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
     private router: Router,
@@ -32,10 +35,10 @@ export class BusinessCentralMappingComponent implements OnInit {
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
         response.results.forEach((item) => {
-          if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY') {
+          if (item.source_field!==FyleField.EMPLOYEE && item.source_field!==FyleField.CATEGORY) {
             this.mappingPages.push({
               label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
-              routerLink: `/integrations/business-central/main/mapping/${item.source_field.toLowerCase()}`
+              routerLink: `/integrations/business_central/main/mapping/${item.source_field.toLowerCase()}`
             });
           }
         });

@@ -32,7 +32,7 @@
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
                             [options]="expensesExportTypeOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'reimbursableExportType'"
                             [appName]="appName"
@@ -41,20 +41,6 @@
                             [appName]="appName"
                             [isDisabled]="true">
                         </app-configuration-select-field>
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType===Sage300ExportType.PURCHASE_INVOICE">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Default Vendor Name'"
-                                [label]="'Set the Default Vendor as?'"
-                                [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the vendor selected here.'"
-                                [destinationAttributes]="vendorOptions"
-                                [iconPath]="'expense'"
-                                [placeholder]="'Select default vendor'"
-                                [appName]="appName"
-                                [formControllerName]="'defaultVendorName'">
-                            </app-configuration-select-field>
-                        </div>
                         <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -63,7 +49,7 @@
                                 [label]="'Set the Default Reimbursable Credit Card Account as?'"
                                 [subLabel]="'The integration will credit the account selected here for Reimbursable Expenses exported as Direct Cost.'"
                                 [destinationAttributes]="creditCardAccountOptions"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select default reimbursable credit card account'"
                                 [appName]="appName"
                                 [formControllerName]="'defaultReimbursableCCCAccountName'">
@@ -75,7 +61,7 @@
                                 [label]="'Set the Default Debit Card Account as?'"
                                 [subLabel]="'The integration will debit the account selected here for All Expenses exported as Direct Cost.'"
                                 [destinationAttributes]="debitCardAccountOptions"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select default debit card account'"
                                 [appName]="appName"
                                 [formControllerName]="'defaultDebitCardAccountName'">
@@ -88,7 +74,7 @@
                                 [destinationAttributes]="sage300Jobs"
                                 [subLabel]="'The integration will assign the account to the selected Default Job.'"
                                 [showClearIcon]="true"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select default Job'"
                                 [appName]="appName"
                                 [formControllerName]="'defaultJobName'">
@@ -103,7 +89,7 @@
                         [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                         [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
                         [options]="reimbursableExpenseState"
-                        [iconPath]="'expense'"
+                        [iconPath]="'list'"
                         [placeholder]="'Select export state'"
                         [appName]="appName"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
@@ -116,23 +102,25 @@
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
                         [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
                         [options]="reimbursableExpenseGroupingDateOptions"
-                        [iconPath]="'calender'"
+                        [iconPath]="'calendar'"
                         [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date'"
                         [appName]="appName"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'how expenses to be grouped'"
-                        [label]="'How should the expenses be grouped?'"
-                        [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
-                        [options]="expenseGroupByOptions"
-                        [iconPath]="'questionmark'"
-                        [placeholder]="'Select expense grouping'"
-                        [appName]="appName"
-                        [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'how expenses to be grouped'"
+                            [label]="'How should the expenses be grouped?'"
+                            [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                            [options]="expenseGroupByOptions"
+                            [iconPath]="'questionmark'"
+                            [placeholder]="'Select expense grouping'"
+                            [appName]="appName"
+                            [formControllerName]="'reimbursableExportGroup'"
+                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
+                        </app-configuration-select-field>
                     </div>
                 </div>
             </div>
@@ -153,7 +141,7 @@
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
                             [options]="expensesExportTypeOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select expense export module'"
                             [formControllerName]="'cccExportType'"
                             [appName]="appName"
@@ -170,7 +158,7 @@
                                 [label]="'Set the Default Credit Account as?'"
                                 [subLabel]="'The integration will credit the account selected here for Corporate Card Expenses exported as Direct Cost.'"
                                 [destinationAttributes]="creditCardAccountOptions"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select default credit account'"
                                 [appName]="appName"
                                 [formControllerName]="'defaultCreditCardCCCAccountName'">
@@ -183,7 +171,7 @@
                                     [label]="'Set the Default Debit Card Account as?'"
                                     [subLabel]="'The integration will debit the account selected here for All Expenses exported as Direct Cost.'"
                                     [destinationAttributes]="debitCardAccountOptions"
-                                    [iconPath]="'expense'"
+                                    [iconPath]="'list'"
                                     [placeholder]="'Select default debit card account'"
                                     [appName]="appName"
                                     [formControllerName]="'defaultDebitCardAccountName'">
@@ -196,14 +184,14 @@
                                     [destinationAttributes]="sage300Jobs"
                                     [subLabel]="'The integration will assign the account to the selected Job.'"
                                     [showClearIcon]="true"
-                                    [iconPath]="'expense'"
+                                    [iconPath]="'list'"
                                     [placeholder]="'Select Default Job'"
                                     [appName]="appName"
                                     [formControllerName]="'defaultJobName'">
                                 </app-configuration-select-field>
                             </div>
                         </div>
-                        <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE && exportSettingForm.value.reimbursableExportType!==Sage300ExportType.PURCHASE_INVOICE">
+                        <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -211,7 +199,7 @@
                                 [label]="'Set the Default Vendor as?'"
                                 [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the vendor selected here.'"
                                 [destinationAttributes]="vendorOptions"
-                                [iconPath]="'expense'"
+                                [iconPath]="'list'"
                                 [placeholder]="'Select default vendor'"
                                 [appName]="appName"
                                 [formControllerName]="'defaultVendorName'">
@@ -226,7 +214,7 @@
                         [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                         [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Payment processing) or when the payment has been settled (Paid).'"
                         [options]="cccExpenseState"
-                        [iconPath]="'expense'"
+                        [iconPath]="'list'"
                         [placeholder]="'Select export state'"
                         [appName]="appName"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
@@ -239,29 +227,37 @@
                         [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
                         [options]="cccExpenseGroupingDateOptions"
-                        [iconPath]="'calender'"
+                        [iconPath]="'calendar'"
                         [placeholder]="'Select date'"
                         [appName]="appName"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'how expenses to be grouped'"
-                        [label]="'How should the expenses be grouped?'"
-                        [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
-                        [options]="expenseGroupByOptions"
-                        [iconPath]="'questionmark'"
-                        [placeholder]="'Select expense grouping'"
-                        [appName]="appName"
-                        [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'how expenses to be grouped'"
+                            [label]="'How should the expenses be grouped?'"
+                            [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                            [options]="expenseGroupByOptions"
+                            [iconPath]="'questionmark'"
+                            [placeholder]="'Select expense grouping'"
+                            [appName]="appName"
+                            [formControllerName]="'cccExportGroup'"
+                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
+                        </app-configuration-select-field>
                     </div>
                 </div>
             </div>
         </div>
         <div>
-            <app-configuration-step-footer [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingForm.valid"></app-configuration-step-footer>
+            <app-configuration-step-footer 
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                [showBackButton] = "isOnboarding"
+                [isButtonDisabled]="!exportSettingForm.valid"
+                (navigateToPreviousStep)="navigateBack()"
+                (save)="save()">
+            </app-configuration-step-footer>
         </div>
     </form>
 </div>

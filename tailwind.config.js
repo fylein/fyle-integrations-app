@@ -14,7 +14,6 @@ const customColors = {
   'mandatory-field-color': 'var(--mandatory-field-color)',
   'disabled-bg-color': 'var(--disabled-bg-color)',
   'configuration-bg': 'var(--configuration-bg)',
-  'dropdown-hover': 'var(--dropdown-hover)',
   'check-box': 'var(--check-box)',
   'info-section': 'var(--info-section)',
   'info': 'var(--info)',
@@ -29,6 +28,8 @@ const customColors = {
   'unmapped-red-bg': 'var(--unmapped-red-bg)',
   'pink': 'var(--pink)',
   'pink-box-border': 'var(--pink-box-border)',
+  'bg-warning-lighter': 'var(--bg-warning-lighter)',
+  'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
 }
 
 module.exports = {
@@ -87,8 +88,8 @@ module.exports = {
       },
       keyframes: {
         'p-progress-spinner-color': {
-          '0%': { 'stroke': '#ff3863'},
-          '100%': { 'stroke': '#ff3863'}
+          '0%': { 'stroke': 'var(--mandatory-field-color)'},
+          '100%': { 'stroke': 'var(--mandatory-field-color)'}
         },
         'p-progress-spinner-cta-color': {
           '0%': { 'stroke': '#ffffff'},
@@ -280,6 +281,7 @@ module.exports = {
         '220-px': '220px',
         '226-px': '226px',
         '240-px': '240px',
+        '242-px': '242px',
         '246-px': '246px',
         '260-px': '260px',
         '270-px': '270px',
@@ -298,6 +300,7 @@ module.exports = {
         '452-px': '452px',
         '466-px': '466px',
         '600-px': '600px',
+        '674-px': '674px',
         '800-px': '800px',
         '960-px': '960px',
         '4-vw': '4vw',
@@ -324,7 +327,8 @@ module.exports = {
       },
       maxWidth: {
         '20-px': '20px',
-        '300-px': '300px'
+        '300-px': '300px',
+        '600-px': '600px'
       },
       borderRadius: {
         '0-px': '0px',
@@ -363,12 +367,12 @@ module.exports = {
         ...customColors
       },
       backgroundImage: {
-        'btn-cta': 'linear-gradient(162.38deg, #FF3366 3.01%, #FE5196 111.5%)',
+        'btn-cta': 'linear-gradient(162.38deg, var(--mandatory-field-color) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
         'header-1': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)',
         'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)'
       },
       fontFamily: {
-        'aktiv-grotesk': '"aktiv-grotesk", sans-serif'
+        'primary': 'var(--font-primary)',
       },
       boxShadow: {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',

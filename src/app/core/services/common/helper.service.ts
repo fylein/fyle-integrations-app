@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
-import { AppUrl, ExpenseState, ProgressPhase, Sage300ExportType } from '../../models/enum/enum.model';
+import { AppUrl, BusinessCentralExportType, ExpenseState, FyleField, ProgressPhase, Sage300ExportType } from '../../models/enum/enum.model';
 import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
@@ -112,6 +112,10 @@ export class HelperService {
   setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
       form.controls[values.formController].valueChanges.subscribe((isSelected) => {
+        const urlSplit = this.router.url.split('/');
+        if (urlSplit[2] === AppUrl.BUSINESS_CENTRAL && values.formController === 'reimbursableExportType' && isSelected === BusinessCentralExportType.PURCHASE_INVOICE) {
+          form.controls.reimbursableEmployeeMapping.patchValue(FyleField.VENDOR);
+        }
         Object.entries(values.requiredValue).forEach(([key, value]) => {
           if (key === isSelected) {
             value.forEach((element: any) => {
