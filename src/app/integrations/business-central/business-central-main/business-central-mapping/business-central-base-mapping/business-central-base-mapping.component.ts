@@ -68,7 +68,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
       this.mappingService.getExportSettings()
     ]).subscribe(([mappingSettingsResponse, exportSettingsResponse]) => {
       this.destinationField = this.getDestinationField(exportSettingsResponse, mappingSettingsResponse.results);
-      this.employeeFieldMapping = (exportSettingsResponse.employee_mapping as unknown as FyleField);
+      this.employeeFieldMapping = (exportSettingsResponse.employee_field_mapping as unknown as FyleField);
       this.reimbursableExpenseObject = exportSettingsResponse.reimbursable_expenses_object;
       this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;

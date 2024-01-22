@@ -97,7 +97,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
 
   connectBusinessCentral(): void {
     this.businessCentralConnectionInProgress = true;
-    const url = `${environment.business_central_authorize_uri}client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
+    const url = `https://login.microsoftonline.com/organizations/oauth2/authorize?resource=https://api.businesscentral.dynamics.com&client_id=${environment.business_central_oauth_client_id}&redirect_uri=${environment.business_central_oauth_redirect_uri}&state=business_central_local_redirect&response_type=code`;
 
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
       const code = callbackURL.split('code=')[1].split('&')[0];

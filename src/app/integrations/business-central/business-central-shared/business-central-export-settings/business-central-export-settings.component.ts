@@ -144,8 +144,8 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   }
 
   getExportDate(options: BusinessCentralExportSettingFormOption[]): BusinessCentralExportSettingFormOption[]{
-    if (this.exportSettingForm.value.reimbursableExpenseState === ExpenseGroupedBy.REPORT) {
-      return options.filter(option => option.value !== ExportDateType.SPENT_AT);
+    if (this.exportSettingForm.value.reimbursableExportGroup === ExpenseGroupedBy.REPORT) {
+      return options.filter(option => option.value === ExportDateType.LAST_SPENT_AT);
     }
     return options;
   }
