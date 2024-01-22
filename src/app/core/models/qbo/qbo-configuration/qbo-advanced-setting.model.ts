@@ -5,7 +5,7 @@ import { QBOPaymentSyncDirection } from "../../enum/enum.model";
 import { ExportSettingValidatorRule } from "../../common/export-settings.model";
 import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
-import { brandingConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 
 
 export type QBOAdvancedSettingWorkspaceGeneralSetting = {
@@ -119,7 +119,7 @@ export class QBOAdvancedSettingModel extends HelperUtility {
         sync_qbo_to_fyle_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === QBOPaymentSyncDirection.QBO_TO_FYLE ? true : false,
         auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
         auto_create_merchants_as_vendors: advancedSettingsForm.get('autoCreateMerchantsAsVendors')?.value,
-        je_single_credit_line: advancedSettingsForm.get('singleCreditLineJE')?.value,
+        je_single_credit_line: brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE ? true : advancedSettingsForm.get('singleCreditLineJE')?.value,
         change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
         memo_structure: advancedSettingsForm.get('memoStructure')?.value
       },

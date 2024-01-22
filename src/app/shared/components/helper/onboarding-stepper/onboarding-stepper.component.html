@@ -14,7 +14,7 @@
             </p>
         </div>
         <div class="tw-flex tw-justify-center">
-            <div *ngFor="let onboardingStep of onboardingSteps">
+            <div *ngFor="let onboardingStep of onboardingSteps; let i = index">
                 <div class="tw-grip tw-grid-cols-1">
                     <div class="tw-flex tw-items-center">
                         <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-text-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-text-white tw-border-success-toast !tw-cursor-pointer':'',]">
@@ -22,7 +22,7 @@
                             <svg-icon-sprite *ngIf="!onboardingStep.active && onboardingStep.completed" src="tick" class="tick-icon"></svg-icon-sprite>
                             <svg-icon-sprite *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ onboardingStep.icon }}-inactive' class="tw-text-placeholder" [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[1] : ''"></svg-icon-sprite>
                         </div>
-                        <div *ngIf="onboardingStep.number < onboardingSteps.length" >
+                        <div *ngIf="i + 1 < onboardingSteps.length" >
                             <div *ngIf="!onboardingStep.completed">
                                 <hr class="line-active">
                             </div>

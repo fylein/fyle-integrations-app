@@ -23,7 +23,6 @@ export class OnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 2,
       step: 'Export Settings',
       icon: 'export-setting',
       route: 'export_settings',
@@ -35,7 +34,6 @@ export class OnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 3,
       step: 'Field Mapping',
       icon: 'field-mapping',
       route: 'field_mappings',
@@ -47,7 +45,6 @@ export class OnboardingStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 4,
       step: 'Advanced',
       icon: 'advanced-setting',
       route: 'advanced_settings',

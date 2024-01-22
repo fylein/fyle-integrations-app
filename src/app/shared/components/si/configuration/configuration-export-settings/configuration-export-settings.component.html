@@ -14,7 +14,7 @@
     <form [formGroup]="exportSettingsForm">
         <div class="tw-p-24-px">
             <div class="tw-mb-16-px">
-                <div *ngIf="brandingFeatureConfig.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field 
                     [form]="exportSettingsForm"
                     [label]="'Export Reimbursable Expenses'" 
@@ -22,7 +22,7 @@
                     [formControllerName]="'reimbursableExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
-                <div *ngIf="brandingFeatureConfig.reimbursableExpenses && exportSettingsForm.value?.reimbursableExpense">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses && exportSettingsForm.value?.reimbursableExpense">
                     <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingsForm"

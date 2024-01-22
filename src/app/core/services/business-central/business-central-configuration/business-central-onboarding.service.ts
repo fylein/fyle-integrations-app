@@ -22,7 +22,6 @@ export class BusinessCentralOnboardingService {
     {
       active: false,
       completed: false,
-      number: 1,
       step: 'Connect to Dynamics \n 365 Business Central',
       icon: 'connector',
       route: '/integrations/business_central/onboarding/connector',
@@ -35,7 +34,6 @@ export class BusinessCentralOnboardingService {
     {
       active: false,
       completed: false,
-      number: 2,
       step: 'Export Settings',
       icon: 'export-setting',
       route: '/integrations/business_central/onboarding/export_settings',
@@ -48,7 +46,6 @@ export class BusinessCentralOnboardingService {
     {
       active: false,
       completed: false,
-      number: 3,
       step: 'Import Settings',
       icon: 'import-setting',
       route: '/integrations/business_central/onboarding/import_settings',
@@ -61,7 +58,6 @@ export class BusinessCentralOnboardingService {
     {
       active: false,
       completed: false,
-      number: 4,
       step: 'Advanced Settings',
       icon: 'advanced-setting',
       route: '/integrations/business_central/onboarding/advanced_settings',

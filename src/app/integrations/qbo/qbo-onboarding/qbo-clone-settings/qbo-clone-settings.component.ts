@@ -268,7 +268,6 @@ export class QboCloneSettingsComponent implements OnInit {
     this.onboardingSteps.push({
       active: false,
       completed: false,
-      number: 6,
       step: 'Clone Settings',
       icon: 'advanced-setting',
       route: '/integrations/qbo/onboarding/clone_settings',
