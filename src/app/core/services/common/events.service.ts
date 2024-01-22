@@ -56,8 +56,7 @@ export class EventsService {
           this.redirectToOldIntacctApp.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('quickbooks')) {
           this.qboLogin.emit();
-        }
-        else {
+        } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }
       } else if (message.data && message.data.navigateBack) {
