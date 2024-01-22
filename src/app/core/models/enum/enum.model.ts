@@ -24,6 +24,7 @@ export enum AccountingIntegrationApp {
 }
 
 export enum InAppIntegration {
+  QBO = 'QuickBooks Online',
   BAMBOO_HR = 'Bamboo HR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'TravelPerk',

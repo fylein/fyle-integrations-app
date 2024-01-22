@@ -3,5 +3,6 @@ export type FeatureConfiguration = {
         reimbursableExpenses: boolean;
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;
+        exposeOnlyQBOApp: boolean;
     }
 }
