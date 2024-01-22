@@ -36,7 +36,7 @@ p {
 }
 
 .pi-times:before {
-    @apply tw-text-12-px tw-text-placeholder #{!important}
+    @apply tw-text-placeholder #{!important}
 }
 
 .p-component {

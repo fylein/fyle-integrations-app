@@ -35,7 +35,7 @@
                         'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
                         'selectedItem': form.controls[formControllerName].value,
                         'filterDropdown': !form.controls[formControllerName].value,
-                        'showClearIcon': showClearIcon && !isDisabled
+                        'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
                     }" [disabled]="isDisabled"
                     >
                     <ng-template let-option pTemplate="item">

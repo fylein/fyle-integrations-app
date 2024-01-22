@@ -57,12 +57,16 @@ export class BusinessCentralExportSettingModel {
           value: ExportDateType.POSTED_AT
         },
         {
+          label: 'Created At',
+          value: ExportDateType.CREATED_AT
+        },
+        {
           label: 'Last Spent Date',
           value: ExportDateType.LAST_SPENT_AT
         },
         {
-          label: 'Created At',
-          value: ExportDateType.CREATED_AT
+          label: 'Spent Date',
+          value: ExportDateType.SPENT_AT
         }
       ];
     }
@@ -70,8 +74,8 @@ export class BusinessCentralExportSettingModel {
     static getReimbursableExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
       return [
         {
-          label: 'Created At',
-          value: ExportDateType.CREATED_AT
+          label: 'Current Date',
+          value: ExportDateType.CURRENT_DATE
         },
         {
           label: 'Spent Date',
@@ -106,18 +110,31 @@ export class BusinessCentralExportSettingModel {
         ];
     }
 
-    static getExpenseState(): BusinessCentralExportSettingFormOption[] {
-        return [
-          {
-            label: 'Processing',
-            value: ExpenseState.PAYMENT_PROCESSING
-          },
-          {
-            label: 'Closed',
-            value: ExpenseState.PAID
-          }
-        ];
+    static getCCCExpenseState(): BusinessCentralExportSettingFormOption[] {
+      return [
+        {
+          label: 'Approved',
+          value: CCCExpenseState.APPROVED
+        },
+        {
+          label: 'Closed',
+          value: CCCExpenseState.PAID
+        }
+      ];
     }
+
+    static getReimbursableExpenseState(): BusinessCentralExportSettingFormOption[] {
+      return [
+        {
+          label: 'Processing',
+          value: ExpenseState.PAYMENT_PROCESSING
+        },
+        {
+          label: 'Closed',
+          value: ExpenseState.PAID
+        }
+      ];
+  }
 
     static getEntityOptions(): BusinessCentralExportSettingFormOption[] {
         return [

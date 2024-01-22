@@ -78,9 +78,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   cccExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCExpensesExportTypeOptions();
 
-  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseState();
+  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getReimbursableExpenseState();
 
-  cccExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseState();
+  cccExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCExpenseState();
 
   employeeFieldMappingOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEntityOptions();
 
@@ -90,7 +90,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   sessionStartTime = new Date();
 
-  isSaveInProgress: boolean;
+  isSaveInProgress: boolean = false;
 
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,
@@ -143,11 +143,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     }
   }
 
-  getExportDate(options: BusinessCentralExportSettingFormOption[]): BusinessCentralExportSettingFormOption[]{
-    if (this.exportSettingForm.value.reimbursableExportGroup === ExpenseGroupedBy.REPORT) {
-      return options.filter(option => option.value === ExportDateType.LAST_SPENT_AT);
+  getExportDate(options: BusinessCentralExportSettingFormOption[], formControllerName: string): BusinessCentralExportSettingFormOption[]{
+    if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
+      return options.filter(option => option.value !== ExportDateType.LAST_SPENT_AT);
     }
-    return options;
+    return options.filter(option => option.value !== ExportDateType.SPENT_AT);
   }
 
   refreshDimensions(isRefresh: boolean): void{
@@ -157,19 +157,21 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
-      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'entityNamePreference', 'reimbursableEmployeeMapping'],
-      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'entityNamePreference']
+      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'reimbursableEmployeeMapping'],
+      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'reimbursableEmployeeMapping']
     };
 
     const exportModuleRule: ExportModuleRule[] = [
       {
         'formController': 'reimbursableExportType',
-        'requiredValue': {}
+        'requiredValue': {
+          'JOURNAL_ENTRY': ['defaultBankName']
+        }
       },
       {
         'formController': 'cccExportType',
         'requiredValue': {
-          'JOURNAL_ENTRY': ['defaultCreditCardCCCAccountName', 'defaultBankName', 'journalEntryNamePreference']
+          'JOURNAL_ENTRY': ['defaultBankName', 'journalEntryNamePreference']
         }
       }
     ];
