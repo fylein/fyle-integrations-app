@@ -23,7 +23,6 @@ export class IntacctStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 1,
       step: 'Connect to Sage Intacct',
       icon: 'connector',
       route: 'connector',
@@ -35,7 +34,6 @@ export class IntacctStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 2,
       step: 'Export Settings',
       icon: 'export-setting',
       route: 'export_settings',
@@ -47,7 +45,6 @@ export class IntacctStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 3,
       step: 'Import Settings',
       icon: 'import-setting',
       route: 'import_settings',
@@ -59,7 +56,6 @@ export class IntacctStepperComponent implements OnInit {
     {
       active: false,
       completed: false,
-      number: 4,
       step: 'Advanced Settings',
       icon: 'advanced-setting',
       route: 'advanced_settings',

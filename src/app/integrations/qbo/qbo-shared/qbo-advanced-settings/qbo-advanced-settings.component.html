@@ -39,7 +39,7 @@
                             [label]="'Set up export frequency'"
                             [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to QuickBooks Online'"
                             [options]="hours"
-                            [isEmailPresent]="true"
+                            [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                             [formControllerName]="'exportScheduleFrequency'"
                             [adminEmails]="adminEmails">
                         </app-configuration-schedule-export>
@@ -62,7 +62,7 @@
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible()"
+                <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
                     [form]="advancedSettingForm"
                     [iconPath]="'building'"
                     [label]="'Auto-Create Vendors'"
@@ -70,7 +70,7 @@
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-select-field *ngIf="isPaymentSyncFieldVisible()"
+                <app-configuration-select-field *ngIf="isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
                     [form]="advancedSettingForm"
                     [options]="paymentSyncOptions"
                     [iconPath]="'synced'"
@@ -92,7 +92,7 @@
                     [formControllerName]="'billPaymentAccount'">
                 </app-configuration-select-field>
 
-                <app-configuration-toggle-field *ngIf="isSingleCreditLineJEFieldVisible()"
+                <app-configuration-toggle-field *ngIf="isSingleCreditLineJEFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.singleCreditLineJE"
                     [form]="advancedSettingForm"
                     [iconPath]="'list'"
                     [label]="'Create a single itemized offset credit entry for Journal'"

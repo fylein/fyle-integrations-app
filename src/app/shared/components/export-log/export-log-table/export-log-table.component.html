@@ -3,7 +3,7 @@
         <tr>
             <th *ngIf="!isDashboardFailed">Date and Time of Export</th>
             <th>Employee Name and ID</th>
-            <th *ngIf="isExportLogTable">Expense Type</th>
+            <th *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">Expense Type</th>
             <th>Reference ID</th>
             <th *ngIf="!isDashboardFailed">Exported As</th>
             <th *ngIf="!isDashboardFailed">Link to {{appName}}</th>
@@ -25,7 +25,7 @@
                     {{rowData.employee[1]}}
                 </h5>
             </td>
-            <td *ngIf="isExportLogTable">{{rowData.expenseType | titlecase}}</td>
+            <td *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | titlecase}}</td>
             <td class="tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
             <td *ngIf="!isDashboardFailed">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
             <td *ngIf="!isDashboardFailed">

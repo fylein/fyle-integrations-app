@@ -23,6 +23,9 @@ export class QboConfigurationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if (!brandingFeatureConfig.featureFlags.mapEmployees) {
+      this.modules.splice(0, 1);
+    }
   }
 
 }

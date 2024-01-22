@@ -8,16 +8,60 @@ export const brandingConfig: BrandingConfiguration = config;
 
 const featureConfigs: FeatureConfiguration = {
     fyle: {
-        reimbursableExpenses: true,
         illustrationsAllowed: true,
         isGradientAllowed: true,
-        exposeOnlyQBOApp: false
+        exposeOnlyQBOApp: false,
+        featureFlags: {
+            cloneSettings: true,
+            mapEmployees: true,
+            exportSettings: {
+                reimbursableExpenses: true,
+                nameInJournalEntry: true
+            },
+            importSettings: {
+                tax: true
+            },
+            advancedSettings: {
+                autoCreateVendors: true,
+                paymentsSync: true,
+                singleCreditLineJE: true,
+                emailNotification: true
+            },
+            exportLog: {
+                expenseType: true
+            },
+            mappings: {
+                employeeMapping: true
+            }
+        }
     },
     co: {
-        reimbursableExpenses: true,
         illustrationsAllowed: false,
         isGradientAllowed: false,
-        exposeOnlyQBOApp: true
+        exposeOnlyQBOApp: true,
+        featureFlags: {
+            cloneSettings: false,
+            mapEmployees: false,
+            exportSettings: {
+                reimbursableExpenses: false,
+                nameInJournalEntry: false
+            },
+            importSettings: {
+                tax: false
+            },
+            advancedSettings: {
+                autoCreateVendors: false,
+                paymentsSync: false,
+                singleCreditLineJE: false,
+                emailNotification: false
+            },
+            exportLog: {
+                expenseType: false
+            },
+            mappings: {
+                employeeMapping: false
+            }
+        }
     }
 };
 

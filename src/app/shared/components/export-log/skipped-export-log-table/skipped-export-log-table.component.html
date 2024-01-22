@@ -3,7 +3,7 @@
         <tr>
             <th>Export Skipped On</th>
             <th>Employee Name and ID</th>
-            <th>Expense Type</th>
+            <th *ngIf="brandingFeatureConfig.featureFlags.exportLog.expenseType">Expense Type</th>
             <th>Reference ID</th>
         </tr>
     </ng-template>
@@ -22,7 +22,7 @@
                     {{rowData.employee[1]}}
                 </h5>
             </td>
-            <td>{{rowData.expenseType | titlecase}}</td>
+            <td *ngIf="brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | titlecase}}</td>
             <td class="tw-underline tw-cursor-pointer" (click)="openUrl(rowData.fyleUrl)">{{rowData.claim_number}}</td>
         </tr>
     </ng-template>
