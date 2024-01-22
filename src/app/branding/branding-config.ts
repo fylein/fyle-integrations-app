@@ -16,22 +16,22 @@ const featureConfigs: FeatureConfiguration = {
             mapEmployees: true,
             exportSettings: {
                 reimbursableExpenses: true,
-                nameInJournalEntry: true,
+                nameInJournalEntry: true
             },
             importSettings: {
-                tax: true,
+                tax: true
             },
             advancedSettings: {
                 autoCreateVendors: true,
                 paymentsSync: true,
                 singleCreditLineJE: true,
-                emailNotification: true,
+                emailNotification: true
             },
             exportLog: {
-                expenseType: true,
+                expenseType: true
             },
             mappings: {
-                employeeMapping: true,
+                employeeMapping: true
             }
         }
     },
@@ -44,22 +44,22 @@ const featureConfigs: FeatureConfiguration = {
             mapEmployees: false,
             exportSettings: {
                 reimbursableExpenses: false,
-                nameInJournalEntry: false,
+                nameInJournalEntry: false
             },
             importSettings: {
-                tax: false,
+                tax: false
             },
             advancedSettings: {
                 autoCreateVendors: false,
                 paymentsSync: false,
                 singleCreditLineJE: false,
-                emailNotification: false,
+                emailNotification: false
             },
             exportLog: {
-                expenseType: false,
+                expenseType: false
             },
             mappings: {
-                employeeMapping: false,
+                employeeMapping: false
             }
         }
     }
