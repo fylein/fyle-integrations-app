@@ -68,7 +68,8 @@
                                 [formControllerName]="'reimbursableEmployeeMapping'">
                             </app-configuration-select-field>
                         </div>
-                        <app-configuration-select-field
+                        <div class="remove-padding">
+                            <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="false"
                             [label]="'How should Employees in  ' + brandingConfig.brandName + ' be mapped to Employees in Dynamics 365 Business Central ?'"
@@ -79,9 +80,10 @@
                             [formControllerName]="'autoMapEmployee'"
                             [showClearIcon]="true">
                         </app-configuration-select-field>
+                        </div>
                     </div>
-                    <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.JOURNAL_ENTRY">
+                    <div *ngIf="exportSettingForm?.value.reimbursableExportType">
+                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
