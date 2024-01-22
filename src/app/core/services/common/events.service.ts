@@ -56,7 +56,7 @@ export class EventsService {
           this.sageIntacctLogin.emit(message.data.redirectUri);
           this.redirectToOldIntacctApp.emit(message.data.redirectUri);
         } else if (brandingFeatureConfig.exposeOnlyQBOApp && message.data.redirectUri.includes('quickbooks')) {
-          this.qboLogin.emit();
+          this.qboLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }
