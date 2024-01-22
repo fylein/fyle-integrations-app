@@ -62,7 +62,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
   ) { }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
-    interval(20000).pipe(
+    interval(3000).pipe(
       switchMap(() => from(this.accountingExportService.getAccountingExports(this.accountingExportType, [], exportableAccountingExportIds, 500, 0))),
       takeWhile((response: BusinessCentralAccountingExportResponse) =>
         response.results.filter(task =>
