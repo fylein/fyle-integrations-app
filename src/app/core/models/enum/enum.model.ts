@@ -139,7 +139,7 @@ export enum ClickEvent {
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
   INTACCT_EXPORT = 'Export Sage Intacct',
   CONNECT_SAGE300 = 'Connect Sage 300 CRE',
-  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 360 Business Central'
+  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 365 Business Central'
 }
 
 export enum ProgressPhase {
