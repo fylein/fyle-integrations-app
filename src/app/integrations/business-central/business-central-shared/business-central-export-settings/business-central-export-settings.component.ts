@@ -39,22 +39,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   previewImagePaths = [
     {
-      'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg'
+      'PURCHASE_INVOICE': 'assets/illustrations/ms-dynamics/purchase-invoice.png',
+      'JOURNAL_ENTRY': 'assets/illustrations/ms-dynamics/journal-entry.png'
     },
     {
-      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC Bill.jpg'
-    }
-  ];
-
-  previewExpenseGroupTypeImagePath = [
-    {
-      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
-    },
-    {
-      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
+      'JOURNAL_ENTRY': 'assets/illustrations/ms-dynamics/journal-entry.png'
     }
   ];
 

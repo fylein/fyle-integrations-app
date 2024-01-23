@@ -108,8 +108,7 @@
                             [iconPath]="'questionmark'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'reimbursableExportGroup'"
-                            [appName]="appName"
-                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
+                            [appName]="appName">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -204,8 +203,7 @@
                             [iconPath]="'questionmark'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'cccExportGroup'"
-                            [appName]="appName"
-                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
+                            [appName]="appName">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="!exportSettingForm.value?.reimbursableExpense && exportSettingForm.value.cccExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

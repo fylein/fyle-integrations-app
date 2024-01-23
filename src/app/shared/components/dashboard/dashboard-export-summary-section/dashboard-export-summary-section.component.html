@@ -16,7 +16,7 @@
                             <a *ngIf="accountingExportSummary?.successful_accounting_export_count" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-text-pink pointer">View</a>
                         </div>
                         <div class="tw-flex tw-flex-col">
-                            <span class="tw-w-260-px tw-text-left">
+                            <span class="tw-w-260-px tw-text-right">
                                 <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Last Export at: </span>
                                 <span class="tw-text-14-px tw-font-500">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
                                 {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'dd MMM yyyy') : '' }}</span>
@@ -33,7 +33,7 @@
                             <a *ngIf="accountingExportSummary?.failed_accounting_export_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-text-pink pointer">View</a>
                         </div>
                         <div class="tw-flex tw-flex-col">
-                            <span class="tw-w-260-px tw-text-left" *ngIf="accountingExportSummary?.next_export_at">
+                            <span class="tw-w-260-px tw-text-right" *ngIf="accountingExportSummary?.next_export_at">
                                 <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Next Export at: </span>
                                 <span class="tw-text-14-px tw-font-500">{{ accountingExportSummary?.next_export_at ? (accountingExportSummary?.next_export_at | date: 'h:mm a,') : 'None' }}
                                 {{ accountingExportSummary ? (accountingExportSummary.next_export_at | date: 'dd MMM yyyy') : '' }}</span>
