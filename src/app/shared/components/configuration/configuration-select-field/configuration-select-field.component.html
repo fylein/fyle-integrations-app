@@ -8,7 +8,7 @@
             <div>
                 <h5 class="tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
                 <h5 *ngIf="subLabel || (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType')" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [innerHTML]="subLabel"></h5>
-                <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.SAGE300 && appName !== AppName.QBO" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
+                <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
                     Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from {{brandingConfig.brandName}}. <span *ngIf="exportTypeIconPath">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more detailsss.</span>
                 </h5>
             </div>

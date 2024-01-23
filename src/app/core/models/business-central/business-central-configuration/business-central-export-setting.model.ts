@@ -57,8 +57,8 @@ export class BusinessCentralExportSettingModel {
           value: ExportDateType.POSTED_AT
         },
         {
-          label: 'Created At',
-          value: ExportDateType.CREATED_AT
+          label: 'Current Date',
+          value: ExportDateType.CURRENT_DATE
         },
         {
           label: 'Last Spent Date',
