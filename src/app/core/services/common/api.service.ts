@@ -2,9 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
-let API_BASE_URL = environment.api_url;
+let API_BASE_URL: string;
 
 const httpOptions = {
   headers: new HttpHeaders({
