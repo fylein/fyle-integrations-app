@@ -5,7 +5,6 @@ import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, QBDOnbo
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'

@@ -41,7 +41,6 @@ export class HelperService {
     }
 
     const apiUrlMap: AppUrlMap = {
-      // [AppUrl.INTACCT]: `${this.apiBaseUrl}/${environment.production ? 'intacct-api/': ''}api`,
       [AppUrl.INTACCT]: environment.production ? `${this.apiBaseUrl}/intacct-api/api` : environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
       [AppUrl.TRAVELPERK]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
