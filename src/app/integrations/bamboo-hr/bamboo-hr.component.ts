@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -26,6 +26,8 @@ export class BambooHrComponent implements OnInit {
   isBambooSetupInProgress: boolean;
 
   isLoading: boolean = true;
+
+  appName: AppName = AppName.BAMBOO_HR
 
   hideRefreshIcon: boolean = true;
 

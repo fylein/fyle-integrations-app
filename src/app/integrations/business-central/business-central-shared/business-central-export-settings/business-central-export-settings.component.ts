@@ -79,7 +79,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   sessionStartTime = new Date();
 
-  isSaveInProgress: boolean = false;
+  isSaveInProgress: boolean;
 
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,

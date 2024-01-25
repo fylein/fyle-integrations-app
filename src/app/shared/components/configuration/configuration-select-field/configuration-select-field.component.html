@@ -54,7 +54,7 @@
                         </div>
                     </ng-template>
                 </p-dropdown>
-                    <div *ngIf="(appName !== AppName.BUSINESS_CENTRAL || ['JOURNAL_ENTRY', 'PURCHASE_INVOICE'].includes(form.controls[formControllerName].value)) && ['JOURNAL_ENTRY', 'EXPENSE_REPORT', 'BILL', 'CHARGE_CARD_TRANSACTION', 'PURCHASE_INVOICE', 'DIRECT_COST', 'EXPENSE', 'JOURNAL ENTRY', 'CHECK', 'CREDIT CARD PURCHASE', 'DEBIT CARD EXPENSE'].includes(form.controls[formControllerName].value)" class="sub-text tw-text-pretty tw-pt-3-px">
+                    <div *ngIf="appName !== AppName.BUSINESS_CENTRAL || (['JOURNAL_ENTRY', 'PURCHASE_INVOICE'].includes(form.controls[formControllerName].value)) && ['JOURNAL_ENTRY', 'EXPENSE_REPORT', 'BILL', 'CHARGE_CARD_TRANSACTION', 'PURCHASE_INVOICE', 'DIRECT_COST', 'EXPENSE', 'JOURNAL ENTRY', 'CHECK', 'CREDIT CARD PURCHASE', 'DEBIT CARD EXPENSE'].includes(form.controls[formControllerName].value)" class="sub-text tw-text-pretty tw-pt-3-px">
                         <span>Click </span>
                         <a class="tw-text-hyperlink-color !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
                         <span> to preview how it looks on {{appName}}</span>
