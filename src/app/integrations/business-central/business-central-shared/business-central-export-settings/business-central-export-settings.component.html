@@ -50,7 +50,7 @@
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                                 [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
-                                [iconPath]="'people'"
+                                [iconPath]="'user-two'"
                                 [formControllerName]="'reimbursableEmployeeMapping'"
                                 [isDisabled]="true">
                             </app-configuration-select-field>
@@ -64,7 +64,7 @@
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                                 [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
-                                [iconPath]="'people'"
+                                [iconPath]="'user-two'"
                                 [formControllerName]="'reimbursableEmployeeMapping'">
                             </app-configuration-select-field>
                         </div>
@@ -76,7 +76,7 @@
                             [subLabel]="'Automatically map the employees in  ' + brandingConfig.brandName + ' to their corresponding records in Dynamics 365 Business Central based on a unique parameter'"
                             [placeholder]="'Select representation'"
                             [options]="employeeMapOptions"
-                            [iconPath]="'questionmark'"
+                            [iconPath]="'question-square-outline'"
                             [formControllerName]="'autoMapEmployee'"
                             [showClearIcon]="true">
                         </app-configuration-select-field>
@@ -105,7 +105,7 @@
                             [label]="'How should the expenses be grouped?'"
                             [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
                             [options]="expenseGroupByOptions"
-                            [iconPath]="'questionmark'"
+                            [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'reimbursableExportGroup'"
                             [appName]="appName">
@@ -200,7 +200,7 @@
                             [label]="'How should the expenses be grouped?'"
                             [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
                             [options]="expenseGroupByOptions"
-                            [iconPath]="'questionmark'"
+                            [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'cccExportGroup'"
                             [appName]="appName">
@@ -215,7 +215,7 @@
                             [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                             [options]="employeeFieldMappingOptions"
                             [placeholder]="'Select representation'"
-                            [iconPath]="'people'"
+                            [iconPath]="'user-two'"
                             [formControllerName]="'reimbursableEmployeeMapping'">
                         </app-configuration-select-field>
                     </div>
@@ -228,7 +228,7 @@
                             [subLabel]="'Select What should be the employee Name in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                             [options]="nameReferenceInCCC"
                             [placeholder]="'Select representation'"
-                            [iconPath]="'people'"
+                            [iconPath]="'user-two'"
                             [formControllerName]="'journalEntryNamePreference'">
                         </app-configuration-select-field>
                     </div>

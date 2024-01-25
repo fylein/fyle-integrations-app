@@ -107,7 +107,7 @@
                                 [label]="'How should the expenses be grouped?'"
                                 [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
                                 [options]="expenseGroupByOptions"
-                                [iconPath]="'questionmark'"
+                                [iconPath]="'question-square-outline'"
                                 [placeholder]="'Select expense grouping'"
                                 [formControllerName]="'reimbursableExportGroup'">
                             </app-configuration-select-field>
@@ -253,7 +253,7 @@
                             [label]="'How should the expenses be grouped?'"
                             [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
                             [options]="expenseGroupByOptions"
-                            [iconPath]="'questionmark'"
+                            [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'creditCardExportGroup'">
                         </app-configuration-select-field>
@@ -290,7 +290,6 @@
     [isWarningVisible]="isConfirmationDialogVisible"
     [headerText]="'Change in Configuration'"
     [contextText]="warningDialogText"
-    [iconPath]="'assets/icons/alert_dialog.svg'"
     [confirmBtnText]="'Continue'"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>

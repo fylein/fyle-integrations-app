@@ -79,7 +79,7 @@
                             [label]="'How should Employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingsForm.value.employeeFieldMapping, exportSettingsForm.value.reimbursableExportType) + ' in Sage Intacct?'"
                             [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in Sage Intacct based on a unique parameter.'"
                             [options]="autoMapEmployeeOptions"
-                            [iconPath]="'questionmark'"
+                            [iconPath]="'question-square-outline'"
                             [placeholder]="'Select mapping method'"
                             [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
                         </div>
@@ -92,7 +92,7 @@
                         [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                         [subLabel]="'You can export expenses either when they are awaiting closure after approval (Processing) or when the payment has been settled (Closed).'"
                         [options]="expenseStateOptions"
-                        [iconPath]="'questionmark'"
+                        [iconPath]="'question-square-outline'"
                         [placeholder]="'Select export state'"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                     </div>
@@ -116,7 +116,7 @@
                         [label]="'How should the expenses be grouped?'"
                         [subLabel]="'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)'"
                         [options]="expenseGroupingFieldOptions"
-                        [iconPath]="'questionmark'"
+                        [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
                     </div>
@@ -216,7 +216,7 @@
                         [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
                         [subLabel]="'You can export expenses either when they are awaiting closure after approval (Approved) or when the transaction has been settled (Closed)'"
                         [options]="cccExpenseStateOptions"
-                        [iconPath]="'questionmark'"
+                        [iconPath]="'question-square-outline'"
                         [placeholder]="'Select export state'"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
@@ -240,7 +240,7 @@
                         [label]="'How should the expenses be grouped?'"
                         [subLabel]="'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)'"
                         [options]="expenseGroupingFieldOptions"
-                        [iconPath]="'questionmark'"
+                        [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
@@ -277,7 +277,7 @@
             [label]="'How are your Employees represented in Sage Intacct?'"
             [subLabel]="'Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct'"
             [options]="employeeFieldOptions"
-            [iconPath]="'twopeople'"
+            [iconPath]="'user-two'"
             [placeholder]="'Select representation'"
             [formControllerName]="'employeeFieldMapping'"></app-configuration-select-field>
 

@@ -12,7 +12,7 @@
                     <div class="tw-flex tw-items-center">
                         <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
                             <img *ngIf="onboardingStep.active" src='{{ "assets/icons/stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
-                            <img *ngIf="!onboardingStep.active && onboardingStep.completed" src="assets/icons/tick.svg" class="icon">
+                            <svg-icon-sprite *ngIf="!onboardingStep.active && onboardingStep.completed" src="check-medium" width="20px" height="20px"></svg-icon-sprite>
                             <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "assets/icons/stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
                         </div>
                         <div *ngIf="i + 1 !== 4" >

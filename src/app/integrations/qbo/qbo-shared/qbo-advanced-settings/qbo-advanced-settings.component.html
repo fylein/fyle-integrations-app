@@ -64,7 +64,7 @@
 
                 <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
                     [form]="advancedSettingForm"
-                    [iconPath]="'building'"
+                    [iconPath]="'user-plus'"
                     [label]="'Auto-Create Vendors'"
                     [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in QuickBooks Online already.'"
                     [formControllerName]="'autoCreateVendors'">
@@ -73,7 +73,7 @@
                 <app-configuration-select-field *ngIf="isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
                     [form]="advancedSettingForm"
                     [options]="paymentSyncOptions"
-                    [iconPath]="'synced'"
+                    [iconPath]="'arrow-rotate'"
                     [label]="'Auto Sync payment status for reimbursable expenses'"
                     [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in QuickBooks Online will be automatically be updated to Paid and vice versa.'"
                     [placeholder]="'Select how payments should be synced for reimbursable expenses'"
@@ -102,7 +102,7 @@
 
                 <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()"
                     [form]="advancedSettingForm"
-                    [iconPath]="'building'"
+                    [iconPath]="'user-plus'"
                     [label]="'Auto-create Merchants as Vendors'"
                     [subLabel]="brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online'"
                     [formControllerName]="'autoCreateMerchantsAsVendors'">

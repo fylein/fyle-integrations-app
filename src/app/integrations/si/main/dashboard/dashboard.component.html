@@ -10,9 +10,9 @@
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-4/5">
-                    <div class="tw-flex">
+                    <div class="tw-flex tw-items-center">
                         <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length" src="check" height="24px" width="24px"></svg-icon-sprite>
-                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!exportInProgress && exportableExpenseGroupIds.length) || (exportInProgress)" src="arrow_tail" height="24px" width="24px"></svg-icon-sprite>
+                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!exportInProgress && exportableExpenseGroupIds.length) || (exportInProgress)" src="arrow-tail-up" height="24px" width="24px" classes="tw-text-slightly-normal-text-color"></svg-icon-sprite>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && !lastExport"> Sit back and relax!</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="exportInProgress"> Exporting {{ processedCount }} of {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} to your Sage Intacct Account</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && exportableExpenseGroupIds.length"> {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} ready to export</h3>
