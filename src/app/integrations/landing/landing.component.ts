@@ -71,6 +71,8 @@ export class LandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly isINCluster = this.storageService.get('cluster-domain').includes('in1');
+
   constructor(
     private eventsService: EventsService,
     private qboAuthService: QboAuthService,
