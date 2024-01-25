@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header 
             [headerText]="'Export Settings'"
-            [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Dynamic 360 Business Central. '"
+            [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Dynamic 365 Business Central. '"
             [redirectLink]="redirectLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -19,7 +19,7 @@
                     <app-configuration-toggle-field 
                         [form]="exportSettingForm"
                         [label]="'Export Reimbursable Expenses'" 
-                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Dynamic 360 Business Central.'" 
+                        [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to Dynamic 365 Business Central.'" 
                         [formControllerName]="'reimbursableExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -46,7 +46,7 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employees representation'"
-                                [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                                [label]="'How are your Employees represented in Dynamic 365 Business Central?'"
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                                 [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
@@ -60,7 +60,7 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employees representation'"
-                                [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                                [label]="'How are your Employees represented in Dynamic 365 Business Central?'"
                                 [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                                 [options]="employeeFieldMappingOptions"
                                 [placeholder]="'Select representation'"
@@ -68,7 +68,8 @@
                                 [formControllerName]="'reimbursableEmployeeMapping'">
                             </app-configuration-select-field>
                         </div>
-                        <app-configuration-select-field
+                        <div class="remove-padding">
+                            <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="false"
                             [label]="'How should Employees in  ' + brandingConfig.brandName + ' be mapped to Employees in Dynamics 365 Business Central ?'"
@@ -76,8 +77,25 @@
                             [placeholder]="'Select representation'"
                             [options]="employeeMapOptions"
                             [iconPath]="'questionmark'"
-                            [formControllerName]="'autoMapEmployee'">
+                            [formControllerName]="'autoMapEmployee'"
+                            [showClearIcon]="true">
                         </app-configuration-select-field>
+                        </div>
+                    </div>
+                    <div *ngIf="exportSettingForm?.value.reimbursableExportType">
+                        <div *ngIf="exportSettingForm.value.reimbursableExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Default Bank Account Name'"
+                            [label]="'Set the Default Bank Account as?'"
+                            [subLabel]="'The integration will assign the Expenses that is exported as Journal Entry to the Bank Account selected here.'"
+                            [destinationAttributes]="bankOptions"
+                            [iconPath]="'list'"
+                            [placeholder]="'Select default Bank Account'"
+                            [formControllerName]="'defaultBankName'">
+                        </app-configuration-select-field>
+                        </div>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
@@ -90,8 +108,7 @@
                             [iconPath]="'questionmark'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'reimbursableExportGroup'"
-                            [appName]="appName"
-                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
+                            [appName]="appName">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -113,9 +130,9 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
                             [label]="'Set the date of the transaction as?'"
-                            [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
+                            [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Dynamic 365 Business Central.'"
                             [placeholder]="'Select date type'"
-                            [options]="getExportDate(reimbursableExpenseGroupingDateOptions)"
+                            [options]="getExportDate(reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup')"
                             [iconPath]="'calendar'"
                             [formControllerName]="'reimbursableExportDate'">
                         </app-configuration-select-field>
@@ -128,7 +145,7 @@
                     <app-configuration-toggle-field 
                         [form]="exportSettingForm"
                         [label]="'Export Corporate Card Expenses'" 
-                        [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Dynamic 360 Business Central.'" 
+                        [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Dynamic 365 Business Central.'" 
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true">
                     </app-configuration-toggle-field>
@@ -149,13 +166,13 @@
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.value.cccExportType && exportSettingForm.value.reimbursableExportType !== BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Default Bank Account Name'"
                             [label]="'Set the Default Bank Account as?'"
-                            [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the Bank Account selected here.'"
+                            [subLabel]="'The integration will assign the Expenses that is exported as Journal Entry to the Bank Account selected here.'"
                             [destinationAttributes]="bankOptions"
                             [iconPath]="'list'"
                             [placeholder]="'Select default Bank Account'"
@@ -170,7 +187,7 @@
                             [label]="'Set the Default Vendor as?'"
                             [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Purchase invoice to the Vendor selected here.'"
                             [destinationAttributes]="vendorOptions"
-                            [iconPath]="'expense'"
+                            [iconPath]="'list'"
                             [placeholder]="'Select default Vendor'"
                             [formControllerName]="'defaultVendorName'">
                         </app-configuration-select-field>
@@ -186,8 +203,7 @@
                             [iconPath]="'questionmark'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'cccExportGroup'"
-                            [appName]="appName"
-                            [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
+                            [appName]="appName">
                         </app-configuration-select-field>
                     </div>
                     <div *ngIf="!exportSettingForm.value?.reimbursableExpense && exportSettingForm.value.cccExportType === BusinessCentralExportType.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -195,7 +211,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Employees representation'"
-                            [label]="'How are your Employees represented in Dynamic 360 Business Central?'"
+                            [label]="'How are your Employees represented in Dynamic 365 Business Central?'"
                             [subLabel]="'Select how your employee are represented in Dynamics 365 Business Central. This would help to export the expenses to the correct record in Dynamics 365 Business Central.'"
                             [options]="employeeFieldMappingOptions"
                             [placeholder]="'Select representation'"
@@ -235,8 +251,8 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
                             [label]="'Set the date of the transaction as?'"
-                            [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamic 360 Business Central. Click here for more details.'"
-                            [options]="getExportDate(cccExpenseGroupingDateOptions)"
+                            [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Dynamic 365 Business Central.'"
+                            [options]="getExportDate(cccExpenseGroupingDateOptions, 'cccExportGroup')"
                             [iconPath]="'calendar'"
                             [placeholder]="'Select date'"
                             [formControllerName]="'cccExportDate'">
@@ -247,7 +263,7 @@
         </div>
         <div>
             <app-configuration-step-footer 
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
                 [showBackButton] = "isOnboarding"
                 [isButtonDisabled]="!exportSettingForm.valid"
                 (navigateToPreviousStep)="navigateBack()"

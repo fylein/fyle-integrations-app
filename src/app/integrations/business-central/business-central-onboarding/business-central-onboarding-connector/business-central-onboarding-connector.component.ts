@@ -161,8 +161,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     this.businessCentralConnectorService.connectBusinessCentral(payload).subscribe((businessCentralCredential: BusinessCentralCredential) => {
       this.getCompanyDetails();
     }, (error) => {
-      const errorMessage = 'message' in error ? error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
-      if (errorMessage === 'Please choose the correct Dynamic 360 Business Central account') {
+      const errorMessage = 'message' in error ? error.message : 'Failed to connect to Dynamic 365 Business Central. Please try again';
+      if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
         this.isIncorrectBusinessCentralConnectedDialogVisible = true;
       } else {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);

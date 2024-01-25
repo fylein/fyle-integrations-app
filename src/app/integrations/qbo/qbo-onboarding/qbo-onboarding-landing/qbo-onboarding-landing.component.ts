@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
-import { QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
 import { QBOConnectorModel, QBOConnectorPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-connector.model';
@@ -18,6 +18,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./qbo-onboarding-landing.component.scss']
 })
 export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
+
+  appName: AppName = AppName.QBO;
 
   brandingConfig = brandingConfig;
 
