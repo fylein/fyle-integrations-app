@@ -25,6 +25,8 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   @Input() hasDependentFields: boolean;
 
+  @Input() hideToggle: boolean = false;
+
   constructor(
     public windowService: WindowService
   ) { }
