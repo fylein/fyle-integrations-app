@@ -15,7 +15,7 @@
                             <svg-icon-sprite *ngIf="!onboardingStep.active && onboardingStep.completed" src="check-medium" width="20px" height="20px" class="tw-text-white"></svg-icon-sprite>
                             <svg-icon-sprite *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ onboardingStep.icon }}' width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
                         </div>
-                        <div *ngIf="i + 1 !== 4">
+                        <div *ngIf="i + 1 !== 3">
                             <div *ngIf="!onboardingStep.completed">
                                 <hr class="line-active">
                             </div>
