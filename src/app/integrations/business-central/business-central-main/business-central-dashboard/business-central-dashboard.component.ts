@@ -87,10 +87,12 @@ export class BusinessCentralDashboardComponent implements OnInit {
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
+
+        this.exportableAccountingExportIds = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).map(taskLog => taskLog.id);
+
         this.isExportInProgress = false;
         this.exportProgressPercentage = 0;
         this.processedCount = 0;
-
         if (this.failedExpenseGroupCount === 0) {
           this.refinerService.triggerSurvey(
             AppName.BUSINESS_CENTRAL, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
