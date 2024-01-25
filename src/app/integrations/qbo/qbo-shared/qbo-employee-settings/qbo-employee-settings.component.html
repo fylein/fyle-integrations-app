@@ -21,7 +21,7 @@
                             [label]="'How are your Employees represented in QuickBooks Online?'"
                             [subLabel]="'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Online.'"
                             [options]="employeeMappingOptions"
-                            [iconPath]="'employee'"
+                            [iconPath]="'user-two'"
                             [placeholder]="'Select representation'"
                             [formControllerName]="'employeeMapping'">
                         </app-configuration-select-field>
@@ -32,7 +32,7 @@
                             [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
                             [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Online based on a unique parameter.'"
                             [options]="autoMapEmployeeOptions"
-                            [iconPath]="'employee'"
+                            [iconPath]="'question-square-outline'"
                             [placeholder]="'Select representation'"
                             [formControllerName]="'autoMapEmployee'">
                         </app-configuration-select-field>
