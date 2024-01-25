@@ -18,6 +18,6 @@
       </div>
     </div>
     <div class="configuration--input-toggle-section">
-      <p-inputSwitch [formControlName]="formControllerName"></p-inputSwitch>
+      <p-inputSwitch *ngIf="!hideToggle" [formControlName]="formControllerName"></p-inputSwitch>
     </div>
   </div>

@@ -265,6 +265,11 @@ export class QboExportSettingsComponent implements OnInit {
       this.showNameInJournalOption = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
+      
+      if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
+        this.exportSettingForm.controls.creditCardExpense.patchValue(true);
+      }
+
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
 
       const [exportSettingValidatorRule, exportModuleRule] = QBOExportSettingModel.getValidators();
