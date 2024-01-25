@@ -220,7 +220,6 @@ export enum ExpenseState {
 }
 
 export enum CCCExpenseState {
-  PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
   PAID = 'PAID',
   APPROVED = 'APPROVED'
 }
@@ -632,4 +631,14 @@ export enum TrackingApp {
   BAMBOO_HR = 'BHR',
   TRAVELPERK = 'TP',
   GUSTO = 'GUSTO'
+}
+
+export enum ReimbursableImportState {
+  PROCESSING = 'processed for payments',
+  PAID = 'closed'
+}
+
+export enum CCCImportState {
+  APPROVED = 'approved',
+  PAID = 'closed'
 }

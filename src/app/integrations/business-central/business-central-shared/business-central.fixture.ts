@@ -16,7 +16,7 @@ export const exportSettingsResponse: BusinessCentralExportSettingGet = {
   "reimbursable_expense_date": ExportDateType.LAST_SPENT_AT,
   "reimbursable_expense_grouped_by": ExpenseGroupedBy.EXPENSE,
   "credit_card_expense_export_type": BusinessCentralExportType.JOURNAL_ENTRY,
-  "credit_card_expense_state": CCCExpenseState.PAYMENT_PROCESSING,
+  "credit_card_expense_state": CCCExpenseState.APPROVED,
   "credit_card_expense_grouped_by": ExpenseGroupedBy.EXPENSE,
   "credit_card_expense_date": ExportDateType.LAST_SPENT_AT,
   "updated_at": new Date("2023-10-09T08:18:29.080160Z"),
