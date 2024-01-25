@@ -39,14 +39,14 @@ export class IntacctStepperComponent implements OnInit {
       completed: false,
       step: 'Import Settings',
       icon: 'arrow-tail-down-medium',
-      route: 'import_settings',
+      route: 'import_settings'
     },
     {
       active: false,
       completed: false,
       step: 'Advanced Settings',
       icon: 'gear-medium',
-      route: 'advanced_settings',
+      route: 'advanced_settings'
     }
   ];
 
