@@ -11,15 +11,15 @@
                 <div class="tw-grip tw-grid-cols-1">
                     <div class="tw-flex tw-items-center">
                         <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-border-success-toast !tw-cursor-pointer':'',]">
-                            <img *ngIf="onboardingStep.active" src='{{ "assets/icons/stepper/" + onboardingStep.icon + ".svg" }}' class="icon" >
+                            <svg-icon-sprite *ngIf="onboardingStep.active" src='{{ onboardingStep.icon }}' width="20px" height="20px" class="tw-text-success-toast"></svg-icon-sprite>
                             <svg-icon-sprite *ngIf="!onboardingStep.active && onboardingStep.completed" src="check-medium" width="20px" height="20px"></svg-icon-sprite>
-                            <img *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ "assets/icons/stepper/" + onboardingStep.icon + "-inactive.svg" }}' class="icon">
+                            <svg-icon-sprite *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ onboardingStep.icon }}' width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
                         </div>
-                        <div *ngIf="i + 1 !== 4" >
+                        <div *ngIf="i + 1 !== 4">
                             <div *ngIf="!onboardingStep.completed">
                                 <hr class="line-active">
                             </div>
-                            <div *ngIf="onboardingStep.completed" class="">
+                            <div *ngIf="onboardingStep.completed">
                                 <hr class="line-inactive">
                             </div>
                         </div>

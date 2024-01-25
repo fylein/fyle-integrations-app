@@ -18,15 +18,15 @@
                 <div class="tw-grip tw-grid-cols-1">
                     <div class="tw-flex tw-items-center">
                         <div class="tw-flex tw-justify-center step" (click)="navigate(onboardingStep.completed, onboardingStep.route)" [ngClass]="[onboardingStep.active && !onboardingStep.completed ? 'step-state tw-border-success-toast tw-text-success-toast tw-cursor-pointer' : 'step-state tw-border-box-color tw-cursor-not-allowed', onboardingStep.active && onboardingStep.completed ? 'step-state tw-border-success-toast !tw-cursor-pointer' : '',onboardingStep.completed && !onboardingStep.active ? '!tw-bg-success-toast tw-text-white tw-border-success-toast !tw-cursor-pointer':'',]">
-                            <svg-icon-sprite *ngIf="onboardingStep.active" src='{{ onboardingStep.icon }}' [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[1] : ''" ></svg-icon-sprite>
+                            <svg-icon-sprite *ngIf="onboardingStep.active" src='{{ onboardingStep.icon }}' width="20px" height="20px" class="tw-text-success-toast"></svg-icon-sprite>
                             <svg-icon-sprite *ngIf="!onboardingStep.active && onboardingStep.completed" src="check-medium" width="20px" height="20px"></svg-icon-sprite>
-                            <svg-icon-sprite *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ onboardingStep.icon }}-inactive' class="tw-text-placeholder" [ngClass]="onboardingStep.styleClasses ? onboardingStep.styleClasses[1] : ''"></svg-icon-sprite>
+                            <svg-icon-sprite *ngIf="!onboardingStep.active && !onboardingStep.completed" src='{{ onboardingStep.icon }}' width="20px" height="20px" class="tw-text-placeholder"></svg-icon-sprite>
                         </div>
-                        <div *ngIf="i + 1 < onboardingSteps.length" >
+                        <div *ngIf="i + 1 < onboardingSteps.length">
                             <div *ngIf="!onboardingStep.completed">
                                 <hr class="line-active">
                             </div>
-                            <div *ngIf="onboardingStep.completed" class="">
+                            <div *ngIf="onboardingStep.completed">
                                 <hr class="line-inactive">
                             </div>
                         </div>

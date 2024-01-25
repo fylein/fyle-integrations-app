@@ -23,49 +23,33 @@ export class BusinessCentralOnboardingService {
       active: false,
       completed: false,
       step: 'Connect to Dynamics \n 365 Business Central',
-      icon: 'connector',
+      icon: 'link-vertical-medium',
       route: '/integrations/business_central/onboarding/connector',
-      size: {
-        height: '18px',
-        width: '15px'
-      },
-      styleClasses: ['step-name-connector--text tw-pl-12-px tw-whitespace-pre-line', 'step-name-connector--icon']
+      styleClasses: ['step-name-connector--text tw-pl-12-px tw-whitespace-pre-line']
     },
     {
       active: false,
       completed: false,
       step: 'Export Settings',
-      icon: 'export-setting',
+      icon: 'arrow-tail-up-medium',
       route: '/integrations/business_central/onboarding/export_settings',
-      size: {
-        height: '18px',
-        width: '15px'
-      },
-      styleClasses: ['step-name-export--text', 'step-name-export--icon']
+      styleClasses: ['step-name-export--text']
     },
     {
       active: false,
       completed: false,
       step: 'Import Settings',
-      icon: 'import-setting',
+      icon: 'arrow-tail-down-medium',
       route: '/integrations/business_central/onboarding/import_settings',
-      size: {
-        height: '18px',
-        width: '15px'
-      },
-      styleClasses: ['step-name-import--text', 'step-name-import--icon']
+      styleClasses: ['step-name-import--text']
     },
     {
       active: false,
       completed: false,
       step: 'Advanced Settings',
-      icon: 'advanced-setting',
+      icon: 'gear-medium',
       route: '/integrations/business_central/onboarding/advanced_settings',
-      size: {
-        height: '20px',
-        width: '20px'
-      },
-      styleClasses: ['step-name-advanced--text', 'step-name-advanced--icon']
+      styleClasses: ['step-name-advanced--text']
     }
   ];
 
