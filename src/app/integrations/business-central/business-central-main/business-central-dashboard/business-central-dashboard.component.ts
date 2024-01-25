@@ -87,9 +87,9 @@ export class BusinessCentralDashboardComponent implements OnInit {
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
-        console.log(this.exportableAccountingExportIds);
+
         this.exportableAccountingExportIds = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).map(taskLog => taskLog.id);
-        console.log(this.exportableAccountingExportIds);
+
         this.isExportInProgress = false;
         this.exportProgressPercentage = 0;
         this.processedCount = 0;
