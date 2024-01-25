@@ -27,7 +27,7 @@ export class BambooHrComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  appName: AppName = AppName.BAMBOO_HR
+  appName: AppName = AppName.BAMBOO_HR;
 
   hideRefreshIcon: boolean = true;
 
