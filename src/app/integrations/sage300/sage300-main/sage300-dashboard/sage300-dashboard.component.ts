@@ -90,6 +90,9 @@ export class Sage300DashboardComponent implements OnInit {
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
+
+        this.exportableAccountingExportIds = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).map(taskLog => taskLog.id);
+
         this.isExportInProgress = false;
         this.exportProgressPercentage = 0;
         this.processedCount = 0;

@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
 })
 export class BusinessCentralDashboardComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   appName: AppName = AppName.BUSINESS_CENTRAL;
 
@@ -74,7 +74,6 @@ export class BusinessCentralDashboardComponent implements OnInit {
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
       if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)).length === 0) {
-        this.isLoading = true;
         forkJoin([
           this.getExportErrors$,
           this.getAccountingExportSummary$
@@ -85,17 +84,18 @@ export class BusinessCentralDashboardComponent implements OnInit {
             CATEGORY_MAPPING: null
           };
           this.accountingExportSummary = responses[1];
-          this.isLoading = false;
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
+
+        this.exportableAccountingExportIds = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).map(taskLog => taskLog.id);
+
         this.isExportInProgress = false;
         this.exportProgressPercentage = 0;
         this.processedCount = 0;
-
         if (this.failedExpenseGroupCount === 0) {
           this.refinerService.triggerSurvey(
-            AppName.SAGE300, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+            AppName.BUSINESS_CENTRAL, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
           );
         }
       }
@@ -133,6 +133,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
         this.pollExportStatus();
+        this.isLoading = false;
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.isImportInProgress = false;
