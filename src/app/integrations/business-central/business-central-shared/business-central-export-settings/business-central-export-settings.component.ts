@@ -39,22 +39,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   previewImagePaths = [
     {
-      'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg'
+      'PURCHASE_INVOICE': 'assets/illustrations/ms-dynamics/purchase-invoice.png',
+      'JOURNAL_ENTRY': 'assets/illustrations/ms-dynamics/journal-entry.png'
     },
     {
-      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/CCC Bill.jpg'
-    }
-  ];
-
-  previewExpenseGroupTypeImagePath = [
-    {
-      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
-    },
-    {
-      'EXPENSE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'EXPENSE_REPOR': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg'
+      'JOURNAL_ENTRY': 'assets/illustrations/ms-dynamics/journal-entry.png'
     }
   ];
 
@@ -78,9 +67,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   cccExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCExpensesExportTypeOptions();
 
-  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseState();
+  reimbursableExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getReimbursableExpenseState();
 
-  cccExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseState();
+  cccExpenseState: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCExpenseState();
 
   employeeFieldMappingOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getEntityOptions();
 
@@ -143,11 +132,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     }
   }
 
-  getExportDate(options: BusinessCentralExportSettingFormOption[]): BusinessCentralExportSettingFormOption[]{
-    if (this.exportSettingForm.value.reimbursableExportGroup === ExpenseGroupedBy.REPORT) {
-      return options.filter(option => option.value === ExportDateType.LAST_SPENT_AT);
+  getExportDate(options: BusinessCentralExportSettingFormOption[], formControllerName: string): BusinessCentralExportSettingFormOption[]{
+    if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
+      return options.filter(option => option.value !== ExportDateType.LAST_SPENT_AT);
     }
-    return options;
+    return options.filter(option => option.value !== ExportDateType.SPENT_AT);
   }
 
   refreshDimensions(isRefresh: boolean): void{
@@ -157,22 +146,25 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
-      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'entityNamePreference', 'reimbursableEmployeeMapping'],
-      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'entityNamePreference']
+      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
+      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
     };
 
     const exportModuleRule: ExportModuleRule[] = [
       {
         'formController': 'reimbursableExportType',
-        'requiredValue': {}
+        'requiredValue': {
+          'JOURNAL_ENTRY': ['defaultBankName']
+        }
       },
       {
         'formController': 'cccExportType',
         'requiredValue': {
-          'JOURNAL_ENTRY': ['defaultCreditCardCCCAccountName', 'defaultBankName', 'journalEntryNamePreference']
+          'JOURNAL_ENTRY': ['defaultBankName', 'journalEntryNamePreference']
         }
       }
     ];
+    const commonFormFields: string[] = ['defaultBankName'];
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
       this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT, FyleField.VENDOR], 'v2')
@@ -181,7 +173,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, destinationAttributes);
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
-      this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+      this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
       this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
       this.bankOptions = destinationAttributes.ACCOUNT;
       this.vendorOptions = destinationAttributes.VENDOR;

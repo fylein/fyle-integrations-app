@@ -23,6 +23,8 @@ export class TravelperkComponent implements OnInit {
 
   AppName = AppName;
 
+  appName: AppName = AppName.TRAVELPERK;
+
   isLoading: boolean = true;
 
   showErrorScreen: boolean;

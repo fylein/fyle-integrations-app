@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, FyleField, Page, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300ExpenseDate, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -138,6 +138,13 @@ export class Sage300ExportSettingsComponent implements OnInit {
     if (this.exportSettingForm.valid) {
       this.constructPayloadAndSave();
     }
+  }
+
+  getExportDate(options: Sage300ExportSettingFormOption[], formControllerName: string): Sage300ExportSettingFormOption[]{
+    if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
+      return options.filter(option => option.value !== Sage300ExpenseDate.LAST_SPENT_AT);
+    }
+    return options.filter(option => option.value !== Sage300ExpenseDate.SPENT_AT);
   }
 
   private setupPage(): void {

@@ -38,7 +38,7 @@
                         </ng-template>
                     </p-dropdown>
                 </div>
-                <div class="tw-w-300-px tw-break-words tw-text-center tw-py-16-px">
+                <div class="tw-w-300-px tw-text-pretty tw-text-center tw-py-16-px">
                     <span class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Please select a Location (Entity) from {{accountingAppTitle}} to proceed further.</span>
                 </div>
             </div>
@@ -50,7 +50,7 @@
             <h4 *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect && accountingCompanyName" class="tw-text-faded-text-color">
                 Not the company that you wish to connect with?
             </h4>
-            <h4 *ngIf="accountingCompanyConnectionInProgress" class="tw-text-faded-text-color tw-max-w-300-px tw-overflow-hidden tw-break-all">
+            <h4 *ngIf="accountingCompanyConnectionInProgress" class="tw-text-faded-text-color tw-max-w-300-px tw-text-pretty">
                 Please hold on; we are fetching data from your {{ accountingAppTitle }} account, which may take a few seconds.
             </h4>
             <h4 *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-faded-text-color ">

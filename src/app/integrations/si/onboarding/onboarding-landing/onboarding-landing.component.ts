@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-onboarding-landing',
@@ -7,6 +8,8 @@ import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/
   styleUrls: ['./onboarding-landing.component.scss']
 })
 export class OnboardingLandingComponent implements OnInit {
+
+  appName: AppName = AppName.INTACCT;
 
   redirectLink = brandingKbArticles.onboardingArticles.INTACCT.LANDING;
 

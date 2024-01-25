@@ -74,9 +74,9 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     if (this.advancedSettingForm.controls.skipExport) {
       if (this.skipExportForm.controls.condition1.value) {
         if (this.skipExportForm.controls.condition2.value) {
-          return (this.skipExportForm.controls.value1.value || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsEmpty) && (this.skipExportForm.controls.value2.value || this.skipExportForm.controls.operator2.value === CustomOperatorOption.IsEmpty) ? true : false;
+          return (this.skipExportForm.controls.value1.value || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsEmpty || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsNotEmpty) && (this.skipExportForm.controls.value2.value || this.skipExportForm.controls.operator2.value === CustomOperatorOption.IsEmpty || this.skipExportForm.controls.operator2.value === CustomOperatorOption.IsNotEmpty) ? true : false;
         }
-        return this.skipExportForm.controls.value1.value || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsEmpty ? true : false;
+        return this.skipExportForm.controls.value1.value || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsEmpty || this.skipExportForm.controls.operator1.value === CustomOperatorOption.IsNotEmpty ? true : false;
       }
     }
     return true;

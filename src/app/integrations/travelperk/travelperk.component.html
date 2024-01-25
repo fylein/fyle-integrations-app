@@ -16,6 +16,7 @@
     [headerText]="'Auto sync employee details between TravelPerk and ' + brandingConfig.brandName + '.'" 
     [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
     [redirectLink]="brandingKbArticles.topLevelArticles.TRAVELPERK"
+    [appName]="appName"
 ></app-landing-page-body>
 
 <app-error *ngIf="showErrorScreen"></app-error>
