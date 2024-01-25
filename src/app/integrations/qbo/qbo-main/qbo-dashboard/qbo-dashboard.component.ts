@@ -95,6 +95,9 @@ export class QboDashboardComponent implements OnInit {
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+        console.log(this.exportableAccountingExportIds);
+        this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.id);
+        console.log(this.exportableAccountingExportIds);
         this.isExportInProgress = false;
         this.exportProgressPercentage = 0;
         this.processedCount = 0;
