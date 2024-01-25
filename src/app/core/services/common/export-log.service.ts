@@ -28,7 +28,8 @@ export class ExportLogService {
     const params: SkipExportParam = {
       limit,
       offset,
-      org_id: this.userService.getUserProfile().org_id
+      org_id: this.userService.getUserProfile().org_id,
+      is_skipped: true
     };
     params.org_id = this.userService.getUserProfile().org_id;
 

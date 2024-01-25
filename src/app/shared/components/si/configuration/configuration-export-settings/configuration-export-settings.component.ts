@@ -216,8 +216,8 @@ export class ConfigurationExportSettingsComponent implements OnInit {
     private setUpExpenseStates(): void {
       this.cccExpenseStateOptions = [
         {
-          label: this.is_simplify_report_closure_enabled ? 'Approved' : 'Payment Processing',
-          value: this.is_simplify_report_closure_enabled ? CCCExpenseState.APPROVED: CCCExpenseState.PAYMENT_PROCESSING
+          label: 'Approved',
+          value: CCCExpenseState.APPROVED
         },
         {
           label: this.is_simplify_report_closure_enabled ? 'Closed' : 'Paid',

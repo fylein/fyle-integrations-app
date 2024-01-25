@@ -5,7 +5,7 @@ import { BusinessCentralAccountingExport, BusinessCentralAccountingExportRespons
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, CCCImportState, RefinerSurveyType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -53,6 +53,14 @@ export class BusinessCentralDashboardComponent implements OnInit {
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary();
 
   isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
+  reimbursableImportState: ReimbursableImportState | null;
+
+  private readonly reimbursableExpenseImportStateMap = DashboardModel.getReimbursableExpenseImportStateMap();
+
+  cccImportState: CCCImportState | null;
+
+  private readonly cccExpenseImportStateMap = DashboardModel.getCCCExpenseImportStateMap();
 
   constructor(
     private refinerService: RefinerService,
@@ -128,6 +136,9 @@ export class BusinessCentralDashboardComponent implements OnInit {
         'EMPLOYEE': responses[4].employee_field_mapping,
         'CATEGORY': 'ACCOUNT'
       };
+
+      this.reimbursableImportState = responses[4].reimbursable_expenses_export_type ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
+      this.cccImportState = responses[4].credit_card_expense_export_type ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;

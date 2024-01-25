@@ -39,6 +39,7 @@ export type SkipExportParam = {
   limit: number;
   offset: number;
   org_id: string;
+  is_skipped: boolean;
   updated_at__gte?: string;
   updated_at__lte?: string;
 }

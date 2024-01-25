@@ -4,11 +4,12 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AppName, AppUrl, QBOTaskLogType, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName, AppUrl, CCCExpenseState, CCCImportState, ExpenseState, QBOTaskLogType, ReimbursableImportState, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { QBOTaskLog, QBOTaskResponse } from 'src/app/core/models/qbo/db/qbo-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
 
 @Component({
   selector: 'app-qbo-dashboard',
@@ -52,6 +53,14 @@ export class QboDashboardComponent implements OnInit {
 
   isImportItemsEnabled: boolean;
 
+  reimbursableImportState: ReimbursableImportState | null;
+
+  private readonly reimbursableExpenseImportStateMap = DashboardModel.getReimbursableExpenseImportStateMap();
+
+  cccImportState: CCCImportState | null;
+
+  private readonly cccExpenseImportStateMap = DashboardModel.getCCCExpenseImportStateMap();
+
   AppUrl = AppUrl;
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
@@ -59,6 +68,7 @@ export class QboDashboardComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
+    private qboExportSettingsService: QboExportSettingsService,
     private workspaceService: WorkspaceService
   ) { }
 
@@ -111,7 +121,8 @@ export class QboDashboardComponent implements OnInit {
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
       this.workspaceService.getWorkspaceGeneralSettings(),
-      this.dashboardService.getExportableAccountingExportIds('v1')
+      this.dashboardService.getExportableAccountingExportIds('v1'),
+      this.qboExportSettingsService.getExportSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.isImportItemsEnabled = responses[3].import_items;
@@ -129,6 +140,9 @@ export class QboDashboardComponent implements OnInit {
       this.failedExpenseGroupCount = responses[2].results.filter((task: QBOTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
+
+      this.reimbursableImportState = responses[5].workspace_general_settings.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
+      this.cccImportState = responses[5].workspace_general_settings.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
