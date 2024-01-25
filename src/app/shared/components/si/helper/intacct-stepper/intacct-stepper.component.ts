@@ -24,45 +24,29 @@ export class IntacctStepperComponent implements OnInit {
       active: false,
       completed: false,
       step: 'Connect to Sage Intacct',
-      icon: 'connector',
-      route: 'connector',
-      size: {
-        height: '18px',
-        width: '15px'
-      }
+      icon: 'link-vertical-medium',
+      route: 'connector'
     },
     {
       active: false,
       completed: false,
       step: 'Export Settings',
-      icon: 'export-setting',
-      route: 'export_settings',
-      size: {
-        height: '18px',
-        width: '15px'
-      }
+      icon: 'arrow-tail-up-medium',
+      route: 'export_settings'
     },
     {
       active: false,
       completed: false,
       step: 'Import Settings',
-      icon: 'import-setting',
-      route: 'import_settings',
-      size: {
-        height: '18px',
-        width: '15px'
-      }
+      icon: 'arrow-tail-down-medium',
+      route: 'import_settings'
     },
     {
       active: false,
       completed: false,
       step: 'Advanced Settings',
-      icon: 'advanced-setting',
-      route: 'advanced_settings',
-      size: {
-        height: '20px',
-        width: '20px'
-      }
+      icon: 'gear-medium',
+      route: 'advanced_settings'
     }
   ];
 

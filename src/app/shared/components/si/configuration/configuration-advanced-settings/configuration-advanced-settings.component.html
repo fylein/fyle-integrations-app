@@ -57,7 +57,7 @@
                 [label]="'Auto-Sync Payment Status for Reimbursable Expenses'"
                 [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
                 [options]="paymentSyncOptions"
-                [iconPath]="'synced'"
+                [iconPath]="'arrow-rotate'"
                 [placeholder]="'Select payment sync method'"
                 [formControllerName]="'autoSyncPayments'"></app-configuration-select-field>
                 <div *ngIf="isCCT()">

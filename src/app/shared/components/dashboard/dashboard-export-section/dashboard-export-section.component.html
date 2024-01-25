@@ -3,9 +3,9 @@
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-4/5">
-                    <div class="tw-flex">
+                    <div class="tw-flex tw-items-center">
                         <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length" src="check" height="24px" width="24px"></svg-icon-sprite>
-                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!isExportInProgress && exportableAccountingExportIds.length) || (isExportInProgress)" src="arrow_tail" height="24px" width="24px"></svg-icon-sprite>
+                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!isExportInProgress && exportableAccountingExportIds.length) || (isExportInProgress)" src="arrow-tail-up" height="24px" width="24px" classes="tw-text-slightly-normal-text-color"></svg-icon-sprite>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary"> Sit back and relax!</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="isExportInProgress"> Exporting {{ processedCount }} of {{ exportableAccountingExportIds.length }} expense{{exportableAccountingExportIds.length > 1 ? 's' : ''}} to your {{appName}} account</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!isExportInProgress && exportableAccountingExportIds.length"> {{ exportableAccountingExportIds.length }} expense{{exportableAccountingExportIds.length > 1 ? 's' : ''}} ready to export</h3>

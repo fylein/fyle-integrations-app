@@ -269,13 +269,9 @@ export class QboCloneSettingsComponent implements OnInit {
       active: false,
       completed: false,
       step: 'Clone Settings',
-      icon: 'advanced-setting',
+      icon: 'gear-medium',
       route: '/integrations/qbo/onboarding/clone_settings',
-      size: {
-        height: '20px',
-        width: '20px'
-      },
-      styleClasses: ['step-name-export--text', 'step-name-advanced--icon']
+      styleClasses: ['step-name-export--text']
     });
   }
 

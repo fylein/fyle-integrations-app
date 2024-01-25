@@ -30,6 +30,7 @@ const customColors = {
   'pink-box-border': 'var(--pink-box-border)',
   'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
+  'icon-warning': 'var(--icon-warning)'
 }
 
 module.exports = {

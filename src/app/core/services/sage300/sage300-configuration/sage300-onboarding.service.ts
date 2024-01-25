@@ -22,48 +22,32 @@ export class Sage300OnboardingService {
       active: false,
       completed: false,
       step: 'Connect to Sage 300 CRE',
-      icon: 'connector',
+      icon: 'link-vertical-medium',
       route: '/integrations/sage300/onboarding/connector',
-      size: {
-        height: '18px',
-        width: '15px'
-      },
-      styleClasses: ['step-name-connector--text', 'step-name-connector--icon']
+      styleClasses: ['step-name-connector--text']
     },
     {
       active: false,
       completed: false,
       step: 'Export Settings',
-      icon: 'export-setting',
+      icon: 'arrow-tail-up-medium',
       route: '/integrations/sage300/onboarding/export_settings',
-      size: {
-        height: '18px',
-        width: '15px'
-      },
       styleClasses: ['step-name-export--text', 'step-name-export--icon']
     },
     {
       active: false,
       completed: false,
       step: 'Import Settings',
-      icon: 'import-setting',
+      icon: 'arrow-tail-down-medium',
       route: '/integrations/sage300/onboarding/import_settings',
-      size: {
-        height: '18px',
-        width: '15px'
-      },
       styleClasses: ['step-name-import--text', 'step-name-import--icon']
     },
     {
       active: false,
       completed: false,
       step: 'Advanced Settings',
-      icon: 'advanced-setting',
+      icon: 'gear-medium',
       route: '/integrations/sage300/onboarding/advanced_settings',
-      size: {
-        height: '20px',
-        width: '20px'
-      },
       styleClasses: ['step-name-advanced--text', 'step-name-advanced--icon']
     }
   ];
