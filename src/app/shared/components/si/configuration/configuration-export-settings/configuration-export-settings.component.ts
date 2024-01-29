@@ -442,7 +442,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         creditCardVendor: [findObjectById(this.destinationOptions.VENDOR, generalMappings?.default_ccc_vendor.id)],
         creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
         chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)],
-        useMerchantInJournalEntry: [configurations?.use_merchant_in_journal_line]
+        useMerchantInJournalLine: [configurations?.use_merchant_in_journal_line]
       });
 
       this.exportFieldsWatcher();

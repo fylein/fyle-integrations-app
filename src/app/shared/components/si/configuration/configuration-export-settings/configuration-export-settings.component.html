@@ -174,12 +174,12 @@
                             [formControllerName]="'creditCardVendor'"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div *ngIf="exportSettingsForm.value.cccExportType === CorporateCreditCardExpensesObject.JOURNAL_ENTRY" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <app-configuration-toggle-field 
                             [form]="exportSettingsForm"
                             [label]="'Export Merchant as Vendor for Journal Line'" 
                             [subLabel]="'we’ll Match merchant name with Vendor in Intacct'"
-                            [formControllerName]="'useMerchantInJournalEntry'"></app-configuration-toggle-field>
+                            [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <app-configuration-select-field

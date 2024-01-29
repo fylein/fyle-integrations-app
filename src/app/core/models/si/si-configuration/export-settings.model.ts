@@ -81,7 +81,7 @@ export type ExportSettingOptionSearch = {
                 corporate_credit_card_expenses_object: cccExportType,
                 employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : null,
                 auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees')),
-                use_merchant_in_journal_line: exportSettingsForm.get('useMerchantInJournalEntry')?.value
+                use_merchant_in_journal_line: exportSettingsForm.get('useMerchantInJournalLine')?.value
             },
             general_mappings: {
                 default_gl_account: exportSettingsForm.get('glAccount')?.value?.value ? {id: exportSettingsForm.get('glAccount')?.value.destination_id, name: exportSettingsForm.get('glAccount')?.value.value} : emptyDestinationAttribute,
