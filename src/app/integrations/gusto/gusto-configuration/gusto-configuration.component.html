@@ -10,7 +10,7 @@
             <div class="tw-rounded-12-px tw-border-1-px tw-border-separator tw-mb-24-px ">
                 <div class="tw-p-24-px tw-border-b-1-px tw-border-b-separator tw-flex tw-items-start">
                     <div class="tw-pr-20-px tw-mt-4-px">
-                        <svg-icon-sprite src="multiple-people" width="24px" hight="24px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                        <app-svg-icon [svgSource]="'multiple-people'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
                     </div>
                     <div>
                         <h5 class="tw-text-14-px !tw-font-500">Import Employee</h5>
@@ -29,7 +29,7 @@
                         <tbody>
                           <tr *ngFor="let field of configurationFields"> 
                             <td><input type="text" [value]="field" class="gusto-configuration-fields" disabled></td>
-                            <td class="right-arrow tw-content-center "><svg-icon-sprite src="arrow-line" width="60px" hight="10px" class="tw-text-box-color"></svg-icon-sprite></td>
+                            <td class="right-arrow tw-content-center "><app-svg-icon [svgSource]="'arrow-line'" [width]="'60px'" [height]="'10px'" [styleClasses]="'tw-text-box-color'"></app-svg-icon></td>
                             <td><input type="text" [value]="field" class="gusto-configuration-fields" disabled></td>
                           </tr>
                         </tbody>

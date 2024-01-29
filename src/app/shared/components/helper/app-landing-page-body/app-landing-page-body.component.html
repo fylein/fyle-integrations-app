@@ -5,7 +5,7 @@
         {{headerText}}
         <span *ngIf="redirectLink" class="tw-text-hyperlink-color tw-flex tw-pl-4-px tw-cursor-pointer" (click)="windowService.openInNewTab(redirectLink)">
             Read More
-            <svg-icon-sprite src="open-in-new-tab" width="16px" height="16px" class="tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px"></svg-icon-sprite>
+            <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px'"></app-svg-icon>
         </span>
     </p>
 
