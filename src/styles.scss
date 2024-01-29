@@ -20,23 +20,23 @@ p {
 }
 
 .pi-times:before {
-    content: url('./assets/icons/cross.svg') #{!important};
+    content: url('./assets/icons/cross-small.svg') !important;
 }
 
 .pi-chevron-down:before {
-    content: url('./assets/icons/arrow-down.svg') #{!important};
+    content: url('./assets/icons/arrow-down.svg') !important;
 }
 
 .pi-eye:before {
-    content: url('./assets/icons/eye.svg') #{!important};
+    content: url('./assets/icons/eye.svg') !important;
 }
 
 .pi-eye-slash:before {
-    content: url('./assets/icons/eye-slash.svg') #{!important};
+    content: url('./assets/icons/eye-slash.svg') !important;
 }
 
 .pi-times:before {
-    @apply tw-text-placeholder #{!important}
+    @apply tw-text-placeholder tw-text-12-px #{!important}
 }
 
 .p-component {

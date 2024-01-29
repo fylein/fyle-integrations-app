@@ -127,6 +127,7 @@ module.exports = {
         '42-px': '42px',
         '44-px': '44px',
         '48-px': '48px',
+        '50-px': '50px',
         '56-px': '56px',
         '60-px': '60px',
         '62-px': '62px',
@@ -396,9 +397,6 @@ module.exports = {
       top: {
         '70': '70%'
       },
-      inset: {
-        '2': '0.28rem'
-      },
       lineHeight: {
         '16-px': '16px'
       },
@@ -406,6 +404,10 @@ module.exports = {
         'no': "'No'",
         'yes': "'Yes'",
         'empty': "''"
+      },
+      left: {
+        '2': '0.5rem',
+        '6': '1.5rem'
       }
     },
   },

@@ -42,7 +42,7 @@
             <div class="clone-setting--export-setting-header">
                 <div class="tw-flex tw-items-center">
                     Export Reimbursable Expenses
-                    <svg-icon-sprite width="16px" height="16px" src="info-circle-fill" class="tw-text-placeholder tw-ml-8-px" [pTooltip]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" tooltipPosition="top"></svg-icon-sprite>
+                    <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
                 </div>
                 <div>
                     <p-inputSwitch formControlName="reimbursableExpense"></p-inputSwitch>
@@ -147,7 +147,7 @@
             <div class="clone-setting--export-setting-header">
                 <div class="tw-flex tw-items-center">
                     Export Corporate Credit Card Expenses
-                    <svg-icon-sprite width="16px" height="16px" src="info-circle-fill" class="tw-text-placeholder tw-ml-8-px" [pTooltip]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" tooltipPosition="top"></svg-icon-sprite>
+                    <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
                 </div>
                 <div>
                     <p-inputSwitch formControlName="creditCardExpense"></p-inputSwitch>
@@ -385,7 +385,7 @@
             <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.value.exportSchedule">
                 <p class="tw-pl-40-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
                     Send Error Notification to
-                    <svg-icon-sprite width="16px" height="16px" src="info-circle-fill" class="tw-text-placeholder tw-ml-8-px" [pTooltip]="'Select or add an email address to notify upon import failure or integration error.'" tooltipPosition="top"></svg-icon-sprite>
+                    <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Select or add an email address to notify upon import failure or integration error.'" [tooltipPosition]="'top'"></app-svg-icon>
                 </p>
                 <app-email-multi-select-field
                     [form]="advancedSettingForm"
@@ -476,10 +476,10 @@
         <div class="clone-setting--field">
             <div class="tw-flex tw-justify-between">
                 <div class="tw-flex">
-                    <svg-icon-sprite width="24px" height="24px" src="list" class="tw-text-menu-inactive-text-color"></svg-icon-sprite>
+                    <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="'list'" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
                     <p class="tw-flex tw-items-center tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
                         Set the Description Field in QuickBooks Online
-                        <svg-icon-sprite width="16px" height="16px" src="info-circle-fill" class="tw-text-placeholder tw-ml-8-px" [pTooltip]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'" tooltipPosition="top"></svg-icon-sprite>
+                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'" [tooltipPosition]="'top'"></app-svg-icon>
                     </p>
                 </div>
                 <app-configuration-multi-select
