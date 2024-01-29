@@ -9,7 +9,6 @@ import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage3
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
-import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,14 +18,9 @@ export class HelperService {
   @Output() oauthCallbackUrl: EventEmitter<string> = new EventEmitter();
 
   constructor(
-    private apiService: ApiService,
     private router: Router,
-    private storageService: StorageService
+    private apiService: ApiService
   ) {}
-
-  private get apiBaseUrl(): string {
-    return this.storageService.get('cluster-domain') || environment.cluster_domain_api_url;
-  }
 
   setBaseApiURL(appUrl: string| void): void {
     const urlSplit = this.router.url.split('/');
@@ -41,15 +35,15 @@ export class HelperService {
     }
 
     const apiUrlMap: AppUrlMap = {
-      [AppUrl.INTACCT]: environment.production ? `${this.apiBaseUrl}/intacct-api/api` : environment.si_api_url,
+      [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
-      [AppUrl.TRAVELPERK]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
-      [AppUrl.BAMBOO_HR]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
-      [AppUrl.GUSTO]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
+      [AppUrl.TRAVELPERK]: environment.api_url,
+      [AppUrl.BAMBOO_HR]: environment.api_url,
+      [AppUrl.GUSTO]: environment.api_url,
       [AppUrl.SAGE300]: environment.sage300_api_url,
-      [AppUrl.INTEGRATION]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
+      [AppUrl.INTEGRATION]: environment.api_url,
       [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url,
-      [AppUrl.QBO]: environment.production ? `${this.apiBaseUrl}/quickbooks-api/api` : environment.qbo_api_url
+      [AppUrl.QBO]: environment.qbo_api_url
     };
 
     const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration;
