@@ -32,7 +32,7 @@ export class BusinessCentralComponent implements OnInit {
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private windowService: WindowService,
-    private workspaceService: WorkspaceService,
+    private workspaceService: WorkspaceService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }

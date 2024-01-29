@@ -32,7 +32,7 @@ export class SiComponent implements OnInit {
     private storageService: StorageService,
     private userService: UserService,
     private windowService: WindowService,
-    private workspaceService: SiWorkspaceService,
+    private workspaceService: SiWorkspaceService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
