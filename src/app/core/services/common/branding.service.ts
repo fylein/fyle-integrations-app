@@ -3,6 +3,11 @@ import { Inject, Injectable } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
+const faviconMap = {
+  'fyle': 'favicon.ico',
+  'co': 'favicon.png'
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +20,7 @@ export class BrandingService {
 
   private setupBrandingConfig(): void {
     this.title.setTitle(brandingConfig.webpageTitle);
-    this.document.getElementById('appFavicon')?.setAttribute('href', `assets/${brandingConfig.brandId}/favicon.ico`);
+    this.document.getElementById('appFavicon')?.setAttribute('href', `assets/${brandingConfig.brandId}/${faviconMap[brandingConfig.brandId]}`);
     this.document.documentElement.setAttribute('data-theme', brandingConfig.brandId);
   }
 
