@@ -54,12 +54,12 @@
                         </div>
                     </ng-template>
                 </p-dropdown>
-                    <div *ngIf="showPreviewText" class="sub-text tw-text-pretty tw-pt-3-px">
+                    <div *ngIf="showExportPreview" class="sub-text tw-text-pretty tw-pt-3-px">
                         <span>Click </span>
                         <a class="tw-text-hyperlink-color !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
                         <span> to preview how it looks on {{appName}}</span>
                     </div>
-                    <div *ngIf="!showPreviewText && isDisabled" class="sub-text tw-text-pretty tw-pt-3-px">
+                    <div *ngIf="!showExportPreview && isDisabled" class="sub-text tw-text-pretty tw-pt-3-px">
                         <span>Auto-selected based on your export module</span>
                     </div>
                     <div *ngIf="form.controls[formControllerName].value==='spent_at' && isOnboarding" class="sub-text">
