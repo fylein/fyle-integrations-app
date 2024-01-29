@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable, from, mergeMap, of, reduce, takeWhile } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Cacheable } from 'ts-cacheable';
-import { SiApiService } from '../si-core/si-api.service';
 import { UserService } from '../../misc/user.service';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { FyleReferenceType, TaskLogState } from 'src/app/core/models/enum/enum.model';
@@ -10,6 +9,7 @@ import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.mod
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { Expense } from 'src/app/core/models/si/db/expense.model';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class ExportLogService {
   private org_id: string = this.userService.getUserProfile().org_id;
 
   constructor(
-    private apiService: SiApiService,
+    private apiService: ApiService,
     private userService: UserService,
     private workspaceService: SiWorkspaceService
   ) { }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Token } from 'src/app/core/models/misc/token.model';
-import { SiApiService } from './si-api.service';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { SiApiService } from './si-api.service';
 export class SiAuthService {
 
   constructor(
-    private apiService: SiApiService
+    private apiService: ApiService
   ) { }
 
   loginWithRefreshToken(refresh_token: string): Observable<Token> {
