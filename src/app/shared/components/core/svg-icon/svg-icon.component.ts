@@ -80,8 +80,8 @@ export class SvgIconComponent implements OnInit {
       // @ts-ignore
       this.svgSource = ICON_MAPPING[this.svgSource];
 
-      // remove all text classes
-      this.styleClasses = this.styleClasses.split(' ').filter((styleClass: string) => !styleClass.startsWith('tw-text-') ? styleClass: '').join(' ');
+      // Remove all text classes
+      this.styleClasses = this.styleClasses.split(' ').filter((styleClass: string) => (!styleClass.startsWith('tw-text-') ? styleClass: '')).join(' ');
     }
   }
 
