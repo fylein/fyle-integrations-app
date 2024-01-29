@@ -45,7 +45,7 @@ const ICON_MAPPING = {
   'tabs': 'grv-budle',
   'user-plus': 'grv-person',
   'user-two': 'grv-persons',
-  'warning-outline': 'warning-outline'
+  'warning-outline': 'grv-caution-triangle-small'
 };
 
 @Component({
@@ -61,7 +61,7 @@ export class SvgIconComponent implements OnInit {
 
   @Input() height: string;
 
-  @Input() styleClasses: string;
+  @Input() styleClasses: string = '';
 
   @Input() tooltipPosition: string = 'top';
 
