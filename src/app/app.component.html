@@ -4,7 +4,7 @@
     <ng-template let-message pTemplate="message">
         <div class="tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px" [ngClass]="message.severity === 'success' ? 'tw-bg-success-toast' : 'tw-bg-alert-toast'">
             <div class="tw-flex">
-                <svg-icon-sprite *ngIf="message.severity === 'success'" src="check-circle-outline" width="20px" height="20px" class="tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px"></svg-icon-sprite>
+                <svg-icon-sprite *ngIf="message.severity === 'success'" src="check-circle-outline-medium" width="20px" height="20px" class="tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px"></svg-icon-sprite>
                 <svg-icon-sprite *ngIf="message.severity !== 'success'" src="warning-outline" width="20px" height="20px" class="tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px"></svg-icon-sprite>
                 {{ message.summary }}
             </div>
