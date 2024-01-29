@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MinimalUser } from '../../models/db/user.model';
-import { Token } from '../../models/misc/token.model';
+import { ClusterDomainWithToken, Token } from '../../models/misc/token.model';
 import { UserService } from '../misc/user.service';
 import { ApiService } from './api.service';
 import { StorageService } from './storage.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,14 @@ export class AuthService {
 
   login(code: string): Observable<Token> {
     return this.apiService.post('/auth/login/', { code: code });
+  }
+
+  getClusterDomainByCode(code: string): Observable<ClusterDomainWithToken> {
+    return this.apiService.post('/auth/cluster_domain/', { code });
+  }
+
+  loginWithRefreshToken(refreshToken: string): Observable<Token> {
+    return this.apiService.post('/auth/login_with_refresh_token/', { refresh_token: refreshToken });
   }
 
   getAccessToken(): string | null {
@@ -55,6 +64,7 @@ export class AuthService {
 
   logout(): void {
     this.storageService.remove('user');
+    this.storageService.remove('cluster-domain');
   }
 
   checkLoginStatusAndLogout(): void {
