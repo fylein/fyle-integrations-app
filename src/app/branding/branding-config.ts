@@ -4,7 +4,7 @@ import { FeatureConfiguration } from '../core/models/branding/feature-configurat
 import { KbArticle } from '../core/models/branding/kb-article.model';
 import config from './config.json';
 
-export const brandingConfig: BrandingConfiguration = config;
+export const brandingConfig: BrandingConfiguration = config as BrandingConfiguration;
 
 const featureConfigs: FeatureConfiguration = {
     fyle: {
