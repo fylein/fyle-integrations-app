@@ -79,12 +79,12 @@ export class SkipExportComponent implements OnInit {
   customCheckBoxValueOptions: { label: string; value: string; }[] = [
     {
       label: 'Yes',
-      value: 'true',
+      value: 'true'
     },
     {
       label: 'No',
-      value: 'false',
-    },
+      value: 'false'
+    }
   ];
 
   constructor(
@@ -407,7 +407,7 @@ export class SkipExportComponent implements OnInit {
       const customCheckBoxOperatorOptions: { label: string; value: string; }[] = [
         {
           label: 'Is',
-          value: 'exact',
+          value: 'exact'
         }
       ];
       if (rank === 1) {
