@@ -66,6 +66,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() optionLabel: string = 'value';
 
+  @Input() showPreviewText: boolean = false;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
