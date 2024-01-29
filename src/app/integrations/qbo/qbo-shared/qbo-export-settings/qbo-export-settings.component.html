@@ -35,6 +35,7 @@
                                 [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                                 [formControllerName]="'reimbursableExportType'"
                                 [appName]="appName"
+                                [showExportPreview]="true"
                                 [exportTypeIconPathArray]="previewImagePaths">
                             </app-configuration-select-field>
 
@@ -153,6 +154,7 @@
                             [placeholder]="'Select expense export type'"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
+                            [showExportPreview]="true"
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
 

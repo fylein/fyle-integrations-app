@@ -39,6 +39,7 @@
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
                             [exportTypeIconPathArray]="previewImagePaths"
                             [appName]="appName"
+                            [showExportPreview]="true"
                             [isDisabled]="true">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
@@ -148,6 +149,7 @@
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
                             [exportTypeIconPathArray]="previewImagePaths"
                             [appName]="appName"
+                            [showExportPreview]="true"
                             [isDisabled]="true">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.DIRECT_COST">
