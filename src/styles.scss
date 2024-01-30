@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 // Import all the themes here
-@import 'assets/themes/fyle.scss';
+@import 'assets/themes/theme.scss';
 
+
+
+@font-face {
+    font-family: "Optimist";
+    src: url('./assets/fonts/Optimist.woff2') format('woff2');
+}
 
 html,
 body {
