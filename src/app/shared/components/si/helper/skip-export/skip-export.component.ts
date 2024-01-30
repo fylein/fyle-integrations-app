@@ -282,6 +282,10 @@ export class SkipExportComponent implements OnInit {
     return this.skipExportForm.value?.condition1?.type==='DATE' && (this.skipExportForm.value.operator1 !== 'is_empty' || this.skipExportForm.value.operator1 !== 'is_not_empty');
   }
 
+  showBooleanField1() {
+    return this.skipExportForm.value?.condition1?.type==='BOOLEAN';
+  }
+
   showInputField2() {
     return this.skipExportForm.value?.condition2?.field_name && this.skipExportForm.value?.condition2?.field_name === 'report_title'  && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
   }
@@ -292,6 +296,10 @@ export class SkipExportComponent implements OnInit {
 
   showDateField2() {
     return this.skipExportForm.value?.condition2?.type==='DATE' && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
+  }
+
+  showBooleanField2() {
+    return this.skipExportForm.value?.condition2?.type==='BOOLEAN';
   }
 
   saveSkipExportFields() {
