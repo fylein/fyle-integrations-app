@@ -177,7 +177,7 @@ export class SkipExportComponent implements OnInit {
   getFieldValue(value: any, condition: ConditionField, rank: number) {
     if (condition.type === 'DATE') {
       return new Date(value[0]);
-    } else if (condition.field_name === 'report_title') {
+    } else if (condition.field_name === 'report_title' || condition.type === 'BOOLEAN') {
       return value[0];
     }
       if (rank === 1) {
