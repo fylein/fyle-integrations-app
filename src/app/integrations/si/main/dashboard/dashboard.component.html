@@ -80,7 +80,7 @@
                 <div *ngIf="true" class="inside-container tw-p-10 tw-rounded-6-px tw-bg-white">
                     <div class="tw-flex tw-items-center tw-justify-between">
                         <div class="tw-flex">
-                                <app-svg-icon [styleClasses]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-success-toast tw-mr-16-px'"></app-svg-icon>
+                                <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-success-toast tw-mr-16-px'"></app-svg-icon>
                                 <p class="tw-text-14-px tw-font-500 tw-mt-2-px tw-text-slightly-normal-text-color">Successful Expenses</p>
                                 <span class="tw-w-120-px tw-text-right tw-mt-2-px tw-text-faded-text-color">
                                     {{ lastExport?.successful_expense_groups_count ? lastExport?.successful_expense_groups_count : 0 }}
