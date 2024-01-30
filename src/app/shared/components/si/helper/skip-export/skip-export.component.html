@@ -48,6 +48,10 @@
                 <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
                 <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
               </div>
+              <div class="tw-w-296-px" *ngIf="showBooleanField1()">
+                <p-dropdown appendTo="body" formControlName="value1" placeholder="Select Value" [options]="customCheckBoxValueOptions">
+                </p-dropdown>
+              </div>
         </div>
   
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
@@ -104,6 +108,10 @@
             </div>
             <div *ngIf="showDateField2()" class="tw-w-296-px">
               <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
+            </div>
+            <div class="tw-w-296-px" *ngIf="showBooleanField2()">
+              <p-dropdown appendTo="body" formControlName="value2" placeholder="Select Value" [options]="customCheckBoxValueOptions">
+              </p-dropdown>
             </div>
             <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-sub-text-color delete-icon'" [tooltipText]="'Remove Condition'" (iconClick)="remCondition()"></app-svg-icon>
           </div>
