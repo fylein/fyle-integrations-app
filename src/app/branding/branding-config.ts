@@ -75,7 +75,6 @@ const kbArticles: KbArticle = {
             QBD: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
             INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             TRAVELPERK: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            GUSTO: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
         },
@@ -122,7 +121,6 @@ const kbArticles: KbArticle = {
             QBD: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
             INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             TRAVELPERK: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            GUSTO: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
         },
