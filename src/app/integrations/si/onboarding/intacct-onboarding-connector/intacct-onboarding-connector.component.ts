@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-onboarding-intacct-connector',
-  templateUrl: './onboarding-intacct-connector.component.html',
-  styleUrls: ['./onboarding-intacct-connector.component.scss']
+  templateUrl: './intacct-onboarding-connector.component.html',
+  styleUrls: ['./intacct-onboarding-connector.component.scss']
 })
-export class OnboardingIntacctConnectorComponent implements OnInit {
+export class IntacctOnboardingConnectorComponent implements OnInit {
 
   isLoading: boolean;
 
