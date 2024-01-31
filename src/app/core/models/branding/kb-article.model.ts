@@ -5,7 +5,6 @@ export type KbArticle = {
             QBD: string;
             INTACCT: string;
             TRAVELPERK: string;
-            GUSTO: string;
             SAGE300: string;
             BUSINESS_CENTRAL: string;
         },
