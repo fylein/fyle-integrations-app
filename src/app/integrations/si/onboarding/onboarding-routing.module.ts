@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OnboardingLandingComponent } from './onboarding-landing/onboarding-landing.component';
+import { IntacctOnboardingLandingComponent } from './intacct-onboarding-landing/intacct-onboarding-landing.component';
 import { OnboardingExportSettingComponent } from './onboarding-export-setting/onboarding-export-setting.component';
 import { OnboardingImportSettingComponent } from './onboarding-import-setting/onboarding-import-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-setting/onboarding-advanced-setting.component';
@@ -17,7 +17,7 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: OnboardingLandingComponent
+        component: IntacctOnboardingLandingComponent
       },
       {
         path: 'connector',
