@@ -126,6 +126,7 @@ module.exports = {
         '40-px': '40px',
         '42-px': '42px',
         '44-px': '44px',
+        '46-px': '46px',
         '48-px': '48px',
         '50-px': '50px',
         '56-px': '56px',
@@ -234,7 +235,8 @@ module.exports = {
         '70-px': '70px'
       },
       maxHeight: {
-        '20-px': '20px'
+        '20-px': '20px',
+        '36-px': '36px'
       },
       lineHeight: {
         'normal': 'normal',
@@ -329,6 +331,7 @@ module.exports = {
       },
       maxWidth: {
         '20-px': '20px',
+        '296-px': '296px',
         '300-px': '300px',
         '600-px': '600px'
       },
@@ -406,6 +409,7 @@ module.exports = {
         'empty': "''"
       },
       left: {
+        '5px': '5px',
         '2': '0.5rem',
         '6': '1.5rem'
       }

@@ -9,7 +9,7 @@
                     <div class="tw-flex tw-items-center tw-justify-between">
                         <div class="tw-flex">
                                 <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-success-toast tw-mr-16-px'"></app-svg-icon>
-                                <p class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color">Successful Expenses</p>
+                                <p class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-10-px">Successful Expenses</p>
                                 <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-faded-text-color">
                                     {{ accountingExportSummary?.successful_accounting_export_count ? accountingExportSummary?.successful_accounting_export_count : 0 }}
                                 </span>  
@@ -26,7 +26,7 @@
                     <div class="tw-flex tw-items-center tw-mt-8-px tw-justify-between">
                         <div class="tw-flex">
                             <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast tw-mr-16-px'"></app-svg-icon>
-                            <p class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color">Failed Expenses</p>
+                            <p class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-10-px">Failed Expenses</p>
                             <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-faded-text-color">
                                 {{ accountingExportSummary?.failed_accounting_export_count ? accountingExportSummary?.failed_accounting_export_count : 0 }}
                             </span>

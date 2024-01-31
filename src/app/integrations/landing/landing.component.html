@@ -32,14 +32,16 @@
             <div class="tw-flex">
                 <div *ngIf="!exposeOnlyQBOApp">
                     <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.NETSUITE)">
-                        <img src="assets/logos/netsuite-logo.png" width="110px" height="60px" />
+                        <img src="assets/logos/netsuite-logo.png" width="120px" height="60px" />
                         <span class="landing--accounting-app-name">
                             NetSuite
-                            <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" [styleClasses]="'landing--accounting-app-open'"></app-svg-icon>
+                            <div class="landing--accounting-app-open">
+                                <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
+                            </div>
                         </span>
                     </div>
                     <div class="landing--accounting-app tw-mr-20-px tw-mt-20-px" (click)="openInAppIntegration(InAppIntegration.QBD)">
-                        <img src="assets/logos/quickbooks-desktop.svg" class="tw-mt-[-20px]" width="100px" height="60px" />
+                        <img src="assets/logos/quickbooks-desktop.svg" class="tw-mt-[-20px]" width="120px" height="60px" />
                         <span class="landing--accounting-app-name">
                             QuickBooks Desktop
                         </span>
@@ -47,25 +49,29 @@
                 </div>
                 <div *ngIf="!exposeOnlyQBOApp">
                     <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.SAGE_INTACCT)">
-                        <img src="assets/logos/intacct-logo.png" width="110px" height="60px" />
+                        <img src="assets/logos/intacct-logo.png" width="120px" height="60px" />
                         <span class="landing--accounting-app-name">
                             Sage Intacct
-                            <app-svg-icon *ngIf="!exposeIntacctNewApp" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" [styleClasses]="'landing--accounting-app-open'"></app-svg-icon>
+                            <div class="landing--accounting-app-open">
+                                <app-svg-icon *ngIf="!exposeIntacctNewApp" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
+                            </div>
                         </span>
                     </div>
-                    <div class="landing--accounting-app tw-mr-20-px tw-mt-20-px" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+                    <!-- <div class="landing--accounting-app tw-mr-20-px tw-mt-20-px" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
                         <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
                         <span class="landing--accounting-app-name">
                             Dynamics 365 Business Central
                         </span>
-                    </div>
+                    </div> -->
                 </div>
                 <div>
                     <div class="landing--accounting-app tw-mr-20-px" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.QBO)">
                         <img src="assets/logos/quickbooks-logo.png" width="180px"  />
                         <span class="landing--accounting-app-name">
                             QuickBooks Online
-                            <app-svg-icon *ngIf="!exposeOnlyQBOApp" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" [styleClasses]="'landing--accounting-app-open'"></app-svg-icon>
+                            <div class="landing--accounting-app-open">
+                                <app-svg-icon *ngIf="!exposeOnlyQBOApp" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
+                            </div>
                         </span>
                     </div>
                     <!-- <div class="landing--accounting-app tw-mr-20-px tw-mt-20-px" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
@@ -76,10 +82,12 @@
                     </div> -->
                 </div>
                 <div *ngIf="!exposeOnlyQBOApp" class="landing--accounting-app" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                    <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="50px" height="60px" />
+                    <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
                     <span class="landing--accounting-app-name">
                         Xero
-                        <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" [styleClasses]="'landing--accounting-app-open'"></app-svg-icon>
+                        <div class="landing--accounting-app-open">
+                            <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
+                        </div>
                     </span>
                 </div>
             </div>
@@ -99,12 +107,6 @@
                     <img src="assets/logos/bamboo-hr-logo.svg" width="160px" height="60px" />
                     <span class="landing--accounting-app-name">
                         BambooHR
-                    </span>
-                </div>
-                <div *ngIf="isGustoAllowed" class="landing--accounting-app tw-mr-20-px" (click)="openInAppIntegration(InAppIntegration.GUSTO)">
-                    <img src="assets/logos/gusto-logo.svg" width="140px" height="54px" />
-                    <span class="landing--accounting-app-name">
-                        Gusto
                     </span>
                 </div>
             </div>
