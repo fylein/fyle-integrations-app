@@ -52,7 +52,7 @@
             </div>
             <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView}">
                 <div>
-                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field" dropdownIcon="pi pi-chevron-down"
+                    <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                         optionLabel="display_name" optionValue="attribute_type" [disabled]="isDestinationFixedImport" [ngClass]="{'selectedAccItem !tw-text-slightly-normal-text-color': isDestinationFixedImport}">
                         <ng-template let-option pTemplate="item">
                             <div>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="tw-w-28-vw">
                         <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFieldOptions" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
-                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}" dropdownIcon="pi pi-chevron-down">
+                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                 <div class="tw-ml-0 tw-mr-6-px ">
@@ -90,7 +90,7 @@
                                 <span>
                                     {{ item.display_name }}
                                 </span>
-                                <i class="pi pi-times" (click)="removeFilter(expenseField)"></i>
+                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(expenseField)"></i>
                             </div>
                             </ng-template>
                       </p-dropdown>
@@ -121,7 +121,7 @@
                         </div>
                         <div>
                             <p class="tw-mb-8-px tw-text-14-px tw-text-sub-text-color !tw-font-400">Fyle Field <app-mandatory-field></app-mandatory-field> </p>
-                            <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" placeholder="Select Expense Field" [disabled]="dependentField.isDisabled" dropdownIcon="pi pi-chevron-down">
+                            <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" placeholder="Select Expense Field" [disabled]="dependentField.isDisabled" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                         <div class="tw-ml-0 tw-mr-6-px ">

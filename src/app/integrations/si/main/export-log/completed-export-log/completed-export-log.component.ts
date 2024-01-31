@@ -9,7 +9,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-completed-export-log',
@@ -88,6 +88,8 @@ export class CompletedExportLogComponent implements OnInit {
   visible: boolean = false;
 
   readonly illustrationsAllowed: boolean = brandingFeatureConfig.illustrationsAllowed;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private formBuilder: FormBuilder,

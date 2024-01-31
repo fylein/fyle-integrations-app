@@ -25,20 +25,36 @@ p {
     @apply tw-m-0-px;
 }
 
-.pi-times:before {
+.pi-times.fyle {
     content: url('./assets/icons/cross-small.svg') !important;
 }
 
-.pi-chevron-down:before {
+.pi-times.co {
+    content: url('./assets/icons/co/grv-close-small.svg') !important;
+}
+
+.pi-chevron-down.fyle {
     content: url('./assets/icons/arrow-down.svg') !important;
 }
 
-.pi-eye:before {
+.pi-chevron-down.co {
+    content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+}
+
+.pi-eye.fyle {
     content: url('./assets/icons/eye.svg') !important;
 }
 
-.pi-eye-slash:before {
+.pi-eye.co {
+    content: url('./assets/icons/co/grv-show.svg') !important;
+}
+
+.pi-eye-slash.fyle {
     content: url('./assets/icons/eye-slash.svg') !important;
+}
+
+.pi-eye-slash.co {
+    content: url('./assets/icons/co/grv-show-hide.svg') !important;
 }
 
 .pi-times:before {

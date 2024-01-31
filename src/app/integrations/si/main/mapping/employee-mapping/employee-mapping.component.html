@@ -64,7 +64,7 @@
                             [filter]="true"
                             filterBy="value"
                             [emptyFilterMessage]="mapping.employeemapping.isOptionSearchInProgress ? 'Searching...' : 'No results found'"
-                            [dropdownIcon]="mapping.employeemapping.isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'"
+                            [dropdownIcon]="mapping.employeemapping.isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId"
                             (onFilter)="searchOptions($event, mapping.employeemapping)">
                             </p-dropdown>
                         </td>

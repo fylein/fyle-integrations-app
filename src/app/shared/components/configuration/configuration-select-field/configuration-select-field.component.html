@@ -22,14 +22,14 @@
                     [filter]="true" [filterBy]="optionLabel"
                     (onFilter)="searchOptions($event)" 
                     [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
-                    [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'">
+                    [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
                 </p-dropdown>
             </div>
             <div *ngIf="options && !destinationAttributes && !simpleOptions">
                 <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
                     <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px"
                     [formControlName]="formControllerName" [placeholder]="placeholder"
-                    dropdownIcon="pi pi-chevron-down"
+                    [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                     [ngClass]="{
                         'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
                         'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
@@ -50,7 +50,7 @@
                             <span>
                                 {{ item.label }}
                             </span>
-                            <i *ngIf="showClearIcon && !isDisabled" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                            <i *ngIf="showClearIcon && !isDisabled" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(form.controls[formControllerName])"></i>
                         </div>
                     </ng-template>
                 </p-dropdown>
