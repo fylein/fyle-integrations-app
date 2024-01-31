@@ -7,7 +7,7 @@ import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-settin
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { OnboardingComponent } from './onboarding.component';
 import { RouterModule, Routes } from '@angular/router';
-import { OnboardingIntacctConnectorComponent } from './intacct-onboarding-connector/intacct-onboarding-connector.component';
+import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector/intacct-onboarding-connector.component';
 
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
       },
       {
         path: 'connector',
-        component: OnboardingIntacctConnectorComponent
+        component: IntacctOnboardingConnectorComponent
       },
       {
         path: 'export_settings',
