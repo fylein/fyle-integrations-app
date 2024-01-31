@@ -26,11 +26,11 @@ p {
 }
 
 .pi-times.fyle {
-    content: url('./assets/icons/cross-small.svg') !important;
+    content: url('./assets/icons/cross-medium.svg') !important;
 }
 
 .pi-times.co {
-    content: url('./assets/icons/co/grv-close-small.svg') !important;
+    content: url('./assets/icons/co/grv-close-medium.svg') !important;
 }
 
 .pi-chevron-down.fyle {
@@ -196,7 +196,7 @@ p {
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item, 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    @apply tw-max-w-296-px tw-max-h-36-px tw-overflow-hidden tw-whitespace-nowrap tw-text-ellipsis ;
+    @apply tw-h-fit tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-mx-px tw-mt-px tw-mb-4-px #{!important};
 }
 
 .p-dropdown.p-focus {
