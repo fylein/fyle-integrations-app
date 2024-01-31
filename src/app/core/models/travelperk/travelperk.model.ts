@@ -1,4 +1,5 @@
 import { Org} from 'src/app/core/models/org/org.model';
+import { TravelPerkExpenseGroup, TravelPerkUserRole } from '../enum/enum.model';
 
 export type Travelperk = {
     id: number;
@@ -32,3 +33,37 @@ export type WorkatoConnectionStatus = {
         error?: string,
     }
 }
+
+export type TravelperkAdvancedSetting = {
+    default_employee: string,
+	default_employee_id: string,
+	default_category: string,
+	default_category_id: string,
+	description_structure: string[],
+	invoice_lineitem_structure: TravelPerkExpenseGroup,
+}
+
+export interface TravelperkAdvancedSettingGet extends TravelperkAdvancedSetting {
+    id: number,
+    created_at: Date,
+    update_at: Date,
+    workspace: number
+}
+
+export interface TravelperkAdvancedSettingPost extends TravelperkAdvancedSetting { }
+
+export type TravelperkProfileMapping = {
+    payment_profile_name: string,
+	payment_profile_id: string,
+	user_role: TravelPerkUserRole,
+	import_to_fyle: boolean
+}
+
+export interface TravelperkProfileMappingGet extends TravelperkProfileMapping {
+    id: number,
+    created_at: Date,
+    update_at: Date,
+    workspace: number
+}
+
+export interface TravelperkProfileMappingPost extends TravelperkProfileMapping { }

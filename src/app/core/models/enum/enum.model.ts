@@ -508,22 +508,22 @@ export enum AccountingExport {
 }
 
 export enum Operator {
-  IsNull = "isnull",
-  IExact = "iexact",
-  IContains = "icontains",
-  LessThan = "lt",
-  LessThanOrEqual = "lte"
+  IsNull = 'isnull',
+  IExact = 'iexact',
+  IContains = 'icontains',
+  LessThan = 'lt',
+  LessThanOrEqual = 'lte'
 }
 
 export enum JoinOption {
-  AND = "AND",
-  OR = "OR"
+  AND = 'AND',
+  OR = 'OR'
 }
 
 export enum CustomOperatorOption {
-  Is = "iexact",
-  IsEmpty = "is_empty",
-  IsNotEmpty = "is_not_empty"
+  Is = 'iexact',
+  IsEmpty = 'is_empty',
+  IsNotEmpty = 'is_not_empty'
 }
 
 export enum IntacctExportSettingDestinationOptionKey {
@@ -641,4 +641,15 @@ export enum ReimbursableImportState {
 export enum CCCImportState {
   APPROVED = 'approved',
   PAID = 'closed'
+}
+
+export enum TravelPerkExpenseGroup {
+  SINGLE= 'SINGLE',
+  MULTIPLE = 'MULTIPLE'
+}
+
+export enum TravelPerkUserRole {
+  CARD_HOLDER = 'CARD_HOLDER',
+  TRAVELLER = 'TRAVELLER',
+  BOOKER = 'BOOKER'
 }

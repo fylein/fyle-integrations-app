@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
-import { Travelperk, TravelperkConfiguration } from '../../models/travelperk/travelperk.model';
+import { Travelperk, TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost, TravelperkConfiguration, TravelperkProfileMappingGet, TravelperkProfileMappingPost } from '../../models/travelperk/travelperk.model';
 import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
+import { WorkspaceService } from '../common/workspace.service';
 
 const travelPerkConfigurationCache$ = new Subject<void>();
 
@@ -16,7 +17,8 @@ export class TravelperkService {
 
   constructor(
     private apiService: ApiService,
-    private orgService: OrgService
+    private orgService: OrgService,
+    private workspaceService: WorkspaceService
   ) { }
 
   createFolder(): Observable<{}> {
@@ -73,5 +75,21 @@ export class TravelperkService {
 
   disconnect(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/disconnect/`, {});
+  }
+
+  getTravelperkPaymentProfileMapping(): Observable<TravelperkProfileMappingGet[]> {
+    return this.apiService.get(`${this.workspaceService.getWorkspaceId()}/profile_mappings/`, {});
+  }
+
+  postTravelperkPaymentProfileMapping(travelperkPaymentProfileMappingPayload: TravelperkProfileMappingPost[]): Observable<TravelperkProfileMappingGet[]> {
+    return this.apiService.post(`${this.workspaceService.getWorkspaceId()}/profile_mappings/`, travelperkPaymentProfileMappingPayload);
+  }
+
+  getTravelperkAdvancedSettings(): Observable<TravelperkAdvancedSettingGet> {
+    return this.apiService.get(`${this.workspaceService.getWorkspaceId()}/advance_settings/`, {});
+  }
+
+  postTravelperkAdvancedSettings(travelperkAdvancedSettingPayload: TravelperkAdvancedSettingPost): Observable<TravelperkAdvancedSettingGet> {
+    return this.apiService.post(`${this.workspaceService.getWorkspaceId()}/advance_settings/`, travelperkAdvancedSettingPayload);
   }
 }
