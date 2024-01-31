@@ -3,7 +3,7 @@
   color: #5a5d72;
 }
 
-:host ::ng-deep .delete-icon {
+.delete-icon {
   @apply tw-text-center tw-cursor-pointer tw-ml-26-px tw-max-h-20-px tw-max-w-20-px #{!important};
 }
 

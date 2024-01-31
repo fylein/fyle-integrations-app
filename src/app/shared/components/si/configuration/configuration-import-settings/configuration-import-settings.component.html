@@ -117,7 +117,7 @@
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
-                                        <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'icon-align'"></app-svg-icon>
+                                        <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-ml-0 tw-mr-6-px tw-align-middle'"></app-svg-icon>
                                         {{ option.display_name }}
                                     </div>
                                     </ng-template>
@@ -170,7 +170,7 @@
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
                                     <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
-                                      <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'icon-align'"></app-svg-icon>
+                                      <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-ml-0 tw-mr-6-px tw-align-middle'"></app-svg-icon>
                                       {{ option.display_name }}
                                     </div>
                                   </ng-template>
@@ -184,8 +184,8 @@
                   </div>                  
             </div>
             <div *ngIf="showAddButton" class="add-button-container tw-pl-4">
-                <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'add-row-text'" (iconClick)="addExpenseField()"></app-svg-icon>
-                <a class="add-row-text tw-pl-2" (click)="addExpenseField()">
+                <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'" (iconClick)="addExpenseField()"></app-svg-icon>
+                <a class="tw-cursor-pointer tw-text-mandatory-field-color tw-pl-2" (click)="addExpenseField()">
                     Add more fields
                 </a>
             </div>            
