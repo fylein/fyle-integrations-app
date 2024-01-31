@@ -167,7 +167,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-h-fit tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-mx-px tw-mt-px tw-mb-4-px #{!important};
+    @apply tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-mx-px tw-mt-px tw-mb-4-px #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
@@ -180,10 +180,7 @@ p {
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item, 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    max-width: 18.5rem;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    @apply tw-max-w-296-px tw-max-h-36-px tw-overflow-hidden tw-whitespace-nowrap tw-text-ellipsis ;
 }
 
 .p-dropdown.p-focus {

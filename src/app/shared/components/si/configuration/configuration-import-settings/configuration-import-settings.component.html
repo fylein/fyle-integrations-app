@@ -116,8 +116,10 @@
                                 <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
                                 optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}">
                                     <ng-template let-option pTemplate="item">
-                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
-                                        <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-ml-0 tw-mr-6-px tw-align-middle'"></app-svg-icon>
+                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
+                                        <div class="tw-ml-0 tw-mr-6-px ">
+                                            <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
+                                        </div>
                                         {{ option.display_name }}
                                     </div>
                                     </ng-template>
@@ -152,11 +154,13 @@
                             </div>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
-                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
-                                      <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'icon-align'"></app-svg-icon>
-                                      {{ option.display_name }}
+                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
+                                        <div class="tw-ml-0 tw-mr-6-px ">
+                                            <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
+                                        </div>
+                                        {{ option.display_name }}
                                     </div>
-                                  </ng-template>
+                                </ng-template>
                             </p-dropdown>
                             <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                         </div>
@@ -169,10 +173,11 @@
                             </div>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
-                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}">
-                                      <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-ml-0 tw-mr-6-px tw-align-middle'"></app-svg-icon>
-                                      {{ option.display_name }}
-                                    </div>
+                                    <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
+                                        <div class="tw-ml-0 tw-mr-6-px ">
+                                            <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
+                                        </div>
+                                        {{ option.display_name }}                                    </div>
                                   </ng-template>
                             </p-dropdown>
                             <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
@@ -264,8 +269,10 @@
 <p-dialog *ngIf="showDependentFieldWarning" [showHeader]="false" [modal]="true" [(visible)]="showDependentFieldWarning" [draggable]="false" [style]="{width: '468px'}">
     <div class="tw-px-24-px tw-py-22-px tw-border-b-1-px tw-border-b-box-color">
         <div class="tw-flex tw-justify-between tw-items-center">
-            <div class="tw-flex">
-                <app-svg-icon [svgSource]="'warning-outline'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-icon-warning tw-p-8-px tw-bg-bg-warning-lighter'"></app-svg-icon>
+            <div class="tw-flex tw-items-center">
+                <div class="tw-p-8-px tw-bg-bg-warning-lighter tw-mr-10-px">
+                    <app-svg-icon [svgSource]="'warning-outline'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-icon-warning'"></app-svg-icon>
+                </div>
                 <p class="tw-text-20-px tw-font-500 tw-text-normal-text-color">Warning</p>
             </div>
             <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="acceptDependentFieldWarning(false)"></i>
