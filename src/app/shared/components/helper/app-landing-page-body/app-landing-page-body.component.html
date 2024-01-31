@@ -3,10 +3,12 @@
     <p *ngIf="headlineText" class="tw-text-normal-text-color tw-text-20-px tw-font-500">{{ headlineText }}</p>
     <p class="tw-text-slightly-normal-text-color tw-text-14-px tw-pt-8-px tw-flex tw-justify-center">
         {{headerText}}
-        <span *ngIf="redirectLink" class="tw-text-hyperlink-color tw-flex tw-pl-4-px tw-cursor-pointer" (click)="windowService.openInNewTab(redirectLink)">
-            Read More
-            <svg-icon-sprite src="open-in-new-tab" width="16px" height="16px" class="tw-text-hyperlink-color tw-pl-6-px tw-pt-3-px"></svg-icon-sprite>
-        </span>
+        <a *ngIf="redirectLink"
+            class="tw-text-hyperlink-color tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+            (click)="windowService.openInNewTab(redirectLink)">
+                Read More
+            <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'" class="tw-text-hyperlink-color tw-pl-2-px tw-w-fit"></app-svg-icon>
+        </a>
     </p>
 
     <div *ngIf="embedVideo" class="tw-flex tw-justify-center tw-pt-48-px">

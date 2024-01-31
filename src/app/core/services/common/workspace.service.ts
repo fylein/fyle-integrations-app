@@ -49,7 +49,6 @@ export class WorkspaceService {
   getOnboardingState(): any {
     const appInitialOnboardingState: AppUrlMap = {
       [AppUrl.INTACCT]: IntacctOnboardingState.CONNECTION,
-      [AppUrl.GUSTO]: null,
       [AppUrl.SAGE300]: Sage300OnboardingState.CONNECTION,
       [AppUrl.BAMBOO_HR]: null,
       [AppUrl.QBD]: QBDOnboardingState.CONNECTION,

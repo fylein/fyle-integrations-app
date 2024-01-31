@@ -52,7 +52,7 @@
             </div>
             <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-16-px tw-rounded-4-px drop-down">
                 <div>
-                    <svg-icon-sprite src="calendar" width="24px" height="24px" class="tw-text-placeholder"></svg-icon-sprite>
+                    <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-placeholder'"></app-svg-icon>
                 </div>
                 <p-dropdown appendTo="body" [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
                     <ng-template let-item pTemplate="selectedItem">
@@ -79,7 +79,7 @@
 
             </div>
         </div>
-        <div class="tw-pt-24-px tw-border-y-2-px tw-border-y-separator tw-box-border tw-px-24-px tw-pt-24-px">
+        <div class="tw-pt-24-px tw-border-y-2-px tw-border-y-separator tw-box-border tw-px-24-px">
             <div *ngIf="accountingExports.count > 0">
                 <p-table [value]="accountingExports.results">
                     <ng-template pTemplate="header">
@@ -100,7 +100,7 @@
                             <td>{{getExpenseType(exports.fund_source)| titlecase }}</td>
                             <td>
                                 <div *ngIf="!downloadingExportId[i]">
-                                    <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><svg-icon-sprite class="tw-pt-5-px" src="download" width="24px" height="24px"></svg-icon-sprite></button>
+                                    <button (click)="getDownloadLink(exports,i)" pTooltip="Download" tooltipPosition="top"><app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'download'" [width]="'24px'" [height]="'24px'"></app-svg-icon></button>
                                 </div>
                                 <div *ngIf="downloadingExportId[i]" class="tw-flex tw-items-center">
                                     <i class="pi pi-spin pi-spinner tw-text-sub-text-color tw-text-16-px"></i>
