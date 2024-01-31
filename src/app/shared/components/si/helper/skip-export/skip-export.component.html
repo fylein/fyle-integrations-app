@@ -113,14 +113,16 @@
               <p-dropdown appendTo="body" formControlName="value2" placeholder="Select Value" [options]="customCheckBoxValueOptions">
               </p-dropdown>
             </div>
-            <svg-icon-sprite src="bin" width="24px" height="24px" class="tw-text-sub-text-color delete-icon" [pTooltip]="'Remove Condition'" (click)="remCondition()"></svg-icon-sprite>
+            <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
+              <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-sub-text-color tw-text-center tw-cursor-pointer'" [tooltipText]="'Remove Condition'" (iconClick)="remCondition()"></app-svg-icon>
+            </div>
           </div>
           <div class=" tw-text-mandatory-field-color" *ngIf="checkValidationCondition()">
             <p>*Condition selected should be distinct.</p>
           </div>
         </div>
         <div class="tw-flex items-center tw-text-mandatory-field-color tw-pt-12-px tw-pb-24-px" *ngIf="showAddButton">
-          <svg-icon-sprite src="plus-square-medium" width="18px" height="18px" (click)="updateAdditionalFilterVisibility(true)"></svg-icon-sprite>
+          <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" (iconClick)="updateAdditionalFilterVisibility(true)"></app-svg-icon>
           <a class="add-row-text tw-cursor-pointer tw-pl-8-px tw-text-14-px" (click)="updateAdditionalFilterVisibility(true)">
             Add More Fields
           </a>
