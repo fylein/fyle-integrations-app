@@ -1,7 +1,7 @@
 <div class="tw-flex tw-p-24-px tw-border-t tw-border-t-gray-200" [ngClass]="!showBackButton ? 'tw-justify-end': 'tw-justify-between'">
     <div *ngIf="showBackButton">
-        <button type="button" class="p-button-raised tw-bg-white back-btn" (click)="navigate()">
-            <i class="tw-pr-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-left tw-text-btn-cta"></i>
+        <button type="button" class="p-button-raised tw-bg-white back-btn tw-flex" (click)="navigate()">
+            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-left-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pr-10-px tw-text-12-px tw-text-btn-cta'"></app-svg-icon>
             Back
         </button>
 
@@ -12,11 +12,11 @@
     <div>
         <button *ngIf="ctaText !== 'Saving' && ctaText !== 'Syncing'" pButton type="button" class="p-button-raised" (click)="saveChanges()" [disabled]="isButtonDisabled">
             {{ ctaText }}
-            <i *ngIf="ctaText !== 'Save'" class="tw-pl-10-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && ctaText !== 'Save'" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-white tw-pl-10-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
         </button>
         <button *ngIf="ctaText === 'Saving' || ctaText === 'Syncing'" pButton type="button" class="p-button-raised" disabled>
             {{ ctaText }}
-            <div style="border-top-color:transparent"
+            <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" style="border-top-color:transparent"
                 class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-white tw-border-r-white tw-border-l-white tw-border-t-transparent tw-border-solid tw-rounded-full tw-animate-spin"></div>
         </button>
     </div>

@@ -37,7 +37,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="{{intacctCategoryDestination | snakeCaseToSpaceCase | titlecase}}" disabled>
             </div>
             <div class="tw-pt-16-px ">
-                <app-svg-icon [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
+                <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <div class="tw-w-30-vw">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Category" disabled>
@@ -51,7 +51,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Vendor" disabled>
             </span>
             <div class="tw-pt-16-px ">
-                <app-svg-icon [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
+                <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Merchant" disabled>
@@ -65,7 +65,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax Detail" disabled>
             </span>
             <div class="tw-pt-16-px ">
-                <app-svg-icon [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
+                <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
             </div>
             <span class="tw-w-30-vw">
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax Group" disabled>
@@ -110,7 +110,7 @@
                             </p>
                         </div>
                             <div class="tw-pt-16-px ">
-                                <app-svg-icon [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
+                                <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <div class="tw-w-28-vw">
                                 <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFields" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
@@ -150,7 +150,7 @@
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-40-px !tw-font-500 tw-w-260-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Code" disabled>
                             </div>
                             <div class="tw-pt-16-px ">
-                                <app-svg-icon [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
+                                <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costCodes" [options]="costCodeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
@@ -169,7 +169,7 @@
                                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-ml-60-px !tw-font-500 tw-w-240-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Cost Type" disabled>
                             </div>
                             <div class="tw-pt-16-px ">
-                                <app-svg-icon [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
+                                <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'30px'" [width]="'100px'" [styleClasses]="'!tw-ml-0 tw-text-box-color'"></app-svg-icon>
                             </div>
                             <p-dropdown appendTo="body" class="tw-w-28-vw" formControlName="costTypes" [options]="costTypeFieldOption" optionLabel="attribute_type" placeholder="Select Expense Field">
                                 <ng-template let-option pTemplate="item">
