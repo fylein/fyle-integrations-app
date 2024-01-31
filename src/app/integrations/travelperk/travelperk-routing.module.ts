@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { TravelperkComponent } from './travelperk.component';
 
 const routes: Routes = [
-  { 
-    path: '', 
+  {
+    path: '',
     component: TravelperkComponent,
     children: [
       {
