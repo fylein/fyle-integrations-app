@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
-import { Travelperk, TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost, TravelperkConfiguration, TravelperkProfileMappingGet, TravelperkProfileMappingPost } from '../../models/travelperk/travelperk.model';
+import { Travelperk, TravelperkConfiguration } from '../../models/travelperk/travelperk.model';
 import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
 import { WorkspaceService } from '../common/workspace.service';
+import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
+import { TravelperkPaymentProfileSettingGetPaginator, TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 
 const travelPerkConfigurationCache$ = new Subject<void>();
 
@@ -77,11 +79,11 @@ export class TravelperkService {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/disconnect/`, {});
   }
 
-  getTravelperkPaymentProfileMapping(): Observable<TravelperkProfileMappingGet[]> {
+  getTravelperkPaymentProfileMapping(): Observable<TravelperkPaymentProfileSettingGetPaginator> {
     return this.apiService.get(`${this.workspaceService.getWorkspaceId()}/profile_mappings/`, {});
   }
 
-  postTravelperkPaymentProfileMapping(travelperkPaymentProfileMappingPayload: TravelperkProfileMappingPost[]): Observable<TravelperkProfileMappingGet[]> {
+  postTravelperkPaymentProfileMapping(travelperkPaymentProfileMappingPayload: TravelperkPaymentProfileSettingPost[]): Observable<TravelperkPaymentProfileSettingGetPaginator> {
     return this.apiService.post(`${this.workspaceService.getWorkspaceId()}/profile_mappings/`, travelperkPaymentProfileMappingPayload);
   }
 
