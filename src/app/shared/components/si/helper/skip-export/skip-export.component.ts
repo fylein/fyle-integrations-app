@@ -76,6 +76,17 @@ export class SkipExportComponent implements OnInit {
 
   valueOption2: any[] = [];
 
+  customCheckBoxValueOptions: { label: string; value: string; }[] = [
+    {
+      label: 'Yes',
+      value: 'true'
+    },
+    {
+      label: 'No',
+      value: 'false'
+    }
+  ];
+
   constructor(
     private formBuilder: FormBuilder,
     private advancedSettingsService: SiAdvancedSettingService
@@ -166,7 +177,7 @@ export class SkipExportComponent implements OnInit {
   getFieldValue(value: any, condition: ConditionField, rank: number) {
     if (condition.type === 'DATE') {
       return new Date(value[0]);
-    } else if (condition.field_name === 'report_title') {
+    } else if (condition.field_name === 'report_title' || condition.type === 'BOOLEAN') {
       return value[0];
     }
       if (rank === 1) {
@@ -271,6 +282,10 @@ export class SkipExportComponent implements OnInit {
     return this.skipExportForm.value?.condition1?.type==='DATE' && (this.skipExportForm.value.operator1 !== 'is_empty' || this.skipExportForm.value.operator1 !== 'is_not_empty');
   }
 
+  showBooleanField1() {
+    return this.skipExportForm.value?.condition1?.type==='BOOLEAN';
+  }
+
   showInputField2() {
     return this.skipExportForm.value?.condition2?.field_name && this.skipExportForm.value?.condition2?.field_name === 'report_title'  && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
   }
@@ -281,6 +296,10 @@ export class SkipExportComponent implements OnInit {
 
   showDateField2() {
     return this.skipExportForm.value?.condition2?.type==='DATE' && (this.skipExportForm.value.operator2 !== 'is_empty' || this.skipExportForm.value.operator2 !== 'is_not_empty');
+  }
+
+  showBooleanField2() {
+    return this.skipExportForm.value?.condition2?.type==='BOOLEAN';
   }
 
   saveSkipExportFields() {
@@ -392,7 +411,19 @@ export class SkipExportComponent implements OnInit {
   }
 
   setCustomOperatorOptions(rank: number, type: string) {
-      if (type !== 'SELECT') {
+    if (type === 'BOOLEAN') {
+      const customCheckBoxOperatorOptions: { label: string; value: string; }[] = [
+        {
+          label: 'Is',
+          value: 'exact'
+        }
+      ];
+      if (rank === 1) {
+        this.operatorFieldOptions1 = customCheckBoxOperatorOptions;
+      } else if (rank === 2) {
+        this.operatorFieldOptions2 = customCheckBoxOperatorOptions;
+      }
+    } else if (type !== 'SELECT') {
         if (rank === 1) {
           this.operatorFieldOptions1 = this.customOperatorOptions;
         } else if (rank === 2) {

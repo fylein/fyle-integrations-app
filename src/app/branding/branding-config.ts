@@ -4,7 +4,7 @@ import { FeatureConfiguration } from '../core/models/branding/feature-configurat
 import { KbArticle } from '../core/models/branding/kb-article.model';
 import config from './config.json';
 
-export const brandingConfig: BrandingConfiguration = config;
+export const brandingConfig: BrandingConfiguration = config as BrandingConfiguration;
 
 const featureConfigs: FeatureConfiguration = {
     fyle: {
@@ -74,8 +74,7 @@ const kbArticles: KbArticle = {
             BAMBOO_HR: 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
             QBD: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
             INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            TRAVELPERK: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            GUSTO: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+            TRAVELPERK: 'https://help.fylehq.com/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle',
             SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
         },
@@ -121,8 +120,7 @@ const kbArticles: KbArticle = {
             BAMBOO_HR: 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
             QBD: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
             INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            TRAVELPERK: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            GUSTO: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
+            TRAVELPERK: 'https://help.fylehq.com/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle',
             SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
         },

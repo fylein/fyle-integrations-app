@@ -1,6 +1,6 @@
 export type BrandingConfiguration = {
     brandName: string;
     webpageTitle: string;
-    brandId: string;
+    brandId: 'fyle' | 'co';
     supportEmail: string;
 };

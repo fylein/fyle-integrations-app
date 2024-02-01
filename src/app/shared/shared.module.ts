@@ -90,6 +90,7 @@ import { DropdownComponent } from './components/input/dropdown/dropdown.componen
 import { CloneSettingFieldComponent } from './components/onboarding/clone-setting/clone-setting-field/clone-setting-field.component';
 import { ToggleComponent } from './components/input/toggle/toggle.component';
 import { MultiSelectComponent } from './components/input/multi-select/multi-select.component';
+import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component';
 
 
 @NgModule({
@@ -162,7 +163,8 @@ import { MultiSelectComponent } from './components/input/multi-select/multi-sele
     DropdownComponent,
     CloneSettingFieldComponent,
     ToggleComponent,
-    MultiSelectComponent
+    MultiSelectComponent,
+    SvgIconComponent
   ],
   imports: [
     CommonModule,
@@ -257,7 +259,8 @@ import { MultiSelectComponent } from './components/input/multi-select/multi-sele
     DropdownComponent,
     CloneSettingFieldComponent,
     ToggleComponent,
-    MultiSelectComponent
+    MultiSelectComponent,
+    SvgIconComponent
   ]
 })
 export class SharedModule { }

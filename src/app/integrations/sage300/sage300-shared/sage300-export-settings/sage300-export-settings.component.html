@@ -39,6 +39,7 @@
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
                             [exportTypeIconPathArray]="previewImagePaths"
                             [appName]="appName"
+                            [showExportPreview]="true"
                             [isDisabled]="true">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
@@ -94,19 +95,6 @@
                         [appName]="appName"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
-                        [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
-                        [options]="reimbursableExpenseGroupingDateOptions"
-                        [iconPath]="'calendar'"
-                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date'"
-                        [appName]="appName"
-                        [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
-                    </div>
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
@@ -115,12 +103,25 @@
                             [label]="'How should the expenses be grouped?'"
                             [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
                             [options]="expenseGroupByOptions"
-                            [iconPath]="'questionmark'"
+                            [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [appName]="appName"
                             [formControllerName]="'reimbursableExportGroup'"
                             [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
                         </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export date'"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
+                        [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
+                        [options]="getExportDate(reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup')"
+                        [iconPath]="'calendar'"
+                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date'"
+                        [appName]="appName"
+                        [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
                 </div>
             </div>
@@ -148,6 +149,7 @@
                             [exportConfigurationIconPath]="'assets/flow-charts/intacct-export-module.svg'"
                             [exportTypeIconPathArray]="previewImagePaths"
                             [appName]="appName"
+                            [showExportPreview]="true"
                             [isDisabled]="true">
                         </app-configuration-select-field>
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.DIRECT_COST">
@@ -191,6 +193,8 @@
                                 </app-configuration-select-field>
                             </div>
                         </div>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -221,31 +225,31 @@
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
-                        [options]="cccExpenseGroupingDateOptions"
-                        [iconPath]="'calendar'"
-                        [placeholder]="'Select date'"
-                        [appName]="appName"
-                        [formControllerName]="'cccExportDate'"></app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be grouped'"
                             [label]="'How should the expenses be grouped?'"
                             [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
                             [options]="expenseGroupByOptions"
-                            [iconPath]="'questionmark'"
+                            [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [appName]="appName"
                             [formControllerName]="'cccExportGroup'"
                             [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
                         </app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export date'"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
+                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
+                        [options]="getExportDate(cccExpenseGroupingDateOptions, 'cccExportGroup')"
+                        [iconPath]="'calendar'"
+                        [placeholder]="'Select date'"
+                        [appName]="appName"
+                        [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     </div>
                 </div>
             </div>

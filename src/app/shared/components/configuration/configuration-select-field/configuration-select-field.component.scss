@@ -31,7 +31,7 @@
 }
 
 .sub-text {
-    @apply tw-text-faded-text-color tw-text-12-px tw-pl-2-px tw-w-300-px tw-break-words ;
+    @apply tw-text-faded-text-color tw-text-12-px tw-pl-2-px tw-max-w-300-px;
 }
 
 .smaller-th th {
@@ -46,7 +46,7 @@
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-dropdown-trigger {
+:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-dropdown-trigger, :host ::ng-deep .filterDropdown .p-dropdown-trigger {
     @apply tw-visible #{!important};
 }
 

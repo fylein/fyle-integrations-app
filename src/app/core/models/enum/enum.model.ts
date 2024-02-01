@@ -28,7 +28,6 @@ export enum InAppIntegration {
   BAMBOO_HR = 'Bamboo HR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'TravelPerk',
-  GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central'
@@ -71,7 +70,6 @@ export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
   TRAVELPERK = 'Travelperk',
-  GUSTO = 'Gusto',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
@@ -82,7 +80,6 @@ export enum AppNameInService {
   BAMBOO_HR = 'bambooHR',
   QBD = 'qbd',
   TRAVELPERK = 'travelperk',
-  GUSTO = 'gusto',
   INTACCT = 'sage_intacct',
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central'
@@ -93,8 +90,6 @@ export enum Page {
   BAMBOO_HR_LANDING = 'Bamboo HR Landing',
   CONNECT_BAMBOO_HR = 'Connect Bamboo HR',
   CONFIGURE_BAMBOO_HR = 'Bamboo HR Configuration',
-  GUSTO_LANDING = 'Gusto Landing',
-  CONFIGURE_GUSTO = 'Gusto Configuration',
   QBD_LANDING = 'QuickBooks Desktop Landing',
   INTACCT_LANDING = 'Sage Intacct Landing',
   CONNECT_QBD = 'Connect QuickBooks Desktop',
@@ -119,15 +114,10 @@ export enum ClickEvent {
   OPEN_XERO_INTEGRATION = 'Open Xero Integration',
   OPEN_BAMBOO_HR_INTEGRATION = 'Open Bamboo HR Integration',
   OPEN_QBD_INTEGRATION = 'Open QBD Integration',
-  OPEN_GUSTO_INTEGRATION = 'Open Gusto Integration',
   INTEGRATION_TABS = 'Integration Tabs',
   CONNECT_BAMBOO_HR = 'Connect Bamboo HR',
   CONFIGURE_BAMBOO_HR = 'Configure Bamboo HR',
   DISCONNECT_BAMBOO_HR = 'Disconnect Bamboo HR',
-  CONNECT_GUSTO = 'Connect Gusto',
-  CONFIGURE_GUSTO = 'Configure Gusto',
-  DISCONNECT_GUSTO = 'Disconnect Gusto',
-  SYNC_GUSTO_EMPLOYEES = 'Sync Gusto Employees',
   CONNECT_QBD = 'Connect QBD',
   COPY_SUPPORT_EMAIL = 'Copy Support Email',
   SYNC_BAMBOO_HR_EMPLOYEES = 'Sync Bamboo HR Employees',
@@ -139,7 +129,7 @@ export enum ClickEvent {
   PREVIEW_INTACCT_EXPORT = 'Preview Sage Intacct Export',
   INTACCT_EXPORT = 'Export Sage Intacct',
   CONNECT_SAGE300 = 'Connect Sage 300 CRE',
-  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 360 Business Central'
+  CONNECT_BUSINESS_CENTRAL = 'Connect Dynamic 365 Business Central'
 }
 
 export enum ProgressPhase {
@@ -220,7 +210,6 @@ export enum ExpenseState {
 }
 
 export enum CCCExpenseState {
-  PAYMENT_PROCESSING = 'PAYMENT_PROCESSING',
   PAID = 'PAID',
   APPROVED = 'APPROVED'
 }
@@ -450,7 +439,6 @@ export enum AppUrl {
   BAMBOO_HR = 'bamboo_hr',
   QBD = 'qbd',
   TRAVELPERK = 'travelperk',
-  GUSTO = 'gusto',
   INTACCT = 'intacct',
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central',
@@ -631,5 +619,14 @@ export enum TrackingApp {
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
   TRAVELPERK = 'TP',
-  GUSTO = 'GUSTO'
+}
+
+export enum ReimbursableImportState {
+  PROCESSING = 'processed for payments',
+  PAID = 'closed'
+}
+
+export enum CCCImportState {
+  APPROVED = 'approved',
+  PAID = 'closed'
 }

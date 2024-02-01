@@ -5,7 +5,7 @@ import { BusinessCentralAccountingExport, BusinessCentralAccountingExportRespons
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, CCCImportState, RefinerSurveyType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
 })
 export class BusinessCentralDashboardComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
   appName: AppName = AppName.BUSINESS_CENTRAL;
 
@@ -54,6 +54,14 @@ export class BusinessCentralDashboardComponent implements OnInit {
 
   isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
+  reimbursableImportState: ReimbursableImportState | null;
+
+  private readonly reimbursableExpenseImportStateMap = DashboardModel.getReimbursableExpenseImportStateMap();
+
+  cccImportState: CCCImportState | null;
+
+  private readonly cccExpenseImportStateMap = DashboardModel.getCCCExpenseImportStateMap();
+
   constructor(
     private refinerService: RefinerService,
     private dashboardService: DashboardService,
@@ -74,7 +82,6 @@ export class BusinessCentralDashboardComponent implements OnInit {
       this.exportProgressPercentage = Math.round((this.processedCount / this.exportableAccountingExportIds.length) * 100);
 
       if (res.results.filter(task => (task.status === AccountingExportStatus.IN_PROGRESS || task.status === AccountingExportStatus.ENQUEUED || task.status === AccountingExportStatus.EXPORT_QUEUED)).length === 0) {
-        this.isLoading = true;
         forkJoin([
           this.getExportErrors$,
           this.getAccountingExportSummary$
@@ -85,17 +92,18 @@ export class BusinessCentralDashboardComponent implements OnInit {
             CATEGORY_MAPPING: null
           };
           this.accountingExportSummary = responses[1];
-          this.isLoading = false;
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
+
+        this.exportableAccountingExportIds = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).map(taskLog => taskLog.id);
+
         this.isExportInProgress = false;
         this.exportProgressPercentage = 0;
         this.processedCount = 0;
-
         if (this.failedExpenseGroupCount === 0) {
           this.refinerService.triggerSurvey(
-            AppName.SAGE300, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+            AppName.BUSINESS_CENTRAL, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
           );
         }
       }
@@ -129,10 +137,14 @@ export class BusinessCentralDashboardComponent implements OnInit {
         'CATEGORY': 'ACCOUNT'
       };
 
+      this.reimbursableImportState = responses[4].reimbursable_expenses_export_type ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
+      this.cccImportState = responses[4].credit_card_expense_export_type ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
+
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
         this.pollExportStatus();
+        this.isLoading = false;
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.isImportInProgress = false;

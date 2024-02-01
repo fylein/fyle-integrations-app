@@ -39,7 +39,6 @@ export class HelperService {
       [AppUrl.QBD]: environment.qbd_api_url,
       [AppUrl.TRAVELPERK]: environment.api_url,
       [AppUrl.BAMBOO_HR]: environment.api_url,
-      [AppUrl.GUSTO]: environment.api_url,
       [AppUrl.SAGE300]: environment.sage300_api_url,
       [AppUrl.INTEGRATION]: environment.api_url,
       [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url,
@@ -63,9 +62,15 @@ export class HelperService {
     form.controls[controllerName].addValidators(Validators.required);
   }
 
-  clearValidatorAndResetValue(form: FormGroup, controllerName: string): void {
+  clearValidatorAndResetValue(form: FormGroup, controllerName: string, commonFormFields: string[] | void): void {
     form.controls[controllerName].clearValidators();
-    form.controls[controllerName].setValue(null);
+    if (commonFormFields) {
+      if (commonFormFields.indexOf(controllerName) === -1) {
+        form.controls[controllerName].reset();
+      }
+    } else {
+      form.controls[controllerName].reset();
+    }
   }
 
   setSage300ExportTypeControllerValue(form: FormGroup, controllerName: string): void {
@@ -109,7 +114,7 @@ export class HelperService {
     });
   }
 
-  setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
+  setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup, commonFormFields: string[] | void): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
       form.controls[values.formController].valueChanges.subscribe((isSelected) => {
         const urlSplit = this.router.url.split('/');
@@ -123,7 +128,7 @@ export class HelperService {
             });
           } else {
             value.forEach((element: any) => {
-              this.clearValidatorAndResetValue(form, element);
+              this.clearValidatorAndResetValue(form, element, commonFormFields);
             });
           }
         });

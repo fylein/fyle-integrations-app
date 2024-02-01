@@ -15,8 +15,6 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
 
   @Input() contextText: string;
 
-  @Input() iconPath: string;
-
   @Input() confirmBtnText: string;
 
   @Input() showSecondaryCTA: boolean = true;

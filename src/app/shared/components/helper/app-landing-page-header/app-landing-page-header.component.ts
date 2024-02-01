@@ -57,7 +57,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() logoSectionStyleClasses: string = 'tw-rounded-4-px tw-border-1-px tw-border-box-color tw-bg-white tw-w-176-px';
 
-  qboConnectButtonSource: string = 'assets/icons/buttons/connect-to-qbo.svg';
+  qboConnectButtonSource: string = 'assets/buttons/connect-to-qbo.svg';
 
   readonly brandingConfig = brandingConfig;
 

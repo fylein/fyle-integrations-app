@@ -35,6 +35,7 @@
                                 [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                                 [formControllerName]="'reimbursableExportType'"
                                 [appName]="appName"
+                                [showExportPreview]="true"
                                 [exportTypeIconPathArray]="previewImagePaths">
                             </app-configuration-select-field>
 
@@ -107,7 +108,7 @@
                                 [label]="'How should the expenses be grouped?'"
                                 [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
                                 [options]="expenseGroupByOptions"
-                                [iconPath]="'questionmark'"
+                                [iconPath]="'question-square-outline'"
                                 [placeholder]="'Select expense grouping'"
                                 [formControllerName]="'reimbursableExportGroup'">
                             </app-configuration-select-field>
@@ -134,7 +135,9 @@
                         [form]="exportSettingForm"
                         [label]="'Export Corporate Card Expenses'"
                         [subLabel]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online'"
-                        [formControllerName]="'creditCardExpense'" [isSectionHeader]="true">
+                        [formControllerName]="'creditCardExpense'"
+                        [isSectionHeader]="true"
+                        [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
                     </app-configuration-toggle-field>
                 </div>
 
@@ -151,6 +154,7 @@
                             [placeholder]="'Select expense export type'"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
+                            [showExportPreview]="true"
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
 
@@ -251,7 +255,7 @@
                             [label]="'How should the expenses be grouped?'"
                             [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
                             [options]="expenseGroupByOptions"
-                            [iconPath]="'questionmark'"
+                            [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'creditCardExportGroup'">
                         </app-configuration-select-field>
@@ -288,7 +292,6 @@
     [isWarningVisible]="isConfirmationDialogVisible"
     [headerText]="'Change in Configuration'"
     [contextText]="warningDialogText"
-    [iconPath]="'assets/icons/alert_dialog.svg'"
     [confirmBtnText]="'Continue'"
     [showSecondaryCTA]="false">
 </app-configuration-confirmation-dialog>

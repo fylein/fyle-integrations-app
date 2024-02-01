@@ -3,7 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BusinessCentralConnectorPost, BusinessCentralConnectorModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
-import { BusinessCentralOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, BusinessCentralOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { BusinessCentralConnectorService } from 'src/app/core/services/business-central/business-central-configuration/business-central-connector.service';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
@@ -18,6 +18,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./business-central-onboarding-landing.component.scss']
 })
 export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDestroy {
+
+  appName: AppName = AppName.BUSINESS_CENTRAL;
 
   redirectLink = brandingKbArticles.onboardingArticles.BUSINESS_CENTRAL.LANDING;
 
@@ -68,8 +70,8 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
         this.checkProgressAndRedirect(code);
       });
     }, (error) => {
-      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 360 Business Central. Please try again';
-      if (errorMessage === 'Please choose the correct Dynamic 360 Business Central account') {
+      const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 365 Business Central. Please try again';
+      if (errorMessage === 'Please choose the correct Dynamic 365 Business Central account') {
         this.isIncorrectQBOConnectedDialogVisible = false;
       } else {
         this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);

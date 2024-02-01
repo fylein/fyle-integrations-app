@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
-import { AppName, LoaderType } from 'src/app/core/models/enum/enum.model';
+import { AppName, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-dashboard-export-section',
@@ -28,9 +28,15 @@ export class DashboardExportSectionComponent implements OnInit {
 
   @Input() loaderType: LoaderType = LoaderType.DETERMINATE;
 
+  @Input() reimbursableImportState: ReimbursableImportState | null;
+
+  @Input() cccImportState: CCCImportState | null;
+
   @Output() export = new EventEmitter<boolean>();
 
   readonly brandingConfig = brandingConfig;
+
+  importStates: string;
 
   constructor() { }
 
@@ -38,7 +44,22 @@ export class DashboardExportSectionComponent implements OnInit {
     this.export.emit(true);
   }
 
+  private constructImportStates() {
+    if (this.reimbursableImportState === ReimbursableImportState.PAID && this.cccImportState === CCCImportState.PAID) {
+      this.importStates = ReimbursableImportState.PAID;
+    } else {
+      if (this.reimbursableImportState && this.cccImportState) {
+        this.importStates = this.reimbursableImportState + ' or ' + this.cccImportState;
+      } else if (this.reimbursableImportState) {
+        this.importStates = this.reimbursableImportState;
+      } else if (this.cccImportState) {
+        this.importStates = this.cccImportState;
+      }
+    }
+  }
+
   ngOnInit(): void {
+    this.constructImportStates();
   }
 
 }

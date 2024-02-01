@@ -14,7 +14,7 @@
                 <div class="tw-p-24-px">
                     <div class="tw-flex tw-justify-between">
                         <div class="tw-flex">
-                            <svg-icon-sprite src="envelope" width="24px" height="24px" class="tw-text-mandatory-field-color tw-mr-20-px"></svg-icon-sprite>
+                            <app-svg-icon [svgSource]="'envelope'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color tw-mr-20-px'"></app-svg-icon>
                             <div class="tw-text-14-px tw-w-360-px max-lg:tw-w-260-px">
                                 <p class="tw-text-slightly-normal-text-color">
                                     Send email notification to
@@ -33,8 +33,8 @@
                                         class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
                                         <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px">{{ selectedEmail }}</p>
                                         <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
-                                        <svg-icon-sprite (click)="removeEmail()" src="cross-small" width="12px" height="12px"
-                                            class="tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color"></svg-icon-sprite>
+                                        <app-svg-icon (iconClick)="removeEmail()" [svgSource]="'cross-small'" [width]="'12px'" [height]="'12px'"
+                                            [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"></app-svg-icon>
                                     </div>
                                     <div *ngIf="selectedEmail && cofigurationForm.value.emails.length > 1" class="tw-pl-8-px">
                                         <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-disabled-bg-color tw-text-12-px tw-text-faded-text-color tw-rounded-12-px">
@@ -51,10 +51,10 @@
                                             <i class="pi pi-search"></i>
                                             <input type="text" class="!tw-h-32-px !tw-w-300-px" (keyup)="options.filter($event)"
                                                 pInputText placeholder="Search by Name / Email" formControlName="search" />
-                                            <svg-icon-sprite src="cross" width="24px" height="24px"
-                                                class="tw-text-faded-text-color tw-absolute tw-top-10-px tw-right-12-px tw-cursor-pointer"
-                                                (click)="clearSearch(options)">
-                                            </svg-icon-sprite>
+                                            <app-svg-icon [svgSource]="'cross'" [width]="'24px'" [height]="'24px'"
+                                                [styleClasses]="'tw-text-faded-text-color tw-absolute tw-top-10-px tw-right-12-px tw-cursor-pointer'"
+                                                (iconClick)="clearSearch(options)">
+                                            </app-svg-icon>
                                         </div>
                                     </div>
                                 </ng-template>
@@ -69,9 +69,9 @@
                             <div class="tw-flex tw-pt-24-px tw-w-27-vw max-lg:tw-w-20-vw">
                                 <p class="tw-text-slightly-normal-text-color tw-text-14-px tw-pr-12-px">or</p>
                                 <div class="tw-flex tw-cursor-pointer" (click)="openDialog()">
-                                    <svg-icon-sprite src="add" width="18px" height="18px"
-                                        class="tw-text-mandatory-field-color">
-                                    </svg-icon-sprite>
+                                    <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'"
+                                        [styleClasses]="'tw-text-mandatory-field-color'">
+                                    </app-svg-icon>
                                     <p class="tw-pl-6-px tw-text-slightly-normal-text-color tw-text-14-px">Add new Email address</p>
                                 </div>
                             </div>

@@ -23,7 +23,7 @@ export function constructPayload1(valueField: {
     operator: valueField.operator1,
     values:
       valueField.condition1.type === 'DATE' ||
-      valueField.operator1 === 'isnull' || valueField.condition1.field_name === 'report_title'
+      valueField.operator1 === 'isnull' || valueField.condition1.field_name === 'report_title' || valueField.condition1.type === 'BOOLEAN'
         ? valueField.value1
         : valueOption1,
     rank: 1,
@@ -45,7 +45,7 @@ export function constructPayload2(valueField: {
     operator: valueField.operator2,
     values:
       valueField.condition2.type === 'DATE' ||
-      valueField.operator2 === 'isnull' || valueField.condition2.field_name === 'report_title'
+      valueField.operator2 === 'isnull' || valueField.condition2.field_name === 'report_title' || valueField.condition2.type === 'BOOLEAN'
         ? valueField.value2
         : valueOption2,
     rank: 2,

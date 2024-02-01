@@ -24,34 +24,22 @@ export class OnboardingStepperComponent implements OnInit {
       active: false,
       completed: false,
       step: 'Export Settings',
-      icon: 'export-setting',
-      route: 'export_settings',
-      size: {
-        height: '18px',
-        width: '15px'
-      }
+      icon: 'arrow-tail-up-medium',
+      route: 'export_settings'
     },
     {
       active: false,
       completed: false,
       step: 'Field Mapping',
-      icon: 'field-mapping',
-      route: 'field_mappings',
-      size: {
-        height: '18px',
-        width: '15px'
-      }
+      icon: 'mapping-medium',
+      route: 'field_mappings'
     },
     {
       active: false,
       completed: false,
       step: 'Advanced',
-      icon: 'advanced-setting',
-      route: 'advanced_settings',
-      size: {
-        height: '20px',
-        width: '20px'
-      }
+      icon: 'gear-medium',
+      route: 'advanced_settings'
     }
   ];
 

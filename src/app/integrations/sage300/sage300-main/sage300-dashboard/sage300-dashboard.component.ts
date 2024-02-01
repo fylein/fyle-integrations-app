@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { Error, AccountingGroupedErrorStat, AccountingGroupedErrors, ErrorResponse } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, FyleField, LoaderType, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingExportStatus, AccountingExportType, AppName, CCCImportState, FyleField, LoaderType, RefinerSurveyType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { environment } from 'src/environments/environment';
@@ -10,6 +10,7 @@ import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dash
 import { Sage300AccountingExportResponse, Sage300AccountingExport } from 'src/app/core/models/sage300/db/sage300-accounting-export.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 
 @Component({
   selector: 'app-sage300-dashboard',
@@ -56,12 +57,21 @@ export class Sage300DashboardComponent implements OnInit {
 
   LoaderType = LoaderType;
 
+  reimbursableImportState: ReimbursableImportState | null;
+
+  private readonly reimbursableExpenseImportStateMap = DashboardModel.getReimbursableExpenseImportStateMap();
+
+  cccImportState: CCCImportState | null;
+
+  private readonly cccExpenseImportStateMap = DashboardModel.getCCCExpenseImportStateMap();
+
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
-    private refinerService: RefinerService,
+    private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
-    private accountingExportService: AccountingExportService
+    private refinerService: RefinerService,
+    private sage300ExportSettingService: Sage300ExportSettingService
   ) { }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
@@ -90,6 +100,9 @@ export class Sage300DashboardComponent implements OnInit {
         });
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
+
+        this.exportableAccountingExportIds = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).map(taskLog => taskLog.id);
+
         this.isExportInProgress = false;
         this.exportProgressPercentage = 0;
         this.processedCount = 0;
@@ -115,21 +128,28 @@ export class Sage300DashboardComponent implements OnInit {
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0),
-      this.dashboardService.getExportableAccountingExportIds()
+      this.dashboardService.getExportableAccountingExportIds(),
+      this.sage300ExportSettingService.getSage300ExportSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.accountingExportSummary = responses[1];
       this.exportableAccountingExportIds = responses[3].exportable_accounting_export_ids;
-      this.isLoading = false;
+
       const queuedTasks: Sage300AccountingExport[] = responses[2].results.filter((accountingExport: Sage300AccountingExport) => accountingExport.status === AccountingExportStatus.ENQUEUED || accountingExport.status === AccountingExportStatus.IN_PROGRESS || accountingExport.status === AccountingExportStatus.EXPORT_QUEUED);
       this.failedExpenseGroupCount = responses[2].results.filter((accountingExport: Sage300AccountingExport) => accountingExport.status === AccountingExportStatus.FAILED || accountingExport.status === AccountingExportStatus.FATAL).length;
+
+      this.reimbursableImportState = responses[4].reimbursable_expenses_export_type ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
+      this.cccImportState = responses[4].credit_card_expense_export_type ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
+
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
         this.pollExportStatus();
+        this.isLoading = false;
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.isImportInProgress = false;
+          this.isLoading = false;
         });
       }
     });

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-sage300-onboarding-landing',
@@ -7,6 +8,8 @@ import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/
   styleUrls: ['./sage300-onboarding-landing.component.scss']
 })
 export class Sage300OnboardingLandingComponent implements OnInit {
+
+  appName: AppName = AppName.SAGE300;
 
   redirectLink = brandingKbArticles.onboardingArticles.SAGE300.LANDING;
 
