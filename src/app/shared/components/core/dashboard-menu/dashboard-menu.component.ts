@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -29,6 +29,8 @@ export class DashboardMenuComponent implements OnInit {
   moreDropdown: null;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     private dashboardService: DashboardService,

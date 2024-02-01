@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-text-field',
@@ -21,6 +22,8 @@ export class ConfigurationTextFieldComponent implements OnInit {
   @Input() customErrorMessage: string;
 
   @Input() type: string = 'text';
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

@@ -33,10 +33,10 @@
                     <div>
                         <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="export()" [ngClass]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress || !exportableExpenseGroupIds.length">
                             <p class="!tw-text-14-px !tw-font-500" *ngIf="!exportInProgress">Export
-                                <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px !tw-text-12-'"></app-svg-icon>
                             </p>
                             <p class="!tw-text-14-px !tw-font-500" *ngIf="exportInProgress">Exporting
-                                <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
                             </p>
                         </button><br>
                     </div>

@@ -10,6 +10,7 @@ const featureConfigs: FeatureConfiguration = {
     fyle: {
         illustrationsAllowed: true,
         isGradientAllowed: true,
+        isIconsInsideButtonAllowed: true,
         exposeOnlyQBOApp: false,
         featureFlags: {
             cloneSettings: true,
@@ -38,6 +39,7 @@ const featureConfigs: FeatureConfiguration = {
     co: {
         illustrationsAllowed: false,
         isGradientAllowed: false,
+        isIconsInsideButtonAllowed: false,
         exposeOnlyQBOApp: true,
         featureFlags: {
             cloneSettings: false,

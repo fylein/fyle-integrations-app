@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                             </span>
-                            <i class="pi pi-times" (click)="removeFilter(exportLogForm.controls.dateRange)"></i>
+                            <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(exportLogForm.controls.dateRange)"></i>
                         </div>
                     </ng-template>
                     <ng-template let-date pTemplate="item">

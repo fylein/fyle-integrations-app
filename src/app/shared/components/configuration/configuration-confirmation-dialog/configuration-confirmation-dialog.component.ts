@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { ConfigurationWarningEvent } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 
@@ -22,6 +23,8 @@ export class ConfigurationConfirmationDialogComponent implements OnInit {
   @Input() event: ConfigurationWarningEvent;
 
   @Output() warningAccepted = new EventEmitter<ConfigurationWarningOut>();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 
