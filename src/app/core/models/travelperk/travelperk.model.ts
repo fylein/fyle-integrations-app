@@ -1,5 +1,5 @@
 import { Org} from 'src/app/core/models/org/org.model';
-import { TravelPerkExpenseGroup, TravelPerkUserRole } from '../enum/enum.model';
+import { TravelPerkExpenseGroup, TravelPerkOnboardingState, TravelPerkUserRole } from '../enum/enum.model';
 
 export type Travelperk = {
     id: number;
@@ -10,6 +10,7 @@ export type Travelperk = {
     is_s3_connected: boolean;
     org: number;
     travelperk_connection_id: number;
+    onboarding_state: TravelPerkOnboardingState;
     created_at: Date;
     updated_at: Date;
 }
