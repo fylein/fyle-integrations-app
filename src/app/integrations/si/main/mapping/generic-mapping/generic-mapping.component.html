@@ -10,7 +10,7 @@
                 <p>Total {{ this.sourceType | snakeCaseToSpaceCase | titlecase }}{{mappingStats.all_attributes_count > 0 ? 's' : ''}}</p>
             </div>
             <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
-                <p>{{mappingStats?.all_attributes_count}}</p>
+                <p>{{mappingStats.all_attributes_count}}</p>
             </div>
         </div>
     
@@ -21,7 +21,7 @@
                 <p>Unmapped {{ this.sourceType | snakeCaseToSpaceCase | titlecase }}{{mappingStats.unmapped_attributes_count > 0 ? 's' : ''}}</p>
             </div>
             <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
-                <p>{{mappingStats?.unmapped_attributes_count}}</p>
+                <p>{{mappingStats.unmapped_attributes_count}}</p>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
                     <tr>
                         <td>
                             <div class="tw-flex tw-items-center">
-                                <svg-icon-sprite *ngIf="mapping.auto_mapped" pTooltip="Auto-mapped" tooltipPosition="top" src="flash" width="12px" height="12px" class="tw-mr-12-px tw-text-placeholder"></svg-icon-sprite>
+                                <app-svg-icon *ngIf="mapping.auto_mapped" [tooltipText]="'Auto-mapped'" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
                                 <span [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped}">{{ mapping.value }}</span>
                             </div>
                         </td>

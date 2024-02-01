@@ -24,7 +24,6 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -89,7 +88,6 @@
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
@@ -124,7 +122,6 @@
               "node_modules/primeng/resources/primeng.min.css"
             ],
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "compodocArgs": [
@@ -146,7 +143,6 @@
               "node_modules/primeng/resources/primeng.min.css"
             ],
             "assets": [
-              "src/favicon.ico",
               "src/assets"
             ],
             "configDir": ".storybook",

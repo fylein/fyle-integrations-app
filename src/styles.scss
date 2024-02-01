@@ -3,8 +3,14 @@
 @tailwind utilities;
 
 // Import all the themes here
-@import 'assets/themes/fyle.scss';
+@import 'assets/themes/theme.scss';
 
+
+
+@font-face {
+    font-family: "Optimist";
+    src: url('./assets/fonts/Optimist.woff2') format('woff2');
+}
 
 html,
 body {
@@ -19,24 +25,40 @@ p {
     @apply tw-m-0-px;
 }
 
+.pi-times.fyle {
+    content: url('./assets/icons/cross-medium.svg') !important;
+}
+
+.pi-times.co {
+    content: url('./assets/icons/co/grv-close-medium.svg') !important;
+}
+
+.pi-chevron-down.fyle {
+    content: url('./assets/icons/arrow-down.svg') !important;
+}
+
+.pi-chevron-down.co {
+    content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+}
+
+.pi-eye.fyle {
+    content: url('./assets/icons/eye.svg') !important;
+}
+
+.pi-eye.co {
+    content: url('./assets/icons/co/grv-show.svg') !important;
+}
+
+.pi-eye-slash.fyle {
+    content: url('./assets/icons/eye-slash.svg') !important;
+}
+
+.pi-eye-slash.co {
+    content: url('./assets/icons/co/grv-show-hide.svg') !important;
+}
+
 .pi-times:before {
-    content: url('./assets/icons/cross.svg') #{!important};
-}
-
-.pi-chevron-down:before {
-    content: url('./assets/icons/arrow-down.svg') #{!important};
-}
-
-.pi-eye:before {
-    content: url('./assets/icons/eye.svg') #{!important};
-}
-
-.pi-eye-slash:before {
-    content: url('./assets/icons/eye-slash.svg') #{!important};
-}
-
-.pi-times:before {
-    @apply tw-text-placeholder #{!important}
+    @apply tw-text-placeholder tw-text-12-px #{!important}
 }
 
 .p-component {
@@ -161,7 +183,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-h-fit tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-mx-px tw-mt-px tw-mb-4-px #{!important};
+    @apply tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-mx-px tw-mt-px tw-mb-4-px #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
@@ -174,10 +196,7 @@ p {
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item, 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    max-width: 18.5rem;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    @apply tw-h-fit tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-mx-px tw-mt-px tw-mb-4-px #{!important};
 }
 
 .p-dropdown.p-focus {
@@ -413,3 +432,51 @@ p {
 .preview-box {
     @apply tw-p-10-px tw-bg-disabled-bg-color tw-rounded-8-px #{!important} ;
 }
+
+.landing {
+    &--active-tag {
+        @apply tw-bg-slightly-normal-text-color tw-h-2-px tw-w-[100%] tw-rounded-tr-4-px tw-rounded-tl-4-px;
+    }
+
+    &--tab {
+        @apply tw-mt-20-px tw-flex tw-flex-col tw-justify-between tw-items-center tw-h-36-px tw-cursor-pointer;
+    }
+
+    &--divider {
+        @apply tw-h-1-px tw-w-[100%] tw-bg-separator;
+    }
+
+    &--section-divider {
+        @extend .landing--divider;
+        @apply tw-my-40-px;
+    }
+
+    &--accounting-app {
+        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px tw-shadow-app-card;
+    }
+
+    &--accounting-app-name {
+        @apply tw-pt-22-px tw-text-14-px tw-flex;
+    }
+
+    &--accounting-app-open {
+        @apply tw-pl-6-px tw-pt-3-px tw-text-slightly-normal-text-color;
+    }
+
+    &--section-heading {
+        @apply tw-text-18-px tw-pb-8-px;
+    }
+
+    &--section-caption {
+        @apply tw-text-sub-text-color tw-text-14-px tw-pb-24-px;
+    }
+
+    &--other-integrations {
+        @apply tw-grid tw-grid-cols-3 tw-mt-50-px;
+    }
+
+    &--other-integration-app {
+        @apply tw-flex tw-items-center tw-justify-center;
+    }
+}
+

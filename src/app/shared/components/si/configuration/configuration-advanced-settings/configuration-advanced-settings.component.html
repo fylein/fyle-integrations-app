@@ -31,7 +31,7 @@
                     [label]="'Schedule Automatic Export'"
                     [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Sage Intacct.'"
                     [options]="hours"
-                    [iconPath]="'email'"
+                    [iconPath]="'envelope'"
                     [showClearIcon]="true"
                     [placeholder]="'Set Schedule'"
                     [formControllerName]="'scheduleAutoExport'">
@@ -161,7 +161,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)"></i>
+                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)"></i>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -182,7 +182,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)"></i>
+                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)"></i>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -203,7 +203,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)"></i>
+                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)"></i>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -220,7 +220,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)"></i>
+                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)"></i>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -237,7 +237,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i class="pi pi-times" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)"></i>
+                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)"></i>
                             </div>
                         </ng-template>
                     </p-dropdown>

@@ -2,14 +2,14 @@
     <div *ngIf="!isDefaultFields" class="tw-flex tw-flex-row tw-justify-between tw-items-center">
         <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
             <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
-                <svg-icon-sprite *ngIf="iconPath" src="{{iconPath}}" width="24px" height="24px" class="tw-text-mandatory-field-color"></svg-icon-sprite>
+                <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
             </div>
 
             <div>
                 <h5 class="tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">{{ label | snakeCaseToSpaceCase}}<app-mandatory-field *ngIf="isFieldMandatory"></app-mandatory-field></h5>
-                <h5 *ngIf="subLabel || (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType')" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4" [innerHTML]="subLabel"></h5>
-                <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.SAGE300 && appName !== AppName.QBO" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
-                    Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from {{brandingConfig.brandName}}. <span *ngIf="exportTypeIconPath">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more detailsss.</span>
+                <h5 *ngIf="subLabel || (formControllerName !== 'reimbursableExportType' && formControllerName!=='cccExportType' && formControllerName !== 'creditCardExportType')" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty" [innerHTML]="subLabel"></h5>
+                <h5 *ngIf="(formControllerName === 'reimbursableExportType' || formControllerName === 'cccExportType' || formControllerName === 'creditCardExportType') && appName !== AppName.QBO" class="!tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 !tw-leading-4">
+                    Choose the type of transaction record that you would like to create in {{ appName }} while exporting expenses from {{brandingConfig.brandName}}. <span *ngIf="exportConfigurationIconPath && appName === AppName.INTACCT">Click<a (click)="showExportTable()" class="tw-cursor-pointer tw-text-hyperlink-color"> here</a> for more details.</span>
                 </h5>
             </div>
         </div>
@@ -22,20 +22,20 @@
                     [filter]="true" [filterBy]="optionLabel"
                     (onFilter)="searchOptions($event)" 
                     [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
-                    [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'">
+                    [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
                 </p-dropdown>
             </div>
             <div *ngIf="options && !destinationAttributes && !simpleOptions">
                 <div class="p-field-checkbox tw-pl-34-px" *ngIf="formControllerName !== 'dayOfMonth' && formControllerName !== 'dayOfWeek' && formControllerName !== 'timeOfDay' && !destinationAttributes">
                     <p-dropdown appendTo="body" [options]="options" class="!tw-w-300-px"
                     [formControlName]="formControllerName" [placeholder]="placeholder"
-                    dropdownIcon="pi pi-chevron-down"
+                    [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
                     [ngClass]="{
                         'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
                         'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
                         'selectedItem': form.controls[formControllerName].value,
                         'filterDropdown': !form.controls[formControllerName].value,
-                        'showClearIcon': showClearIcon && !isDisabled
+                        'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
                     }" [disabled]="isDisabled"
                     >
                     <ng-template let-option pTemplate="item">
@@ -50,14 +50,17 @@
                             <span>
                                 {{ item.label }}
                             </span>
-                            <i *ngIf="showClearIcon && !isDisabled" class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                            <i *ngIf="showClearIcon && !isDisabled" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(form.controls[formControllerName])"></i>
                         </div>
                     </ng-template>
                 </p-dropdown>
-                    <div *ngIf="['JOURNAL_ENTRY', 'EXPENSE_REPORT', 'BILL', 'CHARGE_CARD_TRANSACTION', 'PURCHASE_INVOICE', 'DIRECT_COST', 'EXPENSE', 'JOURNAL ENTRY', 'CHECK', 'CREDIT CARD PURCHASE', 'DEBIT CARD EXPENSE'].includes(form.controls[formControllerName].value)" class="sub-text tw-pt-3-px">
+                    <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <span>Click </span>
                         <a class="tw-text-hyperlink-color !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
                         <span> to preview how it looks on {{appName}}</span>
+                    </div>
+                    <div *ngIf="!showExportPreview && isDisabled" class="sub-text tw-text-pretty tw-pt-3-px">
+                        <span>Auto-selected based on your export module</span>
                     </div>
                     <div *ngIf="form.controls[formControllerName].value==='spent_at' && isOnboarding" class="sub-text">
                         <span>Using the Spend Date may lead to multiple single line<br>item entries.</span>

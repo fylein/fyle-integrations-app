@@ -48,6 +48,10 @@
                 <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" [(ngModel)]="valueOption1" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
                 <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
               </div>
+              <div class="tw-w-296-px" *ngIf="showBooleanField1()">
+                <p-dropdown appendTo="body" formControlName="value1" placeholder="Select Value" [options]="customCheckBoxValueOptions">
+                </p-dropdown>
+              </div>
         </div>
   
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
@@ -105,14 +109,20 @@
             <div *ngIf="showDateField2()" class="tw-w-296-px">
               <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
-            <svg-icon-sprite src="bin" width="24px" height="24px" class="tw-text-sub-text-color delete-icon" [pTooltip]="'Remove Condition'" (click)="remCondition()"></svg-icon-sprite>
+            <div class="tw-w-296-px" *ngIf="showBooleanField2()">
+              <p-dropdown appendTo="body" formControlName="value2" placeholder="Select Value" [options]="customCheckBoxValueOptions">
+              </p-dropdown>
+            </div>
+            <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
+              <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-sub-text-color tw-text-center tw-cursor-pointer'" [tooltipText]="'Remove Condition'" (iconClick)="remCondition()"></app-svg-icon>
+            </div>
           </div>
           <div class=" tw-text-mandatory-field-color" *ngIf="checkValidationCondition()">
             <p>*Condition selected should be distinct.</p>
           </div>
         </div>
         <div class="tw-flex items-center tw-text-mandatory-field-color tw-pt-12-px tw-pb-24-px" *ngIf="showAddButton">
-          <svg-icon-sprite src="add" width="18px" height="18px" (click)="updateAdditionalFilterVisibility(true)"></svg-icon-sprite>
+          <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" (iconClick)="updateAdditionalFilterVisibility(true)"></app-svg-icon>
           <a class="add-row-text tw-cursor-pointer tw-pl-8-px tw-text-14-px" (click)="updateAdditionalFilterVisibility(true)">
             Add More Fields
           </a>
@@ -120,4 +130,3 @@
       </form>
     </div>
 </div>
-  

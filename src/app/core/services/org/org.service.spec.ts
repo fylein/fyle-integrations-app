@@ -81,7 +81,7 @@ describe('OrgService', () => {
 
   it('should connect Fyle', () => {
     spyOn(service, 'getOrgId').and.returnValue('1');
-    service.connectFyle(AppName.GUSTO).subscribe((res) => {
+    service.connectFyle(AppName.BAMBOO_HR).subscribe((res) => {
       expect(res).toEqual({});
     });
 

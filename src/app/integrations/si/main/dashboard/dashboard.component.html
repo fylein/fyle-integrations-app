@@ -11,13 +11,13 @@
             <div class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-4/5">
                     <div class="tw-flex tw-items-center">
-                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length" src="check" height="24px" width="24px"></svg-icon-sprite>
-                        <svg-icon-sprite class="tw-mt-1-px tw-pr-8-px" *ngIf="(!exportInProgress && exportableExpenseGroupIds.length) || (exportInProgress)" src="arrow-tail-up" height="24px" width="24px" classes="tw-text-slightly-normal-text-color"></svg-icon-sprite>
+                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px'" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length" [svgSource]="'check'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
+                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px tw-text-slightly-normal-text-color'" *ngIf="(!exportInProgress && exportableExpenseGroupIds.length) || (exportInProgress)" [svgSource]="'arrow-tail-up'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && !lastExport"> Sit back and relax!</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="exportInProgress"> Exporting {{ processedCount }} of {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} to your Sage Intacct Account</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && exportableExpenseGroupIds.length"> {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} ready to export</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && lastExport?.successful_expense_groups_count">You are all caught up!</h3>
-                        <svg-icon-sprite src="info" width="16px" height="16px" class="tw-text-info tw-ml-4-px" pTooltip="All expenses that have reached your export state in {{brandingConfig.brandName}} will be automatically imported and kept ready for export"></svg-icon-sprite>
+                        <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-flex tw-text-info tw-ml-4-px'" [tooltipText]="'All expenses that have reached your export state in {{brandingConfig.brandName}} will be automatically imported and kept ready for export'"></app-svg-icon>
                     </div>
                     <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && !lastExport">No new expenses to export in the configured state of export in {{brandingConfig.brandName}}. Once you start processing payments or closing your expenses, they will be automatically available here.</h5>
                     <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="exportInProgress">This may take a few minutes...</h5>
@@ -32,11 +32,11 @@
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
                         <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="export()" [ngClass]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress || !exportableExpenseGroupIds.length">
-                            <p class="!tw-text-14-px !tw-font-500" *ngIf="!exportInProgress">Export
-                                <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="!exportInProgress">Export
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px !tw-text-12-'"></app-svg-icon>
                             </p>
-                            <p class="!tw-text-14-px !tw-font-500" *ngIf="exportInProgress">Exporting
-                                <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="exportInProgress">Exporting
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
                             </p>
                         </button><br>
                     </div>
@@ -68,7 +68,7 @@
         <div class="tw-text-center">
             <img *ngIf="illustrationsAllowed" class="tw-pr-4" src="assets/illustrations/dashboard-illustration.svg" alt="">
             <p class="tw-pt-8 tw-font-400 tw-text-14-px">Looks like you have</p>
-            <p class="tw-pt-4-px tw-font-600 tw-text-14-px">0 expenses to export right now</p>
+            <p class="tw-pt-4-px tw-font-400 tw-text-14-px">0 expenses to export right now</p>
         </div>
     </div>
     <div *ngIf="lastExport || exportableExpenseGroupIds.length" class="tw-mt-24-px tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
@@ -78,28 +78,28 @@
         <div class="tw-border-separator tw-border-t-1-px">
             <div *ngIf="true" class="tw-p-6 tw-rounded-6-px tw-bg-white">
                 <div *ngIf="true" class="inside-container tw-p-10 tw-rounded-6-px tw-bg-white">
-                    <div class="tw-flex tw-items-center tw-justify-between">
+                    <div class="tw-flex tw-items-start tw-justify-between">
                         <div class="tw-flex">
-                                <svg-icon-sprite src="check-circle-outline-small" width="18px" height="18px" class="tw-text-success-toast tw-mr-16-px"></svg-icon-sprite>
-                                <p class="tw-text-14-px tw-font-500 tw-mt-2-px tw-text-slightly-normal-text-color">Successful Expenses</p>
-                                <span class="tw-w-120-px tw-text-right tw-mt-2-px tw-text-faded-text-color">
+                                <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-success-toast tw-mr-16-px'"></app-svg-icon>
+                                <p class="tw-text-14-px tw-font-500 tw-pl-10-px tw-text-slightly-normal-text-color">Successful Expenses</p>
+                                <span class="tw-w-120-px tw-text-right tw-text-faded-text-color">
                                     {{ lastExport?.successful_expense_groups_count ? lastExport?.successful_expense_groups_count : 0 }}
                                 </span>  
                             <a *ngIf="lastExport?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-20-px tw-text-pink pointer">View</a>
                         </div>
-                        <div class="tw-flex tw-flex-col tw-mt-2-px">
-                            <span class="tw-w-260-px tw-text-left">
+                        <div class="tw-flex tw-flex-col">
+                            <span class="tw-w-260-px">
                                 <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Last Export at: </span>
                                 <span class="tw-text-14-px tw-font-500">{{ lastExport ? (lastExport.last_exported_at | date: 'h:mm a,') : 'None' }}
                                 {{ lastExport ? (lastExport.last_exported_at | date: 'dd MMM yyyy') : '' }}</span>
                             </span>                              
                         </div>
                     </div>
-                    <div class="tw-flex tw-items-center tw-mt-8-px tw-justify-between">
+                    <div class="tw-flex tw-items-start tw-mt-8-px tw-justify-between">
                         <div class="tw-flex">
-                            <svg-icon-sprite src="error-outlined" width="18px" height="18px" class="tw-text-alert-toast tw-mr-16-px"></svg-icon-sprite>
-                            <p class="tw-text-14-px tw-font-500 tw-mt-2-px tw-text-slightly-normal-text-color">Failed Expenses</p>
-                            <span class="tw-w-150-px tw-text-right tw-mt-2-px tw-text-faded-text-color">
+                            <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast tw-mr-16-px'"></app-svg-icon>
+                            <p class="tw-text-14-px tw-font-500 tw-pl-10-px tw-text-slightly-normal-text-color">Failed Expenses</p>
+                            <span class="tw-w-150-px tw-text-right tw-text-faded-text-color">
                                 {{ lastExport?.failed_expense_groups_count ? lastExport?.failed_expense_groups_count : 0 }}
                             </span>
                             <a *ngIf="lastExport?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-20-px tw-text-pink pointer tw-mt-2-px">View</a>
@@ -144,7 +144,7 @@
                                     Resolve
                                 </button>
                                 <div class="tw-flex" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
-                                    <svg-icon-sprite src="check-circle-outline-standard" width="24px" height="24px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
+                                    <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
                                     <p class="tw-text-faded-text-color tw-text-14-px">
                                       Resolved
                                     </p>
@@ -166,7 +166,7 @@
                                     Resolve
                                 </button>
                                 <div class="tw-flex" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
-                                    <svg-icon-sprite src="check-circle-outline-standard" width="24px" height="24px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
+                                    <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
                                     <p class="tw-text-faded-text-color tw-text-14-px">
                                       Resolved
                                     </p>
@@ -240,7 +240,7 @@
                     <td *ngIf="exportLogHeader==='Successful'">
                         <div *ngIf="rowData.intacctUrl">
                           <button (click)="openUrl($event, rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
-                            <svg-icon-sprite class="tw-pt-5-px" src="open-in-new-tab-standard" width="24px" height="24px"></svg-icon-sprite>
+                            <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
                           </button>
                         </div>
                     </td>

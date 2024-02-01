@@ -45,7 +45,6 @@ export class HelperService {
       [AppUrl.QBD]: environment.qbd_api_url,
       [AppUrl.TRAVELPERK]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
       [AppUrl.BAMBOO_HR]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
-      [AppUrl.GUSTO]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
       [AppUrl.SAGE300]: environment.sage300_api_url,
       [AppUrl.INTEGRATION]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
       [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url,
