@@ -37,11 +37,11 @@ export class HelperService {
     const apiUrlMap: AppUrlMap = {
       [AppUrl.INTACCT]: environment.si_api_url,
       [AppUrl.QBD]: environment.qbd_api_url,
-      [AppUrl.TRAVELPERK]: environment.api_url,
-      [AppUrl.BAMBOO_HR]: environment.api_url,
-      [AppUrl.GUSTO]: environment.api_url,
+      [AppUrl.TRAVELPERK]: environment.cluster_domain_api_url,
+      [AppUrl.BAMBOO_HR]: environment.cluster_domain_api_url,
+      [AppUrl.GUSTO]: environment.cluster_domain_api_url,
       [AppUrl.SAGE300]: environment.sage300_api_url,
-      [AppUrl.INTEGRATION]: environment.api_url,
+      [AppUrl.INTEGRATION]: environment.cluster_domain_api_url,
       [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url,
       [AppUrl.QBO]: environment.qbo_api_url
     };

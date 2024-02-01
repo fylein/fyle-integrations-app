@@ -11,7 +11,7 @@
     </app-landing-page-header>
 
     <app-landing-page-body
-        *ngIf="!isConnectionInProgress && !showErrorScreen"
+        *ngIf="!showErrorScreen"
         [headerText]="'Auto sync employee details between TravelPerk and ' + brandingConfig.brandName + '.'" 
         [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
         [redirectLink]="brandingKbArticles.topLevelArticles.TRAVELPERK"

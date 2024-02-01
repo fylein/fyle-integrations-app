@@ -35,7 +35,7 @@ export class TravelperkComponent implements OnInit {
     if (pathName === '/integrations/travelperk') {
       const onboardingStateComponentMap = {
         [TravelPerkOnboardingState.CONNECTION]: '/integrations/travelperk/onboarding/landing',
-        [TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS]: '/integrations/travelperk/onboarding/import_settings',
+        [TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS]: '/integrations/travelperk/onboarding/payment_profile_settings',
         [TravelPerkOnboardingState.ADVANCED_SETTINGS]: '/integrations/travelperk/onboarding/advanced_settings',
         [TravelPerkOnboardingState.COMPLETE]: '/integrations/travelperk/main/configuration'
       };

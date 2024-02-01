@@ -20,7 +20,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
 
   AppName = AppName;
 
-  showErrorScreen: boolean;
+  showErrorScreen: boolean = false;
 
   travelperkData: Travelperk;
 
@@ -33,6 +33,8 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
   org: Org = this.orgService.getCachedOrg();
 
   readonly brandingConfig = brandingConfig;
+
+  isLoading: boolean;
 
   constructor(
     private travelperkService: TravelperkService,
@@ -71,7 +73,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
-            this.router.navigateByUrl('/integrations/travelperk/onboarding/import_settings');
+            this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
             popup?.close();
             clearInterval(activePopup);
           });
@@ -80,7 +82,18 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     }, 2000);
   }
 
+  private setupPage(): void {
+    this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
+      this.travelperkData = travelperkData;
+      this.isIntegrationConnected = travelperkData.is_travelperk_connected;
+      this.isLoading = false;
+    }, () => {
+      this.isLoading = false;
+    });
+  }
+
   ngOnInit(): void {
+    this.setupPage();
   }
 
 }
