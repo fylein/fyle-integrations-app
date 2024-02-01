@@ -1,0 +1,65 @@
+<div class="tw-p-24-px">
+    <div [formGroup]="form">
+        <div formArrayName="expenseFields">
+            <div *ngFor="let expenseField of expenseFieldsGetter.controls | slice:0:currentLength; let i = index" [formGroupName]="i">
+                <div class="tw-flex tw-justify-center tw-items-center tw-mb-18-px">
+                    <div>
+                        <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
+                            <p>{{ DestinationFieldText }}</p>
+                        </div>
+                        <p-dropdown appendTo="body" [options]="DestinationFields" placeholder="Choose {{appName}} field" formControlName="destination_field" dropdownIcon="pi pi-chevron-down"
+                            optionLabel="display_name" optionValue="attribute_type" [disabled]="isDestinationDisabled">
+                            <ng-template let-option pTemplate="item">
+                                <div>
+                                    {{ option.display_name | snakeCaseToSpaceCase | titlecase }}
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="selectedItem" let-item>
+                                <div class="tw-flex tw-justify-between tw-items-center">
+                                    <span>
+                                        {{ item.display_name | snakeCaseToSpaceCase | titlecase }}
+                                    </span>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                            {{appName}} Fields should be unique
+                        </p>
+                    </div>
+                    <div>
+                        <svg-icon-sprite src="arrow-line" height="5px" width="100px" class="!tw-ml-0 tw-text-box-color"></svg-icon-sprite>
+                    </div>
+                    <div>
+                        <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
+                            <p>{{ sourceFieldText }}</p>
+                        </div>
+                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="SourceFields" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field" [disabled]="isDestinationDisabled"
+                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}" dropdownIcon="pi pi-chevron-down">
+                            <ng-template let-option pTemplate="item">
+                            <div>
+                                {{ option.display_name }}
+                            </div>
+                            </ng-template>
+                            <ng-template pTemplate="selectedItem" let-item>
+                            <div class="tw-flex tw-justify-between tw-items-center ">
+                                <span>
+                                    {{ item.display_name }}
+                                </span>
+                                <i class="pi pi-times" (click)="removeFilter(expenseField)"></i>
+                            </div>
+                            </ng-template>
+                      </p-dropdown>
+                      <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                        {{brandingConfig.brandName}} Fields should be unique
+                        </p>
+                    </div>
+                </div>                      
+            </div>  
+        </div>               
+    </div>
+    <div *ngIf="showOrHideLoadMoreButton()" class="add-button-container">
+        <a class="add-row-text tw-pl-2" (click)="addExpenseFields()">
+            Load more
+        </a>
+    </div> 
+</div>
