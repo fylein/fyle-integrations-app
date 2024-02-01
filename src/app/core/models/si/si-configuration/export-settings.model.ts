@@ -12,8 +12,7 @@ export type ExportSettingConfiguration = {
     employee_field_mapping: string,
     auto_map_employees: string,
     reimbursable_expenses_object: IntacctReimbursableExpensesObject | null,
-    corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject | null,
-    use_merchant_in_journal_line: boolean
+    corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject | null
   }
 
 export type ExportSettingGeneralMapping = {
@@ -80,8 +79,7 @@ export type ExportSettingOptionSearch = {
                 reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
                 corporate_credit_card_expenses_object: cccExportType,
                 employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : null,
-                auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees')),
-                use_merchant_in_journal_line: exportSettingsForm.get('useMerchantInJournalLine')?.value
+                auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees'))
             },
             general_mappings: {
                 default_gl_account: exportSettingsForm.get('glAccount')?.value?.value ? {id: exportSettingsForm.get('glAccount')?.value.destination_id, name: exportSettingsForm.get('glAccount')?.value.value} : emptyDestinationAttribute,

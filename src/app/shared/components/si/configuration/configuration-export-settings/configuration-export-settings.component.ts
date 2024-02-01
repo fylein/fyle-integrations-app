@@ -441,8 +441,7 @@ export class ConfigurationExportSettingsComponent implements OnInit {
         cccExpensePaymentType: [findObjectById(this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE, generalMappings?.default_ccc_expense_payment_type.id)],
         creditCardVendor: [findObjectById(this.destinationOptions.VENDOR, generalMappings?.default_ccc_vendor.id)],
         creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
-        chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)],
-        useMerchantInJournalLine: [configurations?.use_merchant_in_journal_line]
+        chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)]
       });
 
       this.exportFieldsWatcher();
