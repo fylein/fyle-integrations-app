@@ -112,6 +112,8 @@ export class DashboardComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   constructor(
     private dashboardService: DashboardService,
     private exportLogService: ExportLogService,

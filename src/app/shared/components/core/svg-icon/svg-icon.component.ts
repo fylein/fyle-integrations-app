@@ -8,6 +8,8 @@ const ICON_MAPPING = {
   'arrow-rotate': 'grv-recurring',
   'arrow-tail-down-medium': 'grv-arrow-down-medium',
   'arrow-tail-down': 'grv-arrow-down',
+  'arrow-tail-left-medium': 'grv-arrow-left-medium',
+  'arrow-tail-right-medium': 'grv-arrow-right-medium',
   'arrow-tail-up-down': 'grv-sort',
   'arrow-tail-up-medium': 'grv-arrow-up-medium',
   'arrow-tail-up': 'grv-arrow-up',
@@ -67,6 +69,8 @@ export class SvgIconComponent implements OnInit {
 
   @Input() tooltipText: string;
 
+  @Input() isTextColorAllowed: boolean = false;
+
   @Output() iconClick = new EventEmitter();
 
   constructor() { }
@@ -80,8 +84,10 @@ export class SvgIconComponent implements OnInit {
       // @ts-ignore
       this.svgSource = ICON_MAPPING[this.svgSource];
 
-      // Remove all text classes
-      this.styleClasses = this.styleClasses.split(' ').filter((styleClass: string) => (!styleClass.startsWith('tw-text-') ? styleClass: '')).join(' ');
+      if (!this.isTextColorAllowed) {
+        // Remove all text classes
+        this.styleClasses = this.styleClasses.split(' ').filter((styleClass: string) => (!styleClass.startsWith('tw-text-') ? styleClass: '')).join(' ');
+      }
     }
   }
 
