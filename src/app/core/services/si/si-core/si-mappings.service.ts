@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 import { ExpenseField } from 'src/app/core/models/si/db/expense-field.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
@@ -13,6 +12,7 @@ import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { CategoryMapping, CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
 import { ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
 import { GroupedDestinationAttribute, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ import { GroupedDestinationAttribute, IntacctDestinationAttribute, Paginatedinta
 export class SiMappingsService {
 
   constructor(
-    private apiService: SiApiService,
+    private apiService: ApiService,
     private workspaceService: SiWorkspaceService
   ) { }
 

@@ -1,10 +1,10 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { QbdApiService } from '../qbd-core/qbd-api.service';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
 import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { Observable } from 'rxjs';
 import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class QbdMappingService {
   @Output() getMappingPagesForSideNavBar: EventEmitter<Boolean> = new EventEmitter();
 
   constructor(
-    private apiService: QbdApiService,
+    private apiService: ApiService,
     private workspaceService: QbdWorkspaceService
   ) { }
 
