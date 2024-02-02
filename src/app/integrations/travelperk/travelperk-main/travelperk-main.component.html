@@ -1,2 +1,6 @@
-<p>travelperk-main works!</p>
-<router-outlet></router-outlet>
+<div>
+    <app-main-menu [modules]="modules" [activeItem]="modules[0]" [appName]="appName" [isDropdrownRequired]="true" [isSyncRequired]="false"></app-main-menu>
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>
