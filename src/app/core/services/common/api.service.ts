@@ -4,7 +4,7 @@ import { catchError, Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-let API_BASE_URL = environment.cluster_domain_api_url;
+let API_BASE_URL = environment.api_url;
 
 const httpOptions = {
   headers: new HttpHeaders({

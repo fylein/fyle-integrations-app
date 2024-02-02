@@ -13,7 +13,7 @@ export interface TravelperkAdvancedSettingGet extends TravelperkAdvancedSetting 
     id: number,
     created_at: Date,
     update_at: Date,
-    workspace: number
+    org: number
 }
 
 export interface TravelperkAdvancedSettingPost extends TravelperkAdvancedSetting { }

@@ -74,9 +74,9 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
             this.isConnectionInProgress = false;
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
             this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
-            this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
             popup?.close();
             clearInterval(activePopup);
+            this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
           });
         }
       }

@@ -80,18 +80,18 @@ export class TravelperkService {
   }
 
   getTravelperkPaymentProfileMapping(): Observable<TravelperkPaymentProfileSettingGetPaginator> {
-    return this.apiService.get(`${this.workspaceService.getWorkspaceId()}/profile_mappings/`, {});
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/profile_mappings/`, {});
   }
 
   postTravelperkPaymentProfileMapping(travelperkPaymentProfileMappingPayload: TravelperkPaymentProfileSettingPost[]): Observable<TravelperkPaymentProfileSettingGetPaginator> {
-    return this.apiService.post(`${this.workspaceService.getWorkspaceId()}/profile_mappings/`, travelperkPaymentProfileMappingPayload);
+    return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/profile_mappings/`, travelperkPaymentProfileMappingPayload);
   }
 
   getTravelperkAdvancedSettings(): Observable<TravelperkAdvancedSettingGet> {
-    return this.apiService.get(`${this.workspaceService.getWorkspaceId()}/advance_settings/`, {});
+    return this.apiService.get(`/${this.workspaceService.getWorkspaceId()}/advance_settings/`, {});
   }
 
   postTravelperkAdvancedSettings(travelperkAdvancedSettingPayload: TravelperkAdvancedSettingPost): Observable<TravelperkAdvancedSettingGet> {
-    return this.apiService.post(`${this.workspaceService.getWorkspaceId()}/advance_settings/`, travelperkAdvancedSettingPayload);
+    return this.apiService.post(`/${this.workspaceService.getWorkspaceId()}/advance_settings/`, travelperkAdvancedSettingPayload);
   }
 }
