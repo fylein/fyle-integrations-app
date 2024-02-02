@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { brandingConfig } from 'src/app/branding/branding-config';
-import { Page, Sage300OnboardingState, ToastSeverity, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { AppName, ConfigurationCta, Page, Sage300OnboardingState, ToastSeverity, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent } from 'src/app/core/models/enum/enum.model';
 import { TravelPerkPaymetProfileSettingFormOption, TravelperkPaymentProfileSettingGetPaginator, TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { travelperkPaymentProfileMappingResponse } from '../travelperk.fixture';
 
 @Component({
   selector: 'app-travelperk-payment-profile-settings',
@@ -16,6 +17,8 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
   styleUrls: ['./travelperk-payment-profile-settings.component.scss']
 })
 export class TravelperkPaymentProfileSettingsComponent implements OnInit {
+
+  appName: string = AppName.TRAVELPERK;
 
   isLoading: boolean = true;
 
@@ -33,6 +36,12 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   sessionStartTime: Date = new Date();
 
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.SAGE300.IMPORT_SETTING;
+
+  ConfigurationCtaText = ConfigurationCta;
+
+  isPreviewDialogVisible: boolean;
+
   constructor(
     private router: Router,
     private travelperkService: TravelperkService,
@@ -41,6 +50,18 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService
   ) { }
+
+  navigateBack(): void {
+    this.router.navigate([`/integrations/travelperk/onboarding/landing`]);
+  }
+
+  closeDialog() {
+    this.isPreviewDialogVisible = false;
+  }
+
+  showPreviewDialog(visible: boolean) {
+    this.isPreviewDialogVisible = visible;
+  }
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
@@ -83,14 +104,14 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.travelperkService.getTravelperkPaymentProfileMapping().subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingGetPaginator) => {
+    // This.travelperkService.getTravelperkPaymentProfileMapping().subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingGetPaginator) => {
       this.paymentProfileSettings = travelperkPaymentProfileMappingResponse;
-      this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(travelperkPaymentProfileMappingResponse.results);
+      this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(this.paymentProfileSettings.results);
       this.isLoading = false;
-    }, () => {
-      this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(null);
-      this.isLoading = false;
-    });
+    // }, () => {
+    //   This.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(null);
+    //   This.isLoading = false;
+    // });
   }
 
   ngOnInit(): void {

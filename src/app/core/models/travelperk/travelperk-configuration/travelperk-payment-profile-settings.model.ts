@@ -1,7 +1,6 @@
-import { expand } from "rxjs";
 import { TravelPerkUserRole } from "../../enum/enum.model";
-import { Paginator } from "../../misc/paginator.model";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { PaginatedResponse } from "../../db/paginated-response.model";
 
 export type TravelperkPaymentProfileSetting = {
     payment_profile_name: string,
@@ -13,13 +12,13 @@ export type TravelperkPaymentProfileSetting = {
 export interface TravelperkPaymentProfileSettingGet extends TravelperkPaymentProfileSetting {
     id: number,
     created_at: Date,
-    update_at: Date,
+    updated_at: Date,
     org: number
 }
 
 export interface TravelperkPaymentProfileSettingPost extends TravelperkPaymentProfileSetting { }
 
-export interface TravelperkPaymentProfileSettingGetPaginator extends Paginator {
+export interface TravelperkPaymentProfileSettingGetPaginator extends PaginatedResponse {
     results: TravelperkPaymentProfileSettingGet[]
 }
 

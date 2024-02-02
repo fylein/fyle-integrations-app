@@ -1,64 +1,55 @@
-<div class="tw-p-24-px">
+<div class="tw-px-24-px tw-pb-24-px">
     <div [formGroup]="form">
         <div formArrayName="expenseFields">
-            <div *ngFor="let expenseField of expenseFieldsGetter.controls | slice:0:currentLength; let i = index" [formGroupName]="i">
-                <div class="tw-flex tw-justify-center tw-items-center tw-mb-18-px">
+            <div *ngFor="let expenseField of expenseFieldsGetter.controls | slice:0:noOfFieldsToShow; let i = index" [formGroupName]="i">
+                <div class="tw-flex tw-justify-start tw-items-center tw-mb-18-px">
                     <div>
                         <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
                             <p>{{ DestinationFieldText }}</p>
                         </div>
-                        <p-dropdown appendTo="body" [options]="DestinationFields" placeholder="Choose {{appName}} field" formControlName="destination_field" dropdownIcon="pi pi-chevron-down"
-                            optionLabel="display_name" optionValue="attribute_type" [disabled]="isDestinationDisabled">
-                            <ng-template let-option pTemplate="item">
-                                <div>
-                                    {{ option.display_name | snakeCaseToSpaceCase | titlecase }}
-                                </div>
-                            </ng-template>
+                        <p-dropdown appendTo="body" [options]="DestinationFields" placeholder="Choose {{appName}} field" formControlName="payment_profile_name" dropdownIcon="pi pi-chevron-down"
+                            optionLabel="payment_profile_name" optionValue="payment_profile_name" class="!tw-w-360-px" [disabled]="isDestinationDisabled">
                             <ng-template pTemplate="selectedItem" let-item>
                                 <div class="tw-flex tw-justify-between tw-items-center">
                                     <span>
-                                        {{ item.display_name | snakeCaseToSpaceCase | titlecase }}
+                                        {{ item.payment_profile_name | snakeCaseToSpaceCase | titlecase }}
                                     </span>
                                 </div>
                             </ng-template>
                         </p-dropdown>
-                        <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
-                            {{appName}} Fields should be unique
-                        </p>
                     </div>
                     <div>
-                        <svg-icon-sprite src="arrow-line" height="5px" width="100px" class="!tw-ml-0 tw-text-box-color"></svg-icon-sprite>
+                        <div *ngIf="i===0" class="tw-mb-38-px">
+                        </div>
+                        <svg-icon-sprite src="arrow-line" height="6px" width="100px" class="!tw-ml-0 tw-text-box-color"></svg-icon-sprite>
                     </div>
                     <div>
                         <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
                             <p>{{ sourceFieldText }}</p>
                         </div>
-                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="SourceFields" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field" [disabled]="isDestinationDisabled"
-                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}" dropdownIcon="pi pi-chevron-down">
+                        <p-dropdown appendTo="body" [options]="SourceFields" [placeholder]="sourceFieldPlaceholderText" formControlName="user_role" [disabled]="isSourceDisabled"
+                        optionLabel="label" optionValue="value" [ngClass]="{'selectedItem': expenseField.value.user_role, 'filterDropdown': !expenseField.value.user_role, 'showClearIcon': showCrossIcon && !isSourceDisabled && expenseField.value.user_role}" dropdownIcon="pi pi-chevron-down">
                             <ng-template let-option pTemplate="item">
                             <div>
-                                {{ option.display_name }}
+                                {{ option.label }}
                             </div>
                             </ng-template>
                             <ng-template pTemplate="selectedItem" let-item>
                             <div class="tw-flex tw-justify-between tw-items-center ">
                                 <span>
-                                    {{ item.display_name }}
+                                    {{ item.label }}
                                 </span>
-                                <i class="pi pi-times" (click)="removeFilter(expenseField)"></i>
+                                <i *ngIf="showCrossIcon && !isSourceDisabled" class="pi pi-times" (click)="removeFilter(expenseField)"></i>
                             </div>
                             </ng-template>
                       </p-dropdown>
-                      <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
-                        {{brandingConfig.brandName}} Fields should be unique
-                        </p>
                     </div>
                 </div>                      
             </div>  
         </div>               
     </div>
-    <div *ngIf="showOrHideLoadMoreButton()" class="add-button-container">
-        <a class="add-row-text tw-pl-2" (click)="addExpenseFields()">
+    <div *ngIf="showOrHideLoadMoreButton()" class="tw-mt-30-px">
+        <a class="tw-cursor-pointer tw-text-mandatory-field-color" (click)="addExpenseFields()">
             Load more
         </a>
     </div> 

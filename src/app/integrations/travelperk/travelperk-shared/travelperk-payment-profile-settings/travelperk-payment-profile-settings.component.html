@@ -1,1 +1,69 @@
-<p>travelperk-payment-profile-settings works!</p>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+    <div>
+        <app-configuration-step-header 
+            [headerText]="'Payment Profile Settings'"
+            [contentText]="'Each invoice in TravelPerk is linked to multiple user roles such as Booker, Traveler, and Card Holder. You can establish the User Role for each Payment Profile, based on which expenses will be created in ' + brandingConfig.brandName + '. '"
+            [redirectLink]="supportArticleLink" 
+            [appName]="appName">
+        </app-configuration-step-header>
+    </div>
+    <div>
+        <form [formGroup]="paymentProfileMappingForm">
+            <div class="tw-p-24-px">
+                <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
+                    <div>
+                        <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
+                            Add Payment Profiles for Expense Creation
+                        </h4>
+                        <p class="tw-text-14-px tw-text-faded-text-color tw-w-600-px tw-text-prrety">
+                            Add the required Payment Profiles and assign a User Role to each of them based on your requirement. 
+                            Expenses will be created for every invoice generated in Travelperk based on the settings.
+                            <a class="tw-text-hyperlink-color tw-pl-2-px tw-w-fit tw-cursor-pointer" (click)="showPreviewDialog(true)">
+                                Click here
+                            </a> 
+                            to preview.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <app-configuration-info-label
+                        [infoText]="'For Payment Profiles with cards added in ' + brandingConfig.brandName + ', select the \'Card Holder\' user role for accurate reconciliation.'">
+                    </app-configuration-info-label>
+                </div>
+            </div>
+            <div class="tw-px-24-px">
+                <app-configuration-mapping-fields 
+                    [appName]="appName"
+                    [showCrossIcon]="true"
+                    [isDestinationDisabled]="true"
+                    [SourceFields]="userRole"
+                    [DestinationFields]="paymentProfileSettings.results"
+                    [form]="paymentProfileMappingForm"
+                    [sourceFieldText]="'User Role'"
+                    [DestinationFieldText]="'Payment Profile'"
+                    [sourceFieldPlaceholderText]="'Select a User Role'"
+                    [noOfFieldsToShow]="5">
+                </app-configuration-mapping-fields>
+            </div>
+            <div>
+                <app-configuration-step-footer 
+                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                    [showBackButton] = "isOnboarding"
+                    [isButtonDisabled]="!paymentProfileMappingForm.valid"
+                    (navigateToPreviousStep)="navigateBack()"
+                    (save)="save()">
+                </app-configuration-step-footer>
+            </div>
+        </form>
+    </div>
+    <div *ngIf="isPreviewDialogVisible">
+        <app-preview-dialog 
+            [isPreviewDialogVisible]="true"
+            [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+            [header]="'Preview'">
+        </app-preview-dialog>
+    </div>
+</div>

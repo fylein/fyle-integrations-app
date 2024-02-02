@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { TravelPerkPaymetProfileSettingFormOption, TravelperkPaymentProfileSettingGet } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 
 @Component({
   selector: 'app-configuration-mapping-fields',
@@ -19,9 +20,9 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() DestinationPlaceholderFieldText: string;
 
-  @Input() SourceFields: string[];
+  @Input() SourceFields: string[] | TravelPerkPaymetProfileSettingFormOption[];
 
-  @Input() DestinationFields: string[];
+  @Input() DestinationFields: string[] | TravelperkPaymentProfileSettingGet[];
 
   @Input() isSourceDisabled: boolean;
 
@@ -33,8 +34,6 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() appName: string;
 
-  currentLength: number = this.noOfFieldsToShow;
-
   readonly brandingConfig = brandingConfig;
 
   constructor() { }
@@ -44,14 +43,14 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
   }
 
   showOrHideLoadMoreButton() {
-    if (this.form.controls.expenseFields.value.length > this.currentLength) {
+    if (this.form.controls.expenseFields.value.length > this.noOfFieldsToShow) {
       return true;
     }
     return false;
   }
 
   addExpenseFields() {
-    this.currentLength = this.form.controls.expenseFields.value.length;
+    this.noOfFieldsToShow = this.form.controls.expenseFields.value.length;
   }
 
   hasDuplicateOption(formGroup: AbstractControl, index: number, controlName: string): boolean {
@@ -59,29 +58,8 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
   }
 
   removeFilter(expenseField: AbstractControl) {
-    (expenseField as FormGroup).controls.source_field.patchValue('');
-    (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
-    (expenseField as FormGroup).controls.import_to_fyle.enable();
+    (expenseField as FormGroup).controls.user_role.patchValue('');
     event?.stopPropagation();
-  }
-
-  onDropdownChange(event: any, index: number) {
-    // Get the selected value from the <p-dropdown>
-    const selectedValue = event.value;
-
-    // Find the selected field in 'fyleFields' based on the selected value
-    // Const selectedField = this.SourceFields.find(field => field.attribute_type === selectedValue);
-
-    // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
-    // If (selectedField?.is_dependent) {
-      // Set the toggle to false
-      // (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(false);
-
-      // Get the 'import_to_fyle' control at the specified index and disable it
-      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
-    // } else {
-      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
-    // }
   }
 
   ngOnInit(): void {
