@@ -21,8 +21,6 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
 
   AppName = AppName;
 
-  showErrorScreen: boolean = false;
-
   travelperkData: Travelperk;
 
   isTravelperkSetupInProgress: boolean;

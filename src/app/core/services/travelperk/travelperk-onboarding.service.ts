@@ -31,7 +31,7 @@ export class TravelperkOnboardingService {
       step: 'Payment Profile Settings',
       icon: 'arrow-tail-down-medium',
       route: '/integrations/travelperk/onboarding/payment_profile_settings',
-      styleClasses: ['step-name-import--text !tw-w-100-px tw-text-prrety tw-text-center', 'step-name-import--icon']
+      styleClasses: ['step-name-import--text !tw-w-100-px tw-text-prrety tw-text-center']
     },
     {
       active: false,
@@ -39,7 +39,7 @@ export class TravelperkOnboardingService {
       step: 'Advanced Settings',
       icon: 'gear-medium',
       route: '/integrations/travelperk/onboarding/advanced_settings',
-      styleClasses: ['step-name-advanced--text', 'step-name-advanced--icon']
+      styleClasses: ['step-name-advanced--text']
     }
   ];
 
