@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OnboardingRoutingModule } from './onboarding-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { OnboardingIntacctConnectorComponent } from './onboarding-intacct-connector/onboarding-intacct-connector.component';
+import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector/intacct-onboarding-connector.component';
 import { IntacctOnboardingLandingComponent } from './intacct-onboarding-landing/intacct-onboarding-landing.component';
 import { OnboardingComponent } from './onboarding.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,7 +13,7 @@ import { OnboardingImportSettingComponent } from './onboarding-import-setting/on
 
 @NgModule({
   declarations: [
-    OnboardingIntacctConnectorComponent,
+    IntacctOnboardingConnectorComponent,
     IntacctOnboardingLandingComponent,
     OnboardingComponent,
     OnboardingComponent,
