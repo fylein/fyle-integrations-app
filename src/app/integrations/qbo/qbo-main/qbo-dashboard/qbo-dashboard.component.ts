@@ -106,7 +106,7 @@ export class QboDashboardComponent implements OnInit {
 
         this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
-        this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.id);
+        this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.expense_group);
 
         this.isExportInProgress = false;
         this.exportProgressPercentage = 0;
@@ -150,7 +150,10 @@ export class QboDashboardComponent implements OnInit {
         this.pollExportStatus();
       } else {
         this.accountingExportService.importExpensesFromFyle('v1').subscribe(() => {
-          this.isImportInProgress = false;
+          this.dashboardService.getExportableAccountingExportIds('v1').subscribe((exportableAccountingExportIds) => {
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
+            this.isImportInProgress = false;
+          });
         });
       }
     });
