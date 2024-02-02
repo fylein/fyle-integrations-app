@@ -8,6 +8,7 @@ import { GeneratedToken, Org } from '../../models/org/org.model';
 import { ApiService } from '../common/api.service';
 import { StorageService } from '../common/storage.service';
 import { HelperService } from '../common/helper.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class OrgService {
     private sanitizer: DomSanitizer,
     private apiService: ApiService,
     private storageService: StorageService,
-    helper: HelperService
+    private helper: HelperService
   ) {
     helper.setBaseApiURL(AppUrl.INTEGRATION);
    }
@@ -56,7 +57,8 @@ export class OrgService {
   }
 
   getAdditionalEmails(): Observable<EmailOption[]> {
-    return this.apiService.get(`/orgs/${this.getOrgId()}/admins/`, {});
+    const baseApiUrl = `${this.helper.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`;
+    return this.apiService.get(`/orgs/${this.getOrgId()}/admins/`, {}, baseApiUrl);
   }
 
   connectSendgrid(): Observable<{}> {

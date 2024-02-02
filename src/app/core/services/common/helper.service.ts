@@ -24,7 +24,7 @@ export class HelperService {
     private storageService: StorageService
   ) {}
 
-  private get apiBaseUrl(): string {
+  get apiBaseUrl(): string {
     return this.storageService.get('cluster-domain') || environment.cluster_domain_api_url;
   }
 

@@ -43,12 +43,12 @@ export class ApiService {
     }));
   }
 
-  get(endpoint: string, apiParams: any): Observable<any> {
+  get(endpoint: string, apiParams: any, apiBaseUrl?: string): Observable<any> {
     let params = new HttpParams();
     Object.keys(apiParams).forEach(key => {
       params = params.set(key, apiParams[key]);
     });
-    const url = API_BASE_URL + endpoint;
+    const url = (apiBaseUrl ? apiBaseUrl : API_BASE_URL) + endpoint;
     return this.http.get(url, { params }).pipe(catchError(error => {
       return this.handleError(error, 'GET', url);
     }));
