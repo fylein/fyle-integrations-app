@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QBDWorkspace } from 'src/app/core/models/qbd/db/workspaces.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-qbd',
@@ -23,8 +24,9 @@ export class QbdComponent implements OnInit {
   windowReference: Window;
 
   constructor(
-    private storageService: StorageService,
+    private helperService: HelperService,
     private router: Router,
+    private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: QbdWorkspaceService,
     private windowService: WindowService
@@ -47,6 +49,7 @@ export class QbdComponent implements OnInit {
   }
 
   private setupWorkspace(): void {
+    this.helperService.setBaseApiURL(AppUrl.QBD);
     this.workspaceService.getQBDWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces?.id) {
         this.workspaceSetting(workspaces);

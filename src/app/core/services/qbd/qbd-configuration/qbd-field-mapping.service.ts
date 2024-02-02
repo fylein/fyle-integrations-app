@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QBDFieldMappingGet, QBDFieldMappingPost } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
-import { QbdApiService } from '../qbd-core/qbd-api.service';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
 export class QbdFieldMappingService {
 
   constructor(
-    private apiService: QbdApiService,
+    private apiService: ApiService,
     private workspaceService: QbdWorkspaceService
   ) { }
 
