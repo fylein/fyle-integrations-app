@@ -34,3 +34,8 @@ export type WorkatoConnectionStatus = {
         error?: string,
     }
 }
+
+export type TravelperkFormOption = {
+    label: string,
+    value: TravelPerkUserRole | TravelPerkExpenseGroup
+}

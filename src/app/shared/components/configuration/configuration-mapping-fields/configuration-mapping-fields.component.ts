@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { TravelPerkPaymetProfileSettingFormOption, TravelperkPaymentProfileSettingGet } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { TravelperkPaymentProfileSettingGet } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { TravelperkFormOption } from 'src/app/core/models/travelperk/travelperk.model';
 
 @Component({
   selector: 'app-configuration-mapping-fields',
@@ -20,7 +21,7 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() DestinationPlaceholderFieldText: string;
 
-  @Input() SourceFields: string[] | TravelPerkPaymetProfileSettingFormOption[];
+  @Input() SourceFields: string[] | TravelperkFormOption[];
 
   @Input() DestinationFields: string[] | TravelperkPaymentProfileSettingGet[];
 
