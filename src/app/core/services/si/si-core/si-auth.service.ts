@@ -22,6 +22,7 @@ export class SiAuthService {
   }
 
   loginWithAuthCode(code: string): Observable<Token> {
+    this.helperService.setBaseApiURL(AppUrl.INTACCT);
     return this.apiService.post('/auth/login/', { code });
   }
 
