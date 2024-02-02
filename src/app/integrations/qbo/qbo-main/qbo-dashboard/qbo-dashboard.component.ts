@@ -81,7 +81,7 @@ export class QboDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], exportableAccountingExportIds, this.accountingExportType))),
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
       takeWhile((response: QBOTaskResponse) =>
         response.results.filter(task =>
           (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
