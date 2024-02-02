@@ -37,7 +37,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   sessionStartTime: Date = new Date();
 
-  supportArticleLink: string = brandingKbArticles.onboardingArticles.SAGE300.IMPORT_SETTING;
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.TRAVELPERK.PAYMENT_PROFILE_SETTINGS;
 
   ConfigurationCtaText = ConfigurationCta;
 

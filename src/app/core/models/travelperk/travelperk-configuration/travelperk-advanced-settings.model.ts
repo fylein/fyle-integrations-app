@@ -35,7 +35,7 @@ export class TravelperkAdvancedSettingModel {
     }
 
     static mapAPIResponseToFormGroup(advancedSettings: TravelperkAdvancedSettingGet | null): FormGroup {
-        const defaultMemoOptions: string[] = ['Trip ID', 'Trip Name', 'Traveler Name', 'Booker Name', 'Merchant Name'];
+        const defaultMemoOptions: string[] =['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
         return new FormGroup({
             descriptionStructure: new FormControl(advancedSettings?.description_structure ? advancedSettings?.description_structure : defaultMemoOptions),
             defaultEmployee: new FormControl(advancedSettings?.default_employee ? advancedSettings?.default_employee : null),
@@ -50,7 +50,7 @@ export class TravelperkAdvancedSettingModel {
             default_employee: advancedSettingsForm.get('defaultEmployee')?.value ? advancedSettingsForm.get('defaultEmployee')?.value : null,
             default_employee_id: advancedSettingsForm.get('defaultEmployeeId')?.value ? advancedSettingsForm.get('defaultEmployeeId')?.value : null,
             default_category: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.value : null,
-            default_category_id: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.destination_id : null,
+            default_category_id: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.source_id : null,
             description_structure: advancedSettingsForm.get('descriptionStructure')?.value ? advancedSettingsForm.get('descriptionStructure')?.value : null,
             invoice_lineitem_structure: advancedSettingsForm.get('invoiceLineitemStructure')?.value ? advancedSettingsForm.get('invoiceLineitemStructure')?.value : null
         };
