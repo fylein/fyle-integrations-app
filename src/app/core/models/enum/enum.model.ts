@@ -443,7 +443,8 @@ export enum AppUrl {
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central',
   INTEGRATION = 'integration',
-  QBO = 'qbo'
+  QBO = 'qbo',
+  NETSUITE = 'netsuite'
 }
 
 export enum Sage300ExportType {
