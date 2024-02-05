@@ -3,12 +3,12 @@ import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, t
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
-import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/si/db/error.model';
+import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/intacct/db/error.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
-import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
-import { Expense } from 'src/app/core/models/si/db/expense.model';
-import { LastExport } from 'src/app/core/models/si/db/last-export.model';
-import { Task } from 'src/app/core/models/si/db/task-log.model';
+import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
+import { Expense } from 'src/app/core/models/intacct/db/expense.model';
+import { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
+import { Task } from 'src/app/core/models/intacct/db/task-log.model';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';

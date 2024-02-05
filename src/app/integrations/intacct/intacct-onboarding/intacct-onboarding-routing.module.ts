@@ -5,7 +5,7 @@ import { IntacctOnboardingExportSettingComponent } from './intacct-onboarding-ex
 import { OnboardingImportSettingComponent } from './intacct-onboarding-import-setting/onboarding-import-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-setting/onboarding-advanced-setting.component';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
-import { OnboardingComponent } from './onboarding.component';
+import { IntacctOnboardingComponent } from './intacct-onboarding.component';
 import { RouterModule, Routes } from '@angular/router';
 import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector/intacct-onboarding-connector.component';
 
@@ -13,7 +13,7 @@ import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connec
 const routes: Routes = [
   {
     path: '',
-    component: OnboardingComponent,
+    component: IntacctOnboardingComponent,
     children: [
       {
         path: 'landing',

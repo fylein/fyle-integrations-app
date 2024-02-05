@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./intacct-onboarding/onboarding.module').then(m => m.OnboardingModule)
+        loadChildren: () => import('./intacct-onboarding/intacct-onboarding.module').then(m => m.IntacctOnboardingModule)
       },
       {
         path: 'main',

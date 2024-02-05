@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { IntacctWorkspace } from 'src/app/core/models/si/db/workspaces.model';
+import { IntacctWorkspace } from 'src/app/core/models/intacct/db/workspaces.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
