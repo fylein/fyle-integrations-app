@@ -8,8 +8,8 @@ import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/a
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
-import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel as IntacctExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/si/si-configuration/export-settings.model';
+import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
+import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel as IntacctExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';

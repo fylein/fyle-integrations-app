@@ -4,16 +4,16 @@ import { forkJoin } from 'rxjs';
 import { AppName, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
 import { Configuration } from 'src/app/core/models/db/configuration.model';
-import { MinimalMappingSetting } from 'src/app/core/models/si/db/mapping-setting.model';
-import { MappingPost } from 'src/app/core/models/si/db/mapping.model';
+import { MinimalMappingSetting } from 'src/app/core/models/intacct/db/mapping-setting.model';
+import { MappingPost } from 'src/app/core/models/intacct/db/mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
-import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/si/db/expense-attribute.model';
+import { ExtendedExpenseAttribute, ExtendedExpenseAttributeResponse } from 'src/app/core/models/intacct/db/expense-attribute.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
-import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
+import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { Observable } from 'rxjs';
-import { ExportSettingGet, ExportSettingPost } from 'src/app/core/models/si/si-configuration/export-settings.model';
+import { ExportSettingGet, ExportSettingPost } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { ApiService } from '../../common/api.service';
 
 @Injectable({

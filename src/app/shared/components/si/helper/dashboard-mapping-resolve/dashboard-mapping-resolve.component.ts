@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FyleField, IntacctCategoryDestination, IntacctErrorType, SageIntacctField, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { CategoryMappingPost } from 'src/app/core/models/si/db/category-mapping.model';
-import { IntacctDestinationAttribute } from 'src/app/core/models/si/db/destination-attribute.model';
-import { EmployeeMappingPost } from 'src/app/core/models/si/db/employee-mapping.model';
-import { Error } from 'src/app/core/models/si/db/error.model';
-import { ExpenseAttribute } from 'src/app/core/models/si/db/expense-attribute.model';
+import { CategoryMappingPost } from 'src/app/core/models/intacct/db/category-mapping.model';
+import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
+import { EmployeeMappingPost } from 'src/app/core/models/intacct/db/employee-mapping.model';
+import { Error } from 'src/app/core/models/intacct/db/error.model';
+import { ExpenseAttribute } from 'src/app/core/models/intacct/db/expense-attribute.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';

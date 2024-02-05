@@ -1,4 +1,4 @@
-import { ConditionField, JoinOption, Operator } from "../si-configuration/advanced-settings.model";
+import { ConditionField, JoinOption, Operator } from "../intacct-configuration/advanced-settings.model";
 
 
 export type SkipExport = {

@@ -13,27 +13,28 @@ import { ConfigurationExportSettingComponent } from './main/configuration/config
 import { ConfigurationAdvancedSettingComponent } from './main/configuration/configuration-advanced-setting/configuration-advanced-setting.component';
 import { ConfigurationImportSettingComponent } from './main/configuration/configuration-import-setting/configuration-import-setting.component';
 import { DialogModule } from 'primeng/dialog';
-import { IntacctExportSettingsComponent } from './intacct-shared/intacct-export-settings/intacct-export-settings.component';
+import { IntacctSharedModule } from './intacct-shared/intacct-shared.module';
 
 
 @NgModule({
-  declarations: [
-    IntacctComponent,
-    MainComponent,
-    ConfigurationComponent,
-    ConfigurationExportSettingComponent,
-    ConfigurationAdvancedSettingComponent,
-    ConfigurationImportSettingComponent
-  ],
-  imports: [
-    DialogModule,
-    TableModule,
-    CommonModule,
-    SiRoutingModule,
-    SharedModule,
-    TabMenuModule,
-    DropdownModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
-  ]
+    declarations: [
+        IntacctComponent,
+        MainComponent,
+        ConfigurationComponent,
+        ConfigurationExportSettingComponent,
+        ConfigurationAdvancedSettingComponent,
+        ConfigurationImportSettingComponent
+    ],
+    imports: [
+        DialogModule,
+        TableModule,
+        CommonModule,
+        SiRoutingModule,
+        SharedModule,
+        TabMenuModule,
+        DropdownModule,
+        IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
+        IntacctSharedModule
+    ]
 })
 export class IntacctModule { }
