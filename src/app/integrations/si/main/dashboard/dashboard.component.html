@@ -32,11 +32,11 @@
                 <div class="tw-flex tw-items-end tw-justify-end">
                     <div>
                         <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="export()" [ngClass]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress || !exportableExpenseGroupIds.length">
-                            <p class="!tw-text-14-px !tw-font-500" *ngIf="!exportInProgress">Export
-                                <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="!exportInProgress">Export
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px !tw-text-12-'"></app-svg-icon>
                             </p>
-                            <p class="!tw-text-14-px !tw-font-500" *ngIf="exportInProgress">Exporting
-                                <i class="tw-pl-8-px tw-pt-2-px !tw-text-12-px pi pi-arrow-right"></i>
+                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="exportInProgress">Exporting
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
                             </p>
                         </button><br>
                     </div>
@@ -143,7 +143,7 @@
                                 <button *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)" type="button" (click)="showMappingResolve(IntacctErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING)" class="tw-text-white tw-text-500 tw-text-12-px tw-px-12-px tw-py-6-px tw-bg-slightly-normal-text-color tw-rounded-4-px tw-w-100-px tw-font-500">
                                     Resolve
                                 </button>
-                                <div class="tw-flex" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
+                                <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
                                     <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
                                     <p class="tw-text-faded-text-color tw-text-14-px">
                                       Resolved
@@ -165,7 +165,7 @@
                                 <button *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)" type="button" (click)="showMappingResolve(IntacctErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING)" class="tw-text-white tw-text-500 tw-text-12-px tw-px-12-px tw-py-6-px tw-bg-slightly-normal-text-color tw-rounded-4-px tw-w-100-px tw-font-500">
                                     Resolve
                                 </button>
-                                <div class="tw-flex" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
+                                <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
                                     <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
                                     <p class="tw-text-faded-text-color tw-text-14-px">
                                       Resolved

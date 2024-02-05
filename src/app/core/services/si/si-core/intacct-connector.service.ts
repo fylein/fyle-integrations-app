@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 import { StorageService } from '../../common/storage.service';
 import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
 import { SageIntacctCredential } from 'src/app/core/models/si/db/sage-credentials.model';
+import { ApiService } from '../../common/api.service';
 
 
 const sageIntacctCredentialCache = new Subject<void>();
@@ -19,7 +19,7 @@ export class IntacctConnectorService {
   workspaceId: number;
 
   constructor(
-    private apiService: SiApiService,
+    private apiService: ApiService,
     private workspaceService: SiWorkspaceService,
     private workspace: SiWorkspaceService,
     private storageService: StorageService

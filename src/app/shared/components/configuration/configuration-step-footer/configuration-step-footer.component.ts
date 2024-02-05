@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-step-footer',
@@ -20,6 +21,8 @@ export class ConfigurationStepFooterComponent implements OnInit {
   @Output() save = new EventEmitter();
 
   @Output() navigateToPreviousStep = new EventEmitter();
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor() { }
 

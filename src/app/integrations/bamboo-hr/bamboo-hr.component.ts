@@ -4,9 +4,10 @@ import { MessageService } from 'primeng/api';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BambooHr, BambooHRConfiguration, BambooHRConfigurationPost, BambooHrModel, EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
-import { AppName, ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppUrl, ClickEvent, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { BambooHrService } from 'src/app/core/services/bamboo-hr/bamboo-hr.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 
@@ -57,6 +58,7 @@ export class BambooHrComponent implements OnInit {
   constructor(
     private bambooHrService: BambooHrService,
     private formBuilder: FormBuilder,
+    private helperService: HelperService,
     private messageService: MessageService,
     private orgService: OrgService,
     private trackingService: TrackingService
@@ -148,6 +150,7 @@ export class BambooHrComponent implements OnInit {
   }
 
   private setupPage(): void {
+    this.helperService.setBaseApiURL(AppUrl.BAMBOO_HR);
     this.bambooHrService.getBambooHRData().subscribe((bambooHrData: BambooHr) => {
       this.isBambooConnected = bambooHrData.sub_domain && bambooHrData.api_token ? true : false;
       this.bambooHrData = bambooHrData;

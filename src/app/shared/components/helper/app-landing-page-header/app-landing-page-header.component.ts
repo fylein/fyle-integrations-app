@@ -63,6 +63,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   constructor(
     private router: Router,
     private trackingService: TrackingService,

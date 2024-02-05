@@ -7,6 +7,7 @@ import { WorkspaceService } from './workspace.service';
 import { HelperService } from './helper.service';
 import { AccountingExportCount, AccountingExportGetParam } from '../../models/db/accounting-export.model';
 import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
+import { Cacheable } from 'ts-cacheable';
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,7 @@ export class AccountingExportService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/`, apiParams);
   }
 
+  @Cacheable()
   importExpensesFromFyle(version?: 'v1'): Observable<{}> {
     return this.apiService.post(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_groups' : 'accounting_exports'}/sync/`, {});
   }

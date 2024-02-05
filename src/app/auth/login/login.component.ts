@@ -11,6 +11,8 @@ import { BusinessCentralAuthService } from 'src/app/core/services/business-centr
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { AppUrl } from 'src/app/core/models/enum/enum.model';
+import { ClusterDomainWithToken } from 'src/app/core/models/misc/token.model';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -21,15 +23,16 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
+    private businessCentralAuthService: BusinessCentralAuthService,
     private helperService: HelperService,
+    private qboAuthService: QboAuthService,
+    private qbdAuthService: QbdAuthService,
     private route: ActivatedRoute,
     private router: Router,
-    private userService: UserService,
-    private qbdAuthService: QbdAuthService,
-    private siAuthService : SiAuthService,
     private sage300AuthService: Sage300AuthService,
-    private businessCentralAuthService: BusinessCentralAuthService,
-    private qboAuthService: QboAuthService
+    private siAuthService : SiAuthService,
+    private storageService: StorageService,
+    private userService: UserService
   ) { }
 
   private redirect(redirectUri: string | undefined): void {
@@ -41,38 +44,42 @@ export class LoginComponent implements OnInit {
   }
 
   private saveUserProfileAndNavigate(code: string, redirectUri: string | undefined): void {
-    this.authService.login(code).subscribe(response => {
-      const user: MinimalUser = {
-        'email': response.user.email,
-        'access_token': response.access_token,
-        'refresh_token': response.refresh_token,
-        'full_name': response.user.full_name,
-        'user_id': response.user.user_id,
-        'org_id': response.user.org_id,
-        'org_name': response.user.org_name
-      };
-      this.userService.storeUserProfile(user);
-
-      this.helperService.setBaseApiURL(AppUrl.QBD);
-      this.qbdAuthService.qbdLogin(user.refresh_token).subscribe();
-
-      this.helperService.setBaseApiURL(AppUrl.SAGE300);
-      this.sage300AuthService.loginWithRefreshToken(user.refresh_token).subscribe();
-
-      this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
-      this.businessCentralAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
-
-      // Only local dev needs this, login happens via postMessage for prod/staging through webapp
-      if (!environment.production) {
+    this.helperService.setBaseApiURL(AppUrl.INTEGRATION);
+    this.authService.getClusterDomainByCode(code).subscribe((clusterDomainWithToken: ClusterDomainWithToken) => {
+      this.storageService.set('cluster-domain', clusterDomainWithToken.cluster_domain);
+      this.authService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe(response => {
+        const user: MinimalUser = {
+          'email': response.user.email,
+          'access_token': response.access_token,
+          'refresh_token': response.refresh_token,
+          'full_name': response.user.full_name,
+          'user_id': response.user.user_id,
+          'org_id': response.user.org_id,
+          'org_name': response.user.org_name
+        };
         this.userService.storeUserProfile(user);
-        this.helperService.setBaseApiURL(AppUrl.QBO);
-        this.qboAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
-        this.helperService.setBaseApiURL(AppUrl.INTACCT);
-        this.siAuthService.loginWithRefreshToken(user.refresh_token).subscribe();
-        this.redirect(redirectUri);
-      } else {
-        this.redirect(redirectUri);
-      }
+
+        this.helperService.setBaseApiURL(AppUrl.QBD);
+        this.qbdAuthService.qbdLogin(clusterDomainWithToken.tokens.refresh_token).subscribe();
+
+        this.helperService.setBaseApiURL(AppUrl.SAGE300);
+        this.sage300AuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+
+        this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
+        this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+
+        // Only local dev needs this, login happens via postMessage for prod/staging through webapp
+        if (!environment.production) {
+          this.userService.storeUserProfile(user);
+          this.helperService.setBaseApiURL(AppUrl.QBO);
+          this.qboAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          this.helperService.setBaseApiURL(AppUrl.INTACCT);
+          this.siAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          this.redirect(redirectUri);
+        } else {
+          this.redirect(redirectUri);
+        }
+      });
     });
   }
 

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { AppName, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { IntacctWorkspace } from 'src/app/core/models/si/db/workspaces.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { AppcuesService } from 'src/app/core/services/integration/appcues.service';
@@ -26,11 +27,12 @@ export class SiComponent implements OnInit {
 
   constructor(
     private appcuesService: AppcuesService,
-    private storageService: StorageService,
+    private helperService: HelperService,
     private router: Router,
+    private storageService: StorageService,
     private userService: UserService,
-    private workspaceService: SiWorkspaceService,
-    private windowService: WindowService
+    private windowService: WindowService,
+    private workspaceService: SiWorkspaceService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -62,6 +64,7 @@ export class SiComponent implements OnInit {
   }
 
   private getOrCreateWorkspace(): void {
+    this.helperService.setBaseApiURL(AppUrl.INTACCT);
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces) => {
       if (workspaces.length) {
         this.setupWorkspace(workspaces[0]);

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { QbdApiService } from '../qbd-core/qbd-api.service';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
 export class QbdIifLogsService {
 
   constructor(
-    private apiService: QbdApiService,
+    private apiService: ApiService,
     private workspaceService: QbdWorkspaceService
   ) { }
 

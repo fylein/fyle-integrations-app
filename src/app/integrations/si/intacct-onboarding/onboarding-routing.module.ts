@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { OnboardingLandingComponent } from './onboarding-landing/onboarding-landing.component';
+import { IntacctOnboardingLandingComponent } from './intacct-onboarding-landing/intacct-onboarding-landing.component';
 import { OnboardingExportSettingComponent } from './onboarding-export-setting/onboarding-export-setting.component';
 import { OnboardingImportSettingComponent } from './onboarding-import-setting/onboarding-import-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-setting/onboarding-advanced-setting.component';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { OnboardingComponent } from './onboarding.component';
 import { RouterModule, Routes } from '@angular/router';
-import { OnboardingIntacctConnectorComponent } from './onboarding-intacct-connector/onboarding-intacct-connector.component';
+import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector/intacct-onboarding-connector.component';
 
 
 const routes: Routes = [
@@ -17,11 +17,11 @@ const routes: Routes = [
     children: [
       {
         path: 'landing',
-        component: OnboardingLandingComponent
+        component: IntacctOnboardingLandingComponent
       },
       {
         path: 'connector',
-        component: OnboardingIntacctConnectorComponent
+        component: IntacctOnboardingConnectorComponent
       },
       {
         path: 'export_settings',
