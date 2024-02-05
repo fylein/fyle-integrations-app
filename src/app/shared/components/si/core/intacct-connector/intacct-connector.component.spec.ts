@@ -7,9 +7,9 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { SageIntacctCredential } from 'src/app/core/models/si/db/sage-credentials.model';
-import { SiComponent } from 'src/app/integrations/si/si.component';
+import { SiComponent } from 'src/app/integrations/intacct/si.component';
 import { HttpClientModule } from '@angular/common/http';
-import { IntacctOnboardingConnectorComponent } from 'src/app/integrations/si/intacct-onboarding/intacct-onboarding-connector/intacct-onboarding-connector.component';
+import { IntacctOnboardingConnectorComponent } from 'src/app/integrations/intacct/intacct-onboarding/intacct-onboarding-connector/intacct-onboarding-connector.component';
 
 describe('IntacctConnectorComponent', () => {
   let component: IntacctConnectorComponent;

@@ -26,7 +26,7 @@ const routes: Routes = [
       },
       {
         path: 'intacct',
-        loadChildren: () => import('./si/si.module').then(m => m.SiModule)
+        loadChildren: () => import('./intacct/si.module').then(m => m.SiModule)
       },
       {
         path: 'sage300',
