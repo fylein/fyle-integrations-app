@@ -53,7 +53,7 @@ export class IntacctOnboardingModel {
         [IntacctOnboardingState.EXPORT_SETTINGS]: 3,
         [IntacctOnboardingState.IMPORT_SETTINGS]: 4,
         [IntacctOnboardingState.ADVANCED_CONFIGURATION]: 5,
-        [IntacctOnboardingState.COMPLETE]: 6,
+        [IntacctOnboardingState.COMPLETE]: 6
       };
 
     getOnboardingSteps(currentStep: string, onboardingState: IntacctOnboardingState): OnboardingStepper[] {
