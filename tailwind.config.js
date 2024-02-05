@@ -30,7 +30,8 @@ const customColors = {
   'pink-box-border': 'var(--pink-box-border)',
   'bg-warning-lighter': 'var(--bg-warning-lighter)',
   'gradient-vibrant-lg': 'linear-gradient(162deg, var(--gradient-vibrant-lg-start) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
-  'icon-warning': 'var(--icon-warning)'
+  'icon-warning': 'var(--icon-warning)',
+  'bg-tertiary-lighter': 'var(--bg-tertiary-lighter)',
 }
 
 module.exports = {
@@ -229,7 +230,8 @@ module.exports = {
         '465-px': '465px',
         '756-px': '756px',
         '62-vh': '62vh',
-        '68-vh': '68vh'
+        '68-vh': '68vh',
+        '100-vh': '100vh'
       },
       minHeight: {
         '70-px': '70px'
