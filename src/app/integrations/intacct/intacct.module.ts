@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SiComponent } from './si.component';
+import { IntacctComponent } from './intacct.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
-import { SiRoutingModule } from './si-routing.module';
+import { SiRoutingModule } from './intacct-routing.module';
 import { MainComponent } from './main/main.component';
 import { ConfigurationComponent } from './main/configuration/configuration.component';
 import { ConfigurationExportSettingComponent } from './main/configuration/configuration-export-setting/configuration-export-setting.component';
@@ -18,7 +18,7 @@ import { IntacctExportSettingsComponent } from './intacct-shared/intacct-export-
 
 @NgModule({
   declarations: [
-    SiComponent,
+    IntacctComponent,
     MainComponent,
     ConfigurationComponent,
     ConfigurationExportSettingComponent,
@@ -37,4 +37,4 @@ import { IntacctExportSettingsComponent } from './intacct-shared/intacct-export-
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
-export class SiModule { }
+export class IntacctModule { }

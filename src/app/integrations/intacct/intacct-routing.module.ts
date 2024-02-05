@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SiComponent } from './si.component';
+import { IntacctComponent } from './intacct.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: SiComponent,
+    component: IntacctComponent,
     children: [
       {
         path: 'onboarding',

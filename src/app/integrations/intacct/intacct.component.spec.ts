@@ -3,13 +3,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
-import { SiComponent } from './si.component';
-import { errorResponse, workspaceResponse } from './si.fixture';
+import { IntacctComponent } from './intacct.component';
+import { errorResponse, workspaceResponse } from './intacct.fixture';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 describe('SiComponent', () => {
-  let component: SiComponent;
-  let fixture: ComponentFixture<SiComponent>;
+  let component: IntacctComponent;
+  let fixture: ComponentFixture<IntacctComponent>;
   let workspace: SiWorkspaceService;
 
   beforeEach(async () => {
@@ -24,14 +24,14 @@ describe('SiComponent', () => {
   };
   await TestBed.configureTestingModule({
     imports: [RouterTestingModule, HttpClientModule, HttpClientTestingModule],
-    declarations: [ SiComponent ],
+    declarations: [ IntacctComponent ],
     providers: [
       { provide: SiWorkspaceService, useValue: service1 }
     ]
   })
   .compileComponents();
 
-  fixture = TestBed.createComponent(SiComponent);
+  fixture = TestBed.createComponent(IntacctComponent);
   component = fixture.componentInstance;
   workspace = TestBed.inject(SiWorkspaceService);
   fixture.detectChanges();

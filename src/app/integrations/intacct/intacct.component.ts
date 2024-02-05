@@ -11,11 +11,11 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
-  selector: 'app-si',
-  templateUrl: './si.component.html',
-  styleUrls: ['./si.component.scss']
+  selector: 'app-intacct',
+  templateUrl: './intacct.component.html',
+  styleUrls: ['./intacct.component.scss']
 })
-export class SiComponent implements OnInit {
+export class IntacctComponent implements OnInit {
 
   user: MinimalUser = this.userService.getUserProfile();
 
