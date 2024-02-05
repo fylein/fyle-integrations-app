@@ -13,6 +13,7 @@ import { ConfigurationExportSettingComponent } from './main/configuration/config
 import { ConfigurationAdvancedSettingComponent } from './main/configuration/configuration-advanced-setting/configuration-advanced-setting.component';
 import { ConfigurationImportSettingComponent } from './main/configuration/configuration-import-setting/configuration-import-setting.component';
 import { DialogModule } from 'primeng/dialog';
+import { IntacctExportSettingsComponent } from './intacct-shared/intacct-export-settings/intacct-export-settings.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { DialogModule } from 'primeng/dialog';
     ConfigurationComponent,
     ConfigurationExportSettingComponent,
     ConfigurationAdvancedSettingComponent,
-    ConfigurationImportSettingComponent
+    ConfigurationImportSettingComponent,
+    IntacctExportSettingsComponent
   ],
   imports: [
     DialogModule,
