@@ -11,7 +11,7 @@
                         <p>Total Employees</p>
                     </div>
                     <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
-                        <p>{{mappingStats?.all_attributes_count}}</p>
+                        <p>{{mappingStats.all_attributes_count}}</p>
                     </div>
                 </div>
                 <span class="tw-pl-16-px"></span>
@@ -22,7 +22,7 @@
                         <p>Unmapped Employees</p>
                     </div>
                     <div class="tw-text-20-px tw-text-500 tw-text-slightly-normal-text-color">
-                        <p>{{mappingStats?.unmapped_attributes_count}}</p>
+                        <p>{{mappingStats.unmapped_attributes_count}}</p>
                     </div>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     <tr>
                         <td>
                             <div class="tw-flex tw-items-center">
-                                <svg-icon-sprite *ngIf="mapping.auto_mapped" pTooltip="Auto-mapped" tooltipPosition="top" src="flash-on" width="12px" height="12px" class="tw-mr-12-px tw-text-placeholder"></svg-icon-sprite>
+                                <app-svg-icon *ngIf="mapping.auto_mapped" [tooltipText]="'Auto-mapped'" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
                                 <span [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped}">{{ mapping.value }}</span>
                             </div>
                         </td>
@@ -64,7 +64,7 @@
                             [filter]="true"
                             filterBy="value"
                             [emptyFilterMessage]="mapping.employeemapping.isOptionSearchInProgress ? 'Searching...' : 'No results found'"
-                            [dropdownIcon]="mapping.employeemapping.isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down'"
+                            [dropdownIcon]="mapping.employeemapping.isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId"
                             (onFilter)="searchOptions($event, mapping.employeemapping)">
                             </p-dropdown>
                         </td>

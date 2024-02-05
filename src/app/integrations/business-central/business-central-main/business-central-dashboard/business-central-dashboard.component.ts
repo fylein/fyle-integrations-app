@@ -140,15 +140,18 @@ export class BusinessCentralDashboardComponent implements OnInit {
       this.reimbursableImportState = responses[4].reimbursable_expenses_export_type ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
       this.cccImportState = responses[4].credit_card_expense_export_type ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
 
+      this.isLoading = false;
+
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
         this.pollExportStatus();
-        this.isLoading = false;
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
-          this.isImportInProgress = false;
-          this.isLoading = false;
+          this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_accounting_export_ids ?? [];
+            this.isImportInProgress = false;
+          });
         });
       }
     });

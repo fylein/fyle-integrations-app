@@ -55,7 +55,7 @@
         --success-toast: #24A148;
         --alert-toast: #DA1E28;
         --line-inactive: #CCCDD7;
-        --progress-bar-bg: #015884;
+        --progress-bar-bg: var(--white);
         --mapped-green-border: #D9EBE1;
         --mapped-green-bg: #EEF8F2;
         --unmapped-red-border: #F5C0C3;
@@ -64,7 +64,7 @@
         --icon-warning: #E1AF05;
 
         --pink-box-border: rgba(255, 51, 102, 0.16);
-        --cta-disabled: #FFC2D6;
+        --cta-disabled: #0070A8;
 
         --pink: #0070A8;
         --gradient-vibrant-lg-start: #ff3366;

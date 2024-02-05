@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { firstValueFrom, from, Observable } from 'rxjs';
 import { Cacheable } from 'ts-cacheable';
-import { SiApiService } from './si-api.service';
 import { SiWorkspaceService } from './si-workspace.service';
 import { LastExport } from 'src/app/core/models/si/db/last-export.model';
 import { TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
 import { TaskGetParams, TaskResponse } from 'src/app/core/models/si/db/task-log.model';
 import { Error } from 'src/app/core/models/si/db/error.model';
 import { ExportableExpenseGroup } from 'src/app/core/models/si/db/expense-group.model';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class DashboardService {
   workspaceId: string = this.workspaceService.getWorkspaceId();
 
   constructor(
-    private apiService: SiApiService,
+    private apiService: ApiService,
     private workspaceService: SiWorkspaceService
   ) { }
 

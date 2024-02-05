@@ -9,7 +9,6 @@ export type Org = {
     is_fyle_connected: boolean;
     is_sendgrid_connected: boolean;
     allow_travelperk: boolean;
-    allow_gusto: boolean;
     created_at: Date;
     updated_at: Date;
 }

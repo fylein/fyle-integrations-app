@@ -25,10 +25,6 @@ const routes: Routes = [
         loadChildren: () => import('./travelperk/travelperk.module').then(m => m.TravelperkModule)
       },
       {
-        path: 'gusto',
-        loadChildren: () => import('./gusto/gusto.module').then(m => m.GustoModule)
-      },
-      {
         path: 'intacct',
         loadChildren: () => import('./si/si.module').then(m => m.SiModule)
       },

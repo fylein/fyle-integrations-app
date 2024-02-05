@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Token } from 'src/app/core/models/misc/token.model';
-import { QbdApiService } from './qbd-api.service';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { QbdApiService } from './qbd-api.service';
 export class QbdAuthService {
 
   constructor(
-    private apiService: QbdApiService
+    private apiService: ApiService
   ) { }
 
   qbdLogin(refresh_token: string): Observable<Token> {

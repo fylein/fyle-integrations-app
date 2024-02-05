@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 
@@ -35,6 +36,8 @@ export class ConfigurationScheduleExportComponent implements OnInit {
   @Input() customErrorMessage: string;
 
   @Input() isEmailPresent: boolean = false;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

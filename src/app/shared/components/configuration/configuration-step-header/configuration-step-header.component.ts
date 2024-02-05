@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -25,6 +25,8 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   @Output() refreshDimension = new EventEmitter<boolean>();
 
   readonly brandingConfig = brandingConfig;
+
+  brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     public windowService: WindowService

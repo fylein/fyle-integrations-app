@@ -2,9 +2,8 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { Injectable } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
 import { throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
 
-let API_BASE_URL = environment.api_url;
+let API_BASE_URL: string;
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -44,12 +43,12 @@ export class ApiService {
     }));
   }
 
-  get(endpoint: string, apiParams: any): Observable<any> {
+  get(endpoint: string, apiParams: any, apiBaseUrl?: string): Observable<any> {
     let params = new HttpParams();
     Object.keys(apiParams).forEach(key => {
       params = params.set(key, apiParams[key]);
     });
-    const url = API_BASE_URL + endpoint;
+    const url = (apiBaseUrl ? apiBaseUrl : API_BASE_URL) + endpoint;
     return this.http.get(url, { params }).pipe(catchError(error => {
       return this.handleError(error, 'GET', url);
     }));

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
-import { ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-travelperk',
@@ -42,6 +43,7 @@ export class TravelperkComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
+    private helperService: HelperService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location,
@@ -52,6 +54,7 @@ export class TravelperkComponent implements OnInit {
   ) { }
 
   private setupPage(): void {
+    this.helperService.setBaseApiURL(AppUrl.TRAVELPERK);
     this.travelperkService.getTravelperkData().subscribe((travelperkData : Travelperk) => {
       this.travelperkData = travelperkData;
       this.isIntegrationConnected = travelperkData.is_travelperk_connected;

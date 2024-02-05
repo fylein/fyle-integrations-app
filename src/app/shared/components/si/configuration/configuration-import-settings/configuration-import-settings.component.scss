@@ -116,10 +116,6 @@
   align-items: center;
 }
 
-svg-icon-sprite {
-  margin-left: 10px; /* Adds some space between the icon and the text */
-}
-
 .add-row-text {
   cursor: pointer; /* Changes the cursor to a hand when hovering */
   color: #F36;
@@ -135,9 +131,7 @@ svg-icon-sprite {
 }
 
 .icon-align {
-  margin-left: 0;
-  margin-right: 5px;
-  vertical-align: middle;
+  @apply tw-ml-0 tw-mr-6-px tw-align-middle #{!important};
 }
 
 :host ::ng-deep input {

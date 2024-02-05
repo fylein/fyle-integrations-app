@@ -10,7 +10,7 @@
         <tr *ngIf="!isLoading" [ngClass]="{'tw-h-70-px': isDashboardMappingResolve}">
             <td>
                 <div class="tw-flex tw-items-center">
-                    <svg-icon-sprite *ngIf="mapping.auto_mapped && !isDashboardMappingResolve" pTooltip="Auto-mapped" tooltipPosition="top" src="flash-on" width="12px" height="12px" class="tw-mr-12-px tw-text-placeholder"></svg-icon-sprite>
+                    <app-svg-icon *ngIf="mapping.auto_mapped && !isDashboardMappingResolve" [tooltipText]="'Auto-mapped'" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
                     <span [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped}">{{ mapping.value }}</span>
                 </div>
             </td>

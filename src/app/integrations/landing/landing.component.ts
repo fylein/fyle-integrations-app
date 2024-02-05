@@ -31,8 +31,6 @@ export class LandingComponent implements OnInit {
 
   isTravelperkAllowed: boolean = this.org.allow_travelperk;
 
-  isGustoAllowed: boolean = this.org.allow_gusto;
-
   exposeIntacctNewApp: boolean = EXPOSE_INTACCT_NEW_APP;
 
   readonly exposeOnlyQBOApp = brandingFeatureConfig.exposeOnlyQBOApp;
@@ -62,7 +60,6 @@ export class LandingComponent implements OnInit {
     [InAppIntegration.BAMBOO_HR]: '/integrations/bamboo_hr/',
     [InAppIntegration.QBD]: '/integrations/qbd/',
     [InAppIntegration.TRAVELPERK]: '/integrations/travelperk/',
-    [InAppIntegration.GUSTO]: '/integrations/gusto/',
     [InAppIntegration.INTACCT]: '/integrations/intacct',
     [InAppIntegration.QBO]: '/integrations/qbo',
     [InAppIntegration.SAGE300]: '/integrations/sage300',
@@ -70,6 +67,8 @@ export class LandingComponent implements OnInit {
   };
 
   readonly brandingConfig = brandingConfig;
+
+  readonly isINCluster = this.storageService.get('cluster-domain').includes('in1');
 
   constructor(
     private eventsService: EventsService,
