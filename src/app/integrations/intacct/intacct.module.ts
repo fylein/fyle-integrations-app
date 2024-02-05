@@ -23,8 +23,7 @@ import { IntacctExportSettingsComponent } from './intacct-shared/intacct-export-
     ConfigurationComponent,
     ConfigurationExportSettingComponent,
     ConfigurationAdvancedSettingComponent,
-    ConfigurationImportSettingComponent,
-    IntacctExportSettingsComponent
+    ConfigurationImportSettingComponent
   ],
   imports: [
     DialogModule,
