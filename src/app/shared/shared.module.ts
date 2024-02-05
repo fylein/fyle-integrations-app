@@ -46,8 +46,6 @@ import { MappingTableComponent } from './components/qbd/mapping/mapping-table/ma
 import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
 import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
 import { TableModule } from 'primeng/table';
-
-import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
 import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
@@ -119,7 +117,6 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     ConfigurationMultiSelectComponent,
     ConfigurationLabelComponent,
     AppLandingPageBodyComponent,
-    IntacctStepperComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
     MappingTableComponent,
@@ -217,7 +214,6 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     ChipsModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
-    IntacctStepperComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
     MappingTableComponent,
