@@ -5,10 +5,12 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IntacctExportSettingsComponent } from './intacct-export-settings/intacct-export-settings.component';
+import { IntacctImportSettingsComponent } from './intacct-import-settings/intacct-import-settings.component';
 
 @NgModule({
   declarations: [
-    IntacctExportSettingsComponent
+    IntacctExportSettingsComponent,
+    IntacctImportSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { IntacctExportSettingsComponent } from './intacct-export-settings/intacc
     MultiSelectModule
   ],
   exports: [
-    IntacctExportSettingsComponent
+    IntacctExportSettingsComponent,
+    IntacctImportSettingsComponent
   ]
 })
 export class IntacctSharedModule { }
