@@ -7,7 +7,7 @@ import { IntacctOnboardingLandingComponent } from './intacct-onboarding-landing/
 import { OnboardingComponent } from './onboarding.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
-import { OnboardingExportSettingComponent } from './onboarding-export-setting/onboarding-export-setting.component';
+import { IntacctOnboardingExportSettingComponent } from './intacct-onboarding-export-setting/intacct-onboarding-export-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-setting/onboarding-advanced-setting.component';
 import { OnboardingImportSettingComponent } from './onboarding-import-setting/onboarding-import-setting.component';
 
@@ -19,7 +19,7 @@ import { OnboardingImportSettingComponent } from './onboarding-import-setting/on
     OnboardingComponent,
     OnboardingDoneComponent,
     OnboardingImportSettingComponent,
-    OnboardingExportSettingComponent,
+    IntacctOnboardingExportSettingComponent,
     OnboardingAdvancedSettingComponent
   ],
   imports: [
