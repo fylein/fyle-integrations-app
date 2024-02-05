@@ -3,11 +3,11 @@ import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/
 import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
-  selector: 'app-onboarding-landing',
-  templateUrl: './onboarding-landing.component.html',
-  styleUrls: ['./onboarding-landing.component.scss']
+  selector: 'app-intacct-onboarding-landing',
+  templateUrl: './intacct-onboarding-landing.component.html',
+  styleUrls: ['./intacct-onboarding-landing.component.scss']
 })
-export class OnboardingLandingComponent implements OnInit {
+export class IntacctOnboardingLandingComponent implements OnInit {
 
   appName: AppName = AppName.INTACCT;
 

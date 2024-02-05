@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnboardingIntacctConnectorComponent } from './onboarding-intacct-connector.component';
+import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector.component';
 
-describe('OnboardingIntacctConnectorComponent', () => {
-  let component: OnboardingIntacctConnectorComponent;
-  let fixture: ComponentFixture<OnboardingIntacctConnectorComponent>;
+describe('IntacctOnboardingConnectorComponent', () => {
+  let component: IntacctOnboardingConnectorComponent;
+  let fixture: ComponentFixture<IntacctOnboardingConnectorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OnboardingIntacctConnectorComponent ]
+      declarations: [ IntacctOnboardingConnectorComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OnboardingIntacctConnectorComponent);
+    fixture = TestBed.createComponent(IntacctOnboardingConnectorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
