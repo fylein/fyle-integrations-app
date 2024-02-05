@@ -9,7 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { IntacctOnboardingExportSettingComponent } from './intacct-onboarding-export-setting/intacct-onboarding-export-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-setting/onboarding-advanced-setting.component';
-import { OnboardingImportSettingComponent } from './onboarding-import-setting/onboarding-import-setting.component';
+import { OnboardingImportSettingComponent } from './intacct-onboarding-import-setting/onboarding-import-setting.component';
 
 @NgModule({
   declarations: [
