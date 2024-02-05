@@ -31,4 +31,4 @@ import { IntacctSharedModule } from '../intacct-shared/intacct-shared.module';
     ReactiveFormsModule
   ]
 })
-export class OnboardingModule { }
+export class IntacctOnboardingModule { }
