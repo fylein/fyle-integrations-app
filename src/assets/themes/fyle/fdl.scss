@@ -1,0 +1,212 @@
+// Declare the Token Name from Common element library figma file here
+// Refer: https://www.figma.com/file/JAhSNaV7gZKYsQyCFZLC9w/Common-Element-library?type=design&node-id=0%3A1&mode=design&t=0FzXvulWRrAS9gc9-1
+// You can view all the list of tokens by clicking on Local Variables button on right side menu, you need edit access to view this.  
+// Don't add any token which is not in figma common element library's token list, few exceptions are for gradients as they are not supported by figma yet.
+
+@import './primitives_variables';
+
+@layer base {
+  [data-theme='fyle'] {
+    //brand bg
+    --bg-brand-primary: #{$brand-500};
+    --bg-brand-disable: #{$brand-300};
+    --bg-brand-muted: #{$brand-secondary-opacity-15};
+    //grey bg
+    --bg-primary: #{$grey-800};
+    --bg-secondary: #{$grey-700};
+    --bg-disable: #{$grey-400};
+    --bg-tertiary: #{$grey-100};
+    --bg-white: #{$white};
+    --bg-primary-opacity: #{$primary-opacity-10};
+    //_contextual bg
+    --bg-success: #{$green-500};
+    --bg-info: #{$blue-500};
+    --bg-warning: #{$yellow-500};
+    --bg-danger: #{$red-500};
+
+    //light bg
+    --bg-info-light: #{$blue-200};
+    --bg-danger-light: #{$red-200};
+    --bg-success-light: #{$green-100};
+    --bg-calm-light: #{$green-150};
+    --bg-highlight-light: #{$purple-200};
+    --bg-disable-light: #{$grey-100};
+    --bg-tertiary-light: #{$blue-50};
+
+    //lighter bg
+    --bg-info-lighter: #{$blue-100};
+    --bg-info-lightest: #{$blue-10};
+    --bg-warning-lighter: #{$yellow-100};
+    --bg-danger-lighter: #{$red-100};
+    --bg-success-lighter: #{$green-50};
+    --bg-disable-lighter: #{$grey-100};
+    --bg-tertiary-lighter: #{$blue-50};
+
+    //border-color
+    --border-brand: #{$brand-500};
+    --border-primary: #{$grey-700};
+    --border-secondary: #{$grey-300};
+    --border-tertiary: #{$grey-200};
+
+    --border-info: #{$blue-500};
+    --border-warning: #{$yellow-500};
+    --border-success: #{$green-500};
+    --border-danger: #{$red-500};
+    --border-white: #{$white};
+
+    --border-danger-light: #{$red-300};
+    --border-highlight-light: #{$purple-300};
+    --border-success-light: #{$green-200};
+    --border-calm-light: #{$green-300};
+    --border-info-light: #{$blue-300};
+
+    --border-info-lighter: #{$info-opacity-10};
+    --border-warning-lighter: #{$warning-opacity-10};
+    --border-success-lighter: #{$success-opacity-10};
+    --border-danger-lighter: #{$error-opacity-10};
+    --border-highlight-lighter: #{$purple-300}; //deprecated
+    --border-calm-lighter: #{$green-300}; //deprecated
+    --border-manate: #{$manate};
+
+    //border-radius
+    --border-radius-none: #{$size-0};
+    --border-radius-3xs: #{$size-2};
+    --border-radius-2xs: #{$size-4};
+    --border-radius-xs: #{$size-6};
+    --border-radius-sm: #{$size-8};
+    --border-radius-md: #{$size-10};
+    --border-radius-lg: #{$size-12};
+    --border-radius-xl: #{$size-14};
+    --border-radius-2xl: #{$size-16};
+    --border-radius-full: 50%;
+
+    //border-width
+    --border-1: #{$size-1};
+    --border-2: #{$size-2};
+
+    //text
+    --text-brand-primary: #{$brand-500};
+    --text-brand-secondary: #{$brand-300};
+    --text-primary: #{$grey-800};
+    --text-secondary: #{$grey-700};
+    --text-tertiary: #{$grey-600};
+    --text-success: #{$green-500};
+    --text-info: #{$blue-900};
+    --text-warning: #{$yellow-500};
+    --text-danger: #{$red-500};
+    --text-highlight: #{$purple-500};
+    --text-calm: #{$green-900};
+    --text-white: #{$white};
+    --text-disable: #{$grey-400};
+    --text-placeholder: #{$grey-400};
+    --text-label: #{$grey-500};
+    --text-pending: #{$yellow-800}; //todo: confirmation from design team for the exact token names
+    --text-muted: #{$grey-500};
+
+    //link
+    --link-primary: #{$blue-600};
+    --link-visited: #{$purple-500};
+
+    //icons
+    --icon-brand-primary: #{$brand-500};
+    --icon-brand-disable: #{$brand-300};
+    --icon-secondary: #{$grey-700};
+    --icon-tertiary: #{$grey-500};
+    --icon-disable: #{$grey-400};
+    --icon-white: #{$white};
+    --icon-success: #{$green-500};
+    --icon-danger: #{$red-500};
+    --icon-info: #{$blue-500};
+    --icon-warning: #{$yellow-500};
+    --icon-muted: #{$grey-400};
+
+    //spacing
+    --spacing-0: #{$size-0};
+    --spacing-2: #{$size-2};
+    --spacing-4: #{$size-4};
+    --spacing-6: #{$size-6};
+    --spacing-8: #{$size-8};
+    --spacing-10: #{$size-10};
+    --spacing-12: #{$size-12};
+    --spacing-14: #{$size-14};
+    --spacing-16: #{$size-16};
+    --spacing-18: #{$size-18};
+    --spacing-20: #{$size-20};
+    --spacing-24: #{$size-24};
+    --spacing-28: #{$size-28};
+    --spacing-32: #{$size-32};
+    --spacing-40: #{$size-40};
+    --spacing-48: #{$size-48};
+    --spacing-56: #{$size-56};
+    --spacing-72: #{$size-72};
+
+    //font size, dimensions
+    --size-0: #{$size-0};
+    --size-2: #{$size-2};
+    --size-4: #{$size-4};
+    --size-6: #{$size-6};
+    --size-8: #{$size-8};
+    --size-10: #{$size-10};
+    --size-12: #{$size-12};
+    --size-14: #{$size-14};
+    --size-16: #{$size-16};
+    --size-18: #{$size-18};
+    --size-20: #{$size-20};
+    --size-24: #{$size-24};
+    --size-28: #{$size-28};
+    --size-32: #{$size-32};
+    --size-40: #{$size-40};
+    --size-48: #{$size-48};
+    --size-56: #{$size-56};
+    --size-72: #{$size-72};
+    --size-70-percent: 70%;
+
+    //gradients from FDL
+    --gradient-light-start: #e1eeff;
+    --gradient-light-end: #ffe4fb;
+
+    --gradient-light-transparent-start: rgba(225, 238, 255, 0.52);
+    --gradient-light-transparent-end: rgba(255, 228, 251, 0.22);
+
+    --gradient-vibrant-sm-start: #ff758c;
+    --gradient-vibrant-sm-end: #ff7eb3;
+
+    --gradient-vibrant-lg-start: #ff3366;
+    --gradient-vibrant-lg-end: #fe5196;
+
+    --gradient-cool-md-start: #c1f4ff;
+    --gradient-cool-md-end: #5b86e5;
+
+    --gradient-dark-xs-start: #2c304e;
+    --gradient-dark-xs-end: rgba(44, 48, 78, 0.40);
+
+    --gradient-dark-sm-start: #383a51;
+    --gradient-dark-sm-end: #2b2e47;
+
+    --gradient-dark-lg-start: #190f2f;
+    --gradient-dark-lg-center: #242c42;
+    --gradient-dark-lg-end: #05091c;
+
+    --gradient-white-xs-start: rgba(255, 255, 255, 0.90); 
+    --gradient-white-xs-end: rgba(255, 255, 255, 0.24);
+
+    --gradient-white-fade-xs-start: rgba(255, 255, 255, 0.00);
+    --gradient-white-fade-xs-end: #f5f5f5;
+    
+    /*TODO-clean up once figma tokens are created*/ 
+    //brand gradient
+    --gradient-brand-start: #{$brand-500};
+    --gradient-brand-end: #fe5196;
+    --gradient-light-sm-start: #e1eeff; 
+    --gradient-light-sm-end: #ffe4fb;
+
+    //dropdown shadow
+    --dropdown-shadow: rgba(44, 48, 78, 0.1);
+    --filter-hover-shadow: rgba(44, 48, 78, 0.03);
+
+    //focus
+    --secondary-outline-focus: #{$grey-100};
+
+    --black: #{$black};
+  }
+}
