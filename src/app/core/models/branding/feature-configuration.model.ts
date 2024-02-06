@@ -4,6 +4,7 @@ export type FeatureConfiguration = {
         isGradientAllowed: boolean;
         isIconsInsideButtonAllowed: boolean;
         exposeOnlyQBOApp: boolean;
+        isBackgroundColorAllowed: boolean;
         featureFlags: {
             cloneSettings: boolean;
             mapEmployees: boolean;

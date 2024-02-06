@@ -34,6 +34,8 @@
 
         --pink-box-border: rgba(255, 51, 102, 0.16);
 
+        --bg-tertiary-lighter: var(--white);
+
         --font-primary: "aktiv-grotesk", sans-serif;
     }
     [data-theme='co'] {
@@ -71,6 +73,8 @@
         --gradient-vibrant-lg-end: #0070A8;
 
         --check-box: #ced4da;
+
+        --bg-tertiary-lighter: #f4f4f4;
 
         --font-primary: "Optimist";
     }
