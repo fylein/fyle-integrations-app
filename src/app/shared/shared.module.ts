@@ -50,7 +50,6 @@ import { TableModule } from 'primeng/table';
 import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
-import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
 import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
 import { ChipsModule } from 'primeng/chips';
@@ -125,7 +124,6 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     MappingTableComponent,
     MappingFilterComponent,
     MappingHeaderSectionComponent,
-    ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
     SkipExportComponent,
     DashboardMappingResolveComponent,
@@ -223,7 +221,6 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     MappingTableComponent,
     MappingFilterComponent,
     MappingHeaderSectionComponent,
-    ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
