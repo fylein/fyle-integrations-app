@@ -1297,7 +1297,7 @@ module.exports = {
       boxShadow: {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
         'btn-cta-shadow': '0px 4px 4px rgba(44, 48, 78, 0.1)',
-        'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2);',
+        'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2)',
         ...shadow
       },
       dropShadow: {
