@@ -46,7 +46,7 @@ import { MappingTableComponent } from './components/qbd/mapping/mapping-table/ma
 import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
 import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
 import { TableModule } from 'primeng/table';
-import { ConfigurationExportSettingsComponent } from './components/si/configuration/configuration-export-settings/configuration-export-settings.component';
+
 import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
@@ -125,7 +125,6 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     MappingTableComponent,
     MappingFilterComponent,
     MappingHeaderSectionComponent,
-    ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
     SkipExportComponent,
@@ -224,7 +223,6 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     MappingTableComponent,
     MappingFilterComponent,
     MappingHeaderSectionComponent,
-    ConfigurationExportSettingsComponent,
     ConfigurationImportSettingsComponent,
     ConfigurationAdvancedSettingsComponent,
     DashboardMappingResolveComponent,

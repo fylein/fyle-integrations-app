@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { Observable } from 'rxjs';
-import { AdvancedSettingsGet, AdvancedSettingsPost, ConditionField, ExpenseFilterResponse, SkipExport } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { AdvancedSettingsGet, AdvancedSettingsPost, ConditionField, ExpenseFilterResponse, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { EmailOption } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { StorageService } from '../../common/storage.service';
 import { ApiService } from '../../common/api.service';

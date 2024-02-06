@@ -4,7 +4,7 @@ import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/cor
 import { PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
+import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';

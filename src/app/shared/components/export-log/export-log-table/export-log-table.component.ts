@@ -3,7 +3,7 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { AccountingExportList } from 'src/app/core/models/db/accounting-export.model';
 import { AppName } from 'src/app/core/models/enum/enum.model';
-import { Expense } from 'src/app/core/models/si/db/expense.model';
+import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
