@@ -1,4 +1,4 @@
-import { Expense } from "../si/db/expense.model";
+import { Expense } from "../intacct/db/expense.model";
 import { PaginatedResponse } from "./paginated-response.model";
 
 export type ExpenseGroupDescription = {

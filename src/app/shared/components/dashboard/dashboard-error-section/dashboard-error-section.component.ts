@@ -7,7 +7,7 @@ import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel,
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { AccountingDisplayName, AccountingErrorType, AccountingField, AppName, AppUrl, ExportErrorSourceType, FyleField, MappingState } from 'src/app/core/models/enum/enum.model';
 import { ResolveMappingErrorProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
-import { Expense } from 'src/app/core/models/si/db/expense.model';
+import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';

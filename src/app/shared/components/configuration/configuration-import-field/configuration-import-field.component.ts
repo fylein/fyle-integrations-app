@@ -5,7 +5,7 @@ import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldR
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
-import { MappingSetting } from 'src/app/core/models/si/si-configuration/import-settings.model';
+import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({

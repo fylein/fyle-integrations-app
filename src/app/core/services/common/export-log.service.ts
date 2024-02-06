@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { UserService } from '../misc/user.service';
 import { WorkspaceService } from './workspace.service';
 import { environment } from 'src/environments/environment';
-import { SkipExportLogResponse } from '../../models/si/db/expense-group.model';
+import { SkipExportLogResponse } from '../../models/intacct/db/expense-group.model';
 import { FyleReferenceType, TaskLogState } from '../../models/enum/enum.model';
 import { Observable } from 'rxjs';
 import { AccountingExport } from '../../models/db/accounting-export.model';
