@@ -6,9 +6,9 @@ import { UserService } from '../../misc/user.service';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { FyleReferenceType, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/si/db/expense-group.model';
+import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
-import { Expense } from 'src/app/core/models/si/db/expense.model';
+import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { ApiService } from '../../common/api.service';
 
 @Injectable({
