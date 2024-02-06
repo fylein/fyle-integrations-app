@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IntacctOnboardingLandingComponent } from './intacct-onboarding-landing/intacct-onboarding-landing.component';
 import { IntacctOnboardingExportSettingComponent } from './intacct-onboarding-export-setting/intacct-onboarding-export-setting.component';
 import { IntacctOnboardingImportSettingComponent } from './intacct-onboarding-import-setting/intacct-onboarding-import-setting.component';
-import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-setting/onboarding-advanced-setting.component';
+import { IntacctOnboardingAdvancedSettingComponent } from './intacct-onboarding-advanced-setting/intacct-onboarding-advanced-setting.component';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { IntacctOnboardingComponent } from './intacct-onboarding.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -33,7 +33,7 @@ const routes: Routes = [
       },
       {
         path: 'advanced_settings',
-        component: OnboardingAdvancedSettingComponent
+        component: IntacctOnboardingAdvancedSettingComponent
       },
       {
         path: 'done',

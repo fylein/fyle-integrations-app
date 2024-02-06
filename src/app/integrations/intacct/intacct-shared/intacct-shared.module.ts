@@ -23,7 +23,8 @@ import { IntacctAdvancedSettingsComponent } from './intacct-advanced-settings/in
   ],
   exports: [
     IntacctExportSettingsComponent,
-    IntacctImportSettingsComponent
+    IntacctImportSettingsComponent,
+    IntacctAdvancedSettingsComponent
   ]
 })
 export class IntacctSharedModule { }
