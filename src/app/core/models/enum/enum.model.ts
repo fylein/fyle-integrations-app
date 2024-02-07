@@ -67,6 +67,12 @@ export enum BusinessCentralUpdateEvent {
   ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings Business Central',
 }
 
+export enum TravelperkUpdateEvent {
+  CONNECT_TRAVELPERK = 'Connect Travelperk',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Import Settings Travelperk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings Travelperk',
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
@@ -110,6 +116,8 @@ export enum Page {
   EXPORT_SETTING_BUSINESS_CENTRAL = 'Export Settings BusinessCentral',
   IMPORT_SETTINGS_BUSINESS_CENTRAL = 'Import Settings BusinessCentral',
   ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings BusinessCentral',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Payment Profile Settings TravelPerk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
 }
 
 export enum ClickEvent {
@@ -656,7 +664,7 @@ export enum TravelPerkUserRole {
 
 export enum TravelPerkOnboardingState {
   CONNECTION = 'CONNECTION',
-  PAYMENT_PROFILE_SETTINGS = 'IMPORT_SETTINGS',
+  PAYMENT_PROFILE_SETTINGS = 'PAYMENT_PROFILE_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
 }

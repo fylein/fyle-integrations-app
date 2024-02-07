@@ -1,23 +1,81 @@
-import { expand } from "rxjs";
+import { SelectFormOption } from "../../common/select-form-option.model";
 import { TravelPerkUserRole } from "../../enum/enum.model";
-import { Paginator } from "../../misc/paginator.model";
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { PaginatedResponse } from "../../db/paginated-response.model";
 
 export type TravelperkPaymentProfileSetting = {
-    payment_profile_name: string,
-	payment_profile_id: string,
-	user_role: TravelPerkUserRole,
-	import_to_fyle: boolean
+    profile_name: string,
+	user_role: TravelPerkUserRole | null,
+	is_import_enabled: boolean
 }
 
 export interface TravelperkPaymentProfileSettingGet extends TravelperkPaymentProfileSetting {
     id: number,
     created_at: Date,
-    update_at: Date,
-    workspace: number
+    updated_at: Date,
+    org: number
 }
 
 export interface TravelperkPaymentProfileSettingPost extends TravelperkPaymentProfileSetting { }
 
-export interface TravelperkPaymentProfileSettingGetPaginator extends Paginator {
+export interface TravelperkPaymentProfileSettingGetPaginator extends PaginatedResponse {
     results: TravelperkPaymentProfileSettingGet[]
+}
+
+export class TravelperkPaymentProfileSettingModel {
+
+    static getUserRoleOptions(): SelectFormOption[] {
+        return [
+            {
+                label: 'Booker',
+                value: TravelPerkUserRole.BOOKER
+            },
+            {
+                label: 'Card Holder',
+                value: TravelPerkUserRole.CARD_HOLDER
+            },
+            {
+                label: 'Traveller',
+                value: TravelPerkUserRole.TRAVELLER
+            }
+        ];
+    }
+
+    static createFormGroup(data: TravelperkPaymentProfileSettingGet): FormGroup {
+        return new FormGroup ({
+            profileName: new FormControl(data.profile_name || ''),
+            userRole: new FormControl(data.user_role || null),
+            isImportEnabled: new FormControl(data.is_import_enabled || false)
+        });
+    }
+
+    static constructFormArray(arrayData: TravelperkPaymentProfileSettingGet[]): FormGroup[] {
+        const resultentArray:FormGroup[] = [];
+        arrayData.forEach((data) => resultentArray.push(this.createFormGroup(data)));
+        return resultentArray;
+    }
+
+    static constructPaymentProfileMapping(paymentProfileFieldArray: any): TravelperkPaymentProfileSettingPost[] {
+        const paymentProfileSettings = paymentProfileFieldArray.map((field: any) => {
+            return {
+                profile_name: field.profileName,
+                is_import_enabled: field.isImportEnabled,
+                user_role: field.userRole
+            };
+        });
+
+        return paymentProfileSettings;
+      }
+
+    static mapAPIResponseToFormGroup(travelperkPaymentProfileSettingResponse:TravelperkPaymentProfileSettingGet[] | null): FormGroup {
+        const paymentProfileMappingsArray = travelperkPaymentProfileSettingResponse ? this.constructFormArray(travelperkPaymentProfileSettingResponse) : [] ;
+        return new FormGroup({
+            paymentProfileMappings: new FormArray(paymentProfileMappingsArray)
+        });
+    }
+
+    static createPaymentProfileSettingPayload(travelperkPaymentProfileSettingForm: FormGroup){
+        return this.constructPaymentProfileMapping(travelperkPaymentProfileSettingForm.value.paymentProfileMappings);
+    }
+
 }

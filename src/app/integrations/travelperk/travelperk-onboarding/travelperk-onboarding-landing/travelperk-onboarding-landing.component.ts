@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { brandingKbArticles, brandingConfig } from 'src/app/branding/branding-config';
-import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ToastSeverity, TravelPerkOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { environment } from 'src/environments/environment';
@@ -38,6 +39,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     private travelperkService: TravelperkService,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
+    private storageService: StorageService,
     private router: Router
   ) { }
 
@@ -71,9 +73,10 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
-            this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
+            this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
             popup?.close();
             clearInterval(activePopup);
+            this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
           });
         }
       }

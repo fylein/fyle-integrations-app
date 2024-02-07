@@ -11,11 +11,13 @@ import { Sage300ImportSettingGet } from "../sage300/sage300-configuration/sage30
 import { AdvancedSettingsGet } from "../si/si-configuration/advanced-settings.model";
 import { ExportSettingGet } from "../si/si-configuration/export-settings.model";
 import { ImportSettingGet, ImportSettings } from "../si/si-configuration/import-settings.model";
+import { TravelperkAdvancedSettingPost } from "../travelperk/travelperk-configuration/travelperk-advanced-settings.model";
+import { TravelperkPaymentProfileSettingGetPaginator } from "../travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
 
 export type UpdateEventAdditionalProperty = {
     phase: ProgressPhase,
-    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet,
-    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet
+    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingGetPaginator | TravelperkAdvancedSettingPost,
+    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingGetPaginator | TravelperkAdvancedSettingPost
   };
 
 export type UpdateIntacctEventAdditionalProperty = {
