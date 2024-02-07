@@ -1146,6 +1146,7 @@ module.exports = {
       },
       minHeight: {
         '70-px': '70px',
+        '228-px': '228px',
         ...dimensions
       },
       maxHeight: {

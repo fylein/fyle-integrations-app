@@ -12,32 +12,31 @@
                     [redirectLink]="redirectLink">
                 </app-configuration-step-header>
             </div>
-            <app-configuration-connector
-                [accountingAppTitle]="'QuickBooks Online Company'"
-                [accountingCompanyName]="qboCompanyName"
-                [fyleOrgName]="fyleOrgName"
-                [accountingCompanyTokenExpired]="qboTokenExpired"
-                [isAccountingCompanyConnected]="isQboConnected"
-                [showDisconnect]="showDisconnectQBO"
-                [accountingCompanyConnectionInProgress]="qboConnectionInProgress"
-                [switchLinkText]="'Disconnect'"
-                (switchCompany)="disconnectQbo()"
-                (connectCompany)="connectQbo()">
-            </app-configuration-connector>
+            <div class="tw-px-24-px tw-pb-24-px">
+                <app-configuration-connector
+                    [accountingAppTitle]="'QuickBooks Online Company'"
+                    [accountingCompanyName]="qboCompanyName"
+                    [fyleOrgName]="fyleOrgName"
+                    [accountingCompanyTokenExpired]="qboTokenExpired"
+                    [isAccountingCompanyConnected]="isQboConnected"
+                    [showDisconnect]="showDisconnectQBO"
+                    [accountingCompanyConnectionInProgress]="qboConnectionInProgress"
+                    [switchLinkText]="'Disconnect'"
+                    (switchCompany)="disconnectQbo()"
+                    (connectCompany)="connectQbo()">
+                </app-configuration-connector>
 
-            <app-configuration-confirmation-dialog
-                (warningAccepted)="acceptWarning($event)"
-                [isWarningVisible]="isWarningDialogVisible"
-                [event]="warningEvent"
-                [headerText]="warningHeaderText"
-                [contextText]="warningContextText"
-                [confirmBtnText]="primaryButtonText"
-                [showSecondaryCTA]="false">
-            </app-configuration-confirmation-dialog>
-
-            <div>
+                <app-configuration-confirmation-dialog
+                    (warningAccepted)="acceptWarning($event)"
+                    [isWarningVisible]="isWarningDialogVisible"
+                    [event]="warningEvent"
+                    [headerText]="warningHeaderText"
+                    [contextText]="warningContextText"
+                    [confirmBtnText]="primaryButtonText"
+                    [showSecondaryCTA]="false">
+                </app-configuration-confirmation-dialog>
                 <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
-             </div>
+            </div>
         </div>
     </div>
 </div>
