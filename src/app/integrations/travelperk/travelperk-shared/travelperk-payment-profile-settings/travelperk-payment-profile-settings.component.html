@@ -39,11 +39,11 @@
                     [appName]="appName"
                     [showCrossIcon]="true"
                     [isDestinationDisabled]="true"
-                    [SourceFields]="userRole"
-                    [DestinationFields]="paymentProfileSettings.results"
+                    [sourceFieldOptions]="userRole"
+                    [destinationFieldOptions]="paymentProfileSettings.results"
                     [form]="paymentProfileMappingForm"
                     [sourceFieldText]="'User Role'"
-                    [DestinationFieldText]="'Payment Profile'"
+                    [destinationFieldText]="'Payment Profile'"
                     [sourceFieldPlaceholderText]="'Select a User Role'"
                     [noOfFieldsToShow]="5">
                 </app-configuration-mapping-fields>
@@ -59,6 +59,7 @@
             </div>
         </form>
     </div>
+    <!-- TODO change the image path here -->
     <div *ngIf="isPreviewDialogVisible">
         <app-preview-dialog 
             [isPreviewDialogVisible]="true"

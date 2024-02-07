@@ -1,13 +1,13 @@
 <div class="tw-px-24-px tw-pb-24-px">
     <div [formGroup]="form">
         <div formArrayName="expenseFields">
-            <div *ngFor="let expenseField of expenseFieldsGetter.controls | slice:0:noOfFieldsToShow; let i = index" [formGroupName]="i">
+            <div *ngFor="let expenseField of paymentProfileMappings.controls | slice:0:noOfFieldsToShow; let i = index" [formGroupName]="i">
                 <div class="tw-flex tw-justify-start tw-items-center tw-mb-18-px">
                     <div>
                         <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
-                            <p>{{ DestinationFieldText }}</p>
+                            <p>{{ destinationFieldText }}</p>
                         </div>
-                        <p-dropdown appendTo="body" [options]="DestinationFields" placeholder="Choose {{appName}} field" formControlName="payment_profile_name" dropdownIcon="pi pi-chevron-down"
+                        <p-dropdown appendTo="body" [options]="destinationFieldOptions" [placeholder]="destinationPlaceholderFieldText" formControlName="payment_profile_name" dropdownIcon="pi pi-chevron-down"
                             optionLabel="payment_profile_name" optionValue="payment_profile_name" class="!tw-w-360-px" [disabled]="isDestinationDisabled">
                             <ng-template pTemplate="selectedItem" let-item>
                                 <div class="tw-flex tw-justify-between tw-items-center">
@@ -27,8 +27,8 @@
                         <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
                             <p>{{ sourceFieldText }}</p>
                         </div>
-                        <p-dropdown appendTo="body" [options]="SourceFields" [placeholder]="sourceFieldPlaceholderText" formControlName="user_role" [disabled]="isSourceDisabled"
-                        optionLabel="label" optionValue="value" [ngClass]="{'selectedItem': expenseField.value.user_role, 'filterDropdown': !expenseField.value.user_role, 'showClearIcon': showCrossIcon && !isSourceDisabled && expenseField.value.user_role}" dropdownIcon="pi pi-chevron-down">
+                        <p-dropdown appendTo="body" [options]="sourceFieldOptions" [placeholder]="sourceFieldPlaceholderText" formControlName="user_role"
+                        optionLabel="label" optionValue="value" [ngClass]="{'selectedItem': expenseField.value.user_role, 'filterDropdown': !expenseField.value.user_role, 'showClearIcon': showCrossIcon && expenseField.value.user_role}" dropdownIcon="pi pi-chevron-down">
                             <ng-template let-option pTemplate="item">
                             <div>
                                 {{ option.label }}
@@ -39,7 +39,7 @@
                                 <span>
                                     {{ item.label }}
                                 </span>
-                                <i *ngIf="showCrossIcon && !isSourceDisabled" class="pi pi-times" (click)="removeFilter(expenseField)"></i>
+                                <i *ngIf="showCrossIcon  && expenseField.value.user_role" class="pi pi-times" (click)="removeFilter(expenseField)"></i>
                             </div>
                             </ng-template>
                       </p-dropdown>
@@ -49,7 +49,7 @@
         </div>               
     </div>
     <div *ngIf="showOrHideLoadMoreButton()" class="tw-mt-30-px">
-        <a class="tw-cursor-pointer tw-text-mandatory-field-color" (click)="addExpenseFields()">
+        <a class="tw-cursor-pointer tw-text-mandatory-field-color" (click)="showAllFields()">
             Load more
         </a>
     </div> 

@@ -14,17 +14,15 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() sourceFieldText: string;
 
-  @Input() DestinationFieldText: string;
+  @Input() destinationFieldText: string;
 
   @Input() sourceFieldPlaceholderText: string;
 
-  @Input() DestinationPlaceholderFieldText: string;
+  @Input() destinationPlaceholderFieldText: string;
 
-  @Input() SourceFields: string[] | TravelPerkPaymetProfileSettingFormOption[];
+  @Input() sourceFieldOptions: string[] | TravelPerkPaymetProfileSettingFormOption[];
 
-  @Input() DestinationFields: string[] | TravelperkPaymentProfileSettingGet[];
-
-  @Input() isSourceDisabled: boolean;
+  @Input() destinationFieldOptions: string[] | TravelperkPaymentProfileSettingGet[];
 
   @Input() isDestinationDisabled: boolean;
 
@@ -38,7 +36,7 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   constructor() { }
 
-  get expenseFieldsGetter() {
+  get paymentProfileMappings() {
     return this.form.get('expenseFields') as FormArray;
   }
 
@@ -49,12 +47,8 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
     return false;
   }
 
-  addExpenseFields() {
+  showAllFields() {
     this.noOfFieldsToShow = this.form.controls.expenseFields.value.length;
-  }
-
-  hasDuplicateOption(formGroup: AbstractControl, index: number, controlName: string): boolean {
-    return (formGroup as FormGroup).controls[controlName].valid;
   }
 
   removeFilter(expenseField: AbstractControl) {
