@@ -100,7 +100,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
   }
 
   save() {
-    if(this.paymentProfileMappingForm.valid) {
+    if (this.paymentProfileMappingForm.valid) {
       this.constructPayloadAndSave();
     }
   }
