@@ -12,24 +12,19 @@ import { TravelperkPaymentProfileSettingsComponent } from './travelperk-shared/t
 import { TravelperkOnboardingPaymentProfileSettingsComponent } from './travelperk-onboarding/travelperk-onboarding-payment-profile-settings/travelperk-onboarding-payment-profile-settings.component';
 import { TravelperkOnboardingAdvancedSettingsComponent } from './travelperk-onboarding/travelperk-onboarding-advanced-settings/travelperk-onboarding-advanced-settings.component';
 import { TravelperkConfigurationComponent } from './travelperk-main/travelperk-configuration/travelperk-configuration.component';
+import { TravelperkSharedModule } from './travelperk-shared/travelperk-shared.module';
 
 
 @NgModule({
   declarations: [
-    TravelperkComponent,
     TravelperkMainComponent,
-    TravelperkOnboardingComponent,
-    TravelperkAdvancedSettingsComponent,
-    TravelperkPaymentProfileSettingsComponent,
-    TravelperkOnboardingPaymentProfileSettingsComponent,
-    TravelperkOnboardingAdvancedSettingsComponent,
-    TravelperkConfigurationComponent
+    TravelperkOnboardingComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    TravelperkRoutingModule,
-    SkeletonModule
+    TravelperkSharedModule,
+    TravelperkRoutingModule
   ]
 })
 export class TravelperkModule { }

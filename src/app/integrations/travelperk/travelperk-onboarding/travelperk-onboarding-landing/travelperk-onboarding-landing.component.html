@@ -1,1 +1,21 @@
-<p>travelperk-onboarding-landing works!</p>
+<div>
+
+    <app-landing-page-header 
+        [iconPath]="'assets/logos/travelperk-logo.svg'"
+        [appName]="AppName.TRAVELPERK"
+        [appDescription]="'Effortlessly automate accurate expense creation for your TravelPerk invoices as Credit Card Expenses in ' + brandingConfig.brandName + '.'"
+        [isIntegrationConnected]="isIntegrationConnected"
+        [isRecipeRunning]="true"
+        [isConnectionInProgress]="isConnectionInProgress"
+        (disconnectIntegration)="disconnect()"
+        (connectIntegration)="connectTravelperk()">
+    </app-landing-page-header>
+
+
+    <app-landing-page-body
+        [headerText]="'Auto sync employee details between TravelPerk and ' + brandingConfig.brandName + '.'" 
+        [svgPath]="'assets/flow-charts/travelperk-flow-chart.svg'" 
+        [redirectLink]="brandingKbArticles.topLevelArticles.TRAVELPERK"
+        [appName]="AppName.TRAVELPERK">
+    </app-landing-page-body>
+</div>

@@ -6,14 +6,14 @@
       <svg-icon-sprite src="check-large" width="30px" height="30px" class="tw-p-16-px tw-bg-success-toast tw-rounded-50 tw-text-white"></svg-icon-sprite>
     </div>
     <div class="tw-text-center">
-      <h2 class="tw-text-normal-text-color !tw-font-400 !tw-text-18-px">Congratulations! Your integration setup is now complete.</h2>
+      <h2 class="tw-text-normal-text-color !tw-font-400 !tw-text-18-px" [innerHTML]="headerText">
+      </h2>
     </div>
     <div class="tw-flex tw-justify-center tw-py-20-px">
-        <button type="button" class="tw-font-500 tw-text-white tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="navigateToDashboard()">Launch Integration</button>
+        <button type="button" class="tw-font-500 tw-text-white tw-px-24-px tw-py-12-px tw-bg-mandatory-field-color tw-rounded-4-px" (click)="navigateToDashboard()">{{ btnText }}</button>
     </div>
     <div class="tw-py-20-px">
-      <h5 class="tw-text-faded-text-color tw-text-center tw-text-14-px tw-font-400">
-        After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.
+      <h5 class="tw-text-faded-text-color tw-text-center tw-text-14-px tw-font-400" [innerHTML]="subText">
       </h5>
     </div>
   </div>
