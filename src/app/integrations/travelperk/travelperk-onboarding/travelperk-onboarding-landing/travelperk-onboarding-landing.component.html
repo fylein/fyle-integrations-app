@@ -1,14 +1,16 @@
 <div>
+
     <app-landing-page-header 
         [iconPath]="'assets/logos/travelperk-logo.svg'"
         [appName]="AppName.TRAVELPERK"
-        [appDescription]="'Autosync employee details between ' + brandingConfig.brandName + ' and TravelPerk.'"
+        [appDescription]="'Effortlessly automate accurate expense creation for your TravelPerk invoices as Credit Card Expenses in ' + brandingConfig.brandName + '.'"
         [isIntegrationConnected]="isIntegrationConnected"
         [isRecipeRunning]="true"
         [isConnectionInProgress]="isConnectionInProgress"
         (disconnectIntegration)="disconnect()"
         (connectIntegration)="connectTravelperk()">
     </app-landing-page-header>
+
 
     <app-landing-page-body
         [headerText]="'Auto sync employee details between TravelPerk and ' + brandingConfig.brandName + '.'" 
