@@ -19,7 +19,7 @@ export class ConfigurationStepSubHeaderComponent implements OnInit {
   constructor() { }
 
   previewClick() {
-    this.isPreviewClick.emit()
+    this.isPreviewClick.emit();
   }
 
   ngOnInit(): void {
