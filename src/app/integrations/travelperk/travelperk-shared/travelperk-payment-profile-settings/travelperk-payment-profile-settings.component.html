@@ -13,20 +13,13 @@
     <div>
         <form [formGroup]="paymentProfileMappingForm">
             <div class="tw-p-24-px">
-                <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
-                    <div>
-                        <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
-                            Add Payment Profiles for Expense Creation
-                        </h4>
-                        <p class="tw-text-14-px tw-text-faded-text-color tw-w-600-px tw-text-prrety">
-                            Add the required Payment Profiles and assign a User Role to each of them based on your requirement. 
-                            Expenses will be created for every invoice generated in Travelperk based on the settings.
-                            <a class="tw-text-hyperlink-color tw-pl-2-px tw-w-fit tw-cursor-pointer" (click)="showPreviewDialog(true)">
-                                Click here
-                            </a> 
-                            to preview.
-                        </p>
-                    </div>
+                <div class="tw-pb-24-px">
+                    <app-configuration-step-sub-header
+                        [label]="'Add Payment Profiles for Expense Creation'"
+                        [subLabel]="'Add the required Payment Profiles and assign a User Role to each of them based on your requirement. Expenses will be created for every invoice generated in Travelperk based on the settings.'"
+                        [showPreview]="true"
+                        (isPreviewClick)="showPreviewDialog(true)">
+                    </app-configuration-step-sub-header>
                 </div>
                 <div>
                     <app-configuration-info-label

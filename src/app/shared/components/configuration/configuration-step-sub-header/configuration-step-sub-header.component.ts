@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -12,7 +12,15 @@ export class ConfigurationStepSubHeaderComponent implements OnInit {
 
   @Input() subLabel: string | SafeHtml;
 
+  @Input() showPreview: boolean = false;
+
+  @Output() isPreviewClick = new EventEmitter();
+
   constructor() { }
+
+  previewClick() {
+    this.isPreviewClick.emit()
+  }
 
   ngOnInit(): void {
   }
