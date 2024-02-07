@@ -27,6 +27,14 @@ p {
     @apply tw-m-0-px;
 }
 
+.pi-search.fyle {
+    content: url('./assets/icons/magnifier.svg') !important;
+}
+
+.pi-times.co {
+    content: url('./assets/icons/co/grv-magnifier.svg') !important;
+}
+
 .pi-times.fyle {
     content: url('./assets/icons/cross-medium.svg') !important;
 }
