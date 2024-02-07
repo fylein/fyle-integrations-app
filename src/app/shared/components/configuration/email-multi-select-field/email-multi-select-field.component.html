@@ -31,7 +31,7 @@
             <ng-template pTemplate="filter" let-options="options">
                 <div *ngIf="emails.length" class="p-inputgroup">
                     <div class="p-input-icon-left p-input-icon-right">
-                        <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-search fyle' : 'pi pi-search co']" class="!tw-text-placeholder"></i>
+                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? 'magnifier' : 'grv-magnifier'" [styleClasses]="'!tw-text-placeholder'"></app-svg-icon>
                         <input type="text" class="!tw-h-32-px !tw-w-270-px" (keyup)="options.filter($event)"
                             pInputText placeholder="Search by Name / Email" formControlName="search" />
                         <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" class="tw-cursor-pointer tw-text-16-px" (click)="clearSearch(options)"></i>
