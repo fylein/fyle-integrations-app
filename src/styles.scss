@@ -69,7 +69,7 @@ p {
 
 // Button CTA
 .p-button {
-    @apply tw-w-[100%] tw-text-14-px tw-shadow-none tw-border-none tw-bg-btn-cta #{!important};
+    @apply tw-w-[100%] tw-text-14-px tw-text-btn-primary-text-color tw-shadow-none tw-border-none tw-bg-btn-primary-bg tw-px-16-px tw-py-10-px #{!important};
 }
 
 .p-button.p-button-raised {
@@ -81,11 +81,35 @@ p {
 }
 
 .p-button:enabled:hover {
-    @apply tw-shadow-btn-cta-shadow #{!important};
+    @apply tw-text-btn-primary-hover-text-color tw-bg-btn-primary-hover-bg tw-shadow-btn-cta-shadow #{!important};
 }
 
 .p-button:disabled {
-    @apply tw-cursor-no-drop #{!important};
+    @apply tw-cursor-no-drop tw-text-btn-primary-disable-text-color tw-bg-bg-brand-disable #{!important};
+}
+
+.p-button.secondary-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-text-color tw-bg-btn-secondary-bg #{!important};
+}
+
+.p-button:enabled:hover.secondary-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-hover-text-color tw-bg-btn-secondary-hover-bg tw-shadow-btn-cta-shadow #{!important};
+}
+
+.p-button.outline-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+.p-button:enabled:hover.outline-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
+}
+
+.btn-text-primary {
+    @apply tw-cursor-pointer tw-text-btn-tertiary-text-color tw-text-14-px;
+}
+
+.btn-text-primary:hover {
+    @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px tw-py-10-px;
 }
 
 // Dialog
