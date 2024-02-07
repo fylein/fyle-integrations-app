@@ -17,8 +17,8 @@
                     </span>  
                 </td>
                 <td>
-                    <p *ngIf="mapping.destination_value" class="mapped">MAPPED</p>
-                    <p *ngIf="!mapping.destination_value" class="unmapped">UNMAPPED</p>
+                    <p *ngIf="mapping.destination_value" class="mapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? 'MAPPED': 'Mapped'}}</p>
+                    <p *ngIf="!mapping.destination_value" class="unmapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? 'UNMAPPED': 'Unmapped'}}</p>
                 </td>
             </tr>
         </ng-template>

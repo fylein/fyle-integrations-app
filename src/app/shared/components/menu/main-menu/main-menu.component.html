@@ -2,14 +2,17 @@
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
     <div class="tw-flex tw-items-center">
-        <button [pTooltip]="'The integration will import all the newly updated ' + appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'"
+        <button *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated ' + appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'"
             (click)="refreshDimensions()"
             class="tw-py-8-px tw-px-12-px tw-h-32-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
-            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
+            <app-svg-icon [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
             <span class="tw-text-14-px">
                 Sync
             </span>
         </button>
+        <span class="btn-text-primary tw-mr-12-px" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed">
+            Sync
+        </span>
 
     <p-dropdown *ngIf="isDropdrownRequired" [(ngModel)]="moreDropdown" (onChange)="null" appendTo="body" class="tw-mr-26-px tw-w-fit" [options]="['Submit Feedback']" placeholder="More">
             <ng-template let-option pTemplate="item">

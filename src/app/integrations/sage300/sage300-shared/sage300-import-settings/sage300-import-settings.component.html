@@ -21,7 +21,7 @@
                             The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandingConfig.brandName}} field of your preference,
                             or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandingConfig.brandName}} will make the values
                             available as a dropdown in the expense form for your employees to choose from.<a
-                                class="tw-text-hyperlink-color tw-pl-4-px tw-w-fit tw-cursor-pointer"
+                                class="tw-text-link-primary tw-pl-4-px tw-w-fit tw-cursor-pointer"
                                 (click)="showPreviewDialog(true)">Click here</a> to preview.
                         </p>
                     </div>
@@ -45,8 +45,6 @@
                         (showWarningForDependentFields)="showWarningForDependentFields()">
                     </app-configuration-import-field>
                 </div>
-            </div>
-            <div>
                 <app-configuration-step-footer 
                     [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
                     [showBackButton] = "isOnboarding"
