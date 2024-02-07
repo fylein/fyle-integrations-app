@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
-import { Travelperk, TravelperkConfiguration } from '../../models/travelperk/travelperk.model';
+import { Travelperk, TravelperkConfiguration, TravelperkDestinationAttribuite } from '../../models/travelperk/travelperk.model';
 import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
+import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
+import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 
 const travelPerkConfigurationCache$ = new Subject<void>();
 
@@ -73,5 +75,32 @@ export class TravelperkService {
 
   disconnect(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/disconnect/`, {});
+  }
+
+  syncPaymentProfile(): Observable<{}> {
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/sync_payment_profile/`,  {});
+  }
+
+  getTravelperkPaymentProfileMapping(limit: number): Observable<TravelperkPaymentProfileSettingResponse> {
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/profile_mappings/`, {
+      limit: limit,
+      offset: 0
+    });
+  }
+
+  postTravelperkPaymentProfileMapping(travelperkPaymentProfileMappingPayload: TravelperkPaymentProfileSettingPost[]): Observable<TravelperkPaymentProfileSettingResponse> {
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/profile_mappings/`, travelperkPaymentProfileMappingPayload);
+  }
+
+  getTravelperkAdvancedSettings(): Observable<TravelperkAdvancedSettingGet> {
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/advance_settings/`, {});
+  }
+
+  postTravelperkAdvancedSettings(travelperkAdvancedSettingPayload: TravelperkAdvancedSettingPost): Observable<TravelperkAdvancedSettingGet> {
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/advance_settings/`, travelperkAdvancedSettingPayload);
+  }
+
+  getCategories(): Observable<TravelperkDestinationAttribuite[]> {
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/sync_category/`,  {});
   }
 }

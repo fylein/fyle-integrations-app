@@ -23,7 +23,6 @@ import { SkeletonModule } from 'primeng/skeleton';
     CommonModule,
     IntegrationsRoutingModule,
     SharedModule,
-    SkeletonModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
