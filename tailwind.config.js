@@ -944,7 +944,8 @@ module.exports = {
     textColor: {
       ...customColors,
       ...textColors,
-      ...componentVariables
+      ...componentVariables,
+      ...colors
     },
     backgroundColor: {
       ...customColors,

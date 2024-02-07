@@ -79,8 +79,8 @@
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'filterDropdown': !expenseField.value.source_field}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
-                                <div class="tw-ml-0 tw-mr-6-px ">
-                                    <app-svg-icon *ngIf="option.attribute_type === 'custom_field'" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
+                                <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && option.attribute_type === 'custom_field'" class="tw-ml-0 tw-mr-6-px ">
+                                    <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
                                 </div>
                                 {{ option.display_name }}
                             </div>
