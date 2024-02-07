@@ -101,6 +101,6 @@ export class TravelperkService {
   }
 
   getCategories(): Observable<TravelperkDestinationAttribuite[]> {
-    return this.apiService.get(`/orgs/${this.orgId}/travelperk/sync_category/`,  {});
+    return this.apiService.get(`/orgs/${this.orgId}/sync_categories/`,  {});
   }
 }
