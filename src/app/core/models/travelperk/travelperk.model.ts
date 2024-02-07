@@ -1,5 +1,5 @@
 import { Org} from 'src/app/core/models/org/org.model';
-import { TravelPerkExpenseGroup, TravelPerkUserRole } from '../enum/enum.model';
+import { FyleField, TravelPerkExpenseGroup, TravelPerkOnboardingState, TravelPerkUserRole } from '../enum/enum.model';
 
 export type Travelperk = {
     id: number;
@@ -10,6 +10,7 @@ export type Travelperk = {
     is_s3_connected: boolean;
     org: number;
     travelperk_connection_id: number;
+    onboarding_state: TravelPerkOnboardingState;
     created_at: Date;
     updated_at: Date;
 }
@@ -32,4 +33,17 @@ export type WorkatoConnectionStatus = {
         connected?: boolean,
         error?: string,
     }
+}
+
+export type TravelperkDestinationAttribuite = {
+    id: number,
+    attribute_type: FyleField,
+    value: string,
+    active: boolean,
+    detail: null,
+    created_at: Date,
+    updated_at: Date,
+    source_id: string,
+    auto_created: boolean,
+    org: number
 }
