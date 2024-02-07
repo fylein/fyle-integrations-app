@@ -1,5 +1,5 @@
 import { Org} from 'src/app/core/models/org/org.model';
-import { TravelPerkExpenseGroup, TravelPerkOnboardingState, TravelPerkUserRole } from '../enum/enum.model';
+import { FyleField, TravelPerkExpenseGroup, TravelPerkOnboardingState, TravelPerkUserRole } from '../enum/enum.model';
 
 export type Travelperk = {
     id: number;
@@ -35,7 +35,15 @@ export type WorkatoConnectionStatus = {
     }
 }
 
-export type TravelperkFormOption = {
-    label: string,
-    value: TravelPerkUserRole | TravelPerkExpenseGroup
+export type TravelperkDestinationAttribuite = {
+    id: number,
+    attribute_type: FyleField,
+    value: string,
+    active: boolean,
+    detail: null,
+    created_at: Date,
+    updated_at: Date,
+    source_id: string,
+    auto_created: boolean,
+    org: number
 }

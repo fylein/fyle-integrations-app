@@ -10,7 +10,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { travelperkPaymentProfileMappingResponse } from '../travelperk.fixture';
-import { TravelperkFormOption } from 'src/app/core/models/travelperk/travelperk.model';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-travelperk-payment-profile-settings',
@@ -27,7 +27,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   paymentProfileMappingForm: FormGroup;
 
-  userRole: TravelperkFormOption[] = TravelperkPaymentProfileSettingModel.getUserRoles();
+  userRole: SelectFormOption[] = TravelperkPaymentProfileSettingModel.getUserRoles();
 
   isSaveInProgress: boolean;
 
@@ -37,7 +37,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   sessionStartTime: Date = new Date();
 
-  supportArticleLink: string = brandingKbArticles.onboardingArticles.SAGE300.IMPORT_SETTING;
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.TRAVELPERK.PAYMENT_PROFILE_SETTINGS;
 
   ConfigurationCtaText = ConfigurationCta;
 

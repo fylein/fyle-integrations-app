@@ -1,12 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastSeverity, TrackingApp, Page, TravelPerkOnboardingState, TravelperkUpdateEvent } from 'src/app/core/models/enum/enum.model';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ToastSeverity, TrackingApp, Page, TravelPerkOnboardingState, TravelperkUpdateEvent, AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
+import { travelperkAdvancedSettingsResponse, travelperkDestinationAttribute } from '../travelperk.fixture';
+import { catchError, forkJoin, of } from 'rxjs';
+import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-travelperk-advanced-settings',
@@ -14,17 +19,36 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
   styleUrls: ['./travelperk-advanced-settings.component.scss']
 })
 export class TravelperkAdvancedSettingsComponent implements OnInit {
+
+  appName: string = AppName.TRAVELPERK;
+
   isOnboarding: boolean;
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
-  advancedSettings: TravelperkAdvancedSettingGet;
+  advancedSettings: TravelperkAdvancedSettingGet | null;
 
   advancedSettingsForm: any;
 
   isSaveInProgress: boolean;
 
-  sessionStartTime: Date;
+  sessionStartTime: Date = new Date();
+
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.TRAVELPERK.ADVANCED_SETTING;
+
+  ConfigurationCtaText = ConfigurationCta;
+
+  readonly brandingConfig = brandingConfig;
+
+  defaultCategories: TravelperkDestinationAttribuite[];
+
+  defaultMemoOptions: string[] = ['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
+
+  memoPreviewText: string;
+
+  memoStructure: string[] = [];
+
+  lineItems: SelectFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
 
   constructor(
     private router: Router,
@@ -34,6 +58,43 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService
   ) { }
+
+  private formatMemoPreview(): void {
+    const previewValues: { [key: string]: string } = {
+      booker_name: 'john.doe@acme.com',
+      trip_name: 'Meals and Entertainment',
+      traveler_name: 'Client Meeting',
+      merchant_name: 'Pizza Hut',
+      trip_id: 'C/2021/12/R/1'
+    };
+    this.memoPreviewText = '';
+    const memo: string[] = [];
+    this.memoStructure.forEach((field, index) => {
+      if (field in previewValues) {
+        const defaultIndex = this.defaultMemoOptions.indexOf(this.memoStructure[index]);
+        memo[defaultIndex] = previewValues[field];
+      }
+    });
+    memo.forEach((field, index) => {
+      this.memoPreviewText += field;
+      if (index + 1 !== memo.length) {
+        this.memoPreviewText = this.memoPreviewText + ' - ';
+      }
+    });
+  }
+
+  private createMemoStructureWatcher(): void {
+    this.memoStructure = this.advancedSettingsForm.value.descriptionStructure;
+    this.formatMemoPreview();
+    this.advancedSettingsForm.controls.descriptionStructure.valueChanges.subscribe((memoChanges: string[]) => {
+      this.memoStructure = memoChanges;
+      this.formatMemoPreview();
+    });
+  }
+
+  navigateBack(): void {
+    this.router.navigate([`/integrations/travelperk/onboarding/payment_profile_settings`]);
+  }
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
@@ -76,12 +137,14 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.travelperkService.getTravelperkAdvancedSettings().subscribe((travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet) => {
+    forkJoin([
+      this.travelperkService.getTravelperkAdvancedSettings().pipe(catchError(() => of(null))),
+      this.travelperkService.getCategories()
+    ]).subscribe(([travelperkAdvancedSettingsResponse, travelperkDestinationAttribute]) => {
       this.advancedSettings = travelperkAdvancedSettingsResponse;
+      this.defaultCategories = travelperkDestinationAttribute;
       this.advancedSettingsForm = TravelperkAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings);
-      this.isLoading = false;
-    }, () => {
-      this.advancedSettingsForm = TravelperkAdvancedSettingModel.mapAPIResponseToFormGroup(null);
+      this.createMemoStructureWatcher();
       this.isLoading = false;
     });
   }
