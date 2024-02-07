@@ -40,7 +40,7 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
   constructor() { }
 
   get expenseFieldsGetter() {
-    return this.form.get('expenseFields') as FormArray;
+    return this.form.get('userRoleFields') as FormArray;
   }
 
   showOrHideLoadMoreButton() {
