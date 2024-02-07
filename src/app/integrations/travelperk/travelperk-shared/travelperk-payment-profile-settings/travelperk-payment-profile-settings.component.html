@@ -38,7 +38,8 @@
                     [sourceFieldText]="'User Role'"
                     [destinationFieldText]="'Payment Profile'"
                     [sourceFieldPlaceholderText]="'Select a User Role'"
-                    [noOfFieldsToShow]="5">
+                    [totalAvailableRows]="paymentProfileSettings.count"
+                    (loadMoreClick)="getProfileMappings(paymentProfileSettings.count)">
                 </app-configuration-mapping-fields>
             </div>
             <div>

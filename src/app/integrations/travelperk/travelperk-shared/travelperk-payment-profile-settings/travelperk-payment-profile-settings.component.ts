@@ -43,6 +43,8 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   isPreviewDialogVisible: boolean;
 
+  limit: number = 5;
+
   constructor(
     private router: Router,
     private travelperkService: TravelperkService,
@@ -64,7 +66,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     this.isPreviewDialogVisible = visible;
   }
 
-  save(): void {
+  constructPayloadAndSave(): void {
     this.isSaveInProgress = true;
     const paymentProfileMappingPayload = TravelperkPaymentProfileSettingModel.createPaymentProfileSettingPayload(this.paymentProfileMappingForm);
     this.travelperkService.postTravelperkPaymentProfileMapping(paymentProfileMappingPayload).subscribe((travelperkPaymentProfileMappingResponse) => {
@@ -97,16 +99,27 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     });
   }
 
-  private setupPage(): void {
-    this.isOnboarding = this.router.url.includes('onboarding');
-    // This.travelperkService.getTravelperkPaymentProfileMapping().subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingGetPaginator) => {
+  save() {
+    if(this.paymentProfileMappingForm.valid) {
+      this.constructPayloadAndSave();
+    }
+  }
+
+  getProfileMappings(limit: number) {
+    this.travelperkService.getTravelperkPaymentProfileMapping(limit).subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingGetPaginator) => {
       this.paymentProfileSettings = travelperkPaymentProfileMappingResponse;
       this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(this.paymentProfileSettings.results);
       this.isLoading = false;
-    // }, () => {
-    //   This.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(null);
-    //   This.isLoading = false;
-    // });
+    }, () => {
+      this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(null);
+      this.isLoading = false;
+    });
+  }
+
+  private setupPage(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
+    this.travelperkService.syncPaymentProfile().subscribe();
+    this.getProfileMappings(this.limit);
   }
 
   ngOnInit(): void {

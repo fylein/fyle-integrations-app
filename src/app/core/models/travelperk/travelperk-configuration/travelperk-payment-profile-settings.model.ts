@@ -4,10 +4,9 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { PaginatedResponse } from "../../db/paginated-response.model";
 
 export type TravelperkPaymentProfileSetting = {
-    payment_profile_name: string,
-	payment_profile_id: string,
+    profile_name: string,
 	user_role: TravelPerkUserRole | null,
-	import_to_fyle: boolean
+	is_import_enabled: boolean
 }
 
 export interface TravelperkPaymentProfileSettingGet extends TravelperkPaymentProfileSetting {
@@ -44,10 +43,9 @@ export class TravelperkPaymentProfileSettingModel {
 
     static createFormGroup(data: TravelperkPaymentProfileSettingGet): FormGroup {
         return new FormGroup ({
-            paymentProfileName: new FormControl(data.payment_profile_name || ''),
-            paymentProfileId: new FormControl(data.payment_profile_id || ''),
+            profileName: new FormControl(data.profile_name || ''),
             userRole: new FormControl(data.user_role || null),
-            importToFyle: new FormControl(data.import_to_fyle || false)
+            isImportEnabled: new FormControl(data.is_import_enabled || false)
         });
     }
 
@@ -57,30 +55,27 @@ export class TravelperkPaymentProfileSettingModel {
         return resultentArray;
     }
 
-    static constructPaymentProfileMapping(paymentProfileFieldArray: TravelperkPaymentProfileSettingGet[]): TravelperkPaymentProfileSettingPost[] {
-        const filteredExpenseFieldArray = paymentProfileFieldArray.filter((field: TravelperkPaymentProfileSetting) => field.user_role);
-
-        const paymentProfileSettings = filteredExpenseFieldArray.map((field: TravelperkPaymentProfileSetting) => {
-          return {
-            payment_profile_name: field.payment_profile_name,
-            payment_profile_id: field.payment_profile_id,
-            import_to_fyle: field.import_to_fyle,
-            user_role: field.user_role
-          };
+    static constructPaymentProfileMapping(paymentProfileFieldArray: any): TravelperkPaymentProfileSettingPost[] {
+        const paymentProfileSettings = paymentProfileFieldArray.map((field: any) => {
+            return {
+                profile_name: field.profileName,
+                is_import_enabled: field.isImportEnabled,
+                user_role: field.userRole
+            };
         });
 
         return paymentProfileSettings;
       }
 
     static mapAPIResponseToFormGroup(travelperkPaymentProfileSettingResponse:TravelperkPaymentProfileSettingGet[] | null): FormGroup {
-        const expenseFieldsArray = travelperkPaymentProfileSettingResponse ? this.constructFormArray(travelperkPaymentProfileSettingResponse) : [] ;
+        const paymentProfileMappingsArray = travelperkPaymentProfileSettingResponse ? this.constructFormArray(travelperkPaymentProfileSettingResponse) : [] ;
         return new FormGroup({
-            userRoleFields: new FormArray(expenseFieldsArray)
+            paymentProfileMappings: new FormArray(paymentProfileMappingsArray)
         });
     }
 
     static createPaymentProfileSettingPayload(travelperkPaymentProfileSettingForm: FormGroup){
-        return this.constructPaymentProfileMapping(travelperkPaymentProfileSettingForm.value.expenseFields);
+        return this.constructPaymentProfileMapping(travelperkPaymentProfileSettingForm.value.paymentProfileMappings);
     }
 
 }

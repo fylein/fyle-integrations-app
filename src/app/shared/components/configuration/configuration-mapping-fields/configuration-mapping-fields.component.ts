@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -27,33 +27,35 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() isDestinationDisabled: boolean;
 
-  @Input() noOfFieldsToShow: number = 0;
+  @Input() totalAvailableRows: number;
 
   @Input() showCrossIcon: boolean;
 
   @Input() appName: string;
+
+  @Output() loadMoreClick =  new EventEmitter();
 
   readonly brandingConfig = brandingConfig;
 
   constructor() { }
 
   get paymentProfileMappingsGetter() {
-    return this.form.get('expenseFields') as FormArray;
+    return this.form.get('paymentProfileMappings') as FormArray;
   }
 
   showOrHideLoadMoreButton() {
-    if (this.form.controls.expenseFields.value.length > this.noOfFieldsToShow) {
+    if (this.form.controls.paymentProfileMappings.value.length < this.totalAvailableRows) {
       return true;
     }
     return false;
   }
 
   showAllFields() {
-    this.noOfFieldsToShow = this.form.controls.expenseFields.value.length;
+    this.loadMoreClick.emit();
   }
 
   removeFilter(expenseField: AbstractControl) {
-    (expenseField as FormGroup).controls.user_role.patchValue('');
+    (expenseField as FormGroup).controls.userRole.patchValue('');
     event?.stopPropagation();
   }
 
