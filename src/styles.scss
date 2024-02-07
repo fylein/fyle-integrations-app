@@ -379,7 +379,7 @@ p {
     }
   
     &--contents {
-        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
+        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
     }
 }
 
