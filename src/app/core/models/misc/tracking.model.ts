@@ -12,12 +12,12 @@ import { AdvancedSettingsGet } from "../si/si-configuration/advanced-settings.mo
 import { ExportSettingGet } from "../si/si-configuration/export-settings.model";
 import { ImportSettingGet, ImportSettings } from "../si/si-configuration/import-settings.model";
 import { TravelperkAdvancedSettingPost } from "../travelperk/travelperk-configuration/travelperk-advanced-settings.model";
-import { TravelperkPaymentProfileSettingGetPaginator } from "../travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
+import { TravelperkPaymentProfileSettingResponse } from "../travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
 
 export type UpdateEventAdditionalProperty = {
     phase: ProgressPhase,
-    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingGetPaginator | TravelperkAdvancedSettingPost,
-    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingGetPaginator | TravelperkAdvancedSettingPost
+    oldState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | null | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost,
+    newState: QBDAdvancedSettingsGet | QBDExportSettingGet | QBDFieldMappingGet | Sage300ExportSettingGet |  Sage300ImportSettingGet | Sage300AdvancedSettingGet | BusinessCentralExportSettingGet | BusinessCentralImportSettingsGet | BusinessCentralAdvancedSettingsGet | TravelperkPaymentProfileSettingResponse | TravelperkAdvancedSettingPost
   };
 
 export type UpdateIntacctEventAdditionalProperty = {

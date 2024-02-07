@@ -5,7 +5,7 @@ import { Travelperk, TravelperkConfiguration, TravelperkDestinationAttribuite } 
 import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
 import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
-import { TravelperkPaymentProfileSettingGetPaginator, TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 
 const travelPerkConfigurationCache$ = new Subject<void>();
 
@@ -81,14 +81,14 @@ export class TravelperkService {
     return this.apiService.get(`/orgs/${this.orgId}/travelperk/sync_payment_profile/`,  {});
   }
 
-  getTravelperkPaymentProfileMapping(limit: number): Observable<TravelperkPaymentProfileSettingGetPaginator> {
+  getTravelperkPaymentProfileMapping(limit: number): Observable<TravelperkPaymentProfileSettingResponse> {
     return this.apiService.get(`/orgs/${this.orgId}/travelperk/profile_mappings/`, {
       limit: limit,
       offset: 0
     });
   }
 
-  postTravelperkPaymentProfileMapping(travelperkPaymentProfileMappingPayload: TravelperkPaymentProfileSettingPost[]): Observable<TravelperkPaymentProfileSettingGetPaginator> {
+  postTravelperkPaymentProfileMapping(travelperkPaymentProfileMappingPayload: TravelperkPaymentProfileSettingPost[]): Observable<TravelperkPaymentProfileSettingResponse> {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/profile_mappings/`, travelperkPaymentProfileMappingPayload);
   }
 

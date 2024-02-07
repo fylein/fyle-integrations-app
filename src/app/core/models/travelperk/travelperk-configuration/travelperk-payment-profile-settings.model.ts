@@ -18,7 +18,7 @@ export interface TravelperkPaymentProfileSettingGet extends TravelperkPaymentPro
 
 export interface TravelperkPaymentProfileSettingPost extends TravelperkPaymentProfileSetting { }
 
-export interface TravelperkPaymentProfileSettingGetPaginator extends PaginatedResponse {
+export interface TravelperkPaymentProfileSettingResponse extends PaginatedResponse {
     results: TravelperkPaymentProfileSettingGet[]
 }
 

@@ -1,9 +1,9 @@
 import { FyleField, TravelPerkExpenseGroup, TravelPerkUserRole } from "src/app/core/models/enum/enum.model";
 import { TravelperkAdvancedSettingGet } from "src/app/core/models/travelperk/travelperk-configuration/travelperk-advanced-settings.model";
-import { TravelperkPaymentProfileSettingGetPaginator } from "src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
+import { TravelperkPaymentProfileSettingResponse } from "src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
 import { TravelperkDestinationAttribuite } from "src/app/core/models/travelperk/travelperk.model";
 
-export const travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingGetPaginator = {
+export const travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingResponse = {
     next: '',
     previous: '',
     count: 1,

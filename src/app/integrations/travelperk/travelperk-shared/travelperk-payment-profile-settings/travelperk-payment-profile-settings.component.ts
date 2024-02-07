@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, Page, Sage300OnboardingState, ToastSeverity, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent } from 'src/app/core/models/enum/enum.model';
-import { TravelperkPaymentProfileSettingGetPaginator, TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { TravelperkPaymentProfileSettingResponse, TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -33,7 +33,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  paymentProfileSettings: TravelperkPaymentProfileSettingGetPaginator;
+  paymentProfileSettings: TravelperkPaymentProfileSettingResponse;
 
   sessionStartTime: Date = new Date();
 
@@ -106,7 +106,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
   }
 
   getProfileMappings(limit: number) {
-    this.travelperkService.getTravelperkPaymentProfileMapping(limit).subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingGetPaginator) => {
+    this.travelperkService.getTravelperkPaymentProfileMapping(limit).subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingResponse) => {
       this.paymentProfileSettings = travelperkPaymentProfileMappingResponse;
       this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(this.paymentProfileSettings.results);
       this.isLoading = false;
