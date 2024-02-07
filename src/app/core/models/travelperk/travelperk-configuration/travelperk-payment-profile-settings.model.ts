@@ -1,3 +1,4 @@
+import { SelectFormOption } from "../../common/select-form-option.model";
 import { TravelPerkUserRole } from "../../enum/enum.model";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { PaginatedResponse } from "../../db/paginated-response.model";
@@ -22,14 +23,9 @@ export interface TravelperkPaymentProfileSettingGetPaginator extends PaginatedRe
     results: TravelperkPaymentProfileSettingGet[]
 }
 
-export type TravelPerkPaymetProfileSettingFormOption = {
-    label: string,
-    value: TravelPerkUserRole
-}
-
 export class TravelperkPaymentProfileSettingModel {
 
-    static getUserRoles(): TravelPerkPaymetProfileSettingFormOption[] {
+    static getUserRoleOptions(): SelectFormOption[] {
         return [
             {
                 label: 'Booker',
@@ -48,17 +44,17 @@ export class TravelperkPaymentProfileSettingModel {
 
     static createFormGroup(data: TravelperkPaymentProfileSettingGet): FormGroup {
         return new FormGroup ({
-            payment_profile_name: new FormControl(data.payment_profile_name || ''),
-            payment_profile_id: new FormControl(data.payment_profile_id || ''),
-            user_role: new FormControl(data.user_role || null),
-            import_to_fyle: new FormControl(data.import_to_fyle || false)
+            paymentProfileName: new FormControl(data.payment_profile_name || ''),
+            paymentProfileId: new FormControl(data.payment_profile_id || ''),
+            userRole: new FormControl(data.user_role || null),
+            importToFyle: new FormControl(data.import_to_fyle || false)
         });
     }
 
     static constructFormArray(arrayData: TravelperkPaymentProfileSettingGet[]): FormGroup[] {
-        const arr:FormGroup[] = [];
-        arrayData.forEach((data) => arr.push(this.createFormGroup(data)));
-        return arr;
+        const resultentArray:FormGroup[] = [];
+        arrayData.forEach((data) => resultentArray.push(this.createFormGroup(data)));
+        return resultentArray;
     }
 
     static constructPaymentProfileMapping(paymentProfileFieldArray: TravelperkPaymentProfileSettingGet[]): TravelperkPaymentProfileSettingPost[] {
@@ -79,7 +75,7 @@ export class TravelperkPaymentProfileSettingModel {
     static mapAPIResponseToFormGroup(travelperkPaymentProfileSettingResponse:TravelperkPaymentProfileSettingGet[] | null): FormGroup {
         const expenseFieldsArray = travelperkPaymentProfileSettingResponse ? this.constructFormArray(travelperkPaymentProfileSettingResponse) : [] ;
         return new FormGroup({
-            expenseFields: new FormArray(expenseFieldsArray)
+            userRoleFields: new FormArray(expenseFieldsArray)
         });
     }
 

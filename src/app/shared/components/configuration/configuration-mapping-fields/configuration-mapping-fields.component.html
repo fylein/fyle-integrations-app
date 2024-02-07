@@ -1,7 +1,7 @@
 <div class="tw-px-24-px tw-pb-24-px">
     <div [formGroup]="form">
         <div formArrayName="expenseFields">
-            <div *ngFor="let expenseField of paymentProfileMappings.controls | slice:0:noOfFieldsToShow; let i = index" [formGroupName]="i">
+            <div *ngFor="let expenseField of paymentProfileMappingsGetter.controls | slice:0:noOfFieldsToShow; let i = index" [formGroupName]="i">
                 <div class="tw-flex tw-justify-start tw-items-center tw-mb-18-px">
                     <div>
                         <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">

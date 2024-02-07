@@ -3,7 +3,8 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ConfigurationCta, Page, Sage300OnboardingState, ToastSeverity, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent } from 'src/app/core/models/enum/enum.model';
-import { TravelPerkPaymetProfileSettingFormOption, TravelperkPaymentProfileSettingGetPaginator, TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { TravelperkPaymentProfileSettingGetPaginator, TravelperkPaymentProfileSettingModel } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -26,7 +27,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   paymentProfileMappingForm: FormGroup;
 
-  userRole: TravelPerkPaymetProfileSettingFormOption[] = TravelperkPaymentProfileSettingModel.getUserRoles();
+  userRole: SelectFormOption[] = TravelperkPaymentProfileSettingModel.getUserRoleOptions();
 
   isSaveInProgress: boolean;
 
@@ -63,7 +64,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     this.isPreviewDialogVisible = visible;
   }
 
-  constructPayloadAndSave() {
+  save(): void {
     this.isSaveInProgress = true;
     const paymentProfileMappingPayload = TravelperkPaymentProfileSettingModel.createPaymentProfileSettingPayload(this.paymentProfileMappingForm);
     this.travelperkService.postTravelperkPaymentProfileMapping(paymentProfileMappingPayload).subscribe((travelperkPaymentProfileMappingResponse) => {
@@ -94,12 +95,6 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving payment profile settings, please try again later');
     });
-  }
-
-  save(): void {
-    if (this.paymentProfileMappingForm.valid) {
-      this.constructPayloadAndSave();
-    }
   }
 
   private setupPage(): void {

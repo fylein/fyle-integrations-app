@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
-import { TravelPerkPaymetProfileSettingFormOption, TravelperkPaymentProfileSettingGet } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TravelperkPaymentProfileSettingGet } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 
 @Component({
   selector: 'app-configuration-mapping-fields',
@@ -20,7 +21,7 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() destinationPlaceholderFieldText: string;
 
-  @Input() sourceFieldOptions: string[] | TravelPerkPaymetProfileSettingFormOption[];
+  @Input() sourceFieldOptions: string[] | SelectFormOption[];
 
   @Input() destinationFieldOptions: string[] | TravelperkPaymentProfileSettingGet[];
 
@@ -36,7 +37,7 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   constructor() { }
 
-  get paymentProfileMappings() {
+  get paymentProfileMappingsGetter() {
     return this.form.get('expenseFields') as FormArray;
   }
 
