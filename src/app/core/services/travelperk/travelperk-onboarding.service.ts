@@ -31,7 +31,7 @@ export class TravelperkOnboardingService {
       step: 'Payment Profile Settings',
       icon: 'arrow-tail-down-medium',
       route: '/integrations/travelperk/onboarding/payment_profile_settings',
-      styleClasses: ['step-name-import--text !tw-w-100-px tw-text-prrety tw-text-center']
+      styleClasses: ['step-name-import--text !tw-w-100-px tw-text-pretty tw-text-center']
     },
     {
       active: false,

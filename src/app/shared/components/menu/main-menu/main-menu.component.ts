@@ -20,6 +20,8 @@ export class MainMenuComponent implements OnInit {
 
   @Input() isDropdrownRequired: boolean;
 
+  @Input() isSyncRequired: boolean = true;
+
   @Output() refreshDimensionClick = new EventEmitter<boolean>();
 
   readonly brandingConfig = brandingConfig;

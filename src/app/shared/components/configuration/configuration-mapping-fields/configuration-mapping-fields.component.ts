@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TravelperkPaymentProfileSettingGet } from 'src/app/core/models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
 
 @Component({
   selector: 'app-configuration-mapping-fields',
@@ -13,75 +15,48 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() sourceFieldText: string;
 
-  @Input() DestinationFieldText: string;
+  @Input() destinationFieldText: string;
 
   @Input() sourceFieldPlaceholderText: string;
 
-  @Input() DestinationPlaceholderFieldText: string;
+  @Input() destinationPlaceholderFieldText: string;
 
-  @Input() SourceFields: string[];
+  @Input() sourceFieldOptions: string[] | SelectFormOption[];
 
-  @Input() DestinationFields: string[];
-
-  @Input() isSourceDisabled: boolean;
+  @Input() destinationFieldOptions: string[] | TravelperkPaymentProfileSettingGet[];
 
   @Input() isDestinationDisabled: boolean;
 
-  @Input() noOfFieldsToShow: number = 0;
+  @Input() totalAvailableRows: number;
 
   @Input() showCrossIcon: boolean;
 
   @Input() appName: string;
 
-  currentLength: number = this.noOfFieldsToShow;
+  @Output() loadMoreClick =  new EventEmitter();
 
   readonly brandingConfig = brandingConfig;
 
   constructor() { }
 
-  get expenseFieldsGetter() {
-    return this.form.get('expenseFields') as FormArray;
+  get paymentProfileMappingsGetter() {
+    return this.form.get('paymentProfileMappings') as FormArray;
   }
 
   showOrHideLoadMoreButton() {
-    if (this.form.controls.expenseFields.value.length > this.currentLength) {
+    if (this.form.controls.paymentProfileMappings.value.length < this.totalAvailableRows) {
       return true;
     }
     return false;
   }
 
-  addExpenseFields() {
-    this.currentLength = this.form.controls.expenseFields.value.length;
-  }
-
-  hasDuplicateOption(formGroup: AbstractControl, index: number, controlName: string): boolean {
-    return (formGroup as FormGroup).controls[controlName].valid;
+  showAllFields() {
+    this.loadMoreClick.emit();
   }
 
   removeFilter(expenseField: AbstractControl) {
-    (expenseField as FormGroup).controls.source_field.patchValue('');
-    (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
-    (expenseField as FormGroup).controls.import_to_fyle.enable();
+    (expenseField as FormGroup).controls.userRole.patchValue('');
     event?.stopPropagation();
-  }
-
-  onDropdownChange(event: any, index: number) {
-    // Get the selected value from the <p-dropdown>
-    const selectedValue = event.value;
-
-    // Find the selected field in 'fyleFields' based on the selected value
-    // Const selectedField = this.SourceFields.find(field => field.attribute_type === selectedValue);
-
-    // Check if the selected field is dependent (assuming 'is_dependent' is a property in 'selectedField')
-    // If (selectedField?.is_dependent) {
-      // Set the toggle to false
-      // (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(false);
-
-      // Get the 'import_to_fyle' control at the specified index and disable it
-      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
-    // } else {
-      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
-    // }
   }
 
   ngOnInit(): void {
