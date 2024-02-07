@@ -30,7 +30,8 @@ export class BusinessCentralTokenGuard implements CanActivate {
 
       return forkJoin(
         [
-          this.businessCentralConnectorService.getBusinessCentralCredentials()
+          this.businessCentralConnectorService.getBusinessCentralCredentials(),
+          this.businessCentralConnectorService.getBusinessCentralConnection()
         ]
       ).pipe(
         map(response => !!response),
