@@ -247,5 +247,7 @@
     --btn-tertiary-hover-text-color: var(--text-brand-primary);
 
     --btn-tertiary-hover-bg: #{$white};
+
+    --lv-stats-bg: linear-gradient(112deg, rgba(255, 255, 255, 0.90) 1.65%, rgba(255, 255, 255, 0.24) 100%);
   }
 }

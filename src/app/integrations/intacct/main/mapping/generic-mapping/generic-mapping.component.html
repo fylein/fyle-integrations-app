@@ -3,8 +3,8 @@
 </div>
 <div *ngIf="!isLoading" class="tw-py-16-px tw-px-120-px">
     <div class="tw-inline-flex tw-space-x-4">
-        <div class="tw-rounded-10-px tw-bg-white tw-border-1-px tw-border-separator tw-p-16-px tw-w-200-px tw-h-84-px">
-            <div class="tw-w-36-px tw-h-6-px tw-rounded-12-px tw-bg-cta-disabled">
+        <div class="tw-rounded-10-px tw-bg-white tw-border-1-px tw-border-separator tw-p-16-px tw-h-84-px">
+            <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-bg-cta-disabled">
             </div>
             <div class="tw-pt-8-px tw-text-faded-text-color tw-text-12-px">
                 <p>Total {{ this.sourceType | snakeCaseToSpaceCase | titlecase }}{{mappingStats.all_attributes_count > 0 ? 's' : ''}}</p>
@@ -14,8 +14,8 @@
             </div>
         </div>
     
-        <div class="tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-p-16-px tw-w-200-px tw-h-84-px">
-            <div class="tw-w-36-px tw-h-6-px tw-rounded-12-px tw-bg-cta-disabled">
+        <div class="tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator tw-p-16-px tw-h-84-px">
+            <div class="tw-w-34-px tw-h-6-px tw-rounded-12-px tw-bg-cta-disabled">
             </div>
             <div class="tw-pt-8-px tw-text-faded-text-color tw-text-12-px">
                 <p>Unmapped {{ this.sourceType | snakeCaseToSpaceCase | titlecase }}{{mappingStats.unmapped_attributes_count > 0 ? 's' : ''}}</p>
