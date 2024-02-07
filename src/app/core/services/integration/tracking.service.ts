@@ -4,10 +4,10 @@ import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorPropert
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
 import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/field-mapping.model';
-import { LocationEntityPost } from '../../models/si/si-configuration/connector.model';
-import { ExportSettingPost } from '../../models/si/si-configuration/export-settings.model';
-import { ImportSettingPost } from '../../models/si/si-configuration/import-settings.model';
-import { AdvancedSettingsPost } from '../../models/si/si-configuration/advanced-settings.model';
+import { LocationEntityPost } from '../../models/intacct/intacct-configuration/connector.model';
+import { ExportSettingPost } from '../../models/intacct/intacct-configuration/export-settings.model';
+import { ImportSettingPost } from '../../models/intacct/intacct-configuration/import-settings.model';
+import { AdvancedSettingsPost } from '../../models/intacct/intacct-configuration/advanced-settings.model';
 import { Sage300ExportSettingPost } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { Sage300ImportSettingPost } from '../../models/sage300/sage300-configuration/sage300-import-settings.model';
 import { Sage300AdvancedSettingPost } from '../../models/sage300/sage300-configuration/sage300-advanced-settings.model';

@@ -8,11 +8,11 @@ import { QBDFieldMappingGet } from "../qbd/qbd-configuration/field-mapping.model
 import { Sage300AdvancedSettingGet } from "../sage300/sage300-configuration/sage300-advanced-settings.model";
 import { Sage300ExportSettingGet } from "../sage300/sage300-configuration/sage300-export-setting.model";
 import { Sage300ImportSettingGet } from "../sage300/sage300-configuration/sage300-import-settings.model";
-import { AdvancedSettingsGet } from "../si/si-configuration/advanced-settings.model";
-import { ExportSettingGet } from "../si/si-configuration/export-settings.model";
-import { ImportSettingGet, ImportSettings } from "../si/si-configuration/import-settings.model";
 import { TravelperkAdvancedSettingPost } from "../travelperk/travelperk-configuration/travelperk-advanced-settings.model";
 import { TravelperkPaymentProfileSettingResponse } from "../travelperk/travelperk-configuration/travelperk-payment-profile-settings.model";
+import { AdvancedSettingsGet } from "../intacct/intacct-configuration/advanced-settings.model";
+import { ExportSettingGet } from "../intacct/intacct-configuration/export-settings.model";
+import { ImportSettingGet, ImportSettings } from "../intacct/intacct-configuration/import-settings.model";
 
 export type UpdateEventAdditionalProperty = {
     phase: ProgressPhase,
@@ -51,7 +51,6 @@ export type TrackingAppMap = {
   [AppName.INTACCT]: TrackingApp.INTACCT,
   [AppName.QBO]: TrackingApp.QBO,
   [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
-  [AppName.GUSTO]: TrackingApp.GUSTO,
 }
 
 export const trackingAppMap: TrackingAppMap = {
@@ -61,6 +60,5 @@ export const trackingAppMap: TrackingAppMap = {
   [AppName.BAMBOO_HR]: TrackingApp.BAMBOO_HR,
   [AppName.INTACCT]: TrackingApp.INTACCT,
   [AppName.QBO]: TrackingApp.QBO,
-  [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
-  [AppName.GUSTO]: TrackingApp.GUSTO
+  [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK
 };

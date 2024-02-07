@@ -4,7 +4,7 @@ import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { QBDWorkspace } from 'src/app/core/models/qbd/db/workspaces.model';
 import { Cacheable } from 'ts-cacheable';
 import { StorageService } from '../../common/storage.service';
-import { QbdApiService } from './qbd-api.service';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ import { QbdApiService } from './qbd-api.service';
 export class QbdWorkspaceService {
 
   constructor(
-    private apiService: QbdApiService,
+    private apiService: ApiService,
     private storageService: StorageService
   ) { }
 

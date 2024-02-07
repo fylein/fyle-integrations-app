@@ -5,7 +5,7 @@
         </div>
         <div class="tw-border-separator tw-border-t-1-px tw-pb-24-px">
             <div class="tw-mt-10-px tw-rounded-6-px tw-bg-white">
-                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat?.EMPLOYEE_MAPPING || errors?.CATEGORY_MAPPING?.length || groupedErrorStat?.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
+                <div *ngIf="errors.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING || errors.CATEGORY_MAPPING.length || groupedErrorStat.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
                     <div class="container">
                         <div class="sub-text-container">
                             <h4 class="tw-text-16-px !tw-font-500 tw-text-normal-text-color">Integrations Errors</h4>
@@ -14,11 +14,11 @@
                     </div>
                 </div>
 
-                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat?.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
+                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
                     <div class="container">
                         <div class="inside-container">
                             <h4 class="tw-text-14-px !tw-font-500 tw-text-slightly-normal-text-color">Employee Mapping Errors</h4>
-                            <h5 *ngIf="groupedErrorStat.EMPLOYEE_MAPPING" class="tw-text-faded-text-color tw-text-12-px">{{ groupedErrorStat.EMPLOYEE_MAPPING?.resolvedCount }}/{{ groupedErrorStat.EMPLOYEE_MAPPING?.totalCount }} error(s) resolved</h5>
+                            <h5 *ngIf="groupedErrorStat.EMPLOYEE_MAPPING" class="tw-text-faded-text-color tw-text-12-px">{{ groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount }}/{{ groupedErrorStat.EMPLOYEE_MAPPING.totalCount }} error(s) resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">
                                     <p>Map employees in {{brandingConfig.brandName}} to their corresponding records in {{appName}}.</p>
@@ -26,8 +26,8 @@
                                 <button *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)" type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" class="tw-text-white tw-text-500 tw-text-12-px tw-px-12-px tw-py-6-px tw-bg-slightly-normal-text-color tw-rounded-4-px tw-w-100-px tw-font-500">
                                     Resolve
                                 </button>
-                                <div class="tw-flex" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
-                                    <svg-icon-sprite src="check-circle-outline" width="24px" height="24px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
+                                <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
+                                    <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
                                     <p class="tw-text-faded-text-color tw-text-14-px">
                                     Resolved
                                     </p>
@@ -41,15 +41,15 @@
                     <div class="container">
                         <div class="inside-container">
                             <h4 class="tw-text-14-px !tw-font-500 tw-text-slightly-normal-text-color">Category Mapping Errors</h4>
-                            <h5 *ngIf="groupedErrorStat.CATEGORY_MAPPING" class="tw-pt-4-px tw-text-faded-text-color tw-text-12-px">{{ groupedErrorStat.CATEGORY_MAPPING.resolvedCount }}/{{ groupedErrorStat.CATEGORY_MAPPING?.totalCount }} error(s) resolved</h5>
+                            <h5 *ngIf="groupedErrorStat.CATEGORY_MAPPING" class="tw-pt-4-px tw-text-faded-text-color tw-text-12-px">{{ groupedErrorStat.CATEGORY_MAPPING.resolvedCount }}/{{ groupedErrorStat.CATEGORY_MAPPING.totalCount }} error(s) resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-faded-text-color tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4"><p>Map category in {{brandingConfig.brandName}} to their corresponding records in {{appName}}.</p>
                                 </h5>
                                 <button *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)" type="button" (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" class="tw-text-white tw-text-500 tw-text-12-px tw-px-12-px tw-py-6-px tw-bg-slightly-normal-text-color tw-rounded-4-px tw-w-100-px tw-font-500">
                                     Resolve
                                 </button>
-                                <div class="tw-flex" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
-                                    <svg-icon-sprite src="check-circle-outline" width="24px" height="24px" class="tw-text-success-toast tw-pr-6-px"></svg-icon-sprite>
+                                <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
+                                    <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
                                     <p class="tw-text-faded-text-color tw-text-14-px">
                                     Resolved
                                     </p>

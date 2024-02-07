@@ -6,8 +6,9 @@ import { AppName, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enu
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
-import { EmailOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { EmailOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { trackingAppMap } from 'src/app/core/models/misc/tracking.model';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-email-multi-select-field',
@@ -52,6 +53,8 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   showDialog: boolean;
 
   emails: EmailOptions[];
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private formBuilder: FormBuilder,

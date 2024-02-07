@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { BusinessCentralOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, BusinessCentralOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-mapping/business-central-mapping.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -25,12 +26,13 @@ export class BusinessCentralComponent implements OnInit {
   windowReference: Window;
 
   constructor(
-    private storageService: StorageService,
+    private helperService: HelperService,
+    private mapping: BusinessCentralMappingService,
     private router: Router,
+    private storageService: StorageService,
     private userService: IntegrationsUserService,
-    private workspaceService: WorkspaceService,
     private windowService: WindowService,
-    private mapping: BusinessCentralMappingService
+    private workspaceService: WorkspaceService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -51,6 +53,7 @@ export class BusinessCentralComponent implements OnInit {
   }
 
   private setupWorkspace(): void {
+    this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
     this.workspaceService.getWorkspace(this.user.org_id).subscribe((workspaces: BusinessCentralWorkspace) => {
       if (workspaces?.id) {
         this.storeWorkspaceAndNavigate(workspaces);

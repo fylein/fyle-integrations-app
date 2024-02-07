@@ -1,4 +1,4 @@
-<div class="tw-flex tw-justify-around tw-items-center">
+<div class="tw-flex tw-justify-around tw-items-center tw-h-240-px">
     <div class="tw-text-center tw-py-32-px tw-px-70-px tw-items-center">
         <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-18-px">
             {{brandingConfig.brandName | uppercase}}
@@ -8,7 +8,7 @@
         </h3>
     </div>
     <div>
-        <img src="assets/illustrations/vertical-divider.svg"/>
+        <img *ngIf="brandingFeatureConfig.illustrationsAllowed" src="assets/illustrations/vertical-divider.svg"/>
     </div>
     <div class="tw-py-32-px tw-px-70-px tw-items-center">
         <h5 class="tw-text-14-px tw-text-sub-text-color tw-font-500 tw-pb-16-px tw-text-center ">

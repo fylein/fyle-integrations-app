@@ -4,13 +4,13 @@
             <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
                 <div class="tw-flex tw-justify-between tw-items-center">
                     <p class="tw-text-20-px tw-font-500">Add new Custom Field</p>
-                    <i class="pi pi-times tw-cursor-pointer tw-text-12-px" (click)="closeModel()"></i>
+                    <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" class="tw-cursor-pointer tw-text-12-px" (click)="closeModel()"></i>
                 </div>
             </div>
             <div *ngIf="existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1">
                 <div class="tw-px-16-px tw-text-12-px tw-pt-12-px tw-flex">
                     <span class="error-box tw-flex tw-p-4-px">
-                        <svg-icon-sprite src="danger-fill" width="20px" height="20px" class="tw-text-alert-toast tw-mb-16-px"></svg-icon-sprite>
+                        <app-svg-icon [svgSource]="'danger-fill'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-alert-toast tw-mb-16-px'"></app-svg-icon>
                         <h5 class="tw-ml-6-px">
                             Oops! It looks like another field with the same name already exists in your {{brandingConfig.brandName}} account. Would you please
                             give the field a different name?

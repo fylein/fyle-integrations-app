@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { ConditionField, ExpenseFilterResponse } from 'src/app/core/models/common/advanced-settings.model';
 import { JoinOption } from 'src/app/core/models/enum/enum.model';
-import { CustomOperatorOption } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { CustomOperatorOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({

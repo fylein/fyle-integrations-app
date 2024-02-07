@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
-import { SiApiService } from '../si-core/si-api.service';
 import { Observable } from 'rxjs';
-import { ExportSettingGet, ExportSettingPost } from 'src/app/core/models/si/si-configuration/export-settings.model';
+import { ExportSettingGet, ExportSettingPost } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import { ApiService } from '../../common/api.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { ExportSettingGet, ExportSettingPost } from 'src/app/core/models/si/si-c
 export class SiExportSettingService {
 
   constructor(
-    private apiService: SiApiService,
+    private apiService: ApiService,
     private workspaceService: SiWorkspaceService
   ) { }
 

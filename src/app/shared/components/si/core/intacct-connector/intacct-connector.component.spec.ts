@@ -6,10 +6,10 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
-import { SageIntacctCredential } from 'src/app/core/models/si/db/sage-credentials.model';
-import { SiComponent } from 'src/app/integrations/si/si.component';
+import { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
+import { SiComponent } from 'src/app/integrations/intacct/intacct.component';
 import { HttpClientModule } from '@angular/common/http';
-import { OnboardingIntacctConnectorComponent } from 'src/app/integrations/si/onboarding/onboarding-intacct-connector/onboarding-intacct-connector.component';
+import { IntacctOnboardingConnectorComponent } from 'src/app/integrations/intacct/intacct-onboarding/intacct-onboarding-connector/intacct-onboarding-connector.component';
 
 describe('IntacctConnectorComponent', () => {
   let component: IntacctConnectorComponent;
@@ -34,7 +34,7 @@ describe('IntacctConnectorComponent', () => {
         { provide: SiMappingsService, useValue: mockMappingsService },
         { provide: MessageService, useValue: mockMessageService },
         SiComponent,
-        OnboardingIntacctConnectorComponent
+        IntacctOnboardingConnectorComponent
       ]
     }).compileComponents();
 

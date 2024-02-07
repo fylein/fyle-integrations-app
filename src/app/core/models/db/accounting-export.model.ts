@@ -1,7 +1,7 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
 import { AccountingExportStatus, AccountingExportType, FundSource, FyleReferenceType } from "../enum/enum.model";
-import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../si/db/expense-group.model";
-import { Expense } from "../si/db/expense.model";
+import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intacct/db/expense-group.model";
+import { Expense } from "../intacct/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
 import { ExportLogService } from "../../services/common/export-log.service";
 import { DateFilter } from "../qbd/misc/date-filter.model";

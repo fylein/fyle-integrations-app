@@ -2,7 +2,9 @@ export type FeatureConfiguration = {
     [brandingId: string]: {
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;
+        isIconsInsideButtonAllowed: boolean;
         exposeOnlyQBOApp: boolean;
+        isBackgroundColorAllowed: boolean;
         featureFlags: {
             cloneSettings: boolean;
             mapEmployees: boolean;
