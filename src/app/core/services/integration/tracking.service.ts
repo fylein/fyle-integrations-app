@@ -15,6 +15,7 @@ import { BusinessCentralExportSettingPost } from '../../models/business-central/
 import { BusinessCentralImportSettingsPost } from '../../models/business-central/business-central-configuration/business-central-import-settings.model';
 import { BusinessCentralAdvancedSettingsPost } from '../../models/business-central/business-central-configuration/business-central-advanced-settings.model';
 import { TravelperkPaymentProfileSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-payment-profile-settings.model';
+import { TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
 
 @Injectable({
   providedIn: 'root'
@@ -85,7 +86,7 @@ export class TrackingService {
     this.eventTrack(`Time Spent on ${page} page`, trackingApp, {durationInSeconds: differenceInMs / 1000});
   }
 
-  onOnboardingStepCompletion(trackingApp: TrackingApp, eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState | TravelPerkOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost | BusinessCentralAdvancedSettingsPost | TravelperkPaymentProfileSettingPost[]): void {
+  onOnboardingStepCompletion(trackingApp: TrackingApp, eventName: QBDOnboardingState | Sage300OnboardingState | BusinessCentralOnboardingState | TravelPerkOnboardingState, stepNumber: number, additionalProperties: QBDExportSettingPost | QBDFieldMappingPost | QBDAdvancedSettingsPost | void | Sage300ExportSettingPost | Sage300ImportSettingPost | Sage300AdvancedSettingPost | BusinessCentralExportSettingPost | BusinessCentralImportSettingsPost | BusinessCentralAdvancedSettingsPost | TravelperkPaymentProfileSettingPost[] | TravelperkAdvancedSettingPost): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 

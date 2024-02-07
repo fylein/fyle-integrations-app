@@ -1,6 +1,7 @@
 import { TravelPerkUserRole } from "../../enum/enum.model";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { PaginatedResponse } from "../../db/paginated-response.model";
+import { SelectFormOption } from "../../common/select-form-option.model";
 
 export type TravelperkPaymentProfileSetting = {
     payment_profile_name: string,
@@ -22,14 +23,9 @@ export interface TravelperkPaymentProfileSettingGetPaginator extends PaginatedRe
     results: TravelperkPaymentProfileSettingGet[]
 }
 
-export type TravelPerkPaymetProfileSettingFormOption = {
-    label: string,
-    value: TravelPerkUserRole
-}
-
 export class TravelperkPaymentProfileSettingModel {
 
-    static getUserRoles(): TravelPerkPaymetProfileSettingFormOption[] {
+    static getUserRoles(): SelectFormOption[] {
         return [
             {
                 label: 'Booker',
