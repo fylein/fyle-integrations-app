@@ -8,6 +8,12 @@ import { IntacctExportSettingsComponent } from './intacct-export-settings/intacc
 import { IntacctImportSettingsComponent } from './intacct-import-settings/intacct-import-settings.component';
 import { TooltipModule } from 'primeng/tooltip';
 import { DialogModule } from 'primeng/dialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+
 @NgModule({
   declarations: [
     IntacctExportSettingsComponent,
@@ -20,7 +26,8 @@ import { DialogModule } from 'primeng/dialog';
     ReactiveFormsModule,
     MultiSelectModule,
     TooltipModule,
-    DialogModule
+    DialogModule,
+    InputSwitchModule
   ],
   exports: [
     IntacctExportSettingsComponent,
