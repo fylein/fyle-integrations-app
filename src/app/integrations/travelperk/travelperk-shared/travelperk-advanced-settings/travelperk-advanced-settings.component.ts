@@ -10,7 +10,8 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { travelperkAdvancedSettingsResponse, travelperkDestinationAttribute } from '../travelperk.fixture';
 import { catchError, forkJoin, of } from 'rxjs';
-import { TravelperkDestinationAttribuite, TravelperkFormOption } from 'src/app/core/models/travelperk/travelperk.model';
+import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-travelperk-advanced-settings',
@@ -47,7 +48,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   memoStructure: string[] = [];
 
-  lineItems: TravelperkFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
+  lineItems: SelectFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
 
   constructor(
     private router: Router,

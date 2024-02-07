@@ -1,6 +1,6 @@
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { TravelPerkExpenseGroup } from "../../enum/enum.model";
-import { TravelperkFormOption } from "../travelperk.model";
+import { SelectFormOption } from "../../common/select-form-option.model";
 
 export type TravelperkAdvancedSetting = {
     default_employee: string,
@@ -21,7 +21,7 @@ export interface TravelperkAdvancedSettingGet extends TravelperkAdvancedSetting 
 export interface TravelperkAdvancedSettingPost extends TravelperkAdvancedSetting { }
 
 export class TravelperkAdvancedSettingModel {
-    static getExpenseGroup(): TravelperkFormOption[] {
+    static getExpenseGroup(): SelectFormOption[] {
         return [
             {
                 label: 'Single Expense',

@@ -35,11 +35,6 @@ export type WorkatoConnectionStatus = {
     }
 }
 
-export type TravelperkFormOption = {
-    label: string,
-    value: TravelPerkUserRole | TravelPerkExpenseGroup
-}
-
 export type TravelperkDestinationAttribuite = {
     id: number,
     attribute_type: FyleField,
