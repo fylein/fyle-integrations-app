@@ -29,7 +29,7 @@
             <div *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-border tw-border-separator tw-flex tw-items-center tw-rounded-4-px">
                 <div class="tw-border-r tw-border-r-separator">
                     <button type="button" class="tw-h-32-px tw-w-30-px prevBtn" (click)="previousPageChange(page)" [disabled]="page === 1" >
-                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? './assets/icons/arrow-left' : './assets/icons/co/grv-arrow-left'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? 'arrow-left' : 'grv-arrow-left'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'"></app-svg-icon>
                     </button>
                 </div>
                 <div class="tw-w-30-px tw-h-32-px tw-flex tw-items-center tw-justify-center">
@@ -37,19 +37,19 @@
                 </div>
                 <div class="tw-border-l tw-border-l-separator">
                     <button type="button" class="tw-h-32-px tw-w-30-px nextBtn" (click)="nextPageChange(page)" [disabled]="page === totalPages">
-                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? './assets/icons/arrow-right' : './assets/icons/co/grv-arrow-right'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? 'arrow-right' : 'grv-arrow-right'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'"></app-svg-icon>
                     </button>
                 </div>
             </div>
             <div *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-flex tw-justify-between">
                 <div class="">
                     <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-flex tw-place-items-center tw-pt-2-px tw-mr-12-px" (click)="navigateToPage(1)" [disabled]="page === 1" >
-                        <i class="pi pi-minus tw-rotate-90"></i><app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? './assets/icons/arrow-tail-left' : './assets/icons/co/grv-arrow-tail-left'"></app-svg-icon>
+                        <i class="pi pi-minus tw-rotate-90"></i><app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? 'arrow-tail-left' : 'grv-arrow-tail-left'"></app-svg-icon>
                     </button>
                 </div>
                 <div class="">
                     <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-mr-8-px" (click)="previousPageChange(page)" [disabled]="page === 1" >
-                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? './assets/icons/arrow-tail-left' : './assets/icons/co/grv-arrow-tail-left'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? 'arrow-tail-left' : 'grv-arrow-tail-left'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'"></app-svg-icon>
                     </button>
                 </div>
                 <div class="tw-w-fix tw-h-32-px tw-flex tw-items-center tw-justify-center tw-border-2-px tw-border-separator tw-py-8-px tw-px-12-px tw-rounded-4-px tw-bg-white tw-mr-10-px">
@@ -57,12 +57,12 @@
                 </div>
                 <div >
                     <button type="button" class="tw-h-32-px tw-w-32-px nextBtn tw-mr-12-px" (click)="nextPageChange(page)" [disabled]="page === totalPages">
-                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? './assets/icons/arrow-tail-right' : './assets/icons/co/grv-arrow-tail-right'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? 'arrow-tail-right' : 'grv-arrow-tail-right'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'"></app-svg-icon>
                     </button>
                 </div>
                 <div>
                     <button type="button" class="tw-h-32-px tw-w-32-px tw-ml-10-px nextBtn tw-flex tw-place-items-center tw-pt-2-px" (click)="navigateToPage(totalPages)" [disabled]="page === totalPages">
-                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? './assets/icons/arrow-tail-right' : './assets/icons/co/grv-arrow-tail-right'"></app-svg-icon><i class="pi pi-minus tw-rotate-90"></i>
+                        <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? 'arrow-tail-right' : 'grv-arrow-tail-right'"></app-svg-icon><i class="pi pi-minus tw-rotate-90"></i>
                     </button>
                 </div>
             </div>
