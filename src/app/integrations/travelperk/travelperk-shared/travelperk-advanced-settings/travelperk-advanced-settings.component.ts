@@ -125,7 +125,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
     }, () => {
       this.isSaveInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving payment profile settings, please try again later');
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving advanced settings, please try again later');
     });
   }
 
@@ -140,7 +140,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     forkJoin([
       this.travelperkService.getTravelperkAdvancedSettings().pipe(catchError(() => of(null))),
       this.travelperkService.getCategories()
-    ]).subscribe(([travelperkAdvancedSettingsResponse, travelperkDestinationAttribute]) => {
+    ]).subscribe(([travelperkAdvancedSettingsResponse]) => {
       this.advancedSettings = travelperkAdvancedSettingsResponse;
       this.defaultCategories = travelperkDestinationAttribute;
       this.advancedSettingsForm = TravelperkAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings);

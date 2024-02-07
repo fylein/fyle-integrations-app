@@ -1,13 +1,12 @@
+import { SelectFormOption } from "../../common/select-form-option.model";
 import { TravelPerkUserRole } from "../../enum/enum.model";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { PaginatedResponse } from "../../db/paginated-response.model";
-import { SelectFormOption } from "../../common/select-form-option.model";
 
 export type TravelperkPaymentProfileSetting = {
-    payment_profile_name: string,
-	payment_profile_id: string,
+    profile_name: string,
 	user_role: TravelPerkUserRole | null,
-	import_to_fyle: boolean
+	is_import_enabled: boolean
 }
 
 export interface TravelperkPaymentProfileSettingGet extends TravelperkPaymentProfileSetting {
@@ -25,7 +24,7 @@ export interface TravelperkPaymentProfileSettingGetPaginator extends PaginatedRe
 
 export class TravelperkPaymentProfileSettingModel {
 
-    static getUserRoles(): SelectFormOption[] {
+    static getUserRoleOptions(): SelectFormOption[] {
         return [
             {
                 label: 'Booker',
@@ -44,43 +43,39 @@ export class TravelperkPaymentProfileSettingModel {
 
     static createFormGroup(data: TravelperkPaymentProfileSettingGet): FormGroup {
         return new FormGroup ({
-            payment_profile_name: new FormControl(data.payment_profile_name || ''),
-            payment_profile_id: new FormControl(data.payment_profile_id || ''),
-            user_role: new FormControl(data.user_role || null),
-            import_to_fyle: new FormControl(data.import_to_fyle || false)
+            profileName: new FormControl(data.profile_name || ''),
+            userRole: new FormControl(data.user_role || null),
+            isImportEnabled: new FormControl(data.is_import_enabled || false)
         });
     }
 
     static constructFormArray(arrayData: TravelperkPaymentProfileSettingGet[]): FormGroup[] {
-        const arr:FormGroup[] = [];
-        arrayData.forEach((data) => arr.push(this.createFormGroup(data)));
-        return arr;
+        const resultentArray:FormGroup[] = [];
+        arrayData.forEach((data) => resultentArray.push(this.createFormGroup(data)));
+        return resultentArray;
     }
 
-    static constructPaymentProfileMapping(paymentProfileFieldArray: TravelperkPaymentProfileSettingGet[]): TravelperkPaymentProfileSettingPost[] {
-        const filteredExpenseFieldArray = paymentProfileFieldArray.filter((field: TravelperkPaymentProfileSetting) => field.user_role);
-
-        const paymentProfileSettings = filteredExpenseFieldArray.map((field: TravelperkPaymentProfileSetting) => {
-          return {
-            payment_profile_name: field.payment_profile_name,
-            payment_profile_id: field.payment_profile_id,
-            import_to_fyle: field.import_to_fyle,
-            user_role: field.user_role
-          };
+    static constructPaymentProfileMapping(paymentProfileFieldArray: any): TravelperkPaymentProfileSettingPost[] {
+        const paymentProfileSettings = paymentProfileFieldArray.map((field: any) => {
+            return {
+                profile_name: field.profileName,
+                is_import_enabled: field.isImportEnabled,
+                user_role: field.userRole
+            };
         });
 
         return paymentProfileSettings;
       }
 
     static mapAPIResponseToFormGroup(travelperkPaymentProfileSettingResponse:TravelperkPaymentProfileSettingGet[] | null): FormGroup {
-        const expenseFieldsArray = travelperkPaymentProfileSettingResponse ? this.constructFormArray(travelperkPaymentProfileSettingResponse) : [] ;
+        const paymentProfileMappingsArray = travelperkPaymentProfileSettingResponse ? this.constructFormArray(travelperkPaymentProfileSettingResponse) : [] ;
         return new FormGroup({
-            expenseFields: new FormArray(expenseFieldsArray)
+            paymentProfileMappings: new FormArray(paymentProfileMappingsArray)
         });
     }
 
     static createPaymentProfileSettingPayload(travelperkPaymentProfileSettingForm: FormGroup){
-        return this.constructPaymentProfileMapping(travelperkPaymentProfileSettingForm.value.expenseFields);
+        return this.constructPaymentProfileMapping(travelperkPaymentProfileSettingForm.value.paymentProfileMappings);
     }
 
 }

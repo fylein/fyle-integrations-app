@@ -27,7 +27,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   paymentProfileMappingForm: FormGroup;
 
-  userRole: SelectFormOption[] = TravelperkPaymentProfileSettingModel.getUserRoles();
+  userRole: SelectFormOption[] = TravelperkPaymentProfileSettingModel.getUserRoleOptions();
 
   isSaveInProgress: boolean;
 
@@ -42,6 +42,8 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
   ConfigurationCtaText = ConfigurationCta;
 
   isPreviewDialogVisible: boolean;
+
+  limit: number = 5;
 
   constructor(
     private router: Router,
@@ -64,7 +66,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     this.isPreviewDialogVisible = visible;
   }
 
-  constructPayloadAndSave() {
+  constructPayloadAndSave(): void {
     this.isSaveInProgress = true;
     const paymentProfileMappingPayload = TravelperkPaymentProfileSettingModel.createPaymentProfileSettingPayload(this.paymentProfileMappingForm);
     this.travelperkService.postTravelperkPaymentProfileMapping(paymentProfileMappingPayload).subscribe((travelperkPaymentProfileMappingResponse) => {
@@ -97,15 +99,14 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
     });
   }
 
-  save(): void {
+  save() {
     if (this.paymentProfileMappingForm.valid) {
       this.constructPayloadAndSave();
     }
   }
 
-  private setupPage(): void {
-    this.isOnboarding = this.router.url.includes('onboarding');
-    this.travelperkService.getTravelperkPaymentProfileMapping().subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingGetPaginator) => {
+  getProfileMappings(limit: number) {
+    this.travelperkService.getTravelperkPaymentProfileMapping(limit).subscribe((travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSettingGetPaginator) => {
       this.paymentProfileSettings = travelperkPaymentProfileMappingResponse;
       this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(this.paymentProfileSettings.results);
       this.isLoading = false;
@@ -113,6 +114,12 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
       this.paymentProfileMappingForm = TravelperkPaymentProfileSettingModel.mapAPIResponseToFormGroup(null);
       this.isLoading = false;
     });
+  }
+
+  private setupPage(): void {
+    this.isOnboarding = this.router.url.includes('onboarding');
+    this.travelperkService.syncPaymentProfile().subscribe();
+    this.getProfileMappings(this.limit);
   }
 
   ngOnInit(): void {
