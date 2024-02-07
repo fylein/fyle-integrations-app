@@ -1,10 +1,10 @@
 <div class="tw-p-24-px tw-border-b tw-border-b-gray-200">
     <div class="tw-flex tw-items-center tw-justify-between">
         <div>
-          <h3 class="tw-text-normal-text-color tw-text-18-px tw-font-500">
+          <h3 class="tw-text-text-primary tw-font-500">
             {{ headerText }}
           </h3>
-          <h5 class="tw-text-faded-text-color tw-text-14-px tw-pt-8-px !tw-font-400 tw-max-w-600-px tw-text-pretty">
+          <h5 class="tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 tw-max-w-600-px tw-text-pretty">
             {{ contentText }}
             <a *ngIf="redirectLink"
               class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
@@ -17,7 +17,7 @@
           </h5>
         </div>
 
-        <button *ngIf="showSyncButton" [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'"
+        <button *ngIf="showSyncButton && brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'"
             (click)="refreshDimensions()" tooltipPosition="bottom"
             class="tw-py-8-px tw-px-12-px tw-h-32-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-rotate-sync'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
@@ -25,6 +25,9 @@
                 Sync
             </span>
         </button>
+        <span class="btn-text-primary tw-mr-12-px" *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed">
+          Sync
+      </span>
 
       </div>                             
 </div>

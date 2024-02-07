@@ -73,7 +73,7 @@
                 <app-configuration-toggle-field 
                     [form]="advancedSettingForm"
                     [label]="'Skip export of specific expenses from Fyle to Sage 300 CRE'" 
-                    [subLabel]="'You could choose to skip expenses from Fyle to Sage 300 CRE by setting up a conditional rule.'" 
+                    [subLabel]="'You could choose to skip expenses from Fyle to Sage 300 CRE by setting up a conditional rule. '" 
                     [formControllerName]="'skipExport'"
                     [iconPath]="'list'"
                     [redirectLink]="skipExportRedirectLink">
@@ -88,23 +88,6 @@
                     </app-configuration-skip-export>
                 </div>
             </div>
-            <!-- <div class="tw-mb-16-px">
-                <app-configuration-step-sub-header
-                    [label]="'Other Preferences'"
-                    [subLabel]="'Based on your preference, you can choose whether you want to create any new records in Sage 300 CRE from Fyle. (when there is no employee record found, or when the accounting period is closed)'">
-                </app-configuration-step-sub-header>
-            </div>
-            <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
-                <app-configuration-toggle-field 
-                    [form]="advancedSettingForm"
-                    [label]="'Auto-Create Vendor'" 
-                    [subLabel]="'When matching Vendor record is not found for an employee in Fyle, the integration will auto-create a new record in Sage 300 CRE.'" 
-                    [formControllerName]="'autoCreateVendor'"
-                    [iconPath]="'user-two'">
-                </app-configuration-toggle-field>
-            </div> -->
-        </div>
-        <div>
             <app-configuration-step-footer 
             [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
             (save)="save()" 

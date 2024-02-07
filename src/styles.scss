@@ -452,11 +452,11 @@ p {
 }
 
 .preview-text {
-    @apply tw-text-14-px tw-font-400 tw-text-faded-text-color tw-p-24-px #{!important} ;
+    @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-p-24-px #{!important} ;
 }
 
 .preview-box {
-    @apply tw-p-10-px tw-bg-disabled-bg-color tw-rounded-8-px #{!important} ;
+    @apply tw-text-text-label tw-p-10-px tw-bg-bg-tertiary tw-rounded-8-px #{!important} ;
 }
 
 .landing {
@@ -482,7 +482,7 @@ p {
     }
 
     &--accounting-app-name {
-        @apply tw-pt-22-px tw-text-14-px tw-flex;
+        @apply tw-pt-22-px tw-text-14-px tw-flex tw-text-text-secondary;
     }
 
     &--accounting-app-open {
@@ -490,11 +490,11 @@ p {
     }
 
     &--section-heading {
-        @apply tw-text-18-px tw-pb-8-px;
+        @apply tw-text-18-px tw-pb-8-px tw-text-text-secondary;
     }
 
     &--section-caption {
-        @apply tw-text-sub-text-color tw-text-14-px tw-pb-24-px;
+        @apply tw-text-text-tertiary tw-text-14-px tw-pb-24-px;
     }
 
     &--other-integrations {

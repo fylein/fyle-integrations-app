@@ -74,7 +74,7 @@
                     <app-configuration-toggle-field 
                         [form]="advancedSettingForm"
                         [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central'" 
-                        [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central by setting up a conditional rule.'" 
+                        [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to Dynamics 365 Business Central by setting up a conditional rule. '" 
                         [formControllerName]="'skipExport'"
                         [iconPath]="'list'"
                         [redirectLink]="skipExportRedirectLink">
@@ -89,8 +89,6 @@
                         </app-configuration-skip-export>
                     </div>
                 </div>
-            </div>
-            <div>
                 <app-configuration-step-footer 
                     [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
                     [showBackButton] = "isOnboarding"

@@ -19,10 +19,10 @@
 }
 
 .clickable-row:hover {
-    cursor: pointer;
+    @apply tw-cursor-pointer;
     &:hover {
-        background: #FAFCFF;
-      }
+      @apply tw-bg-bg-info-lightest;
+    }
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
@@ -54,7 +54,7 @@
 }
 
 :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
-    @apply tw-text-slightly-normal-text-color tw-text-12-px tw-font-500 tw-py-12-px tw-px-22-px tw-border tw-border-box-color tw-bg-disabled-bg-color #{!important}
+    @apply tw-text-text-primary tw-text-12-px tw-font-500 tw-py-12-px tw-px-22-px tw-border tw-border-box-color tw-bg-disabled-bg-color #{!important}
 }
 
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td > button {
