@@ -8,7 +8,7 @@
         <div *ngIf="isSearchBoxActive">
             <div class="p-inputgroup !tw-h-40-px" (focusout)="onFocusOut($event)">
                 <span class="p-inputgroup-addon !tw-bg-white !tw-border-r-0 !tw-px-0">
-                  <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-search fyle' : 'pi pi-search co']"></i>
+                  <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? './assets/icons/magnifier.svg' : './assets/icons/co/grv-magnifier.svg'"></app-svg-icon>
                 </span>
                 <input pInputText type="text" formControlName="searchOption" class="!tw-py-5-px !tw-pl-0 !tw-border-l-0" [ngClass]="{'textbox': form.controls.searchOption.value !== ''}">
                 <span *ngIf="form.controls.searchOption.value !== ''" class="p-inputgroup-addon !tw-bg-white !tw-border-l-0 !tw-px-0">

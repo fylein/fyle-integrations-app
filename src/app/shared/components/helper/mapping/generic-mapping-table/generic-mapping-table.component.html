@@ -27,7 +27,7 @@
                     <ng-template pTemplate="filter" let-options="options">
                         <div class="p-inputgroup">
                             <div class="p-input-icon-left">
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-search fyle' : 'pi pi-search co']"></i>
+                                <app-svg-icon [svgSource]="brandingConfig.brandId === 'fyle' ? './assets/icons/magnifier.svg' : './assets/icons/co/grv-magnifier.svg'"></app-svg-icon>
                                 <input type="text" class="!tw-h-32-px !tw-w-260-px" 
                                 (keyup)="options.filter($event)" pInputText />
                             </div>
