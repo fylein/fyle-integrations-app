@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Cacheable, CacheBuster } from 'ts-cacheable';
-import { Travelperk, TravelperkConfiguration } from '../../models/travelperk/travelperk.model';
+import { Travelperk, TravelperkConfiguration, TravelperkDestinationAttribuite } from '../../models/travelperk/travelperk.model';
 import { ApiService } from '../common/api.service';
 import { OrgService } from '../org/org.service';
 import { TravelperkAdvancedSettingGet, TravelperkAdvancedSettingPost } from '../../models/travelperk/travelperk-configuration/travelperk-advanced-settings.model';
@@ -98,5 +98,9 @@ export class TravelperkService {
 
   postTravelperkAdvancedSettings(travelperkAdvancedSettingPayload: TravelperkAdvancedSettingPost): Observable<TravelperkAdvancedSettingGet> {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/advance_settings/`, travelperkAdvancedSettingPayload);
+  }
+
+  getCategories(): Observable<TravelperkDestinationAttribuite[]> {
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/sync_category/`,  {});
   }
 }

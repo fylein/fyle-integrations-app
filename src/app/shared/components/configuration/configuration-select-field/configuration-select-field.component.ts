@@ -15,6 +15,7 @@ import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sag
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -26,7 +27,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | HourOption[] | SelectFormOption[];
 
   // TODO: kill app specific type
-  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[] | DestinationAttribute[] | DefaultDestinationAttribute[];
+  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[] | DestinationAttribute[] | DefaultDestinationAttribute[] | TravelperkDestinationAttribuite[];
 
   @Input() form: FormGroup;
 
