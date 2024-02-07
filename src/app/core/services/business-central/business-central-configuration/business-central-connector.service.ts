@@ -40,6 +40,9 @@ export class BusinessCentralConnectorService {
     return this.apiService.post(`/workspaces/${this.workspaceId}/business_central/company/`, companyPayload);
   }
 
+  @Cacheable({
+    cacheBusterObserver: businessCentralCredentialsCache$
+  })
   getBusinessCentralConnection() {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/connection`, {});
   }
