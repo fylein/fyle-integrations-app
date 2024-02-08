@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         const user: MinimalUser = {
           'email': response.user.email,
           'access_token': response.access_token,
-          'refresh_token': response.refresh_token,
+          'refresh_token': clusterDomainWithToken.tokens.refresh_token,
           'full_name': response.user.full_name,
           'user_id': response.user.user_id,
           'org_id': response.user.org_id,

@@ -7,6 +7,7 @@ import { BusinessCentralOnboardingExportSettingsComponent } from './business-cen
 import { BusinessCentralOnboardingImportSettingsComponent } from './business-central-onboarding-import-settings/business-central-onboarding-import-settings.component';
 import { BusinessCentralOnboardingDoneComponent } from './business-central-onboarding-done/business-central-onboarding-done.component';
 import { BusinessCentralOnboardingAdvancedSettingsComponent } from './business-central-onboarding-advanced-settings/business-central-onboarding-advanced-settings.component';
+import { BusinessCentralTokenGuard } from 'src/app/core/guard/business-central-token.guard';
 
 const routes: Routes = [
   {
@@ -23,19 +24,23 @@ const routes: Routes = [
       },
       {
         path: 'export_settings',
-        component: BusinessCentralOnboardingExportSettingsComponent
+        component: BusinessCentralOnboardingExportSettingsComponent,
+        canActivate: [BusinessCentralTokenGuard]
       },
       {
         path: 'import_settings',
-        component: BusinessCentralOnboardingImportSettingsComponent
+        component: BusinessCentralOnboardingImportSettingsComponent,
+        canActivate: [BusinessCentralTokenGuard]
       },
       {
         path: 'advanced_settings',
-        component: BusinessCentralOnboardingAdvancedSettingsComponent
+        component: BusinessCentralOnboardingAdvancedSettingsComponent,
+        canActivate: [BusinessCentralTokenGuard]
       },
       {
         path: 'done',
-        component: BusinessCentralOnboardingDoneComponent
+        component: BusinessCentralOnboardingDoneComponent,
+        canActivate: [BusinessCentralTokenGuard]
       }
     ]
   }

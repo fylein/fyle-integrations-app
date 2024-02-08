@@ -28,10 +28,10 @@ export class MappingFilterComponent implements OnInit {
   filterOptions: string[] = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
   mappingsFilter: SelectFormOption[] = [{
-    label: 'MAPPED',
+    label: brandingConfig.brandId === 'fyle' ? 'MAPPED' : 'Mapped',
     value: MappingState.MAPPED
   }, {
-    label: 'UNMAPPED',
+    label: brandingConfig.brandId === 'fyle' ? 'UNMAPPED': 'Unmapped',
     value: MappingState.UNMAPPED
   }];
 

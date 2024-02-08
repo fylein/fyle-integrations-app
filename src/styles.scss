@@ -4,6 +4,8 @@
 
 // Import all the themes here
 @import 'assets/themes/theme.scss';
+@import 'assets/themes/co/c1dl.scss';
+@import 'assets/themes/fyle/fdl.scss';
 
 
 
@@ -67,7 +69,7 @@ p {
 
 // Button CTA
 .p-button {
-    @apply tw-w-[100%] tw-text-14-px tw-shadow-none tw-border-none tw-bg-btn-cta #{!important};
+    @apply tw-w-[100%] tw-text-14-px tw-text-btn-primary-text-color tw-shadow-none tw-border-none tw-bg-btn-primary-bg tw-px-16-px tw-py-10-px #{!important};
 }
 
 .p-button.p-button-raised {
@@ -79,11 +81,35 @@ p {
 }
 
 .p-button:enabled:hover {
-    @apply tw-shadow-btn-cta-shadow #{!important};
+    @apply tw-text-btn-primary-hover-text-color tw-bg-btn-primary-hover-bg tw-shadow-btn-cta-shadow #{!important};
 }
 
 .p-button:disabled {
-    @apply tw-cursor-no-drop #{!important};
+    @apply tw-cursor-no-drop tw-text-btn-primary-disable-text-color tw-bg-bg-brand-disable #{!important};
+}
+
+.p-button.secondary-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-text-color tw-bg-btn-secondary-bg #{!important};
+}
+
+.p-button:enabled:hover.secondary-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-secondary-hover-text-color tw-bg-btn-secondary-hover-bg tw-shadow-btn-cta-shadow #{!important};
+}
+
+.p-button.outline-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+.p-button:enabled:hover.outline-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
+}
+
+.btn-text-primary {
+    @apply tw-cursor-pointer tw-text-btn-tertiary-text-color tw-text-14-px;
+}
+
+.btn-text-primary:hover {
+    @apply tw-text-btn-tertiary-hover-text-color tw-bg-btn-tertiary-hover-bg tw-rounded-4-px tw-py-10-px;
 }
 
 // Dialog
@@ -353,7 +379,7 @@ p {
     }
   
     &--contents {
-        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-xl tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
+        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
     }
 }
 
@@ -382,11 +408,11 @@ p {
 }
 
 .mapped {
-    @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-mapped-green-border tw-bg-mapped-green-bg tw-py-4-px tw-px-12-px tw-text-success-toast tw-w-fit #{!important}
+    @apply tw-text-12-px tw-font-600 tw-rounded-full tw-border tw-border-solid tw-border-border-highlight-light tw-bg-bg-highlight-light tw-py-4-px tw-px-10-px tw-text-text-highlight tw-w-fit #{!important}
 }
 
 .unmapped {
-    @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-unmapped-red-border tw-bg-unmapped-red-bg tw-py-4-px tw-px-12-px tw-text-alert-toast tw-w-fit #{!important}
+    @apply tw-text-12-px tw-font-600 tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
 }
 
 .p-calendar .p-inputtext {
@@ -426,11 +452,11 @@ p {
 }
 
 .preview-text {
-    @apply tw-text-14-px tw-font-400 tw-text-faded-text-color tw-p-24-px #{!important} ;
+    @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-p-24-px #{!important} ;
 }
 
 .preview-box {
-    @apply tw-p-10-px tw-bg-disabled-bg-color tw-rounded-8-px #{!important} ;
+    @apply tw-text-text-label tw-p-10-px tw-bg-bg-tertiary tw-rounded-8-px #{!important} ;
 }
 
 .landing {
@@ -456,7 +482,7 @@ p {
     }
 
     &--accounting-app-name {
-        @apply tw-pt-22-px tw-text-14-px tw-flex;
+        @apply tw-pt-22-px tw-text-14-px tw-flex tw-text-text-secondary;
     }
 
     &--accounting-app-open {
@@ -464,11 +490,11 @@ p {
     }
 
     &--section-heading {
-        @apply tw-text-18-px tw-pb-8-px;
+        @apply tw-text-18-px tw-pb-8-px tw-text-text-secondary;
     }
 
     &--section-caption {
-        @apply tw-text-sub-text-color tw-text-14-px tw-pb-24-px;
+        @apply tw-text-text-tertiary tw-text-14-px tw-pb-24-px;
     }
 
     &--other-integrations {

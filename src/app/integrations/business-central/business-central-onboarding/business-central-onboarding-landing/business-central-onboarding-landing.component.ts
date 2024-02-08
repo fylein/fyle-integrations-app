@@ -67,7 +67,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
       this.businessCentralHelperService.refreshBusinessCentralDimensions(true).subscribe(() => {
         this.businessCentralConnectionInProgress = false;
         this.isIntegrationConnected = true;
-        this.checkProgressAndRedirect(code);
+        this.checkProgressAndRedirect();
       });
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to Dynamic 365 Business Central. Please try again';
@@ -80,12 +80,12 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
     });
   }
 
-  private checkProgressAndRedirect(code: string): void {
+  private checkProgressAndRedirect(): void {
     const onboardingState: BusinessCentralOnboardingState = this.workspaceService.getOnboardingState();
     if (onboardingState !== BusinessCentralOnboardingState.COMPLETE) {
       this.router.navigate(['integrations/business_central/onboarding/connector']);
     } else {
-      this.postBusinessCentralCredentials(code);
+      this.router.navigate(['integrations/business_central/main/dashboard']);
     }
   }
 

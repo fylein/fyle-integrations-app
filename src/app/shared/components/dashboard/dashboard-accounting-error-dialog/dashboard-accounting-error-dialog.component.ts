@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Expense, ExpenseModel } from 'src/app/core/models/si/db/expense.model';
+import { Expense, ExpenseModel } from 'src/app/core/models/intacct/db/expense.model';
 
 @Component({
   selector: 'app-dashboard-accounting-error-dialog',

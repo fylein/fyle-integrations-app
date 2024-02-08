@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
-import { constructPayload1, constructPayload2 } from 'src/app/core/models/si/misc/skip-export.model';
-import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/si/si-configuration/advanced-settings.model';
+import { constructPayload1, constructPayload2 } from 'src/app/core/models/intacct/misc/skip-export.model';
+import { ConditionField, CustomOperatorOption, ExpenseFilterResponse, JoinOptions, SkipExport } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 
 @Component({

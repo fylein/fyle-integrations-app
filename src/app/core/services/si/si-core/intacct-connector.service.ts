@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { LocationEntityMapping } from 'src/app/core/models/si/db/location-entity-mapping.model';
+import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SiWorkspaceService } from './si-workspace.service';
 import { StorageService } from '../../common/storage.service';
 import { Cacheable, CacheBuster, globalCacheBusterNotifier } from 'ts-cacheable';
-import { SageIntacctCredential } from 'src/app/core/models/si/db/sage-credentials.model';
+import { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
 import { ApiService } from '../../common/api.service';
 
 

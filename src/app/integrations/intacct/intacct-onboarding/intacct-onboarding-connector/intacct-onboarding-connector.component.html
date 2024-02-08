@@ -1,0 +1,3 @@
+<app-onboarding-steppers [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
+<app-intacct-connector (setupConnectionStatus)="setupConnectionStatus($event)" *ngIf="!isIntacctConnected"></app-intacct-connector>
+<app-intacct-location-entity *ngIf="isIntacctConnected"></app-intacct-location-entity>

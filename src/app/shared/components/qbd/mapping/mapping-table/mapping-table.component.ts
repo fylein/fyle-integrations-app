@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FieldType, OperatingSystem } from 'src/app/core/models/enum/enum.model';
 import { Mapping, MappingModel, MappingPost } from 'src/app/core/models/qbd/db/mapping.model';
-import { EmployeeMapping } from 'src/app/core/models/si/db/employee-mapping.model';
-import { MappingIntacct, MappingResponse, MappingStats } from 'src/app/core/models/si/db/mapping.model';
+import { EmployeeMapping } from 'src/app/core/models/intacct/db/employee-mapping.model';
+import { MappingIntacct, MappingResponse, MappingStats } from 'src/app/core/models/intacct/db/mapping.model';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-mapping-table',
@@ -31,6 +32,8 @@ export class MappingTableComponent implements OnInit {
   destinationValue: string;
 
   fieldType = FieldType;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor() { }
 

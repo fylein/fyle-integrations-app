@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
@@ -22,6 +23,8 @@ export class QboMainComponent implements OnInit {
   ];
 
   activeModule: MenuItem;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     private accountingExportService: AccountingExportService,
