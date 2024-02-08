@@ -44,7 +44,7 @@ export class BusinessCentralConnectorService {
     cacheBusterObserver: businessCentralCredentialsCache$
   })
   getBusinessCentralConnection() {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/connection`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/business_central/connection/`, {});
   }
 
 }
