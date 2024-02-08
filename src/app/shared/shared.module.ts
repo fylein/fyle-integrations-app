@@ -57,7 +57,6 @@ import { ChipsModule } from 'primeng/chips';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DashboardMappingResolveComponent } from './components/si/helper/dashboard-mapping-resolve/dashboard-mapping-resolve.component';
 import { DashboardIntacctErrorsComponent } from './components/si/helper/dashboard-intacct-errors/dashboard-intacct-errors.component';
-import { DashboardMenuComponent } from './components/core/dashboard-menu/dashboard-menu.component';
 import { DashboardExportSectionComponent } from './components/dashboard/dashboard-export-section/dashboard-export-section.component';
 import { DashboardErrorSectionComponent } from './components/dashboard/dashboard-error-section/dashboard-error-section.component';
 import { DashboardExportLogDialogComponent } from './components/dashboard/dashboard-export-log-dialog/dashboard-export-log-dialog.component';
@@ -130,7 +129,6 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     SkipExportComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
-    DashboardMenuComponent,
     DashboardExportSectionComponent,
     DashboardErrorSectionComponent,
     DashboardExportLogDialogComponent,
@@ -227,7 +225,6 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     ConfigurationAdvancedSettingsComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
-    DashboardMenuComponent,
     DashboardExportSectionComponent,
     DashboardErrorSectionComponent,
     DashboardExportLogDialogComponent,
