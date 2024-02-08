@@ -943,10 +943,14 @@ module.exports = {
   theme: {
     textColor: {
       ...customColors,
-      ...textColors
+      ...textColors,
+      ...componentVariables,
+      ...colors
     },
     backgroundColor: {
-      ...customColors
+      ...customColors,
+      ...componentVariables,
+      ...colors
     },
     fontSize: {
       '9-px':'9px',
@@ -1130,6 +1134,7 @@ module.exports = {
         '110-px': '110px',
         '168-px': '168px',
         '192-px': '192px',
+        '228-px': '228px',
         '240-px': '240px',
         '282-px': '282px',
         '465-px': '465px',
@@ -1141,6 +1146,7 @@ module.exports = {
       },
       minHeight: {
         '70-px': '70px',
+        '228-px': '228px',
         ...dimensions
       },
       maxHeight: {
@@ -1166,6 +1172,7 @@ module.exports = {
         '28-px': '28px',
         '30-px': '30px',
         '32-px': '32px',
+        '34-px': '34px',
         '36-px': '36px',
         '38-px': '38px',
         '40-px': '40px',
@@ -1283,20 +1290,23 @@ module.exports = {
         'alert-toast': customColors['alert-toast'],
         'sub-text-color': customColors['sub-text-color'],
         ...customColors,
-        ...borderColors
+        ...borderColors,
+        ...componentVariables
       },
       backgroundImage: {
         'btn-cta': 'linear-gradient(162.38deg, var(--mandatory-field-color) 3.01%, var(--gradient-vibrant-lg-end) 111.5%)',
         'header-1': 'linear-gradient(141.67deg, rgba(225, 238, 255, 0.59) 21.38%, rgba(255, 228, 251, 0.75) 122.46%)',
         'header-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 100%)',
-        ...gradient
+        'btn-primary-bg': 'var(--btn-primary-bg)',
+        ...gradient,
+        ...componentVariables
       },
       fontFamily: {
         'primary': 'var(--font-primary)',
       },
       boxShadow: {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
-        'btn-cta-shadow': '0px 4px 4px rgba(44, 48, 78, 0.1)',
+        'btn-cta-shadow': 'var(--btn-cta-shadow)',
         'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2)',
         ...shadow
       },

@@ -13,7 +13,7 @@
                 [contentText]="'Expenses will be posted to the Dynamics 365 Business Central Location entity selected here.'"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
-            <div>
+            <div class="tw-px-24-px tw-pb-24-px">
                 <app-configuration-connector
                     [accountingAppTitle]="'Dynamics 365 Business Central'"
                     [accountingCompanyName]="businessCentralCompanyName"
@@ -35,10 +35,8 @@
                     [confirmBtnText]="'Re connect'"
                     [showSecondaryCTA]="false">
                 </app-configuration-confirmation-dialog>
-            </div>
-            <div>
                 <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="save()" ></app-configuration-step-footer>
-             </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,13 +1,17 @@
-<div class="tw-flex tw-p-24-px tw-border-t-border-tertiary" [ngClass]="!showBackButton ? 'tw-justify-end': 'tw-justify-between'">
-    <div *ngIf="showBackButton">
-        <button type="button" class="p-button-raised tw-bg-white back-btn tw-flex" (click)="navigate()">
-            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-left-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pr-10-px tw-text-12-px tw-text-btn-cta'"></app-svg-icon>
-            Back
-        </button>
+<div class="tw-flex tw-pt-24-px tw-border-t-border-tertiary" [ngClass]="!showBackButton ? 'tw-justify-end': 'tw-justify-between'">
+    <div class="tw-flex" *ngIf="showBackButton">
+        <div>
+            <button type="button" class="p-button outline-sm" (click)="navigate()">
+                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-left-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pr-10-px tw-text-12-px tw-text-btn-cta'"></app-svg-icon>
+                Back
+            </button>
+        </div>
 
-        <button *ngIf="showResetButton" type="button" class="p-button-raised tw-bg-white back-btn tw-ml-16-px" (click)="resetConfiguration()">
-            Reset Configuration
-        </button>
+        <div class="tw-ml-16-px">
+            <button *ngIf="showResetButton" type="button" class="p-button outline-sm" (click)="resetConfiguration()">
+                Reset Configuration
+            </button>
+        </div>
     </div>
     <div>
         <button *ngIf="ctaText !== 'Saving' && ctaText !== 'Syncing'" pButton type="button" class="p-button-raised" (click)="saveChanges()" [disabled]="isButtonDisabled">
