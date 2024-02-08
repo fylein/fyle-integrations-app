@@ -28,7 +28,7 @@ export class MainComponent implements OnInit {
     private dashboardService: DashboardService,
     private mappingsService: SiMappingsService,
     private router: Router,
-    private toastService: IntegrationsToastService,
+    private toastService: IntegrationsToastService
   ) { }
 
   refreshDimensions() {
