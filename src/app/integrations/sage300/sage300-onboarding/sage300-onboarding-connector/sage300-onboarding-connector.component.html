@@ -13,8 +13,8 @@
                 [contentText]="'Connect to your Sage 300 CRE account to establish a connection between ' + brandingConfig.brandName + ' and Sage 300 CRE. HH2 Identifier is required to connect Sage 300 CRE to '+ brandingConfig.brandName"
                 [redirectLink]="redirectLink"></app-configuration-step-header>
             </div>
-            <div class="tw-flex tw-justify-center tw-items-center">
-                <div class="tw-p-24-px">
+            <div class="tw-p-24-px tw-px-24-px tw-pb-24-px">
+                <div class="tw-flex tw-justify-center tw-items-center">
                     <form [formGroup]="connectSage300Form">
                         <div class="tw-mb-16-px">
                             <app-configuration-text-field [customErrorMessage]="'Please enter a valid HH2 Identifier.'" [form]="connectSage300Form" [formControllerName]="'companyID'" [isFieldMandatory]="true" [label]="'HH2 Identifier'" [placeholder]="'Enter HH2 Identifier'"></app-configuration-text-field>
@@ -27,10 +27,8 @@
                         </div>
                     </form>
                 </div>
-            </div>
-            <div>
                 <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSage300Form.valid"></app-configuration-step-footer>
-             </div>
+            </div>
         </div>
     </div>
 </div>
