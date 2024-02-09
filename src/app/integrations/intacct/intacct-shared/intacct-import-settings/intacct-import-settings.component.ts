@@ -18,11 +18,12 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
-  selector: 'app-configuration-import-settings',
-  templateUrl: './configuration-import-settings.component.html',
-  styleUrls: ['./configuration-import-settings.component.scss']
+  selector: 'app-intacct-import-settings',
+  templateUrl: './intacct-import-settings.component.html',
+  styleUrls: ['./intacct-import-settings.component.scss']
 })
-export class ConfigurationImportSettingsComponent implements OnInit {
+
+export class IntacctImportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IntacctOnboardingLandingComponent } from './intacct-onboarding-landing/intacct-onboarding-landing.component';
 import { IntacctOnboardingExportSettingComponent } from './intacct-onboarding-export-setting/intacct-onboarding-export-setting.component';
-import { OnboardingImportSettingComponent } from './onboarding-import-setting/onboarding-import-setting.component';
+import { IntacctOnboardingImportSettingComponent } from './intacct-onboarding-import-setting/intacct-onboarding-import-setting.component';
 import { OnboardingAdvancedSettingComponent } from './onboarding-advanced-setting/onboarding-advanced-setting.component';
 import { OnboardingDoneComponent } from './onboarding-done/onboarding-done.component';
 import { IntacctOnboardingComponent } from './intacct-onboarding.component';
@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'import_settings',
-        component: OnboardingImportSettingComponent
+        component: IntacctOnboardingImportSettingComponent
       },
       {
         path: 'advanced_settings',
