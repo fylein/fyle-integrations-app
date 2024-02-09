@@ -270,5 +270,25 @@
     --search-default-border: var(--border-secondary);
 
     --search-focused-filled-border: var(--btn-secondary-hover-bg);
+
+    --select-focused-border: var(--border-primary);
+
+    --select-default-border: var(--border-secondary);
+
+    --select-default-placeholder-text: var(--text-placeholder);
+
+    --dropdown-option-height: 32px;
+
+    --dd-menu-item-default-text-color: var(--text-secondary);
+
+    --dd-menu-item-hover-bg: var(--bg-tertiary);
+
+    --select-disabled-bg: var(--bg-tertiary);
+
+    --select-disabled-text: var(--text-placeholder);
+
+    --select-disabled-border: var(--border-secondary);
+
+    --select-error-border: var(--border-danger);
   }
 }
