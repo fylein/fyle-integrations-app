@@ -156,7 +156,6 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
       this.advancedSettings = travelperkAdvancedSettingsResponse;
       this.defaultCategories = travelperkDestinationAttribute;
       this.advancedSettingsForm = TravelperkAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, travelperkDestinationAttribute);
-      console.log(this.advancedSettingsForm)
       this.createMemoStructureWatcher();
       this.isLoading = false;
     });
