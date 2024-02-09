@@ -60,9 +60,7 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
   }
 
-  public handleSimpleSearch(event: any) {
-    const query = event.target.value.toLowerCase();
-
+  public handleSimpleSearch(query: string) {
     this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
       return AccountingExportModel.getfilteredAccountingExports(query, group);
     });

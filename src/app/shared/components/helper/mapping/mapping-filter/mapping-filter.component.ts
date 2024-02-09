@@ -39,8 +39,6 @@ export class MappingFilterComponent implements OnInit {
 
   @Input() selectedAlphabeticalFilter: string;
 
-  isSearchBoxActive: boolean = false;
-
   @Output() mappingFilterUpdateHandler = new EventEmitter<string>();
 
   readonly brandingConfig = brandingConfig;
@@ -49,25 +47,6 @@ export class MappingFilterComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private trackingService: TrackingService
   ) { }
-
-  clearSearch(): void {
-    this.form.controls.searchOption.patchValue(null);
-    const event = {
-      target: {
-        value: ''
-      }
-    };
-    this.onFocusOut(event);
-    this.mappingSearchingEvent.emit('');
-  }
-
-  onFocusOut(event: any): void {
-    if (event.target.value === '') {
-      this.isSearchBoxActive = false;
-    } else {
-      this.isSearchBoxActive = true;
-    }
-  }
 
   getSelectedFilter(item: string): string {
     if (item === MappingState.MAPPED) {
@@ -89,7 +68,7 @@ export class MappingFilterComponent implements OnInit {
 
   searchingFilter(): void {
     this.form.controls.searchOption.valueChanges.subscribe((searchValue) => {
-        this.mappingSearchingEvent.emit(searchValue);
+      this.mappingSearchingEvent.emit(searchValue);
     });
   }
 
