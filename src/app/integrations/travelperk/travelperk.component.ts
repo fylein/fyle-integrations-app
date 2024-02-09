@@ -50,6 +50,8 @@ export class TravelperkComponent implements OnInit {
       this.isIntegrationConnected = travelperkData.is_travelperk_connected;
       this.storageService.set('onboarding-state', this.travelperkData.onboarding_state);
       this.storageService.set('workspaceId', this.travelperkData.org);
+      this.travelperkService.syncPaymentProfile().subscribe();
+      this.travelperkService.syncCategories().subscribe();
       this.isLoading = false;
       this.navigate();
     }, () => {

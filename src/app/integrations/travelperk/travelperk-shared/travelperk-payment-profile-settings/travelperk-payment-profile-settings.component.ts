@@ -128,7 +128,6 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.travelperkService.syncPaymentProfile().subscribe();
     this.getProfileMappings(this.limit);
   }
 

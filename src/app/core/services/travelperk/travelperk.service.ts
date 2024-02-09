@@ -81,6 +81,10 @@ export class TravelperkService {
     return this.apiService.get(`/orgs/${this.orgId}/travelperk/sync_payment_profile/`,  {});
   }
 
+  syncCategories(): Observable<{}> {
+    return this.apiService.post(`/orgs/${this.orgId}/sync_categories/`,  {});
+  }
+
   getTravelperkPaymentProfileMapping(limit: number): Observable<TravelperkPaymentProfileSettingResponse> {
     return this.apiService.get(`/orgs/${this.orgId}/travelperk/profile_mappings/`, {
       limit: limit,
@@ -101,6 +105,6 @@ export class TravelperkService {
   }
 
   getCategories(): Observable<TravelperkDestinationAttribuite[]> {
-    return this.apiService.post(`/orgs/${this.orgId}/sync_categories/`,  {});
+    return this.apiService.get(`/orgs/${this.orgId}/categories/`,  {});
   }
 }
