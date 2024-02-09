@@ -141,7 +141,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
       this.employeeSettingForm = this.formBuilder.group({
         employeeMapping: [this.existingEmployeeFieldMapping, Validators.required],
         autoMapEmployee: [responses[0].workspace_general_settings?.auto_map_employees],
-        searchOption: [''],
+        searchOption: ['']
       });
       this.reimbursableExportType = responses[2].workspace_general_settings?.reimbursable_expenses_object;
       this.isLoading = false;
