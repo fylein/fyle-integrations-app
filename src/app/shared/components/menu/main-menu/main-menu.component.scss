@@ -1,22 +1,4 @@
-:host ::ng-deep .main-tab .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover, :host ::ng-deep .main-tab .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover .p-menuitem-link{
-    @apply tw-bg-disabled-bg-color tw-text-menu-inactive-text-color tw-font-500 tw-border-b-0 #{!important};
-}
-
-:host ::ng-deep .main-tab .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight {
-    @apply tw-bg-white #{!important};
-}
-
-:host ::ng-deep .main-tab .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
-    @apply tw-text-slightly-normal-text-color tw-border-b-2 tw-border-b-slightly-normal-text-color tw-font-500 tw-bg-white #{!important};
-}
-
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav {
-    @apply tw-border-b-white #{!important};
-}
-
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    @apply tw-border-white;
-}
+@import 'src/assets/scss/tab-primary.scss';
 
 :host ::ng-deep .p-dropdown {
     @apply tw-w-fit tw-h-32-px #{!important};
