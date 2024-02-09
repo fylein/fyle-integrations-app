@@ -48,7 +48,7 @@ const ICON_MAPPING = {
   'user-plus': 'grv-person',
   'user-two': 'grv-persons',
   'warning-outline': 'grv-caution-triangle-small',
-  'search': 'grv-search',
+  'search-medium': 'grv-magnifier-medium',
   'arrow-left': 'grv-arrow-left',
   'arrow-right': 'grv-arrow-right',
   'arrow-bar-left': 'grv-arrow-bar-left',
