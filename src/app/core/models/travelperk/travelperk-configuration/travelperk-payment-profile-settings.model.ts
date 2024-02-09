@@ -43,8 +43,8 @@ export class TravelperkPaymentProfileSettingModel {
 
     static createFormGroup(data: TravelperkPaymentProfileSettingGet): FormGroup {
         return new FormGroup ({
-            profileName: new FormControl(data.profile_name || ''),
-            userRole: new FormControl(data.user_role || null),
+            destinationName: new FormControl(data.profile_name || ''),
+            sourceName: new FormControl(data.user_role || null),
             isImportEnabled: new FormControl(data.is_import_enabled || false)
         });
     }
@@ -58,9 +58,9 @@ export class TravelperkPaymentProfileSettingModel {
     static constructPaymentProfileMapping(paymentProfileFieldArray: any): TravelperkPaymentProfileSettingPost[] {
         const paymentProfileSettings = paymentProfileFieldArray.map((field: any) => {
             return {
-                profile_name: field.profileName,
+                profile_name: field.destinationName,
                 is_import_enabled: field.isImportEnabled,
-                user_role: field.userRole
+                user_role: field.sourceName
             };
         });
 

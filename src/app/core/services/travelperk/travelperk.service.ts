@@ -93,14 +93,14 @@ export class TravelperkService {
   }
 
   getTravelperkAdvancedSettings(): Observable<TravelperkAdvancedSettingGet> {
-    return this.apiService.get(`/orgs/${this.orgId}/travelperk/advance_settings/`, {});
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/advanced_settings/`, {});
   }
 
   postTravelperkAdvancedSettings(travelperkAdvancedSettingPayload: TravelperkAdvancedSettingPost): Observable<TravelperkAdvancedSettingGet> {
-    return this.apiService.post(`/orgs/${this.orgId}/travelperk/advance_settings/`, travelperkAdvancedSettingPayload);
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/advanced_settings/`, travelperkAdvancedSettingPayload);
   }
 
   getCategories(): Observable<TravelperkDestinationAttribuite[]> {
-    return this.apiService.get(`/orgs/${this.orgId}/sync_categories/`,  {});
+    return this.apiService.post(`/orgs/${this.orgId}/sync_categories/`,  {});
   }
 }

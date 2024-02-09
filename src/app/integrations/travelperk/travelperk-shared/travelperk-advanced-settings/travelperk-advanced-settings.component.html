@@ -15,6 +15,32 @@
             <div class="tw-mb-16-px">
                 <div class="tw-mb-16-px">
                     <app-configuration-step-sub-header
+                        [label]="'Category Mapping'"
+                        [subLabel]="'Expenses created from your TravelPerk invoices will be categorized in ' + brandingConfig.brandName + ' based on the booking type. Use the default ' + brandingConfig.brandName + ' categories or customize the mappings based on your preference.'">
+                    </app-configuration-step-sub-header>
+                </div>
+                <div class="">
+                    <app-configuration-mapping-fields 
+                        [appName]="appName"
+                        [showCrossIcon]="true"
+                        [isDestinationDisabled]="true"
+                        [sourceFieldOptions]="defaultCategories"
+                        [destinationFieldOptions]="destinationFieldOptions"
+                        [form]="advancedSettingsForm"
+                        [sourceFieldText]="'Category in Fyle'"
+                        [destinationFieldText]="'Booking Type in TravelPerk'"
+                        [sourceFieldPlaceholderText]="'Select a Category'"
+                        [destinationPlaceholderFieldText]="'Select a Category'"
+                        [totalAvailableRows]="4"
+                        [destinationAttributeNames]="destinationAttributeNames"
+                        [sourceAttributeNames]="sourceAttributeNames"
+                        [formControllerName]="'categoryMappings'">
+                    </app-configuration-mapping-fields>
+                </div>
+            </div>
+            <div class="tw-mb-16-px">
+                <div class="tw-mb-16-px">
+                    <app-configuration-step-sub-header
                         [label]="'Default Values'"
                         [subLabel]="'The default values below will substitute for TravelPerk data points lacking a corresponding value in ' + brandingConfig.brandName + ' . You can customize the default category, as the others are pre-defined.'">
                     </app-configuration-step-sub-header>
@@ -72,7 +98,7 @@
                         [isFieldMandatory]="false"
                         [mandatoryErrorListName]="'Item level description'"
                         [label]="'Customize the Purpose field in ' + brandingConfig.brandName "
-                        [subLabel]="'You can choose from a list of available datapoints to populate the \'Purpose\' field in Fyle based on your requirement.'"
+                        [subLabel]="'You can choose from a list of available datapoints to populate the \'Purpose\' field in ' + brandingConfig.brandName + ' based on your requirement.'"
                         [options]="defaultMemoOptions"
                         [iconPath]="'list'"
                         [placeholder]="'Set description'"
@@ -87,7 +113,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div class="tw-px-24-px tw-pb-24-px tw-border-t-1-px tw-border-t-box-color">
             <app-configuration-step-footer 
                 [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
                 [showBackButton] = "isOnboarding"

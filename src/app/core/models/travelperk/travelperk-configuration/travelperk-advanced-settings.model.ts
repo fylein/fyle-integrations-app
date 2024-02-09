@@ -1,6 +1,15 @@
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { TravelPerkExpenseGroup } from "../../enum/enum.model";
-import { SelectFormOption } from "../../common/select-form-option.model";
+import { SelectFormLabel, SelectFormOption } from "../../common/select-form-option.model";
+import { TravelperkDestinationAttribuite } from "../travelperk.model";
+import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+
+interface StringDictionary {
+    [key: string]:  {
+        id: string;
+        name: string;
+    };
+}
 
 export type TravelperkAdvancedSetting = {
     default_employee: string,
@@ -9,6 +18,7 @@ export type TravelperkAdvancedSetting = {
 	default_category_id: string,
 	description_structure: string[],
 	invoice_lineitem_structure: TravelPerkExpenseGroup,
+    category_mappings: StringDictionary
 }
 
 export interface TravelperkAdvancedSettingGet extends TravelperkAdvancedSetting {
@@ -18,9 +28,41 @@ export interface TravelperkAdvancedSettingGet extends TravelperkAdvancedSetting 
     org: number
 }
 
+type TravelperkAdvancedSettingArray = {
+    destination_name: SelectFormLabel;
+    source_name: TravelperkDestinationAttribuite | null;
+}
+
+type TravelperkAdvancedSettingFormArray = {
+    destinationName: SelectFormLabel;
+    sourceName: TravelperkDestinationAttribuite | null;
+}
+
 export interface TravelperkAdvancedSettingPost extends TravelperkAdvancedSetting { }
 
 export class TravelperkAdvancedSettingModel {
+
+    static getDefaultCategory(): SelectFormLabel[] {
+        return [
+            {
+                label: 'Cars',
+                value: 'Cars'
+            },
+            {
+                label: 'Flights',
+                value: 'Flights'
+            },
+            {
+                label: 'Stays',
+                value: 'Stays'
+            },
+            {
+                label: 'Trains',
+                value: 'Trains'
+            }
+        ];
+    }
+
     static getExpenseGroup(): SelectFormOption[] {
         return [
             {
@@ -34,9 +76,48 @@ export class TravelperkAdvancedSettingModel {
         ];
     }
 
-    static mapAPIResponseToFormGroup(advancedSettings: TravelperkAdvancedSettingGet | null): FormGroup {
+    static createFormGroup(data: TravelperkAdvancedSettingArray): FormGroup {
+        return new FormGroup ({
+            destinationName: new FormControl(data.destination_name || ''),
+            sourceName: new FormControl(data.source_name || null)
+        });
+    }
+
+    static constructFormArray(arrayData: TravelperkAdvancedSettingGet, source_fields: TravelperkDestinationAttribuite[]): FormGroup[] {
+        const resultentArray:FormGroup[] = [];
+        const destination = this.getDefaultCategory();
+        const categoryMapping = Object.keys(arrayData.category_mappings);
+        Object.entries(arrayData.category_mappings).forEach((value, index) => {
+            const findObjectByDestinationId = (array: TravelperkDestinationAttribuite[], id: string) => array?.find(item => item.source_id === id) || null;
+            const data: TravelperkAdvancedSettingArray = {
+                destination_name: {
+                    label: categoryMapping[index] ? categoryMapping[index] : destination[index].label,
+                    value: categoryMapping[index] ? categoryMapping[index] : destination[index].value
+                },
+                source_name: findObjectByDestinationId(source_fields, arrayData.category_mappings[categoryMapping[index]].id)
+            };
+            resultentArray.push(this.createFormGroup(data));
+        });
+        return resultentArray;
+    }
+
+    static constructCategoryMapping(categoryMappingFieldArray: TravelperkAdvancedSettingFormArray[]) {
+        const data:StringDictionary = {};
+        categoryMappingFieldArray.forEach((item: TravelperkAdvancedSettingFormArray) => {
+            data[item.destinationName.value] = {
+                "name": item.sourceName?.value ? item.sourceName.value : '',
+                "id": item.sourceName?.source_id ? item.sourceName.source_id : ''
+            };
+        });
+
+        return data;
+    }
+
+    static mapAPIResponseToFormGroup(advancedSettings: TravelperkAdvancedSettingGet | null, sourceOptions: TravelperkDestinationAttribuite[]): FormGroup {
         const defaultMemoOptions: string[] =['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
+        const categoryMappingsArray = advancedSettings ? this.constructFormArray(advancedSettings, sourceOptions) : [] ;
         return new FormGroup({
+            categoryMappings: new FormArray(categoryMappingsArray),
             descriptionStructure: new FormControl(advancedSettings?.description_structure ? advancedSettings?.description_structure : defaultMemoOptions),
             defaultEmployee: new FormControl(advancedSettings?.default_employee ? advancedSettings?.default_employee : null),
             defaultEmployeeId: new FormControl(advancedSettings?.default_employee_id ? advancedSettings?.default_employee_id : null),
@@ -52,7 +133,8 @@ export class TravelperkAdvancedSettingModel {
             default_category: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.value : null,
             default_category_id: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.source_id : null,
             description_structure: advancedSettingsForm.get('descriptionStructure')?.value ? advancedSettingsForm.get('descriptionStructure')?.value : null,
-            invoice_lineitem_structure: advancedSettingsForm.get('invoiceLineitemStructure')?.value ? advancedSettingsForm.get('invoiceLineitemStructure')?.value : null
+            invoice_lineitem_structure: advancedSettingsForm.get('invoiceLineitemStructure')?.value ? advancedSettingsForm.get('invoiceLineitemStructure')?.value : null,
+            category_mappings: this.constructCategoryMapping(advancedSettingsForm.value.categoryMappings)
         };
     }
 }

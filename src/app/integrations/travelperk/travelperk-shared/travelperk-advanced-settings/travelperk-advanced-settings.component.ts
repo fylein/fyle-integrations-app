@@ -11,7 +11,7 @@ import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.s
 import { travelperkAdvancedSettingsResponse, travelperkDestinationAttribute } from '../travelperk.fixture';
 import { catchError, forkJoin, of } from 'rxjs';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-travelperk-advanced-settings',
@@ -42,11 +42,23 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   defaultCategories: TravelperkDestinationAttribuite[];
 
+  destinationFieldOptions: SelectFormOption[] = TravelperkAdvancedSettingModel.getDefaultCategory();
+
   defaultMemoOptions: string[] = ['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
 
   memoPreviewText: string;
 
   memoStructure: string[] = [];
+
+  destinationAttributeNames: SelectFormLabel = {
+    label: 'label',
+    value: ''
+  };
+
+  sourceAttributeNames: SelectFormLabel = {
+    label: 'value',
+    value: ''
+  };
 
   lineItems: SelectFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
 
@@ -140,10 +152,10 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
     forkJoin([
       this.travelperkService.getTravelperkAdvancedSettings().pipe(catchError(() => of(null))),
       this.travelperkService.getCategories()
-    ]).subscribe(([travelperkAdvancedSettingsResponse]) => {
+    ]).subscribe(([travelperkAdvancedSettingsResponse, travelperkDestinationAttribute]) => {
       this.advancedSettings = travelperkAdvancedSettingsResponse;
       this.defaultCategories = travelperkDestinationAttribute;
-      this.advancedSettingsForm = TravelperkAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings);
+      this.advancedSettingsForm = TravelperkAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, travelperkDestinationAttribute);
       this.createMemoStructureWatcher();
       this.isLoading = false;
     });
