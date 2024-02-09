@@ -6,25 +6,32 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IntacctExportSettingsComponent } from './intacct-export-settings/intacct-export-settings.component';
 import { IntacctImportSettingsComponent } from './intacct-import-settings/intacct-import-settings.component';
-import { IntacctAdvancedSettingsComponent } from './intacct-advanced-settings/intacct-advanced-settings.component';
+import { TooltipModule } from 'primeng/tooltip';
+import { DialogModule } from 'primeng/dialog';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
     IntacctExportSettingsComponent,
-    IntacctImportSettingsComponent,
-    IntacctAdvancedSettingsComponent
+    IntacctImportSettingsComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    MultiSelectModule
+    MultiSelectModule,
+    TooltipModule,
+    DialogModule,
+    InputSwitchModule
   ],
   exports: [
     IntacctExportSettingsComponent,
-    IntacctImportSettingsComponent,
-    IntacctAdvancedSettingsComponent
+    IntacctImportSettingsComponent
   ]
 })
 export class IntacctSharedModule { }

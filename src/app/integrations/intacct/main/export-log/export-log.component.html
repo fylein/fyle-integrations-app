@@ -8,7 +8,7 @@
 
 <div *ngIf="!isLoading" class="tw-py-40-px tw-px-120-px">
     <div class="tw-mb-16-px">
-        <p-tabMenu [model]="modules" [activeItem]="activeModule"></p-tabMenu>
+        <app-sub-menu [activeModule]="activeModule" [modules]="modules" ></app-sub-menu>
     </div>
     <div>
         <router-outlet></router-outlet>

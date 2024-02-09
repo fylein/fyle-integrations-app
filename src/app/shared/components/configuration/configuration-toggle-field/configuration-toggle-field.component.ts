@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -26,6 +27,8 @@ export class ConfigurationToggleFieldComponent implements OnInit {
   @Input() hasDependentFields: boolean;
 
   @Input() hideToggle: boolean = false;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     public windowService: WindowService

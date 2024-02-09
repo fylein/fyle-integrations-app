@@ -11,15 +11,7 @@
 }
 
 .form-input {
-    @apply tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-h-40-px tw-bg-white tw-border tw-border-box-color tw-box-border tw-rounded-8-px ;
-}
-
-.save-btn {
-    @apply tw-border tw-bg-mandatory-field-color tw-rounded-4-px #{!important};
-}
-
-.cancel-btn {
-    @apply tw-py-10-px tw-px-16-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px tw-text-slightly-normal-text-color tw-mr-16-px #{!important};
+    @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-h-40-px tw-bg-white tw-border tw-border-box-color tw-box-border tw-rounded-8-px ;
 }
 
 :host ::ng-deep .p-button {
@@ -27,6 +19,5 @@
 }
 
 .form-input-disabled {
-    
-    @apply tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-bg-disabled-bg-color tw-border tw-border-box-color tw-box-border tw-rounded-8-px ;
+    @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-bg-disabled-bg-color tw-border tw-border-box-color tw-box-border tw-rounded-8-px ;
 }

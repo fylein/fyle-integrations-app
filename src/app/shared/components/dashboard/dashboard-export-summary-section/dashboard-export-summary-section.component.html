@@ -1,7 +1,7 @@
 <div class="tw-px-120-px">
     <div class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
-                <h4 class="tw-font-500 tw-text-18-px">Your last export</h4>
+                <h4 class="tw-font-500 tw-text-18-px tw-text-text-primary">Your last export</h4>
         </div>
         <div class="tw-border-separator tw-border-t-1-px">
             <div class="tw-p-6 tw-rounded-6-px tw-bg-white">
@@ -9,16 +9,16 @@
                     <div class="tw-flex tw-items-center tw-justify-between">
                         <div class="tw-flex">
                                 <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-success-toast tw-mr-16-px'"></app-svg-icon>
-                                <p class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-10-px">Successful Expenses</p>
-                                <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-faded-text-color">
+                                <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">Successful Expenses</p>
+                                <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-text-secondary">
                                     {{ accountingExportSummary?.successful_accounting_export_count ? accountingExportSummary?.successful_accounting_export_count : 0 }}
                                 </span>  
                             <a *ngIf="accountingExportSummary?.successful_accounting_export_count" (click)="showExportLog(AccountingExportStatus.COMPLETE)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-text-pink pointer">View</a>
                         </div>
                         <div class="tw-flex tw-flex-col">
                             <span class="tw-w-260-px tw-text-right">
-                                <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Last Export at: </span>
-                                <span class="tw-text-14-px tw-font-500">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
+                                <span class="tw-text-14-px tw-text-text-muted tw-font-400">Last Export at: </span>
+                                <span class="tw-text-14-px tw-font-500 tw-text-text-secondary">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
                                 {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'dd MMM yyyy') : '' }}</span>
                             </span>                              
                         </div>
@@ -26,16 +26,16 @@
                     <div class="tw-flex tw-items-center tw-mt-8-px tw-justify-between">
                         <div class="tw-flex">
                             <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast tw-mr-16-px'"></app-svg-icon>
-                            <p class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-10-px">Failed Expenses</p>
-                            <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-faded-text-color">
+                            <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">Failed Expenses</p>
+                            <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-text-secondary">
                                 {{ accountingExportSummary?.failed_accounting_export_count ? accountingExportSummary?.failed_accounting_export_count : 0 }}
                             </span>
                             <a *ngIf="accountingExportSummary?.failed_accounting_export_count" (click)="showExportLog(AccountingExportStatus.FAILED)" class="tw-ml-20-px tw-text-14-px tw-font-500 tw-text-pink pointer">View</a>
                         </div>
                         <div class="tw-flex tw-flex-col">
                             <span class="tw-w-260-px tw-text-right" *ngIf="accountingExportSummary?.next_export_at">
-                                <span class="tw-text-14-px tw-text-faded-text-color tw-font-400">Next Export at: </span>
-                                <span class="tw-text-14-px tw-font-500">{{ accountingExportSummary?.next_export_at ? (accountingExportSummary?.next_export_at | date: 'h:mm a,') : 'None' }}
+                                <span class="tw-text-14-px tw-text-text-muted tw-font-400">Next Export at: </span>
+                                <span class="tw-text-14-px tw-font-500 tw-text-text-secondary">{{ accountingExportSummary?.next_export_at ? (accountingExportSummary?.next_export_at | date: 'h:mm a,') : 'None' }}
                                 {{ accountingExportSummary ? (accountingExportSummary.next_export_at | date: 'dd MMM yyyy') : '' }}</span>
                             </span> 
                         </div>

@@ -192,6 +192,14 @@
                             [formControllerName]="'creditCard'"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
+                        <div *ngIf="exportSettingsForm.value.cccExportType === CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                            <app-configuration-toggle-field 
+                            [form]="exportSettingsForm"
+                            [iconPath]="'list'"
+                            [label]="'Export Merchant data to the Vendor field'" 
+                            [subLabel]="'Enabling this option would export the merchant name of each expense to the respective journal entry Vendor field'"
+                            [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
+                        </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
@@ -263,8 +271,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div>
             <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingsForm.valid"></app-configuration-step-footer>
         </div>
     </form>

@@ -12,6 +12,7 @@ const featureConfigs: FeatureConfiguration = {
         isGradientAllowed: true,
         isIconsInsideButtonAllowed: true,
         exposeOnlyQBOApp: false,
+        isBackgroundColorAllowed: false,
         featureFlags: {
             cloneSettings: true,
             mapEmployees: true,
@@ -41,6 +42,7 @@ const featureConfigs: FeatureConfiguration = {
         isGradientAllowed: false,
         isIconsInsideButtonAllowed: false,
         exposeOnlyQBOApp: true,
+        isBackgroundColorAllowed: true,
         featureFlags: {
             cloneSettings: false,
             mapEmployees: false,
