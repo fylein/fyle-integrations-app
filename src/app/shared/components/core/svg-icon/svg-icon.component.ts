@@ -48,11 +48,11 @@ const ICON_MAPPING = {
   'user-plus': 'grv-person',
   'user-two': 'grv-persons',
   'warning-outline': 'grv-caution-triangle-small',
-  'search-medium': 'grv-magnifier-medium',
+  'search-medium': 'grv-search-medium',
   'arrow-left': 'grv-arrow-left',
   'arrow-right': 'grv-arrow-right',
-  'arrow-bar-left': 'grv-arrow-bar-left',
-  'arrow-bar-right': 'grv-arrow-bar-right'
+  'arrow-bar-left': 'grv-chevron-left',
+  'arrow-bar-right': 'grv-chevron-right'
 };
 
 @Component({
