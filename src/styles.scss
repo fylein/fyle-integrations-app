@@ -205,7 +205,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items {
-    @apply tw-pt-px tw-pr-0 tw-pb-0 tw-border tw-border-box-color tw-rounded-b-8-px #{!important};
+    @apply tw-mt-1-px tw-p-0 tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {

@@ -67,7 +67,8 @@ export class QBOImportSettingModel extends ImportSettingsModel {
       importItems: new FormControl(importSettings?.workspace_general_settings.import_items ?? false),
       taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
       importVendorsAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_vendors_as_merchants ?? false),
-      defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null)
+      defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
+      searchOption: new FormControl('')
     });
   }
 

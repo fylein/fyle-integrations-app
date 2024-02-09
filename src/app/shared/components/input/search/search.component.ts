@@ -14,6 +14,10 @@ export class SearchComponent implements OnInit {
 
   @Input() styleClasses: string = '';
 
+  @Input() formControllerName: string = 'searchOption';
+
+  @Output() handleSimpleSearch = new EventEmitter<any>();
+
   isSearchFocused: boolean;
 
   constructor() { }
@@ -22,7 +26,14 @@ export class SearchComponent implements OnInit {
     this.form.controls.searchOption.setValue('');
   }
 
+  private searchQueryWatcher(): void {
+    this.form.controls.searchOption.valueChanges.subscribe((value) => {
+      this.handleSimpleSearch.emit(value);
+    });
+  }
+
   ngOnInit(): void {
+    this.searchQueryWatcher();
   }
 
 }

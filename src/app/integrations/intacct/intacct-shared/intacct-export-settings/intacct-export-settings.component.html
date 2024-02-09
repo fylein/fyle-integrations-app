@@ -51,6 +51,7 @@
                                 [iconPath]="'list'"
                                 [placeholder]="'Select GL account'"
                                 [formControllerName]="'glAccount'"
+                                [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
@@ -66,6 +67,7 @@
                                 [iconPath]="'list'"
                                 [placeholder]="'Select expense payment type'"
                                 [formControllerName]="'reimbursableExpensePaymentType'"
+                                [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                     </div>
@@ -160,6 +162,7 @@
                             [iconPath]="'list'"
                             [placeholder]="'Select expense payment type'"
                             [formControllerName]="'cccExpensePaymentType'"
+                            [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.BILL">
@@ -175,6 +178,7 @@
                             [iconPath]="'list'"
                             [placeholder]="'Select credit card vendor'"
                             [formControllerName]="'creditCardVendor'"
+                            [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
@@ -190,6 +194,7 @@
                             [iconPath]="'list'"
                             [placeholder]="'Select GL account'"
                             [formControllerName]="'creditCard'"
+                            [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType === CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
@@ -213,6 +218,7 @@
                             [iconPath]="'list'"
                             [placeholder]="'Select Charge Corporate Card'"
                             [formControllerName]="'chargeCard'"
+                            [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                     </div>
