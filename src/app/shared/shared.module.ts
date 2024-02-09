@@ -245,7 +245,8 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     CloneSettingFieldComponent,
     ToggleComponent,
     MultiSelectComponent,
-    SvgIconComponent
+    SvgIconComponent,
+    SkipExportComponent
   ]
 })
 export class SharedModule { }
