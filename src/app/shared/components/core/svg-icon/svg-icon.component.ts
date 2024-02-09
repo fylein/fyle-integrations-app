@@ -90,8 +90,10 @@ export class SvgIconComponent implements OnInit {
       this.svgSource = ICON_MAPPING[this.svgSource];
 
       if (!this.isTextColorAllowed) {
-        // Remove all text classes
+        // Remove all text classes and add default text color
         this.styleClasses = this.styleClasses.split(' ').filter((styleClass: string) => (!styleClass.startsWith('tw-text-') ? styleClass: '')).join(' ');
+
+        this.styleClasses += ' tw-text-icon-primary';
       }
     }
   }

@@ -7,7 +7,7 @@
 
 @layer base {
   [data-theme='fyle'] {
-    //brand bg
+      //brand bg
     --bg-brand-primary: #{$brand-500};
     --bg-brand-disable: #{$brand-300};
     --bg-brand-muted: #{$brand-secondary-opacity-15};
@@ -204,9 +204,63 @@
     --dropdown-shadow: rgba(44, 48, 78, 0.1);
     --filter-hover-shadow: rgba(44, 48, 78, 0.03);
 
+    --btn-cta-shadow: 0px 4px 4px rgba(44, 48, 78, 0.1);
+
+    --btn-primary-disable-text-color: #{$white};
+
     //focus
     --secondary-outline-focus: #{$grey-100};
 
     --black: #{$black};
+
+    // Button Primary - Default
+    --btn-primary-bg: linear-gradient(162deg, #ff3366 3.01%, #fe5196 111.5%);
+
+    --btn-primary-hover-bg: linear-gradient(162deg, #F36 3.01%, #FE5196 111.5%);
+
+    --btn-primary-text-color: #{$white};
+
+    --btn-primary-hover-text-color: #{$white};
+
+    --btn-secondary-bg: var(--gradient-dark-xs-start);
+
+    --btn-secondary-text-color: #{$white};
+
+    --btn-secondary-hover-bg: var(--gradient-dark-xs-start);
+
+    --btn-secondary-hover-text-color: #{$white};
+
+    --btn-outline-secondary-bg: #{$white};
+
+    --btn-outline-secondary-border-color: #{$grey-300};
+
+    --btn-outline-secondary-text-color: var(--text-secondary);
+
+    --btn-outline-secondary-hover-text-color: var(--text-secondary);
+
+    --btn-outline-secondary-hover-border-color: #{$grey-300};
+
+    --btn-outline-secondary-hover-bg: #{$white};
+
+    --btn-tertiary-text-color: var(--text-brand-primary);
+    
+    --btn-tertiary-hover-text-color: var(--text-brand-primary);
+
+    --btn-tertiary-hover-bg: #{$white};
+
+    --lv-stats-bg: linear-gradient(112deg, rgba(255, 255, 255, 0.90) 1.65%, rgba(255, 255, 255, 0.24) 100%);
+    --lv-stats-label-text-color: var(--text-tertiary);
+
+    --nav-link-text: var(--text-primary);
+
+    --nav-tabs-hover-bg: transparent;
+
+    --nav-link-active-border: var(--bg-primary);
+
+    --nav-link-font-weight: 500;
+
+    --nav-tabs-active-border: var(--border-secondary);
+
+    --nav-tabs-active-bg: #{$white};
   }
 }

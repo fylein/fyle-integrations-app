@@ -1,0 +1,35 @@
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav {
+    @apply tw-border-none;
+}
+
+:host ::ng-deep .p-tabmenu-nav .p-menuitem-text {
+    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-16-px ;
+}
+
+:host ::ng-deep .p-tabmenu-nav .p-menuitem-text:hover {
+    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-16-px tw-border-nav-tabs-hover-bg tw-border-solid tw-border-b-2-px;
+}
+
+:host ::ng-deep .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-text {
+    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-16-px tw-border-nav-link-active-border tw-border-solid tw-border-b-2-px;
+}
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
+    @apply tw-border-white tw-border-solid tw-border-b-2-px #{!important};
+}
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:hover {
+    @apply tw-border-nav-tabs-hover-bg tw-border-solid tw-border-b-2-px #{!important};
+}
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
+    @apply tw-shadow-none;
+}
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):hover {
+    @apply tw-bg-nav-tabs-hover-bg;
+}
+
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+    @apply tw-border-none tw-px-24-px tw-pt-16-px tw-pb-0;
+}

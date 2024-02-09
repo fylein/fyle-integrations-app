@@ -11,7 +11,7 @@
             <td>
                 <div class="tw-flex tw-items-center">
                     <app-svg-icon *ngIf="mapping.auto_mapped && !isDashboardMappingResolve" [tooltipText]="'Auto-mapped'" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
-                    <span [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped}">{{ mapping.value }}</span>
+                    <span class="tw-text-text-secondary" [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped}">{{ mapping.value }}</span>
                 </div>
             </td>
             <td>
@@ -36,8 +36,8 @@
                 </p-dropdown>
             </td>
             <td *ngIf="!isDashboardMappingResolve">
-                <p *ngIf="getDropdownValue(mapping)" class="mapped">MAPPED</p>
-                <p *ngIf="!getDropdownValue(mapping)" class="unmapped">UNMAPPED</p>
+                <p *ngIf="getDropdownValue(mapping)" class="mapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? 'MAPPED': 'Mapped'}}</p>
+                <p *ngIf="!getDropdownValue(mapping)" class="unmapped">{{brandingFeatureConfig.isIconsInsideButtonAllowed ? 'UNMAPPED': 'Unmapped'}}</p>
             </td>
         </tr>
         <ng-container *ngTemplateOutlet="shimmers"></ng-container>

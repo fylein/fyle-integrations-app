@@ -1,6 +1,6 @@
 <p-table *ngIf="filteredExpenseGroups.length > 0" #dt1 [value]="filteredExpenseGroups">
     <ng-template pTemplate="header">
-        <tr>
+        <tr class="tw-text-text-primary">
             <th *ngIf="!isDashboardFailed">Date and Time of Export</th>
             <th>Employee Name and ID</th>
             <th *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">Expense Type</th>
@@ -14,20 +14,20 @@
     <ng-template pTemplate="body" let-rowData>
         <tr class="clickable-row" (click)="displayChildTable(rowData)">
             <td *ngIf="!isDashboardFailed">
-                <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
-                <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>
+                <p class="tw-text-14-px tw-font-400 tw-text-text-secondary">{{rowData.exportedAt | date}}</p>
+                <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exportedAt | date : "HH:ss"}}</span>
             </td>
             <td>
-                <h4>
+                <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">
                     {{rowData.employee[0]}}
                 </h4>
-                <h5 class="tw-font-400 !tw-text-12-px tw-text-placeholder">
+                <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">
                     {{rowData.employee[1]}}
                 </h5>
             </td>
-            <td *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | titlecase}}</td>
-            <td class="tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
-            <td *ngIf="!isDashboardFailed">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
+            <td class="tw-text-text-secondary" *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | titlecase}}</td>
+            <td class="tw-text-text-secondary tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
+            <td class="tw-text-text-secondary" *ngIf="!isDashboardFailed">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
             <td *ngIf="!isDashboardFailed">
                 <div>
                   <button (click)="openUrl(rowData.integrationUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
