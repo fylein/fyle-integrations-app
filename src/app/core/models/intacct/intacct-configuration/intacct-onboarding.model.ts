@@ -65,7 +65,7 @@ export class IntacctOnboardingModel {
           }
         });
 
-        for (let index = this.onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {
+        for (let index = this.onboardingStateStepMap[onboardingState] - 2; index > 0; index--) {
           this.onboardingSteps[index - 1].completed = true;
         }
 
