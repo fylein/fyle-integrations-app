@@ -9,7 +9,3 @@
 :host ::ng-deep .p-progressbar-determinate .p-progressbar-value {
     content: none #{!important};
 }
-
-.export-btn:disabled {
-    @apply tw-cursor-not-allowed tw-bg-cta-disabled #{!important};
-}

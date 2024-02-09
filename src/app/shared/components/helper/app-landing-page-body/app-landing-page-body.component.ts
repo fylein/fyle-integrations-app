@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -25,6 +25,8 @@ export class AppLandingPageBodyComponent implements OnInit {
   embedVideoUrl: SafeResourceUrl;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
     public windowService: WindowService,

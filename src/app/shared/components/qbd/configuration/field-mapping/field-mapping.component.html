@@ -33,8 +33,6 @@
                         [formControllerName]="'classType'"></app-configuration-select-field>
                     </div>
                 </div> 
-            </div>
-            <div>
                 <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!fieldMappingForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
             </div>
         </form>
