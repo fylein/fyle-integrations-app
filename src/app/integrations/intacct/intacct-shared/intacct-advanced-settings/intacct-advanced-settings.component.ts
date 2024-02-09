@@ -10,20 +10,22 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiAdvancedSettingService } from 'src/app/core/services/si/si-configuration/si-advanced-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
-import { SkipExportComponent } from '../../helper/skip-export/skip-export.component';
+
 import { TitleCasePipe } from '@angular/common';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { Configuration } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
 import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
+import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
 
 @Component({
-  selector: 'app-configuration-advanced-settings',
-  templateUrl: './configuration-advanced-settings.component.html',
-  styleUrls: ['./configuration-advanced-settings.component.scss']
+  selector: 'app-intacct-advanced-settings',
+  templateUrl: './intacct-advanced-settings.component.html',
+  styleUrls: ['./intacct-advanced-settings.component.scss']
 })
-export class ConfigurationAdvancedSettingsComponent implements OnInit {
+
+export class IntacctAdvancedSettingsComponent implements OnInit {
 
   @ViewChild('skipExportChild') skipExportChild: SkipExportComponent;
 

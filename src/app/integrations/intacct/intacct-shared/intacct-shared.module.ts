@@ -13,11 +13,13 @@ import { RadioButtonModule } from 'primeng/radiobutton';
 import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
+import { IntacctAdvancedSettingsComponent } from './intacct-advanced-settings/intacct-advanced-settings.component';
 
 @NgModule({
   declarations: [
     IntacctExportSettingsComponent,
-    IntacctImportSettingsComponent
+    IntacctImportSettingsComponent,
+    IntacctAdvancedSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { DropdownModule } from 'primeng/dropdown';
   ],
   exports: [
     IntacctExportSettingsComponent,
-    IntacctImportSettingsComponent
+    IntacctImportSettingsComponent,
+    IntacctAdvancedSettingsComponent
   ]
 })
 export class IntacctSharedModule { }
