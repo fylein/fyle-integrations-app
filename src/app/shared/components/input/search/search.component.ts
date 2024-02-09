@@ -11,7 +11,7 @@ export class SearchComponent implements OnInit {
   @Input() form: FormGroup;
 
   @Input() placeholder: string;
-  
+
   @Input() styleClasses: string = '';
 
   isSearchFocused: boolean;
