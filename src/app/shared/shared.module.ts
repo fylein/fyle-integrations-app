@@ -46,12 +46,8 @@ import { MappingTableComponent } from './components/qbd/mapping/mapping-table/ma
 import { MappingFilterComponent } from './components/helper/mapping/mapping-filter/mapping-filter.component';
 import { MappingHeaderSectionComponent } from './components/qbd/mapping/mapping-header-section/mapping-header-section.component';
 import { TableModule } from 'primeng/table';
-
-import { IntacctStepperComponent } from './components/si/helper/intacct-stepper/intacct-stepper.component';
 import { IntacctConnectorComponent } from './components/si/core/intacct-connector/intacct-connector.component';
 import { IntacctLocationEntityComponent } from './components/si/core/intacct-location-entity/intacct-location-entity.component';
-import { ConfigurationImportSettingsComponent } from './components/si/configuration/configuration-import-settings/configuration-import-settings.component';
-import { ConfigurationAdvancedSettingsComponent } from './components/si/configuration/configuration-advanced-settings/configuration-advanced-settings.component';
 import { SkipExportComponent } from './components/si/helper/skip-export/skip-export.component';
 import { ChipsModule } from 'primeng/chips';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -119,14 +115,11 @@ import { SearchComponent } from './components/input/search/search.component';
     ConfigurationMultiSelectComponent,
     ConfigurationLabelComponent,
     AppLandingPageBodyComponent,
-    IntacctStepperComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
     MappingTableComponent,
     MappingFilterComponent,
     MappingHeaderSectionComponent,
-    ConfigurationImportSettingsComponent,
-    ConfigurationAdvancedSettingsComponent,
     SkipExportComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
@@ -217,14 +210,11 @@ import { SearchComponent } from './components/input/search/search.component';
     ChipsModule,
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
-    IntacctStepperComponent,
     IntacctConnectorComponent,
     IntacctLocationEntityComponent,
     MappingTableComponent,
     MappingFilterComponent,
     MappingHeaderSectionComponent,
-    ConfigurationImportSettingsComponent,
-    ConfigurationAdvancedSettingsComponent,
     DashboardMappingResolveComponent,
     DashboardIntacctErrorsComponent,
     DashboardExportSectionComponent,
@@ -258,7 +248,8 @@ import { SearchComponent } from './components/input/search/search.component';
     ToggleComponent,
     MultiSelectComponent,
     SvgIconComponent,
-    SearchComponent
+    SearchComponent,
+    SkipExportComponent
   ]
 })
 export class SharedModule { }
