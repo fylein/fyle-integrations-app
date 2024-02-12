@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6 tw-p-24-px">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
     <div>
     <app-configuration-step-header 
     [headerText]="'Advanced Settings'"
@@ -244,9 +244,7 @@
                 </div>  
               </div>
         </div>
+        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)"></app-configuration-step-footer>
     </div>
-        <div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)"></app-configuration-step-footer>
-        </div>
     </form>
 </div>
