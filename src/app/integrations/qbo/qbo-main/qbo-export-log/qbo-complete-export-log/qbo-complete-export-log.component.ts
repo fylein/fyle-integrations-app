@@ -11,6 +11,9 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-qbo-complete-export-log',
   templateUrl: './qbo-complete-export-log.component.html',
@@ -46,6 +49,8 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   isDateSelected: boolean = false;
 
+  private searchQuerySubject = new Subject<string>();
+
   private org_id: string = this.userService.getUserProfile().org_id;
 
   constructor(
@@ -54,18 +59,22 @@ export class QboCompleteExportLogComponent implements OnInit {
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+      debounceTime(1000)
+    ).subscribe((query: string) => {
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+      this.getAccountingExports(paginator.limit, paginator.offset, query);
+    });
+  }
 
   openExpenseinFyle(expense_id: string) {
     this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(event: any) {
-    const query = event.target.value.toLowerCase();
-
-    this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
-      return AccountingExportModel.getfilteredAccountingExports(query, group);
-    });
+    const query = event.target.value;
+    this.searchQuerySubject.next(query);
   }
 
   pageSizeChanges(limit: number): void {
@@ -82,15 +91,15 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset:number, query? : string | null) {
     this.isLoading = true;
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
-      if (!this.isDateSelected) {
+    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, query).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+      if (!this.isDateSelected && !query) {
         this.totalCount = accountingExportResponse.count;
       }
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>

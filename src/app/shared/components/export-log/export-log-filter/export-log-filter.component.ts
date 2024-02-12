@@ -61,6 +61,7 @@ export class ExportLogFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.exportLogForm.value);
   }
 
 }

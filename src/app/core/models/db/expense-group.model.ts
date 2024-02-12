@@ -33,6 +33,10 @@ export type ExpenseGroupParam = {
   tasklog__status: string;
   exported_at__gte?: string;
   exported_at__lte?: string;
+  expenses__expense_number?: string,
+  expenses__employee_name?: string,
+  expenses__employee_email?: string,
+  expenses__claim_number?: string,
 }
 
 export type SkipExportParam = {

@@ -42,12 +42,19 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, params);
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
       offset,
       tasklog__status: state
     };
+
+    if (query){
+      params.expenses__expense_number = query;
+      params.expenses__employee_name = query;
+      params.expenses__employee_email = query;
+      params.expenses__claim_number = query;
+    }
 
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
