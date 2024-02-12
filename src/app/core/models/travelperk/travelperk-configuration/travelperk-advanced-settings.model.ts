@@ -2,9 +2,8 @@ import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { TravelPerkExpenseGroup } from "../../enum/enum.model";
 import { SelectFormLabel, SelectFormOption } from "../../common/select-form-option.model";
 import { TravelperkDestinationAttribuite } from "../travelperk.model";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 
-interface StringDictionary {
+interface TravelperkCategoryMapping {
     [key: string]:  {
         id: string;
         name: string;
@@ -18,7 +17,7 @@ export type TravelperkAdvancedSetting = {
 	default_category_id: string,
 	description_structure: string[],
 	invoice_lineitem_structure: TravelPerkExpenseGroup,
-    category_mappings: StringDictionary
+    category_mappings: TravelperkCategoryMapping
 }
 
 export interface TravelperkAdvancedSettingGet extends TravelperkAdvancedSetting {
@@ -84,29 +83,29 @@ export class TravelperkAdvancedSettingModel {
     }
 
     static constructFormArray(arrayData: TravelperkAdvancedSettingGet, source_fields: TravelperkDestinationAttribuite[]): FormGroup[] {
-        const resultentArray:FormGroup[] = [];
-        const destination = this.getDefaultCategory();
+        const mappingPayload:FormGroup[] = [];
+        const defaultCategories = this.getDefaultCategory();
         const categoryMapping = Object.keys(arrayData.category_mappings);
         Object.entries(arrayData.category_mappings).forEach((value, index) => {
             const findObjectByDestinationId = (array: TravelperkDestinationAttribuite[], id: string) => array?.find(item => item.source_id === id) || null;
             const data: TravelperkAdvancedSettingArray = {
                 destination_name: {
-                    label: categoryMapping[index] ? categoryMapping[index] : destination[index].label,
-                    value: categoryMapping[index] ? categoryMapping[index] : destination[index].value
+                    label: categoryMapping[index] ? categoryMapping[index] : defaultCategories[index].label,
+                    value: categoryMapping[index] ? categoryMapping[index] : defaultCategories[index].value
                 },
                 source_name: findObjectByDestinationId(source_fields, arrayData.category_mappings[categoryMapping[index]].id)
             };
-            resultentArray.push(this.createFormGroup(data));
+            mappingPayload.push(this.createFormGroup(data));
         });
-        return resultentArray;
+        return mappingPayload;
     }
 
     static constructCategoryMapping(categoryMappingFieldArray: TravelperkAdvancedSettingFormArray[]) {
-        const data:StringDictionary = {};
+        const data:TravelperkCategoryMapping = {};
         categoryMappingFieldArray.forEach((item: TravelperkAdvancedSettingFormArray) => {
             data[item.destinationName.value] = {
-                "name": item.sourceName?.value ? item.sourceName.value : '',
-                "id": item.sourceName?.source_id ? item.sourceName.source_id : ''
+                'name': item.sourceName?.value ? item.sourceName.value : '',
+                'id': item.sourceName?.source_id ? item.sourceName.source_id : ''
             };
         });
 
@@ -115,9 +114,9 @@ export class TravelperkAdvancedSettingModel {
 
     static mapAPIResponseToFormGroup(advancedSettings: TravelperkAdvancedSettingGet | null, sourceOptions: TravelperkDestinationAttribuite[]): FormGroup {
         const defaultMemoOptions: string[] =['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
-        const categoryMappingsArray = advancedSettings ? this.constructFormArray(advancedSettings, sourceOptions) : [] ;
+        const categoryMappings = advancedSettings ? this.constructFormArray(advancedSettings, sourceOptions) : [] ;
         return new FormGroup({
-            categoryMappings: new FormArray(categoryMappingsArray),
+            categoryMappings: new FormArray(categoryMappings),
             descriptionStructure: new FormControl(advancedSettings?.description_structure ? advancedSettings?.description_structure : defaultMemoOptions),
             defaultEmployee: new FormControl(advancedSettings?.default_employee ? advancedSettings?.default_employee : null),
             defaultEmployeeId: new FormControl(advancedSettings?.default_employee_id ? advancedSettings?.default_employee_id : null),

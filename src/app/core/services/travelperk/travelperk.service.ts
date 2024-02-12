@@ -77,10 +77,16 @@ export class TravelperkService {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/disconnect/`, {});
   }
 
+  @CacheBuster({
+    cacheBusterNotifier: travelPerkConfigurationCache$
+  })
   syncPaymentProfile(): Observable<{}> {
     return this.apiService.get(`/orgs/${this.orgId}/travelperk/sync_payment_profile/`,  {});
   }
 
+  @CacheBuster({
+    cacheBusterNotifier: travelPerkConfigurationCache$
+  })
   syncCategories(): Observable<{}> {
     return this.apiService.post(`/orgs/${this.orgId}/sync_categories/`,  {});
   }

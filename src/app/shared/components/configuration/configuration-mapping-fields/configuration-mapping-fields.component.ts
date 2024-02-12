@@ -22,9 +22,9 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() destinationPlaceholderFieldText: string;
 
-  @Input() sourceFieldOptions: string[] | SelectFormOption[] | TravelperkDestinationAttribuite[];
+  @Input() sourceFieldOptions: any[];
 
-  @Input() destinationFieldOptions: string[] | TravelperkPaymentProfileSettingGet[] | TravelperkDestinationAttribuite[] | SelectFormOption[];
+  @Input() destinationFieldOptions: any[];
 
   @Input() isDestinationDisabled: boolean;
 
