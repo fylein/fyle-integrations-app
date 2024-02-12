@@ -262,5 +262,13 @@
     --nav-tabs-active-border: var(--border-secondary);
 
     --nav-tabs-active-bg: #{$white};
+
+    --dd-menu-item-default-text-color: var(--text-secondary);
+
+    --dd-menu-item-hover-bg: var(--bg-tertiary);
+
+    --checkbox-icon-selected-color: var(--icon-brand-primary);
+
+    --checkbox-icon-color: var(--icon-disable);
   }
 }
