@@ -63,7 +63,7 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
     }
 
     static createImportSettingPayload(importSettingsForm: FormGroup, importSettings: Sage300ImportSettingGet): Sage300ImportSettingPost {
-        const expenseFieldArray = importSettingsForm.value.expenseFields;
+        const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
         const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
         return {
