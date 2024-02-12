@@ -77,7 +77,11 @@ export const travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet = 
     "created_at": new Date("12/11/1999"),
     "updated_at": new Date("12/11/1999"),
     "org": 1,
-    "id": 1
+    "id": 1,
+    category_mappings: {
+        "Cars": {"name": "xyz", "id": '123'},
+        "Stays": {"name": "xyz", "id": '278'}
+    }
 };
 
 export const travelperkDestinationAttribute: TravelperkDestinationAttribuite[] = [
@@ -89,7 +93,7 @@ export const travelperkDestinationAttribute: TravelperkDestinationAttribuite[] =
         "detail": null,
         "created_at": new Date("12/11/1999"),
         "updated_at": new Date("12/11/1999"),
-        "source_id": "278508",
+        "source_id": "123",
         "auto_created": false,
         "org": 2
     },
@@ -101,7 +105,7 @@ export const travelperkDestinationAttribute: TravelperkDestinationAttribuite[] =
         "detail": null,
         "created_at": new Date("12/11/1999"),
         "updated_at": new Date("12/11/1999"),
-        "source_id": "278508",
+        "source_id": "278",
         "auto_created": false,
         "org": 2
     }

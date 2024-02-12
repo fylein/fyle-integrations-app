@@ -77,8 +77,18 @@ export class TravelperkService {
     return this.apiService.post(`/orgs/${this.orgId}/travelperk/disconnect/`, {});
   }
 
+  @Cacheable({
+    cacheBusterObserver: travelPerkConfigurationCache$
+  })
   syncPaymentProfile(): Observable<{}> {
     return this.apiService.get(`/orgs/${this.orgId}/travelperk/sync_payment_profile/`,  {});
+  }
+
+  @Cacheable({
+    cacheBusterObserver: travelPerkConfigurationCache$
+  })
+  syncCategories(): Observable<{}> {
+    return this.apiService.post(`/orgs/${this.orgId}/sync_categories/`,  {});
   }
 
   getTravelperkPaymentProfileMapping(limit: number): Observable<TravelperkPaymentProfileSettingResponse> {
@@ -93,14 +103,14 @@ export class TravelperkService {
   }
 
   getTravelperkAdvancedSettings(): Observable<TravelperkAdvancedSettingGet> {
-    return this.apiService.get(`/orgs/${this.orgId}/travelperk/advance_settings/`, {});
+    return this.apiService.get(`/orgs/${this.orgId}/travelperk/advanced_settings/`, {});
   }
 
   postTravelperkAdvancedSettings(travelperkAdvancedSettingPayload: TravelperkAdvancedSettingPost): Observable<TravelperkAdvancedSettingGet> {
-    return this.apiService.post(`/orgs/${this.orgId}/travelperk/advance_settings/`, travelperkAdvancedSettingPayload);
+    return this.apiService.post(`/orgs/${this.orgId}/travelperk/advanced_settings/`, travelperkAdvancedSettingPayload);
   }
 
   getCategories(): Observable<TravelperkDestinationAttribuite[]> {
-    return this.apiService.get(`/orgs/${this.orgId}/sync_categories/`,  {});
+    return this.apiService.get(`/orgs/${this.orgId}/categories/`,  {});
   }
 }

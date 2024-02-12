@@ -39,10 +39,13 @@
                     [destinationFieldText]="'Payment Profile'"
                     [sourceFieldPlaceholderText]="'Select a User Role'"
                     [totalAvailableRows]="paymentProfileSettings.count"
+                    [destinationAttributeNames]="destinationAttributeNames"
+                    [sourceAttributeNames]="sourceAttributeNames"
+                    [formControllerName]="'paymentProfileMappings'"
                     (loadMoreClick)="getProfileMappings(paymentProfileSettings.count)">
                 </app-configuration-mapping-fields>
             </div>
-            <div>
+            <div class="tw-px-24-px tw-pb-24-px tw-border-t-1-px tw-border-t-box-color">
                 <app-configuration-step-footer 
                     [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
                     [showBackButton] = "isOnboarding"

@@ -10,7 +10,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { TravelperkService } from 'src/app/core/services/travelperk/travelperk.service';
 import { travelperkPaymentProfileMappingResponse } from '../travelperk.fixture';
-import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { SelectFormLabel, SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-travelperk-payment-profile-settings',
@@ -44,6 +44,16 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
   isPreviewDialogVisible: boolean;
 
   limit: number = 5;
+
+  destinationAttributeNames: SelectFormLabel = {
+    label: 'profile_name',
+    value: 'profile_name'
+  };
+
+  sourceAttributeNames: SelectFormLabel = {
+    label: 'label',
+    value: 'value'
+  };
 
   constructor(
     private router: Router,
@@ -118,7 +128,6 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
 
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.travelperkService.syncPaymentProfile().subscribe();
     this.getProfileMappings(this.limit);
   }
 
