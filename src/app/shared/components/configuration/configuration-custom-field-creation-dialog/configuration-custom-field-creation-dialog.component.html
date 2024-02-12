@@ -4,7 +4,7 @@
             <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
                 <div class="tw-flex tw-justify-between tw-items-center">
                     <p class="tw-text-text-primary tw-text-20-px tw-font-500">Add new Custom Field</p>
-                    <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" class="tw-cursor-pointer tw-text-12-px" (click)="closeModel()"></i>
+                    <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer tw-text-12-px" (click)="closeModel()"></app-svg-icon>
                 </div>
             </div>
             <div *ngIf="existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1">
