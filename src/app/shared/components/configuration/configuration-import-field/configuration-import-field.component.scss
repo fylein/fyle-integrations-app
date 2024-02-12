@@ -63,7 +63,7 @@
   }
     
   .add-button-container {
-    @apply tw-flex tw-items-center tw-pt-7 tw-pl-50-px ;
+    @apply tw-flex tw-items-center tw-pt-7 tw-pl-20-px;
   }
   
   .add-row-text {
@@ -98,6 +98,9 @@
     @apply tw-bg-alert-toast tw-border tw-border-alert-toast tw-rounded-4-px ;
   }
 
+.inputbox input, :host ::ng-deep .inputbox .p-dropdown {
+  @apply xl:tw-w-300-px lg:tw-w-220-px #{!important};
+}
 .container {
   @apply tw-relative tw-cursor-pointer tw-select-none tw-block #{!important};
 }
