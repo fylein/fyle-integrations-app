@@ -10,7 +10,7 @@ export class NetsuiteComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('i am her')
+    console.log('i am her');
   }
 
 }
