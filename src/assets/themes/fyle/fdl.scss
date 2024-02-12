@@ -249,6 +249,7 @@
     --btn-tertiary-hover-bg: #{$white};
 
     --lv-stats-bg: linear-gradient(112deg, rgba(255, 255, 255, 0.90) 1.65%, rgba(255, 255, 255, 0.24) 100%);
+
     --lv-stats-label-text-color: var(--text-tertiary);
 
     --nav-link-text: var(--text-primary);
@@ -286,6 +287,7 @@
     --checkbox-icon-selected-color: var(--icon-secondary);
 
     --checkbox-icon-color: var(--icon-disable);
+
     --select-disabled-bg: var(--bg-tertiary);
 
     --select-disabled-text: var(--text-placeholder);
@@ -300,5 +302,15 @@
     --toggle-circle-translate: 28px;
 
     --form-switch-bg: var(--bg-disable);
+
+    --alerts-success-icon-color: var(--text-white);
+
+    --toast-success-bg: var(--bg-success);
+
+    --toast-text-color: var(--text-white);
+
+    --alerts-error-icon-color: var(--bg-danger);
+
+    --toast-error-bg: var(--bg-danger);
   }
 }
