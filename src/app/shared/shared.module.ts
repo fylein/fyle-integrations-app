@@ -86,6 +86,7 @@ import { CloneSettingFieldComponent } from './components/onboarding/clone-settin
 import { ToggleComponent } from './components/input/toggle/toggle.component';
 import { MultiSelectComponent } from './components/input/multi-select/multi-select.component';
 import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component';
+import { SearchComponent } from './components/input/search/search.component';
 
 
 @NgModule({
@@ -154,7 +155,8 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     CloneSettingFieldComponent,
     ToggleComponent,
     MultiSelectComponent,
-    SvgIconComponent
+    SvgIconComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -246,6 +248,7 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     ToggleComponent,
     MultiSelectComponent,
     SvgIconComponent,
+    SearchComponent,
     SkipExportComponent
   ]
 })

@@ -47,7 +47,8 @@ const ICON_MAPPING = {
   'tabs': 'grv-budle',
   'user-plus': 'grv-person',
   'user-two': 'grv-persons',
-  'warning-outline': 'grv-caution-triangle-small'
+  'warning-outline': 'grv-caution-triangle-small',
+  'grv-cross-filled-medium': 'grv-cross-filled-medium'
 };
 
 @Component({
@@ -58,6 +59,8 @@ const ICON_MAPPING = {
 export class SvgIconComponent implements OnInit {
 
   @Input() svgSource: string;
+
+  @Input() c1SvgSource: string;
 
   @Input() width: string;
 
@@ -81,8 +84,12 @@ export class SvgIconComponent implements OnInit {
 
   private setupProperties(): void {
     if (brandingConfig.brandId === 'co') {
-      // @ts-ignore
-      this.svgSource = ICON_MAPPING[this.svgSource];
+      if (this.c1SvgSource) {
+        this.svgSource = this.c1SvgSource.toString();
+      } else {
+        // @ts-ignore
+        this.svgSource = ICON_MAPPING[this.svgSource];
+      }
 
       if (!this.isTextColorAllowed) {
         // Remove all text classes and add default text color

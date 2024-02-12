@@ -1143,6 +1143,7 @@ module.exports = {
         '62-vh': '62vh',
         '68-vh': '68vh',
         '100-vh': '100vh',
+        'dropdown-option-height': 'var(--dropdown-option-height)',
         ...dimensions
       },
       minHeight: {
@@ -1211,6 +1212,7 @@ module.exports = {
         '300-px': '300px',
         '302-px': '302px',
         '320-px': '320px',
+        '350-px': '350px',
         '354-px': '354px',
         '360-px': '360px',
         '388-px': '388px',

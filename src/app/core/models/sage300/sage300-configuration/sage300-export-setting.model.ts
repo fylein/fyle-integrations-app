@@ -67,7 +67,8 @@ export class ExportSettingModel {
       defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_credit_card_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_ccc_credit_card_account_id) : null),
       defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? findObjectByDestinationId(destinationAttribute.VENDOR, exportSettings?.default_vendor_id) : null),
       defaultDebitCardAccountName: new FormControl(exportSettings?.default_debit_card_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_debit_card_account_id) : null),
-      defaultJobName: new FormControl(exportSettings?.default_job_name ? findObjectByDestinationId(destinationAttribute.JOB, exportSettings?.default_job_id) : null)
+      defaultJobName: new FormControl(exportSettings?.default_job_name ? findObjectByDestinationId(destinationAttribute.JOB, exportSettings?.default_job_id) : null),
+      searchOption: new FormControl('')
     });
   }
 

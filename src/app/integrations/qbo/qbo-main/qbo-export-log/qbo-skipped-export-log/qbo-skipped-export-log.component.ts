@@ -47,9 +47,7 @@ export class QboSkippedExportLogComponent implements OnInit {
     private paginatorService: PaginatorService
   ) { }
 
-  public handleSimpleSearch(event: any) {
-    const query = event.target.value.toLowerCase();
-
+  public handleSimpleSearch(query: string) {
     this.filteredExpenses = this.expenses.filter((group: SkipExportList) => {
       return SkippedAccountingExportModel.getfilteredSkippedAccountingExports(query, group);
     });
