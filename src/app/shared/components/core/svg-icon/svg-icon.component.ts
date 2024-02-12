@@ -51,8 +51,8 @@ const ICON_MAPPING = {
   'search-medium': 'grv-search-medium',
   'arrow-left': 'grv-chevron-left',
   'arrow-right': 'grv-chevron-right',
-  'arrow-bar-left': 'grv-arrow-bar-left',
-  'arrow-bar-right': 'grv-arrow-bar-right'
+  'arrow-bar-left': 'grv-chevron-first',
+  'arrow-bar-right': 'grv-chevron-last'
 };
 
 @Component({
