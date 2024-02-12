@@ -244,9 +244,7 @@
                 </div>  
               </div>
         </div>
+        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)"></app-configuration-step-footer>
     </div>
-        <div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)"></app-configuration-step-footer>
-        </div>
     </form>
 </div>
