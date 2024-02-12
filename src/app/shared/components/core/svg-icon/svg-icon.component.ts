@@ -49,10 +49,10 @@ const ICON_MAPPING = {
   'user-two': 'grv-persons',
   'warning-outline': 'grv-caution-triangle-small',
   'search-medium': 'grv-search-medium',
-  'arrow-left': 'grv-arrow-left',
-  'arrow-right': 'grv-arrow-right',
-  'arrow-bar-left': 'grv-chevron-left',
-  'arrow-bar-right': 'grv-chevron-right'
+  'arrow-left': 'grv-chevron-left',
+  'arrow-right': 'grv-chevron-right',
+  'arrow-bar-left': 'grv-arrow-bar-left',
+  'arrow-bar-right': 'grv-arrow-bar-right'
 };
 
 @Component({
