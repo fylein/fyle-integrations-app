@@ -7,7 +7,7 @@
         <div [formGroup]="exportLogForm" class="tw-flex tw-items-center tw-p-24-px">
 
             <span class="custom-search-field" [ngStyle]="{ 'border-color': isSearchFocused ? 'black' : '#ccc' }">
-                <app-svg-icon [svgSource]="'search'"></app-svg-icon>
+                <app-svg-icon [svgSource]="'search'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
                 <input class="tw-pb-1 tw-pt-1 tw-text-14-px" type="text" (input)="filterTable($event)" (focus)="isSearchFocused = true" (blur)="isSearchFocused = false" placeholder="Search by Employee Name or Expense ID" />
             </span>
             <div class="tw-flex tw-mr-4"></div>
