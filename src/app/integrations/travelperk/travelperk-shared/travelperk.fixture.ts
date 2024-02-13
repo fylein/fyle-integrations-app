@@ -68,7 +68,7 @@ export const travelperkPaymentProfileMappingResponse: TravelperkPaymentProfileSe
 export const travelperkAdvancedSettingsResponse: TravelperkAdvancedSettingGet = {
     "default_employee_name": "nilesh.p@fyle.in",
     "default_employee_id": "212",
-    "default_category": "travel",
+    "default_category_name": "travel",
     "default_category_id": "12312",
     "description_structure": [
         "trip_id"

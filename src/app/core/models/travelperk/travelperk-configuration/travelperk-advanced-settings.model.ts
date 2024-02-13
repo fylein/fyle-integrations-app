@@ -13,7 +13,7 @@ interface TravelperkCategoryMapping {
 export type TravelperkAdvancedSetting = {
     default_employee_name: string,
 	default_employee_id: string,
-	default_category: string,
+	default_category_name: string,
 	default_category_id: string,
 	description_structure: string[],
 	invoice_lineitem_structure: TravelPerkExpenseGroup,
@@ -115,12 +115,13 @@ export class TravelperkAdvancedSettingModel {
     static mapAPIResponseToFormGroup(advancedSettings: TravelperkAdvancedSettingGet | null, sourceOptions: TravelperkDestinationAttribuite[]): FormGroup {
         const defaultMemoOptions: string[] =['trip_id', 'trip_name', 'traveler_name', 'booker_name', 'merchant_name'];
         const categoryMappings = advancedSettings ? this.constructFormArray(advancedSettings, sourceOptions) : [] ;
+        const findObjectByDestinationId = (array: TravelperkDestinationAttribuite[], id: string) => array?.find(item => item.source_id === id) || null;
         return new FormGroup({
             categoryMappings: new FormArray(categoryMappings),
             descriptionStructure: new FormControl(advancedSettings?.description_structure ? advancedSettings?.description_structure : defaultMemoOptions),
             defaultEmployee: new FormControl(advancedSettings?.default_employee_name ? advancedSettings?.default_employee_name : null),
             defaultEmployeeId: new FormControl(advancedSettings?.default_employee_id ? advancedSettings?.default_employee_id : null),
-            defaultCategory: new FormControl(advancedSettings?.default_category ? advancedSettings?.default_category : null),
+            defaultCategory: new FormControl(advancedSettings?.default_category_name ? findObjectByDestinationId(sourceOptions, advancedSettings.default_category_id) : null),
             invoiceLineitemStructure: new FormControl(advancedSettings?.invoice_lineitem_structure ? advancedSettings.invoice_lineitem_structure : null, Validators.required)
         });
     }
@@ -129,7 +130,7 @@ export class TravelperkAdvancedSettingModel {
         return {
             default_employee_name: advancedSettingsForm.get('defaultEmployee')?.value ? advancedSettingsForm.get('defaultEmployee')?.value : null,
             default_employee_id: advancedSettingsForm.get('defaultEmployeeId')?.value ? advancedSettingsForm.get('defaultEmployeeId')?.value : null,
-            default_category: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.value : null,
+            default_category_name: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.value : null,
             default_category_id: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.source_id : null,
             description_structure: advancedSettingsForm.get('descriptionStructure')?.value ? advancedSettingsForm.get('descriptionStructure')?.value : null,
             invoice_lineitem_structure: advancedSettingsForm.get('invoiceLineitemStructure')?.value ? advancedSettingsForm.get('invoiceLineitemStructure')?.value : null,

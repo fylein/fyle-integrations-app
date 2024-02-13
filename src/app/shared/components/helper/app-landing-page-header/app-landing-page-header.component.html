@@ -35,7 +35,7 @@
                     <app-svg-icon *ngIf="!isConnectionInProgress && brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
                     <app-loader class="tw-ml-10-px" *ngIf="isConnectionInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
                 </button>
-                <button *ngIf="isIntegrationConnected && (appName !== AppName.TRAVELPERK)" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
+                <button *ngIf="isIntegrationConnected" pButton type="button" class="!tw-text-alert-toast remove-bg disconnect !tw-bg-white" (click)="disconnect()">
                     {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
                 </button>
                 <button *ngIf="(appName === AppName.QBD || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)" pButton type="button" class="p-button-raised" (click)="connect()">
