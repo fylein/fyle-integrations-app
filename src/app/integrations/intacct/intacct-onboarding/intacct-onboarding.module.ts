@@ -6,7 +6,7 @@ import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connec
 import { IntacctOnboardingLandingComponent } from './intacct-onboarding-landing/intacct-onboarding-landing.component';
 import { IntacctOnboardingComponent } from './intacct-onboarding.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { OnboardingDoneComponent } from './intacct-onboarding-done/intacct-onboarding-done.component';
+import { IntacctOnboardingDoneComponent } from './intacct-onboarding-done/intacct-onboarding-done.component';
 import { IntacctOnboardingExportSettingComponent } from './intacct-onboarding-export-setting/intacct-onboarding-export-setting.component';
 
 import { IntacctSharedModule } from '../intacct-shared/intacct-shared.module';
@@ -19,7 +19,7 @@ import { IntacctOnboardingAdvancedSettingComponent } from './intacct-onboarding-
     IntacctOnboardingLandingComponent,
     IntacctOnboardingComponent,
     IntacctOnboardingComponent,
-    OnboardingDoneComponent,
+    IntacctOnboardingDoneComponent,
     IntacctOnboardingImportSettingComponent,
     IntacctOnboardingExportSettingComponent,
     IntacctOnboardingAdvancedSettingComponent
