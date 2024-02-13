@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { IntacctDashboardComponent } from './dashboard.component';
+import { IntacctDashboardComponent } from './intacct-dashboard.component';
 
 const routes: Routes = [
   {

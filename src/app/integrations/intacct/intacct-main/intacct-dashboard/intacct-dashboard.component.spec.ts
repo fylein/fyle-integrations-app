@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IntacctDashboardComponent } from './dashboard.component';
+import { IntacctDashboardComponent } from './intacct-dashboard.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DashboardComponent', () => {
