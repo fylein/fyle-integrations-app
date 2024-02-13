@@ -15,7 +15,7 @@
                 <ng-template let-value pTemplate="selectedItem">
                     <div class="tw-flex tw-justify-between tw-items-center">
                         <p [ngClass]="getSelectedFilter(form.controls.filterOption.value.value)">{{ form.controls.filterOption.value.label }}</p>
-                        <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter()"></i>
+                        <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                     </div>
                     <div></div>
                 </ng-template>
