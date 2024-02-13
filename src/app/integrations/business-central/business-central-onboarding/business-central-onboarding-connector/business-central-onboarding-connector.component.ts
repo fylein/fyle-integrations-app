@@ -199,8 +199,7 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
       const data: BusinessCentralCompanyPost = BusinessCentralConnectorModel.constructCompanyPost(this.businessCentralCompanyselected.destination_id, this.businessCentralCompanyselected.value);
       this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
         forkJoin([
-          this.workspaceService.importFyleAttributes(false).subscribe(),
-          this.mapping.importBusinessCentralAttributes(false).subscribe()
+          this.mapping.importBusinessCentralAttributes(true).subscribe()
         ]).subscribe(() => {
             this.saveInProgress = false;
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
