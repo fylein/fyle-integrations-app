@@ -230,7 +230,7 @@ p {
 }
 
 .p-dropdown:hover {
-    @apply tw-shadow-none tw-border-select-focused-border #{!important};
+    @apply tw-shadow-none #{!important};
 }
 
 .p-multiselect {
