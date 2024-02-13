@@ -270,7 +270,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
+    @apply tw-h-fit tw-py-6-px tw-px-12-px #{!important};
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {
