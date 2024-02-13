@@ -16,7 +16,7 @@
             <div class="tw-mb-24-px tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                 <app-configuration-step-sub-header
                     [label]="'Import Sage Intacct Dimensions'"
-                    [subLabel]="'The Sage Intacct dimensions listed below will be mapped to their corresponding Fyle Field as shown below. Importing these dimensions from Sage Intacct to Fyle will make the values available as a dropdown in the expense form for your employees to choose from.'"
+                    [subLabel]="'The Sage Intacct dimensions listed below will be mapped to their corresponding ' + brandingConfig.brandName + ' Field as shown below. Importing these dimensions from Sage Intacct to ' + brandingConfig.brandName + ' will make the values available as a dropdown in the expense form for your employees to choose from.'"
                     [showPreview]="true"
                     (isPreviewClick)="showPreviewDialog(true)">
                 </app-configuration-step-sub-header>
