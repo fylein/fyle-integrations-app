@@ -56,6 +56,7 @@ export class TravelperkComponent implements OnInit {
       this.navigate();
     }, () => {
       this.isLoading = false;
+      this.router.navigateByUrl('/integrations/travelperk/onboarding/landing');
     });
   }
 

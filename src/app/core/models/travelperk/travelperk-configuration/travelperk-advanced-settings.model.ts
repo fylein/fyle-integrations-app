@@ -11,7 +11,7 @@ interface TravelperkCategoryMapping {
 }
 
 export type TravelperkAdvancedSetting = {
-    default_employee: string,
+    default_employee_name: string,
 	default_employee_id: string,
 	default_category: string,
 	default_category_id: string,
@@ -93,7 +93,7 @@ export class TravelperkAdvancedSettingModel {
                     label: categoryMapping[index] ? categoryMapping[index] : defaultCategories[index].label,
                     value: categoryMapping[index] ? categoryMapping[index] : defaultCategories[index].value
                 },
-                source_name: findObjectByDestinationId(source_fields, arrayData.category_mappings[categoryMapping[index]].id)
+                source_name: arrayData.category_mappings[categoryMapping[index]] ? findObjectByDestinationId(source_fields, arrayData.category_mappings[categoryMapping[index]].id) : null
             };
             mappingPayload.push(this.createFormGroup(data));
         });
@@ -118,7 +118,7 @@ export class TravelperkAdvancedSettingModel {
         return new FormGroup({
             categoryMappings: new FormArray(categoryMappings),
             descriptionStructure: new FormControl(advancedSettings?.description_structure ? advancedSettings?.description_structure : defaultMemoOptions),
-            defaultEmployee: new FormControl(advancedSettings?.default_employee ? advancedSettings?.default_employee : null),
+            defaultEmployee: new FormControl(advancedSettings?.default_employee_name ? advancedSettings?.default_employee_name : null),
             defaultEmployeeId: new FormControl(advancedSettings?.default_employee_id ? advancedSettings?.default_employee_id : null),
             defaultCategory: new FormControl(advancedSettings?.default_category ? advancedSettings?.default_category : null),
             invoiceLineitemStructure: new FormControl(advancedSettings?.invoice_lineitem_structure ? advancedSettings.invoice_lineitem_structure : null, Validators.required)
@@ -127,7 +127,7 @@ export class TravelperkAdvancedSettingModel {
 
     static createAdvancedSettingPayload(advancedSettingsForm: FormGroup): TravelperkAdvancedSettingPost {
         return {
-            default_employee: advancedSettingsForm.get('defaultEmployee')?.value ? advancedSettingsForm.get('defaultEmployee')?.value : null,
+            default_employee_name: advancedSettingsForm.get('defaultEmployee')?.value ? advancedSettingsForm.get('defaultEmployee')?.value : null,
             default_employee_id: advancedSettingsForm.get('defaultEmployeeId')?.value ? advancedSettingsForm.get('defaultEmployeeId')?.value : null,
             default_category: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.value : null,
             default_category_id: advancedSettingsForm.get('defaultCategory')?.value ? advancedSettingsForm.get('defaultCategory')?.value.source_id : null,
