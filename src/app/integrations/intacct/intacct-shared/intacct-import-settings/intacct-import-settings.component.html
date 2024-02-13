@@ -128,7 +128,7 @@
                                         <span>
                                             {{ item.display_name }}
                                         </span>
-                                        <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(expenseField)"></i>
+                                        <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(expenseField)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                                     </div>
                                     </ng-template>
                               </p-dropdown>
@@ -204,7 +204,7 @@
         <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
             <div class="tw-flex tw-justify-between tw-items-center">
                 <p class="tw-text-20-px tw-font-500">Add new Custom Field</p>
-                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" class="tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()"></i>
+                <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
             </div>
         </div>
         <div *ngIf="existingFields.indexOf(customFieldForm.value.attribute_type?.toLowerCase()) !== -1">
@@ -273,7 +273,7 @@
                 </div>
                 <p class="tw-text-20-px tw-font-500 tw-text-normal-text-color">Warning</p>
             </div>
-            <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" class="tw-cursor-pointer" style="font-size: 12px" (click)="acceptDependentFieldWarning(false)"></i>
+            <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="acceptDependentFieldWarning(false)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
         </div>
     </div>
     <div class="tw-pl-24-px tw-pr-10-px tw-pt-16-px tw-pb-24-px">

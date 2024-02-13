@@ -7,7 +7,7 @@
         <div [formGroup]="exportLogForm" class="tw-flex tw-items-center tw-p-24-px">
 
             <span class="custom-search-field" [ngStyle]="{ 'border-color': isSearchFocused ? 'black' : '#ccc' }">
-                <i class="pi pi-search"></i>
+                <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
                 <input class="tw-pb-1 tw-pt-1 tw-text-14-px" type="text" (input)="filterTable($event)" (focus)="isSearchFocused = true" (blur)="isSearchFocused = false" placeholder="Search by Employee Name or Expense ID" />
             </span>
             <div class="tw-flex tw-mr-4"></div>
@@ -32,7 +32,7 @@
                                     </div>
                                 </div>
                             </span>
-                            <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(exportLogForm.controls.dateRange)"></i>
+                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(exportLogForm.controls.dateRange)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </div>
                     </ng-template>
                     <ng-template let-date pTemplate="item">
