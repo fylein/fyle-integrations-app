@@ -27,7 +27,7 @@
                     <ng-template pTemplate="filter" let-options="options">
                         <div class="p-inputgroup">
                             <div class="p-input-icon-left">
-                                <i class="pi pi-search" [ngClass]="{'!tw-text-search-focused-search-icon': isSearchFocused}"></i>
+                                <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [ngClass]="{'!tw-text-search-focused-search-icon': isSearchFocused}"></app-svg-icon>
                                 <input type="text" class="!tw-h-32-px !tw-w-260-px" (focus)="isSearchFocused = true" (blur)="isSearchFocused = false"
                                 (keyup)="options.filter($event)" pInputText />
                             </div>
