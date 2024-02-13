@@ -73,7 +73,7 @@ export class QBOImportSettingModel extends ImportSettingsModel {
 
   static constructPayload(importSettingsForm: FormGroup): QBOImportSettingPost {
     const emptyDestinationAttribute = {id: null, name: null};
-    const expenseFieldArray = importSettingsForm.value.expenseFields;
+    const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
     return {
