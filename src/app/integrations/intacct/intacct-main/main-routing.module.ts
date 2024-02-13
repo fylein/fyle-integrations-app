@@ -10,19 +10,19 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () => import('./intacct-dashboard/dashboard.module').then(m => m.DashboardModule)
       },
       {
         path: 'export_log',
-        loadChildren: () => import('./export-log/export-log.module').then(m => m.ExportLogModule)
+        loadChildren: () => import('./intacct-export-log/export-log.module').then(m => m.ExportLogModule)
       },
       {
         path: 'mapping',
-        loadChildren: () => import('./mapping/mapping.module').then(m => m.MappingModule)
+        loadChildren: () => import('./intacct-mapping/mapping.module').then(m => m.MappingModule)
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
+        loadChildren: () => import('./intacct-configuration/configuration.module').then(m => m.ConfigurationModule)
       }
     ]
   }
