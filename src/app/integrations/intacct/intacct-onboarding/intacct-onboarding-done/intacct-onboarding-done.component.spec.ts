@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OnboardingDoneComponent } from './onboarding-done.component';
+import { IntacctOnboardingDoneComponent } from './intacct-onboarding-done.component';
 import { Router } from '@angular/router';
 
 describe('OnboardingDoneComponent', () => {
-  let component: OnboardingDoneComponent;
-  let fixture: ComponentFixture<OnboardingDoneComponent>;
+  let component: IntacctOnboardingDoneComponent;
+  let fixture: ComponentFixture<IntacctOnboardingDoneComponent>;
   let router: Router;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/path' };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OnboardingDoneComponent ],
+      declarations: [ IntacctOnboardingDoneComponent ],
       providers: [
         { provide: Router, useValue: routerSpy }
       ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OnboardingDoneComponent);
+    fixture = TestBed.createComponent(IntacctOnboardingDoneComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
     fixture.detectChanges();

@@ -6,11 +6,11 @@ import { RefinerService } from 'src/app/core/services/integration/refiner.servic
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-onboarding-done',
-  templateUrl: './onboarding-done.component.html',
-  styleUrls: ['./onboarding-done.component.scss']
+  selector: 'app-intacct-onboarding-done',
+  templateUrl: './intacct-onboarding-done.component.html',
+  styleUrls: ['./intacct-onboarding-done.component.scss']
 })
-export class OnboardingDoneComponent implements OnInit {
+export class IntacctOnboardingDoneComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
