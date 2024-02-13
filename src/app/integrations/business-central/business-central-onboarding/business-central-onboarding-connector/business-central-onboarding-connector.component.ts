@@ -198,11 +198,12 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     if (!this.businessCentralCompanyName) {
       const data: BusinessCentralCompanyPost = BusinessCentralConnectorModel.constructCompanyPost(this.businessCentralCompanyselected.destination_id, this.businessCentralCompanyselected.value);
       this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
-        this.mapping.importBusinessCentralAttributes(true).subscribe();
-        this.saveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
-        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
-        this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
+        this.mapping.importBusinessCentralAttributes(true).subscribe(()=>{
+          this.saveInProgress = false;
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
+          this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
+          this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
+        })
       });
     } else {
       this.saveInProgress = false;
