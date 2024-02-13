@@ -35,6 +35,18 @@ p {
     content: url('./assets/icons/co/grv-close-medium.svg') !important;
 }
 
+[data-theme='fyle'] {
+    .pi-times-circle {
+        content: url('./assets/icons/cross-xs-small.svg') !important;
+    }
+}
+
+[data-theme='co'] {
+    .pi-times-circle {
+        content: url('./assets/icons/co/grv-cross-encircled-xs-small.svg') !important;
+    }
+}
+
 .pi-chevron-down.fyle {
     content: url('./assets/icons/arrow-down.svg') !important;
 }
@@ -446,6 +458,18 @@ p {
 
 .p-dialog .p-dialog-header .p-dialog-title {
     @apply tw-text-20-px tw-font-500 #{!important};
+}
+
+.p-chips .p-chips-multiple-container .p-chips-token {
+    @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
+}
+
+.p-chips .p-chips-multiple-container:not(.p-disabled) {
+    @apply tw-border-select-default-border #{!important};
+}
+
+.p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
+    @apply tw-shadow-none #{!important};
 }
 
 .preview-text {
