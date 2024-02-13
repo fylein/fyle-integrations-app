@@ -31,7 +31,7 @@
             <ng-template pTemplate="filter" let-options="options">
                 <div *ngIf="emails.length" class="p-inputgroup">
                     <div class="p-input-icon-left p-input-icon-right">
-                        <app-svg-icon [svgSource]="'search'" height]="'16px'" [width]="'16px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'search-medium'" height]="'16px'" [width]="'16px'"></app-svg-icon>
                         <input type="text" class="!tw-h-32-px !tw-w-270-px" (keyup)="options.filter($event)"
                             pInputText placeholder="Search by Name / Email" formControlName="search" />
                         <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer tw-text-16-px" (click)="clearSearch(options)"></app-svg-icon>
