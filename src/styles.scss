@@ -112,16 +112,16 @@ p {
     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
 }
 
+.p-button:enabled:hover.outline-sm {
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
+}
+
 .p-button.danger-outline {
     @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
 }
 
 .p-button:enabled:hover.danger-outline {
     @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
-}
-
-.p-button:enabled:hover.outline-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
 }
 
 .btn-text-primary {
@@ -420,6 +420,34 @@ p {
 
 .p-datatable .p-datatable-tbody > tr > td {
     @apply tw-text-text-secondary tw-text-14-px tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-lv-table-border-color #{!important};
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:hover {
+    @apply tw-text-calendar-header-text-color #{!important};
+}
+
+.p-datepicker .p-datepicker-header {
+    @apply tw-p-0 #{!important};
+}
+
+.p-datepicker table th {
+    @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px #{!important};
+}
+
+.p-datepicker table td {
+    @apply tw-p-0 tw-pb-4-px #{!important};
+}
+
+.p-datepicker table td > span {
+    @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
+}
+
+.p-datepicker {
+    @apply tw-p-16-px #{!important};
 }
 
 .configuration {

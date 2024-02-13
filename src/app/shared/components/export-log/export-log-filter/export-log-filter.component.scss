@@ -14,21 +14,21 @@
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .p-datepicker table td > span.p-highlight {
-    @apply tw-text-white tw-bg-mandatory-field-color #{!important};
-}
+// :host ::ng-deep .p-datepicker table td > span.p-highlight {
+//     @apply tw-text-white tw-bg-mandatory-field-color #{!important};
+// }
 
-:host ::ng-deep .p-datepicker table td > span:focus {
-    @apply tw-shadow-none #{!important};
-}
+// :host ::ng-deep .p-datepicker table td > span:focus {
+//     @apply tw-shadow-none #{!important};
+// }
 
-:host ::ng-deep .p-datepicker table th {
-    @apply tw-text-center ;
-}
+// :host ::ng-deep .p-datepicker table th {
+//     @apply tw-text-center ;
+// }
 
-:host ::ng-deep .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
-    @apply tw-min-w-fit tw-top-2/3 #{!important};
-}
+// :host ::ng-deep .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
+//     @apply tw-min-w-fit tw-top-2/3 #{!important};
+// }
 
 :host ::ng-deep .p-calendar ::placeholder {
     @apply tw-text-sub-text-color #{!important};
@@ -36,4 +36,8 @@
 
 :host ::ng-deep .p-dialog {
     @apply tw-max-h-full tw-m-0 #{!important};
+}
+
+:host ::ng-deep .p-button.outline-sm {
+    @apply tw-w-100-px tw-justify-center #{!important};
 }

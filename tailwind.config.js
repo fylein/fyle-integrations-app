@@ -119,6 +119,7 @@ const borderColors = {
   'border-brand-pressed': 'var(--border-brand-pressed)',
   'border-disable': 'var(--border-disable)',
   'border-neutral': 'var(--border-neutral)',
+  'border-date-picker-border': 'var(--border-date-picker-border)',
 };
 
 const colors = {
@@ -1189,6 +1190,7 @@ module.exports = {
         '68-px': '68px',
         '70-px': '70px',
         '80-px': '80px',
+        '82-px': '82px',
         '92-px': '92px',
         '98-px': '98px',
         '100-px': '100px',
