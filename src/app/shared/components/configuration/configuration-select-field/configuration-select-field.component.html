@@ -133,7 +133,7 @@
                             <span>
                                 {{ item.value }}
                             </span>
-                            <i class="pi pi-times" (click)="removeFilter(form.controls[formControllerName])"></i>
+                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </div>
                     </ng-template>
                 </p-dropdown>

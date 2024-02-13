@@ -26,7 +26,8 @@ export type Sage300ImportSettingsDependentFieldSetting = {
 export type Sage300ImportSetting = {
     import_settings: {
         import_categories: boolean,
-        import_vendors_as_merchants: boolean
+        import_vendors_as_merchants: boolean,
+        add_commitment_details: boolean
     },
     mapping_settings: ImportSettingMappingRow[] | [],
     dependent_field_settings: Sage300ImportSettingsDependentFieldSetting | null,
@@ -63,13 +64,14 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
     }
 
     static createImportSettingPayload(importSettingsForm: FormGroup, importSettings: Sage300ImportSettingGet): Sage300ImportSettingPost {
-        const expenseFieldArray = importSettingsForm.value.expenseFields;
+        const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
         const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
         return {
             import_settings: {
                 import_categories: importSettingsForm.get('importCategories')?.value,
-                import_vendors_as_merchants: importSettingsForm.get('importVendorAsMerchant')?.value
+                import_vendors_as_merchants: importSettingsForm.get('importVendorAsMerchant')?.value,
+                add_commitment_details: false
             },
             mapping_settings: mappingSettings,
             dependent_field_settings: importSettingsForm.get('isDependentImportEnabled')?.value ? {
