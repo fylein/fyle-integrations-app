@@ -2,7 +2,7 @@
     <div class="tw-mr-16-px tw-flex tw-content-center">
         <div *ngIf="!isSearchBoxActive" class="tw-flex tw-justify-start tw-items-center tw-cursor-pointer tw-border tw-border-box-color tw-pt-8-px tw-pb-6-px tw-px-10-px tw-rounded-4-px drop-down" (click)="isSearchBoxActive = true">
             <div>
-                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-search fyle' : 'pi pi-search co']" class="tw-w-18-px tw-h-18-px"></app-svg-icon>
+                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-search fyle' : 'pi pi-search co']" class="tw-w-18-px tw-h-18-px"></i>
             </div>
         </div>
         <div *ngIf="isSearchBoxActive">

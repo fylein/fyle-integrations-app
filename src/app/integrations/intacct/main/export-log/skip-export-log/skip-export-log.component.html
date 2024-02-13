@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                             </span>
-                            <i *ngIf="skipExportLogForm.controls.dateRange.value" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(skipExportLogForm.controls.dateRange)"></app-svg-icon>
+                            <i *ngIf="skipExportLogForm.controls.dateRange.value" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(skipExportLogForm.controls.dateRange)"></i>
                         </div>
                     </ng-template>
                     <ng-template let-date pTemplate="item">

@@ -50,7 +50,7 @@
                             <span>
                                 {{ item.label }}
                             </span>
-                            <i *ngIf="showClearIcon && !isDisabled" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(form.controls[formControllerName])"></app-svg-icon>
+                            <i *ngIf="showClearIcon && !isDisabled" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(form.controls[formControllerName])"></i>
                         </div>
                     </ng-template>
                 </p-dropdown>
