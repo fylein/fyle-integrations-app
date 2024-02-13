@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DashboardRoutingModule } from './intacct-dashboard-routing.module';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SkeletonModule } from 'primeng/skeleton';
-import { DashboardComponent } from './dashboard.component';
+import { IntacctDashboardComponent } from './dashboard.component';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
@@ -13,7 +13,7 @@ import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
-    DashboardComponent
+    IntacctDashboardComponent
   ],
   imports: [
     TabMenuModule,
@@ -26,4 +26,4 @@ import { TableModule } from 'primeng/table';
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
-export class DashboardModule { }
+export class IntacctDashboardModule { }

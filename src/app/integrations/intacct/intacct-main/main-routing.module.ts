@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: () => import('./intacct-dashboard/dashboard.module').then(m => m.DashboardModule)
+        loadChildren: () => import('./intacct-dashboard/intacct-dashboard.module').then(m => m.IntacctDashboardModule)
       },
       {
         path: 'export_log',

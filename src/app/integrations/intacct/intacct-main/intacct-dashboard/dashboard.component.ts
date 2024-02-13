@@ -18,11 +18,11 @@ import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspac
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-intacct-dashboard',
+  templateUrl: './intacct-dashboard.component.html',
+  styleUrls: ['./intacct-dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class IntacctDashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 

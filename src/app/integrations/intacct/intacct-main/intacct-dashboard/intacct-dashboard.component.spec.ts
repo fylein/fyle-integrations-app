@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardComponent } from './dashboard.component';
+import { IntacctDashboardComponent } from './dashboard.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('DashboardComponent', () => {
-  let component: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+  let component: IntacctDashboardComponent;
+  let fixture: ComponentFixture<IntacctDashboardComponent>;
 
   beforeEach(async () => {
     const localStorageDump = {
@@ -15,11 +15,11 @@ describe('DashboardComponent', () => {
     localStorage.setItem('user', JSON.stringify(localStorageDump));
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      declarations: [ DashboardComponent ]
+      declarations: [ IntacctDashboardComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(IntacctDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
