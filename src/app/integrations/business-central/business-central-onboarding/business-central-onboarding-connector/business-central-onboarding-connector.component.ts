@@ -23,6 +23,7 @@ import { GroupedDestinationAttribute } from 'src/app/core/models/db/destination-
 import { BusinessCentralCompanyPost, BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { BusinessCentralMappingService } from 'src/app/core/services/business-central/business-central-mapping/business-central-mapping.service';
 
 @Component({
   selector: 'app-business-central-onboarding-connector',
@@ -80,7 +81,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     private workspaceService: WorkspaceService,
     private businessCentralHelperService: BusinessCentralHelperService,
     private helperService: HelperService,
-    private mappingService: MappingService
+    private mappingService: MappingService,
+    private mapping: BusinessCentralMappingService,
   ) { }
 
   disconnectBusinessCentral(): void {
@@ -196,6 +198,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     if (!this.businessCentralCompanyName) {
       const data: BusinessCentralCompanyPost = BusinessCentralConnectorModel.constructCompanyPost(this.businessCentralCompanyselected.destination_id, this.businessCentralCompanyselected.value);
       this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
+        this.workspaceService.importFyleAttributes(false).subscribe();
+        this.mapping.importBusinessCentralAttributes(false).subscribe();
         this.saveInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
         this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
