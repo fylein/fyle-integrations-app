@@ -112,6 +112,14 @@ p {
     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
 }
 
+.p-button.danger-outline {
+    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+.p-button:enabled:hover.danger-outline {
+    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+}
+
 .p-button:enabled:hover.outline-sm {
     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
 }
