@@ -90,7 +90,7 @@
                                 <span>
                                     {{ item.display_name }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(expenseField)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(expenseField)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                             </ng-template>
                       </p-dropdown>
