@@ -18,11 +18,12 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 
 @Component({
-  selector: 'app-configuration-import-settings',
-  templateUrl: './configuration-import-settings.component.html',
-  styleUrls: ['./configuration-import-settings.component.scss']
+  selector: 'app-intacct-import-settings',
+  templateUrl: './intacct-import-settings.component.html',
+  styleUrls: ['./intacct-import-settings.component.scss']
 })
-export class ConfigurationImportSettingsComponent implements OnInit {
+
+export class IntacctImportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
@@ -420,7 +421,7 @@ export class ConfigurationImportSettingsComponent implements OnInit {
       dependentFieldImportToggle: [true],
       workspaceId: this.storageService.get('si.workspaceId'),
       costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder) : null],
-      isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || null],
+      isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || false],
       sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
       expenseFields: this.formBuilder.array(this.constructFormArray())
     });

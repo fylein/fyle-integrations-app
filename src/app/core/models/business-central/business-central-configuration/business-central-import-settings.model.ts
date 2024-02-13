@@ -31,7 +31,7 @@ export class BusinessCentralImportSettingsModel extends ImportSettingsModel {
     }
 
     static createImportSettingPayload(importSettingsForm: FormGroup): BusinessCentralImportSettingsPost {
-        const expenseFieldArray = importSettingsForm.value.expenseFields;
+        const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
         const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
         return {
             import_settings: {

@@ -383,30 +383,6 @@ p {
     }
 }
 
-.p-tabmenu {
-    @apply tw-font-primary tw-font-500 #{!important};
-}
-
-.p-tabmenu .p-tabmenu-nav {
-    @apply tw-border-b-2-px tw-border-b-box-color tw-text-14-px #{!important};
-}
-
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    @apply tw-text-menu-inactive-text-color tw-font-500 #{!important};
-}
-
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
-    @apply tw-text-slightly-normal-text-color tw-border-b-2 tw-border-b-slightly-normal-text-color tw-font-500 #{!important};
-}
-
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus{
-    @apply tw-shadow-none #{!important};
-}
-
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    @apply tw-px-0 tw-pt-0 tw-pb-20-px tw-mx-24-px tw-mt-20-px #{!important};
-}
-
 .mapped {
     @apply tw-text-12-px tw-font-600 tw-rounded-full tw-border tw-border-solid tw-border-border-highlight-light tw-bg-bg-highlight-light tw-py-4-px tw-px-10-px tw-text-text-highlight tw-w-fit #{!important}
 }

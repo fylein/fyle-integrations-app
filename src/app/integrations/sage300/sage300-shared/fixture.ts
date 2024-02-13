@@ -8,7 +8,8 @@ import { Sage300ImportSettingGet } from "src/app/core/models/sage300/sage300-con
 export const importSettingsResponse: Sage300ImportSettingGet = {
     "import_settings": {
         "import_categories": false,
-        "import_vendors_as_merchants": false
+        "import_vendors_as_merchants": false,
+        "add_commitment_details": false
     },
     "mapping_settings": [
         {

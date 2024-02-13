@@ -161,7 +161,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -182,7 +182,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -203,7 +203,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -220,7 +220,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -237,16 +237,14 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
                 </div>  
               </div>
         </div>
+        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)"></app-configuration-step-footer>
     </div>
-        <div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)"></app-configuration-step-footer>
-        </div>
     </form>
 </div>

@@ -1,6 +1,6 @@
 <div>
     <div class="main-tab">
-        <p-tabMenu [model]="activeModules" [activeItem]="activeModule" ></p-tabMenu>
+        <app-main-menu [modules]="modules" [activeItem]="modules[0]" [appName]="appName" [isDropdrownRequired]="false"></app-main-menu>
     </div>
     <div>
         <router-outlet></router-outlet>

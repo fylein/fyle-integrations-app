@@ -972,7 +972,8 @@ module.exports = {
       '400': '400',
       '500': '500',
       '600': '600',
-      '700': '700'
+      '700': '700',
+      'nav-link-font-weight': 'var(--nav-link-font-weight)',
     },
     letterSpacing: {
       '.4-px': '.4px',
