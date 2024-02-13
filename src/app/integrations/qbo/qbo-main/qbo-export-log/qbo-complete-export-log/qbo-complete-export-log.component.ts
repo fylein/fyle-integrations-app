@@ -49,6 +49,8 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   isDateSelected: boolean = false;
 
+  searchedQuery: string | null;
+
   private searchQuerySubject = new Subject<string>();
 
   private org_id: string = this.userService.getUserProfile().org_id;
@@ -63,8 +65,9 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
+      this.searchedQuery = query;
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      this.getAccountingExports(paginator.limit, paginator.offset, query);
+      this.getAccountingExports(paginator.limit, paginator.offset);
     });
   }
 
@@ -91,17 +94,18 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number, query? : string | null) {
+  private getAccountingExports(limit: number, offset:number) {
     this.isLoading = true;
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, query).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
-      if (!this.isDateSelected && !query) {
+    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchedQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+      if (!this.isDateSelected && !this.searchedQuery) {
         this.totalCount = accountingExportResponse.count;
       }
+
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id)
       );

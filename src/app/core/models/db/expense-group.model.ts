@@ -46,4 +46,8 @@ export type SkipExportParam = {
   is_skipped: boolean;
   updated_at__gte?: string;
   updated_at__lte?: string;
+  expense_number?: string;
+  employee_name?: string;
+  employee_email?: string;
+  claim_number?: string;
 }

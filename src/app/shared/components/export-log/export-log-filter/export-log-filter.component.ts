@@ -4,6 +4,7 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { isClassDeclaration } from 'typescript';
 
 @Component({
   selector: 'app-export-log-filter',
@@ -60,8 +61,6 @@ export class ExportLogFilterComponent implements OnInit {
     this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
   }
 
-  ngOnInit(): void {
-    console.log(this.exportLogForm.value);
-  }
+  ngOnInit(): void {}
 
 }

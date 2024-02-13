@@ -23,7 +23,7 @@
             </app-paginator>
         </div>
 
-        <app-zero-state-with-illustration *ngIf="!filteredExpenses.length && !selectedDateFilter && totalCount > 0"
+        <app-zero-state-with-illustration *ngIf="!filteredExpenses.length && (selectedDateFilter ||  searchedQuery) && totalCount > 0"
             [mainText]="'Sorry, no results found!'"
             [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
         </app-zero-state-with-illustration>

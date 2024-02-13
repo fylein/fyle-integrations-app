@@ -23,7 +23,7 @@ export class ExportLogService {
     private workspaceService: WorkspaceService
   ) { }
 
-  getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null): Observable<SkipExportLogResponse> {
+  getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, query: string | null): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: SkipExportParam = {
       limit,
@@ -31,6 +31,14 @@ export class ExportLogService {
       org_id: this.userService.getUserProfile().org_id,
       is_skipped: true
     };
+
+    if (query){
+      params.expense_number = query;
+      params.employee_email = query;
+      params.employee_name = query;
+      params.claim_number = query;
+    }
+
     params.org_id = this.userService.getUserProfile().org_id;
 
     if (selectedDateFilter) {
