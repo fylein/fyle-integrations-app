@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 import { BusinessCentralConnectorModel, BusinessCentralConnectorPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
 import { BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
 import { BusinessCentralField, BusinessCentralOnboardingState, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -198,12 +198,15 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     if (!this.businessCentralCompanyName) {
       const data: BusinessCentralCompanyPost = BusinessCentralConnectorModel.constructCompanyPost(this.businessCentralCompanyselected.destination_id, this.businessCentralCompanyselected.value);
       this.businessCentralConnectorService.postBusinessCentralCompany(data).subscribe((workspace: BusinessCentralWorkspace) => {
-        this.workspaceService.importFyleAttributes(false).subscribe();
-        this.mapping.importBusinessCentralAttributes(false).subscribe();
-        this.saveInProgress = false;
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
-        this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
-        this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
+        forkJoin([
+          this.workspaceService.importFyleAttributes(false).subscribe(),
+          this.mapping.importBusinessCentralAttributes(false).subscribe()
+        ]).subscribe(() => {
+            this.saveInProgress = false;
+            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'MS Dynamics Company saved Successfully');
+            this.workspaceService.setOnboardingState(BusinessCentralOnboardingState.EXPORT_SETTINGS);
+            this.router.navigate([`/integrations/business_central/onboarding/export_settings`]);
+        })
       });
     } else {
       this.saveInProgress = false;
