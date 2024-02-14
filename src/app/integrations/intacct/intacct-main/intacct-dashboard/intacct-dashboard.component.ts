@@ -58,7 +58,7 @@ export class IntacctDashboardComponent implements OnInit {
 
   exportProgressPercentage: number = 0;
 
-  exportableExpenseGroupIds: number[] = [];
+  exportableAccountingExportIds: number[] = [];
 
   lastExport: LastExport | null;
 
@@ -181,15 +181,15 @@ export class IntacctDashboardComponent implements OnInit {
     });
   }
 
-  private pollExportStatus(exportableExpenseGroupIds: number[] = []): void {
+  private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableExpenseGroupIds, this.taskType))),
-      takeWhile((response) => response.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length > 0, true)
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.taskType))),
+      takeWhile((response) => response.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length > 0, true)
     ).subscribe((res) => {
-      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableExpenseGroupIds.includes(task.expense_group)).length;
-      this.exportProgressPercentage = Math.round((this.processedCount / exportableExpenseGroupIds.length) * 100);
+      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableAccountingExportIds.includes(task.expense_group)).length;
+      this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
 
-      if (res.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableExpenseGroupIds.includes(task.expense_group)).length === 0) {
+      if (res.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
         this.isLoading = true;
         forkJoin([
           this.getExportErrors$,
@@ -205,7 +205,7 @@ export class IntacctDashboardComponent implements OnInit {
         });
         this.dashboardService.getAllTasks([TaskLogState.FAILED, TaskLogState.FATAL], undefined, this.taskType).subscribe((taskResponse) => {
           this.failedExpenseGroupCount = taskResponse.count;
-          this.exportableExpenseGroupIds = taskResponse.results.map((task: Task) => task.expense_group);
+          this.exportableAccountingExportIds = taskResponse.results.map((task: Task) => task.expense_group);
           this.isExportInProgress = false;
           this.exportProgressPercentage = 0;
           this.processedCount = 0;
@@ -315,12 +315,12 @@ export class IntacctDashboardComponent implements OnInit {
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
-        this.exportableExpenseGroupIds = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
-        this.pollExportStatus(this.exportableExpenseGroupIds);
+        this.exportableAccountingExportIds = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
+        this.pollExportStatus(this.exportableAccountingExportIds);
       } else {
         this.dashboardService.importExpenseGroups().subscribe(() => {
           this.dashboardService.getExportableGroupsIds().subscribe((exportableExpenseGroups: ExportableExpenseGroup) => {
-            this.exportableExpenseGroupIds = exportableExpenseGroups.exportable_expense_group_ids;
+            this.exportableAccountingExportIds = exportableExpenseGroups.exportable_expense_group_ids;
             this.isImportInProgress = false;
           });
         });
@@ -330,11 +330,11 @@ export class IntacctDashboardComponent implements OnInit {
   }
 
   export(): void {
-    if (!this.isExportInProgress && this.exportableExpenseGroupIds.length) {
+    if (!this.isExportInProgress && this.exportableAccountingExportIds.length) {
       this.isExportInProgress = true;
       this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.INTACCT_EXPORT);
       this.dashboardService.exportExpenseGroups().subscribe(() => {
-        this.pollExportStatus(this.exportableExpenseGroupIds);
+        this.pollExportStatus(this.exportableAccountingExportIds);
       });
     }
   }
