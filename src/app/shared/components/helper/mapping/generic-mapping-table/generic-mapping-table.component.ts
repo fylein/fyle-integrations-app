@@ -40,6 +40,8 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() isDashboardMappingResolve: boolean;
 
+  isSearchFocused: boolean;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(

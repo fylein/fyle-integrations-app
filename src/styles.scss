@@ -123,7 +123,7 @@ p {
 }
 
 .p-inputtext:enabled:focus-visible {
-    @apply tw-shadow-none tw-border-faded-text-color #{!important};
+    @apply tw-shadow-none tw-border-select-default-border #{!important};
 }
 
 // Tooltip
@@ -191,11 +191,11 @@ p {
 
 // Dropdown
 .p-dropdown {
-    @apply lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] #{!important};
+    @apply lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] tw-border-select-default-border #{!important};
 }
 
-.p-dropdown:disabled {
-    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-border #{!important} ;
+.p-dropdown .p-disabled {
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-border tw-border-select-disabled-border #{!important} ;
 }
 
 .p-dropdown .p-dropdown-label {
@@ -222,15 +222,15 @@ p {
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item, 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    @apply tw-h-fit tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px  #{!important};
+    @apply tw-h-dropdown-option-height tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px  #{!important};
 }
 
 .p-dropdown.p-focus {
-    @apply tw-shadow-none tw-border-slightly-normal-text-color #{!important};
+    @apply tw-shadow-none tw-border-select-focused-border #{!important};
 }
 
 .p-dropdown:hover {
-    @apply tw-shadow-none tw-border-slightly-normal-text-color #{!important};
+    @apply tw-shadow-none #{!important};
 }
 
 .p-multiselect {

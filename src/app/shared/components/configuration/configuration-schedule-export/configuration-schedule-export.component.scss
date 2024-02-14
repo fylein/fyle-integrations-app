@@ -15,7 +15,7 @@
 }
 
 :host ::ng-deep  .dropdown-size-schedule .p-disabled, .p-component:disabled {
-    @apply tw-opacity-100;
+    @apply tw-opacity-100 tw-border-select-disabled-border;
 }
 
 :host ::ng-deep .selectedItem .p-dropdown-trigger {

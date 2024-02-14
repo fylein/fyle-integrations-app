@@ -91,7 +91,7 @@
   }
 
   :host ::ng-deep .selectedAccItem .p-dropdown.p-disabled {
-    @apply tw-bg-disabled-bg-color tw-border tw-border-box-color #{!important}
+    @apply tw-bg-disabled-bg-color tw-border tw-border-select-disabled-border #{!important}
   }
   
   .error-box {
