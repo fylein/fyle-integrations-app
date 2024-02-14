@@ -1,7 +1,7 @@
 <p-table [value]="getTableSourceData()" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
-        <th class="!tw-pl-40-px">{{sourceField | snakeCaseToSpaceCase | titlecase}} in Fyle</th>
+        <th class="!tw-pl-40-px">{{sourceField | snakeCaseToSpaceCase | titlecase}} in {{brandingConfig.brandName}}</th>
         <th>{{destinationField | snakeCaseToSpaceCase | titlecase}} in {{appName}}</th>
         <th *ngIf="!isDashboardMappingResolve">Status</th>
         </tr>

@@ -13,7 +13,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { Router } from '@angular/router';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
-import { brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { environment } from 'src/environments/environment';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 
@@ -65,6 +65,8 @@ export class Sage300AdvancedSettingsComponent implements OnInit {
   sageIntacctJobs: Sage300DestinationAttributes[];
 
   readonly AppName = AppName;
+
+  brandingConfig = brandingConfig;
 
   constructor(
     private advancedSettingsService: Sage300AdvancedSettingsService,

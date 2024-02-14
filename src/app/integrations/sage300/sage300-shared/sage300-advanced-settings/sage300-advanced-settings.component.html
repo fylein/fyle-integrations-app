@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field 
                         [form]="advancedSettingForm"
                         [label]="'Schedule automatic export'" 
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from Fyle to Sage 300 CRE.'" 
+                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Sage 300 CRE.'" 
                         [formControllerName]="'scheduleEnabled'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -36,7 +36,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'automatic export method'"
                             [label]="'Set up export frequency'"
-                            [subLabel]="'Set a frequency based on how often you want your expenses in Fyle to be exported to Sage 300 CRE'"
+                            [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Sage 300 CRE'"
                             [options]="hours"
                             [placeholder]="'Set Schedule'"
                             [formControllerName]="'scheduleAutoExportFrequency'">
@@ -47,7 +47,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'Customization'"
-                    [subLabel]="'In this section, you can customize the data that you\'d like to export from Fyle to Sage 300 CRE. You can choose what data points need to be exported and what shouldn\'t be.'">
+                    [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Sage 300 CRE. You can choose what data points need to be exported and what shouldn\'t be.'">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
@@ -72,8 +72,8 @@
             <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
                 <app-configuration-toggle-field 
                     [form]="advancedSettingForm"
-                    [label]="'Skip export of specific expenses from Fyle to Sage 300 CRE'" 
-                    [subLabel]="'You could choose to skip expenses from Fyle to Sage 300 CRE by setting up a conditional rule. '" 
+                    [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to Sage 300 CRE'" 
+                    [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to Sage 300 CRE by setting up a conditional rule. '" 
                     [formControllerName]="'skipExport'"
                     [iconPath]="'list'"
                     [redirectLink]="skipExportRedirectLink">

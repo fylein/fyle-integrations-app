@@ -1,5 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { ImportSettingsCustomFieldRow } from "../../common/import-settings.model";
 
 const emptyDestinationAttribute = { id: null, name: null };
 
@@ -19,6 +20,13 @@ export type MappingSetting = {
     import_to_fyle: boolean,
     is_custom: boolean,
     source_placeholder: null
+}
+
+export type IntacctDependentImportFields = {
+    options: ImportSettingsCustomFieldRow[],
+    source_field: string,
+    formController: string,
+    isDisabled: boolean
 }
 
 export type DependentFieldSetting = {
