@@ -7,7 +7,8 @@
             <app-configuration-step-header
                 [headerText]="'Export Settings'"
                 [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Online'"
-                [redirectLink]="redirectLink">
+                [redirectLink]="redirectLink"
+                [showSyncButton]="isOnboarding">
             </app-configuration-step-header>
         </div>
         <form [formGroup]="exportSettingForm">
