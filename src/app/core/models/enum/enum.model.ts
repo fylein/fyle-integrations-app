@@ -30,7 +30,8 @@ export enum InAppIntegration {
   TRAVELPERK = 'TravelPerk',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
-  BUSINESS_CENTRAL = 'Dynamics 365 Business Central'
+  BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
+  NETSUITE = 'Netsuite'
 }
 
 export enum ToastSeverity {
@@ -154,6 +155,16 @@ export enum QBOOnboardingState {
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
   COMPLETE = 'COMPLETE',
   CLONE_SETTINGS = 'CLONE_SETTINGS'
+}
+
+export enum NetsuiteOnboardingState {
+  CONNECTION = 'CONNECTION',
+  SUBSIDIARY_MAPPING = 'SUBSIDIARY_MAPPING',
+  MAP_EMPLOYEES = 'MAP_EMPLOYEES',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  COMPLETE = 'COMPLETE',
 }
 
 export enum Sage300OnboardingState {
@@ -443,7 +454,8 @@ export enum AppUrl {
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central',
   INTEGRATION = 'integration',
-  QBO = 'qbo'
+  QBO = 'qbo',
+  NETSUITE = 'netsuite'
 }
 
 export enum Sage300ExportType {

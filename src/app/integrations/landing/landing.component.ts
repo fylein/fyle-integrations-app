@@ -63,7 +63,8 @@ export class LandingComponent implements OnInit {
     [InAppIntegration.INTACCT]: '/integrations/intacct',
     [InAppIntegration.QBO]: '/integrations/qbo',
     [InAppIntegration.SAGE300]: '/integrations/sage300',
-    [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central'
+    [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central',
+    [InAppIntegration.NETSUITE]: '/integrations/netsuite'
   };
 
   readonly brandingConfig = brandingConfig;
