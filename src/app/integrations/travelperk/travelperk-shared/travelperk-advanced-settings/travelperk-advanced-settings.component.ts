@@ -73,11 +73,11 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
 
   private formatMemoPreview(): void {
     const previewValues: { [key: string]: string } = {
-      booker_name: 'john.doe@acme.com',
-      trip_name: 'Meals and Entertainment',
-      traveler_name: 'Client Meeting',
-      merchant_name: 'Pizza Hut',
-      trip_id: 'C/2021/12/R/1'
+      booker_name: 'John Doe',
+      trip_name: 'Flight to West Lisaville, Jan 30 - Jan 31',
+      traveler_name: 'Jane Doe',
+      merchant_name: 'Uber',
+      trip_id: '9788'
     };
     this.memoPreviewText = '';
     const memo: string[] = [];
