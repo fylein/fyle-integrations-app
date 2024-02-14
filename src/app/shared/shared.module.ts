@@ -86,6 +86,8 @@ import { CloneSettingFieldComponent } from './components/onboarding/clone-settin
 import { ToggleComponent } from './components/input/toggle/toggle.component';
 import { MultiSelectComponent } from './components/input/multi-select/multi-select.component';
 import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component';
+import { NetsuiteConnectorComponent } from './components/netsuite/core/netsuite-connector/netsuite-connector.component';
+import { NetsuiteSubsidiaryMappingComponent } from './components/netsuite/core/netsuite-subsidiary-mapping/netsuite-subsidiary-mapping.component';
 
 
 @NgModule({
@@ -154,7 +156,9 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     CloneSettingFieldComponent,
     ToggleComponent,
     MultiSelectComponent,
-    SvgIconComponent
+    SvgIconComponent,
+    NetsuiteConnectorComponent,
+    NetsuiteSubsidiaryMappingComponent
   ],
   imports: [
     CommonModule,
@@ -209,6 +213,8 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     IntacctConnectorComponent,
+    NetsuiteConnectorComponent,
+    NetsuiteSubsidiaryMappingComponent,
     IntacctLocationEntityComponent,
     MappingTableComponent,
     MappingFilterComponent,

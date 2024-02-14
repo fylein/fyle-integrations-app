@@ -43,7 +43,6 @@ export class NetsuiteComponent implements OnInit {
       const onboardingStateComponentMap = {
         [NetsuiteOnboardingState.CONNECTION]: '/integrations/netsuite/onboarding/landing',
         [NetsuiteOnboardingState.SUBSIDIARY_MAPPING]: '/integrations/netsuite/onboarding/subsiduary-mappings',
-        [NetsuiteOnboardingState.MAP_EMPLOYEES]: '/integrations/netsuite/onboarding/employee_settings',
         [NetsuiteOnboardingState.EXPORT_SETTINGS]: '/integrations/netsuite/onboarding/export_settings',
         [NetsuiteOnboardingState.IMPORT_SETTINGS]: '/integrations/netsuite/onboarding/import_settings',
         [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/netsuite/onboarding/advanced_settings',

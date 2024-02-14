@@ -1,0 +1,57 @@
+import { Injectable } from '@angular/core';
+import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
+import { ApiService } from '../../common/api.service';
+import { StorageService } from '../../common/storage.service';
+import { NetsuiteCredential } from 'src/app/core/models/netsuite/db/netsuite-credentials.model';
+import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
+import { Observable, Subject } from 'rxjs';
+import { NetsuiteWorkspaceService } from './netsuite-workspace.service';
+import { NetsuiteConnectorPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+
+
+const netsuiteCredentialCache = new Subject<void>();
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class NetsuiteConnectorService {
+
+  workspaceId: number;
+
+  constructor(
+    private apiService: ApiService,
+    private workspaceService: NetsuiteWorkspaceService,
+    private storageService: StorageService
+  ) { }
+
+  @Cacheable({
+    cacheBusterObserver: netsuiteCredentialCache
+  })
+  getNetsuiteCredentials(): Observable<NetsuiteCredential> {
+    this.workspaceId = this.storageService.get('netsuite.workspaceId');
+    return this.apiService.get('/workspaces/' + '1' + '/credentials/netsuite/', {});
+  }
+
+  @CacheBuster({
+    cacheBusterNotifier: netsuiteCredentialCache
+  })
+  connectNetsuite(data: NetsuiteConnectorPost): Observable<NetsuiteCredential> {
+    this.workspaceId = this.storageService.get('netsuite.workspaceId');
+    globalCacheBusterNotifier.next();
+    return this.apiService.post('/workspaces/' + '1' + '/credentials/netsuite/', data);
+  }
+
+  postSubsdiaryMapping(subsdiaryMappingPayload: SubsidiaryMapping): Observable<SubsidiaryMapping> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+
+    return this.apiService.post(`/workspaces/${workspaceId}/mappings/subsidiaries/`, subsdiaryMappingPayload);
+  }
+
+  getSubsidiaryMapping(): Observable<SubsidiaryMapping> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(
+      `/workspaces/${workspaceId}/mappings/subsidiaries/`, {}
+    );
+  }
+}
