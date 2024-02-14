@@ -103,6 +103,13 @@
             <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex">
                     <label class="container tw-pl-24-px tw-text-14-px">Import Cost Code and Cost Type from {{appName}} as dependent fields
+                        <a *ngIf="appName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                            (click)="windowService.openInNewTab(redirectLink)">
+                            Read More
+                            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                                class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                            </app-svg-icon>
+                        </a>
                         <input type="checkbox" formControlName="isDependentImportEnabled">
                         <span class="checkmark"></span>
                     </label>
@@ -110,7 +117,7 @@
                 <div *ngIf="form.value.isDependentImportEnabled && dependentImportFields">
                     <div *ngFor="let dependentField of dependentImportFields; index as i" class="tw-flex tw-items-strat tw-pt-4" [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']">
                         <div class="tw-pt-2-px">
-                            <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'line'" [width]="'21px'" [height]="'49px'" [styleClasses]="'tw-text-box-color'"></app-svg-icon>
+                            <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'Line'" [width]="'21px'" [height]="'49px'" [styleClasses]="'tw-text-box-color'"></app-svg-icon>
                         </div>
                         <div>
                             <p class="tw-pl-16-px tw-mb-8-px tw-text-14-px tw-text-sub-text-color !tw-font-400">Dependent Field <app-mandatory-field></app-mandatory-field> </p>
@@ -133,6 +140,19 @@
                             </p-dropdown>
                         </div>
                         <p-inputSwitch class="tw-pl-128-px input-toggle-section tw-pt-30-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                    </div>
+                    <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px">
+                        <label class="container tw-pl-24-px tw-text-14-px">Auto-Export Commitment based on the Cost Code and Cost Category.
+                            <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                                (click)="windowService.openInNewTab(redirectLink)">
+                                Read More
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                                    class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                                </app-svg-icon>
+                            </a>
+                            <input type="checkbox" formControlName="addCommitmentDetails">
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
                 </div>
             </div>                      

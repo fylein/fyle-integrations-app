@@ -3,10 +3,11 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { MappingSourceField } from 'src/app/core/models/enum/enum.model';
+import { AppName, MappingSourceField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -37,17 +38,23 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() isCloneSettingView: boolean;
 
+  @Input() redirectLink: string;
+
   @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;
 
   showAddButton: any;
 
+  AppName = AppName;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor() { }
+  constructor(
+    public windowService: WindowService
+  ) { }
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
