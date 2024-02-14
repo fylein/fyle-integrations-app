@@ -76,7 +76,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
       booker_name: 'John Doe',
       trip_name: 'Flight to West Lisaville, Jan 30 - Jan 31',
       traveler_name: 'Jane Doe',
-      merchant_name: 'Uber',
+      merchant_name: 'American Airlines',
       trip_id: '9788'
     };
     this.memoPreviewText = '';
