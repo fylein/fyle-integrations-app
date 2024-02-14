@@ -26,6 +26,8 @@ export class IntacctDashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  appName: AppName = AppName.INTACCT;
+
   isExportLogFetchInProgress: boolean;
 
   isImportInProgress: boolean = true;
@@ -52,7 +54,7 @@ export class IntacctDashboardComponent implements OnInit {
 
   failedExpenseGroupCount: number | null = null;
 
-  exportInProgress: boolean = false;
+  isExportInProgress: boolean = false;
 
   exportProgressPercentage: number = 0;
 
@@ -204,7 +206,7 @@ export class IntacctDashboardComponent implements OnInit {
         this.dashboardService.getAllTasks([TaskLogState.FAILED, TaskLogState.FATAL], undefined, this.taskType).subscribe((taskResponse) => {
           this.failedExpenseGroupCount = taskResponse.count;
           this.exportableExpenseGroupIds = taskResponse.results.map((task: Task) => task.expense_group);
-          this.exportInProgress = false;
+          this.isExportInProgress = false;
           this.exportProgressPercentage = 0;
           this.processedCount = 0;
 
@@ -312,7 +314,7 @@ export class IntacctDashboardComponent implements OnInit {
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
-        this.exportInProgress = true;
+        this.isExportInProgress = true;
         this.exportableExpenseGroupIds = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
         this.pollExportStatus(this.exportableExpenseGroupIds);
       } else {
@@ -328,8 +330,8 @@ export class IntacctDashboardComponent implements OnInit {
   }
 
   export(): void {
-    if (!this.exportInProgress && this.exportableExpenseGroupIds.length) {
-      this.exportInProgress = true;
+    if (!this.isExportInProgress && this.exportableExpenseGroupIds.length) {
+      this.isExportInProgress = true;
       this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.INTACCT_EXPORT);
       this.dashboardService.exportExpenseGroups().subscribe(() => {
         this.pollExportStatus(this.exportableExpenseGroupIds);
