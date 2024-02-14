@@ -11,22 +11,10 @@ import { AppUrl } from 'src/app/core/models/enum/enum.model';
 export class NetsuiteAuthService {
 
   constructor(
-    private apiService: ApiService,
-    private helperService: HelperService
-  ) {
-    this.helperService.setBaseApiURL(AppUrl.NETSUITE);
-  }
+    private apiService: ApiService
+  ) {}
 
   loginWithRefreshToken(refresh_token: string): Observable<Token> {
     return this.apiService.post('/auth/login_with_refresh_token/', { refresh_token });
-  }
-
-  loginWithAuthCode(code: string): Observable<Token> {
-    this.helperService.setBaseApiURL(AppUrl.NETSUITE);
-    return this.apiService.post('/auth/login/', { code });
-  }
-
-  refreshAccessToken(refreshToken: string): Observable<Token> {
-    return this.apiService.post('/auth/refresh/', { refresh_token: refreshToken });
   }
 }
