@@ -31,7 +31,7 @@
     </div>
 
     <app-zero-state-with-illustration *ngIf="totalCount === 0"
-    [mainText]="'No records to show yet!'"
-    [subText]="'All your expenses that were skipped from exporting will be stored here.'">
+    [mainText]="brandingConfig.brandId === 'fyle' ? 'No records to show yet!': 'Looks like you have 0 records to show right now'"
+    [subText]="brandingConfig.brandId === 'fyle' ? 'All your expenses that were skipped from exporting will be stored here.': 'All your expenses that are skipped from exporting will be visible here'">
     </app-zero-state-with-illustration>
 </div>
