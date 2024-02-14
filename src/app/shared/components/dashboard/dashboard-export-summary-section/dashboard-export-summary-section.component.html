@@ -1,4 +1,4 @@
-<div class="tw-px-120-px">
+<div [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
     <div class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="tw-font-500 tw-text-18-px tw-text-text-primary">Your last export</h4>
