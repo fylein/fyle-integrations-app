@@ -62,7 +62,7 @@
   
   /* Change text color to black */
   :host ::ng-deep .p-chips-token-label {
-    @apply tw-py-4-px tw-px-8-px tw-text-slightly-normal-text-color #{!important};
+    @apply tw-text-chips-body-text-color #{!important};
   }
   
   

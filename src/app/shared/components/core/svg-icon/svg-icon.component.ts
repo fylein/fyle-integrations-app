@@ -21,6 +21,7 @@ const ICON_MAPPING = {
   'check-medium': 'grv-checkmark-medium',
   'check': 'grv-checkmark',
   'check-large': 'grv-checkmark-large',
+  'cross-xs-small': 'grv-close-xs-small',
   'cross-medium': 'grv-close-medium',
   'cross-small': 'grv-close-small',
   'cross': 'grv-close',

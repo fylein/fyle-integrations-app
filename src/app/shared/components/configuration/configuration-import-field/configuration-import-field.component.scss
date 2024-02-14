@@ -39,7 +39,7 @@
   }
   
   .sub-text {
-    @apply tw-rounded-8-px tw-border tw-border-separator tw-bg-configuration-bg tw-p-24-px tw-items-start tw-flex-col tw-gap-4;
+    @apply tw-rounded-8-px tw-border tw-border-border-tertiary tw-bg-configuration-bg tw-p-24-px tw-items-start tw-flex-col tw-gap-4;
   }
   
   .sub-text-note {
@@ -52,14 +52,6 @@
   
   .fields-header-text {
     @apply tw-font-500 tw-leading-16-px ;
-  }
-    
-  :host ::ng-deep .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
-    @apply tw-content-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-top-0 tw-left-2 #{!important};
-  }
-  
-  :host ::ng-deep .p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
-    @apply tw-content-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-6 tw-top-0 #{!important};
   }
     
   .add-button-container {
