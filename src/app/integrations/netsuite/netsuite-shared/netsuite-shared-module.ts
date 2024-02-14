@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NetsuiteExportSettingsComponent } from './netsuite-export-settings/netsuite-export-settings.component';
 import { NetsuiteImportSettingsComponent } from './netsuite-import-settings/netsuite-import-settings.component';
 import { NetsuiteAdvancedSettingsComponent } from './netsuite-advanced-settings/netsuite-advanced-settings.component';
+import { NetsuiteConnectorComponent } from './netsuite-connector/netsuite-connector.component';
 
 
 
@@ -10,7 +11,8 @@ import { NetsuiteAdvancedSettingsComponent } from './netsuite-advanced-settings/
   declarations: [
     NetsuiteExportSettingsComponent,
     NetsuiteImportSettingsComponent,
-    NetsuiteAdvancedSettingsComponent
+    NetsuiteAdvancedSettingsComponent,
+    NetsuiteConnectorComponent
   ],
   imports: [
     CommonModule
