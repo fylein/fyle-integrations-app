@@ -7,7 +7,7 @@
         <div [formGroup]="exportLogForm" class="tw-flex tw-items-center tw-p-24-px">
 
             <span class="custom-search-field" [ngStyle]="{ 'border-color': isSearchFocused ? 'black' : '#ccc' }">
-                <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
+                <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-muted tw-pr-8-px'"></app-svg-icon>
                 <input class="tw-pb-1 tw-pt-1 tw-text-14-px" type="text" (input)="filterTable($event)" (focus)="isSearchFocused = true" (blur)="isSearchFocused = false" placeholder="Search by Employee Name or Expense ID" />
             </span>
             <div class="tw-flex tw-mr-4"></div>
@@ -39,8 +39,8 @@
                         <div>
                             <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" *ngIf="date.dateRange === presentDate" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
                             <p class="tw-text-sub-text-color tw-text-14-px" [ngClass]="{'!tw-text-mandatory-field-color' : exportLogForm.controls.dateRange.value === date }" *ngIf="date.dateRange !== presentDate">{{ date.dateRange | titlecase | snakeCaseToSpaceCase }}</p>
-                            <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange !== presentDate && date.dateRange !== 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}} - {{date.endDate | date : 'MMM dd, yyyy'}}</p>
-                            <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p>
+                            <!-- <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange !== presentDate && date.dateRange !== 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}} - {{date.endDate | date : 'MMM dd, yyyy'}}</p>
+                            <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p> -->
                         </div>
                     </ng-template> 
                 </p-dropdown>

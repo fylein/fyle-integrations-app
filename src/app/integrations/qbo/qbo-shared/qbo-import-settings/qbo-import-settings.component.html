@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6">
     <div>
         <app-configuration-step-header [headerText]="'Import Settings'"
             [contentText]="'In this section, you can choose the fields required to be imported from QuickBooks Online to ' + brandingConfig.brandName + '. '"
@@ -12,7 +12,7 @@
     <div>
         <form [formGroup]="importSettingForm">
             <div class="tw-p-24-px">
-                <div class="tw-rounded-lg tw-border-separator tw-border">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName"
@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSettings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
                       [label]="'Import Products/Services from QuickBooks Online'"
@@ -48,7 +48,7 @@
                     </app-configuration-toggle-field>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
                       [label]="'Import Tax from QuickBooks Online'"
@@ -71,7 +71,7 @@
                     </app-configuration-select-field>
                   </div>
 
-                  <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed">
+                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="'Import Vendors from QuickBooks Online'"

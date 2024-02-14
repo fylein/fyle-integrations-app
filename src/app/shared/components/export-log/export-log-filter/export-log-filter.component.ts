@@ -30,8 +30,10 @@ export class ExportLogFilterComponent implements OnInit {
 
   constructor() { }
 
-  filterTable(event: any) {
-    this.handleSimpleSearch.emit(event);
+  setupSearchWatcher() {
+    this.exportLogForm.controls.searchOption.valueChanges.subscribe((value) => {
+      this.handleSimpleSearch.emit(value);
+    });
   }
 
   dropDownWatcher() {
@@ -61,6 +63,7 @@ export class ExportLogFilterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.setupSearchWatcher();
   }
 
 }
