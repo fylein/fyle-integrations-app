@@ -22,13 +22,23 @@ export class MainMenuComponent implements OnInit {
 
   @Input() isSyncRequired: boolean = true;
 
+  @Input() isDisconnectRequired: boolean = false;
+
+  @Input() isConnectionInProgress: boolean;
+
   @Output() refreshDimensionClick = new EventEmitter<boolean>();
+
+  @Output() disconnectClick = new EventEmitter();
 
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor() { }
+
+  disconnect() {
+    this.disconnectClick.emit();
+  }
 
   refreshDimensions() {
     this.refreshDimensionClick.emit(true);
