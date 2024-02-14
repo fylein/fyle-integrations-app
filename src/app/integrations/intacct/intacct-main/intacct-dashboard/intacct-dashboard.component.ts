@@ -16,6 +16,7 @@ import { ExportLogService } from 'src/app/core/services/si/export-log/export-log
 import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { environment } from 'src/environments/environment';
+import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 
 @Component({
   selector: 'app-intacct-dashboard',
@@ -31,6 +32,18 @@ export class IntacctDashboardComponent implements OnInit {
   isExportLogFetchInProgress: boolean;
 
   isImportInProgress: boolean = true;
+
+  isExportInProgress: boolean = false;
+
+  exportableAccountingExportIds: number[] = [];
+
+  failedExpenseGroupCount: number = 0;
+
+  exportProgressPercentage: number = 0;
+
+  accountingExportSummary: AccountingExportSummary | null;
+
+  processedCount: number = 0;
 
   isExportLogVisible: boolean = false;
 
@@ -49,16 +62,6 @@ export class IntacctDashboardComponent implements OnInit {
   taskLogStatusFailed: TaskLogState = TaskLogState.FAILED;
 
   exportLogHeader: string;
-
-  processedCount: number = 0;
-
-  failedExpenseGroupCount: number | null = null;
-
-  isExportInProgress: boolean = false;
-
-  exportProgressPercentage: number = 0;
-
-  exportableAccountingExportIds: number[] = [];
 
   lastExport: LastExport | null;
 
