@@ -5,7 +5,7 @@
         <div>
             <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-placeholder'"></app-svg-icon>
         </div>
-        <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range">
+        <!-- <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range">
             <ng-template pTemplate="header">
                 <div class="tw-flex tw-items-center tw-justify-center">
                     <div class="tw-pr-8-px">
@@ -47,8 +47,8 @@
                     </div>
                 </div>
             </ng-template>
-        </p-calendar>
-        <!-- <p-dropdown placeholder="Select date range" appendTo="body" [options]="dateOptions"
+        </p-calendar> -->
+        <p-dropdown placeholder="Select date range" appendTo="body" [options]="dateOptions"
         formControlName="dateRange" (click)="dropDownWatcher()" (onFocus)="isDateFieldFocused = true" (onBlur)="isDateFieldFocused = false"
         [ngClass]="{'selectedItem': exportLogForm.controls.dateRange.value, 'filterDropdown': !exportLogForm.controls.dateRange.value}">
             <ng-template let-item pTemplate="selectedItem">
@@ -79,6 +79,6 @@
                     <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p>
                 </div>
             </ng-template> 
-        </p-dropdown> -->
+        </p-dropdown>
     </span>
 </div>
