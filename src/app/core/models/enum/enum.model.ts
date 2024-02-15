@@ -31,7 +31,7 @@ export enum InAppIntegration {
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
-  NETSUITE = 'Netsuite'
+  NETSUITE = 'NetSuite'
 }
 
 export enum ToastSeverity {
