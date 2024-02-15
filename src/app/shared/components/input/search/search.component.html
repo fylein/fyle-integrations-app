@@ -1,5 +1,5 @@
 <span [formGroup]="form" [class]="'custom-search-field ' + styleClasses" [ngStyle]="{ 'border-color': isSearchFocused ? 'var(--search-focused-filled-border)' : 'var(--search-default-border)' }">
-    <i class="pi pi-search"></i>
+    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-muted tw-pr-8-px'"></app-svg-icon>
     <input [formControlName]="formControllerName" class="tw-pb-1 tw-pt-1 tw-text-14-px tw-text-search-default-filled-text" type="text" (focus)="isSearchFocused = true" (blur)="isSearchFocused = false" [placeholder]="placeholder" />
     <app-svg-icon *ngIf="form.value[formControllerName]" (iconClick)="clearSearch()" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-icon-muted'"></app-svg-icon>
 </span>

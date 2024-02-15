@@ -37,3 +37,7 @@
 :host ::ng-deep .p-dialog {
     @apply tw-max-h-full tw-m-0 #{!important};
 }
+
+:host ::ng-deep .p-button.outline-sm {
+    @apply tw-w-100-px tw-justify-center #{!important};
+}
