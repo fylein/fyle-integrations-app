@@ -24,8 +24,15 @@
                     (onHide)="clearSearch()" 
                     [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
                     [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
+                    <ng-template let-options pTemplate="item">
+                        <div #textElement
+                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                            [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                            {{options[optionLabel]}}
+                        </div>
+                    </ng-template>
                     <ng-template *ngIf="!isAdvanceSearchEnabled" pTemplate="filter" let-dropdownOptions="options">
-                        <app-search [form]="form" [placeholder]="'Search'" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white'" (handleSimpleSearch)="simpleSearch($event)"></app-search>
+                        <app-search [form]="form" [isDropdown]="true" [placeholder]="'Search'" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white'" (handleSimpleSearch)="simpleSearch($event)"></app-search>
                     </ng-template>
                 </p-dropdown>
             </div>
