@@ -113,8 +113,7 @@
                 <p-dropdown appendTo="body" [options]="simpleOptions" [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
                     <ng-template let-value pTemplate="selectedItem" >
                         <div *ngIf="form.value[formControllerName]" class="tw-flex">
-                            <p *ngIf="formControllerName !== 'defaultEmployee'">{{ value | titlecase | snakeCaseToSpaceCase }}</p>
-                            <p *ngIf="formControllerName === 'defaultEmployee'">{{ value }}</p>
+                            <p>{{ value | titlecase | snakeCaseToSpaceCase }}</p>
                         </div>
                         <div *ngIf="!form.value[formControllerName]" class="tw-text-placeholder">
                             {{ placeholder }}
