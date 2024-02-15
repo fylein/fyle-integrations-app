@@ -249,6 +249,7 @@
     --btn-tertiary-hover-bg: #{$white};
 
     --lv-stats-bg: linear-gradient(112deg, rgba(255, 255, 255, 0.90) 1.65%, rgba(255, 255, 255, 0.24) 100%);
+
     --lv-stats-label-text-color: var(--text-tertiary);
 
     --nav-link-text: var(--text-primary);
@@ -262,5 +263,78 @@
     --nav-tabs-active-border: var(--border-secondary);
 
     --nav-tabs-active-bg: #{$white};
+
+    --search-default-filled-text: var(--text-primary);
+
+    --search-focused-placeholder-text: var(--text-placeholder);
+
+    --search-default-border: var(--border-secondary);
+
+    --search-focused-filled-border: var(--btn-secondary-hover-bg);
+
+    --select-focused-border: var(--border-primary);
+
+    --select-default-border: var(--border-secondary);
+
+    --select-default-placeholder-text: var(--text-placeholder);
+
+    --dropdown-option-height: 32px;
+
+    --dd-menu-item-default-text-color: var(--text-secondary);
+
+    --dd-menu-item-hover-bg: var(--bg-tertiary);
+
+    --checkbox-icon-selected-color: var(--icon-secondary);
+
+    --checkbox-icon-color: var(--icon-disable);
+
+    --select-disabled-bg: var(--bg-tertiary);
+
+    --select-disabled-text: var(--text-placeholder);
+
+    --select-disabled-border: var(--border-secondary);
+
+    --select-error-border: var(--border-danger);
+
+    --toggle-text-yes: 'Yes';
+    --toggle-text-no: 'No';
+
+    --toggle-circle-translate: 28px;
+
+    --form-switch-bg: var(--bg-disable);
+
+    --alerts-success-icon-color: var(--text-white);
+
+    --toast-success-bg: var(--bg-success);
+
+    --toast-text-color: var(--text-white);
+
+    --alerts-error-icon-color: var(--bg-danger);
+
+    --toast-error-bg: var(--bg-danger);
+
+    --chips-border-color: var(--border-secondary);
+
+    --chips-body-text-color: var(--text-tertiary);
+
+    --lv-table-default-bg: var(--bg-tertiary);
+
+    --lv-table-header-text-color: var(--text-secondary);
+
+    --lv-table-header-border-color: var(--border-secondary);
+
+    --lv-table-border-color: var(--border-tertiary);
+
+    --calendar-day-text-color: var(--text-label);
+
+    --border-date-picker-border: var(--border-secondary);
+
+    --date-picker-placeholder-text: var(--text-placeholder);
+
+    --calendar-header-text-color: var(--text-primary);
+
+    --calendar-date-default-text-color: var(--text-secondary);
+
+    --tooltip-bg: var(--bg-secondary);
   }
 }

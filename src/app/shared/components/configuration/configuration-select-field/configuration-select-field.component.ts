@@ -69,6 +69,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() showExportPreview: boolean = false;
 
+  @Input() isAdvanceSearchEnabled: boolean;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
@@ -84,6 +86,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   isOnboarding: boolean = false;
 
   isCCCExportTableVisible: boolean = false;
+
+  optionsCopy: any[];
 
   exportTableData = [
     { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
@@ -124,17 +128,19 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     this.isPreviewDialogVisible = true;
   }
 
-  showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
-    const data: PreviewPage = {
-      intacctReimburse: reimbursableExportType,
-      intacctCCC: creditCardExportType
-    };
-
-    this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.PREVIEW_INTACCT_EXPORT);
-  }
-
   closeDialog() {
     this.isPreviewDialogVisible = false;
+  }
+
+  simpleSearch(query: string) {
+    this.destinationAttributes = this.optionsCopy.filter(attribute => attribute.name?.toLowerCase().includes(query.toLowerCase()) || attribute.value?.toLowerCase().includes(query.toLowerCase()));
+  }
+
+  clearSearch(): void {
+    this.form.controls.searchOption.patchValue('');
+    if (this.destinationAttributes) {
+      this.destinationAttributes = this.optionsCopy.concat();
+    }
   }
 
   searchOptions(event: any) {
@@ -143,5 +149,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
+    if (this.destinationAttributes) {
+      this.optionsCopy = this.destinationAttributes.slice();
+    }
   }
 }

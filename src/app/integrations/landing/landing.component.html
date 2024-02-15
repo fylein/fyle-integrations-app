@@ -20,7 +20,7 @@
 
     <p *ngIf="!exposeOnlyQBOApp" class="tw-mt-1-px landing--divider"></p>
 
-    <div class="tw-pt-40-px tw-mx-60-px">
+    <div class="tw-pt-40-px" [ngClass]="{'tw-mx-120-px': brandingConfig.brandId === 'fyle', 'tw-mx-60-px': brandingConfig.brandId === 'co'}">
         <div *ngIf="integrationTabs.ALL || integrationTabs.ACCOUNTING">
             <p class="landing--section-heading">
                 Accounting

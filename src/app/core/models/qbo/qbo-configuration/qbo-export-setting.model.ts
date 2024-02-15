@@ -4,7 +4,7 @@ import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expens
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 
 export type QBOExportSettingWorkspaceGeneralSettingPost = {
   reimbursable_expenses_object: QBOReimbursableExpensesObject | null,
@@ -70,7 +70,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
   }
 
   static getCreditCardExportTypes(): SelectFormOption[] {
-    return [
+    const creditCardExportTypes = [
       {
         label: 'Bill',
         value: QBOCorporateCreditCardExpensesObject.BILL
@@ -82,12 +82,17 @@ export class QBOExportSettingModel extends ExportSettingModel {
       {
         label: 'Journal Entry',
         value: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-      },
-      {
-        label: 'Debit Card Expense',
-        value: QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE
       }
     ];
+
+    if (brandingConfig.brandId !== 'co') {
+      creditCardExportTypes.push({
+        label: 'Debit Card Expense',
+        value: QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE
+      });
+    }
+
+    return creditCardExportTypes;
   }
 
   static getCCCExpenseStateOptions(): SelectFormOption[] {
@@ -248,7 +253,8 @@ export class QBOExportSettingModel extends ExportSettingModel {
       defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
       qboExpenseAccount: new FormControl(exportSettings?.general_mappings?.qbo_expense_account?.id ? exportSettings.general_mappings.qbo_expense_account : null),
       defaultDebitCardAccount: new FormControl(exportSettings?.general_mappings?.default_debit_card_account?.id ? exportSettings.general_mappings.default_debit_card_account : null),
-      nameInJournalEntry: new FormControl(exportSettings?.workspace_general_settings.name_in_journal_entry ? exportSettings.workspace_general_settings.name_in_journal_entry : NameInJournalEntry.EMPLOYEE )
+      nameInJournalEntry: new FormControl(exportSettings?.workspace_general_settings.name_in_journal_entry ? exportSettings.workspace_general_settings.name_in_journal_entry : NameInJournalEntry.EMPLOYEE ),
+      searchOption: new FormControl('')
     });
   }
 
