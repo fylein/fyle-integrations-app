@@ -4,7 +4,7 @@ import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expens
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 
 export type QBOExportSettingWorkspaceGeneralSettingPost = {
   reimbursable_expenses_object: QBOReimbursableExpensesObject | null,
@@ -70,7 +70,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
   }
 
   static getCreditCardExportTypes(): SelectFormOption[] {
-    return [
+    const creditCardExportTypes = [
       {
         label: 'Bill',
         value: QBOCorporateCreditCardExpensesObject.BILL
@@ -82,12 +82,17 @@ export class QBOExportSettingModel extends ExportSettingModel {
       {
         label: 'Journal Entry',
         value: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-      },
-      {
-        label: 'Debit Card Expense',
-        value: QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE
       }
     ];
+
+    if (brandingConfig.brandId !== 'co') {
+      creditCardExportTypes.push({
+        label: 'Debit Card Expense',
+        value: QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE
+      });
+    }
+
+    return creditCardExportTypes;
   }
 
   static getCCCExpenseStateOptions(): SelectFormOption[] {
