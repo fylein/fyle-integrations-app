@@ -11,7 +11,7 @@ export class NetsuiteMappingsService {
     private apiService: ApiService,
     private workspaceService: NetsuiteWorkspaceService
   ) { }
-  
+
   refreshNetsuiteDimensions(dimensionsToSync: string[] = []) {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
