@@ -57,29 +57,28 @@ export type AccountingExportGetParam = {
 }
 
 export class AccountingExportModel {
-
-  static getDateOptions(): DateFilter[] {
+  static getDateOptionsV2(): DateFilter[] {
     const currentDateTime = new Date();
     const dateOptions: DateFilter[] = [
-      {
-        dateRange: 'This Month',
-        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
-        endDate: currentDateTime
-      },
       {
         dateRange: 'This Week',
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay()),
         endDate: currentDateTime
       },
       {
-        dateRange: 'Today',
-        startDate: currentDateTime,
+        dateRange: 'Last Week',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 7),
+        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 1)
+      },
+      {
+        dateRange: 'This Month',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
         endDate: currentDateTime
       },
       {
-        dateRange: currentDateTime.toLocaleDateString(),
-        startDate: currentDateTime,
-        endDate: currentDateTime
+        dateRange: 'Last Month',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth() - 1, 1),
+        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 0)
       }
     ];
 
@@ -92,6 +91,7 @@ export class AccountingExportModel {
   }
 
   static getfilteredAccountingExports(query: string, group: AccountingExportList): boolean {
+    query = query.toLowerCase();
     const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';

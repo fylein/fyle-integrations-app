@@ -1203,6 +1203,7 @@ module.exports = {
         '180-px': '180px',
         '184-px': '184px',
         '200-px': '200px',
+        '218-px': '218px',
         '220-px': '220px',
         '226-px': '226px',
         '240-px': '240px',
@@ -1330,7 +1331,8 @@ module.exports = {
         '12-px': '12px',
         '14-px': '14px',
         '24-px': '24px',
-        '30-px': '30px'
+        '30-px': '30px',
+        '36-px': '36px',
       },
       translate: {
         'toggle-circle-translate': 'var(--toggle-circle-translate)',
