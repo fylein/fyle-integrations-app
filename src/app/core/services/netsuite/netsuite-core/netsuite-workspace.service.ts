@@ -38,14 +38,14 @@ export class NetsuiteWorkspaceService {
   }
 
   getWorkspaceId(): string {
-    return this.storageService.get('si.workspaceId');
+    return this.storageService.get('netsuite.workspaceId');
   }
 
   setNetsuiteOnboardingState(onboardingState: NetsuiteOnboardingState): void {
     return this.storageService.set('onboarding-state', onboardingState);
   }
 
-  getIntacctOnboardingState(): NetsuiteOnboardingState {
+  getNetsuiteOnboardingState(): NetsuiteOnboardingState {
     const onboardingState = this.storageService.get('onboarding-state');
     return onboardingState ? onboardingState : NetsuiteOnboardingState.CONNECTION;
   }

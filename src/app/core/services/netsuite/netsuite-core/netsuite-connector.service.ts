@@ -6,7 +6,7 @@ import { NetsuiteCredential } from 'src/app/core/models/netsuite/db/netsuite-cre
 import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { Observable, Subject } from 'rxjs';
 import { NetsuiteWorkspaceService } from './netsuite-workspace.service';
-import { NetsuiteConnectorPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import { NetsuiteConnectorPost, SubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 
 
 const netsuiteCredentialCache = new Subject<void>();
@@ -30,7 +30,7 @@ export class NetsuiteConnectorService {
   })
   getNetsuiteCredentials(): Observable<NetsuiteCredential> {
     this.workspaceId = this.storageService.get('netsuite.workspaceId');
-    return this.apiService.get('/workspaces/' + '1' + '/credentials/netsuite/', {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/credentials/netsuite/`, {});
   }
 
   @CacheBuster({
@@ -39,10 +39,10 @@ export class NetsuiteConnectorService {
   connectNetsuite(data: NetsuiteConnectorPost): Observable<NetsuiteCredential> {
     this.workspaceId = this.storageService.get('netsuite.workspaceId');
     globalCacheBusterNotifier.next();
-    return this.apiService.post('/workspaces/' + '1' + '/credentials/netsuite/', data);
+    return this.apiService.post('/workspaces/' + this.workspaceId + '/credentials/netsuite/', data);
   }
 
-  postSubsdiaryMapping(subsdiaryMappingPayload: SubsidiaryMapping): Observable<SubsidiaryMapping> {
+  postSubsdiaryMapping(subsdiaryMappingPayload: SubsidiaryMappingPost): Observable<SubsidiaryMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/subsidiaries/`, subsdiaryMappingPayload);

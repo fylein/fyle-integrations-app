@@ -19,3 +19,11 @@ export class NetsuiteConnectorModel {
     };
   }
 }
+
+
+export type SubsidiaryMappingPost = {
+  country_name: string | null,
+  internal_id: string,
+  subsidiary_name: string,
+  workspace: number
+}

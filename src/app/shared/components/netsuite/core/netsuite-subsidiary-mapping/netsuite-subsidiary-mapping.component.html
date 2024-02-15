@@ -1,1 +1,56 @@
-<p>netsuite-subsidiary-mapping works!</p>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+  <app-loader></app-loader>
+</div>
+
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+  <div class="configuration--step-header configuration--step-header-styles">
+    <app-configuration-step-header
+      [headerText]="'Connect to NetSuite'"
+      [contentText]="'Expenses will be posted to the NetSuite Subsdiary selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Subsidiary.'"
+      [redirectLink]="redirectLink">
+    </app-configuration-step-header>
+  </div>
+  <div class="tw-px-24-px tw-pb-24-px">
+    <div class="tw-flex">
+      <div class="tw-w-40-vw tw-h-240-px tw-flex tw-flex-col tw-items-center tw-justify-center">
+        <h5 class="tw-text-14-px tw-font-500 align-center tw-text-sub-text-color tw-cursor-default">
+          {{ brandingConfig.brandName | uppercase }}
+        </h5>
+        <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px tw-pt-18-px tw-whitespace-nowrap tw-cursor-default">
+          {{ fyleOrgName | trimCharacter: 26 }}
+        </h3>
+      </div>
+      <div class="tw-flex tw-justify-center tw-items-center tw-w-20-vw">
+        <div>
+          <img src="assets/gifs/disconnect.gif" height="100px" width="100px" alt="Disconnect GIF" />
+        </div>
+      </div>
+        <form class="tw-flex tw-flex-col tw-justify-center tw-items-center tw-w-40-vw" [formGroup]="netsuiteSubsidiaryForm">
+          <div class="tw-whitespace-nowrap">
+            <div>
+              <h5 class="tw-text-14-px tw-font-500 tw-items-center tw-text-sub-text-color">
+              NETSUITE
+            </h5>
+            </div>
+          </div>
+            <div class="tw-pt-16-px">
+              <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!netsuiteSubsidiary?.subsidiary_name" placeholder="Select NetSuite Subsidiary" formControllerName="netsuiteSubsidiary" [options]="netsuiteSubsidiaryOptions" optionLabel="value">
+              </p-dropdown>
+          </div>
+            <h3 *ngIf="netsuiteSubsidiary" [pTooltip]="netsuiteSubsidiary.subsidiary_name" [tooltipDisabled]="netsuiteSubsidiary.subsidiary_name.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px center-align-text tw-whitespace-nowrap tw-cursor-default">
+              {{ netsuiteSubsidiary.subsidiary_name | trimCharacter: 26 }}
+            </h3>
+
+            <div *ngIf="!netsuiteSubsidiary" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-faded-text-color tw-text-center">
+              Please select a Subsidiary from NetSuite to proceed further.
+            </div>
+
+            <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-faded-text-color tw-text-center">
+              Please hold on; we are fetching data from your NetSuite account, which may take a few seconds.
+            </div>
+        </form>
+    </div>
+    <app-configuration-step-footer *ngIf="!netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!netsuiteSubsidiaryForm.valid"></app-configuration-step-footer>
+    <app-configuration-step-footer *ngIf="netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
+  </div>
+</div>

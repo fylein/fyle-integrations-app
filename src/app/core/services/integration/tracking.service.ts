@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, UpdateEvent } from '../../models/enum/enum.model';
+import { BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, NetsuiteOnboardingState, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, UpdateEvent } from '../../models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
 import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
 import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
@@ -14,6 +14,7 @@ import { Sage300AdvancedSettingPost } from '../../models/sage300/sage300-configu
 import { BusinessCentralExportSettingPost } from '../../models/business-central/business-central-configuration/business-central-export-setting.model';
 import { BusinessCentralImportSettingsPost } from '../../models/business-central/business-central-configuration/business-central-import-settings.model';
 import { BusinessCentralAdvancedSettingsPost } from '../../models/business-central/business-central-configuration/business-central-advanced-settings.model';
+import { SubsidiaryMappingPost } from '../../models/netsuite/netsuite-configuration/netsuite-connector.model';
 
 @Injectable({
   providedIn: 'root'
@@ -88,7 +89,7 @@ export class TrackingService {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 
-  integrationsOnboardingCompletion(trackingApp: TrackingApp, eventName: IntacctOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | AdvancedSettingsPost | void): void {
+  integrationsOnboardingCompletion(trackingApp: TrackingApp, eventName: IntacctOnboardingState | NetsuiteOnboardingState, stepNumber: number, additionalProperties: LocationEntityPost | ExportSettingPost | ImportSettingPost | AdvancedSettingsPost | SubsidiaryMappingPost | void): void {
     this.eventTrack(`Step ${stepNumber} completed: ${eventName}`, trackingApp, additionalProperties);
   }
 

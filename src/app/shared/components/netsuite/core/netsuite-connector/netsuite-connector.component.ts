@@ -28,7 +28,7 @@ export class NetsuiteConnectorComponent implements OnInit {
   redirectLink: string = brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR;
 
   windowReference: Window;
-  
+
   @Output() setupConnectionStatus = new EventEmitter<boolean>();
 
   readonly brandingConfig = brandingConfig;
@@ -40,7 +40,7 @@ export class NetsuiteConnectorComponent implements OnInit {
     private connectorService: NetsuiteConnectorService,
     private mappingsService: NetsuiteMappingsService
   ) { }
-  
+
   clearField() {
     this.connectNetsuiteForm.get("accountId")?.setValue('');
     this.connectNetsuiteForm.get("tokenId")?.setValue('');
@@ -70,7 +70,7 @@ export class NetsuiteConnectorComponent implements OnInit {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
     });
   }
-  
+
   private setupPage(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
