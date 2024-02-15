@@ -1,8 +1,8 @@
-<div [formGroup]="exportLogForm" class="tw-flex tw-items-center tw-p-24-px">
-    <app-search [form]="exportLogForm" [placeholder]="'Search by Employee Name or Expense ID'" [styleClasses]="'tw-w-350-px tw-h-40-px'"></app-search>
-    <div class="tw-flex tw-mr-4"></div>
-    <span [ngClass]="{'tw-border-select-focused-border': isDateFieldFocused}" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-select-default-border tw-px-12-px tw-py-4-px tw-rounded-4-px drop-down">
-        <p-calendar (onSelect)="onSelect($event)" (click)="showCalendar($event)" placeholder="Select date range" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [monthNavigator]="false">
+<div [formGroup]="exportLogForm" class="tw-flex tw-items-center" [ngClass]="{'tw-p-24-px': isSimpleSearchRequired}">
+    <app-search *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="'Search by Employee Name or Expense ID'" [styleClasses]="'tw-w-350-px tw-h-40-px'"></app-search>
+    <div *ngIf="isSimpleSearchRequired" class="tw-flex tw-mr-4"></div>
+    <span [ngClass]="{'tw-border-select-focused-border': isDateFieldFocused}" class="tw-flex tw-justify-start tw-items-center tw-px-12-px tw-py-4-px tw-rounded-4-px drop-down" [ngClass]="{'tw-border tw-border-select-default-border': isSimpleSearchRequired}">
+        <p-calendar (onSelect)="onSelect($event)" (click)="showCalendar($event)" placeholder="Select date range" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [monthNavigator]="false">
             <ng-template pTemplate="header">
                 <div class="tw-flex tw-items-center tw-justify-between">
                     <div class="tw-pr-8-px">
@@ -35,12 +35,12 @@
                     </span>
                 </div>
 
-                <div class="tw-pt-16-px tw-pb-8-px">
+                <div class="tw-pt-16-px tw-pb-8-px tw-w-218-px">
                     <div class="tw-whitespace-nowrap tw-text-12-px tw-flex tw-items-center tw-justify-between tw-text-date-picker-placeholder-text tw-border-1-px tw-border-solid tw-border-date-picker-border tw-py-4-px tw-px-12-px">
-                        <p class="tw-pr-18-px">{{exportLogForm.value.start[0] ? (exportLogForm.value.start[0] | date): 'Start date'}}</p>
+                        <p>{{exportLogForm.value.start[0] ? (exportLogForm.value.start[0] | date): 'Start date'}}</p>
                         <app-svg-icon [svgSource]="'arrow-tail-right-small'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-text-date-picker-placeholder-text tw-pr-10-px'" [isTextColorAllowed]="true"></app-svg-icon>
                         <p>{{exportLogForm.value.start[1] ? (exportLogForm.value.start[1] | date) : 'End date'}}</p>
-                        <app-svg-icon [svgSource]="'calendar-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-date-picker-placeholder-text tw-pl-22-px'" [isTextColorAllowed]="true"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'calendar-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-date-picker-placeholder-text'" [isTextColorAllowed]="true"></app-svg-icon>
                     </div>
                 </div>
             </ng-template>
@@ -53,35 +53,5 @@
         <div>
             <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
         </div>
-        <!-- <p-dropdown placeholder="Select date range" appendTo="body" [options]="dateOptions"
-        formControlName="dateRange" (click)="dropDownWatcher()" (onFocus)="isDateFieldFocused = true" (onBlur)="isDateFieldFocused = false"
-        [ngClass]="{'selectedItem': exportLogForm.controls.dateRange.value, 'filterDropdown': !exportLogForm.controls.dateRange.value}">
-            <ng-template let-item pTemplate="selectedItem">
-                <div class="tw-flex tw-justify-between tw-items-center">
-                    <span>
-                        <div *ngIf="exportLogForm.controls.dateRange.value">
-                            <div class="my-dropdown-selected-item">
-                                {{exportLogForm.controls.dateRange.value.dateRange}}
-                            </div>
-                        </div>
-                        <div *ngIf="!exportLogForm.controls.dateRange.value">
-                            <div class="my-dropdown-selected-item tw-text-placeholder tw-text-14-px">
-                                Select date range
-                            </div>
-                        </div>
-                    </span>
-                    <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(exportLogForm.controls.dateRange)"></i>
-                </div>
-            </ng-template>
-            <ng-template let-date pTemplate="item">
-                <div>
-                    <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" *ngIf="date.dateRange === presentDate" selectionMode="range" [readonlyInput]="true" inputId="range">
-                    </p-calendar>
-                    <p class="tw-text-sub-text-color tw-text-14-px" [ngClass]="{'!tw-text-mandatory-field-color' : exportLogForm.controls.dateRange.value === date }" *ngIf="date.dateRange !== presentDate">{{ date.dateRange | titlecase | snakeCaseToSpaceCase }}</p>
-                    <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange !== presentDate && date.dateRange !== 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}} - {{date.endDate | date : 'MMM dd, yyyy'}}</p>
-                    <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p>
-                </div>
-            </ng-template> 
-        </p-dropdown> -->
     </span>
 </div>

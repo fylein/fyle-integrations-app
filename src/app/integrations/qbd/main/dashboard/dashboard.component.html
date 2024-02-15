@@ -50,32 +50,12 @@
             <div>
                 <h4 class="tw-font-500">IIF file logs</h4>
             </div>
-            <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-16-px tw-rounded-4-px drop-down">
-                <div>
-                    <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-placeholder'"></app-svg-icon>
-                </div>
-                <p-dropdown appendTo="body" [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()">
-                    <ng-template let-item pTemplate="selectedItem">
-                        <div *ngIf="exportLogForm.controls.dateRange.value">
-                            <div class="my-dropdown-selected-item">
-                                {{exportLogForm.controls.dateRange.value.dateRange}}
-                              </div>
-                        </div>
-                        <div *ngIf="!exportLogForm.controls.dateRange.value">
-                            <div class="my-dropdown-selected-item tw-text-placeholder">
-                                Select date range
-                              </div>
-                        </div>
-                    </ng-template>
-                    <ng-template let-date pTemplate="item">
-                        <div>
-                            <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" *ngIf="date.dateRange === presentDate" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
-                            <p class="tw-text-sub-text-color tw-text-14-px" [ngClass]="{'!tw-text-mandatory-field-color' : exportLogForm.controls.dateRange.value === date }" *ngIf="date.dateRange !== presentDate">{{ date.dateRange | titlecase | snakeCaseToSpaceCase }}</p>
-                            <!-- <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange !== presentDate && date.dateRange !== 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}} - {{date.endDate | date : 'MMM dd, yyyy'}}</p>
-                            <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p> -->
-                        </div>
-                    </ng-template> 
-                </p-dropdown>
+            <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-rounded-4-px drop-down">
+                <app-export-log-filter *ngIf="totalCount > 0 || selectedDateFilter"
+                    [exportLogForm]="exportLogForm"
+                    [dateOptions]="dateOptions"
+                    [isSimpleSearchRequired]="false">
+                </app-export-log-filter>
 
             </div>
         </div>
