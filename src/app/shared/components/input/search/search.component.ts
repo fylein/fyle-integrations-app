@@ -22,6 +22,10 @@ export class SearchComponent implements OnInit {
 
   constructor() { }
 
+  searchIconStyle() {
+    return this.isSearchFocused ? '!tw-text-search-focused-search-icon !tw-pr-8-px' : '!tw-text-icon-muted !tw-pr-8-px'
+  }
+
   clearSearch(): void {
     this.form.controls.searchOption.setValue('');
   }

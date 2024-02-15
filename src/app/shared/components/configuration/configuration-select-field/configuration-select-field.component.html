@@ -28,7 +28,7 @@
                         <div #textElement
                             [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                             [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
-                            {{options.value}}
+                            {{options[optionLabel]}}
                         </div>
                     </ng-template>
                     <ng-template *ngIf="!isAdvanceSearchEnabled" pTemplate="filter" let-dropdownOptions="options">
