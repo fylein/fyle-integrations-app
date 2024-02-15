@@ -7,5 +7,5 @@
 }
 
 :host ::ng-deep .normal-box :enabled:focus-visible {
-    @apply tw-border-slightly-normal-text-color #{!important};
+    @apply tw-border-input-focused-border #{!important};
 }

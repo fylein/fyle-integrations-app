@@ -31,7 +31,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptions();
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -118,21 +118,23 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
       end: ['']
     });
 
-    this.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
-      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      if (dateRange) {
-        this.selectedDateFilter = {
-          startDate: dateRange.startDate,
-          endDate: dateRange.endDate
-        };
+    this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
+      if (dateRange[1]) {
+        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+        if (dateRange) {
+          this.selectedDateFilter = {
+            startDate: dateRange[0],
+            endDate: dateRange[1]
+          };
 
-        this.trackDateFilter('existing', this.selectedDateFilter);
-        this.getAccountingExports(paginator.limit, paginator.offset);
-      } else {
-        this.dateOptions = AccountingExportModel.getDateOptions();
-        this.exportLogForm.controls.start.patchValue([]);
-        this.selectedDateFilter = null;
-        this.getAccountingExports(paginator.limit, paginator.offset);
+          this.trackDateFilter('existing', this.selectedDateFilter);
+          this.getAccountingExports(paginator.limit, paginator.offset);
+        } else {
+          this.dateOptions = AccountingExportModel.getDateOptionsV2();
+          this.exportLogForm.controls.start.patchValue([]);
+          this.selectedDateFilter = null;
+          this.getAccountingExports(paginator.limit, paginator.offset);
+        }
       }
     });
   }

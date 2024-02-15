@@ -16,6 +16,8 @@ export class SearchComponent implements OnInit {
 
   @Input() formControllerName: string = 'searchOption';
 
+  @Input() isDropdown:boolean = false;
+
   @Output() handleSimpleSearch = new EventEmitter<any>();
 
   isSearchFocused: boolean;
