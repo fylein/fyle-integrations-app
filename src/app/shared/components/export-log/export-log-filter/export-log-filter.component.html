@@ -1,32 +1,29 @@
 <div [formGroup]="exportLogForm" class="tw-flex tw-items-center tw-p-24-px">
     <app-search [form]="exportLogForm" [placeholder]="'Search by Employee Name or Expense ID'" [styleClasses]="'tw-w-350-px tw-h-40-px'"></app-search>
     <div class="tw-flex tw-mr-4"></div>
-    <span [ngClass]="{'tw-border-select-focused-border': isDateFieldFocused}" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-select-default-border tw-pl-12-px tw-rounded-4-px drop-down">
-        <div>
-            <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-placeholder'"></app-svg-icon>
-        </div>
-        <!-- <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range">
+    <span [ngClass]="{'tw-border-select-focused-border': isDateFieldFocused}" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-select-default-border tw-px-12-px tw-py-4-px tw-rounded-4-px drop-down">
+        <p-calendar (onSelect)="onSelect($event)" (click)="showCalendar($event)" placeholder="Select date range" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range">
             <ng-template pTemplate="header">
                 <div class="tw-flex tw-items-center tw-justify-center">
                     <div class="tw-pr-8-px">
-                        <button type="button" class="p-button outline-sm tw-font-nav-link-font-weight">
+                        <button type="button" class="p-button outline-sm tw-font-nav-link-font-weight" (click)="selectPreFilledDate(0)">
                             This week
                         </button>
                     </div>
                     <div>
-                        <button type="button" class="p-button outline-sm tw-font-nav-link-font-weight">
+                        <button type="button" class="p-button outline-sm tw-font-nav-link-font-weight" (click)="selectPreFilledDate(1)">
                             Last week
                         </button>
                     </div>
                 </div>
                 <div class="tw-pt-10-px tw-flex tw-items-center tw-justify-center">
                     <div class="tw-pr-8-px">
-                        <button type="button" class="p-button outline-sm tw-whitespace-nowrap tw-font-nav-link-font-weight">
+                        <button type="button" class="p-button outline-sm tw-whitespace-nowrap tw-font-nav-link-font-weight" (click)="selectPreFilledDate(2)">
                             This month
                         </button>
                     </div>
                     <div>
-                        <button type="button" class="p-button outline-sm tw-whitespace-nowrap tw-font-nav-link-font-weight">
+                        <button type="button" class="p-button outline-sm tw-whitespace-nowrap tw-font-nav-link-font-weight" (click)="selectPreFilledDate(3)">
                             Last month
                         </button>
                     </div>
@@ -39,16 +36,42 @@
                 </div>
 
                 <div class="tw-pt-16-px tw-pb-8-px">
-                    <div class="tw-flex tw-items-center tw-text-date-picker-placeholder-text tw-border-1-px tw-border-solid tw-border-date-picker-border tw-py-4-px tw-px-12-px">
-                        <p class="tw-pr-18-px">Start date</p>
+                    <div class="tw-text-12-px tw-flex tw-items-center tw-text-date-picker-placeholder-text tw-border-1-px tw-border-solid tw-border-date-picker-border tw-py-4-px tw-px-12-px">
+                        <p class="tw-pr-18-px">{{startDate ? (startDate | date): 'Start date'}}</p>
                         <app-svg-icon [svgSource]="'arrow-tail-right-small'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-text-date-picker-placeholder-text tw-pr-10-px'" [isTextColorAllowed]="true"></app-svg-icon>
-                        <p>End date</p>
+                        <p>{{endDate ? (endDate | date) : 'End date'}}</p>
                         <app-svg-icon [svgSource]="'calendar-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-date-picker-placeholder-text tw-pl-22-px'" [isTextColorAllowed]="true"></app-svg-icon>
                     </div>
                 </div>
             </ng-template>
-        </p-calendar> -->
-        <p-dropdown placeholder="Select date range" appendTo="body" [options]="dateOptions"
+            <ng-template let-item pTemplate="selectedItem">
+                <div class="tw-flex tw-justify-between tw-items-center">
+                    <span>
+                        ulla
+                        <div *ngIf="exportLogForm.value.dateRange">
+                            <div class="my-dropdown-selected-item">
+                                {{exportLogForm.value.dateRange.dateRange}}
+                            </div>
+                        </div>
+                        <div *ngIf="!exportLogForm.value.dateRange">
+                            <div class="my-dropdown-selected-item tw-text-placeholder tw-text-14-px">
+                                Select date rangeee
+                            </div>
+                        </div>
+                    </span>
+                    <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(exportLogForm.controls.dateRange)"></i>
+                </div>
+            </ng-template>
+            <ng-template let-date pTemplate="date">
+                <div>
+                    {{date.day}}
+                </div>
+            </ng-template>
+        </p-calendar>
+        <div>
+            <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+        </div>
+        <!-- <p-dropdown placeholder="Select date range" appendTo="body" [options]="dateOptions"
         formControlName="dateRange" (click)="dropDownWatcher()" (onFocus)="isDateFieldFocused = true" (onBlur)="isDateFieldFocused = false"
         [ngClass]="{'selectedItem': exportLogForm.controls.dateRange.value, 'filterDropdown': !exportLogForm.controls.dateRange.value}">
             <ng-template let-item pTemplate="selectedItem">
@@ -73,10 +96,10 @@
                     <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" *ngIf="date.dateRange === presentDate" selectionMode="range" [readonlyInput]="true" inputId="range">
                     </p-calendar>
                     <p class="tw-text-sub-text-color tw-text-14-px" [ngClass]="{'!tw-text-mandatory-field-color' : exportLogForm.controls.dateRange.value === date }" *ngIf="date.dateRange !== presentDate">{{ date.dateRange | titlecase | snakeCaseToSpaceCase }}</p>
-                    <!-- <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange !== presentDate && date.dateRange !== 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}} - {{date.endDate | date : 'MMM dd, yyyy'}}</p> -->
-                    <!-- <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p> -->
+                    <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange !== presentDate && date.dateRange !== 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}} - {{date.endDate | date : 'MMM dd, yyyy'}}</p>
+                    <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p>
                 </div>
             </ng-template> 
-        </p-dropdown>
+        </p-dropdown> -->
     </span>
 </div>

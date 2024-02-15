@@ -86,6 +86,34 @@ export class AccountingExportModel {
     return dateOptions;
   }
 
+  static getDateOptionsV2(): DateFilter[] {
+    const currentDateTime = new Date();
+    const dateOptions: DateFilter[] = [
+      {
+        dateRange: 'This Week',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay()),
+        endDate: currentDateTime
+      },
+      {
+        dateRange: 'Last Week',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 7),
+        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 1)
+      },
+      {
+        dateRange: 'This Month',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
+        endDate: currentDateTime
+      },
+      {
+        dateRange: 'Last Month',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth() - 1, 1),
+        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 0)
+      }
+    ];
+
+    return dateOptions;
+  }
+
   static getFyleExpenseUrl(expense_id: string): string {
     const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}`;
     return url;

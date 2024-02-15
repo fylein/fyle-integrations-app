@@ -430,33 +430,33 @@ p {
     @apply tw-text-text-secondary tw-text-14-px tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-lv-table-border-color #{!important};
 }
 
-// .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
-//     @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
-// }
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
+}
 
-// .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:hover {
-//     @apply tw-text-calendar-header-text-color #{!important};
-// }
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:hover {
+    @apply tw-text-calendar-header-text-color #{!important};
+}
 
-// .p-datepicker .p-datepicker-header {
-//     @apply tw-p-0 #{!important};
-// }
+.p-datepicker .p-datepicker-header {
+    @apply tw-p-0 #{!important};
+}
 
-// .p-datepicker table th {
-//     @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px #{!important};
-// }
+.p-datepicker table th {
+    @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px #{!important};
+}
 
-// .p-datepicker table td {
-//     @apply tw-p-0 tw-pb-4-px #{!important};
-// }
+.p-datepicker table td {
+    @apply tw-p-0 tw-pb-4-px #{!important};
+}
 
-// .p-datepicker table td > span {
-//     @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
-// }
+.p-datepicker table td > span {
+    @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
+}
 
-// .p-datepicker {
-//     @apply tw-p-16-px #{!important};
-// }
+.p-datepicker {
+    @apply tw-p-16-px #{!important};
+}
 
 .configuration {
     &--section {
@@ -477,7 +477,7 @@ p {
 }
 
 .p-calendar .p-inputtext {
-    @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none tw-text-sub-text-color #{!important};
+    @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none tw-text-date-picker-placeholder-text #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext, .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext{

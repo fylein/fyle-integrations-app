@@ -30,7 +30,7 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptions();
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null;
 

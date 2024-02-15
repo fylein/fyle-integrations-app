@@ -26,6 +26,12 @@ export class ExportLogFilterComponent implements OnInit {
 
   presentDate = new Date().toLocaleDateString();
 
+  startDate: Date;
+
+  endDate: Date;
+
+  isSelectionStartDate: boolean = true;
+
   readonly brandingConfig = brandingConfig;
 
   constructor() { }
@@ -52,6 +58,20 @@ export class ExportLogFilterComponent implements OnInit {
   showCalendar(event: Event) {
     event.stopPropagation();
     this.isCalendarVisible = true;
+  }
+
+  onSelect(event: Date) {
+    if (this.isSelectionStartDate) {
+      this.startDate = event;
+      this.isSelectionStartDate = false;
+    } else {
+      this.endDate = event;
+      this.isSelectionStartDate = true;
+    }
+  }
+
+  selectPreFilledDate(selectedOption: number): void {
+    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[selectedOption]);
   }
 
   getDates() {
