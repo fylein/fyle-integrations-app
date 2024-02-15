@@ -55,6 +55,10 @@ export class GenericMappingTableComponent implements OnInit {
     private workspaceService: WorkspaceService
   ) { }
 
+  isOverflowing(element: any): boolean {
+    return element.offsetWidth < element.scrollWidth;
+  }
+
   tableDropdownWidth() {
     const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
     if (element) {
