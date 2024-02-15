@@ -5,7 +5,6 @@ import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
 type NetsuiteOnboardingStepperMap = {
     [NetsuiteOnboardingState.CONNECTION]: number,
-    [NetsuiteOnboardingState.SUBSIDIARY_MAPPING]: number,
     [NetsuiteOnboardingState.EXPORT_SETTINGS]: number,
     [NetsuiteOnboardingState.IMPORT_SETTINGS]: number,
     [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: number,
@@ -50,11 +49,10 @@ export class NetsuiteOnboardingModel {
 
     private readonly onboardingStateStepMap: NetsuiteOnboardingStepperMap = {
         [NetsuiteOnboardingState.CONNECTION]: 1,
-        [NetsuiteOnboardingState.SUBSIDIARY_MAPPING]: 2,
-        [NetsuiteOnboardingState.EXPORT_SETTINGS]: 3,
-        [NetsuiteOnboardingState.IMPORT_SETTINGS]: 4,
-        [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: 5,
-        [NetsuiteOnboardingState.COMPLETE]: 6
+        [NetsuiteOnboardingState.EXPORT_SETTINGS]: 2,
+        [NetsuiteOnboardingState.IMPORT_SETTINGS]: 3,
+        [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: 4,
+        [NetsuiteOnboardingState.COMPLETE]: 5
       };
 
     getOnboardingSteps(currentStep: string, onboardingState: NetsuiteOnboardingState): OnboardingStepper[] {

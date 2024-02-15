@@ -31,7 +31,7 @@ export enum InAppIntegration {
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
-  NETSUITE = 'Netsuite'
+  NETSUITE = 'NetSuite'
 }
 
 export enum ToastSeverity {
@@ -75,7 +75,7 @@ export enum AppName {
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
-  NETSUITE = 'Netsuite'
+  NETSUITE = 'NetSuite'
 }
 
 export enum AppNameInService {
@@ -160,7 +160,6 @@ export enum QBOOnboardingState {
 
 export enum NetsuiteOnboardingState {
   CONNECTION = 'CONNECTION',
-  SUBSIDIARY_MAPPING = 'SUBSIDIARY_MAPPING',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
