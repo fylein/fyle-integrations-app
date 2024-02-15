@@ -75,7 +75,7 @@ export enum AppName {
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
-  NETSUITE = 'Netsuite'
+  NETSUITE = 'NetSuite'
 }
 
 export enum AppNameInService {
@@ -160,8 +160,6 @@ export enum QBOOnboardingState {
 
 export enum NetsuiteOnboardingState {
   CONNECTION = 'CONNECTION',
-  SUBSIDIARY_MAPPING = 'SUBSIDIARY_MAPPING',
-  MAP_EMPLOYEES = 'MAP_EMPLOYEES',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
