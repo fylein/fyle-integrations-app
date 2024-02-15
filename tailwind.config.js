@@ -1151,6 +1151,7 @@ module.exports = {
       minHeight: {
         '70-px': '70px',
         '228-px': '228px',
+        'dropdown-option-height': 'var(--dropdown-option-height)',
         ...dimensions
       },
       maxHeight: {
