@@ -263,7 +263,7 @@ p {
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item, 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    @apply tw-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px  #{!important};
+    @apply tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px  #{!important};
 }
 
 .p-dropdown.p-focus {
@@ -311,7 +311,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
+    @apply tw-min-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {
@@ -468,16 +468,16 @@ p {
     }
   
     &--contents {
-        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px tw-shadow-app-card #{!important};
+        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px #{!important};
     }
 }
 
 .mapped {
-    @apply tw-text-12-px tw-font-600 tw-rounded-full tw-border tw-border-solid tw-border-border-highlight-light tw-bg-bg-highlight-light tw-py-4-px tw-px-10-px tw-text-text-highlight tw-w-fit #{!important}
+    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-highlight-light tw-bg-bg-highlight-light tw-py-4-px tw-px-10-px tw-text-text-highlight tw-w-fit #{!important}
 }
 
 .unmapped {
-    @apply tw-text-12-px tw-font-600 tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
+    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
 }
 
 .p-calendar .p-inputtext {
@@ -587,7 +587,7 @@ p {
     }
 
     &--accounting-app {
-        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px tw-shadow-app-card;
+        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px;
     }
 
     &--accounting-app-name {
