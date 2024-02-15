@@ -99,7 +99,6 @@ export class DashboardComponent implements OnInit {
 
   dateFilter(): void {
     this.isLoading = true;
-    // this.selectedDateFilter = event.value;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;

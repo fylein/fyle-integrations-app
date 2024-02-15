@@ -106,7 +106,7 @@ export class QboSkippedExportLogComponent implements OnInit {
             startDate: dateRange[0],
             endDate: dateRange[1]
           };
-  
+
           this.getSkippedExpenses(paginator.limit, paginator.offset);
         } else {
           this.dateOptions = AccountingExportModel.getDateOptions();
