@@ -25,7 +25,7 @@
                 Sync
             </span>
         </button>
-        <span class="btn-text-primary tw-mr-12-px" *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed">
+        <span class="btn-text-primary tw-mr-12-px" *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'">
           Sync
       </span>
 
