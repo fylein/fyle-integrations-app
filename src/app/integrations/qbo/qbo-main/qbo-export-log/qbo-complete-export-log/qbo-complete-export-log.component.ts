@@ -119,7 +119,7 @@ export class QboCompleteExportLogComponent implements OnInit {
 
           this.getAccountingExports(paginator.limit, paginator.offset);
         } else {
-          this.dateOptions = AccountingExportModel.getDateOptions();
+          this.dateOptions = AccountingExportModel.getDateOptionsV2();
           this.exportLogForm.controls.start.patchValue([]);
           this.selectedDateFilter = null;
           this.getAccountingExports(paginator.limit, paginator.offset);
