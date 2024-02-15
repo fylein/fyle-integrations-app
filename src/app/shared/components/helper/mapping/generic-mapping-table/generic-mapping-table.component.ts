@@ -41,8 +41,6 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() isDashboardMappingResolve: boolean;
 
-  optionsCopy: DestinationAttribute[];
-
   form: FormGroup = new FormGroup({
     searchOption: new FormControl('')
   });
@@ -64,10 +62,6 @@ export class GenericMappingTableComponent implements OnInit {
     if (element) {
       element.style.width = '300px';
     }
-  }
-
-  simpleSearch(query: string) {
-    this.destinationOptions = this.optionsCopy.filter(attribute => attribute.value.toLowerCase().includes(query.toLowerCase()));
   }
 
   getDropdownValue(genericMapping: ExtendedGenericMapping) {
@@ -147,7 +141,6 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.optionsCopy = this.destinationOptions.concat();
   }
 
 }
