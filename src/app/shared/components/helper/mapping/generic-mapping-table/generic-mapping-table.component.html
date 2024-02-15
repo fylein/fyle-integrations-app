@@ -32,7 +32,7 @@
                         </div>
                     </ng-template>
                     <ng-template pTemplate="filter" let-options="options">
-                        <app-search [form]="form" [placeholder]="'Search'" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white'" (handleSimpleSearch)="simpleSearch($event)"></app-search>
+                        <app-search [form]="form" [placeholder]="'Search'" [isDropdown]="true" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white'" (handleSimpleSearch)="simpleSearch($event)"></app-search>
                     </ng-template>
                 </p-dropdown>
             </td>
