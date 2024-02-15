@@ -151,7 +151,7 @@ p {
 }
 
 .p-inputtext:enabled:focus-visible {
-    @apply tw-shadow-none tw-border-select-default-border #{!important};
+    @apply tw-shadow-none tw-border-input-focused-border #{!important};
 }
 
 // Tooltip
