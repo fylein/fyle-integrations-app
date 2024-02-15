@@ -71,15 +71,15 @@ export class ExportLogFilterComponent implements OnInit {
   }
 
   selectPreFilledDate(selectedOption: number): void {
-    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[selectedOption]);
+    this.exportLogForm.controls.start.patchValue([this.dateOptions[selectedOption].startDate, this.dateOptions[selectedOption].endDate]);
   }
 
   getDates() {
-    this.dateOptions[3].dateRange = this.exportLogForm.value.start[0].toLocaleDateString() + '-' + this.exportLogForm.value.start[1].toLocaleDateString();
-    this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
-    this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
-    this.presentDate = new Date().toLocaleDateString();
-    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
+    // this.dateOptions[3].dateRange = this.exportLogForm.value.start[0].toLocaleDateString() + '-' + this.exportLogForm.value.start[1].toLocaleDateString();
+    // this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
+    // this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
+    // this.presentDate = new Date().toLocaleDateString();
+    // this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
   }
 
   ngOnInit(): void {

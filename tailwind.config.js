@@ -1330,7 +1330,8 @@ module.exports = {
         '12-px': '12px',
         '14-px': '14px',
         '24-px': '24px',
-        '30-px': '30px'
+        '30-px': '30px',
+        '36-px': '36px',
       },
       translate: {
         'toggle-circle-translate': 'var(--toggle-circle-translate)',
