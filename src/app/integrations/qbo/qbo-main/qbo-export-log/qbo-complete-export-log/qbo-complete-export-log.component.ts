@@ -10,6 +10,7 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-qbo-complete-export-log',
@@ -47,6 +48,8 @@ export class QboCompleteExportLogComponent implements OnInit {
   isDateSelected: boolean = false;
 
   private org_id: string = this.userService.getUserProfile().org_id;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -9,6 +9,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-qbo-skipped-export-log',
@@ -38,6 +39,8 @@ export class QboSkippedExportLogComponent implements OnInit {
   isDateSelected: boolean = false;
 
   selectedDateFilter: SelectedDateFilter | null;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private formBuilder: FormBuilder,
