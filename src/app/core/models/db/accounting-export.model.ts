@@ -120,6 +120,7 @@ export class AccountingExportModel {
   }
 
   static getfilteredAccountingExports(query: string, group: AccountingExportList): boolean {
+    query = query.toLowerCase();
     const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';
