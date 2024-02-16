@@ -10,6 +10,7 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-qbo-complete-export-log',
@@ -30,7 +31,7 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptions();
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -47,6 +48,8 @@ export class QboCompleteExportLogComponent implements OnInit {
   isDateSelected: boolean = false;
 
   private org_id: string = this.userService.getUserProfile().org_id;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -108,20 +111,22 @@ export class QboCompleteExportLogComponent implements OnInit {
       end: ['']
     });
 
-    this.exportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
-      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      if (dateRange) {
-        this.selectedDateFilter = {
-          startDate: dateRange.startDate,
-          endDate: dateRange.endDate
-        };
+    this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
+      if (dateRange[1]) {
+        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+        if (dateRange) {
+          this.selectedDateFilter = {
+            startDate: dateRange[0],
+            endDate: dateRange[1]
+          };
 
-        this.getAccountingExports(paginator.limit, paginator.offset);
-      } else {
-        this.dateOptions = AccountingExportModel.getDateOptions();
-        this.exportLogForm.controls.start.patchValue([]);
-        this.selectedDateFilter = null;
-        this.getAccountingExports(paginator.limit, paginator.offset);
+          this.getAccountingExports(paginator.limit, paginator.offset);
+        } else {
+          this.dateOptions = AccountingExportModel.getDateOptionsV2();
+          this.exportLogForm.controls.start.patchValue([]);
+          this.selectedDateFilter = null;
+          this.getAccountingExports(paginator.limit, paginator.offset);
+        }
       }
     });
   }

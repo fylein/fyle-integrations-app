@@ -1151,6 +1151,7 @@ module.exports = {
       minHeight: {
         '70-px': '70px',
         '228-px': '228px',
+        'dropdown-option-height': 'var(--dropdown-option-height)',
         ...dimensions
       },
       maxHeight: {
@@ -1203,6 +1204,7 @@ module.exports = {
         '180-px': '180px',
         '184-px': '184px',
         '200-px': '200px',
+        '218-px': '218px',
         '220-px': '220px',
         '226-px': '226px',
         '240-px': '240px',
@@ -1315,6 +1317,7 @@ module.exports = {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
         'btn-cta-shadow': 'var(--btn-cta-shadow)',
         'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2)',
+        'stats-box': '0px 4px 4px 0px rgba(255, 255, 255, 0.02), 3px 3px 6px 0px rgba(255, 255, 255, 0.60) inset',
         ...shadow
       },
       dropShadow: {
@@ -1330,7 +1333,8 @@ module.exports = {
         '12-px': '12px',
         '14-px': '14px',
         '24-px': '24px',
-        '30-px': '30px'
+        '30-px': '30px',
+        '36-px': '36px',
       },
       translate: {
         'toggle-circle-translate': 'var(--toggle-circle-translate)',
