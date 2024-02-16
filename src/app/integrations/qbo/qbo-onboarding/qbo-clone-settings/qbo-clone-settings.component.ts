@@ -26,6 +26,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 
 @Component({
   selector: 'app-qbo-clone-settings',
@@ -167,6 +168,7 @@ export class QboCloneSettingsComponent implements OnInit {
     public helperService: HelperService,
     private mappingService: MappingService,
     private qboConnectorService: QboConnectorService,
+    private qboImportSettingsService: QboImportSettingsService,
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
@@ -361,8 +363,9 @@ export class QboCloneSettingsComponent implements OnInit {
       this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v1', 'qbo'),
       this.mappingService.getFyleFields('v1'),
       this.qboConnectorService.getQBOCredentials(),
-      this.configurationService.getAdditionalEmails()
-    ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, qboCredentials, adminEmails]) => {
+      this.configurationService.getAdditionalEmails(),
+      this.qboImportSettingsService.getQBOFields()
+    ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, qboCredentials, adminEmails, qboFields]) => {
       this.cloneSetting = cloneSetting;
 
       // Employee Settings
@@ -401,7 +404,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
 
       // Import Settings
-      this.qboFields = QBOImportSettingModel.getQBOFields();
+      this.qboFields = qboFields;
       this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.isImportMerchantsAllowed = !cloneSetting.advanced_configurations.workspace_general_settings.auto_create_merchants_as_vendors;
 
@@ -409,7 +412,7 @@ export class QboCloneSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings);
+      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupImportSettingFormWatcher();
