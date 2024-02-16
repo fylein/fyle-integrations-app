@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
 import { ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
-import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
 import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -28,30 +29,9 @@ export class DashboardComponent implements OnInit {
 
   pageNo: number = 0;
 
-  dateOptions: DateFilter[] = [
-    {
-      dateRange: 'This Month',
-      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-      endDate: new Date()
-    },
-    {
-      dateRange: 'This Week',
-      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay()),
-      endDate: new Date()
-    },
-    {
-      dateRange: 'Today',
-      startDate: new Date(),
-      endDate: new Date()
-    },
-    {
-      dateRange: new Date().toLocaleDateString(),
-      startDate: new Date(),
-      endDate: new Date()
-    }
-  ];
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
-  selectedDateFilter: DateFilter | null = null;
+  selectedDateFilter: SelectedDateFilter | null = null;
 
   presentDate = new Date().toLocaleDateString();
 
@@ -95,18 +75,6 @@ export class DashboardComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
-  getDates() {
-    this.dateOptions[3].dateRange = this.exportLogForm.value.start[0].toLocaleDateString() + '-' + this.exportLogForm.value.start[1].toLocaleDateString();
-    this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
-    this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
-    this.presentDate = this.dateOptions[3].dateRange;
-    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
-    const event = {
-      value: this.dateOptions[3]
-    };
-    this.dateFilter(event);
-  }
-
   dropDownWatcher() {
     if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
       this.isCalendarVisible = false;
@@ -129,9 +97,8 @@ export class DashboardComponent implements OnInit {
     return type.split("_").slice(1).join(' ').split(",").join('');
   }
 
-  dateFilter(event: any): void {
+  dateFilter(): void {
     this.isLoading = true;
-    this.selectedDateFilter = event.value;
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
@@ -243,6 +210,19 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  private setupDateFilterWatcher(): void {
+    this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
+      if (dateRange[1]) {
+        this.selectedDateFilter = {
+          startDate: dateRange[0],
+          endDate: dateRange[1]
+        };
+
+        this.dateFilter();
+      }
+    });
+  }
+
   setUpDashboard(): void {
     this.isLoading = true;
     this.exportLogForm = this.formBuilder.group({
@@ -251,6 +231,8 @@ export class DashboardComponent implements OnInit {
       start: [''],
       end: ['']
     });
+    this.setupDateFilterWatcher();
+
     forkJoin([
       this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, null, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]),
       this.advancedSettingService.getQbdAdvancedSettings()

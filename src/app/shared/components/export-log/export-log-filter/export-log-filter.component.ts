@@ -16,6 +16,8 @@ export class ExportLogFilterComponent implements OnInit {
 
   @Input() dateOptions: DateFilter[];
 
+  @Input() isSimpleSearchRequired: boolean = true;
+
   isSearchFocused: boolean;
 
   isDateFieldFocused: boolean;
@@ -26,12 +28,20 @@ export class ExportLogFilterComponent implements OnInit {
 
   presentDate = new Date().toLocaleDateString();
 
+  startDate: Date;
+
+  endDate: Date;
+
+  isSelectionStartDate: boolean = true;
+
   readonly brandingConfig = brandingConfig;
 
   constructor() { }
 
-  filterTable(event: any) {
-    this.handleSimpleSearch.emit(event);
+  setupSearchWatcher() {
+    this.exportLogForm.controls.searchOption.valueChanges.subscribe((value) => {
+      this.handleSimpleSearch.emit(value);
+    });
   }
 
   dropDownWatcher() {
@@ -52,15 +62,22 @@ export class ExportLogFilterComponent implements OnInit {
     this.isCalendarVisible = true;
   }
 
-  getDates() {
-    this.dateOptions[3].dateRange = this.exportLogForm.value.start[0].toLocaleDateString() + '-' + this.exportLogForm.value.start[1].toLocaleDateString();
-    this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
-    this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
-    this.presentDate = new Date().toLocaleDateString();
-    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
+  onSelect(event: Date) {
+    if (this.isSelectionStartDate) {
+      this.startDate = event;
+      this.isSelectionStartDate = false;
+    } else {
+      this.endDate = event;
+      this.isSelectionStartDate = true;
+    }
+  }
+
+  selectPreFilledDate(selectedOption: number): void {
+    this.exportLogForm.controls.start.patchValue([this.dateOptions[selectedOption].startDate, this.dateOptions[selectedOption].endDate]);
   }
 
   ngOnInit(): void {
+    this.setupSearchWatcher();
   }
 
 }

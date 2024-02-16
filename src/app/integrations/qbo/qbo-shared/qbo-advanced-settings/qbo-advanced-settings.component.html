@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header
             [headerText]="'Advanced Settings'"
@@ -21,7 +21,7 @@
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-mb-16-px">
-                <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
+                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'Schedule automatic export'" 
@@ -53,7 +53,7 @@
                     [subLabel]="'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'">
                 </app-configuration-step-sub-header>
             </div>
-            <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
+            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [iconPath]="'calendar'"
@@ -115,7 +115,7 @@
                     [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.'">
                 </app-configuration-step-sub-header>
             </div>
-            <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
+            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                 <app-configuration-multi-select
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"
@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="tw-rounded-12-px tw-border-separator tw-border tw-bg-white tw-mb-16-px">
+            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'" 

@@ -5,7 +5,7 @@
         <div>
             <app-card-mapping-header (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceField" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees"></app-card-mapping-header>
         </div>
-        <div class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
+        <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-mt-16-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
             <div class="tw-p-24-px tw-border-b-separator">
                 <app-mapping-filter [appName]="appName" [selectedAlphabeticalFilter]="alphabetFilter" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)" (mappingFilterUpdateHandler)="mappingFilterUpdate($event)" [isAlphabetFilterHidden]="false"></app-mapping-filter>
             </div>
