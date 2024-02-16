@@ -5,6 +5,7 @@ import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
 type NetsuiteOnboardingStepperMap = {
     [NetsuiteOnboardingState.CONNECTION]: number,
+    [NetsuiteOnboardingState.SUBSIDIARY_MAPPING]: number,
     [NetsuiteOnboardingState.EXPORT_SETTINGS]: number,
     [NetsuiteOnboardingState.IMPORT_SETTINGS]: number,
     [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: number,
@@ -26,7 +27,7 @@ export class NetsuiteOnboardingModel {
           completed: false,
           step: 'Export Settings',
           icon: 'arrow-tail-up-medium',
-          route: '/integrations/intacct/onboarding/export_settings',
+          route: '/integrations/netsuite/onboarding/export_settings',
           styleClasses: ['step-name-export--text']
         },
         {
@@ -34,7 +35,7 @@ export class NetsuiteOnboardingModel {
           completed: false,
           step: 'Import Settings',
           icon: 'arrow-tail-down-medium',
-          route: '/integrations/intacct/onboarding/import_settings',
+          route: '/integrations/netsuite/onboarding/import_settings',
           styleClasses: ['step-name-export--text']
         },
         {
@@ -42,17 +43,18 @@ export class NetsuiteOnboardingModel {
           completed: false,
           step: 'Advanced Settings',
           icon: 'gear-medium',
-          route: '/integrations/intacct/onboarding/advanced_settings',
+          route: '/integrations/netsuite/onboarding/advanced_settings',
           styleClasses: ['step-name-advanced--text']
         }
     ];
 
     private readonly onboardingStateStepMap: NetsuiteOnboardingStepperMap = {
         [NetsuiteOnboardingState.CONNECTION]: 1,
-        [NetsuiteOnboardingState.EXPORT_SETTINGS]: 2,
-        [NetsuiteOnboardingState.IMPORT_SETTINGS]: 3,
-        [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: 4,
-        [NetsuiteOnboardingState.COMPLETE]: 5
+        [NetsuiteOnboardingState.SUBSIDIARY_MAPPING]: 2,
+        [NetsuiteOnboardingState.EXPORT_SETTINGS]: 3,
+        [NetsuiteOnboardingState.IMPORT_SETTINGS]: 4,
+        [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: 5,
+        [NetsuiteOnboardingState.COMPLETE]: 6
       };
 
     getOnboardingSteps(currentStep: string, onboardingState: NetsuiteOnboardingState): OnboardingStepper[] {

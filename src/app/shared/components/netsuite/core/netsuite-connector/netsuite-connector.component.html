@@ -14,21 +14,21 @@
           <div class="container">
             <div class="tw-mb-4">
               <p class="tw-text-faded-text-color tw-pb-8-px">Account ID<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
-              <input placeholder="Enter User ID" type="text" id="accountID" name="accountID" formControlName="accountId" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectNetsuiteForm.controls.accountId.invalid && connectNetsuiteForm.controls.accountId.touched ? 'error-box' : 'normal-box']">
+              <input placeholder="Enter Account ID" type="text" id="accountID" name="accountID" formControlName="accountId" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectNetsuiteForm.controls.accountId.invalid && connectNetsuiteForm.controls.accountId.touched ? 'error-box' : 'normal-box']">
               <div *ngIf="connectNetsuiteForm.controls.accountId.invalid && connectNetsuiteForm.controls.accountId.touched" class="incorrect-credential">
                  Invalid Account ID. Please enter valid Account ID.
               </div>
             </div>
             <div class="tw-mb-4">
               <p for="tokenID" class="tw-text-faded-text-color tw-pb-8-px tw-pt-16-px">Token ID<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
-              <input placeholder="Enter Company ID" type="text" id="tokenID" name="tokenID" formControlName="tokenId" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectNetsuiteForm.controls.tokenId.invalid && connectNetsuiteForm.controls.tokenId.touched ? 'error-box' : 'normal-box']">
+              <input placeholder="Enter Token ID" type="text" id="tokenID" name="tokenID" formControlName="tokenId" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectNetsuiteForm.controls.tokenId.invalid && connectNetsuiteForm.controls.tokenId.touched ? 'error-box' : 'normal-box']">
               <div *ngIf="connectNetsuiteForm.controls.tokenId.invalid && connectNetsuiteForm.controls.tokenId.touched" class="incorrect-credential">
                 Invalid Token ID. Please enter valid Token ID.
               </div>
             </div>
             <div class="tw-mb-4">
               <p for="userPassword" class="tw-text-faded-text-color tw-pb-8-px tw-pt-16-px">Token Secret<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
-              <input placeholder="Enter User Password" type="password" formControlName="tokenSecret" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectNetsuiteForm.controls.tokenSecret.invalid && connectNetsuiteForm.controls.tokenSecret.touched ? 'error-box' : 'normal-box']">
+              <input placeholder="Enter Token Secret" type="password" formControlName="tokenSecret" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectNetsuiteForm.controls.tokenSecret.invalid && connectNetsuiteForm.controls.tokenSecret.touched ? 'error-box' : 'normal-box']">
               <div *ngIf="connectNetsuiteForm.controls.tokenSecret.invalid && connectNetsuiteForm.controls.tokenSecret.touched" class="incorrect-credential">
                  Incorrect Token Secret. Please enter correct Token Secret.
                </div>
