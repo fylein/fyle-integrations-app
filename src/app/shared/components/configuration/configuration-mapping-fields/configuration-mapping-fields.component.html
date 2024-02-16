@@ -29,9 +29,11 @@
                         </div>
                         <p-dropdown appendTo="body" [options]="sourceFieldOptions" [placeholder]="sourceFieldPlaceholderText" [formControlName]="'sourceName'"
                         [optionLabel]="sourceAttributeNames.label" [optionValue]="sourceAttributeNames.value" [ngClass]="{'selectedItem': mappingField.value.sourceName, 'filterDropdown': !mappingField.value.sourceName, 'showClearIcon': showCrossIcon && mappingField.value.sourceName}" dropdownIcon="pi pi-chevron-down">    
-                            <ng-template let-option pTemplate="item">
-                                <div>
-                                    {{ option[sourceAttributeNames.label] }}
+                            <ng-template let-options pTemplate="item">
+                                <div #textElement
+                                    [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                                    [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                                    {{ options[sourceAttributeNames.label] }}
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="selectedItem" let-item>

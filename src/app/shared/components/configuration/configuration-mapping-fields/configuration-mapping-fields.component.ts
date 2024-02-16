@@ -50,6 +50,10 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
     return this.form.get(this.formControllerName) as FormArray;
   }
 
+  isOverflowing(element: any): boolean {
+    return element.offsetWidth < element.scrollWidth;
+  }
+
   showOrHideLoadMoreButton() {
     if (this.form.controls[this.formControllerName].value.length < this.totalAvailableRows) {
       return true;
