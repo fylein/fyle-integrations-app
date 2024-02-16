@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
@@ -61,6 +62,8 @@ export class GenericMappingV2Component implements OnInit {
   alphabetFilter: string = 'All';
 
   @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private mappingService: MappingService,

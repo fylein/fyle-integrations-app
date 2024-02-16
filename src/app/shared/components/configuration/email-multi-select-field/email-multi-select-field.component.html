@@ -31,10 +31,14 @@
             <ng-template pTemplate="filter" let-options="options">
                 <div *ngIf="emails.length" class="p-inputgroup">
                     <div class="p-input-icon-left p-input-icon-right">
-                        <i class="pi pi-search !tw-text-placeholder"></i>
+                        <i>
+                            <app-svg-icon [svgSource]="'search-medium'" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                        </i>
                         <input type="text" class="!tw-h-32-px !tw-w-270-px" (keyup)="options.filter($event)"
                             pInputText placeholder="Search by Name / Email" formControlName="search" />
-                        <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" class="tw-cursor-pointer tw-text-16-px" (click)="clearSearch(options)"></i>
+                        <i>
+                            <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer tw-text-16-px" (click)="clearSearch(options)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                        </i>
                     </div>
                 </div>
             </ng-template>
@@ -73,7 +77,7 @@
         <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
             <div class="tw-flex tw-justify-between tw-items-center">
                 <p class="tw-text-slightly-normal-text-color tw-text-20-px tw-font-500">Add new Email Address</p>
-                <i class="pi pi-times tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()"></i>
+                <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer" style="font-size: 12px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
             </div>
         </div>
         <div class="tw-p-24-px">

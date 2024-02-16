@@ -24,11 +24,20 @@
                     (onChange)="save(mapping, $event); getDropdownValue(mapping)"
                     [filter]="true"
                     filterBy="value">
+                    <ng-template let-options pTemplate="item">
+                        <div #textElement
+                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                            [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                            {{options.value}}
+                        </div>
+                    </ng-template>
                     <ng-template pTemplate="filter" let-options="options">
                         <div class="p-inputgroup">
                             <div class="p-input-icon-left">
-                                <i class="pi pi-search"></i>
-                                <input type="text" class="!tw-h-32-px !tw-w-260-px" 
+                                <i>
+                                    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
+                                </i>
+                                <input type="text" class="!tw-h-32-px !tw-w-260-px"
                                 (keyup)="options.filter($event)" pInputText />
                             </div>
                         </div>

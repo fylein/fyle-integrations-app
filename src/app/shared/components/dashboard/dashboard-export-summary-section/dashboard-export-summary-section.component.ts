@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
@@ -38,6 +39,8 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   isExportLogVisible: boolean;
 
   private org_id: string = this.userService.getUserProfile().org_id;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private accountingExportService: AccountingExportService,

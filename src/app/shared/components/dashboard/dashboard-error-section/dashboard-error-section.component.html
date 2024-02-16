@@ -1,9 +1,9 @@
-<div class="tw-py-24-px tw-px-120-px">
-    <div *ngIf="errors" class="tw-mt-24-px tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator">
+<div class="tw-py-24-px" [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
+    <div *ngIf="errors" class="tw-mt-24-px tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
         <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
                 <h4 class="tw-text-text-primary !tw-font-500 !tw-text-18-px">Errors</h4>
         </div>
-        <div class="tw-border-separator tw-border-t-1-px tw-pb-24-px">
+        <div class="tw-border-border-tertiary tw-border-t-1-px tw-pb-24-px">
             <div class="tw-mt-10-px tw-rounded-6-px tw-bg-white">
                 <div *ngIf="errors.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING || errors.CATEGORY_MAPPING.length || groupedErrorStat.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
                     <div class="container">

@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
     <app-configuration-step-header 
     [headerText]="'Advanced Settings'"
@@ -161,7 +161,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -182,7 +182,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -203,7 +203,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -220,7 +220,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>
@@ -237,7 +237,7 @@
                                 <span>
                                     {{ item.value }}
                                 </span>
-                                <i [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)"></i>
+                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </div>
                         </ng-template>
                     </p-dropdown>

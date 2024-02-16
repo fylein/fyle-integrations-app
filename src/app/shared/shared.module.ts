@@ -88,6 +88,7 @@ import { MultiSelectComponent } from './components/input/multi-select/multi-sele
 import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component';
 import { NetsuiteConnectorComponent } from './components/netsuite/core/netsuite-connector/netsuite-connector.component';
 import { NetsuiteSubsidiaryMappingComponent } from './components/netsuite/core/netsuite-subsidiary-mapping/netsuite-subsidiary-mapping.component';
+import { SearchComponent } from './components/input/search/search.component';
 
 
 @NgModule({
@@ -158,7 +159,8 @@ import { NetsuiteSubsidiaryMappingComponent } from './components/netsuite/core/n
     MultiSelectComponent,
     SvgIconComponent,
     NetsuiteConnectorComponent,
-    NetsuiteSubsidiaryMappingComponent
+    NetsuiteSubsidiaryMappingComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -252,6 +254,7 @@ import { NetsuiteSubsidiaryMappingComponent } from './components/netsuite/core/n
     ToggleComponent,
     MultiSelectComponent,
     SvgIconComponent,
+    SearchComponent,
     SkipExportComponent
   ]
 })

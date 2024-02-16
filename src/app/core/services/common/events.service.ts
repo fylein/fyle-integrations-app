@@ -55,7 +55,7 @@ export class EventsService {
         if (EXPOSE_INTACCT_NEW_APP && message.data.redirectUri.includes('sage-intacct')) {
           this.sageIntacctLogin.emit(message.data.redirectUri);
           this.redirectToOldIntacctApp.emit(message.data.redirectUri);
-        } else if (brandingFeatureConfig.exposeOnlyQBOApp && message.data.redirectUri.includes('quickbooks')) {
+        } else if (message.data.redirectUri.includes('quickbooks')) {
           this.qboLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
