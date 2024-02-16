@@ -41,7 +41,7 @@ export class NetsuiteConnectorComponent implements OnInit {
     private mappingsService: NetsuiteMappingsService
   ) { }
 
-  clearField() {
+  private clearField() {
     this.connectNetsuiteForm.get("accountId")?.setValue('');
     this.connectNetsuiteForm.get("tokenId")?.setValue('');
     this.connectNetsuiteForm.get("tokenSecret")?.setValue('');

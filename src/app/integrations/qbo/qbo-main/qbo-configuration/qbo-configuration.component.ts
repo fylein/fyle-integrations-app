@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-qbo-configuration',
@@ -19,6 +19,8 @@ export class QboConfigurationComponent implements OnInit {
   activeModule: MenuItem = this.modules[0];
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

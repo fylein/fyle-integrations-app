@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { NetsuiteWorkspaceService } from './netsuite-workspace.service';
 import { ApiService } from '../../common/api.service';
 import { Observable } from 'rxjs';
+import { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class NetsuiteMappingsService {
 
   constructor(
     private apiService: ApiService,
-    private workspaceService: NetsuiteWorkspaceService
+    private workspaceService: WorkspaceService
   ) { }
 
   refreshNetsuiteDimensions(dimensionsToSync: string[] = []) {
@@ -20,21 +20,4 @@ export class NetsuiteMappingsService {
       dimensions_to_sync: dimensionsToSync
     });
   }
-
-  getNetsuiteDestinationAttributes(attributeTypes: string | string[], accountType?: string, active?: boolean): Observable<[]> {
-    const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {attribute_types: string | string[], account_type?: string, active?: boolean} = {
-      attribute_types: attributeTypes
-    };
-
-    if (accountType) {
-      params.account_type = accountType;
-    }
-    if (active) {
-      params.active = active;
-    }
-
-    return this.apiService.get(`/workspaces/${workspaceId}/netsuite/destination_attributes/`, params);
-  }
-
 }

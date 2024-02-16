@@ -1,48 +1,11 @@
 <div *ngIf="isLoading"></div>
 <div *ngIf="!isLoading" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
     <div *ngIf="totalCount > 0">
-        <div [formGroup]="skipExportLogForm" class="tw-flex tw-items-center tw-p-24-px">
-
-            <span class="custom-search-field" [ngStyle]="{ 'border-color': isSearchFocused ? 'black' : '#ccc' }">
-                <i class="pi pi-search"></i>
-                <input class="tw-pb-1 tw-pt-1 tw-text-14-px" type="text" (input)="filterTable($event)" (focus)="isSearchFocused = true" (blur)="isSearchFocused = false" placeholder="Search by Employee Name or Expense ID" />
-            </span>
-            <div class="tw-flex tw-mr-4"></div>
-            <span [ngClass]="{'tw-border-black': isDateFieldFocused}" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-pl-12-px tw-rounded-4-px drop-down">
-                <div>
-                    <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-placeholder'"></app-svg-icon>
-                </div>
-                <p-dropdown placeholder="Select date range" appendTo="body" [options]="dateOptions" formControlName="dateRange" (onChange)="dateFilter($event)" (click)="dropDownWatcher()" 
-                (onFocus)="isDateFieldFocused = true" (onBlur)="isDateFieldFocused = false"
-                [ngClass]="{'selectedItem': skipExportLogForm.controls.dateRange.value, 'filterDropdown': !skipExportLogForm.controls.dateRange.value}">
-                    <ng-template let-item pTemplate="selectedItem">
-                        <div class="tw-flex tw-justify-between tw-items-center">
-                            <span>
-                                <div *ngIf="skipExportLogForm.controls.dateRange.value">
-                                    <div class="my-dropdown-selected-item">
-                                        {{skipExportLogForm.controls.dateRange.value.dateRange}}
-                                    </div>
-                                </div>
-                                <div *ngIf="!skipExportLogForm.controls.dateRange.value">
-                                    <div class="my-dropdown-selected-item tw-text-placeholder">
-                                        Select date range
-                                    </div>
-                                </div>
-                            </span>
-                            <i *ngIf="skipExportLogForm.controls.dateRange.value" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(skipExportLogForm.controls.dateRange)"></i>
-                        </div>
-                    </ng-template>
-                    <ng-template let-date pTemplate="item">
-                        <div>
-                            <p-calendar (click)="showCalendar($event)" placeholder="Custom dates" formControlName="start" (onClose)="getDates()" [touchUI]="isCalendarVisible" *ngIf="date.dateRange === presentDate" selectionMode="range" [readonlyInput]="true" inputId="range"></p-calendar>
-                            <p class="tw-text-sub-text-color tw-text-14-px" [ngClass]="{'!tw-text-mandatory-field-color' : skipExportLogForm.controls.dateRange.value === date }" *ngIf="date.dateRange !== presentDate">{{ date.dateRange | titlecase | snakeCaseToSpaceCase }}</p>
-                            <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange !== presentDate && date.dateRange !== 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}} - {{date.endDate | date : 'MMM dd, yyyy'}}</p>
-                            <p class="tw-text-sub-text-color tw-text-12-px" *ngIf="date.dateRange === 'Today'">{{date.startDate | date : 'MMM dd, yyyy'}}</p>
-                        </div>
-                    </ng-template> 
-                </p-dropdown>
-            </span>
-        </div>
+        <app-export-log-filter *ngIf="totalCount > 0 || selectedDateFilter"
+            [exportLogForm]="skipExportLogForm"
+            [dateOptions]="dateOptions"
+            (handleSimpleSearch)="filterTable($event)">
+        </app-export-log-filter>
 
         <p-table *ngIf="filteredExpenseGroups.length > 0" #dt1 [value]="filteredExpenseGroups">
             <ng-template pTemplate="header">

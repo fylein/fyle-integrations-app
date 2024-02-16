@@ -10,6 +10,7 @@ import { ExportLogService } from 'src/app/core/services/si/export-log/export-log
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { environment } from 'src/environments/environment';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 
 @Component({
   selector: 'app-skip-export-log',
@@ -32,29 +33,7 @@ export class SkipExportLogComponent implements OnInit {
 
   currentPage: number = 1;
 
-  dateOptions: DateFilter[] = [
-    {
-      dateRange: 'This Month',
-      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-      endDate: new Date()
-    },
-    {
-      dateRange: 'This Week',
-      startDate: new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() - new Date().getDay()),
-      endDate: new Date()
-    },
-    {
-      dateRange: 'Today',
-      startDate: new Date(),
-      endDate: new Date()
-    },
-    {
-      dateRange: new Date().toLocaleDateString(),
-      startDate: new Date(),
-      endDate: new Date()
-    }
-  ];
-
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
   selectedDateFilter: SelectedDateFilter | null;
 
@@ -99,8 +78,8 @@ export class SkipExportLogComponent implements OnInit {
     private paginatorService: PaginatorService
   ) { }
 
-  public filterTable(event: any) {
-    const query = event.target.value.toLowerCase();
+  public filterTable(query: any) {
+    query = query.toLowerCase();
 
     this.filteredExpenseGroups = this.expenseGroups.filter((group: SkipExportList) => {
       const employeeID = group.employee ? group.employee[1] : '';
@@ -208,11 +187,11 @@ export class SkipExportLogComponent implements OnInit {
       end: ['']
     });
 
-    this.skipExportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
-      if (dateRange) {
+    this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
+      if (dateRange[1]) {
         this.selectedDateFilter = {
-          startDate: dateRange.startDate,
-          endDate: dateRange.endDate
+          startDate: dateRange[0],
+          endDate: dateRange[1]
         };
 
         this.trackDateFilter('existing', this.selectedDateFilter);

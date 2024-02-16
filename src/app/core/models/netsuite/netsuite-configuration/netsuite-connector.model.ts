@@ -21,7 +21,7 @@ export class NetsuiteConnectorModel {
 }
 
 
-export type SubsidiaryMappingPost = {
+export type NetsuiteSubsidiaryMappingPost = {
   country_name: string | null,
   internal_id: string,
   subsidiary_name: string,

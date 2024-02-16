@@ -5,8 +5,9 @@ import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-co
 import { ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
-import { SubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
@@ -49,7 +50,8 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private mappingsService: NetsuiteMappingsService,
+    private netsuiteMappingsService: NetsuiteMappingsService,
+    private mappingService: MappingService,
     private connectorService: NetsuiteConnectorService,
     private userService: UserService,
     private storageService: StorageService,
@@ -68,7 +70,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.saveInProgress = true;
 
     const netsuiteSubsidiaryId = this.netsuiteSubsidiaryForm.value.netsuiteSubsidiary;
-    const netsuiteSubsidiaryMappingPayload: SubsidiaryMappingPost = this.getSubsdiaryMappingPayload(netsuiteSubsidiaryId);
+    const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost = this.getSubsdiaryMappingPayload(netsuiteSubsidiaryId);
 
     this.connectorService.postSubsdiaryMapping(netsuiteSubsidiaryMappingPayload).subscribe(
       (netsuiteSubsidiary) => {
@@ -83,7 +85,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     );
   }
 
-  private getSubsdiaryMappingPayload(netsuiteSubsidiaryId: any): SubsidiaryMappingPost {
+  private getSubsdiaryMappingPayload(netsuiteSubsidiaryId: any): NetsuiteSubsidiaryMappingPost {
     const subsidiaries = this.netsuiteSubsidiaryOptions.filter(entity => entity.destination_id === netsuiteSubsidiaryId.destination_id);
     return {
       subsidiary_name: subsidiaries[0].value,
@@ -97,7 +99,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.router.navigate(['/integrations/netsuite/onboarding/export_settings']);
   }
 
-  private setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload: SubsidiaryMappingPost): void {
+  private setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
     if (this.workspaceService.getNetsuiteOnboardingState() === NetsuiteOnboardingState.CONNECTION) {
       this.trackingService.integrationsOnboardingCompletion(TrackingApp.NETSUITE, NetsuiteOnboardingState.CONNECTION, 2, netsuiteSubsidiaryMappingPayload);
     }
@@ -110,9 +112,9 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Subsidiary Selected Successfully.');
   }
 
-  private handleSuccess(netsuiteSubsidiaryMappingPayload: SubsidiaryMappingPost): void {
+  private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
     this.isRefreshDimensionInProgress = true;
-    this.mappingsService.refreshNetsuiteDimensions().subscribe(() => {
+    this.netsuiteMappingsService.refreshNetsuiteDimensions().subscribe(() => {
       this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
     }, () => {
       this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
@@ -122,7 +124,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   private setupPage() {
     this.workspaceId = this.storageService.get('netsuite.workspaceId');
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.mappingsService.getNetsuiteDestinationAttributes('SUBSIDIARY').subscribe((subsidiaries) => {
+    this.mappingService.getDestinationAttributes('SUBSIDIARY', 'v2', 'netsuite').subscribe((subsidiaries) => {
       this.netsuiteSubsidiaryOptions = subsidiaries;
       this.setupSubsidiaryMapping();
     });
