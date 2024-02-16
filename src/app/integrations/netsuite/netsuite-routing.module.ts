@@ -1,14 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NetsuiteComponent } from './netsuite.component';
 
 const routes: Routes = [
   {
-    path: 'onboarding',
-    loadChildren: () => import('./netsuite-onboarding/netsuite-onboarding.module').then(m => m.NetsuiteOnboardingModule)
-  },
-  {
-    path: 'main',
-    loadChildren: () => import('./netsuite-main/netsuite-main.module').then(m => m.NetsuiteMainModule)
+    path: '',
+    component: NetsuiteComponent,
+    children: [
+      {
+        path: 'onboarding',
+        loadChildren: () => import('./netsuite-onboarding/netsuite-onboarding.module').then(m => m.NetsuiteOnboardingModule)
+      },
+      {
+        path: 'main',
+        loadChildren: () => import('./netsuite-main/netsuite-main.module').then(m => m.NetsuiteMainModule)
+      }
+    ]
   }
 ];
 

@@ -9,6 +9,7 @@ import { NetsuiteOnboardingExportSettingsComponent } from './netsuite-onboarding
 import { NetsuiteOnboardingImportSettingsComponent } from './netsuite-onboarding-import-settings/netsuite-onboarding-import-settings.component';
 import { NetsuiteOnboardingAdvancedSettingsComponent } from './netsuite-onboarding-advanced-settings/netsuite-onboarding-advanced-settings.component';
 import { NetsuiteOnboardingDoneComponent } from './netsuite-onboarding-done/netsuite-onboarding-done.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { NetsuiteOnboardingDoneComponent } from './netsuite-onboarding-done/nets
   ],
   imports: [
     CommonModule,
-    NetsuiteOnboardingRoutingModule
+    NetsuiteOnboardingRoutingModule,
+    SharedModule
   ]
 })
 export class NetsuiteOnboardingModule { }
