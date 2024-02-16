@@ -187,6 +187,19 @@ export enum IntacctReimbursableExpensesObject {
   EXPENSE_REPORT = 'EXPENSE_REPORT'
 }
 
+export enum NetsuiteReimbursableExpensesObject {
+  EXPENSE_REPORT = 'EXPENSE REPORT',
+  JOURNAL_ENTRY = 'JOURNAL ENTRY',
+  BILL = 'BILL'
+}
+
+export enum NetSuiteCorporateCreditCardExpensesObject {
+  EXPENSE_REPORT = 'EXPENSE REPORT',
+  JOURNAL_ENTRY = 'JOURNAL ENTRY',
+  CREDIT_CARD_CHARGE = 'CREDIT CARD CHARGE',
+  BILL = 'BILL'
+}
+
 export enum QBOReimbursableExpensesObject {
   BILL = 'BILL',
   CHECK = 'CHECK',

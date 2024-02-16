@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { NetsuiteExportSettingsComponent } from './netsuite-export-settings/netsuite-export-settings.component';
 import { NetsuiteImportSettingsComponent } from './netsuite-import-settings/netsuite-import-settings.component';
 import { NetsuiteAdvancedSettingsComponent } from './netsuite-advanced-settings/netsuite-advanced-settings.component';
-import { NetsuiteConnectorComponent } from './netsuite-connector/netsuite-connector.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
@@ -13,11 +12,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
     NetsuiteExportSettingsComponent,
     NetsuiteImportSettingsComponent,
     NetsuiteAdvancedSettingsComponent,
-    NetsuiteConnectorComponent
   ],
   imports: [
     CommonModule,
     SharedModule
+  ],
+  exports: [
+    NetsuiteExportSettingsComponent,
+    NetsuiteImportSettingsComponent,
+    NetsuiteAdvancedSettingsComponent,
   ]
 })
 export class NetsuiteSharedModule { }
