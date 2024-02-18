@@ -199,9 +199,10 @@ export class QboImportSettingsComponent implements OnInit {
       this.mappingService.getFyleFields('v1'),
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.qboConnectorService.getQBOCredentials(),
-      this.mappingService.getDestinationAttributes(QBOField.TAX_CODE, 'v1', 'qbo')
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboCredentials, taxCodes]) => {
-      this.qboFields = QBOImportSettingModel.getQBOFields();
+      this.mappingService.getDestinationAttributes(QBOField.TAX_CODE, 'v1', 'qbo'),
+      this.importSettingService.getQBOFields()
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboCredentials, taxCodes, qboFields]) => {
+      this.qboFields = qboFields;
       this.importSettings = importSettingsResponse;
       this.workspaceGeneralSettings = workspaceGeneralSettings;
       this.taxCodes = taxCodes.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
@@ -211,7 +212,7 @@ export class QboImportSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings);
+      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
