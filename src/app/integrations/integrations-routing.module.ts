@@ -43,6 +43,10 @@ const routes: Routes = [
       {
         path: 'netsuite',
         loadChildren: () => import('./netsuite/netsuite.module').then(m => m.NetsuiteModule)
+      },
+      {
+        path: 'xero',
+        loadChildren: () => import('./xero/xero.module').then(m => m.XeroModule)
       }
     ]
   }
