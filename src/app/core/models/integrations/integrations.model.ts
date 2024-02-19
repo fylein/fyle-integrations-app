@@ -28,7 +28,8 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.INTACCT]: string,
     [InAppIntegration.QBO]: string,
     [InAppIntegration.SAGE300]: string,
-    [InAppIntegration.BUSINESS_CENTRAL]: string
+    [InAppIntegration.BUSINESS_CENTRAL]: string,
+    [InAppIntegration.NETSUITE]: string
 }
 
 export type AppUrlMap = {
@@ -40,4 +41,5 @@ export type AppUrlMap = {
     [AppUrl.INTEGRATION]: string,
     [AppUrl.BUSINESS_CENTRAL]: string
     [AppUrl.QBO]: string
+    [AppUrl.NETSUITE]: string
 }

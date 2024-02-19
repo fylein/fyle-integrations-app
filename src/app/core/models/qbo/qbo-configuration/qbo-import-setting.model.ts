@@ -34,23 +34,6 @@ export type QBOImportSettingGet = {
 
 
 export class QBOImportSettingModel extends ImportSettingsModel {
-  static getQBOFields(): IntegrationField[] {
-    return [
-      {
-        attribute_type: QBOField.CLASS,
-        display_name: 'Class'
-      },
-      {
-        attribute_type: QBOField.DEPARTMENT,
-        display_name: 'Department'
-      },
-      {
-        attribute_type: QBOField.CUSTOMER,
-        display_name: 'Customer'
-      }
-    ];
-  }
-
   static getChartOfAccountTypesList(): string[] {
     return [
       'Expense', 'Other Expense', 'Fixed Asset', 'Cost of Goods Sold', 'Current Liability', 'Equity',
@@ -58,8 +41,8 @@ export class QBOImportSettingModel extends ImportSettingsModel {
     ];
   }
 
-  static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null): FormGroup {
-    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, this.getQBOFields()) : [];
+  static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null, qboFields: IntegrationField[]): FormGroup {
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, qboFields) : [];
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
