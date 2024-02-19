@@ -164,7 +164,7 @@ p {
 
 // Tooltip
 .p-tooltip .p-tooltip-text {
-    @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 #{!important}
+    @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 tw-rounded-4-px #{!important}
 }
 
 .p-tooltip.p-tooltip-right .p-tooltip-arrow {
@@ -599,7 +599,7 @@ p {
     }
 
     &--accounting-app {
-        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px;
+        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px tw-bg-white;
     }
 
     &--accounting-app-name {
