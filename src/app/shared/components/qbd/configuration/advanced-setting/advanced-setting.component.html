@@ -107,14 +107,14 @@
                     [placeholder]="'Select Memo Types'"
                     [formControllerName]="'expenseMemoStructure'"></app-configuration-multi-select>
                     <div class="tw-p-24-px">
-                        <p class="tw-text-12-px tw-mb-12-px tw-text-faded-text-color">Preview of the data in QuickBooks Desktop Memo field</p>
+                        <p class="tw-text-12-px tw-mb-12-px tw-text-text-muted">Preview of the data in QuickBooks Desktop Memo field</p>
                         <div class="tw-bg-disabled-bg-color tw-rounded-4-px tw-text-14-px tw-py-8-px tw-px-8-px">
                             <span>{{ memoPreviewText }}</span>
                         </div>
                     </div>
                 </div>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!advancedSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
         </form>
     </div>
 </div>

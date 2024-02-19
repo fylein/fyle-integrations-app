@@ -19,14 +19,14 @@
                         [subLabel]="'Imported account will be available as Categories in ' + brandingConfig.brandName"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-up-down'">
+                        [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
 
                     <div class="tw-p-24-px tw-pl-60-px tw-pt-0" *ngIf="importSettingForm.value.importCategories">
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
                                 Select the accounts from QuickBooks to import as categories in Fyle
-                                <p class="tw-pt-8-px tw-text-faded-text-color">
+                                <p class="tw-pt-8-px tw-text-text-muted">
                                     By default expense will be selected. Open the dropdown to select more as per your requirements
                                 </p>
                             </h5>
@@ -44,7 +44,7 @@
                       [label]="'Import Products/Services from QuickBooks Online'"
                       [subLabel]="'Products/services from QuickBooks Online will be imported as Categories in ' + brandingConfig.brandName"
                       [formControllerName]="'importItems'"
-                      [iconPath]="'arrow-tail-up-down'">
+                      [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                 </div>
 
@@ -54,7 +54,7 @@
                       [label]="'Import Tax from QuickBooks Online'"
                       [subLabel]="'The imported Tax codes from QuickBooks Online will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'"
                       [formControllerName]="'taxCode'"
-                      [iconPath]="'arrow-tail-up-down'"
+                      [iconPath]="'arrow-tail-down'"
                       [hasDependentFields]="true">
                     </app-configuration-toggle-field>
 
@@ -77,7 +77,7 @@
                         [label]="'Import Vendors from QuickBooks Online'"
                         [subLabel]="'Vendors from QuickBooks Online will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
                         [formControllerName]="'importVendorsAsMerchants'"
-                        [iconPath]="'arrow-tail-up-down'">
+                        [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                   </div>
 
@@ -90,14 +90,14 @@
                         [isDestinationFixedImport]="true">
                     </app-configuration-import-field>
                 </div>
-                <app-configuration-step-footer
-                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                    [isButtonDisabled]="!importSettingForm.valid"
-                    [showBackButton]="isOnboarding ? true : false"
-                    (save)="save()"
-                    (navigateToPreviousStep)="navigateToPreviousStep()">
-                </app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+                [isButtonDisabled]="!importSettingForm.valid"
+                [showBackButton]="isOnboarding ? true : false"
+                (save)="save()"
+                (navigateToPreviousStep)="navigateToPreviousStep()">
+            </app-configuration-step-footer>
         </form>
     </div>
 </div>

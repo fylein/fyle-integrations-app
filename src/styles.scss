@@ -124,12 +124,12 @@ p {
     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
 }
 
-.p-button.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+.p-button.primary-outline {
+    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-text-color tw-bg-btn-outline-primary-bg tw-border-solid tw-border-btn-outline-primary-border-color #{!important};
 }
 
-.p-button:enabled:hover.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+.primary-outline:hover {
+    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
 }
 
 .btn-text-primary {
@@ -143,6 +143,14 @@ p {
 // Dialog
 .p-dialog .p-dialog-content {
     @apply tw-p-0 #{!important};
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+    background: none !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+    @apply tw-shadow-none #{!important};
 }
 
 // Input text
@@ -546,6 +554,10 @@ p {
 
 .p-dialog .p-dialog-header .p-dialog-title {
     @apply tw-text-20-px tw-font-500 #{!important};
+}
+
+.p-dialog .p-dialog-header {
+    @apply tw-rounded-none #{!important};
 }
 
 .p-chips .p-chips-multiple-container .p-chips-token {

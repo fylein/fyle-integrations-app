@@ -14,6 +14,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -104,6 +105,7 @@ export class QboExportSettingsComponent implements OnInit {
   constructor(
     private exportSettingService: QboExportSettingsService,
     public helperService: HelperService,
+    private qboHelperService: QboHelperService,
     private mappingService: MappingService,
     private router: Router,
     private toastService: IntegrationsToastService,
@@ -137,7 +139,15 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   navigateToPreviousStep(): void {
-    this.router.navigate([`/integrations/qbo/onboarding/employee_settings`]);
+    if (brandingFeatureConfig.featureFlags.mapEmployees) {
+      this.router.navigate([`/integrations/qbo/onboarding/employee_settings`]);
+    } else {
+      this.router.navigate([`/integrations/qbo/onboarding/connector`]);
+    }
+  }
+
+  refreshDimensions() {
+    this.qboHelperService.refreshQBODimensions().subscribe();
   }
 
   save(): void {

@@ -3,7 +3,7 @@
         <p class="tw-text-text-primary tw-text-20-px">{{exportLogHeader}}</p>
         <h3 class="tw-text-text-muted tw-text-14-px">{{exportLogSubHeader}}</h3>
     </p-header>
-    <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
+    <div class="tw-bg-white">
         <app-export-log-table [appName]="appName" [filteredExpenseGroups]="accountingExports" [isDashboardFailed]="exportLogHeader==='Successful' ? false : true" [isExportLogTable]="false"></app-export-log-table>
     </div>
 </p-dialog>

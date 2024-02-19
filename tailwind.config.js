@@ -1250,6 +1250,7 @@ module.exports = {
         'toggle-width': 'var(--toggle-width)',
       },
       minWidth: {
+        '120-px': '120px',
         '160-px': '160px',
         '250-px': '250px',
         '300-px': '300px',
