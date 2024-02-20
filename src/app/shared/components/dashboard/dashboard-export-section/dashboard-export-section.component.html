@@ -12,13 +12,13 @@
                         <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">{{brandingContent.exportHeaderZeroStateText}}</h3>
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-flex tw-text-info tw-ml-4-px'" [tooltipText]="'All expenses that have reached your export state in ' + brandingConfig.brandName + ' will be automatically imported and kept ready for export.'" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pl-34-px tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary">
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary">
                         No new expenses to export right now
                         <br>
                         Once expenses are {{ importStates }}, they'll automatically be available here for export
                     </h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pl-34-px tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed}" *ngIf="isExportInProgress">This may take a few minutes...</h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pl-34-px tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="isExportInProgress">This may take a few minutes...</h5>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">
                         No new expenses to export right now
                         <br>
                         Once expenses are {{ importStates }}, they'll automatically be available here for export
