@@ -9,6 +9,9 @@ export type ContentConfiguration = {
                     subLabel: string;
                     exportSubLabel: string;
                     defaultCCCAccountLabel: string;
+                    defaultCCCVendorLabel: string;
+                    accountsPayableLabel: string;
+                    accountsPayableSubLabel: string;
                     journalOptionLabel: string;
                     journalOptionSubLabel: string;
                 }

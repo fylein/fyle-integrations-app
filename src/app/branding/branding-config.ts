@@ -211,6 +211,9 @@ const content: ContentConfiguration = {
                     subLabel: '',
                     exportSubLabel: '',
                     defaultCCCAccountLabel: '',
+                    defaultCCCVendorLabel: 'Set default corporate Card Vendor as',
+                    accountsPayableLabel: 'To which Accounts Payable account should the ',
+                    accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
                     journalOptionLabel: 'Name in Journal Entry (CCC)',
                     journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries'
                 }
@@ -230,6 +233,9 @@ const content: ContentConfiguration = {
                     subLabel: '',
                     exportSubLabel: '',
                     defaultCCCAccountLabel: '',
+                    defaultCCCVendorLabel: 'Set default corporate card vendor as',
+                    accountsPayableLabel: 'To which accounts payable account should the ',
+                    accountsPayableSubLabel: ' to the selected accounts payable Account.',
                     journalOptionLabel: 'Name in journal entry (ccc)',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries'
                 }

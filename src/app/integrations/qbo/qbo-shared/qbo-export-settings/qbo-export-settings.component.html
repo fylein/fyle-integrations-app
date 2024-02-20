@@ -165,8 +165,8 @@
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="false"
                                 [mandatoryErrorListName]="'Name in which Journal Entry should export'"
-                                [label]="'Name in Journal Entry (CCC)'"
-                                [subLabel]="'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries'"
+                                [label]="brandingContent.corporateCard.journalOptionLabel"
+                                [subLabel]="brandingContent.corporateCard.journalOptionSubLabel"
                                 [options]="nameInJournalOptions"
                                 [iconPath]="'list'"
                                 [placeholder]="'Select a name'"
@@ -212,7 +212,7 @@
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'corporate card vendor'"
-                              [label]="'Set default corporate Card Vendor as'"
+                              [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
                               [subLabel]="'The default vendor will apply to all corporate card transactions upon export'"
                               [placeholder]="'Select default corporate card vendor'"
                               [formControllerName]="'defaultCreditCardVendor'">
@@ -227,8 +227,8 @@
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'accounts payable'"
-                              [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                              [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'"
+                              [label]="brandingContent.corporateCard.accountsPayableLabel + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                              [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + brandingContent.corporateCard.accountsPayableSubLabel"
                               [placeholder]="'Select accounts payable'"
                               [formControllerName]="'accountsPayable'">
                             </app-configuration-select-field>
