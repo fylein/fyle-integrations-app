@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { ResolveMappingErrorProperty } from 'src/app/core/models/misc/tracking.model';
-import { Error, GroupedErrorStat, GroupedErrors } from 'src/app/core/models/intacct/db/error.model';
+import { AccountingErrorType, AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
@@ -13,10 +11,13 @@ import { RefinerService } from 'src/app/core/services/integration/refiner.servic
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
-import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { environment } from 'src/environments/environment';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
+import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
+import { DashboardService } from 'src/app/core/services/common/dashboard.service';
+import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
 @Component({
   selector: 'app-intacct-dashboard',
@@ -45,6 +46,8 @@ export class IntacctDashboardComponent implements OnInit {
 
   processedCount: number = 0;
 
+  errors: AccountingGroupedErrors;
+
   isExportLogVisible: boolean = false;
 
   isMappingResolveVisible: boolean = false;
@@ -65,17 +68,15 @@ export class IntacctDashboardComponent implements OnInit {
 
   lastExport: LastExport | null;
 
-  errors: GroupedErrors;
-
   employeeFieldMapping: FyleField;
 
   expenseGroupSetting: string;
 
   expenseGroups: ExpenseGroupList [];
 
-  groupedErrorStat: GroupedErrorStat = {
-    [IntacctErrorType.EMPLOYEE_MAPPING]: null,
-    [IntacctErrorType.CATEGORY_MAPPING]: null
+  groupedErrorStat: AccountingGroupedErrorStat = {
+    [AccountingErrorType.EMPLOYEE_MAPPING]: null,
+    [AccountingErrorType.CATEGORY_MAPPING]: null
   };
 
   ExportState = ExportState;
@@ -92,11 +93,11 @@ export class IntacctDashboardComponent implements OnInit {
 
   IntacctErrorType = IntacctErrorType;
 
-  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors();
+  getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
 
-  getLastExport$: Observable<LastExport> = this.dashboardService.getLastExport();
+  getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1');
 
-  private taskType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
+  private accountingExportType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
 
   readonly dummyExpenseGroupList: ExpenseGroupList[] = [{
     index: 0,
@@ -121,6 +122,7 @@ export class IntacctDashboardComponent implements OnInit {
 
   constructor(
     private dashboardService: DashboardService,
+    private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
     private refinerService: RefinerService,
     private trackingService: TrackingService,
@@ -128,29 +130,11 @@ export class IntacctDashboardComponent implements OnInit {
     private workspaceService: SiWorkspaceService
   ) { }
 
-  showMappingResolve(errorType: IntacctErrorType, groupedError: Error[]) {
-    this.eventStartTime = new Date();
-    this.intacctErrorType = errorType;
-    this.groupedError = groupedError;
-    this.isMappingResolveVisible = true;
-  }
-
-  showIntacctErrorDialog(intacctError: Error) {
-    this.intacctErrorDialogVisible = true;
-    this.intacctErrorDetail = intacctError.error_detail;
-    this.intacctErrorExpenses = intacctError.expense_group.expenses;
-  }
-
-  openUrl(event: Event, url: string) {
-    window.open(url, '_blank');
-    event.stopPropagation();
-  }
-
-  showExportLog(status: TaskLogState) {
-    this.isExportLogFetchInProgress = true;
-    this.exportLogHeader = status === this.taskLogStatusComplete ? 'Successful' : 'Failed';
-    this.getExpenseGroups(500, 0, status);
-    this.isExportLogVisible = true;
+  export() {
+    this.isExportInProgress = true;
+    this.dashboardService.triggerAccountingExport().subscribe(() => {
+      this.pollExportStatus(this.exportableAccountingExportIds);
+    });
   }
 
   getExpenseGroups(limit: number, offset: number, status: TaskLogState) {
@@ -186,7 +170,7 @@ export class IntacctDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.taskType))),
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
       takeWhile((response) => response.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length > 0, true)
     ).subscribe((res) => {
       this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableAccountingExportIds.includes(task.expense_group)).length;
@@ -198,7 +182,7 @@ export class IntacctDashboardComponent implements OnInit {
           this.getExportErrors$,
           this.getLastExport$
         ]).subscribe(responses => {
-          this.errors = this.formatErrors(responses[0]);
+          this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
           this.groupedErrorStat = {
             EMPLOYEE_MAPPING: null,
             CATEGORY_MAPPING: null
@@ -206,7 +190,7 @@ export class IntacctDashboardComponent implements OnInit {
           this.lastExport = responses[1];
           this.isLoading = false;
         });
-        this.dashboardService.getAllTasks([TaskLogState.FAILED, TaskLogState.FATAL], undefined, this.taskType).subscribe((taskResponse) => {
+        this.dashboardService.getAllTasks([TaskLogState.FAILED, TaskLogState.FATAL], undefined, this.accountingExportType).subscribe((taskResponse) => {
           this.failedExpenseGroupCount = taskResponse.count;
           this.exportableAccountingExportIds = taskResponse.results.map((task: Task) => task.expense_group);
           this.isExportInProgress = false;
@@ -221,68 +205,6 @@ export class IntacctDashboardComponent implements OnInit {
         });
       }
     });
-  }
-
-  showErrorStats(): void {
-    this.getExportErrors$.subscribe((errors) => {
-      const newError: GroupedErrors = this.formatErrors(errors);
-
-      if (this.errors.CATEGORY_MAPPING.length !== newError.CATEGORY_MAPPING.length) {
-        const totalCount = this.groupedErrorStat.CATEGORY_MAPPING ? this.groupedErrorStat.CATEGORY_MAPPING.totalCount : this.errors.CATEGORY_MAPPING.length;
-
-        this.groupedErrorStat.CATEGORY_MAPPING = {
-          resolvedCount: totalCount - newError.CATEGORY_MAPPING.length,
-          totalCount: totalCount
-        };
-      }
-
-      if (this.errors.EMPLOYEE_MAPPING.length !== newError.EMPLOYEE_MAPPING.length) {
-        const totalCount = this.groupedErrorStat.EMPLOYEE_MAPPING ? this.groupedErrorStat.EMPLOYEE_MAPPING.totalCount : this.errors.EMPLOYEE_MAPPING.length;
-
-        this.groupedErrorStat.EMPLOYEE_MAPPING = {
-          resolvedCount: totalCount - newError.EMPLOYEE_MAPPING.length,
-          totalCount: totalCount
-        };
-      }
-
-      this.errors = newError;
-      this.trackTimeTakenForResolvingMappingErrors();
-    });
-  }
-
-  private formatErrors(errors: Error[]): GroupedErrors {
-    return errors.reduce((groupedErrors: GroupedErrors, error: Error) => {
-      const group: Error[] = groupedErrors[error.type] || [];
-      group.push(error);
-      groupedErrors[error.type] = group;
-
-      return groupedErrors;
-    }, {
-      [IntacctErrorType.EMPLOYEE_MAPPING]: [],
-      [IntacctErrorType.CATEGORY_MAPPING]: [],
-      [IntacctErrorType.INTACCT_ERROR]: []
-    });
-  }
-
-  private trackTimeTakenForResolvingMappingErrors(): void {
-    if (this.intacctErrorType === IntacctErrorType.CATEGORY_MAPPING || this.intacctErrorType === IntacctErrorType.EMPLOYEE_MAPPING) {
-      const error = this.groupedErrorStat[this.intacctErrorType];
-
-      if (error?.totalCount && error?.totalCount > 0) {
-        const properties: ResolveMappingErrorProperty = {
-          resolvedCount: error?.resolvedCount ? error?.resolvedCount : 0,
-          totalCount: error?.totalCount ? error?.totalCount : 0,
-          unresolvedCount: error?.totalCount - error?.resolvedCount,
-          resolvedAllErrors: error.resolvedCount === error.totalCount,
-          startTime: this.eventStartTime,
-          endTime: new Date(),
-          durationInSeconds: Math.floor((new Date().getTime() - this.eventStartTime.getTime()) / 1000),
-          errorType: this.intacctErrorType
-        };
-
-        this.trackingService.onErrorResolve(TrackingApp.INTACCT, properties);
-      }
-    }
   }
 
   private getExpenseGroupingSetting(expenseGroupSetting: ExpenseGroupSetting): string {
@@ -300,46 +222,35 @@ export class IntacctDashboardComponent implements OnInit {
 
   private setupPage(): void {
     forkJoin([
-      this.getLastExport$.pipe(map((res) => res), catchError(() => of(null))),
       this.getExportErrors$,
+      this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
+      this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
       this.workspaceService.getConfiguration(),
-      this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.taskType),
       this.exportLogService.getExpenseGroupSettings()
     ]).subscribe((responses) => {
-      this.lastExport = responses[0];
-      this.errors = this.formatErrors(responses[1]);
-      this.employeeFieldMapping = responses[2].employee_field_mapping;
+      this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
+      this.employeeFieldMapping = responses[3].employee_field_mapping;
       this.expenseGroupSetting = this.getExpenseGroupingSetting(responses[4]);
       this.importState = responses[4].expense_state;
 
-      const queuedTasks: Task[] = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
-      this.failedExpenseGroupCount = responses[3].results.filter((task: Task) => task.status === TaskLogState.FAILED).length;
+      const queuedTasks: Task[] = responses[2].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
+      this.failedExpenseGroupCount = responses[2].results.filter((task: Task) => task.status === TaskLogState.FAILED).length;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
-        this.exportableAccountingExportIds = responses[3].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
+        this.exportableAccountingExportIds = responses[2].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
         this.pollExportStatus(this.exportableAccountingExportIds);
       } else {
-        this.dashboardService.importExpenseGroups().subscribe(() => {
-          this.dashboardService.getExportableGroupsIds().subscribe((exportableExpenseGroups: ExportableExpenseGroup) => {
-            this.exportableAccountingExportIds = exportableExpenseGroups.exportable_expense_group_ids;
+        this.accountingExportService.importExpensesFromFyle('v1').subscribe(() => {
+          this.dashboardService.getExportableAccountingExportIds('v1').subscribe((exportableAccountingExportIds) => {
+            this.exportableAccountingExportIds = exportableAccountingExportIds.exportable_expense_group_ids;
             this.isImportInProgress = false;
           });
         });
       }
       this.isLoading = false;
     });
-  }
-
-  export(): void {
-    if (!this.isExportInProgress && this.exportableAccountingExportIds.length) {
-      this.isExportInProgress = true;
-      this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.INTACCT_EXPORT);
-      this.dashboardService.exportExpenseGroups().subscribe(() => {
-        this.pollExportStatus(this.exportableAccountingExportIds);
-      });
-    }
   }
 
   ngOnInit(): void {
