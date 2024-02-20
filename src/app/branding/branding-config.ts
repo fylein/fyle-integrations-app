@@ -227,6 +227,8 @@ const content: ContentConfiguration = {
                 importCategoriesSubLabel: 'Imported account will be available as Categories in ',
                 importItemsLabel: 'Import Products/Services from QuickBooks Online',
                 importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as Categories in ',
+                taxCodeLabel: 'Import Tax from QuickBooks Online',
+                taxCodeSubLabel: 'The imported Tax codes from QuickBooks Online will be set as Tax group in ',
             }
         },
         dashboard: {},
@@ -259,6 +261,8 @@ const content: ContentConfiguration = {
                 importCategoriesSubLabel: 'Imported account will be available as categories in ',
                 importItemsLabel: 'Import products/services from QuickBooks Online',
                 importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in ',
+                taxCodeLabel: 'Import tax from QuickBooks Online',
+                taxCodeSubLabel: 'The imported tax codes from QuickBooks Online will be set as tax group in ',
             }
         },
         dashboard: {},

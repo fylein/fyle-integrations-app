@@ -25,6 +25,8 @@ export type ContentConfiguration = {
                 importCategoriesSubLabel: string;
                 importItemsLabel: string;
                 importItemsSubLabel: string;
+                taxCodeLabel: string;
+                taxCodeSubLabel: string;
             }
         },
         dashboard: {},
