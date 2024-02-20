@@ -23,6 +23,8 @@ export type ContentConfiguration = {
                 contentText: string;
                 importCategoriesLabel: string;
                 importCategoriesSubLabel: string;
+                importItemsLabel: string;
+                importItemsSubLabel: string;
             }
         },
         dashboard: {},

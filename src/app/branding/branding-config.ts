@@ -224,7 +224,9 @@ const content: ContentConfiguration = {
                 headerText: '',
                 contentText: '',
                 importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
-                importCategoriesSubLabel: 'Imported account will be available as Categories in '
+                importCategoriesSubLabel: 'Imported account will be available as Categories in ',
+                importItemsLabel: 'Import Products/Services from QuickBooks Online',
+                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as Categories in ',
             }
         },
         dashboard: {},
@@ -254,7 +256,9 @@ const content: ContentConfiguration = {
                 headerText: '',
                 contentText: '',
                 importCategoriesLabel: 'Import the chart of accounts as categories in ',
-                importCategoriesSubLabel: 'Imported account will be available as categories in '
+                importCategoriesSubLabel: 'Imported account will be available as categories in ',
+                importItemsLabel: 'Import products/services from QuickBooks Online',
+                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in ',
             }
         },
         dashboard: {},
