@@ -20,7 +20,7 @@
                         [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"></app-svg-icon>
                 </div>
                 <div *ngIf="selectedEmail && form.value.email.length > 1" class="tw-pl-8-px">
-                    <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-disabled-bg-color tw-text-12-px tw-text-text-muted tw-rounded-12-px">
+                    <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-input-read-only-bg tw-text-12-px tw-text-text-muted tw-rounded-12-px">
                         +{{ form.value.email.length - 1 }}
                     </p>
                 </div>

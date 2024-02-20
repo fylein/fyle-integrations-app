@@ -75,7 +75,7 @@
   }
   
   :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
-    @apply tw-bg-disabled-bg-color #{!important};
+    @apply tw-bg-input-read-only-bg #{!important};
   }
   
   :host ::ng-deep .p-calendar ::placeholder {

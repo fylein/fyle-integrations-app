@@ -964,6 +964,7 @@ module.exports = {
       '24-px': '24px',
       '36-px': '36px',
       '40-px': '40px',
+      'label-text-size': 'var(--label-text-size)',
       ...fontSizes
     },
     fontWeight: {
@@ -983,6 +984,7 @@ module.exports = {
     },
     lineHeight: {
       'normal': 'normal',
+      'app': 'var(--app-line-height)',
       '1.14': '1.14',
       '1.2': '1.2',
       '1.4': '1.4',
