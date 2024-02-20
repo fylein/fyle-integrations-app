@@ -13,6 +13,7 @@ const featureConfigs: FeatureConfiguration = {
         isIconsInsideButtonAllowed: true,
         exposeOnlyQBOApp: false,
         isBackgroundColorAllowed: false,
+        isAsterikAllowed: true,
         featureFlags: {
             cloneSettings: true,
             mapEmployees: true,
@@ -43,6 +44,7 @@ const featureConfigs: FeatureConfiguration = {
         isIconsInsideButtonAllowed: false,
         exposeOnlyQBOApp: true,
         isBackgroundColorAllowed: true,
+        isAsterikAllowed: false,
         featureFlags: {
             cloneSettings: false,
             mapEmployees: false,

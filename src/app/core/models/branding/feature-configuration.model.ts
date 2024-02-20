@@ -5,6 +5,7 @@ export type FeatureConfiguration = {
         isIconsInsideButtonAllowed: boolean;
         exposeOnlyQBOApp: boolean;
         isBackgroundColorAllowed: boolean;
+        isAsterikAllowed: boolean;
         featureFlags: {
             cloneSettings: boolean;
             mapEmployees: boolean;
