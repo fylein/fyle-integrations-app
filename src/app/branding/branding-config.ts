@@ -232,15 +232,23 @@ const content: ContentConfiguration = {
                 taxCodeLabel: 'Import Tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported Tax codes from QuickBooks Online will be set as Tax group in ',
                 defaultTaxCodeLabel: 'Select Default Tax Code',
-                importVendorsAsMerchants: 'Import Vendors from QuickBooks Online'
+                importVendorsAsMerchantsLabel: 'Import Vendors from QuickBooks Online'
+            },
+            advancedSettings: {
+                stepName: 'Advanced Settings',
+                autoCreateVendorsLabel: 'Auto-Create Vendors',
+                paymentSyncLabel: 'Auto Sync payment status for reimbursable expenses',
+                customizationSubLabel: 'You can choose what data points need to be exported and what shouldn\'t be.',
+                autoCreateMerchantsAsVendorsLabel: 'Auto-create Merchants as Vendors',
+                singleCreditLineJELabel: 'Create a single itemized offset credit entry for Journal',
+                singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.',
+                billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in '
             },
             done: {
                 ctaText: 'Launch Integration',
                 hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.'
             },
-            advancedSetting: {
-                stepName: 'Advanced Settings'
-            }
         },
         dashboard: {
             exportHeaderFirstTimeZeroStateText: 'Sit back and relax!',
@@ -314,15 +322,23 @@ const content: ContentConfiguration = {
                 taxCodeLabel: 'Import tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported tax codes from QuickBooks Online will be set as tax group in ',
                 defaultTaxCodeLabel: 'Select default tax code',
-                importVendorsAsMerchants: 'Import vendors from QuickBooks Online'
+                importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online'
+            },
+            advancedSettings: {
+                stepName: 'Advanced settings',
+                autoCreateVendorsLabel: 'Auto-create vendors',
+                paymentSyncLabel: 'Auto sync payment status for reimbursable expenses',
+                customizationSubLabel: 'you can choose what data points need to be exported and what shouldn\'t be.',
+                autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
+                singleCreditLineJELabel: 'Create a single itemized offset credit entry for journal',
+                singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
+                billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in '
             },
             done: {
                 ctaText: 'Launch integration',
                 hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">configuration</b> section.'
             },
-            advancedSetting: {
-                stepName: 'Advanced settings'
-            }
         },
         dashboard: {
             exportHeaderFirstTimeZeroStateText: 'Sit back and relax',

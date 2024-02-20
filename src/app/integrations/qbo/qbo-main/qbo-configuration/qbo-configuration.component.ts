@@ -15,7 +15,7 @@ export class QboConfigurationComponent implements OnInit {
     {label: 'Map Employees', routerLink: '/integrations/qbo/main/configuration/employee_settings'},
     {label: this.brandingContent.exportSetting.stepName, routerLink: '/integrations/qbo/main/configuration/export_settings'},
     {label: this.brandingContent.importSetting.stepName, routerLink: '/integrations/qbo/main/configuration/import_settings'},
-    {label: this.brandingContent.advancedSetting.stepName, routerLink: '/integrations/qbo/main/configuration/advanced_settings'}
+    {label: this.brandingContent.advancedSettings.stepName, routerLink: '/integrations/qbo/main/configuration/advanced_settings'}
   ];
 
   activeModule: MenuItem = this.modules[0];

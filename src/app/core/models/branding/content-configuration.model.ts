@@ -30,11 +30,19 @@ export type ContentConfiguration = {
                 taxCodeLabel: string;
                 taxCodeSubLabel: string;
                 defaultTaxCodeLabel: string;
-                importVendorsAsMerchants: string;
+                importVendorsAsMerchantsLabel: string;
             },
-            advancedSetting: {
+            advancedSettings: {
                 stepName: string;
-            }
+                autoCreateVendorsLabel: string;
+                paymentSyncLabel: string;
+                customizationSubLabel: string;
+                autoCreateMerchantsAsVendorsLabel: string;
+                singleCreditLineJELabel: string;
+                singleCreditLineJESubLabel: string;
+                billPaymentAccountLabel: string;
+                billPaymentAccountSubLabel: string;
+            },
             done: {
                 ctaText: string;
                 hintText: string;
