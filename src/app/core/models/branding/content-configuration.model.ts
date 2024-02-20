@@ -29,6 +29,10 @@ export type ContentConfiguration = {
                 taxCodeSubLabel: string;
                 defaultTaxCodeLabel: string;
                 importVendorsAsMerchants: string;
+            },
+            done: {
+                ctaText: string;
+                hintText: string;
             }
         },
         dashboard: {},
