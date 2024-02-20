@@ -102,8 +102,8 @@ export class QboSkippedExportLogComponent implements OnInit {
     });
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (dateRange[1]) {
-        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
         if (dateRange) {
           this.selectedDateFilter = {
             startDate: dateRange[0],
@@ -111,12 +111,11 @@ export class QboSkippedExportLogComponent implements OnInit {
           };
 
           this.getSkippedExpenses(paginator.limit, paginator.offset);
-        } else {
-          this.dateOptions = AccountingExportModel.getDateOptionsV2();
-          this.skipExportLogForm.controls.start.patchValue([]);
-          this.selectedDateFilter = null;
-          this.getSkippedExpenses(paginator.limit, paginator.offset);
         }
+      } else {
+        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.selectedDateFilter = null;
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
       }
     });
   }

@@ -7,8 +7,9 @@
             {{ fyleOrgName }}
         </h3>
     </div>
-    <div>
+    <div [ngClass]="{'tw-flex tw-h-[100%]': !brandingFeatureConfig.illustrationsAllowed}">
         <img *ngIf="brandingFeatureConfig.illustrationsAllowed" src="assets/illustrations/vertical-divider.svg"/>
+        <p *ngIf="!brandingFeatureConfig.illustrationsAllowed" class="tw-border-l-divider-border-color tw-border-solid tw-border-l-1-px"></p>
     </div>
     <div class="tw-px-60-px tw-items-center">
         <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-18-px tw-text-center ">

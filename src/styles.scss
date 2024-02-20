@@ -16,7 +16,7 @@
 
 html,
 body {
-    @apply tw-h-[100%] tw-leading-19;
+    @apply tw-h-[100%] tw-leading-app;
 }
 
 body {
@@ -493,7 +493,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext, .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext{
-    @apply tw-bg-disabled-bg-color #{!important};
+    @apply tw-bg-input-read-only-bg #{!important};
 }
 
 .p-calendar ::placeholder {
@@ -577,7 +577,7 @@ p {
 }
 
 .preview-box {
-    @apply tw-text-text-label tw-p-10-px tw-bg-bg-tertiary tw-rounded-8-px #{!important} ;
+    @apply tw-text-input-read-only-text tw-p-10-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px #{!important} ;
 }
 
 .landing {
@@ -599,7 +599,7 @@ p {
     }
 
     &--accounting-app {
-        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px tw-bg-white;
+        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-8-px tw-border-1-px tw-bg-white tw-border-none;
     }
 
     &--accounting-app-name {
