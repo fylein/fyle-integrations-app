@@ -2,6 +2,7 @@ export type ContentConfiguration = {
     [brandingId: string]: {
         configuration: {
             exportSetting: {
+                stepName: string;
                 headerText: string;
                 contentText: string;
                 corporateCard: {
@@ -19,6 +20,7 @@ export type ContentConfiguration = {
                 }
             },
             importSetting: {
+                stepName: string;
                 headerText: string;
                 contentText: string;
                 importCategoriesLabel: string;
@@ -30,6 +32,9 @@ export type ContentConfiguration = {
                 defaultTaxCodeLabel: string;
                 importVendorsAsMerchants: string;
             },
+            advancedSetting: {
+                stepName: string;
+            }
             done: {
                 ctaText: string;
                 hintText: string;
@@ -66,6 +71,7 @@ export type ContentConfiguration = {
             viewExpenseText: string;
             corporateCard: string;
             errors: string;
+            autoMap: string;
         }
     }
 }

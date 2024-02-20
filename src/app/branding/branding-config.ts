@@ -204,6 +204,7 @@ const content: ContentConfiguration = {
     fyle: {
         configuration: {
             exportSetting: {
+                stepName: 'Export Settings',
                 headerText: 'Export Corporate Card Expenses',
                 contentText: 'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online',
                 corporateCard: {
@@ -221,6 +222,7 @@ const content: ContentConfiguration = {
                 }
             },
             importSetting: {
+                stepName: 'Import Settings',
                 headerText: '',
                 contentText: '',
                 importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
@@ -235,6 +237,9 @@ const content: ContentConfiguration = {
             done: {
                 ctaText: 'Launch Integration',
                 hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.'
+            },
+            advancedSetting: {
+                stepName: 'Advanced Settings'
             }
         },
         dashboard: {
@@ -248,13 +253,13 @@ const content: ContentConfiguration = {
             employeeMappingErrorText: 'Employee Mapping Errors',
             categoryMappingErrorText: 'Category Mapping Errors',
             qboErrorText: 'Errors',
-            qboErrorDialogHeaderText: 'Error',
+            qboErrorDialogHeaderText: 'Error'
         },
         exportLog: {
             tableHeaders: {
                 expenseID: 'Expense ID',
                 employee: 'Employee Name and ID',
-                expenseType: 'Expense Type',
+                expenseType: 'Expense Type'
             }
         },
         mapping: {},
@@ -267,12 +272,14 @@ const content: ContentConfiguration = {
             exportLogTabName: 'Export Log',
             viewExpenseText: 'View Expense',
             corporateCard: 'Corporate Card',
-            errors: 'Errors'
+            errors: 'Errors',
+            autoMap: 'Auto Map'
         }
     },
     co: {
         configuration: {
             exportSetting: {
+                stepName: 'Export settings',
                 headerText: 'Export corporate card expenses',
                 contentText: 'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + ' if not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online',
                 corporateCard: {
@@ -290,6 +297,7 @@ const content: ContentConfiguration = {
                 }
             },
             importSetting: {
+                stepName: 'Import settings',
                 headerText: '',
                 contentText: '',
                 importCategoriesLabel: 'Import the chart of accounts as categories in ',
@@ -304,6 +312,9 @@ const content: ContentConfiguration = {
             done: {
                 ctaText: 'Launch integration',
                 hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">configuration</b> section.'
+            },
+            advancedSetting: {
+                stepName: 'Advanced settings'
             }
         },
         dashboard: {
@@ -317,13 +328,13 @@ const content: ContentConfiguration = {
             employeeMappingErrorText: 'Employee mapping errors',
             categoryMappingErrorText: 'Category mapping errors',
             qboErrorText: 'errors',
-            qboErrorDialogHeaderText: 'error',
+            qboErrorDialogHeaderText: 'error'
         },
         exportLog: {
             tableHeaders: {
                 expenseID: 'Expense ID',
                 employee: 'Employee',
-                expenseType: 'Expense type',
+                expenseType: 'Expense type'
             }
         },
         mapping: {},
@@ -336,7 +347,8 @@ const content: ContentConfiguration = {
             exportLogTabName: 'Export log',
             viewExpenseText: 'View expense',
             corporateCard: 'Corporate card',
-            errors: 'errors'
+            errors: 'errors',
+            autoMap: 'Auto map'
         }
     }
 };
