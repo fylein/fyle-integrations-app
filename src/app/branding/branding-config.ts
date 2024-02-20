@@ -248,7 +248,7 @@ const content: ContentConfiguration = {
             done: {
                 ctaText: 'Launch Integration',
                 hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.'
-            },
+            }
         },
         dashboard: {
             exportHeaderFirstTimeZeroStateText: 'Sit back and relax!',
@@ -338,7 +338,7 @@ const content: ContentConfiguration = {
             done: {
                 ctaText: 'Launch integration',
                 hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">configuration</b> section.'
-            },
+            }
         },
         dashboard: {
             exportHeaderFirstTimeZeroStateText: 'Sit back and relax',
