@@ -9,6 +9,8 @@ export type ContentConfiguration = {
                     subLabel: string;
                     exportSubLabel: string;
                     defaultCCCAccountLabel: string;
+                    journalOptionLabel: string;
+                    journalOptionSubLabel: string;
                 }
             }
         },
