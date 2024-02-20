@@ -4,7 +4,7 @@
           <h3 class="tw-text-text-primary tw-font-500">
             {{ headerText }}
           </h3>
-          <h5 class="tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 tw-max-w-600-px tw-text-pretty">
+          <h5 class="tw-text-text-muted tw-text-14-px tw-pt-8-px !tw-font-400 tw-text-pretty">
             {{ contentText }}
             <a *ngIf="redirectLink"
               class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
@@ -25,9 +25,11 @@
                 Sync
             </span>
         </button>
-        <span class="btn-text-primary tw-mr-12-px" *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'">
-          Sync
-      </span>
+        <div>
+          <span (click)="refreshDimensions()" class="p-button primary-outline tw-mr-12-px" *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'">
+            Sync
+        </span>
+        </div>
 
       </div>                             
 </div>

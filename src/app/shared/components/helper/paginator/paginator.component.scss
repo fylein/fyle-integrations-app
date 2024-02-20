@@ -3,7 +3,7 @@
 }
 
 :host ::ng-deep span {
-    @apply tw-text-faded-text-color tw-text-12-px tw-font-500 #{!important};
+    @apply tw-text-text-muted tw-text-12-px tw-font-500 #{!important};
 }
 
 .prevBtn:disabled, .nextBtn:disabled {
