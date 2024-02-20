@@ -1,5 +1,5 @@
 <div class="tw-flex tw-justify-around tw-items-center tw-h-240-px">
-    <div class="tw-text-center tw-px-60-px tw-items-center tw-pb-46-px">
+    <div class="tw-text-center tw-px-60-px tw-items-center">
         <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-18-px">
             {{ (brandingConfig.brandId === 'co') ? brandingConfig.brandName : brandingConfig.brandName | uppercase }}
 
@@ -8,8 +8,9 @@
             {{ fyleOrgName }}
         </h3>
     </div>
-    <div>
+    <div [ngClass]="{'tw-flex tw-h-[100%]': !brandingFeatureConfig.illustrationsAllowed}">
         <img *ngIf="brandingFeatureConfig.illustrationsAllowed" src="assets/illustrations/vertical-divider.svg"/>
+        <p *ngIf="!brandingFeatureConfig.illustrationsAllowed" class="tw-border-l-divider-border-color tw-border-solid tw-border-l-1-px"></p>
     </div>
     <div class="tw-px-60-px tw-items-center">
         <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-18-px tw-text-center ">
@@ -47,7 +48,7 @@
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px tw-text-center">
             <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
         </div>
-        <div class="tw-text-14-px tw-font-500 tw-text-center tw-h-60-px">
+        <div class="tw-text-14-px tw-font-500 tw-text-center">
             <p *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect && accountingCompanyName" class="tw-text-text-muted">
                 Not the company that you wish to connect with?
             </p>
@@ -57,12 +58,16 @@
             <p *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-text-muted ">
                 Token expired
             </p>
-            <span *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">
-                Re-Connect to {{ accountingAppTitle }}
-            </span>
-            <span class="tw-inline-block btn-text-primary tw-pt-10-px" *ngIf="!accountingCompanyConnectionInProgress && showDisconnect && accountingCompanyName" (click)="disconnect()">
-                {{ switchLinkText }}
-            </span>
+            <div *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" class="tw-h-60-px">
+                <span (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">
+                    Re-Connect to {{ accountingAppTitle }}
+                </span>
+            </div>
+            <div *ngIf="!accountingCompanyConnectionInProgress && showDisconnect && accountingCompanyName" class="tw-h-60-px">
+                <span class="tw-inline-block btn-text-primary tw-pt-10-px" (click)="disconnect()">
+                    {{ switchLinkText }}
+                </span>
+            </div>
         </div>
     </div>
 </div>

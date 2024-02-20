@@ -219,6 +219,9 @@ export class DashboardComponent implements OnInit {
         };
 
         this.dateFilter();
+      } else {
+        this.selectedDateFilter = null;
+        this.dateFilter();
       }
     });
   }

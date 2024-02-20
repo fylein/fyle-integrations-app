@@ -112,6 +112,7 @@ export class GenericMappingV2Component implements OnInit {
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
+      searchValue = searchValue.toLowerCase();
       this.filteredMappings = this.filteredMappings.filter((mapping) =>
       mapping.value?.toLowerCase().includes(searchValue)
     );

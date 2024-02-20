@@ -51,7 +51,8 @@
             </ng-template>
         </p-calendar>
         <div>
-            <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+            <app-svg-icon *ngIf="!(exportLogForm.value.start[0] && exportLogForm.value.start[1])" [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+            <app-svg-icon (iconClick)="clearDateFilter()" *ngIf="exportLogForm.value.start[0] && exportLogForm.value.start[1]" [svgSource]="'cross'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-cursor-pointer tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
         </div>
     </span>
 </div>

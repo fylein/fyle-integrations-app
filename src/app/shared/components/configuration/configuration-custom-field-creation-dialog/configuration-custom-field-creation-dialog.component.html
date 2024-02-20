@@ -1,7 +1,7 @@
 <div>
     <p-dialog [dismissableMask]="true" [showHeader]="false" [modal]="true" [(visible)]="showCustomFieldCreationDialog" [draggable]="false" [style]="{width: '468px'}">
         <div [formGroup]="customFieldForm">
-            <div class="tw-p-24-px tw-border-b-1-px tw-border-b-box-color">
+            <div class="tw-p-24-px tw-border-b-1-px tw-border-b-divider-border-color">
                 <div class="tw-flex tw-justify-between tw-items-center">
                     <p class="tw-text-text-primary tw-text-20-px tw-font-500">Add new Custom Field</p>
                     <app-svg-icon [svgSource]="'cross-medium'" class="tw-cursor-pointer tw-text-12-px" (click)="closeModel()" [height]="'16px'" [width]="'16px'"></app-svg-icon>
@@ -19,30 +19,30 @@
                 </div>
             </div>
             <div class="tw-p-24-px">
-                <p class="tw-pb-8-px tw-text-text-secondary tw-text-14-px">
-                    Field Name <span class="tw-text-mandatory-field-color" *ngIf='isAsterikAllowed'>*</span>
+                <p class="tw-pb-8-px tw-text-form-label-text-color tw-text-label-text-size">
+                    Field Name <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </p>
-                <input formControlName="attribute_type" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
+                <input formControlName="attribute_type" type="text" class="tw-w-388-px tw-h-32-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
                 <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'Enter a valid type'"></app-mandatory-error-message>
     
-                <p class="tw-pt-16-px tw-text-text-secondary tw-text-14-px tw-pb-8-px">
-                    Placeholder Name <span class="tw-text-mandatory-field-color" *ngIf='isAsterikAllowed'>*</span>
+                <p class="tw-pt-16-px tw-text-form-label-text-color tw-text-label-text-size tw-pb-8-px">
+                    Placeholder Name <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </p>
-                <input formControlName="source_placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+                <input formControlName="source_placeholder" type="text" class="tw-w-388-px tw-h-32-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
                 <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
     
                 <div>
-                    <h5 class="tw-pt-16-px tw-text-text-secondary tw-text-14-px tw-pb-8-px">
+                    <h5 class="tw-pt-16-px tw-text-form-label-text-color tw-text-label-text-size tw-pb-8-px">
                       Field Type
                     </h5>
-                    <div class="tw-w-388-px tw-h-48-px">
+                    <div class="tw-w-388-px tw-h-32-px">
                       <input class="tw-w-388-px form-input-disabled" type="text" placeholder="Select" disabled>
                     </div>
                   </div>
     
                   <div class="label-section tw-pt-8">
                     <div class="label-content tw-w-388-px">
-                      <h5 class="name-text text-secondary tw-text-14-px">
+                      <h5 class="name-text text-secondary tw-text-label-text-size">
                         {{customFieldForm.value.attribute_type ? customFieldForm.value.attribute_type : 'Label'}}
                       </h5>
                       <div class="form-field tw-pt-4-px">

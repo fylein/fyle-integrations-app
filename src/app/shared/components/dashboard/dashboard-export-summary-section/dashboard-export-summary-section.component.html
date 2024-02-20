@@ -8,7 +8,7 @@
                 <div class="inside-container tw-p-10 tw-rounded-12-px tw-bg-white">
                     <div class="tw-flex tw-items-center tw-justify-between">
                         <div class="tw-flex">
-                                <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-success-toast tw-mr-16-px'"></app-svg-icon>
+                                <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-success tw-mr-16-px'" [isTextColorAllowed]="true"></app-svg-icon>
                                 <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">{{brandingContent.lastExportSuccessText}}</p>
                                 <span class="tw-w-120-px tw-text-14-px tw-font-500 tw-text-right tw-text-text-secondary">
                                     {{ accountingExportSummary?.successful_accounting_export_count ? accountingExportSummary?.successful_accounting_export_count : 0 }}
@@ -25,7 +25,7 @@
                     </div>
                     <div class="tw-flex tw-items-center tw-mt-8-px tw-justify-between">
                         <div class="tw-flex">
-                            <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast tw-mr-16-px'"></app-svg-icon>
+                            <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-icon-danger tw-mr-16-px'" [isTextColorAllowed]="true"></app-svg-icon>
                             <p class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-10-px">{{brandingContent.lastExportFailedText}}</p>
                             <span class="tw-w-150-px tw-text-right tw-text-14-px tw-font-500 tw-text-text-secondary">
                                 {{ accountingExportSummary?.failed_accounting_export_count ? accountingExportSummary?.failed_accounting_export_count : 0 }}

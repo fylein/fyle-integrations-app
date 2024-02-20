@@ -21,3 +21,7 @@
 :host ::ng-deep .selectedItem .p-dropdown-trigger {
     @apply tw-hidden #{!important};
 }
+
+input[type="text"] {
+    @apply tw-rounded-4-px tw-border-none #{!important};
+}
