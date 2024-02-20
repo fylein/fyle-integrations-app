@@ -234,7 +234,13 @@ const content: ContentConfiguration = {
             },
             advancedSettings: {
                 autoCreateVendorsLabel: 'Auto-Create Vendors',
-                paymentSyncLabel: 'Auto Sync payment status for reimbursable expenses'
+                paymentSyncLabel: 'Auto Sync payment status for reimbursable expenses',
+                customizationSubLabel: 'You can choose what data points need to be exported and what shouldn\'t be.',
+                autoCreateMerchantsAsVendorsLabel: 'Auto-create Merchants as Vendors',
+                singleCreditLineJELabel: 'Create a single itemized offset credit entry for Journal',
+                singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.',
+                billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
             }
         },
         dashboard: {},
@@ -274,7 +280,14 @@ const content: ContentConfiguration = {
             },
             advancedSettings: {
                 autoCreateVendorsLabel: 'Auto-create vendors',
-                paymentSyncLabel: 'Auto sync payment status for reimbursable expenses'
+                paymentSyncLabel: 'Auto sync payment status for reimbursable expenses',
+                customizationSubLabel: 'you can choose what data points need to be exported and what shouldn\'t be.',
+                autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
+                singleCreditLineJELabel: 'Create a single itemized offset credit entry for journal',
+                singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
+                billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
+                
             }
         },
         dashboard: {},
