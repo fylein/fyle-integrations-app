@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-mandatory-field',
@@ -8,6 +9,10 @@ import { Component, Input, OnInit } from '@angular/core';
 export class MandatoryFieldComponent implements OnInit {
 
   @Input() noSpacing: boolean;
+
+  readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

@@ -30,6 +30,8 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
+  readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
+
   constructor(
     public windowService: WindowService
   ) { }
