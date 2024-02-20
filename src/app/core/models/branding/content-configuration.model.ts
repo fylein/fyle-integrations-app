@@ -32,6 +32,7 @@ export type ContentConfiguration = {
             },
             advancedSettings: {
                 autoCreateVendorsLabel: string;
+                paymentSyncLabel: string;
             }
         },
         dashboard: {},

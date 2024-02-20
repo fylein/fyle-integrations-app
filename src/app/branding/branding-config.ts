@@ -234,6 +234,7 @@ const content: ContentConfiguration = {
             },
             advancedSettings: {
                 autoCreateVendorsLabel: 'Auto-Create Vendors',
+                paymentSyncLabel: 'Auto Sync payment status for reimbursable expenses'
             }
         },
         dashboard: {},
@@ -273,6 +274,7 @@ const content: ContentConfiguration = {
             },
             advancedSettings: {
                 autoCreateVendorsLabel: 'Auto-create vendors',
+                paymentSyncLabel: 'Auto sync payment status for reimbursable expenses'
             }
         },
         dashboard: {},
