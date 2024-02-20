@@ -262,12 +262,14 @@ const content: ContentConfiguration = {
                 expenseType: 'Expense Type',
                 dateTime: 'Date and Time of Export',
                 exportedAs: 'Exported As',
-                exportSkippedOn: 'Export Skipped On',
+                exportSkippedOn: 'Export Skipped On'
             },
             searchPlaceholder: 'Search by Employee Name or Expense ID',
-            dateRangeLabel: 'Or, Select Date range',
+            dateRangeLabel: 'Or, Select Date range'
         },
-        mapping: {},
+        mapping: {
+            filterPlaceholder: 'Select Status',
+        },
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
             guideHeaderText: 'Guide to setup your Integrations'
@@ -342,12 +344,14 @@ const content: ContentConfiguration = {
                 expenseType: 'Expense type',
                 dateTime: 'Date and time of export',
                 exportedAs: 'Exported as',
-                exportSkippedOn: 'Export skipped on',
+                exportSkippedOn: 'Export skipped on'
             },
             searchPlaceholder: 'Search by employee or expense ID',
-            dateRangeLabel: 'Or, select date range',
+            dateRangeLabel: 'Or, select date range'
         },
-        mapping: {},
+        mapping: {
+            filterPlaceholder: 'Select status',
+        },
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
             guideHeaderText: 'Guide to setup your integrations'

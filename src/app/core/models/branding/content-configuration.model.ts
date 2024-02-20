@@ -65,7 +65,9 @@ export type ContentConfiguration = {
             searchPlaceholder: string;
             dateRangeLabel: string;
         },
-        mapping: {},
+        mapping: {
+            filterPlaceholder: string;
+        },
         landing: {
             contentText: string;
             guideHeaderText: string;
