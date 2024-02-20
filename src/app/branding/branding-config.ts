@@ -1,4 +1,5 @@
 import { BrandingConfiguration } from '../core/models/branding/branding-configuration.model';
+import { ContentConfiguration } from '../core/models/branding/content-configuration.model';
 import { DemoVideo } from '../core/models/branding/demo-video.model';
 import { FeatureConfiguration } from '../core/models/branding/feature-configuration.model';
 import { KbArticle } from '../core/models/branding/kb-article.model';
@@ -195,3 +196,45 @@ const demoVideoLinks: DemoVideo = {
 
 // @ts-ignore
 export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
+
+
+const content: ContentConfiguration = {
+    fyle: {
+        configuration: {
+            exportSetting: {
+                headerText: 'Export Corporate Card Expenses',
+                contentText: '',
+                corporateCard: {
+                    sectionLabel: '',
+                    subLabel: '',
+                    exportSubLabel: '',
+                    defaultCCCAccountLabel: ''
+                }
+            }
+        },
+        dashboard: {},
+        exportLog: {},
+        mapping: {}
+    },
+    co: {
+        configuration: {
+            exportSetting: {
+                headerText: 'Export corporate card expenses',
+                contentText: '',
+                corporateCard: {
+                    sectionLabel: '',
+                    subLabel: '',
+                    exportSubLabel: '',
+                    defaultCCCAccountLabel: ''
+                }
+            }
+        },
+        dashboard: {},
+        exportLog: {},
+        mapping: {}
+    }
+};
+
+// @ts-ignore
+export const brandingContent = content[brandingConfig.brandId];
+
