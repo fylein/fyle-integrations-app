@@ -74,7 +74,7 @@
                   <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'Import Vendors from QuickBooks Online'"
+                        [label]="brandingContent.importVendorsAsMerchants"
                         [subLabel]="'Vendors from QuickBooks Online will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
                         [formControllerName]="'importVendorsAsMerchants'"
                         [iconPath]="'arrow-tail-down'">

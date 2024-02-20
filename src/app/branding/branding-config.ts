@@ -229,7 +229,8 @@ const content: ContentConfiguration = {
                 importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as Categories in ',
                 taxCodeLabel: 'Import Tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported Tax codes from QuickBooks Online will be set as Tax group in ',
-                defaultTaxCodeLabel: 'Select Default Tax Code'
+                defaultTaxCodeLabel: 'Select Default Tax Code',
+                importVendorsAsMerchants: 'Import Vendors from QuickBooks Online'
             }
         },
         dashboard: {},
@@ -265,6 +266,7 @@ const content: ContentConfiguration = {
                 taxCodeLabel: 'Import tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported tax codes from QuickBooks Online will be set as tax group in ',
                 defaultTaxCodeLabel: 'Select default tax code',
+                importVendorsAsMerchants: 'Import vendors from QuickBooks Online'
             }
         },
         dashboard: {},
