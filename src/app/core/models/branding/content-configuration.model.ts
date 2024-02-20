@@ -33,6 +33,13 @@ export type ContentConfiguration = {
         },
         dashboard: {},
         exportLog: {},
-        mapping: {}
+        mapping: {},
+        landing: {
+            contentText: string;
+            guideHeaderText: string;
+        },
+        common: {
+            readMoreText: string;
+        }
     }
 }

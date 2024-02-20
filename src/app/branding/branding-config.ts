@@ -235,7 +235,14 @@ const content: ContentConfiguration = {
         },
         dashboard: {},
         exportLog: {},
-        mapping: {}
+        mapping: {},
+        landing: {
+            contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
+            guideHeaderText: 'Guide to setup your Integrations'
+        },
+        common: {
+            readMoreText: 'Read More'
+        }
     },
     co: {
         configuration: {
@@ -271,7 +278,14 @@ const content: ContentConfiguration = {
         },
         dashboard: {},
         exportLog: {},
-        mapping: {}
+        mapping: {},
+        landing: {
+            contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
+            guideHeaderText: 'Guide to setup your integrations'
+        },
+        common: {
+            readMoreText: 'Read more'
+        }
     }
 };
 
