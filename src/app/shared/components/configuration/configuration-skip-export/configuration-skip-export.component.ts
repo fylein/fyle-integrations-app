@@ -71,6 +71,8 @@ export class ConfigurationSkipExportComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
+  readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
+
   constructor(
     private helper: HelperService
   ) { }

@@ -6,15 +6,15 @@
             <div class="tw-flex">
                 <div class="tw-ml-120-px tw-w-200-px tw-mr-6-px fields-header">
                     Condition
-                    <span class="tw-text-mandatory-field-color">*</span>
+                    <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </div>
                   <div class="tw-w-180-px tw-mr-24-px fields-header">
                     Operator
-                    <span class="tw-text-mandatory-field-color">*</span>
+                    <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </div>
                 <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(1)">
                   Value
-                  <span class="tw-text-mandatory-field-color">*</span>
+                  <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </div>
             </div>
             <div class="tw-flex dropdown-row tw-mt-8-px tw-pb-24-px">
@@ -64,15 +64,15 @@
           <div class="tw-flex tw-ml-120-px tw-mt-8-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
                   Condition
-                  <span class="tw-text-mandatory-field-color">*</span>
+                  <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
               </div>
                 <div class="tw-w-180-px fields-header tw-mr-24-px">
                   Operator
-                <span class="tw-text-mandatory-field-color">*</span>
+                <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
               </div>
               <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(2)">
                 Value
-                <span class="tw-text-mandatory-field-color">*</span>
+                <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
               </div>
           </div>
           <div class="tw-flex">
