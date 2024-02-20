@@ -51,8 +51,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
-                      [label]="'Import Tax from QuickBooks Online'"
-                      [subLabel]="'The imported Tax codes from QuickBooks Online will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'"
+                      [label]="brandingContent.taxCodeLabel"
+                      [subLabel]="brandingContent.taxCodeSubLabel + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'"
                       [formControllerName]="'taxCode'"
                       [iconPath]="'arrow-tail-down'"
                       [hasDependentFields]="true">
@@ -62,7 +62,7 @@
                         [form]="importSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'tax code'"
-                        [label]="'Select Default Tax Code'"
+                        [label]="brandingContent.defaultTaxCodeLabel"
                         [subLabel]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'"
                         [destinationAttributes]="taxCodes"
                         [optionLabel]="'name'"
