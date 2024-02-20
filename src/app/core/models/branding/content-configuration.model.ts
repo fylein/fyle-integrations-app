@@ -17,6 +17,12 @@ export type ContentConfiguration = {
                     journalOptionLabel: string;
                     journalOptionSubLabel: string;
                 }
+            },
+            importSetting: {
+                headerText: string;
+                contentText: string;
+                importCategoriesLabel: string;
+                importCategoriesSubLabel: string;
             }
         },
         dashboard: {},

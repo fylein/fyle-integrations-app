@@ -219,6 +219,12 @@ const content: ContentConfiguration = {
                     journalOptionLabel: 'Name in Journal Entry (CCC)',
                     journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries'
                 }
+            },
+            importSetting : {
+                headerText: '',
+                contentText: '',
+                importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                importCategoriesSubLabel: 'Imported account will be available as Categories in ',
             }
         },
         dashboard: {},
@@ -243,6 +249,12 @@ const content: ContentConfiguration = {
                     journalOptionLabel: 'Name in journal entry (ccc)',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries'
                 }
+            },
+            importSetting : {
+                headerText: '',
+                contentText: '',
+                importCategoriesLabel: 'Import the chart of accounts as categories in ',
+                importCategoriesSubLabel: 'Imported account will be available as categories in ',
             }
         },
         dashboard: {},

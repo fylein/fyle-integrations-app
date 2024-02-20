@@ -15,8 +15,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName"
-                        [subLabel]="'Imported account will be available as Categories in ' + brandingConfig.brandName"
+                        [label]="brandingContent.importCategoriesLabel + brandingConfig.brandName"
+                        [subLabel]="brandingContent.importCategoriesSubLabel + brandingConfig.brandName"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
