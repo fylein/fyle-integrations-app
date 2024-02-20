@@ -35,8 +35,26 @@ export type ContentConfiguration = {
                 hintText: string;
             }
         },
-        dashboard: {},
-        exportLog: {},
+        dashboard: {
+            exportHeaderFirstTimeZeroStateText: string;
+            exportHeaderZeroStateText: string;
+            lastExportSuccessText: string;
+            lastExportFailedText: string;
+            lastExportedAtText: string;
+            nextExportAtText: string;
+            integrationErrorHeader: string;
+            employeeMappingErrorText: string;
+            categoryMappingErrorText: string;
+            qboErrorText: string;
+            qboErrorDialogHeaderText: string;
+        },
+        exportLog: {
+            tableHeaders: {
+                expenseID: string;
+                employee: string;
+                expenseType: string;
+            }
+        },
         mapping: {},
         landing: {
             contentText: string;
@@ -44,6 +62,10 @@ export type ContentConfiguration = {
         },
         common: {
             readMoreText: string;
+            exportLogTabName: string;
+            viewExpenseText: string;
+            corporateCard: string;
+            errors: string;
         }
     }
 }

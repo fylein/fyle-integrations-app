@@ -237,15 +237,37 @@ const content: ContentConfiguration = {
                 hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.'
             }
         },
-        dashboard: {},
-        exportLog: {},
+        dashboard: {
+            exportHeaderFirstTimeZeroStateText: 'Sit back and relax!',
+            exportHeaderZeroStateText: 'You are all caught up!',
+            lastExportSuccessText: 'Successful Expenses',
+            lastExportFailedText: 'Failed Expenses',
+            lastExportedAtText: 'Last Export at:',
+            nextExportAtText: 'Next Export at:',
+            integrationErrorHeader: 'Integrations Errors',
+            employeeMappingErrorText: 'Employee Mapping Errors',
+            categoryMappingErrorText: 'Category Mapping Errors',
+            qboErrorText: 'Errors',
+            qboErrorDialogHeaderText: 'Error',
+        },
+        exportLog: {
+            tableHeaders: {
+                expenseID: 'Expense ID',
+                employee: 'Employee Name and ID',
+                expenseType: 'Expense Type',
+            }
+        },
         mapping: {},
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
             guideHeaderText: 'Guide to setup your Integrations'
         },
         common: {
-            readMoreText: 'Read More'
+            readMoreText: 'Read More',
+            exportLogTabName: 'Export Log',
+            viewExpenseText: 'View Expense',
+            corporateCard: 'Corporate Card',
+            errors: 'Errors'
         }
     },
     co: {
@@ -284,15 +306,37 @@ const content: ContentConfiguration = {
                 hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">configuration</b> section.'
             }
         },
-        dashboard: {},
-        exportLog: {},
+        dashboard: {
+            exportHeaderFirstTimeZeroStateText: 'Sit back and relax',
+            exportHeaderZeroStateText: 'You are all caught up',
+            lastExportSuccessText: 'Successful expenses',
+            lastExportFailedText: 'Failed expenses',
+            lastExportedAtText: 'Last export at:',
+            nextExportAtText: 'Next export at:',
+            integrationErrorHeader: 'Integrations errors',
+            employeeMappingErrorText: 'Employee mapping errors',
+            categoryMappingErrorText: 'Category mapping errors',
+            qboErrorText: 'errors',
+            qboErrorDialogHeaderText: 'error',
+        },
+        exportLog: {
+            tableHeaders: {
+                expenseID: 'Expense ID',
+                employee: 'Employee',
+                expenseType: 'Expense type',
+            }
+        },
         mapping: {},
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
             guideHeaderText: 'Guide to setup your integrations'
         },
         common: {
-            readMoreText: 'Read more'
+            readMoreText: 'Read more',
+            exportLogTabName: 'Export log',
+            viewExpenseText: 'View expense',
+            corporateCard: 'Corporate card',
+            errors: 'errors'
         }
     }
 };
