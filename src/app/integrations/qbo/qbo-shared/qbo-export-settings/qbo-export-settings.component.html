@@ -136,7 +136,7 @@
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
                         [label]="brandingContent.headerText"
-                        [subLabel]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online'"
+                        [subLabel]="brandingContent.contentText"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"
                         [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">

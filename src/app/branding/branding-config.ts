@@ -205,7 +205,7 @@ const content: ContentConfiguration = {
         configuration: {
             exportSetting: {
                 headerText: 'Export Corporate Card Expenses',
-                contentText: '',
+                contentText: 'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online',
                 corporateCard: {
                     sectionLabel: '',
                     subLabel: '',
@@ -222,7 +222,7 @@ const content: ContentConfiguration = {
         configuration: {
             exportSetting: {
                 headerText: 'Export corporate card expenses',
-                contentText: '',
+                contentText: 'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + ' if not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online',
                 corporateCard: {
                     sectionLabel: '',
                     subLabel: '',
