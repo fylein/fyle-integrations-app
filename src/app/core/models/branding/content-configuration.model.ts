@@ -58,7 +58,12 @@ export type ContentConfiguration = {
                 expenseID: string;
                 employee: string;
                 expenseType: string;
-            }
+                dateTime: string;
+                exportedAs: string;
+                exportSkippedOn: string;
+            },
+            searchPlaceholder: string;
+            dateRangeLabel: string;
         },
         mapping: {},
         landing: {

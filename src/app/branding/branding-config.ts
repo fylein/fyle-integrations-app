@@ -259,8 +259,13 @@ const content: ContentConfiguration = {
             tableHeaders: {
                 expenseID: 'Expense ID',
                 employee: 'Employee Name and ID',
-                expenseType: 'Expense Type'
-            }
+                expenseType: 'Expense Type',
+                dateTime: 'Date and Time of Export',
+                exportedAs: 'Exported As',
+                exportSkippedOn: 'Export Skipped On',
+            },
+            searchPlaceholder: 'Search by Employee Name or Expense ID',
+            dateRangeLabel: 'Or, Select Date range',
         },
         mapping: {},
         landing: {
@@ -334,8 +339,13 @@ const content: ContentConfiguration = {
             tableHeaders: {
                 expenseID: 'Expense ID',
                 employee: 'Employee',
-                expenseType: 'Expense type'
-            }
+                expenseType: 'Expense type',
+                dateTime: 'Date and time of export',
+                exportedAs: 'Exported as',
+                exportSkippedOn: 'Export skipped on',
+            },
+            searchPlaceholder: 'Search by employee or expense ID',
+            dateRangeLabel: 'Or, select date range',
         },
         mapping: {},
         landing: {
