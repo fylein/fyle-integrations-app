@@ -241,7 +241,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out'"
+                            [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
                             [placeholder]="'Select CCC expense state'"

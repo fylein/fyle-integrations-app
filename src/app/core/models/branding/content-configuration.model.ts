@@ -12,6 +12,7 @@ export type ContentConfiguration = {
                     defaultCCCVendorLabel: string;
                     accountsPayableLabel: string;
                     accountsPayableSubLabel: string;
+                    creditCardExportTypeSubLabel: string;
                     journalOptionLabel: string;
                     journalOptionSubLabel: string;
                 }
