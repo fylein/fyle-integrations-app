@@ -134,8 +134,8 @@ export type AdvancedSettingsPost = {
           default_class: mapAttribute('defaultClass', 'destination_id', 'value'),
           default_project: mapAttribute('defaultProject', 'destination_id', 'value'),
           default_item: mapAttribute('defaultItems', 'destination_id', 'value'),
-          use_intacct_employee_departments: !!getFormValue('useEmployeeLocation'),
-          use_intacct_employee_locations: !!getFormValue('useEmployeeDepartment')
+          use_intacct_employee_departments: !!getFormValue('useEmployeeDepartment'),
+          use_intacct_employee_locations: !!getFormValue('useEmployeeLocation')
         },
         workspace_schedules: {
           enabled: !!getFormValue('scheduleAutoExport'),
