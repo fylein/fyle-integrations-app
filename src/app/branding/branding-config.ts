@@ -268,7 +268,7 @@ const content: ContentConfiguration = {
             dateRangeLabel: 'Or, Select Date range'
         },
         mapping: {
-            filterPlaceholder: 'Select Status',
+            filterPlaceholder: 'Select Status'
         },
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
@@ -350,7 +350,7 @@ const content: ContentConfiguration = {
             dateRangeLabel: 'Or, select date range'
         },
         mapping: {
-            filterPlaceholder: 'Select status',
+            filterPlaceholder: 'Select status'
         },
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
