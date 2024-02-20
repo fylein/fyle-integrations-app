@@ -38,6 +38,10 @@ export class ExportLogFilterComponent implements OnInit {
 
   constructor() { }
 
+  clearDateFilter(): void {
+    this.exportLogForm.controls.start.patchValue('');
+  }
+
   setupSearchWatcher() {
     this.exportLogForm.controls.searchOption.valueChanges.subscribe((value) => {
       this.handleSimpleSearch.emit(value);
