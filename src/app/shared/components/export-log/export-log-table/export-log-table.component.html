@@ -1,11 +1,11 @@
 <p-table *ngIf="filteredExpenseGroups.length > 0" #dt1 [value]="filteredExpenseGroups">
     <ng-template pTemplate="header">
         <tr class="tw-text-text-primary">
-            <th class="tw-min-w-120-px" *ngIf="!isDashboardFailed">Date and Time of Export</th>
-            <th>Employee Name and ID</th>
-            <th *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">Expense Type</th>
+            <th class="tw-min-w-120-px" *ngIf="!isDashboardFailed">{{brandingContent.tableHeaders.dateTime}}</th>
+            <th>Employee</th>
+            <th *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{brandingContent.tableHeaders.expenseType}}</th>
             <th>Reference ID</th>
-            <th *ngIf="!isDashboardFailed">Exported As</th>
+            <th *ngIf="!isDashboardFailed">{{brandingContent.tableHeaders.exportedAs}}</th>
             <th *ngIf="!isDashboardFailed">Link to {{appName}}</th>
             <th class="tw-min-w-120-px" *ngIf="isDashboardFailed">Link to {{ brandingConfig.brandName }}</th>
         </tr>

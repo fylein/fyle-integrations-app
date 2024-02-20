@@ -204,6 +204,7 @@ const content: ContentConfiguration = {
     fyle: {
         configuration: {
             exportSetting: {
+                stepName: 'Export Settings',
                 headerText: 'Export Corporate Card Expenses',
                 contentText: 'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online',
                 corporateCard: {
@@ -221,6 +222,7 @@ const content: ContentConfiguration = {
                 }
             },
             importSetting: {
+                stepName: 'Import Settings',
                 headerText: '',
                 contentText: '',
                 importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
@@ -233,6 +235,7 @@ const content: ContentConfiguration = {
                 importVendorsAsMerchantsLabel: 'Import Vendors from QuickBooks Online'
             },
             advancedSettings: {
+                stepName: 'Advanced Settings',
                 autoCreateVendorsLabel: 'Auto-Create Vendors',
                 paymentSyncLabel: 'Auto Sync payment status for reimbursable expenses',
                 customizationSubLabel: 'You can choose what data points need to be exported and what shouldn\'t be.',
@@ -241,15 +244,57 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.',
                 billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in '
+            },
+            done: {
+                ctaText: 'Launch Integration',
+                hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.'
             }
         },
-        dashboard: {},
-        exportLog: {},
-        mapping: {}
+        dashboard: {
+            exportHeaderFirstTimeZeroStateText: 'Sit back and relax!',
+            exportHeaderZeroStateText: 'You are all caught up!',
+            lastExportSuccessText: 'Successful Expenses',
+            lastExportFailedText: 'Failed Expenses',
+            lastExportedAtText: 'Last Export at:',
+            nextExportAtText: 'Next Export at:',
+            integrationErrorHeader: 'Integrations Errors',
+            employeeMappingErrorText: 'Employee Mapping Errors',
+            categoryMappingErrorText: 'Category Mapping Errors',
+            qboErrorText: 'Errors',
+            qboErrorDialogHeaderText: 'Error'
+        },
+        exportLog: {
+            tableHeaders: {
+                expenseID: 'Expense ID',
+                employee: 'Employee Name and ID',
+                expenseType: 'Expense Type',
+                dateTime: 'Date and Time of Export',
+                exportedAs: 'Exported As',
+                exportSkippedOn: 'Export Skipped On'
+            },
+            searchPlaceholder: 'Search by Employee Name or Expense ID',
+            dateRangeLabel: 'Or, Select Date range'
+        },
+        mapping: {
+            filterPlaceholder: 'Select Status'
+        },
+        landing: {
+            contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
+            guideHeaderText: 'Guide to setup your Integrations'
+        },
+        common: {
+            readMoreText: 'Read More',
+            exportLogTabName: 'Export Log',
+            viewExpenseText: 'View Expense',
+            corporateCard: 'Corporate Card',
+            errors: 'Errors',
+            autoMap: 'Auto Map'
+        }
     },
     co: {
         configuration: {
             exportSetting: {
+                stepName: 'Export settings',
                 headerText: 'Export corporate card expenses',
                 contentText: 'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + ' if not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online',
                 corporateCard: {
@@ -267,6 +312,7 @@ const content: ContentConfiguration = {
                 }
             },
             importSetting: {
+                stepName: 'Import settings',
                 headerText: '',
                 contentText: '',
                 importCategoriesLabel: 'Import the chart of accounts as categories in ',
@@ -279,6 +325,7 @@ const content: ContentConfiguration = {
                 importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online'
             },
             advancedSettings: {
+                stepName: 'Advanced settings',
                 autoCreateVendorsLabel: 'Auto-create vendors',
                 paymentSyncLabel: 'Auto sync payment status for reimbursable expenses',
                 customizationSubLabel: 'you can choose what data points need to be exported and what shouldn\'t be.',
@@ -287,12 +334,52 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in '
-
+            },
+            done: {
+                ctaText: 'Launch integration',
+                hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">configuration</b> section.'
             }
         },
-        dashboard: {},
-        exportLog: {},
-        mapping: {}
+        dashboard: {
+            exportHeaderFirstTimeZeroStateText: 'Sit back and relax',
+            exportHeaderZeroStateText: 'You are all caught up',
+            lastExportSuccessText: 'Successful expenses',
+            lastExportFailedText: 'Failed expenses',
+            lastExportedAtText: 'Last export at:',
+            nextExportAtText: 'Next export at:',
+            integrationErrorHeader: 'Integrations errors',
+            employeeMappingErrorText: 'Employee mapping errors',
+            categoryMappingErrorText: 'Category mapping errors',
+            qboErrorText: 'errors',
+            qboErrorDialogHeaderText: 'error'
+        },
+        exportLog: {
+            tableHeaders: {
+                expenseID: 'Expense ID',
+                employee: 'Employee',
+                expenseType: 'Expense type',
+                dateTime: 'Date and time of export',
+                exportedAs: 'Exported as',
+                exportSkippedOn: 'Export skipped on'
+            },
+            searchPlaceholder: 'Search by employee or expense ID',
+            dateRangeLabel: 'Or, select date range'
+        },
+        mapping: {
+            filterPlaceholder: 'Select status'
+        },
+        landing: {
+            contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
+            guideHeaderText: 'Guide to setup your integrations'
+        },
+        common: {
+            readMoreText: 'Read more',
+            exportLogTabName: 'Export log',
+            viewExpenseText: 'View expense',
+            corporateCard: 'Corporate card',
+            errors: 'errors',
+            autoMap: 'Auto map'
+        }
     }
 };
 

@@ -2,6 +2,7 @@ export type ContentConfiguration = {
     [brandingId: string]: {
         configuration: {
             exportSetting: {
+                stepName: string;
                 headerText: string;
                 contentText: string;
                 corporateCard: {
@@ -19,6 +20,7 @@ export type ContentConfiguration = {
                 }
             },
             importSetting: {
+                stepName: string;
                 headerText: string;
                 contentText: string;
                 importCategoriesLabel: string;
@@ -31,6 +33,7 @@ export type ContentConfiguration = {
                 importVendorsAsMerchantsLabel: string;
             },
             advancedSettings: {
+                stepName: string;
                 autoCreateVendorsLabel: string;
                 paymentSyncLabel: string;
                 customizationSubLabel: string;
@@ -39,10 +42,51 @@ export type ContentConfiguration = {
                 singleCreditLineJESubLabel: string;
                 billPaymentAccountLabel: string;
                 billPaymentAccountSubLabel: string;
+            },
+            done: {
+                ctaText: string;
+                hintText: string;
             }
         },
-        dashboard: {},
-        exportLog: {},
-        mapping: {}
+        dashboard: {
+            exportHeaderFirstTimeZeroStateText: string;
+            exportHeaderZeroStateText: string;
+            lastExportSuccessText: string;
+            lastExportFailedText: string;
+            lastExportedAtText: string;
+            nextExportAtText: string;
+            integrationErrorHeader: string;
+            employeeMappingErrorText: string;
+            categoryMappingErrorText: string;
+            qboErrorText: string;
+            qboErrorDialogHeaderText: string;
+        },
+        exportLog: {
+            tableHeaders: {
+                expenseID: string;
+                employee: string;
+                expenseType: string;
+                dateTime: string;
+                exportedAs: string;
+                exportSkippedOn: string;
+            },
+            searchPlaceholder: string;
+            dateRangeLabel: string;
+        },
+        mapping: {
+            filterPlaceholder: string;
+        },
+        landing: {
+            contentText: string;
+            guideHeaderText: string;
+        },
+        common: {
+            readMoreText: string;
+            exportLogTabName: string;
+            viewExpenseText: string;
+            corporateCard: string;
+            errors: string;
+            autoMap: string;
+        }
     }
 }
