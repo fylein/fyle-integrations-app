@@ -83,8 +83,7 @@
   }
   
   .chip-hint {
-    font-size: 12px !important;
-    color: grey !important;
+    @apply tw-text-12-px tw-text-form-default-help-text-color #{!important};
   }
   
   :host ::ng-deep .p-dropdown {
