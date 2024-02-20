@@ -17,8 +17,8 @@
                   <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </div>
             </div>
-            <div class="tw-flex dropdown-row tw-mt-8-px tw-pb-24-px">
-              <p class="tw-text-14-px tw-text-text-tertiary tw-pt-6-px">Where</p>
+            <div class="tw-flex dropdown-row tw-pb-24-px">
+              <p class="tw-text-14-px tw-text-form-label-text-color">Where</p>
               <div class="tw-ml-80-px tw-mr-24-px">
                 <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select Condition">
                   For options
@@ -61,7 +61,7 @@
         </div>
   
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
-          <div class="tw-flex tw-ml-120-px tw-mt-8-px">
+          <div class="tw-flex tw-ml-120-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
                   Condition
                   <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
