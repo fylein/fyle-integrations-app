@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header
-            [headerText]="'Advanced Settings'"
+            [headerText]="brandingContent.stepName"
             [contentText]="'In this section, you can customize the integration based on your accounting requirements. '"
             [redirectLink]="supportArticleLink"
             [showSyncButton]="isOnboarding"
@@ -120,7 +120,7 @@
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'Item level description'"
-                    [label]="'Set the line item-level Description Field in QuickBooks Online'"
+                    [label]="brandingContent.memoStructureLabel"
                     [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'"
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"

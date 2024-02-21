@@ -203,6 +203,12 @@ export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
 const content: ContentConfiguration = {
     fyle: {
         configuration: {
+            connector: {
+                stepName: 'Connect to Quickbooks Online'
+            },
+            employeeSetting: {
+                stepName: 'Map Employees'
+            },
             exportSetting: {
                 stepName: 'Export Settings',
                 headerText: 'Export Corporate Card Expenses',
@@ -211,7 +217,8 @@ const content: ContentConfiguration = {
                     sectionLabel: '',
                     subLabel: '',
                     exportSubLabel: '',
-                    defaultCCCAccountLabel: '',
+                    defaultCCCAccountLabel: 'Set Default Credit Card Account as',
+                    defaultDebitCardAccountLabel: 'Set Default Debit Card Account as',
                     defaultCCCVendorLabel: 'Set default corporate Card Vendor as',
                     accountsPayableLabel: 'To which Accounts Payable account should the ',
                     accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
@@ -243,7 +250,8 @@ const content: ContentConfiguration = {
                 singleCreditLineJELabel: 'Create a single itemized offset credit entry for Journal',
                 singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.',
                 billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
-                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in '
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
+                memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online'
             },
             done: {
                 ctaText: 'Launch Integration',
@@ -288,11 +296,22 @@ const content: ContentConfiguration = {
             viewExpenseText: 'View Expense',
             corporateCard: 'Corporate Card',
             errors: 'Errors',
-            autoMap: 'Auto Map'
+            autoMap: 'Auto Map',
+            customField: 'Add new Custom Field',
+            customFieldName: 'Field Name',
+            customFieldPlaceholderName: 'Placeholder Name',
+            customFieldType: 'Field Type',
+            customFieldCreateandSave: 'Create and save'
         }
     },
     co: {
         configuration: {
+            connector: {
+                stepName: 'Connect to Quickbooks Online'
+            },
+            employeeSetting: {
+                stepName: 'Map employees'
+            },
             exportSetting: {
                 stepName: 'Export settings',
                 headerText: 'Export corporate card expenses',
@@ -301,7 +320,8 @@ const content: ContentConfiguration = {
                     sectionLabel: '',
                     subLabel: '',
                     exportSubLabel: '',
-                    defaultCCCAccountLabel: '',
+                    defaultCCCAccountLabel: 'Set default credit card account as',
+                    defaultDebitCardAccountLabel: 'Set default debit card account as',
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
                     accountsPayableLabel: 'To which accounts payable account should the ',
                     accountsPayableSubLabel: ' to the selected accounts payable Account.',
@@ -333,7 +353,8 @@ const content: ContentConfiguration = {
                 singleCreditLineJELabel: 'Create a single itemized offset credit entry for journal',
                 singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
-                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in '
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
+                memoStructureLabel: 'Set the line item-level description field in QuickBooks Online'
             },
             done: {
                 ctaText: 'Launch integration',
@@ -378,7 +399,13 @@ const content: ContentConfiguration = {
             viewExpenseText: 'View expense',
             corporateCard: 'Corporate card',
             errors: 'errors',
-            autoMap: 'Auto map'
+            autoMap: 'Auto map',
+            customField: 'Add new custom field',
+            customFieldName: 'Field name',
+            customFieldPlaceholderName: 'Placeholder name',
+            customFieldType: 'Field type',
+            customFieldCreateandSave: 'Create and save'
+
         }
     }
 };

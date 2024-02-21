@@ -5,7 +5,7 @@
     <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
         <div>
             <app-configuration-step-header
-                [headerText]="'Export Settings'"
+                [headerText]="brandingContent.stepName"
                 [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Online'"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
@@ -182,7 +182,7 @@
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'credit card account'"
-                              [label]="'Set Default Credit Card Account as'"
+                              [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
                               [subLabel]="'Post all your company corporate card transactions to a default credit card account.'"
                               [placeholder]="'Select Default Credit Card Account'"
                               [formControllerName]="'defaultCCCAccount'">
@@ -197,7 +197,7 @@
                               [iconPath]="'list'"
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'debit card account'"
-                              [label]="'Set Default Debit Card Account as'"
+                              [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
                               [subLabel]="'Post all your company debit card transactions to a default debit card account.'"
                               [placeholder]="'Select Default Debit Card Account'"
                               [formControllerName]="'defaultDebitCardAccount'">
@@ -268,7 +268,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | lowercase))  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"

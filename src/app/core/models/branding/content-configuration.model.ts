@@ -1,6 +1,12 @@
 export type ContentConfiguration = {
     [brandingId: string]: {
         configuration: {
+            connector: {
+                stepName: string;
+            },
+            employeeSetting: {
+                stepName: string;
+            },
             exportSetting: {
                 stepName: string;
                 headerText: string;
@@ -10,6 +16,7 @@ export type ContentConfiguration = {
                     subLabel: string;
                     exportSubLabel: string;
                     defaultCCCAccountLabel: string;
+                    defaultDebitCardAccountLabel: string;
                     defaultCCCVendorLabel: string;
                     accountsPayableLabel: string;
                     accountsPayableSubLabel: string;
@@ -42,6 +49,7 @@ export type ContentConfiguration = {
                 singleCreditLineJESubLabel: string;
                 billPaymentAccountLabel: string;
                 billPaymentAccountSubLabel: string;
+                memoStructureLabel: string;
             },
             done: {
                 ctaText: string;
@@ -87,6 +95,11 @@ export type ContentConfiguration = {
             corporateCard: string;
             errors: string;
             autoMap: string;
+            customField: string;
+            customFieldName: string;
+            customFieldPlaceholderName: string;
+            customFieldType: string;
+            customFieldCreateandSave: string;
         }
     }
 }
