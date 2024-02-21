@@ -290,7 +290,12 @@ const content: ContentConfiguration = {
             viewExpenseText: 'View Expense',
             corporateCard: 'Corporate Card',
             errors: 'Errors',
-            autoMap: 'Auto Map'
+            autoMap: 'Auto Map',
+            customField: 'Add new Custom Field',
+            customFieldName: 'Field Name',
+            customFieldPlaceholderName: 'Placeholder Name',
+            customFieldType: 'Field Type',
+            customFieldCreateandSave: 'Create and save',
         }
     },
     co: {
@@ -382,7 +387,13 @@ const content: ContentConfiguration = {
             viewExpenseText: 'View expense',
             corporateCard: 'Corporate card',
             errors: 'errors',
-            autoMap: 'Auto map'
+            autoMap: 'Auto map',
+            customField: 'Add new custom field',
+            customFieldName: 'Field name',
+            customFieldPlaceholderName: 'Placeholder name',
+            customFieldType: 'Field type',
+            customFieldCreateandSave: 'Create and save',
+            
         }
     }
 };

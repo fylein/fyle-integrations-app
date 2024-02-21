@@ -89,6 +89,11 @@ export type ContentConfiguration = {
             corporateCard: string;
             errors: string;
             autoMap: string;
+            customField: string;
+            customFieldName: string;
+            customFieldPlaceholderName: string;
+            customFieldType: string;
+            customFieldCreateandSave: string;
         }
     }
 }
