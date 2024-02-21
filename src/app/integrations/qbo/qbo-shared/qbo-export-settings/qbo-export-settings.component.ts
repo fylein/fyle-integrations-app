@@ -130,8 +130,6 @@ export class QboExportSettingsComponent implements OnInit {
           this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
         } else if (this.isAdvancedSettingAffected()) {
           this.router.navigate(['/integrations/qbo/main/configuration/advanced_settings']);
-        } else {
-          this.router.navigate(['/integrations/qbo/main/dashboard']);
         }
       }, () => {
         this.isSaveInProgress = false;
