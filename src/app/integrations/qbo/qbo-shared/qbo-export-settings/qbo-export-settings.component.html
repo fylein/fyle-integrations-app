@@ -184,7 +184,7 @@
                               [mandatoryErrorListName]="'credit card account'"
                               [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
                               [subLabel]="'Post all your company corporate card transactions to a default credit card account.'"
-                              [placeholder]="'Select Default Credit Card Account'"
+                              [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
                               [formControllerName]="'defaultCCCAccount'">
                             </app-configuration-select-field>
                         </div>
@@ -199,7 +199,7 @@
                               [mandatoryErrorListName]="'debit card account'"
                               [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
                               [subLabel]="'Post all your company debit card transactions to a default debit card account.'"
-                              [placeholder]="'Select Default Debit Card Account'"
+                              [placeholder]="brandingContent.corporateCard.defaultDebitCardAccountPlaceholder"
                               [formControllerName]="'defaultDebitCardAccount'">
                             </app-configuration-select-field>
                         </div>
@@ -244,7 +244,7 @@
                             [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
-                            [placeholder]="'Select CCC expense state'"
+                            [placeholder]="brandingContent.corporateCard.expenseState"
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
                     </div>
@@ -272,7 +272,7 @@
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase)"
+                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
                     </div>
