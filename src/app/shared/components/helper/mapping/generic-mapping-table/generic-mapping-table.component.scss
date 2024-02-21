@@ -7,24 +7,8 @@
     @apply tw-text-placeholder #{!important};
 }
 
-:host ::ng-deep .mappingFilterDropdown .p-dropdown {
-    @apply tw-w-200-px #{!important}
-}
-
-:host ::ng-deep .mapped {
-    @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-mapped-green-border tw-bg-mapped-green-bg tw-py-4-px tw-px-12-px tw-text-success-toast tw-w-fit #{!important}
-}
-
 :host ::ng-deep .unmapped {
     @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-unmapped-red-border tw-bg-unmapped-red-bg tw-py-4-px tw-px-12-px tw-text-alert-toast tw-w-fit #{!important}
-}
-
-:host ::ng-deep .filterDropdown .p-dropdown .p-dropdown-label.p-inputtext {
-    @apply tw-py-10-px #{!important};
-}
-
-:host ::ng-deep .selectedItem  .p-dropdown .p-dropdown-label.p-inputtext {
-    @apply tw-py-5-px #{!important};
 }
 
 :host ::ng-deep .selectedItem  .p-dropdown-trigger {
@@ -33,10 +17,6 @@
 
 :host ::ng-deep .filterDropdown  .p-dropdown-trigger {
     @apply tw-block #{!important};
-}
-
-:host ::ng-deep .p-dropdown .p-dropdown-trigger {
-    @apply tw-w-32-px #{!important};
 }
 
 :host ::ng-deep .textbox {
@@ -65,4 +45,12 @@ td {
 
 :host ::ng-deep .tooltip-return {
     @apply tw-mt-6-px tw-px-4-px tw-py-4-px tw-text-9-px tw-rounded-md tw-bg-placeholder  #{!important}
+}
+
+input[type="text"] {
+    @apply tw-border-border-primary #{!important};
+}
+
+::placeholder {
+    @apply tw-text-search-focused-placeholder-text;
 }

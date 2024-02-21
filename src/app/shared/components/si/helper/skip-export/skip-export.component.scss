@@ -25,10 +25,6 @@
   @apply tw-text-12-px tw-mr-12-px tw-w-auto;
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-trigger {
-  @apply tw-w-auto;
-}
-
 :host ::ng-deep .p-calendar .p-inputtext {
   @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border-solid tw-py-10-px tw-px-14-px #{!important};
 }
