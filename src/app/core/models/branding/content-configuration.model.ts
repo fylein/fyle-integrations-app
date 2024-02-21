@@ -10,6 +10,7 @@ export type ContentConfiguration = {
                     subLabel: string;
                     exportSubLabel: string;
                     defaultCCCAccountLabel: string;
+                    defaultDebitCardAccountLabel: string;
                     defaultCCCVendorLabel: string;
                     accountsPayableLabel: string;
                     accountsPayableSubLabel: string;
