@@ -92,20 +92,19 @@ export class BusinessCentralDashboardComponent implements OnInit {
             CATEGORY_MAPPING: null
           };
           this.accountingExportSummary = responses[1];
+          this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
+
+          this.exportableAccountingExportIds = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).map(taskLog => taskLog.id);
+
+          this.isExportInProgress = false;
+          this.exportProgressPercentage = 0;
+          this.processedCount = 0;
+          if (this.failedExpenseGroupCount === 0) {
+            this.refinerService.triggerSurvey(
+              AppName.BUSINESS_CENTRAL, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
+            );
+          }
         });
-
-        this.failedExpenseGroupCount = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).length;
-
-        this.exportableAccountingExportIds = res.results.filter(task => task.status === AccountingExportStatus.FAILED || task.status === AccountingExportStatus.FATAL).map(taskLog => taskLog.id);
-
-        this.isExportInProgress = false;
-        this.exportProgressPercentage = 0;
-        this.processedCount = 0;
-        if (this.failedExpenseGroupCount === 0) {
-          this.refinerService.triggerSurvey(
-            AppName.BUSINESS_CENTRAL, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
-          );
-        }
       }
     });
   }

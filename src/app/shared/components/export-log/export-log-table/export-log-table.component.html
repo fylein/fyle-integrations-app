@@ -18,16 +18,39 @@
                 <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exportedAt | date : "HH:ss"}}</span>
             </td>
             <td>
-                <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary">
+                <!-- <h4 [ngClass]="{'truncate': rowData.employee[0]?.length > 16}"
+                    [pTooltip]="rowData.employee[0]?.length > 16 ? rowData.employee[0] : null"
+                    tooltipPosition="top">
                     {{rowData.employee[0]}}
                 </h4>
-                <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted">
+                <h5 class="tw-font-400 !tw-text-12-px tw-text-placeholder"
+                    [ngClass]="{'truncate': rowData.employee[1]?.length > 16}"
+                    [pTooltip]="rowData.employee[1]?.length > 16 ? rowData.employee[1] : null"
+                    tooltipPosition="top">
+                    {{rowData.employee[1]}}
+                </h5> -->
+                <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary"
+                    [ngClass]="{'truncate': rowData.employee[0]?.length > 16 && !isExportLogTable}"
+                    [pTooltip]="rowData.employee[0]?.length > 16 ? rowData.employee[0] : null"
+                    tooltipPosition="top">
+                    {{rowData.employee[0]}}
+                </h4>
+                <h5 class="tw-font-400 !tw-text-12-px tw-text-text-muted"
+                    [ngClass]="{'truncate': rowData.employee[1]?.length > 16 && !isExportLogTable}"
+                    [pTooltip]="rowData.employee[1]?.length > 16 ? rowData.employee[1] : null"
+                    tooltipPosition="top">
                     {{rowData.employee[1]}}
                 </h5>
             </td>
             <td class="tw-text-text-secondary" *ngIf="isExportLogTable && brandingFeatureConfig.featureFlags.exportLog.expenseType">{{rowData.expenseType | titlecase}}</td>
             <td class="tw-text-text-secondary tw-underline" (click)="openUrl(rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
-            <td class="tw-text-text-secondary" *ngIf="!isDashboardFailed">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
+            <td class="tw-text-text-secondary" *ngIf="!isDashboardFailed">
+                <span [ngClass]="{'truncate-export-type': rowData.exportedAs.length > 10 && !isExportLogTable}"
+                    [pTooltip]="rowData.exportedAs.length > 10 ? rowData.exportedAs : null"
+                    tooltipPosition="top">
+                    {{brandingConfig.brandId === 'co' ? (rowData.exportedAs | snakeCaseToSpaceCase) : (rowData.exportedAs | snakeCaseToSpaceCase | titlecase)}}
+                </span>
+            </td>
             <td *ngIf="!isDashboardFailed">
                 <div>
                   <button (click)="openUrl(rowData.integrationUrl)" pTooltip="Open in New Tab" tooltipPosition="top">

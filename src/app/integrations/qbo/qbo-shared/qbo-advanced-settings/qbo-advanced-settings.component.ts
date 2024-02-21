@@ -139,8 +139,6 @@ export class QboAdvancedSettingsComponent implements OnInit {
       if (this.isOnboarding) {
         this.workspaceService.setOnboardingState(QBOOnboardingState.COMPLETE);
         this.router.navigate([`/integrations/qbo/onboarding/done`]);
-      } else {
-        this.router.navigate(['/integrations/qbo/main/dashboard']);
       }
     }, () => {
       this.isSaveInProgress = false;
