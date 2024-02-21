@@ -244,7 +244,8 @@ const content: ContentConfiguration = {
                 singleCreditLineJELabel: 'Create a single itemized offset credit entry for Journal',
                 singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.',
                 billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
-                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in '
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
+                memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online',
             },
             done: {
                 ctaText: 'Launch Integration',
@@ -335,7 +336,8 @@ const content: ContentConfiguration = {
                 singleCreditLineJELabel: 'Create a single itemized offset credit entry for journal',
                 singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
-                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in '
+                billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
+                memoStructureLabel: 'Set the line item-level description Field in QuickBooks Online',
             },
             done: {
                 ctaText: 'Launch integration',

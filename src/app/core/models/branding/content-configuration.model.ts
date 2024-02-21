@@ -43,6 +43,7 @@ export type ContentConfiguration = {
                 singleCreditLineJESubLabel: string;
                 billPaymentAccountLabel: string;
                 billPaymentAccountSubLabel: string;
+                memoStructureLabel: string;
             },
             done: {
                 ctaText: string;
