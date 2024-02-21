@@ -18,17 +18,6 @@
                 <span class="tw-font-400 !tw-text-12-px tw-text-text-muted">{{rowData.exportedAt | date : "HH:ss"}}</span>
             </td>
             <td>
-                <!-- <h4 [ngClass]="{'truncate': rowData.employee[0]?.length > 16}"
-                    [pTooltip]="rowData.employee[0]?.length > 16 ? rowData.employee[0] : null"
-                    tooltipPosition="top">
-                    {{rowData.employee[0]}}
-                </h4>
-                <h5 class="tw-font-400 !tw-text-12-px tw-text-placeholder"
-                    [ngClass]="{'truncate': rowData.employee[1]?.length > 16}"
-                    [pTooltip]="rowData.employee[1]?.length > 16 ? rowData.employee[1] : null"
-                    tooltipPosition="top">
-                    {{rowData.employee[1]}}
-                </h5> -->
                 <h4 class="tw-text-14-px tw-font-400 tw-text-text-secondary"
                     [ngClass]="{'truncate': rowData.employee[0]?.length > 16 && !isExportLogTable}"
                     [pTooltip]="rowData.employee[0]?.length > 16 ? rowData.employee[0] : null"
