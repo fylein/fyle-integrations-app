@@ -12,11 +12,14 @@ export type ContentConfiguration = {
                 headerText: string;
                 contentText: string;
                 corporateCard: {
+                    expenseState: string;
                     sectionLabel: string;
                     subLabel: string;
                     exportSubLabel: string;
                     defaultCCCAccountLabel: string;
+                    defaultCCCAccountPlaceholder: string;
                     defaultDebitCardAccountLabel: string;
+                    defaultDebitCardAccountPlaceholder: string;
                     defaultCCCVendorLabel: string;
                     accountsPayableLabel: string;
                     accountsPayableSubLabel: string;
