@@ -11,7 +11,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class QboOnboardingImportSettingsComponent implements OnInit {
   
-  brandingContent = brandingContent.configuration.exportSetting;
+  brandingContent = brandingContent.configuration.importSetting;
 
   onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
 
