@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
    <app-loader></app-loader>
 </div>
-<div  class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px': brandingConfig.brandId === 'fyle', 'tw-mx-60-px': brandingConfig.brandId === 'co'}">
+<div  class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
    <div>
       <app-configuration-step-header 
       [headerText]="'Connect to Sage Intacct'"
@@ -13,21 +13,21 @@
          <div class="tw-p-24-px">
            <div class="container">
              <div class="tw-mb-4">
-               <p class="tw-text-faded-text-color tw-pb-8-px">User ID<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
+               <p class="tw-text-text-muted tw-pb-8-px">User ID<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
                <input placeholder="Enter User ID" type="text" id="userId" name="userId" formControlName="userID" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.userID.invalid && connectSageIntacctForm.controls.userID.touched ? 'error-box' : 'normal-box']">
                <div *ngIf="connectSageIntacctForm.controls.userID.invalid && connectSageIntacctForm.controls.userID.touched" class="incorrect-credential">
                   Invalid User ID. Please enter valid User ID.
                </div>
              </div>
              <div class="tw-mb-4">
-               <p for="companyId" class="tw-text-faded-text-color tw-pb-8-px tw-pt-16-px">Company ID<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
+               <p for="companyId" class="tw-text-text-muted tw-pb-8-px tw-pt-16-px">Company ID<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
                <input placeholder="Enter Company ID" type="text" id="companyId" name="companyId" formControlName="companyID" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.companyID.invalid && connectSageIntacctForm.controls.companyID.touched ? 'error-box' : 'normal-box']">
                <div *ngIf="connectSageIntacctForm.controls.companyID.invalid && connectSageIntacctForm.controls.companyID.touched" class="incorrect-credential">
                  Invalid Company ID. Please enter valid Company ID.
                </div>
              </div>
              <div class="tw-mb-4">
-               <p for="userPassword" class="tw-text-faded-text-color tw-pb-8-px tw-pt-16-px">User Password<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
+               <p for="userPassword" class="tw-text-text-muted tw-pb-8-px tw-pt-16-px">User Password<app-mandatory-field [noSpacing]="true"></app-mandatory-field></p>
                <input placeholder="Enter User Password" type="password" formControlName="userPassword" class="custom-focus tw-border tw-border-gray-300 tw-rounded tw-px-3 tw-py-2 tw-w-400-px" [ngClass]="[connectSageIntacctForm.controls.userPassword.invalid && connectSageIntacctForm.controls.userPassword.touched ? 'error-box' : 'normal-box']">
                <div *ngIf="connectSageIntacctForm.controls.userPassword.invalid && connectSageIntacctForm.controls.userPassword.touched" class="incorrect-credential">
                   Incorrect Password. Please enter correct Password.
@@ -37,8 +37,6 @@
          </div>
        </form>
        
-      <div>
-         <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
       </div>
-   </div>
+      <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
 </div>

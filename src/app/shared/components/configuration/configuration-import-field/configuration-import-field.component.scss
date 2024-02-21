@@ -11,15 +11,15 @@
   }
   
   :host ::ng-deep .p-dropdown {
-    transform: scale(0.9);
+    // transform: scale(0.9);
   }
   
   .form-input-disabled {
-    @apply tw-px-12-px tw-pt-0 tw-pb-14-px tw-bg-disabled-bg-color tw-border tw-border-box-color tw-rounded-8-px ;
+    @apply tw-px-12-px tw-pt-0 tw-pb-14-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-8-px ;
   }
   
   .label-content {
-    @apply tw-bg-disabled-bg-color tw-border tw-border-box-color tw-rounded-4-px tw-h-100-px ;
+    @apply tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px tw-h-100-px ;
   }
   
   .name-text {
@@ -43,7 +43,7 @@
   }
   
   .sub-text-note {
-    @apply tw-flex tw-bg-info-section tw-p-16-px tw-items-start tw-self-stretch tw-text-14-px tw-font-400 tw-text-faded-text-color tw-not-italic
+    @apply tw-flex tw-bg-info-section tw-p-16-px tw-items-start tw-self-stretch tw-text-14-px tw-font-400 tw-text-text-muted tw-not-italic
   }
   
   .fields-header {
@@ -83,9 +83,13 @@
   }
 
   :host ::ng-deep .selectedAccItem .p-dropdown.p-disabled {
-    @apply tw-bg-disabled-bg-color tw-border tw-border-select-disabled-border #{!important}
+    @apply tw-bg-input-read-only-bg tw-opacity-100 tw-border tw-border-input-read-only-border #{!important}
   }
-  
+
+  :host ::ng-deep .selectedAccItem .p-dropdown.p-disabled .p-dropdown-label {
+    @apply tw-text-input-read-only-text #{!important};
+  }
+
   .error-box {
     @apply tw-bg-alert-toast tw-border tw-border-alert-toast tw-rounded-4-px ;
   }
@@ -96,7 +100,7 @@
 
 /* Hide the browser's default checkbox */
 .container input {
-  @apply tw-absolute tw-opacity-0 tw-cursor-pointer tw-h-0 tw-w-0
+  @apply tw-absolute  tw-cursor-pointer tw-h-0 tw-w-0
 }
 
 .checkmark {

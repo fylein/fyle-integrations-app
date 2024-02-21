@@ -31,7 +31,7 @@
 }
 
 .sub-text {
-    @apply tw-text-faded-text-color tw-text-12-px ;
+    @apply tw-text-text-muted tw-text-12-px ;
 }
 
 :host ::ng-deep .selectedItem .p-dropdown-trigger {

@@ -1,5 +1,5 @@
 <div [formGroup]="exportLogForm" class="tw-flex tw-items-center" [ngClass]="{'tw-p-24-px': isSimpleSearchRequired}">
-    <app-search *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="'Search by Employee Name or Expense ID'" [styleClasses]="'tw-w-350-px tw-h-40-px'"></app-search>
+    <app-search *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="brandingContent.searchPlaceholder" [styleClasses]="'tw-w-350-px tw-h-40-px'"></app-search>
     <div *ngIf="isSimpleSearchRequired" class="tw-flex tw-mr-4"></div>
     <span [ngClass]="{'tw-border-select-focused-border': isDateFieldFocused}" class="tw-flex tw-justify-start tw-items-center tw-px-12-px tw-py-4-px tw-rounded-4-px drop-down" [ngClass]="{'tw-border tw-border-select-default-border': isSimpleSearchRequired}">
         <p-calendar (onSelect)="onSelect($event)" (click)="showCalendar($event)" placeholder="Select date range" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [monthNavigator]="false">
@@ -31,7 +31,7 @@
 
                 <div class="tw-pt-14-px tw-h-32-px tw-rounded-4-px">
                     <span class="tw-text-calendar-day-text-color tw-text-12-px tw-font-nav-link-font-weight">
-                        Or, Select Date range
+                        {{brandingContent.dateRangeLabel}}
                     </span>
                 </div>
 
@@ -51,7 +51,8 @@
             </ng-template>
         </p-calendar>
         <div>
-            <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+            <app-svg-icon *ngIf="!(exportLogForm.value.start[0] && exportLogForm.value.start[1])" [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+            <app-svg-icon (iconClick)="clearDateFilter()" *ngIf="exportLogForm.value.start[0] && exportLogForm.value.start[1]" [svgSource]="'cross'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-cursor-pointer tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
         </div>
     </span>
 </div>

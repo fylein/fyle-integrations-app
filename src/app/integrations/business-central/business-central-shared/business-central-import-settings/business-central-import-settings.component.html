@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px': brandingConfig.brandId === 'fyle', 'tw-mx-60-px': brandingConfig.brandId === 'co'}">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header [headerText]="'Import Settings'"
             [contentText]="'In this section, you can choose the fields required to be imported from Dynamics 365 Business Central to ' + brandingConfig.brandName + '. '"
@@ -19,7 +19,7 @@
                         [subLabel]="'Imported account will be available as Categories in ' + brandingConfig.brandName " 
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-up-down'">
+                        [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                 </div>
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
@@ -29,7 +29,7 @@
                         [subLabel]="'Imported Vendor will be available as Merchants in ' + brandingConfig.brandName " 
                         [formControllerName]="'importVendorAsMerchant'"
                         [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-up-down'">
+                        [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                 </div>
                 <div>
@@ -41,14 +41,14 @@
                         [isDestinationFixedImport]="true">
                     </app-configuration-import-field>
                 </div>
-                <app-configuration-step-footer 
-                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
-                    [showBackButton] = "isOnboarding"
-                    [isButtonDisabled]="!importSettingForm.valid"
-                    (navigateToPreviousStep)="navigateBack()"
-                    (save)="save()">
-                </app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer 
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                [showBackButton] = "isOnboarding"
+                [isButtonDisabled]="!importSettingForm.valid"
+                (navigateToPreviousStep)="navigateBack()"
+                (save)="save()">
+            </app-configuration-step-footer>
         </form>
     </div>
     <div>

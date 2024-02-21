@@ -4,6 +4,7 @@ import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { Observable, Subject } from 'rxjs';
 import { QBOImportSettingGet, QBOImportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { ApiService } from '../../common/api.service';
+import { IntegrationField } from 'src/app/core/models/db/mapping.model';
 
 const qboImportSettingGetCache$ = new Subject<void>();
 
@@ -31,5 +32,9 @@ export class QboImportSettingsService {
   })
   postImportSettings(importSettingsPayload: QBOImportSettingPost): Observable<QBOImportSettingGet> {
     return this.apiService.put(`/v2/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
+  }
+
+  getQBOFields(): Observable<IntegrationField[]> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/qbo/fields/`, {});
   }
 }

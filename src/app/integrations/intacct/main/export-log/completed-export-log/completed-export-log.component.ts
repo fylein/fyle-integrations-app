@@ -204,8 +204,8 @@ export class CompletedExportLogComponent implements OnInit {
     });
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (dateRange[1]) {
-        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
         if (dateRange) {
           this.selectedDateFilter = {
             startDate: dateRange[0],
@@ -214,10 +214,10 @@ export class CompletedExportLogComponent implements OnInit {
 
           this.trackDateFilter('existing', this.selectedDateFilter);
           this.getExpenseGroups(paginator.limit, paginator.offset);
-        } else {
-          this.selectedDateFilter = null;
-          this.getExpenseGroups(paginator.limit, paginator.offset);
         }
+      } else {
+        this.selectedDateFilter = null;
+        this.getExpenseGroups(paginator.limit, paginator.offset);
       }
     });
   }

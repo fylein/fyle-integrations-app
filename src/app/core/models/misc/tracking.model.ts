@@ -49,6 +49,7 @@ export type TrackingAppMap = {
   [AppName.INTACCT]: TrackingApp.INTACCT,
   [AppName.QBO]: TrackingApp.QBO,
   [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
+  [AppName.NETSUITE]: TrackingApp.NETSUITE
 }
 
 export const trackingAppMap: TrackingAppMap = {
@@ -58,5 +59,6 @@ export const trackingAppMap: TrackingAppMap = {
   [AppName.BAMBOO_HR]: TrackingApp.BAMBOO_HR,
   [AppName.INTACCT]: TrackingApp.INTACCT,
   [AppName.QBO]: TrackingApp.QBO,
-  [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK
+  [AppName.TRAVELPERK]: TrackingApp.TRAVELPERK,
+  [AppName.NETSUITE]: TrackingApp.NETSUITE
 };

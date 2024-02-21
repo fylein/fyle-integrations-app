@@ -2,7 +2,7 @@
   <app-loader></app-loader>
 </div>
 
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px': brandingConfig.brandId === 'fyle', 'tw-mx-60-px': brandingConfig.brandId === 'co'}">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
   <div class="configuration--step-header configuration--step-header-styles">
     <app-configuration-step-header
       [headerText]="'Connect to Sage Intacct'"
@@ -41,16 +41,16 @@
               {{ locationEntity.location_entity_name | trimCharacter: 26 }}
             </h3>
 
-            <div *ngIf="!locationEntity" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-faded-text-color tw-text-center">
+            <div *ngIf="!locationEntity" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
               Please select a Location (Entity) from Sage Intacct to proceed further.
             </div>
 
-            <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-faded-text-color tw-text-center">
+            <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
               Please hold on; we are fetching data from your Sage Intacct account, which may take a few seconds.
             </div>
         </form>
     </div>
-    <app-configuration-step-footer *ngIf="!locationEntity" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
-    <app-configuration-step-footer *ngIf="locationEntity" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
   </div>
+  <app-configuration-step-footer *ngIf="!locationEntity" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!locationEntityForm.valid"></app-configuration-step-footer>
+  <app-configuration-step-footer *ngIf="locationEntity" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
 </div>

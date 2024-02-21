@@ -964,6 +964,7 @@ module.exports = {
       '24-px': '24px',
       '36-px': '36px',
       '40-px': '40px',
+      'label-text-size': 'var(--label-text-size)',
       ...fontSizes
     },
     fontWeight: {
@@ -983,6 +984,7 @@ module.exports = {
     },
     lineHeight: {
       'normal': 'normal',
+      'app': 'var(--app-line-height)',
       '1.14': '1.14',
       '1.2': '1.2',
       '1.4': '1.4',
@@ -1151,6 +1153,7 @@ module.exports = {
       minHeight: {
         '70-px': '70px',
         '228-px': '228px',
+        'dropdown-option-height': 'var(--dropdown-option-height)',
         ...dimensions
       },
       maxHeight: {
@@ -1249,6 +1252,7 @@ module.exports = {
         'toggle-width': 'var(--toggle-width)',
       },
       minWidth: {
+        '120-px': '120px',
         '160-px': '160px',
         '250-px': '250px',
         '300-px': '300px',
@@ -1316,6 +1320,7 @@ module.exports = {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
         'btn-cta-shadow': 'var(--btn-cta-shadow)',
         'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2)',
+        'stats-box': '0px 4px 4px 0px rgba(255, 255, 255, 0.02), 3px 3px 6px 0px rgba(255, 255, 255, 0.60) inset',
         ...shadow
       },
       dropShadow: {

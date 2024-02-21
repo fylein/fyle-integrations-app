@@ -123,9 +123,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   disconnectQbo(): void {
     this.isLoading = true;
     this.qboConnectorService.disconnectQBOConnection().subscribe(() => {
-      this.showDisconnectQBO = false;
-      this.qboCompanyName = null;
-      this.getSettings();
+      this.router.navigate(['/integrations/qbo/onboarding/landing']);
     });
   }
 

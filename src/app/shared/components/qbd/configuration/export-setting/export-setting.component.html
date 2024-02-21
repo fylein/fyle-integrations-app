@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px': brandingConfig.brandId === 'fyle', 'tw-mx-60-px': brandingConfig.brandId === 'co'}">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header 
         [headerText]="'Export Settings'"
@@ -36,7 +36,7 @@
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">To which {{ accountName() }} account should the {{ exportType(exportSettingsForm.value.reimbursableExportType, reimbursableExportTypes) }} be posted to?<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the {{ accountName() }} account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
+                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the {{ accountName() }} account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
@@ -49,7 +49,7 @@
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">To which account should the Mileage expenses be posted to?</h4>
-                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Mileage account as per your QuickBooks Desktop setup. This is the account to which all the mileage expenses from {{ brandingConfig.brandName }} will be posted.</h5>
+                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Mileage account as per your QuickBooks Desktop setup. This is the account to which all the mileage expenses from {{ brandingConfig.brandName }} will be posted.</h5>
                                     </div>
                             
                                     <div class="tw-pl-18-px">
@@ -134,7 +134,7 @@
                                 <div class="tw-pl-16 tw-pt-16-px tw-pr-24-px tw-pb-24-px tw-flex tw-flex-row tw-space-between">
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2">
                                         <h4 class="!tw-text-14-px !tw-font-500">Enter the Credit card account name<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Credit Card Account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
+                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Please share the exact name of the Credit Card Account as per your QuickBooks Desktop setup. This is the account to which all the expenses from {{brandingConfig.brandName}} will be posted. </h5>
                                     </div>
 
                                     <div class="tw-pl-18-px">
@@ -150,7 +150,7 @@
                                                 <strong class="tw-text-white tw-text-12-px tw-font-bold">i</strong>
                                             </div>
                                         </div>
-                                        <div class="tw-text-14-px tw-text-400 tw-text-faded-text-color">
+                                        <div class="tw-text-14-px tw-text-400 tw-text-text-muted">
                                             <span *ngIf="isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the integration dashboard after launching the integration.</span>
                                             <span *ngIf="!isOnboarding" class="tw-max-w-sm tw-break-words">If you wish to export expenses to individual credit card accounts, you can establish credit card mappings in the <a class="tw-text-link-primary tw-cursor-pointer" (click)="navigateToMapping()">Mapping section</a>.</span>
                                         </div>
@@ -217,8 +217,8 @@
                         </div>
                     </div>
                 </div>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!exportSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" [isButtonDisabled]="!exportSettingsForm.valid || saveInProgress" (save)="save()"></app-configuration-step-footer>
         </form>
     </div>
 </div>
