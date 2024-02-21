@@ -251,7 +251,7 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.',
                 billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
-                memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online',
+                memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online'
             },
             done: {
                 ctaText: 'Launch Integration',
@@ -301,7 +301,7 @@ const content: ContentConfiguration = {
             customFieldName: 'Field Name',
             customFieldPlaceholderName: 'Placeholder Name',
             customFieldType: 'Field Type',
-            customFieldCreateandSave: 'Create and save',
+            customFieldCreateandSave: 'Create and save'
         }
     },
     co: {
@@ -354,7 +354,7 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
-                memoStructureLabel: 'Set the line item-level description field in QuickBooks Online',
+                memoStructureLabel: 'Set the line item-level description field in QuickBooks Online'
             },
             done: {
                 ctaText: 'Launch integration',
@@ -404,8 +404,8 @@ const content: ContentConfiguration = {
             customFieldName: 'Field name',
             customFieldPlaceholderName: 'Placeholder name',
             customFieldType: 'Field type',
-            customFieldCreateandSave: 'Create and save',
-            
+            customFieldCreateandSave: 'Create and save'
+
         }
     }
 };

@@ -10,7 +10,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
   styleUrls: ['./qbo-onboarding-import-settings.component.scss']
 })
 export class QboOnboardingImportSettingsComponent implements OnInit {
-  
+
   brandingContent = brandingContent.configuration.importSetting;
 
   onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());

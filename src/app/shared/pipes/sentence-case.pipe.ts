@@ -6,7 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class SentenceCasePipe implements PipeTransform {
   transform(value: string): string {
     // Ensure the input value is not empty
-    if (!value) return '';
+    if (!value) {
+return '';
+}
 
     // Convert the entire string to lowercase
     const lowercasedValue = value.toLowerCase();

@@ -14,6 +14,7 @@ type QBOOnboardingStepperMap = {
 
 export class QBOOnboardingModel {
   brandingContent = brandingContent.configuration;
+
     private onboardingSteps: OnboardingStepper[] = [
         {
           active: false,
