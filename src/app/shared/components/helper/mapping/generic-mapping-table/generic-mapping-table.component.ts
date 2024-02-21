@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
@@ -46,6 +46,8 @@ export class GenericMappingTableComponent implements OnInit {
   });
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private mappingService: MappingService,
