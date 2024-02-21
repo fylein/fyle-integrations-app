@@ -17,6 +17,7 @@
 html,
 body {
     @apply tw-h-[100%] tw-leading-app;
+    -webkit-font-smoothing: var(--font-smoothing) !important;
 }
 
 body {

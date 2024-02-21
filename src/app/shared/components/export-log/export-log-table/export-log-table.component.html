@@ -37,7 +37,7 @@
                 <span [ngClass]="{'truncate-export-type': rowData.exportedAs.length > 10 && !isExportLogTable}"
                     [pTooltip]="rowData.exportedAs.length > 10 && !isExportLogTable ? rowData.exportedAs : null"
                     tooltipPosition="top">
-                    {{brandingConfig.brandId === 'co' ? (rowData.exportedAs | snakeCaseToSpaceCase) : (rowData.exportedAs | snakeCaseToSpaceCase | titlecase)}}
+                    {{brandingConfig.brandId === 'co' ? (rowData.exportedAs | snakeCaseToSpaceCase | sentenceCase) : (rowData.exportedAs | snakeCaseToSpaceCase | titlecase)}}
                 </span>
             </td>
             <td *ngIf="!isDashboardFailed">

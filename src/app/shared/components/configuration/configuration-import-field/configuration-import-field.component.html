@@ -72,7 +72,7 @@
                         {{appName}} Fields should be unique
                     </p>
                 </div>
-                    <div class="tw-pt-18-px">
+                    <div [ngClass]="{'tw-pt-14-px': brandingConfig.brandId === 'co', 'tw-pt-18-px': brandingConfig.brandId !== 'co'}">
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
                     <div class="tw-w-28-vw">
