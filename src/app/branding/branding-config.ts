@@ -203,6 +203,12 @@ export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
 const content: ContentConfiguration = {
     fyle: {
         configuration: {
+            connector: {
+                stepName: 'Connect to Quickbooks Online'
+            },
+            employeeSetting: {
+                stepName: 'Map Employees'
+            },
             exportSetting: {
                 stepName: 'Export Settings',
                 headerText: 'Export Corporate Card Expenses',
@@ -300,6 +306,12 @@ const content: ContentConfiguration = {
     },
     co: {
         configuration: {
+            connector: {
+                stepName: 'Connect to Quickbooks Online'
+            },
+            employeeSetting: {
+                stepName: 'Map employees'
+            },
             exportSetting: {
                 stepName: 'Export settings',
                 headerText: 'Export corporate card expenses',

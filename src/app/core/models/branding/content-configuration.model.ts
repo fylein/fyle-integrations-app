@@ -1,6 +1,12 @@
 export type ContentConfiguration = {
     [brandingId: string]: {
         configuration: {
+            connector: {
+                stepName: string;
+            },
+            employeeSetting: {
+                stepName: string;
+            },
             exportSetting: {
                 stepName: string;
                 headerText: string;

@@ -18,7 +18,7 @@ export class QBOOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Connect to QuickBooks Online',
+          step: brandingContent.configuration.connector.stepName,
           icon: 'link-vertical-medium',
           route: '/integrations/qbo/onboarding/connector',
           styleClasses: ['step-name-connector--text']
@@ -26,7 +26,7 @@ export class QBOOnboardingModel {
         {
             active: false,
             completed: false,
-            step: 'Map Employees',
+            step: brandingContent.configuration.employeeSetting.stepName,
             icon: 'mapping-medium',
             route: '/integrations/qbo/onboarding/employee_settings',
             styleClasses: ['step-name-export--text']
