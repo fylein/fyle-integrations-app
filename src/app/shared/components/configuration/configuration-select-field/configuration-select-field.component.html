@@ -70,7 +70,7 @@
                         <a class="tw-text-link-primary !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">here</a>
                         <span> to preview how it looks on {{appName}}</span>
                     </div>
-                    <div *ngIf="!showExportPreview && isDisabled" class="sub-text tw-text-pretty tw-pt-3-px">
+                    <div *ngIf="!showExportPreview && isDisabled" class="sub-text tw-text-pretty">
                         <span>Auto-selected based on your export module</span>
                     </div>
                     <div *ngIf="form.controls[formControllerName].value==='spent_at' && isOnboarding" class="sub-text">
