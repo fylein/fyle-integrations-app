@@ -1,6 +1,6 @@
 .clickable-row:hover {
     @apply tw-cursor-pointer;
     &:hover {
-      @apply tw-bg-bg-info-lightest;
+      @apply tw-bg-lv-table-hover-bg;
     }
 }

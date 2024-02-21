@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
@@ -79,6 +79,8 @@ export class QboImportSettingsComponent implements OnInit {
   isImportMerchantsAllowed: boolean;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingContent = brandingContent.configuration.importSetting;
 
   constructor(
     private formBuilder: FormBuilder,

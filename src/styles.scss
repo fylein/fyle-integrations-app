@@ -16,7 +16,7 @@
 
 html,
 body {
-    @apply tw-h-[100%] tw-leading-19;
+    @apply tw-h-[100%] tw-leading-app;
 }
 
 body {
@@ -124,12 +124,12 @@ p {
     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
 }
 
-.p-button.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+.p-button.primary-outline {
+    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-text-color tw-bg-btn-outline-primary-bg tw-border-solid tw-border-btn-outline-primary-border-color #{!important};
 }
 
-.p-button:enabled:hover.danger-outline {
-    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+.primary-outline:hover {
+    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
 }
 
 .btn-text-primary {
@@ -145,6 +145,14 @@ p {
     @apply tw-p-0 #{!important};
 }
 
+.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+    background: none !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+    @apply tw-shadow-none #{!important};
+}
+
 // Input text
 .p-inputtext {
     @apply tw-font-primary tw-text-14-px tw-border-box-color #{!important};
@@ -156,7 +164,7 @@ p {
 
 // Tooltip
 .p-tooltip .p-tooltip-text {
-    @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 #{!important}
+    @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 tw-rounded-4-px #{!important}
 }
 
 .p-tooltip.p-tooltip-right .p-tooltip-arrow {
@@ -485,7 +493,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext, .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext{
-    @apply tw-bg-disabled-bg-color #{!important};
+    @apply tw-bg-input-read-only-bg #{!important};
 }
 
 .p-calendar ::placeholder {
@@ -548,6 +556,10 @@ p {
     @apply tw-text-20-px tw-font-500 #{!important};
 }
 
+.p-dialog .p-dialog-header {
+    @apply tw-rounded-none #{!important};
+}
+
 .p-chips .p-chips-multiple-container .p-chips-token {
     @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
 }
@@ -565,7 +577,7 @@ p {
 }
 
 .preview-box {
-    @apply tw-text-text-label tw-p-10-px tw-bg-bg-tertiary tw-rounded-8-px #{!important} ;
+    @apply tw-text-input-read-only-text tw-p-10-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px #{!important} ;
 }
 
 .landing {
@@ -587,7 +599,7 @@ p {
     }
 
     &--accounting-app {
-        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px;
+        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-8-px tw-border-1-px tw-bg-white tw-border-none;
     }
 
     &--accounting-app-name {
