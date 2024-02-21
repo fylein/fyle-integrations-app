@@ -342,7 +342,7 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
-                memoStructureLabel: 'Set the line item-level description Field in QuickBooks Online',
+                memoStructureLabel: 'Set the line item-level description field in QuickBooks Online',
             },
             done: {
                 ctaText: 'Launch integration',

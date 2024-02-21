@@ -1,4 +1,4 @@
-import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { QBOOnboardingState } from "../../enum/enum.model";
 import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
@@ -13,6 +13,7 @@ type QBOOnboardingStepperMap = {
 }
 
 export class QBOOnboardingModel {
+  brandingContent = brandingContent.configuration;
     private onboardingSteps: OnboardingStepper[] = [
         {
           active: false,
@@ -33,7 +34,7 @@ export class QBOOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Export Settings',
+          step: brandingContent.configuration.exportSetting.stepName,
           icon: 'arrow-tail-up-medium',
           route: '/integrations/qbo/onboarding/export_settings',
           styleClasses: ['step-name-export--text']
@@ -41,7 +42,7 @@ export class QBOOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Import Settings',
+          step: brandingContent.configuration.importSetting.stepName,
           icon: 'arrow-tail-down-medium',
           route: '/integrations/qbo/onboarding/import_settings',
           styleClasses: ['step-name-export--text']
@@ -49,7 +50,7 @@ export class QBOOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Advanced Settings',
+          step: brandingContent.configuration.advancedSettings.stepName,
           icon: 'gear-medium',
           route: '/integrations/qbo/onboarding/advanced_settings',
           styleClasses: ['step-name-advanced--text']
