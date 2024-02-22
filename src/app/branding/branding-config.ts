@@ -83,7 +83,7 @@ const kbArticles: KbArticle = {
             INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             TRAVELPERK: 'https://help.fylehq.com/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle',
             SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration'
         },
         onboardingArticles: {
             INTACCT: {
