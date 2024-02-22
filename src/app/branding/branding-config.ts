@@ -114,10 +114,10 @@ const kbArticles: KbArticle = {
             },
             // TODO: Update KB articles for MS Dynamics
             BUSINESS_CENTRAL: {
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
+                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_a2dcb23212',
+                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_aea6d1e402',
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_9e9b1c5196',
+                LANDING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration',
                 SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
             }
         }
