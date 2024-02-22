@@ -1,7 +1,7 @@
 <p-table [value]="getTableSourceData()" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
-        <th class="!tw-pl-40-px">{{sourceField | snakeCaseToSpaceCase | titlecase}} in Fyle</th>
+        <th class="!tw-pl-40-px">{{sourceField | snakeCaseToSpaceCase | titlecase}} in {{brandingConfig.brandName}}</th>
         <th>{{destinationField | snakeCaseToSpaceCase | titlecase}} in {{appName}}</th>
         <th *ngIf="!isDashboardMappingResolve">Status</th>
         </tr>
@@ -11,7 +11,7 @@
             <td>
                 <div class="tw-flex tw-items-center">
                     <app-svg-icon *ngIf="mapping.auto_mapped && !isDashboardMappingResolve" [tooltipText]="'Auto-mapped'" [tooltipPosition]="'top'" [svgSource]="'flash-on'" [width]="'12px'" [height]="'12px'" [styleClasses]="'tw-mr-12-px tw-text-placeholder'"></app-svg-icon>
-                    <span class="tw-text-text-secondary" [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped}">{{ mapping.value }}</span>
+                    <span class="tw-text-text-secondary" [ngClass]="{'tw-pl-24-px': !mapping.auto_mapped && !isDashboardMappingResolve}">{{ mapping.value }}</span>
                 </div>
             </td>
             <td>
@@ -24,11 +24,20 @@
                     (onChange)="save(mapping, $event); getDropdownValue(mapping)"
                     [filter]="true"
                     filterBy="value">
+                    <ng-template let-options pTemplate="item">
+                        <div #textElement
+                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                            [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                            {{options.value}}
+                        </div>
+                    </ng-template>
                     <ng-template pTemplate="filter" let-options="options">
                         <div class="p-inputgroup">
                             <div class="p-input-icon-left">
-                                <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
-                                <input type="text" class="!tw-h-32-px !tw-w-260-px" 
+                                <i>
+                                    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
+                                </i>
+                                <input type="text" class="!tw-h-32-px !tw-w-260-px"
                                 (keyup)="options.filter($event)" pInputText />
                             </div>
                         </div>

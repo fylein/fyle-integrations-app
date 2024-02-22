@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 
 @Component({
@@ -15,6 +16,10 @@ export class MappingCardHeaderComponent implements OnInit {
   @Input() showAutoMapEmployee: boolean;
 
   @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
+
+  readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent;
 
   constructor() { }
 

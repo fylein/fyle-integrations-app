@@ -39,6 +39,10 @@ const routes: Routes = [
       {
         path: 'business_central',
         loadChildren: () => import('./business-central/business-central.module').then(m => m.BusinessCentralModule)
+      },
+      {
+        path: 'netsuite',
+        loadChildren: () => import('./netsuite/netsuite.module').then(m => m.NetsuiteModule)
       }
     ]
   }

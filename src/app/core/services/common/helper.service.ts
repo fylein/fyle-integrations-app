@@ -48,7 +48,8 @@ export class HelperService {
       [AppUrl.SAGE300]: environment.sage300_api_url,
       [AppUrl.INTEGRATION]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
       [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url,
-      [AppUrl.QBO]: environment.production ? `${this.apiBaseUrl}/quickbooks-api/api` : environment.qbo_api_url
+      [AppUrl.QBO]: environment.production ? `${this.apiBaseUrl}/quickbooks-api/api` : environment.qbo_api_url,
+      [AppUrl.NETSUITE]: environment.production ? `${this.apiBaseUrl}/netsuite-api/api` : environment.netsuite_api_url
     };
 
     const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration;

@@ -10,9 +10,11 @@
                 Sync
             </span>
         </button>
-        <span class="btn-text-primary tw-mr-12-px" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed">
-            Sync
-        </span>
+        <div class="tw-mr-22-px">
+            <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated ' + appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'">
+                Sync
+            </span>
+        </div>
 
     <p-dropdown *ngIf="isDropdrownRequired" [(ngModel)]="moreDropdown" (onChange)="null" appendTo="body" class="tw-mr-26-px tw-w-fit" [options]="['Submit Feedback']" placeholder="More">
             <ng-template let-option pTemplate="item">

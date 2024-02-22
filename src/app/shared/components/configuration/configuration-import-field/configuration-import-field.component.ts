@@ -47,6 +47,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
+  readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
+
   constructor() { }
 
   get expenseFieldsGetter() {

@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
     <app-configuration-step-header 
     [headerText]="'Export Settings'"
@@ -51,6 +51,7 @@
                                 [iconPath]="'list'"
                                 [placeholder]="'Select GL account'"
                                 [formControllerName]="'glAccount'"
+                                [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                             <div *ngIf="exportSettingsForm.value.reimbursableExportType===IntacctReimbursableExpensesObject.EXPENSE_REPORT">
@@ -66,6 +67,7 @@
                                 [iconPath]="'list'"
                                 [placeholder]="'Select expense payment type'"
                                 [formControllerName]="'reimbursableExpensePaymentType'"
+                                [isAdvanceSearchEnabled]="true"
                                 (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                             </div>
                     </div>
@@ -160,6 +162,7 @@
                             [iconPath]="'list'"
                             [placeholder]="'Select expense payment type'"
                             [formControllerName]="'cccExpensePaymentType'"
+                            [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.BILL">
@@ -175,6 +178,7 @@
                             [iconPath]="'list'"
                             [placeholder]="'Select credit card vendor'"
                             [formControllerName]="'creditCardVendor'"
+                            [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
@@ -190,6 +194,7 @@
                             [iconPath]="'list'"
                             [placeholder]="'Select GL account'"
                             [formControllerName]="'creditCard'"
+                            [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingsForm.value.cccExportType === CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
@@ -213,6 +218,7 @@
                             [iconPath]="'list'"
                             [placeholder]="'Select Charge Corporate Card'"
                             [formControllerName]="'chargeCard'"
+                            [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
                     </div>
@@ -260,7 +266,7 @@
                                     <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
                                     <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
                                         <h4 class="!tw-text-14-px !tw-font-500">How should the expenses be grouped?<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)</h5>
+                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)</h5>
                                     </div>
                                 </div>
                                 <div class="tw-pl-18-px tw-pt-18-px">
@@ -271,8 +277,8 @@
                     </div>
                 </div>
             </div>
-            <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingsForm.valid"></app-configuration-step-footer>
         </div>
+        <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!exportSettingsForm.valid"></app-configuration-step-footer>
     </form>
 </div>
 
@@ -298,7 +304,7 @@
                     </div>
                     <div class="tw-pl-16-px">
                         <h4 class="!tw-text-14-px !tw-font-500">How are your Employees represented in Sage Intacct?<app-mandatory-field></app-mandatory-field></h4>
-                        <h5 class="!tw-text-faded-text-color !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct</h5>
+                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct</h5>
                     </div>
                 </div>
                 <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">

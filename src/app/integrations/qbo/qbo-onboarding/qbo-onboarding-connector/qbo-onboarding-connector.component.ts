@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -28,7 +28,9 @@ import { environment } from 'src/environments/environment';
 })
 export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
 
-  onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps('Connect to QuickBooks Online', this.workspaceService.getOnboardingState());
+  brandingContent = brandingContent.configuration.connector;
+
+  onboardingSteps: OnboardingStepper[] = new QBOOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
 
   isLoading: boolean = true;
 
@@ -123,9 +125,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   disconnectQbo(): void {
     this.isLoading = true;
     this.qboConnectorService.disconnectQBOConnection().subscribe(() => {
-      this.showDisconnectQBO = false;
-      this.qboCompanyName = null;
-      this.getSettings();
+      this.router.navigate(['/integrations/qbo/onboarding/landing']);
     });
   }
 
