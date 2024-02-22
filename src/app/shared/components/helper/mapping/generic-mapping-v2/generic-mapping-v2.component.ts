@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { brandingConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping, GenericMappingResponse } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
@@ -62,6 +63,8 @@ export class GenericMappingV2Component implements OnInit {
 
   @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
 
+  readonly brandingConfig = brandingConfig;
+
   constructor(
     private mappingService: MappingService,
     private paginatorService: PaginatorService,
@@ -109,9 +112,8 @@ export class GenericMappingV2Component implements OnInit {
 
   mappingSearchFilter(searchValue: string) {
     if (searchValue.length > 0) {
-      this.filteredMappings = this.filteredMappings.filter((mapping) =>
-      mapping.value?.toLowerCase().includes(searchValue)
-    );
+      const query = searchValue.toLowerCase().trim();
+      this.filteredMappings = this.mappings.filter((mapping) => mapping.value?.toLowerCase().includes(query));
     } else {
       this.filteredMappings = this.mappings.concat();
     }

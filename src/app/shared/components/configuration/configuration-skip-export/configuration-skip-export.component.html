@@ -6,28 +6,38 @@
             <div class="tw-flex">
                 <div class="tw-ml-120-px tw-w-200-px tw-mr-6-px fields-header">
                     Condition
-                    <span class="tw-text-mandatory-field-color">*</span>
+                    <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </div>
                   <div class="tw-w-180-px tw-mr-24-px fields-header">
                     Operator
-                    <span class="tw-text-mandatory-field-color">*</span>
+                    <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </div>
                 <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(1)">
                   Value
-                  <span class="tw-text-mandatory-field-color">*</span>
+                  <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
                 </div>
             </div>
-            <div class="tw-flex dropdown-row tw-mt-8-px tw-pb-24-px">
-              <p class="tw-text-14-px tw-text-sub-text-color tw-pt-6-px">Where</p>
+            <div class="tw-flex dropdown-row tw-pb-24-px">
+              <p class="tw-text-14-px tw-text-form-label-text-color">Where</p>
               <div class="tw-ml-80-px tw-mr-24-px">
                 <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition1" placeholder="Select Condition">
                   For options
                   <ng-template let-option pTemplate="item">
-                    {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
+                    <span *ngIf="option.field_name !== 'claim_number'">
+                      {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
+                    </span>
+                    <span *ngIf="option.field_name === 'claim_number'">
+                      Report Number
+                    </span>
                   </ng-template>
                   For selected option
                   <ng-template let-selectedOption pTemplate="selectedItem">
-                    {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                    <span *ngIf="selectedOption.field_name !== 'claim_number'">
+                      {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                    </span>
+                    <span *ngIf="selectedOption.field_name === 'claim_number'">
+                      Report Number
+                    </span>
                   </ng-template>
                 </p-dropdown>                               
                 <app-mandatory-error-message *ngIf="skipExportForm.controls.condition1.touched && !skipExportForm.controls.condition1.valid"
@@ -51,18 +61,18 @@
         </div>
   
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
-          <div class="tw-flex tw-ml-120-px tw-mt-8-px">
+          <div class="tw-flex tw-ml-120-px">
               <div class="tw-w-200-px tw-mr-6-px fields-header">
                   Condition
-                  <span class="tw-text-mandatory-field-color">*</span>
+                  <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
               </div>
                 <div class="tw-w-180-px fields-header tw-mr-24-px">
                   Operator
-                <span class="tw-text-mandatory-field-color">*</span>
+                <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
               </div>
               <div class="tw-w-296-px fields-header" *ngIf="showValueHeader(2)">
                 Value
-                <span class="tw-text-mandatory-field-color">*</span>
+                <span *ngIf="isAsterikAllowed" class="tw-text-mandatory-field-color">*</span>
               </div>
           </div>
           <div class="tw-flex">
@@ -80,11 +90,21 @@
               <p-dropdown appendTo="body" [options]="conditionFieldOptions" formControlName="condition2" placeholder="Select Condition">
                 For options
                 <ng-template let-option pTemplate="item">
-                  {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
+                  <span *ngIf="option.field_name !== 'claim_number'">
+                    {{ option.field_name | snakeCaseToSpaceCase | titlecase }}
+                  </span>
+                  <span *ngIf="option.field_name === 'claim_number'">
+                    Report Number
+                  </span>
                 </ng-template>
                 For selected option
                 <ng-template let-selectedOption pTemplate="selectedItem">
-                  {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                  <span *ngIf="selectedOption.field_name !== 'claim_number'">
+                    {{ selectedOption.field_name | snakeCaseToSpaceCase | titlecase }}
+                  </span>
+                  <span *ngIf="selectedOption.field_name === 'claim_number'">
+                    Report Number
+                  </span>
                 </ng-template>
               </p-dropdown>                            
               <app-mandatory-error-message *ngIf="skipExportForm.controls.condition2.touched && !skipExportForm.controls.condition2.valid"
@@ -108,13 +128,13 @@
               <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>
             </div>
             <div class="tw-ml-26-px tw-pt-6-px tw-max-h-20-px tw-max-w-20-px">
-              <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-sub-text-color tw-text-center tw-cursor-pointer'" [tooltipText]="'Remove Condition'" (iconClick)="remCondition()"></app-svg-icon>
+              <app-svg-icon [svgSource]="'bin'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-text-tertiary tw-text-center tw-cursor-pointer'" [tooltipText]="'Remove Condition'" (iconClick)="remCondition()"></app-svg-icon>
             </div>
           </div>
         </div>
-        <div class="tw-flex items-center tw-text-mandatory-field-color tw-pt-12-px tw-pb-24-px" *ngIf="showAddButton">
-          <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" (iconClick)="updateAdditionalFilterVisibility(true)"></app-svg-icon>
-          <a class="add-row-text tw-cursor-pointer tw-pl-8-px tw-text-14-px" (click)="updateAdditionalFilterVisibility(true)">
+        <div class="tw-flex items-center tw-text-mandatory-field-color tw-pb-24-px" *ngIf="showAddButton">
+          <app-svg-icon *ngIf="brandingFeatureConfig.illustrationsAllowed" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" (iconClick)="updateAdditionalFilterVisibility(true)" [styleClasses]="'tw-pr-8-px'"></app-svg-icon>
+          <a class="btn-text-primary tw-py-10-px tw-inline-block" (click)="updateAdditionalFilterVisibility(true)">
             Add More Fields
           </a>
         </div>

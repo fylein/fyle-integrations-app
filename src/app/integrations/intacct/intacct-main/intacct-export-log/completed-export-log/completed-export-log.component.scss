@@ -27,24 +27,12 @@ input.custom-focus:focus {
 .clickable-row:hover {
     @apply tw-cursor-pointer;
     &:hover {
-      @apply tw-bg-bg-info-lightest;
+        @apply tw-bg-lv-table-hover-bg;
     }
 }
 
 :host ::ng-deep .drop-down .p-dropdown {
     @apply tw-w-200-px tw-border-0 #{!important};
-}
-
-:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-    @apply tw-text-sub-text-color tw-text-14-px tw-font-400 tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-box-color  #{!important};
-}
-
-:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
-    @apply tw-text-text-primary tw-text-12-px tw-font-500 tw-py-12-px tw-px-22-px tw-border tw-border-box-color tw-bg-disabled-bg-color #{!important}
-}
-
-:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td > button {
-    @apply tw-pl-48-px #{!important};
 }
 
 :host ::ng-deep .p-progressbar {

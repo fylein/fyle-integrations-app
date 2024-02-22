@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, MappingState } from 'src/app/core/models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
@@ -39,35 +39,16 @@ export class MappingFilterComponent implements OnInit {
 
   @Input() selectedAlphabeticalFilter: string;
 
-  isSearchBoxActive: boolean = false;
-
   @Output() mappingFilterUpdateHandler = new EventEmitter<string>();
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.mapping;
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private trackingService: TrackingService
   ) { }
-
-  clearSearch(): void {
-    this.form.controls.searchOption.patchValue(null);
-    const event = {
-      target: {
-        value: ''
-      }
-    };
-    this.onFocusOut(event);
-    this.mappingSearchingEvent.emit('');
-  }
-
-  onFocusOut(event: any): void {
-    if (event.target.value === '') {
-      this.isSearchBoxActive = false;
-    } else {
-      this.isSearchBoxActive = true;
-    }
-  }
 
   getSelectedFilter(item: string): string {
     if (item === MappingState.MAPPED) {
@@ -89,7 +70,7 @@ export class MappingFilterComponent implements OnInit {
 
   searchingFilter(): void {
     this.form.controls.searchOption.valueChanges.subscribe((searchValue) => {
-        this.mappingSearchingEvent.emit(searchValue);
+      this.mappingSearchingEvent.emit(searchValue);
     });
   }
 

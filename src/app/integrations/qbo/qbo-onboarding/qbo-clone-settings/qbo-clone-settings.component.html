@@ -3,507 +3,507 @@
     <app-loader></app-loader>
 </div>
 
-<div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px tw-pb-48-px">
-    <app-clone-setting-header [headerText]="'Employee Mapping'" [subHeaderText]="'Choose appropriate representation of your Employees in QuickBooks Online'"></app-clone-setting-header>
-
-    <div class="clone-setting--field-section">
-        <div class="clone-setting--field">
-            <app-clone-setting-field
-                [iconSource]="'user-two'"
-                [label]="'How are your Employees represented in QuickBooks Online?'"
-                [options]="employeeMappingOptions"
-                [placeholder]="'Select representation'"
-                [form]="employeeSettingForm"
-                [isFieldMandatory]="true"
-                [formControllerName]="'employeeMapping'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Online.'">
-            </app-clone-setting-field>
-        </div>
-
-        <div class="clone-setting--field">
-            <app-clone-setting-field
-                [iconSource]="'question-square-outline'"
-                [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
-                [options]="autoMapEmployeeOptions"
-                [placeholder]="'Select representation'"
-                [form]="employeeSettingForm"
-                [isFieldMandatory]="false"
-                [formControllerName]="'autoMapEmployee'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Online based on a unique parameter.'">
-            </app-clone-setting-field>
-        </div>
-    </div>
-
-    <app-clone-setting-header [headerText]="'Export Settings'" [subHeaderText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to QuickBooks Online.'"></app-clone-setting-header>
-    <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
-        <div class="clone-setting--field">
-            <div class="clone-setting--export-setting-header">
-                <div class="tw-flex tw-items-center">
-                    Export Reimbursable Expenses
-                    <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
-                </div>
-                <div>
-                    <p-inputSwitch formControlName="reimbursableExpense"></p-inputSwitch>
-                </div>
+<div class=" tw-pb-48-px">
+    <div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+        <app-clone-setting-header [headerText]="'Employee Mapping'" [subHeaderText]="'Choose appropriate representation of your Employees in QuickBooks Online'"></app-clone-setting-header>
+    
+        <div class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'user-two'"
+                    [label]="'How are your Employees represented in QuickBooks Online?'"
+                    [options]="employeeMappingOptions"
+                    [placeholder]="'Select representation'"
+                    [form]="employeeSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'employeeMapping'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'Select how you represent your employees in QuickBooks Online. This would help to export the expenses from ' + brandingConfig.brandName + ' to the correct employee/vendor record in QuickBooks Online.'">
+                </app-clone-setting-field>
             </div>
-        </div>
-
-        <div *ngIf="exportSettingForm.value?.reimbursableExpense" class="clone-setting--field">
-            <app-clone-setting-field
-                [iconSource]="'list'"
-                [label]="'How should the expenses be exported?'"
-                [options]="reimbursableExportTypes"
-                [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
-                [form]="exportSettingForm"
-                [isFieldMandatory]="false"
-                [formControllerName]="'reimbursableExportType'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'">
-            </app-clone-setting-field>
-
-            <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.reimbursableExportType">
-                <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')"
-                    [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                    [options]="bankAccounts"
-                    [placeholder]="'Select bank account'"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'bankAccount'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'All the offset entry in the Journal will be posted to the selected Bank account'">
-                </app-clone-setting-field>
-
-                <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'qboExpenseAccount')"
-                    [label]="'To which Expense Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                    [options]="expenseAccounts"
-                    [placeholder]="'Select Expense account'"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'qboExpenseAccount'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'The expenses exported will be added to the selected Expense Payment Account'">
-                </app-clone-setting-field>
-
-                <app-clone-setting-field *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR))"
-                    [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                    [options]="accountsPayables"
-                    [placeholder]="'Select accounts payable'"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'accountsPayable'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'">
+    
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'question-square-outline'"
+                    [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in QuickBooks Online?'"
+                    [options]="autoMapEmployeeOptions"
+                    [placeholder]="'Select representation'"
+                    [form]="employeeSettingForm"
+                    [isFieldMandatory]="false"
+                    [formControllerName]="'autoMapEmployee'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in QuickBooks Online based on a unique parameter.'">
                 </app-clone-setting-field>
             </div>
         </div>
-
-        <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
-            <app-clone-setting-field
-                [iconSource]="'question-square-outline'"
-                [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                [options]="expenseStateOptions"
-                [placeholder]="'Select export state'"
-                [form]="exportSettingForm"
-                [isFieldMandatory]="true"
-                [formControllerName]="'expenseState'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'You can export expenses either when they\'re awaiting payment after approval (Processing) or when the payment has been settled (Closed).'">
-            </app-clone-setting-field>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
-            <app-clone-setting-field
-                [iconSource]="'question-square-outline'"
-                [label]="'How should the expenses be grouped?'"
-                [options]="expenseGroupByOptions"
-                [placeholder]="'Select expense grouping'"
-                [form]="exportSettingForm"
-                [isFieldMandatory]="true"
-                [formControllerName]="'reimbursableExportGroup'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'">
-            </app-clone-setting-field>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
-            <app-clone-setting-field
-                [iconSource]="'calendar'"
-                [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
-                [options]="reimbursableExpenseGroupingDateOptions"
-                [placeholder]="'Select export date'"
-                [form]="exportSettingForm"
-                [isFieldMandatory]="true"
-                [formControllerName]="'reimbursableExportDate'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Online.'">
-            </app-clone-setting-field>
-        </div>
-    </div>
-
-    <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
-        <div class="clone-setting--field">
-            <div class="clone-setting--export-setting-header">
-                <div class="tw-flex tw-items-center">
-                    Export Corporate Credit Card Expenses
-                    <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
-                </div>
-                <div>
-                    <p-inputSwitch formControlName="creditCardExpense"></p-inputSwitch>
+    
+        <app-clone-setting-header [headerText]="'Export Settings'" [subHeaderText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to QuickBooks Online.'"></app-clone-setting-header>
+        <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <div class="clone-setting--export-setting-header">
+                    <div class="tw-flex tw-items-center">
+                        Export Reimbursable Expenses
+                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
+                    </div>
+                    <div>
+                        <p-inputSwitch formControlName="reimbursableExpense"></p-inputSwitch>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div *ngIf="exportSettingForm.value?.creditCardExpense" class="clone-setting--field">
-            <app-clone-setting-field
-                [iconSource]="'list'"
-                [label]="'How should the expenses be exported?'"
-                [options]="creditCardExportTypes"
-                [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
-                [form]="exportSettingForm"
-                [isFieldMandatory]="false"
-                [formControllerName]="'creditCardExportType'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'Select expense export type'">
-            </app-clone-setting-field>
-
-            <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.creditCardExportType">
-                <app-clone-setting-field *ngIf="showNameInJournalOption"
-                    [label]="'Name in Journal Entry (CCC)'"
-                    [options]="nameInJournalOptions"
-                    [placeholder]="'Select a name'"
+    
+            <div *ngIf="exportSettingForm.value?.reimbursableExpense" class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'list'"
+                    [label]="'How should the expenses be exported?'"
+                    [options]="reimbursableExportTypes"
+                    [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
                     [form]="exportSettingForm"
                     [isFieldMandatory]="false"
-                    [formControllerName]="'nameInJournalEntry'"
+                    [formControllerName]="'reimbursableExportType'"
                     [dropdownDisplayKey]="'label'"
-                    [tooltipText]="'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries'">
+                    [tooltipText]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'">
                 </app-clone-setting-field>
-
-                <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCCCAccount')"
-                    [label]="'Set Default Credit Card Account as'"
-                    [options]="expenseAccounts"
-                    [placeholder]="'Select Default Credit Card Account'"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'defaultCCCAccount'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'Post all your company corporate card transactions to a default credit card account.'">
-                </app-clone-setting-field>
-
-                <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')"
-                    [label]="'Set Default Debit Card Account as'"
-                    [options]="accountsPayables"
-                    [placeholder]="'Select Default Debit Card Account'"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'defaultDebitCardAccount'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'Post all your company debit card transactions to a default debit card account.'">
-                </app-clone-setting-field>
-
-                <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')"
-                    [label]="'Set default corporate Card Vendor as'"
-                    [options]="vendors"
-                    [placeholder]="'Select default corporate card vendor'"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'defaultCreditCardVendor'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'The default vendor will apply to all corporate card transactions upon export'">
-                </app-clone-setting-field>
-
-                <app-clone-setting-field *ngIf="(exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR)))"
-                    [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                    [options]="accountsPayables"
-                    [placeholder]="'Select accounts payable'"
-                    [form]="exportSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'accountsPayable'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'">
-                </app-clone-setting-field>
-            </div>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
-            <app-clone-setting-field
-                [iconSource]="'question-square-outline'"
-                [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                [options]="expenseStateOptions"
-                [placeholder]="'Select CCC expense state'"
-                [form]="exportSettingForm"
-                [isFieldMandatory]="true"
-                [formControllerName]="'cccExpenseState'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out'">
-            </app-clone-setting-field>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
-            <app-clone-setting-field
-                [iconSource]="'question-square-outline'"
-                [label]="'How should the expenses be grouped?'"
-                [options]="expenseGroupByOptions"
-                [placeholder]="'Select expense grouping'"
-                [form]="exportSettingForm"
-                [isFieldMandatory]="true"
-                [formControllerName]="'creditCardExportGroup'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'">
-            </app-clone-setting-field>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
-            <app-clone-setting-field
-                [iconSource]="'calendar'"
-                [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
-                [options]="cccExpenseGroupingDateOptions"
-                [placeholder]="'Select export date'"
-                [form]="exportSettingForm"
-                [isFieldMandatory]="true"
-                [formControllerName]="'creditCardExportDate'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'">
-            </app-clone-setting-field>
-        </div>
-    </div>
-
-    <app-clone-setting-header [headerText]="'Import Settings'" [subHeaderText]="'In this section, you can configure how the dimensions you import from QuickBooks Online should be mapped in ' + brandingConfig.brandName"></app-clone-setting-header>
-
-    <div class="clone-setting--field-section">
-        <div class="clone-setting--field">
-            <app-clone-setting-field
-                [iconSource]="'arrow-tail-down'"
-                [label]="'Import Charts of Accounts from QuickBooks Online'"
-                [form]="importSettingForm"
-                [formControllerName]="'importCategories'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="'Imported account will be available as Categories in ' + brandingConfig.brandName">
-            </app-clone-setting-field>
-
-            <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.importCategories">
-                <app-clone-setting-field
-                    [label]="'Select the accounts from QuickBooks Online to import as categories'"
-                    [options]="chartOfAccountTypesList"
-                    [placeholder]="'Select Chart of Accouts'"
-                    [form]="importSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'chartOfAccountTypes'"
-                    [disabledOption]="'Expense'"
-                    [inputType]="InputType.MULTI_SELECT"
-                    [tooltipText]="'By default expense will be selected. Open the dropdown to select more as per your requirements'">
-                </app-clone-setting-field>
-            </div>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
-            <app-clone-setting-field
-                [iconSource]="'arrow-tail-down'"
-                [label]="'Import Products/Services from QuickBooks Online'"
-                [form]="importSettingForm"
-                [formControllerName]="'importItems'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="'Products/services from QuickBooks Online will be imported as Categories in ' + brandingConfig.brandName">
-            </app-clone-setting-field>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="isTaxGroupSyncAllowed">
-            <app-clone-setting-field
-                [iconSource]="'arrow-tail-down'"
-                [label]="'Import Tax from QuickBooks Online'"
-                [form]="importSettingForm"
-                [formControllerName]="'taxCode'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="'The imported Tax codes from QuickBooks Online will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'">
-            </app-clone-setting-field>
-
-            <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.taxCode">
-                <app-clone-setting-field *ngIf="importSettingForm.value.importCategories"
-                    [label]="'Select Default Tax Code'"
-                    [options]="taxCodes"
-                    [placeholder]="'Select tax code'"
-                    [form]="importSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'defaultTaxCode'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'">
-                </app-clone-setting-field>
-            </div>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="isImportMerchantsAllowed">
-            <app-clone-setting-field
-                [iconSource]="'arrow-tail-down'"
-                [label]="'Import Vendors from QuickBooks Online'"
-                [form]="importSettingForm"
-                [formControllerName]="'importVendorsAsMerchants'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="'Vendors from QuickBooks Online will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'">
-            </app-clone-setting-field>
-        </div>
-
-        <app-configuration-import-field
-            [form]="importSettingForm"
-            [appName]="appName"
-            [accountingFieldOptions]="qboFields"
-            [fyleFieldOptions]="fyleFields"
-            [isDestinationFixedImport]="true"
-            [isCloneSettingView]="true">
-        </app-configuration-import-field>
-    </div>
-
-    <app-clone-setting-header [headerText]="'Advanced Settings'" [subHeaderText]="'In this section,  you can configure settings to automate and customize your expense exports'"></app-clone-setting-header>
-    <div class="clone-setting--field-section">
-        <div class="clone-setting--field">
-            <app-clone-setting-field
-                [iconSource]="'calendar'"
-                [label]="'Schedule automatic export'"
-                [form]="advancedSettingForm"
-                [formControllerName]="'exportSchedule'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'">
-            </app-clone-setting-field>
-
-            <div class="clone-setting--dependent-field tw-flex" *ngIf="advancedSettingForm.value.exportSchedule">
-                <app-clone-setting-field class="tw-flex-auto"
-                    [label]="'Set up export frequency'"
-                    [isFieldMandatory]="true"
-                    [options]="scheduleIntervalHours"
-                    [form]="advancedSettingForm"
-                    [isFieldMandatory]="true"
-                    [formControllerName]="'exportScheduleFrequency'"
-                    [dropdownDisplayKey]="'label'"
-                    [additionalClasses]="'dropdown-size-schedule'"
-                    [tooltipText]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to QuickBooks Online'">
-                </app-clone-setting-field>
-                <div class="tw-ml-16-px">
-                    <input type="text" class="tw-border-box-color !tw-w-100-px !tw-h-40-px !tw-bg-disabled-bg-color tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
+    
+                <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.reimbursableExportType">
+                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')"
+                        [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                        [options]="bankAccounts"
+                        [placeholder]="'Select bank account'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'bankAccount'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'All the offset entry in the Journal will be posted to the selected Bank account'">
+                    </app-clone-setting-field>
+    
+                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'qboExpenseAccount')"
+                        [label]="'To which Expense Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                        [options]="expenseAccounts"
+                        [placeholder]="'Select Expense account'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'qboExpenseAccount'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'The expenses exported will be added to the selected Expense Payment Account'">
+                    </app-clone-setting-field>
+    
+                    <app-clone-setting-field *ngIf="(exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR))"
+                        [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                        [options]="accountsPayables"
+                        [placeholder]="'Select accounts payable'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'accountsPayable'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'">
+                    </app-clone-setting-field>
                 </div>
             </div>
-
-            <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.value.exportSchedule">
-                <p class="tw-pl-40-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
-                    Send Error Notification to
-                    <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Select or add an email address to notify upon import failure or integration error.'" [tooltipPosition]="'top'"></app-svg-icon>
-                </p>
-                <app-email-multi-select-field
-                    [form]="advancedSettingForm"
-                    [appName]="AppName.QBO"
-                    [label]="'Send Error Notification to'"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'email for error notification'"
-                    [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
-                    [options]="adminEmails"
-                    [iconPath]="'list'"
-                    [placeholder]="'Select email address'"
-                    [formControllerName]="'email'"
-                    [isCloneSettingView]="true">
-                </app-email-multi-select-field>
-            </div>
-        </div>
-
-        <div class="clone-setting--field">
-            <app-clone-setting-field
-                [iconSource]="'calendar'"
-                [label]="'Post entries in the next open accounting period'"
-                [form]="advancedSettingForm"
-                [formControllerName]="'changeAccountingPeriod'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="'If the accounting period in QuickBooks Online is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'">
-            </app-clone-setting-field>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="isAutoCreateVendorsFieldVisible()">
-            <app-clone-setting-field
-                [iconSource]="'user-plus'"
-                [label]="'Auto-Create Vendors'"
-                [form]="advancedSettingForm"
-                [formControllerName]="'autoCreateVendors'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in QuickBooks Online already.'">
-            </app-clone-setting-field>
-        </div>
-
-        <div class="clone-setting--field" *ngIf="isPaymentSyncFieldVisible()">
-            <app-clone-setting-field
-                [iconSource]="'arrow-rotate'"
-                [label]="'Auto Sync payment status for reimbursable expenses'"
-                [form]="advancedSettingForm"
-                [formControllerName]="'paymentSync'"
-                [options]="paymentSyncOptions"
-                [placeholder]="'Select how payments should be synced for reimbursable expenses'"
-                [dropdownDisplayKey]="'label'"
-                [tooltipText]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in QuickBooks Online will be automatically be updated to Paid and vice versa.'">
-            </app-clone-setting-field>
-
-            <div class="clone-setting--dependent-field" *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_qbo'">
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
                 <app-clone-setting-field
-                    [label]="'To which Payment account should the payment entries be posted?'"
-                    [options]="billPaymentAccounts"
-                    [placeholder]="'Select a Payment Account'"
-                    [form]="advancedSettingForm"
+                    [iconSource]="'question-square-outline'"
+                    [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                    [options]="expenseStateOptions"
+                    [placeholder]="'Select export state'"
+                    [form]="exportSettingForm"
                     [isFieldMandatory]="true"
-                    [formControllerName]="'billPaymentAccount'"
-                    [dropdownDisplayKey]="'name'"
-                    [tooltipText]="'Once the payment for the reimbursable expense is complete in ' + brandingConfig.brandName + ', the payment entries will be posted to the selected Payment account in QuickBooks Online.'">
+                    [formControllerName]="'expenseState'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'You can export expenses either when they\'re awaiting payment after approval (Processing) or when the payment has been settled (Closed).'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+                <app-clone-setting-field
+                    [iconSource]="'question-square-outline'"
+                    [label]="'How should the expenses be grouped?'"
+                    [options]="expenseGroupByOptions"
+                    [placeholder]="'Select expense grouping'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'reimbursableExportGroup'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+                <app-clone-setting-field
+                    [iconSource]="'calendar'"
+                    [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                    [options]="reimbursableExpenseGroupingDateOptions"
+                    [placeholder]="'Select export date'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'reimbursableExportDate'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Online.'">
                 </app-clone-setting-field>
             </div>
         </div>
-
-        <div class="clone-setting--field" *ngIf="isSingleCreditLineJEFieldVisible()">
-            <app-clone-setting-field
-                [iconSource]="'list'"
-                [label]="'Create a single itemized offset credit entry for Journal'"
-                [form]="advancedSettingForm"
-                [formControllerName]="'singleCreditLineJE'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="'Merge all Credits in a Journal to create a single entry.'">
-            </app-clone-setting-field>
+    
+        <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <div class="clone-setting--export-setting-header">
+                    <div class="tw-flex tw-items-center">
+                        Export Corporate Credit Card Expenses
+                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
+                    </div>
+                    <div>
+                        <p-inputSwitch formControlName="creditCardExpense"></p-inputSwitch>
+                    </div>
+                </div>
+            </div>
+    
+            <div *ngIf="exportSettingForm.value?.creditCardExpense" class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'list'"
+                    [label]="'How should the expenses be exported?'"
+                    [options]="creditCardExportTypes"
+                    [placeholder]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="false"
+                    [formControllerName]="'creditCardExportType'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'Select expense export type'">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.creditCardExportType">
+                    <app-clone-setting-field *ngIf="showNameInJournalOption"
+                        [label]="'Name in Journal Entry (CCC)'"
+                        [options]="nameInJournalOptions"
+                        [placeholder]="'Select a name'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="false"
+                        [formControllerName]="'nameInJournalEntry'"
+                        [dropdownDisplayKey]="'label'"
+                        [tooltipText]="'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries'">
+                    </app-clone-setting-field>
+    
+                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCCCAccount')"
+                        [label]="'Set Default Credit Card Account as'"
+                        [options]="expenseAccounts"
+                        [placeholder]="'Select Default Credit Card Account'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'defaultCCCAccount'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'Post all your company corporate card transactions to a default credit card account.'">
+                    </app-clone-setting-field>
+    
+                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')"
+                        [label]="'Set Default Debit Card Account as'"
+                        [options]="accountsPayables"
+                        [placeholder]="'Select Default Debit Card Account'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'defaultDebitCardAccount'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'Post all your company debit card transactions to a default debit card account.'">
+                    </app-clone-setting-field>
+    
+                    <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')"
+                        [label]="'Set default corporate Card Vendor as'"
+                        [options]="vendors"
+                        [placeholder]="'Select default corporate card vendor'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'defaultCreditCardVendor'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'The default vendor will apply to all corporate card transactions upon export'">
+                    </app-clone-setting-field>
+    
+                    <app-clone-setting-field *ngIf="(exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR)))"
+                        [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                        [options]="accountsPayables"
+                        [placeholder]="'Select accounts payable'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'accountsPayable'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                <app-clone-setting-field
+                    [iconSource]="'question-square-outline'"
+                    [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                    [options]="expenseStateOptions"
+                    [placeholder]="'Select CCC expense state'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'cccExpenseState'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                <app-clone-setting-field
+                    [iconSource]="'question-square-outline'"
+                    [label]="'How should the expenses be grouped?'"
+                    [options]="expenseGroupByOptions"
+                    [placeholder]="'Select expense grouping'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'creditCardExportGroup'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                <app-clone-setting-field
+                    [iconSource]="'calendar'"
+                    [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                    [options]="cccExpenseGroupingDateOptions"
+                    [placeholder]="'Select export date'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'creditCardExportDate'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'The selected date will reflect in the corporate card expenses exported to QuickBooks Online.'">
+                </app-clone-setting-field>
+            </div>
         </div>
-
-        <div class="clone-setting--field" *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()">
-            <app-clone-setting-field
-                [iconSource]="'user-plus'"
-                [label]="'Auto-create Merchants as Vendors'"
-                [form]="advancedSettingForm"
-                [formControllerName]="'autoCreateMerchantsAsVendors'"
-                [inputType]="InputType.TOGGLE"
-                [tooltipText]="brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online'">
-            </app-clone-setting-field>
+    
+        <app-clone-setting-header [headerText]="'Import Settings'" [subHeaderText]="'In this section, you can configure how the dimensions you import from QuickBooks Online should be mapped in ' + brandingConfig.brandName"></app-clone-setting-header>
+    
+        <div class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-tail-down'"
+                    [label]="'Import Charts of Accounts from QuickBooks Online'"
+                    [form]="importSettingForm"
+                    [formControllerName]="'importCategories'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'Imported account will be available as Categories in ' + brandingConfig.brandName">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.importCategories">
+                    <app-clone-setting-field
+                        [label]="'Select the accounts from QuickBooks Online to import as categories'"
+                        [options]="chartOfAccountTypesList"
+                        [placeholder]="'Select Chart of Accouts'"
+                        [form]="importSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'chartOfAccountTypes'"
+                        [disabledOption]="'Expense'"
+                        [inputType]="InputType.MULTI_SELECT"
+                        [tooltipText]="'By default expense will be selected. Open the dropdown to select more as per your requirements'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-tail-down'"
+                    [label]="'Import Products/Services from QuickBooks Online'"
+                    [form]="importSettingForm"
+                    [formControllerName]="'importItems'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'Products/services from QuickBooks Online will be imported as Categories in ' + brandingConfig.brandName">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="isTaxGroupSyncAllowed">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-tail-down'"
+                    [label]="'Import Tax from QuickBooks Online'"
+                    [form]="importSettingForm"
+                    [formControllerName]="'taxCode'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'The imported Tax codes from QuickBooks Online will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.taxCode">
+                    <app-clone-setting-field *ngIf="importSettingForm.value.importCategories"
+                        [label]="'Select Default Tax Code'"
+                        [options]="taxCodes"
+                        [placeholder]="'Select tax code'"
+                        [form]="importSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'defaultTaxCode'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="isImportMerchantsAllowed">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-tail-down'"
+                    [label]="'Import Vendors from QuickBooks Online'"
+                    [form]="importSettingForm"
+                    [formControllerName]="'importVendorsAsMerchants'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'Vendors from QuickBooks Online will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'">
+                </app-clone-setting-field>
+            </div>
+    
+            <app-configuration-import-field
+                [form]="importSettingForm"
+                [appName]="appName"
+                [accountingFieldOptions]="qboFields"
+                [fyleFieldOptions]="fyleFields"
+                [isDestinationFixedImport]="true"
+                [isCloneSettingView]="true">
+            </app-configuration-import-field>
         </div>
-
-        <div class="clone-setting--field">
-            <div class="tw-flex tw-justify-between">
-                <div class="tw-flex">
-                    <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="'list'" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
-                    <p class="tw-flex tw-items-center tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
-                        Set the Description Field in QuickBooks Online
-                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'" [tooltipPosition]="'top'"></app-svg-icon>
+    
+        <app-clone-setting-header [headerText]="'Advanced Settings'" [subHeaderText]="'In this section,  you can configure settings to automate and customize your expense exports'"></app-clone-setting-header>
+        <div class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'calendar'"
+                    [label]="'Schedule automatic export'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'exportSchedule'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field tw-flex" *ngIf="advancedSettingForm.value.exportSchedule">
+                    <app-clone-setting-field class="tw-flex-auto"
+                        [label]="'Set up export frequency'"
+                        [isFieldMandatory]="true"
+                        [options]="scheduleIntervalHours"
+                        [form]="advancedSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'exportScheduleFrequency'"
+                        [dropdownDisplayKey]="'label'"
+                        [additionalClasses]="'dropdown-size-schedule'"
+                        [tooltipText]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to QuickBooks Online'">
+                    </app-clone-setting-field>
+                    <div class="tw-ml-16-px">
+                        <input type="text" class="tw-border-input-read-only-border !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
+                    </div>
+                </div>
+    
+                <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.value.exportSchedule">
+                    <p class="tw-pl-40-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
+                        Send Error Notification to
+                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Select or add an email address to notify upon import failure or integration error.'" [tooltipPosition]="'top'"></app-svg-icon>
                     </p>
+                    <app-email-multi-select-field
+                        [form]="advancedSettingForm"
+                        [appName]="AppName.QBO"
+                        [label]="'Send Error Notification to'"
+                        [isFieldMandatory]="false"
+                        [mandatoryErrorListName]="'email for error notification'"
+                        [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
+                        [options]="adminEmails"
+                        [iconPath]="'list'"
+                        [placeholder]="'Select email address'"
+                        [formControllerName]="'email'"
+                        [isCloneSettingView]="true">
+                    </app-email-multi-select-field>
                 </div>
-                <app-configuration-multi-select
-                    [form]="advancedSettingForm"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'Item level description'"
-                    [label]="'Set the line item-level Description Field in QuickBooks Online'"
-                    [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'"
-                    [options]="defaultMemoOptions"
-                    [iconPath]="'list'"
-                    [placeholder]="'Set description'"
-                    [formControllerName]="'memoStructure'"
-                    [isCloneSettingView]="true">
-                </app-configuration-multi-select>
             </div>
-            <div class="clone-setting--dependent-field tw-text-14-px tw-font-400 tw-text-faded-text-color !tw-pl-40-px">
-                <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
-                <div class="preview-box">
-                    {{memoPreviewText}}
+    
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'calendar'"
+                    [label]="'Post entries in the next open accounting period'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'changeAccountingPeriod'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'If the accounting period in QuickBooks Online is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="isAutoCreateVendorsFieldVisible()">
+                <app-clone-setting-field
+                    [iconSource]="'user-plus'"
+                    [label]="'Auto-Create Vendors'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'autoCreateVendors'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in QuickBooks Online already.'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="isPaymentSyncFieldVisible()">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-rotate'"
+                    [label]="'Auto Sync payment status for reimbursable expenses'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'paymentSync'"
+                    [options]="paymentSyncOptions"
+                    [placeholder]="'Select how payments should be synced for reimbursable expenses'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in QuickBooks Online will be automatically be updated to Paid and vice versa.'">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field" *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_qbo'">
+                    <app-clone-setting-field
+                        [label]="'To which Payment account should the payment entries be posted?'"
+                        [options]="billPaymentAccounts"
+                        [placeholder]="'Select a Payment Account'"
+                        [form]="advancedSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'billPaymentAccount'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'Once the payment for the reimbursable expense is complete in ' + brandingConfig.brandName + ', the payment entries will be posted to the selected Payment account in QuickBooks Online.'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="isSingleCreditLineJEFieldVisible()">
+                <app-clone-setting-field
+                    [iconSource]="'list'"
+                    [label]="'Create a single itemized offset credit entry for Journal'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'singleCreditLineJE'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'Merge all Credits in a Journal to create a single entry.'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="isAutoCreateMerchantsAsVendorsFieldVisible()">
+                <app-clone-setting-field
+                    [iconSource]="'user-plus'"
+                    [label]="'Auto-create Merchants as Vendors'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'autoCreateMerchantsAsVendors'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field">
+                <div class="tw-flex tw-justify-between">
+                    <div class="tw-flex">
+                        <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="'list'" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
+                        <p class="tw-flex tw-items-center tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
+                            Set the Description Field in QuickBooks Online
+                            <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'" [tooltipPosition]="'top'"></app-svg-icon>
+                        </p>
+                    </div>
+                    <app-configuration-multi-select
+                        [form]="advancedSettingForm"
+                        [isFieldMandatory]="false"
+                        [mandatoryErrorListName]="'Item level description'"
+                        [label]="'Set the line item-level Description Field in QuickBooks Online'"
+                        [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'"
+                        [options]="defaultMemoOptions"
+                        [iconPath]="'list'"
+                        [placeholder]="'Set description'"
+                        [formControllerName]="'memoStructure'"
+                        [isCloneSettingView]="true">
+                    </app-configuration-multi-select>
+                </div>
+                <div class="clone-setting--dependent-field tw-text-14-px tw-font-400 tw-text-text-muted !tw-pl-40-px">
+                    <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
+                    <div class="preview-box">
+                        {{memoPreviewText}}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="clone-setting--field-section">
         <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? (ConfigurationCtaText.SAVE_AND_CONTINUE) : ConfigurationCtaText.SAVING" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!employeeSettingForm.valid || !exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
     </div>
 </div>

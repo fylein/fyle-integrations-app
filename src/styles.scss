@@ -16,7 +16,8 @@
 
 html,
 body {
-    @apply tw-h-[100%] tw-leading-19;
+    @apply tw-h-[100%] tw-leading-app;
+    -webkit-font-smoothing: var(--font-smoothing) !important;
 }
 
 body {
@@ -33,6 +34,18 @@ p {
 
 .pi-times.co {
     content: url('./assets/icons/co/grv-close-medium.svg') !important;
+}
+
+[data-theme='fyle'] {
+    .pi-times-circle {
+        content: url('./assets/icons/cross-xs-small.svg') !important;
+    }
+}
+
+[data-theme='co'] {
+    .pi-times-circle {
+        content: url('./assets/icons/co/grv-cross-encircled-xs-small.svg') !important;
+    }
 }
 
 .pi-chevron-down.fyle {
@@ -100,8 +113,24 @@ p {
     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
 }
 
+.p-button.danger-outline {
+    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+}
+
+.p-button:enabled:hover.danger-outline {
+    @apply tw-px-16-px tw-py-10-px tw-text-14-px tw-text-text-danger tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+}
+
 .p-button:enabled:hover.outline-sm {
     @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-hover-text-color tw-bg-btn-outline-secondary-hover-bg tw-border-solid tw-border-btn-outline-secondary-hover-border-color tw-shadow-btn-cta-shadow #{!important};
+}
+
+.p-button.primary-outline {
+    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-text-color tw-bg-btn-outline-primary-bg tw-border-solid tw-border-btn-outline-primary-border-color #{!important};
+}
+
+.primary-outline:hover {
+    @apply tw-font-nav-link-font-weight tw-px-16-px tw-py-10-px tw-text-14-px tw-text-btn-outline-primary-hover-text-color tw-bg-btn-outline-primary-hover-bg tw-border-solid tw-border-btn-outline-primary-hover-border-color #{!important};
 }
 
 .btn-text-primary {
@@ -117,34 +146,42 @@ p {
     @apply tw-p-0 #{!important};
 }
 
+.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
+    background: none !important;
+}
+
+.p-dialog .p-dialog-header .p-dialog-header-icon:focus {
+    @apply tw-shadow-none #{!important};
+}
+
 // Input text
 .p-inputtext {
     @apply tw-font-primary tw-text-14-px tw-border-box-color #{!important};
 }
 
 .p-inputtext:enabled:focus-visible {
-    @apply tw-shadow-none tw-border-faded-text-color #{!important};
+    @apply tw-shadow-none tw-border-input-focused-border #{!important};
 }
 
 // Tooltip
 .p-tooltip .p-tooltip-text {
-    @apply tw-bg-slightly-normal-text-color tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 #{!important}
+    @apply tw-bg-tooltip-bg tw-text-white tw-text-12-px tw-py-6-px tw-px-8-px tw-h-auto tw-break-words tw-whitespace-normal tw-overflow-visible tw-font-400 tw-rounded-4-px #{!important}
 }
 
 .p-tooltip.p-tooltip-right .p-tooltip-arrow {
-    @apply tw-border-r-slightly-normal-text-color #{!important};
+    @apply tw-border-r-tooltip-bg #{!important};
 }
 
 .p-tooltip.p-tooltip-left .p-tooltip-arrow {
-    @apply tw-border-l-slightly-normal-text-color #{!important};
+    @apply tw-border-l-tooltip-bg #{!important};
 }
 
 .p-tooltip.p-tooltip-top .p-tooltip-arrow {
-    @apply tw-border-t-slightly-normal-text-color #{!important};
+    @apply tw-border-t-tooltip-bg #{!important};
 }
 
 .p-tooltip.p-tooltip-bottom .p-tooltip-arrow {
-    @apply tw-border-b-slightly-normal-text-color #{!important};
+    @apply tw-border-b-tooltip-bg #{!important};
 }
 
 // Toggle
@@ -157,16 +194,29 @@ p {
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
-    @apply tw-translate-x-[1.8rem] #{!important};
+    @apply tw-translate-x-toggle-circle-translate #{!important};
 }
 
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
-    @apply tw-bg-mandatory-field-color #{!important};
+    @apply tw-bg-mandatory-field-color tw-w-toggle-width tw-h-toggle-height #{!important};
+}
+
+.p-inputswitch .p-inputswitch-slider {
+    @apply tw-bg-form-switch-bg tw-w-toggle-width tw-h-toggle-height #{!important};
 }
 
 .p-inputswitch.p-focus .p-inputswitch-slider {
     @apply tw-shadow-none #{!important};
 }
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider::after {
+    @apply tw-content-toggle-text-yes tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-8-px tw-bottom-0 #{!important};
+}
+
+.p-inputswitch:not(.p-inputswitch-checked) .p-inputswitch-slider::after {
+    @apply tw-content-toggle-text-no tw-flex tw-justify-center tw-items-center tw-absolute tw-text-12-px tw-text-white tw-font-500 tw-left-24-px tw-bottom-0 #{!important};
+}
+
 
 // Radio Button
 .p-radiobutton {
@@ -191,11 +241,11 @@ p {
 
 // Dropdown
 .p-dropdown {
-    @apply lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] #{!important};
+    @apply lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] tw-border-select-default-border #{!important};
 }
 
 .p-dropdown:disabled {
-    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-border #{!important} ;
+    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-dd-menu-item-hover-bg tw-border tw-border-select-disabled-border #{!important} ;
 }
 
 .p-dropdown .p-dropdown-label {
@@ -205,36 +255,36 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items {
-    @apply tw-pt-px tw-pr-0 tw-pb-0 tw-border tw-border-box-color tw-rounded-b-8-px #{!important};
+    @apply tw-mt-1-px tw-p-0 tw-border tw-border-box-color tw-rounded-b-8-px tw-border-none #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-mx-px tw-mt-px tw-mb-4-px #{!important};
+    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-rounded-4-px  #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    @apply tw-text-mandatory-field-color tw-bg-disabled-bg-color #{!important};
+    @apply tw-text-mandatory-field-color tw-bg-dd-menu-item-hover-bg #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
-    @apply tw-bg-disabled-bg-color tw-text-slightly-normal-text-color #{!important};
+    @apply tw-bg-dd-menu-item-hover-bg tw-text-slightly-normal-text-color #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item, 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    @apply tw-h-fit tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px tw-mx-px tw-mt-px tw-mb-4-px #{!important};
+    @apply tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-4-px  #{!important};
 }
 
 .p-dropdown.p-focus {
-    @apply tw-shadow-none tw-border-slightly-normal-text-color #{!important};
+    @apply tw-shadow-none tw-border-select-focused-border #{!important};
 }
 
 .p-dropdown:hover {
-    @apply tw-shadow-none tw-border-slightly-normal-text-color #{!important};
+    @apply tw-shadow-none #{!important};
 }
 
 .p-multiselect {
-    @apply lg:tw-w-300-px md:tw-w-260-px ;
+    @apply lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border #{!important};
 }
 
 .p-multiselect .p-multiselect-label {
@@ -242,7 +292,7 @@ p {
 }
 
 .p-multiselect:not(.p-disabled):hover {
-    @apply tw-border-faded-text-color #{!important};
+    @apply tw-border-select-focused-border #{!important};
 }
 
 .p-multiselect:not(.p-disabled).p-focus {
@@ -269,8 +319,12 @@ p {
     @apply tw-w-300-px ;
 }
 
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+    @apply tw-min-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
+}
+
 .p-dropdown .p-dropdown-label.p-placeholder {
-    @apply tw-text-placeholder #{!important};
+    @apply tw-text-select-default-placeholder-text #{!important};
 }
 
 .p-multiselect .p-multiselect-label.p-placeholder {
@@ -278,7 +332,7 @@ p {
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-h-54-px tw-px-16-px tw-py-8-px #{!important};
+    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-h-54-px tw-px-16-px tw-py-8-px #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item .p-checkbox {
@@ -286,23 +340,27 @@ p {
 }
 
 .p-checkbox .p-checkbox-box {
-    @apply tw-h-16-px tw-w-16-px tw-rounded-4-px tw-transition-none tw-border tw-border-sub-text-color #{!important};
+    @apply tw-h-16-px tw-w-16-px tw-rounded-4-px tw-transition-none tw-border tw-border-checkbox-icon-color #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
-    @apply tw-text-14-px tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-rounded-4-px #{!important};
+    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-bg-white tw-rounded-4-px #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
-    @apply tw-shadow-none tw-bg-disabled-bg-color #{!important};
+    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
-    @apply tw-shadow-none tw-bg-disabled-bg-color #{!important};
+    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
+}
+
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:hover {
+    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
 }
 
 .p-checkbox .p-checkbox-box.p-highlight {
-    @apply tw-bg-sub-text-color tw-border-none tw-pb-5-px #{!important};
+    @apply tw-bg-checkbox-icon-selected-color tw-border-none tw-pb-5-px #{!important};
 }
 
 .pi-check:before {
@@ -373,34 +431,106 @@ p {
     @apply tw-block #{!important};
 }
 
+.p-datatable .p-datatable-thead > tr > th {
+    @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg #{!important}
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+    @apply tw-text-text-secondary tw-text-14-px tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-lv-table-border-color #{!important};
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-year, .p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month:hover {
+    @apply tw-text-calendar-header-text-color #{!important};
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-title {
+    @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
+}
+
+.p-datepicker .p-datepicker-header {
+    @apply tw-p-0 #{!important};
+}
+
+.p-datepicker table th {
+    @apply tw-text-14-px tw-text-calendar-day-text-color tw-p-0 tw-py-4-px #{!important};
+}
+
+.p-datepicker table td {
+    @apply tw-p-0 tw-pb-4-px #{!important};
+}
+
+.p-datepicker table td > span {
+    @apply tw-text-14-px tw-text-calendar-date-default-text-color tw-h-28-px tw-w-28-px #{!important};
+}
+
+.p-datepicker {
+    @apply tw-p-16-px #{!important};
+}
+
 .configuration {
     &--section {
       @apply tw-pb-100-px ;
     }
   
     &--contents {
-        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px md:tw-mx-100-px lg:tw-mx-120-px tw-shadow-app-card #{!important};
+        @apply tw-overflow-hidden tw-border-separator tw-box-border tw-bg-white tw-rounded-8-px tw-mb-0-px #{!important};
     }
 }
 
 .mapped {
-    @apply tw-text-12-px tw-font-600 tw-rounded-full tw-border tw-border-solid tw-border-border-highlight-light tw-bg-bg-highlight-light tw-py-4-px tw-px-10-px tw-text-text-highlight tw-w-fit #{!important}
+    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-highlight-light tw-bg-bg-highlight-light tw-py-4-px tw-px-10-px tw-text-text-highlight tw-w-fit #{!important}
 }
 
 .unmapped {
-    @apply tw-text-12-px tw-font-600 tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
+    @apply tw-text-12-px tw-font-nav-link-font-weight tw-rounded-full tw-border tw-border-solid tw-border-border-danger-light tw-bg-bg-danger-light tw-py-4-px tw-px-10-px tw-text-text-danger tw-w-fit #{!important}
 }
 
 .p-calendar .p-inputtext {
-    @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none tw-text-sub-text-color #{!important};
+    @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none #{!important};
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext, .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext{
-    @apply tw-bg-disabled-bg-color #{!important};
+    @apply tw-bg-input-read-only-bg #{!important};
 }
 
 .p-calendar ::placeholder {
     @apply tw-text-sub-text-color #{!important};
+}
+
+.p-monthpicker-month {
+    @apply tw-w-[25%] #{!important};
+}
+
+.p-datepicker .p-monthpicker .p-monthpicker-month {
+    @apply tw-p-0 tw-mt-10-px tw-text-14-px tw-text-calendar-month-text-color tw-h-32-px #{!important};
+}
+
+.p-datepicker .p-yearpicker .p-yearpicker-year {
+    @apply tw-p-0 tw-mt-10-px tw-h-32-px tw-text-14-px #{!important};
+}
+
+.p-yearpicker-year {
+    @apply tw-w-[25%] #{!important};
+}
+
+.p-datepicker:not(.p-disabled) .p-monthpicker .p-monthpicker-month:not(.p-disabled):focus {
+    @apply tw-shadow-none #{!important};
+}
+
+.p-datepicker:not(.p-disabled) table td span:not(.p-highlight):not(.p-disabled):hover {
+    @apply tw-bg-calendar-month-hover-bg #{!important};
+}
+
+.p-datepicker:not(.p-disabled) .p-yearpicker .p-yearpicker-year:not(.p-disabled):focus {
+    @apply tw-shadow-none #{!important};
+}
+
+.p-datepicker .p-datepicker-header .p-datepicker-prev:focus, .p-datepicker .p-datepicker-header .p-datepicker-next:focus {
+    @apply tw-shadow-none #{!important};
 }
 
 .p-datepicker table td > span.p-highlight {
@@ -416,7 +546,7 @@ p {
 }
 
 .p-datepicker-touch-ui, .p-calendar .p-datepicker-touch-ui {
-    @apply tw-min-w-fit tw-top-[50%] tw-left-[50%] #{!important};
+    @apply tw-min-w-fit tw-absolute tw-top-36-px tw-left-[-12px] tw-transform-none #{!important};
 }
 
 .p-dropdown-filter {
@@ -427,12 +557,28 @@ p {
     @apply tw-text-20-px tw-font-500 #{!important};
 }
 
+.p-dialog .p-dialog-header {
+    @apply tw-rounded-none #{!important};
+}
+
+.p-chips .p-chips-multiple-container .p-chips-token {
+    @apply tw-bg-white tw-px-8-px tw-py-2-px tw-rounded-full tw-border-chips-border-color tw-shadow-none #{!important};
+}
+
+.p-chips .p-chips-multiple-container:not(.p-disabled) {
+    @apply tw-border-select-default-border #{!important};
+}
+
+.p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
+    @apply tw-shadow-none #{!important};
+}
+
 .preview-text {
     @apply tw-text-14-px tw-font-400 tw-text-text-muted tw-p-24-px #{!important} ;
 }
 
 .preview-box {
-    @apply tw-text-text-label tw-p-10-px tw-bg-bg-tertiary tw-rounded-8-px #{!important} ;
+    @apply tw-text-input-read-only-text tw-p-10-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px #{!important} ;
 }
 
 .landing {
@@ -454,7 +600,7 @@ p {
     }
 
     &--accounting-app {
-        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-4-px tw-border-1-px tw-shadow-app-card;
+        @apply tw-flex tw-flex-col tw-w-20-vw tw-h-168-px tw-items-center tw-justify-center tw-cursor-pointer tw-rounded-8-px tw-border-1-px tw-bg-white tw-border-none;
     }
 
     &--accounting-app-name {

@@ -1,0 +1,27 @@
+.custom-search-field {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px 12px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.custom-search-field i.pi-search {
+    margin-right: 10px;
+    color: grey;
+}
+
+.custom-search-field input[type="text"] {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+::placeholder {
+    @apply tw-text-search-focused-placeholder-text;
+}
+
+input.custom-focus:focus {
+    outline: none;
+    border: 1px solid black !important;
+}

@@ -6,7 +6,7 @@
 </div>
 
 
-<div *ngIf="!isLoading" class="tw-py-40-px tw-px-120-px">
+<div *ngIf="!isLoading" class="tw-py-40-px" [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
     <div class="tw-mb-16-px">
         <app-sub-menu [activeModule]="activeModule" [modules]="modules" ></app-sub-menu>
     </div>

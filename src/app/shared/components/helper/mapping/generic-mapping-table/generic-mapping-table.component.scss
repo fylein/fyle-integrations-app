@@ -52,7 +52,7 @@ td {
 }
 
 .pi-check:before {
-    @apply tw-text-14-px tw-cursor-pointer tw-text-faded-text-color #{!important};
+    @apply tw-text-14-px tw-cursor-pointer tw-text-text-muted #{!important};
 }
 
 :host ::ng-deep .tooltip-main {
@@ -66,15 +66,3 @@ td {
 :host ::ng-deep .tooltip-return {
     @apply tw-mt-6-px tw-px-4-px tw-py-4-px tw-text-9-px tw-rounded-md tw-bg-placeholder  #{!important}
 }
-
-:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-    @apply tw-text-sub-text-color tw-text-14-px tw-font-400 tw-py-14-px tw-px-22-px tw-border-t tw-border-b-0 tw-border-t-box-color  #{!important};
-  }
-  
-  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
-    @apply tw-text-text-primary tw-text-12-px tw-font-500 tw-py-12-px tw-px-22-px tw-border tw-border-box-color tw-bg-disabled-bg-color #{!important}
-  }
-  
-  :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td > button {
-    @apply tw-pl-48-px #{!important};
-  }
