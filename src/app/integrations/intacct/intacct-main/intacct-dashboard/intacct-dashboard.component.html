@@ -5,279 +5,43 @@
     <app-loader></app-loader>
 </div>
 
-<div *ngIf="!isLoading" class="tw-py-32-px tw-px-120-px">
-    <div *ngIf="!isImportInProgress" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
-        <div class="tw-p-24-px">
-            <div class="tw-flex tw-justify-between tw-items-center ">
-                <div class="tw-w-4/5">
-                    <div class="tw-flex tw-items-center">
-                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px'" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length" [svgSource]="'check'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
-                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px tw-text-slightly-normal-text-color'" *ngIf="(!exportInProgress && exportableExpenseGroupIds.length) || (exportInProgress)" [svgSource]="'arrow-tail-up'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && !lastExport"> Sit back and relax!</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="exportInProgress"> Exporting {{ processedCount }} of {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} to your Sage Intacct Account</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && exportableExpenseGroupIds.length"> {{ exportableExpenseGroupIds.length }} expense{{exportableExpenseGroupIds.length > 1 ? 's' : ''}} ready to export</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-slightly-normal-text-color" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && lastExport?.successful_expense_groups_count">You are all caught up!</h3>
-                        <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-flex tw-text-info tw-ml-4-px'" [tooltipText]="'All expenses that have reached your export state in ' + brandingConfig.brandName + ' will be automatically imported and kept ready for export'"></app-svg-icon>
-                    </div>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && !lastExport">No new expenses to export in the configured state of export in {{brandingConfig.brandName}}. Once you start processing payments or closing your expenses, they will be automatically available here.</h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="exportInProgress">This may take a few minutes...</h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px" *ngIf="!exportInProgress && !exportableExpenseGroupIds.length && lastExport?.successful_expense_groups_count">No new expenses to export from the payment processing state in {{brandingConfig.brandName}}.<br>Once you start processing payment for the expenses, they will be automatically available here to export.</h5>
-                    <div *ngIf="!exportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
-                        <h5>{{ exportableExpenseGroupIds.length - failedExpenseGroupCount > 0 ? exportableExpenseGroupIds.length - failedExpenseGroupCount : 0 }} new expense{{(exportableExpenseGroupIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed expense{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
-                    </div>
-                    <div *ngIf="!exportInProgress && exportableExpenseGroupIds.length && (failedExpenseGroupCount === null || failedExpenseGroupCount === 0)" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-slightly-normal-text-color tw-pl-34-px tw-pt-8-px tw-flex">
-                        <h5>{{ exportableExpenseGroupIds.length }} new expense{{(exportableExpenseGroupIds.length) > 1 ? 's' : ''}}, {{ 0 }} previously failed expense</h5>
-                    </div>
-                </div>
-                <div class="tw-flex tw-items-end tw-justify-end">
-                    <div>
-                        <button type="button" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 tw-bg-mandatory-field-color tw-rounded-4-px p-button-raised" pButton (click)="export()" [ngClass]="!exportableExpenseGroupIds.length || exportInProgress ? 'btn-disabled' : 'btn-enabled'" [disabled]="exportInProgress || !exportableExpenseGroupIds.length">
-                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="!exportInProgress">Export
-                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px !tw-text-12-'"></app-svg-icon>
-                            </p>
-                            <p class="tw-flex !tw-text-14-px !tw-font-500" *ngIf="exportInProgress">Exporting
-                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-8-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
-                            </p>
-                        </button><br>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div  *ngIf="exportInProgress">
-            <p-progressBar class="!tw-h-6-px" [value]="exportProgressPercentage" [showValue]='false'></p-progressBar>
-        </div>
-    </div>
+<div *ngIf="!isLoading">
+    <app-dashboard-export-section
+        (export)="export()"
+        [appName]="appName"
+        [isImportInProgress]="isImportInProgress"
+        [isExportInProgress]="isExportInProgress"
+        [exportableAccountingExportIds]="exportableAccountingExportIds"
+        [failedExpenseGroupCount]="failedExpenseGroupCount"
+        [exportProgressPercentage]="exportProgressPercentage"
+        [accountingExportSummary]="accountingExportSummary"
+        [processedCount]="processedCount"
+        [reimbursableImportState]="reimbursableImportState"
+        [cccImportState]="cccImportState">
+    </app-dashboard-export-section>
 
-    <!-- Shimmers -->
-    <div *ngIf="isImportInProgress" class="tw-shadow-app-card tw-rounded-12-px tw-bg-white tw-border-1-px tw-border-separator">
-        <div class="tw-p-24-px">
-            <div class="tw-flex tw-justify-between tw-items-center ">
-                <div class="tw-w-3/5">
-                    <div class="tw-mb-10-px"><p-skeleton width="250px" height="16px" shape="rectangle" ></p-skeleton></div>
-                    <div class="tw-mb-10-px"><p-skeleton width="500px" height="16px" shape="rectangle"></p-skeleton></div>
-                    <div class="tw-mb-10-px"><p-skeleton width="300px" height="16px" shape="rectangle"></p-skeleton></div>
-                </div>
-                <div class="tw-flex tw-items-end tw-justify-end">
-                    <p-skeleton width="120px" height="50px" shape="rectangle" ></p-skeleton>
-                </div>
-            </div>
-        </div>
-    </div>
+    <app-zero-state *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length"
+        [zeroStateImageURL]="'assets/illustrations/dashboard-illustration.svg'"
+        [headerText]="brandingConfig.brandId === 'fyle' ? 'Looks like you have': 'No records to show yet'"
+        [subHeaderText]="brandingConfig.brandId === 'fyle' ? '0 expenses to export right now': 'You\'ll be able to see export info here once you start exporting expenses'">
+    </app-zero-state>
 
-    <div *ngIf="!isLoading && !isImportInProgress && !exportableExpenseGroupIds.length && !lastExport" class="tw-flex tw-justify-center tw-items-center tw-mt-130-px">
-        <div class="tw-text-center">
-            <img *ngIf="illustrationsAllowed" class="tw-pr-4" src="assets/illustrations/dashboard-illustration.svg" alt="">
-            <p class="tw-pt-8 tw-font-400 tw-text-14-px">Looks like you have</p>
-            <p class="tw-pt-4-px tw-font-400 tw-text-14-px">0 expenses to export right now</p>
-        </div>
-    </div>
-    <div *ngIf="lastExport || exportableExpenseGroupIds.length" class="tw-mt-24-px tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator">
-        <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
-                <h4 class="tw-font-500 tw-text-18-px">Your last export</h4>
-        </div>
-        <div class="tw-border-separator tw-border-t-1-px">
-            <div *ngIf="true" class="tw-p-6 tw-rounded-6-px tw-bg-white">
-                <div *ngIf="true" class="inside-container tw-p-10 tw-rounded-6-px tw-bg-white">
-                    <div class="tw-flex tw-items-start tw-justify-between">
-                        <div class="tw-flex">
-                                <app-svg-icon [svgSource]="'check-circle-outline-small'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-success-toast tw-mr-16-px'"></app-svg-icon>
-                                <p class="tw-text-14-px tw-font-500 tw-pl-10-px tw-text-slightly-normal-text-color">Successful Expenses</p>
-                                <span class="tw-w-120-px tw-text-right tw-text-text-muted">
-                                    {{ lastExport?.successful_expense_groups_count ? lastExport?.successful_expense_groups_count : 0 }}
-                                </span>  
-                            <a *ngIf="lastExport?.successful_expense_groups_count" (click)="showExportLog(taskLogStatusComplete)" class="tw-ml-20-px tw-text-pink pointer">View</a>
-                        </div>
-                        <div class="tw-flex tw-flex-col">
-                            <span class="tw-w-260-px">
-                                <span class="tw-text-14-px tw-text-text-muted tw-font-400">Last Export at: </span>
-                                <span class="tw-text-14-px tw-font-500">{{ lastExport ? (lastExport.last_exported_at | date: 'h:mm a,') : 'None' }}
-                                {{ lastExport ? (lastExport.last_exported_at | date: 'dd MMM yyyy') : '' }}</span>
-                            </span>                              
-                        </div>
-                    </div>
-                    <div class="tw-flex tw-items-start tw-mt-8-px tw-justify-between">
-                        <div class="tw-flex">
-                            <app-svg-icon [svgSource]="'danger-outline'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-alert-toast tw-mr-16-px'"></app-svg-icon>
-                            <p class="tw-text-14-px tw-font-500 tw-pl-10-px tw-text-slightly-normal-text-color">Failed Expenses</p>
-                            <span class="tw-w-150-px tw-text-right tw-text-text-muted">
-                                {{ lastExport?.failed_expense_groups_count ? lastExport?.failed_expense_groups_count : 0 }}
-                            </span>
-                            <a *ngIf="lastExport?.failed_expense_groups_count" (click)="showExportLog(taskLogStatusFailed)" class="tw-ml-20-px tw-text-pink pointer tw-mt-2-px">View</a>
-                        </div>
-                        <div class="tw-flex tw-flex-col tw-mt-2-px">
-                            <span class="tw-w-260-px tw-text-left" *ngIf="lastExport?.next_export_at">
-                                <span class="tw-text-14-px tw-text-text-muted tw-font-400">Next Export at: </span>
-                                <span class="tw-text-14-px tw-font-500">{{ lastExport?.next_export_at ? (lastExport?.next_export_at | date: 'h:mm a,') : 'None' }}
-                                {{ lastExport ? (lastExport.next_export_at | date: 'dd MMM yyyy') : '' }}</span>
-                            </span> 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div *ngIf="!isLoading && lastExport && ((errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.INTACCT_ERROR.length) || (groupedErrorStat.EMPLOYEE_MAPPING || groupedErrorStat.CATEGORY_MAPPING))" class="tw-mt-24-px tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator">
-        <div class="tw-flex tw-justify-between tw-items-center tw-p-24-px">
-                <h4 class="!tw-font-500 !tw-text-18-px">Errors</h4>
-        </div>
-        <div class="tw-border-separator tw-border-t-1-px tw-pb-24-px">
-            <div class="tw-mt-10-px tw-rounded-6-px tw-bg-white">
-                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat?.EMPLOYEE_MAPPING || errors?.CATEGORY_MAPPING?.length || groupedErrorStat?.CATEGORY_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-pt-24-px">
-                    <div class="container">
-                        <div class="sub-text-container">
-                            <h4 class="tw-text-16-px !tw-font-500 tw-text-normal-text-color">Integrations Errors</h4>
-                            <h5 class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4">Check and resolve these errors before trying to re-export them again.</h5>
-                        </div>
-                    </div>
-                </div>
+    <app-dashboard-export-summary-section *ngIf="exportableAccountingExportIds.length || accountingExportSummary"
+        [appName]="appName"
+        [exportLogVersion]="'v1'"
+        [accountingExportType]="accountingExportType"
+        [accountingExportSummary]="accountingExportSummary">
+    </app-dashboard-export-summary-section>
 
-                <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat?.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
-                    <div class="container">
-                        <div class="inside-container">
-                            <h4 class="tw-text-14-px !tw-font-500 tw-text-slightly-normal-text-color">Employee Mapping Errors</h4>
-                            <h5 *ngIf="groupedErrorStat.EMPLOYEE_MAPPING" class="tw-text-text-muted tw-text-12-px">{{ groupedErrorStat.EMPLOYEE_MAPPING?.resolvedCount }}/{{ groupedErrorStat.EMPLOYEE_MAPPING?.totalCount }} error(s) resolved</h5>
-                            <div class="flex-wrapper">
-                                <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">
-                                    <p>Map the employees in {{brandingConfig.brandName}} to their corresponding records in Sage Intacct.</p>
-                                </h5>
-                                <button *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)" type="button" (click)="showMappingResolve(IntacctErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING)" class="tw-text-white tw-text-500 tw-text-12-px tw-px-12-px tw-py-6-px tw-bg-slightly-normal-text-color tw-rounded-4-px tw-w-100-px tw-font-500">
-                                    Resolve
-                                </button>
-                                <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount === groupedErrorStat.EMPLOYEE_MAPPING.totalCount">
-                                    <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
-                                    <p class="tw-text-text-muted tw-text-14-px">
-                                      Resolved
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div *ngIf="errors?.CATEGORY_MAPPING?.length || (groupedErrorStat && groupedErrorStat.CATEGORY_MAPPING)" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
-                    <div class="container">
-                        <div class="inside-container">
-                            <h4 class="tw-text-14-px !tw-font-500 tw-text-slightly-normal-text-color">Category Mapping Errors</h4>
-                            <h5 *ngIf="groupedErrorStat.CATEGORY_MAPPING" class="tw-pt-4-px tw-text-text-muted tw-text-12-px">{{ groupedErrorStat.CATEGORY_MAPPING.resolvedCount }}/{{ groupedErrorStat.CATEGORY_MAPPING?.totalCount }} error(s) resolved</h5>
-                            <div class="flex-wrapper">
-                                <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4"><p>Map the category in {{brandingConfig.brandName}} to their corresponding records in Sage Intacct.</p>
-                                </h5>
-                                <button *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)" type="button" (click)="showMappingResolve(IntacctErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING)" class="tw-text-white tw-text-500 tw-text-12-px tw-px-12-px tw-py-6-px tw-bg-slightly-normal-text-color tw-rounded-4-px tw-w-100-px tw-font-500">
-                                    Resolve
-                                </button>
-                                <div class="tw-flex tw-items-center" *ngIf="groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount === groupedErrorStat.CATEGORY_MAPPING.totalCount">
-                                    <app-svg-icon [svgSource]="'check-circle-outline'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-success-toast tw-pr-6-px'"></app-svg-icon>
-                                    <p class="tw-text-text-muted tw-text-14-px">
-                                      Resolved
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div *ngIf="errors?.INTACCT_ERROR?.length"  class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
-                    <div class="container">
-                        <div class="sub-text-container">
-                            <h4 class="tw-text-16-px !tw-font-500 tw-text-normal-text-color">Sage Intacct Errors</h4>
-                            <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">Resolve these errors on your Sage Intacct Account before trying to re-export them again.</h5>
-                        </div>
-                    </div>
-                </div>
-                <div *ngFor="let error of errors?.INTACCT_ERROR" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
-                    <div class="container">
-                        <div class="inside-container">
-                            <h4 class="tw-text-14-px !tw-font-500 tw-text-slightly-normal-text-color tw-w-600-px">{{ error.error_title }}</h4>
-                            <div class="flex-wrapper">
-                                <h5 class="!tw-text-text-muted tw-text-12-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-w-600-px"><p>{{ error.error_detail }}</p>
-                                </h5>
-                                <button type="button" (click)="showIntacctErrorDialog(error)" class="tw-flex hover:tw-shadow-btn-cta-shadow tw-items-center tw-justify-center tw-rounded tw-bg-white tw-text-black tw-px-3 tw-py-2 tw-border tw-border-gray-300 transition-transform tw-text-12-px tw-font-500 tw-text-slightly-normal-text-color">
-                                    View Expense
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
+    <app-dashboard-error-section *ngIf="errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length"
+        [appName]="appName"
+        [apiModuleUrl]="AppUrl.QBO"
+        [errors]="errors"
+        [groupedErrorStat]="groupedErrorStat"
+        [destinationFieldMap]="destinationFieldMap"
+        [isCategoryMappingGeneric]="true"
+        [isImportItemsEnabled]="isImportItemsEnabled"
+        [destinationOptionsVersion]="'v1'"
+        [errorsVersion]="'v1'">
+    </app-dashboard-error-section>
 </div>
-
-<!-- Expenses Table -->
-<p-dialog header="{{exportLogHeader}} Expenses" [dismissableMask]="true" [modal]="true" [draggable]="false" [(visible)]="isExportLogVisible" [position]="'top-right'" [style]="{ width: '50vw', height: '100vh' }">
-    <div class="tw-rounded-6-px tw-bg-white tw-border-1-px">
-        <p-table #dt2 [value]="expenseGroups ? expenseGroups : dummyExpenseGroupList">
-            <ng-template pTemplate="header">
-                <tr>
-                    <th>Reference ID</th>
-                    <th>Date and Time of Export</th>
-                    <th>Employee Name and ID</th>
-                    <th *ngIf="exportLogHeader==='Successful'">Exported As</th>
-                    <th *ngIf="exportLogHeader==='Successful'">Link to Sage Intacct</th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-rowData>
-                <tr *ngIf="!isExportLogFetchInProgress">
-                    <td class="tw-underline tw-cursor-pointer" (click)="openUrl($event, rowData.fyleUrl)">{{rowData.referenceNumber}}</td>
-                    <td>
-                        <p class="tw-font-400 tw-text-sub-text-color">{{rowData.exportedAt | date}}</p>
-                        <span class="tw-font-400 !tw-text-12-px tw-text-placeholder">{{rowData.exportedAt | date : "HH:ss"}}</span>
-                    </td>
-                    <td>
-                        <h4 [ngClass]="{'truncate': rowData.employee[0]?.length > 16}"
-                            [pTooltip]="rowData.employee[0]?.length > 16 ? rowData.employee[0] : null"
-                            tooltipPosition="top">
-                            {{rowData.employee[0]}}
-                        </h4>
-                        <h5 class="tw-font-400 !tw-text-12-px tw-text-placeholder"
-                            [ngClass]="{'truncate': rowData.employee[1]?.length > 16}"
-                            [pTooltip]="rowData.employee[1]?.length > 16 ? rowData.employee[1] : null"
-                            tooltipPosition="top">
-                            {{rowData.employee[1]}}
-                        </h5>                    
-                    </td>
-                    <td *ngIf="exportLogHeader==='Successful'">{{rowData.exportedAs | snakeCaseToSpaceCase | titlecase}}</td>
-                    <td *ngIf="exportLogHeader==='Successful'">
-                        <div *ngIf="rowData.intacctUrl">
-                          <button (click)="openUrl($event, rowData.intacctUrl)" pTooltip="Open in New Tab" tooltipPosition="top">
-                            <app-svg-icon [styleClasses]="'tw-pt-5-px'" [svgSource]="'open-in-new-tab-standard'" [width]="'24px'" [height]="'24px'"></app-svg-icon>
-                          </button>
-                        </div>
-                    </td>
-                </tr>
-                <ng-container *ngTemplateOutlet="shimmers"></ng-container>
-            </ng-template>
-        </p-table>
-    </div>
-</p-dialog>
-
-<!-- Mapping Errors -->
-<div>
-    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="showErrorStats()">
-        <p-header>
-            <p>{{intacctErrorType | snakeCaseToSpaceCase | titlecase }} Errors</p>
-          </p-header>
-        <app-dashboard-mapping-resolve *ngIf="isMappingResolveVisible" [employeeFieldMapping]="employeeFieldMapping" [groupedError]="groupedError" [mappingType]="intacctErrorType" [isDialogVisible]="isMappingResolveVisible"></app-dashboard-mapping-resolve>
-    </p-dialog>
-</div>
-
-<!-- Intacct Errors -->
-<div *ngIf="intacctErrorDialogVisible">
-    <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="intacctErrorDialogVisible" [position]="'top-right'" [style]="{ width: '50vw', height:'100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
-        <p-header>
-            <p>Sage Intacct Error</p>
-            <h3 class="sub-header">{{intacctErrorDetail}}</h3>
-        </p-header>
-        <app-dashboard-intacct-errors [intacctErrorExpenses]="intacctErrorExpenses"></app-dashboard-intacct-errors>
-    </p-dialog>
-</div>
-
-<ng-template #shimmers>
-    <tr *ngFor="let _ of [0,1,2,3,4,5,6]">
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress"><p-skeleton width="100px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress && exportLogHeader==='Successful'"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-        <td *ngIf="isExportLogFetchInProgress && exportLogHeader==='Successful'"><p-skeleton width="50px" height="28px" shape="rectangle"></p-skeleton></td>
-    </tr>
-</ng-template>
