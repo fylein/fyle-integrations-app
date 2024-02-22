@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingErrorType, AppName, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName, AppUrl, CCCImportState, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctErrorType, RefinerSurveyType, ReimbursableImportState, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
@@ -13,9 +13,9 @@ import { UserService } from 'src/app/core/services/misc/user.service';
 import { ExportLogService } from 'src/app/core/services/si/export-log/export-log.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
 import { environment } from 'src/environments/environment';
-import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
+import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
-import { DashboardModel } from 'src/app/core/models/db/dashboard.model';
+import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 
@@ -28,9 +28,9 @@ export class IntacctDashboardComponent implements OnInit {
 
   isLoading: boolean = false;
 
-  appName: AppName = AppName.INTACCT;
+  AppUrl = AppUrl;
 
-  isExportLogFetchInProgress: boolean;
+  appName: AppName = AppName.INTACCT;
 
   isImportInProgress: boolean = true;
 
@@ -93,11 +93,23 @@ export class IntacctDashboardComponent implements OnInit {
 
   IntacctErrorType = IntacctErrorType;
 
+  isImportItemsEnabled: boolean;
+
+  reimbursableImportState: ReimbursableImportState | null;
+
+  private readonly reimbursableExpenseImportStateMap = DashboardModel.getReimbursableExpenseImportStateMap();
+
+  cccImportState: CCCImportState | null;
+
+  private readonly cccExpenseImportStateMap = DashboardModel.getCCCExpenseImportStateMap();
+
   getExportErrors$: Observable<Error[]> = this.dashboardService.getExportErrors('v1');
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1');
 
-  private accountingExportType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
+  accountingExportType: TaskLogType[] = [TaskLogType.CREATING_BILLS, TaskLogType.CREATING_CHARGE_CARD_TRANSACTIONS, TaskLogType.CREATING_JOURNAL_ENTRIES, TaskLogType.CREATING_EXPENSE_REPORTS];
+
+  destinationFieldMap : DestinationFieldMap;
 
   readonly dummyExpenseGroupList: ExpenseGroupList[] = [{
     index: 0,
@@ -164,30 +176,29 @@ export class IntacctDashboardComponent implements OnInit {
         });
       });
       this.expenseGroups = expenseGroups;
-      this.isExportLogFetchInProgress = false;
     });
   }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
-      takeWhile((response) => response.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length > 0, true)
+      takeWhile((response) => response.results.filter((task: { status: string; expense_group: number; }) => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length > 0, true)
     ).subscribe((res) => {
-      this.processedCount = res.results.filter(task => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableAccountingExportIds.includes(task.expense_group)).length;
+      this.processedCount = res.results.filter((task: { status: string; type: TaskLogType; expense_group: number; }) => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableAccountingExportIds.includes(task.expense_group)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
 
-      if (res.results.filter(task => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
+      if (res.results.filter((task: { status: string; expense_group: number; }) => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
         this.isLoading = true;
         forkJoin([
           this.getExportErrors$,
-          this.getLastExport$
+          this.getAccountingExportSummary$
         ]).subscribe(responses => {
           this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
           this.groupedErrorStat = {
             EMPLOYEE_MAPPING: null,
             CATEGORY_MAPPING: null
           };
-          this.lastExport = responses[1];
+          this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
           this.isLoading = false;
         });
         this.dashboardService.getAllTasks([TaskLogState.FAILED, TaskLogState.FATAL], undefined, this.accountingExportType).subscribe((taskResponse) => {
