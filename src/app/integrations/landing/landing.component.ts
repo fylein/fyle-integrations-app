@@ -50,7 +50,7 @@ export class LandingComponent implements OnInit {
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
     [AccountingIntegrationApp.NETSUITE]: [environment.ns_callback_url, environment.ns_client_id],
     [AccountingIntegrationApp.QBO]: [`${environment.fyle_app_url}/quickbooks`, environment.qbo_client_id],
-    [AccountingIntegrationApp.SAGE_INTACCT]: [environment.si_callback_url, environment.si_client_id],
+    [AccountingIntegrationApp.SAGE_INTACCT]: [`${environment.fyle_app_url}/sage-intacct`, environment.si_client_id],
     [AccountingIntegrationApp.XERO]: [environment.xero_callback_url, environment.xero_client_id]
   };
 
