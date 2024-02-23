@@ -11,6 +11,9 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-qbo-skipped-export-log',
   templateUrl: './qbo-skipped-export-log.component.html',
@@ -42,18 +45,28 @@ export class QboSkippedExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
   constructor(
     private formBuilder: FormBuilder,
     private exportLogService: ExportLogService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
     private paginatorService: PaginatorService
-  ) { }
+  ) { 
+    this.searchQuerySubject.pipe(
+      debounceTime(1000)
+    ).subscribe((query: string) => {
+      this.searchQuery = query;
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+      this.getSkippedExpenses(paginator.limit, paginator.offset);
+    });
+  }
 
   public handleSimpleSearch(query: string) {
-    this.filteredExpenses = this.expenses.filter((group: SkipExportList) => {
-      return SkippedAccountingExportModel.getfilteredSkippedAccountingExports(query, group);
-    });
+    this.searchQuerySubject.next(query);
   }
 
   getSkippedExpenses(limit: number, offset: number) {
@@ -64,8 +77,8 @@ export class QboSkippedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter).subscribe((skippedExpenses: SkipExportLogResponse) => {
-      if (!this.isDateSelected) {
+    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
+      if (!this.isDateSelected && !this.searchQuery) {
         this.totalCount = skippedExpenses.count;
       }
 

@@ -12,6 +12,9 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-qbo-complete-export-log',
   templateUrl: './qbo-complete-export-log.component.html',
@@ -51,22 +54,32 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
   constructor(
     private formBuilder: FormBuilder,
     private exportLogService: ExportLogService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+      debounceTime(1000)
+    ).subscribe((query: string) => {
+      this.searchQuery = query;
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+      this.getAccountingExports(paginator.limit, paginator.offset);
+    });
+  }
 
   openExpenseinFyle(expense_id: string) {
     this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(query: string) {
-    this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
-      return AccountingExportModel.getfilteredAccountingExports(query, group);
-    });
+    this.searchQuerySubject.next(query);
   }
 
   pageSizeChanges(limit: number): void {
@@ -90,8 +103,8 @@ export class QboCompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
-      if (!this.isDateSelected) {
+    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+      if (!this.isDateSelected && !this.searchQuery) {
         this.totalCount = accountingExportResponse.count;
       }
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>

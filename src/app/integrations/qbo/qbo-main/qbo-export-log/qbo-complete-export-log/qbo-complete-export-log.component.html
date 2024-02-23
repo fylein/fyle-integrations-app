@@ -27,7 +27,7 @@
             </app-paginator>
         </div>
 
-        <app-zero-state-with-illustration *ngIf="!filteredAccountingExports.length && !selectedDateFilter && totalCount > 0"
+        <app-zero-state-with-illustration *ngIf="!filteredAccountingExports.length && (selectedDateFilter || searchQuery) && totalCount > 0"
             [mainText]="brandingConfig.brandId === 'fyle' ? 'Sorry, no results found!': 'Sorry, no results found'"
             [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
         </app-zero-state-with-illustration>
