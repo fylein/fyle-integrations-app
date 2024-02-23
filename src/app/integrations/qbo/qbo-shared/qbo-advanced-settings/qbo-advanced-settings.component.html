@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
+            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px" *ngIf="hideSkipExport">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'" 
