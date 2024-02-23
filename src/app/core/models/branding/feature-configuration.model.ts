@@ -3,7 +3,7 @@ export type FeatureConfiguration = {
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;
         isIconsInsideButtonAllowed: boolean;
-        exposeOnlyQBOApp: boolean;
+        exposeC1Apps: boolean;
         isBackgroundColorAllowed: boolean;
         isAsterikAllowed: boolean;
         featureFlags: {
