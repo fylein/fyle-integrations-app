@@ -12,7 +12,7 @@ const featureConfigs: FeatureConfiguration = {
         illustrationsAllowed: true,
         isGradientAllowed: true,
         isIconsInsideButtonAllowed: true,
-        exposeOnlyQBOApp: false,
+        exposeC1Apps: false,
         isBackgroundColorAllowed: false,
         isAsterikAllowed: true,
         featureFlags: {
@@ -45,7 +45,7 @@ const featureConfigs: FeatureConfiguration = {
         illustrationsAllowed: false,
         isGradientAllowed: false,
         isIconsInsideButtonAllowed: false,
-        exposeOnlyQBOApp: true,
+        exposeC1Apps: true,
         isBackgroundColorAllowed: true,
         isAsterikAllowed: false,
         featureFlags: {
