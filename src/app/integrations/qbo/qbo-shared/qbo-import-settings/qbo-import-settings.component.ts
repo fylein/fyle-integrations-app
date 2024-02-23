@@ -82,8 +82,6 @@ export class QboImportSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.configuration.importSetting;
 
-  readonly importVendorsAsMerchants: boolean = brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants;
-
   constructor(
     private formBuilder: FormBuilder,
     private helperService: QboHelperService,

@@ -77,8 +77,6 @@ export class QboAdvancedSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.configuration.advancedSettings;
 
-  readonly hideSkipExport: boolean = brandingFeatureConfig.featureFlags.advancedSettings.skipExport;
-
   constructor(
     private advancedSettingsService: QboAdvancedSettingsService,
     private configurationService: ConfigurationService,
