@@ -92,6 +92,8 @@ export class LandingComponent implements OnInit {
       callbackUrl: this.integrationCallbackUrlMap[accountingIntegrationApp][0],
       clientId: this.integrationCallbackUrlMap[accountingIntegrationApp][1]
     };
+    // @ts-ignore
+    console.error(payload);
 
     this.eventsService.postEvent(payload);
   }
