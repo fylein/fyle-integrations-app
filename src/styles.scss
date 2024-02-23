@@ -49,10 +49,12 @@ p {
 
 .pi-chevron-down.fyle {
     content: url('./assets/icons/arrow-down.svg') !important;
+    @apply tw-ml-12-px #{!important} ;
 }
 
 .pi-chevron-down.co {
     content: url('./assets/icons/co/grv-chevron-down.svg') !important;
+    @apply tw-ml-12-px #{!important} ;
 }
 
 .pi-eye.fyle {
@@ -566,6 +568,10 @@ p {
 
 .preview-box {
     @apply tw-text-text-label tw-p-10-px tw-bg-bg-tertiary tw-rounded-8-px #{!important} ;
+}
+
+.p-dialog-header-close-icon {
+    @apply tw-mt-[-3px] #{!important} ;
 }
 
 .landing {

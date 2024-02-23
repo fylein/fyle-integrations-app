@@ -28,7 +28,7 @@
                             <p>{{ sourceFieldText }}</p>
                         </div>
                         <p-dropdown appendTo="body" [options]="sourceFieldOptions" [placeholder]="sourceFieldPlaceholderText" [formControlName]="'sourceName'"
-                        [optionLabel]="sourceAttributeNames.label" [optionValue]="sourceAttributeNames.value" [ngClass]="{'selectedItem': mappingField.value.sourceName, 'filterDropdown': !mappingField.value.sourceName, 'showClearIcon': showCrossIcon && mappingField.value.sourceName}" dropdownIcon="pi pi-chevron-down">    
+                        [optionLabel]="sourceAttributeNames.label" [optionValue]="sourceAttributeNames.value" [ngClass]="{'selectedItem': mappingField.value.sourceName, 'filterDropdown': !mappingField.value.sourceName, 'showClearIcon': showCrossIcon && mappingField.value.sourceName}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">    
                             <ng-template let-options pTemplate="item">
                                 <div #textElement
                                     [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"

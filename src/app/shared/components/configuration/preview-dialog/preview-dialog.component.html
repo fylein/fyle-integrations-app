@@ -1,6 +1,11 @@
 <div>
     <p-dialog [header]="header" [dismissableMask]="true" [showHeader]="true" [modal]="true" [(visible)]="isPreviewDialogVisible" (onHide)="close()" [breakpoints]="{ '960px': '75vw' }" [draggable]="false" [resizable]="false">
-        <div class="tw-flex tw-items-center tw-justify-center tw-px-24-px tw-pb-24-px">
+        <ng-template pTemplate="header">
+            <div class="">
+               <span class="tw-text-20-px tw-font-500 tw-text-modal-header-text-color">{{header}}</span> 
+            </div>
+        </ng-template>
+        <div class="tw-flex tw-items-center tw-justify-center tw-mt-24-px tw-px-24-px tw-pb-24-px">
             <img height="300px" width="700px" [src]="iconPath">
         </div>
     </p-dialog>

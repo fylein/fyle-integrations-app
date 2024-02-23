@@ -32,7 +32,7 @@ export class TravelperkMainComponent implements OnInit {
     this.isConnectionInProgress = true;
     this.travelperkService.disconnect().subscribe(() => {
       this.isConnectionInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Travelperk successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected TravelPerk successfully');
     });
   }
 

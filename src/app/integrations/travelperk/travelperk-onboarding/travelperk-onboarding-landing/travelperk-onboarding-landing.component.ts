@@ -49,7 +49,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     this.travelperkService.disconnect().subscribe(() => {
       this.isIntegrationConnected = false;
       this.isConnectionInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Travelperk successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected TravelPerk successfully');
     });
   }
 
@@ -73,7 +73,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
           this.travelperkService.getTravelperkData().subscribe(() => {
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
-            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected TravelPerk successfully');
             this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
             forkJoin([
               this.travelperkService.syncPaymentProfile(),
