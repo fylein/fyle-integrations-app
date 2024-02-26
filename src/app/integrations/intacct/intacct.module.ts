@@ -8,7 +8,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { SiRoutingModule } from './intacct-routing.module';
 import { MainComponent } from './intacct-main/main.component';
-import { ConfigurationComponent } from './intacct-main/intacct-configuration/configuration.component';
+import { ConfigurationComponent } from './intacct-main/intacct-configuration/intacct-configuration.component';
 import { ConfigurationExportSettingComponent } from './intacct-main/intacct-configuration/configuration-export-setting/configuration-export-setting.component';
 import { ConfigurationAdvancedSettingComponent } from './intacct-main/intacct-configuration/configuration-advanced-setting/configuration-advanced-setting.component';
 import { ConfigurationImportSettingComponent } from './intacct-main/intacct-configuration/configuration-import-setting/configuration-import-setting.component';

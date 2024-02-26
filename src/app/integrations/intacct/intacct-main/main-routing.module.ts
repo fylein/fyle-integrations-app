@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./intacct-configuration/configuration.module').then(m => m.ConfigurationModule)
+        loadChildren: () => import('./intacct-configuration/intacct-configuration.module').then(m => m.IntacctConfigurationModule)
       }
     ]
   }
