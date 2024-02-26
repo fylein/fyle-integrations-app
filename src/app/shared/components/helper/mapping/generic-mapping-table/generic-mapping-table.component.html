@@ -35,7 +35,7 @@
                         <div class="p-inputgroup">
                             <div class="p-input-icon-left">
                                 <i>
-                                    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="isSearchFocused ? 'tw-text-search-focused-filled-border': 'tw-text-search-default-border'" [isTextColorAllowed]="true"></app-svg-icon>
+                                    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
                                 </i>
                                 <input (focus)="isSearchFocused = true" (blur)="isSearchFocused = false" type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px"
                                 (keyup)="options.filter($event)" pInputText placeholder="Search" />

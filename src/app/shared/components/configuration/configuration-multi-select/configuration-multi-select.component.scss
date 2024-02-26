@@ -2,13 +2,6 @@
     @apply tw-z-1 tw-px-12-px tw-py-8-px tw-w-270-px #{!important};      
 }
 
-:host ::ng-deep .p-multiselect-panel .p-multiselect-header,:host ::ng-deep .p-multiselect-panel .p-multiselect-items {
-    @apply tw-p-0 #{!important};
-}
-
-:host ::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-mb-0 #{!important};
-}
 
 :host ::ng-deep .error-box .p-multiselect {
     @apply tw-border-alert-toast #{!important};
@@ -16,12 +9,4 @@
 
 :host ::ng-deep .normal-box .p-multiselect.p-focus {
     @apply tw-border-slightly-normal-text-color #{!important};
-}
-
-:host ::ng-deep .p-checkbox {
-    @apply tw-pt-2-px #{!important};
-}
-
-:host ::ng-deep .p-multiselect-panel .p-multiselect-items .p-multiselect-item {
-    @apply tw-h-32-px tw-px-16-px tw-py-0 #{!important};
 }

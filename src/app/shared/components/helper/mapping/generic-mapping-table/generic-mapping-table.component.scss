@@ -56,7 +56,7 @@ td {
 }
 
 input[type="text"] {
-    @apply tw-border-border-primary #{!important};
+    @apply tw-border-border-primary tw-text-search-focused-text #{!important};
 }
 
 ::placeholder {

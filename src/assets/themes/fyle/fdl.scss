@@ -374,5 +374,11 @@
     --form-default-help-text-color: var(--text-label);
 
     --select-default-text: var(--text-secondary);
+
+    --search-focused-text: var(--text-secondary);
+
+    --select-focused-placeholder-text: var(--text-placeholder);
+
+    --select-focused-text: var(--text-secondary);
   }
 }
