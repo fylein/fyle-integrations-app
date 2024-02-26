@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'mapping',
-        loadChildren: () => import('./intacct-mapping/mapping.module').then(m => m.MappingModule)
+        loadChildren: () => import('./intacct-mapping/intacct-mapping.module').then(m => m.IntacctMappingModule)
       },
       {
         path: 'configuration',
