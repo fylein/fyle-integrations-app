@@ -37,8 +37,8 @@
                                 <i>
                                     <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
                                 </i>
-                                <input type="text" class="!tw-h-32-px !tw-w-260-px"
-                                (keyup)="options.filter($event)" pInputText />
+                                <input type="text" class="!tw-h-32-px !tw-w-260-px" [(ngModel)]="searchWord"
+                                (keyup)="getSearchWord($event)" pInputText />
                             </div>
                         </div>
                     </ng-template>

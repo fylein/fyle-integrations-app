@@ -11,6 +11,7 @@ import { GenericMappingResponse } from '../../models/db/extended-generic-mapping
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
 import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
+import { PaginatedDestinationAttribute } from '../../models/common/mappings.model';
 
 
 @Injectable({
@@ -152,6 +153,25 @@ export class MappingService {
 
   postMapping(mapping: GenericMappingPost): Observable<GenericMapping> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
+  }
+
+  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string): Observable<PaginatedDestinationAttribute> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    const params: {limit: number, offset: number, attribute_type: string, value?: string, display_name?: string} = {
+      limit: 100,
+      offset: 0,
+      attribute_type: attributeType
+    };
+
+    if (value) {
+      params.value = value;
+    }
+
+    if (display_name) {
+      params.display_name = display_name;
+    }
+
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/paginated_destination_attributes/`, params);
   }
 
 }

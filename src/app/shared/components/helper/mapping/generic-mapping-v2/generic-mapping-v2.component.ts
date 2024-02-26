@@ -63,6 +63,8 @@ export class GenericMappingV2Component implements OnInit {
 
   @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
 
+  @Output() searchTrigger = new EventEmitter<string>();
+
   readonly brandingConfig = brandingConfig;
 
   constructor(
@@ -128,12 +130,19 @@ export class GenericMappingV2Component implements OnInit {
     this.getFilteredMappings();
   }
 
+  searchOptions(event: any) {
+    console.log("edede")
+    this.searchTrigger.emit(event)
+  }
+
   setupPage() {
     this.isLoading = true;
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
     this.limit = paginator.limit;
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
+    const mappingType = this.sourceType === FyleField.EMPLOYEE.toUpperCase() ? 'employeemapping' : 'mapping'
+    const mappingDestinationType = this.sourceType === FyleField.EMPLOYEE.toUpperCase() ? 'destinayion_employee' : 'destination'
     forkJoin([
       this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric),
       this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
@@ -144,6 +153,19 @@ export class GenericMappingV2Component implements OnInit {
           this.filteredMappingCount = mappingResponse.count;
         }
         this.mappings = mappingResponse.results;
+        console.log(mappingResponse, this.destinationOptions)
+        this.mappings.forEach((data:any) => {
+          if (data[mappingType].length > 0) {
+            const mappingData = this.destinationOptions.filter((map: any) => {
+              if(mappingType === 'employeemapping')
+              {
+                return data[mappingType][0].destination_employee.value !== map.value
+              }
+              return data[mappingType][0].destination.value !== map.value
+            })
+            console.log(mappingData)
+          }
+        })
         this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
         this.isInitialSetupComplete = true;

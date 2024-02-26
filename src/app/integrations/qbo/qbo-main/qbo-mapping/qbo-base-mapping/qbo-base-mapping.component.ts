@@ -36,6 +36,8 @@ export class QboBaseMappingComponent implements OnInit {
 
   FyleField = FyleField;
 
+  displayName: string | undefined = undefined;
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
@@ -52,6 +54,14 @@ export class QboBaseMappingComponent implements OnInit {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
     });
+  }
+
+  searchDestinationOptions(event:string) {
+    console.log("kjkj2")
+    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event, this.displayName).subscribe((responses) => {
+      this.destinationOptions = responses.results;
+      console.log(this.destinationOptions, event)
+    })
   }
 
   private getDestinationField(workspaceGeneralSetting: QBOWorkspaceGeneralSetting, mappingSettings: MappingSetting[]): string {
@@ -77,15 +87,21 @@ export class QboBaseMappingComponent implements OnInit {
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
-      let displayName;
       if (this.destinationField === AccountingField.ACCOUNT) {
-        displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+        this.displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
       }
 
-      this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined, undefined, displayName).subscribe((response: any) => {
-        this.destinationOptions = response;
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField,undefined,this.displayName).subscribe((responses) => {
+        this.destinationOptions = responses.results;
         this.isLoading = false;
-      });
+        console.log(responses, this.employeeFieldMapping)
+      })
+
+      // this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined, undefined, this.displayName).subscribe((response: any) => {
+      //   this.destinationOptions = response;
+      //   this.isLoading = false;
+      //   console.log(response)
+      // });
     });
   }
 

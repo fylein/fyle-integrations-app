@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { debounceTime } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -41,6 +42,10 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() isDashboardMappingResolve: boolean;
 
+  @Output() searchOptions: EventEmitter<string> = new EventEmitter();
+
+  searchWord: string;
+
   form: FormGroup = new FormGroup({
     searchOption: new FormControl('')
   });
@@ -54,6 +59,11 @@ export class GenericMappingTableComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
+
+  getSearchWord(word: any) {
+    console.log("dcede")
+    this.searchOptions.emit(this.searchWord)
+  }
 
   isOverflowing(element: any): boolean {
     return element.offsetWidth < element.scrollWidth;
