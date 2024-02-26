@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { FyleReferenceType, PaginatorPage, TaskLogState, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { SkipExportLogResponse, SkipExportList, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
+import { ExpenseGroup, ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -13,13 +13,13 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 
 @Component({
-  selector: 'app-skip-export-log',
-  templateUrl: './skip-export-log.component.html',
-  styleUrls: ['./skip-export-log.component.scss']
+  selector: 'app-intacct-completed-export-log',
+  templateUrl: './intacct-completed-export-log.component.html',
+  styleUrls: ['./intacct-completed-export-log.component.scss']
 })
-export class SkipExportLogComponent implements OnInit {
+export class IntacctCompletedExportLogComponent implements OnInit {
 
-  isLoading: boolean = true;
+  isLoading: boolean = false;
 
   isSearchFocused: boolean = false;
 
@@ -39,15 +39,15 @@ export class SkipExportLogComponent implements OnInit {
 
   presentDate = new Date().toLocaleDateString();
 
-  skipExportLogForm: FormGroup;
+  exportLogForm: FormGroup;
 
   isCalendarVisible: boolean;
 
   isRecordPresent: boolean = false;
 
-  expenseGroups: SkipExportList [];
+  expenseGroups: ExpenseGroupList [];
 
-  filteredExpenseGroups: SkipExportList [];
+  filteredExpenseGroups: ExpenseGroupList [];
 
   expenses: Expense [] = [];
 
@@ -78,25 +78,43 @@ export class SkipExportLogComponent implements OnInit {
     private paginatorService: PaginatorService
   ) { }
 
-  public filterTable(query: any) {
-    query = query.toLowerCase();
+  displayChildTable(index: number) {
+    this.clickedExportLogIndex = index;
+    this.expenses = this.filteredExpenseGroups[this.clickedExportLogIndex].expenses;
+    this.visible = true;
+  }
 
-    this.filteredExpenseGroups = this.expenseGroups.filter((group: SkipExportList) => {
-      const employeeID = group.employee ? group.employee[1] : '';
-      const expenseType = group.expenseType ? group.expenseType : '';
-      const referenceNumber = group.claim_number ? group.claim_number : '';
+  openExpenseinFyle(expense_id: string) {
+    const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}`;
+    window.open(url, '_blank');
+  }
 
-      return (
-        employeeID.toLowerCase().includes(query) ||
-        expenseType.toLowerCase().includes(query) ||
-        referenceNumber.toLowerCase().includes(query)
-      );
-    });
+  openUrl(event: Event, url: string) {
+    window.open(url, '_blank');
+    event.stopPropagation();
   }
 
   removeFilter(formField: AbstractControl) {
     (formField as FormGroup).reset();
     event?.stopPropagation();
+  }
+
+  public filterTable(query: any) {
+    query = query.toLowerCase();
+
+    this.filteredExpenseGroups = this.expenseGroups.filter((group: ExpenseGroupList) => {
+      const employeeName = group.employee ? group.employee[0] : '';
+      const employeeID = group.employee ? group.employee[1] : '';
+      const expenseType = group.expenseType ? group.expenseType : '';
+      const referenceNumber = group.referenceNumber ? group.referenceNumber : '';
+
+      return (
+        employeeName.toLowerCase().includes(query) ||
+        employeeID.toLowerCase().includes(query) ||
+        expenseType.toLowerCase().includes(query) ||
+        referenceNumber.toLowerCase().includes(query)
+      );
+    });
   }
 
   pageSizeChanges(limit: number): void {
@@ -109,26 +127,14 @@ export class SkipExportLogComponent implements OnInit {
 
   pageChanges(offset: number): void {
     this.isLoading = true;
-    this.currentPage = Math.ceil(offset / this.limit) + 1;
     this.offset = offset;
+    this.currentPage = Math.ceil(offset / this.limit) + 1;
     this.selectedDateFilter = this.selectedDateFilter ? this.selectedDateFilter : null;
     this.getExpenseGroups(this.limit, offset);
   }
 
-  dateFilter(event: any): void {
-    this.isLoading = true;
-    this.isDateSelected = true;
-    this.selectedDateFilter = event.value;
-    this.getExpenseGroups(this.limit, this.offset);
-  }
-
-  openUrl(event: Event, url: string) {
-    window.open(url, '_blank');
-    event.stopPropagation();
-  }
-
   dropDownWatcher() {
-    if (this.skipExportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
+    if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
       this.isCalendarVisible = false;
     } else {
       this.isCalendarVisible = true;
@@ -141,36 +147,46 @@ export class SkipExportLogComponent implements OnInit {
   }
 
   getDates() {
-    this.dateOptions[3].dateRange = this.skipExportLogForm.value.start[0].toLocaleDateString() + '-' + this.skipExportLogForm.value.start[1].toLocaleDateString();
-    this.dateOptions[3].startDate = this.skipExportLogForm.value.start[0];
-    this.dateOptions[3].endDate = this.skipExportLogForm.value.start[1];
+    this.dateOptions[3].dateRange = this.exportLogForm.value.start[0].toLocaleDateString() + '-' + this.exportLogForm.value.start[1].toLocaleDateString();
+    this.dateOptions[3].startDate = this.exportLogForm.value.start[0];
+    this.dateOptions[3].endDate = this.exportLogForm.value.start[1];
     this.presentDate = this.dateOptions[3].dateRange;
-    this.skipExportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
-    const event = {
-      value: this.dateOptions[3]
-    };
-    this.dateFilter(event);
+    this.exportLogForm.controls.dateRange.patchValue(this.dateOptions[3]);
   }
 
   getExpenseGroups(limit: number, offset:number) {
     this.isLoading = true;
-    const expenseGroups: SkipExportList[] = [];
+    const expenseGroups: ExpenseGroupList[] = [];
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkipExportLogs(limit, offset).subscribe((skippedExpenses: SkipExportLogResponse) => {
+    return this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(expenseGroupResponse => {
       if (!this.isDateSelected) {
-        this.totalCount = skippedExpenses.count;
+        this.totalCount = expenseGroupResponse.count;
       }
-      skippedExpenses.results.forEach((skippedExpenses: SkipExportLog) => {
+      expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
+        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
+        let referenceNumber: string = expenseGroup.description[referenceType];
+
+        if (referenceType === FyleReferenceType.EXPENSE) {
+          referenceNumber = expenseGroup.expenses[0].expense_number;
+        } else if (referenceType === FyleReferenceType.PAYMENT) {
+          referenceNumber = expenseGroup.expenses[0].payment_number;
+        }
+
         expenseGroups.push({
-          updated_at: skippedExpenses.updated_at,
-          claim_number: skippedExpenses.claim_number,
-          employee: [skippedExpenses.employee_name, skippedExpenses.employee_email],
-          expenseType: skippedExpenses.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
-          fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpenses.expense_id}`
+          index: index++,
+          exportedAt: expenseGroup.exported_at,
+          employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
+          expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
+          fyleReferenceType: null,
+          referenceNumber: referenceNumber,
+          exportedAs: expenseGroup.export_type,
+          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
+          intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
+          expenses: expenseGroup.expenses
         });
       });
       this.filteredExpenseGroups = expenseGroups;
@@ -180,23 +196,27 @@ export class SkipExportLogComponent implements OnInit {
   }
 
   private setupForm(): void {
-    this.skipExportLogForm = this.formBuilder.group({
+    this.exportLogForm = this.formBuilder.group({
       searchOption: [''],
       dateRange: [null],
       start: [''],
       end: ['']
     });
 
-    this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
+    this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (dateRange[1]) {
-        this.selectedDateFilter = {
-          startDate: dateRange[0],
-          endDate: dateRange[1]
-        };
+        if (dateRange) {
+          this.selectedDateFilter = {
+            startDate: dateRange[0],
+            endDate: dateRange[1]
+          };
 
-        this.trackDateFilter('existing', this.selectedDateFilter);
-
-        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+          this.trackDateFilter('existing', this.selectedDateFilter);
+          this.getExpenseGroups(paginator.limit, paginator.offset);
+        }
+      } else {
+        this.selectedDateFilter = null;
         this.getExpenseGroups(paginator.limit, paginator.offset);
       }
     });

@@ -4,11 +4,11 @@ import { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-export-log',
-  templateUrl: './export-log.component.html',
-  styleUrls: ['./export-log.component.scss']
+  selector: 'app-intacct-export-log',
+  templateUrl: './intacct-export-log.component.html',
+  styleUrls: ['./intacct-export-log.component.scss']
 })
-export class ExportLogComponent implements OnInit {
+export class IntacctExportLogComponent implements OnInit {
 
   isLoading: boolean = false;
 

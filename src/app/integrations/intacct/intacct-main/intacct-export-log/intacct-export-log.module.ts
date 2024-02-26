@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ExportLogRoutingModule } from './export-log-routing.module';
-import { ExportLogComponent } from './export-log.component';
+import { ExportLogRoutingModule } from './intacct-export-log-routing.module';
+import { IntacctExportLogComponent } from './intacct-export-log.component';
 import { TableModule } from 'primeng/table';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { DialogModule } from 'primeng/dialog';
 import { TabMenuModule } from 'primeng/tabmenu';
-import { SkipExportLogComponent } from './skip-export-log/skip-export-log.component';
-import { CompletedExportLogComponent } from './completed-export-log/completed-export-log.component';
+import { IntacctSkipExportLogComponent } from './intacct-skip-export-log/skip-export-log.component';
+import { IntacctCompletedExportLogComponent } from './intacct-completed-export-log/intacct-completed-export-log.component';
 
 
 @NgModule({
   declarations: [
-    ExportLogComponent,
-    SkipExportLogComponent,
-    CompletedExportLogComponent
+    IntacctExportLogComponent,
+    IntacctSkipExportLogComponent,
+    IntacctCompletedExportLogComponent
   ],
   imports: [
     TabMenuModule,
@@ -27,4 +27,4 @@ import { CompletedExportLogComponent } from './completed-export-log/completed-ex
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ]
 })
-export class ExportLogModule { }
+export class IntacctExportLogModule { }

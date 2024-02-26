@@ -14,7 +14,7 @@ const routes: Routes = [
       },
       {
         path: 'export_log',
-        loadChildren: () => import('./intacct-export-log/export-log.module').then(m => m.ExportLogModule)
+        loadChildren: () => import('./intacct-export-log/intacct-export-log.module').then(m => m.IntacctExportLogModule)
       },
       {
         path: 'mapping',

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SkipExportLogComponent } from './skip-export-log.component';
+import { IntacctSkipExportLogComponent } from './skip-export-log.component';
 
 describe('SkipExportLogComponent', () => {
-  let component: SkipExportLogComponent;
-  let fixture: ComponentFixture<SkipExportLogComponent>;
+  let component: IntacctSkipExportLogComponent;
+  let fixture: ComponentFixture<IntacctSkipExportLogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SkipExportLogComponent ]
+      declarations: [ IntacctSkipExportLogComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SkipExportLogComponent);
+    fixture = TestBed.createComponent(IntacctSkipExportLogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
