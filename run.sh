@@ -23,7 +23,6 @@ do
     sed -i $SED_EXTRA_ARGS "s?{{SEGMENT_ID}}?${SEGMENT_ID}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{QBO_CALLBACK_URL}}?${QBO_CALLBACK_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{NS_CALLBACK_URL}}?${NS_CALLBACK_URL}?g" $f;
-    sed -i $SED_EXTRA_ARGS "s?{{SI_CALLBACK_URL}}?${SI_CALLBACK_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{XERO_CALLBACK_URL}}?${XERO_CALLBACK_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{QBO_CLIENT_ID}}?${QBO_CLIENT_ID}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{NS_CLIENT_ID}}?${NS_CLIENT_ID}?g" $f;

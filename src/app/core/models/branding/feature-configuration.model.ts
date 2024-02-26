@@ -3,7 +3,7 @@ export type FeatureConfiguration = {
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;
         isIconsInsideButtonAllowed: boolean;
-        exposeOnlyQBOApp: boolean;
+        exposeC1Apps: boolean;
         isBackgroundColorAllowed: boolean;
         isAsterikAllowed: boolean;
         featureFlags: {
@@ -15,12 +15,14 @@ export type FeatureConfiguration = {
             },
             importSettings: {
                 tax: boolean;
+                importVendorsAsMerchants: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;
                 paymentsSync: boolean;
                 singleCreditLineJE: boolean;
                 emailNotification: boolean;
+                skipExport: boolean;
             },
             exportLog: {
                 expenseType: boolean;

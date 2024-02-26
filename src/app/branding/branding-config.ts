@@ -12,7 +12,7 @@ const featureConfigs: FeatureConfiguration = {
         illustrationsAllowed: true,
         isGradientAllowed: true,
         isIconsInsideButtonAllowed: true,
-        exposeOnlyQBOApp: false,
+        exposeC1Apps: false,
         isBackgroundColorAllowed: false,
         isAsterikAllowed: true,
         featureFlags: {
@@ -23,13 +23,15 @@ const featureConfigs: FeatureConfiguration = {
                 nameInJournalEntry: true
             },
             importSettings: {
-                tax: true
+                tax: true,
+                importVendorsAsMerchants: true
             },
             advancedSettings: {
                 autoCreateVendors: true,
                 paymentsSync: true,
                 singleCreditLineJE: true,
-                emailNotification: true
+                emailNotification: true,
+                skipExport: true
             },
             exportLog: {
                 expenseType: true
@@ -43,7 +45,7 @@ const featureConfigs: FeatureConfiguration = {
         illustrationsAllowed: false,
         isGradientAllowed: false,
         isIconsInsideButtonAllowed: false,
-        exposeOnlyQBOApp: true,
+        exposeC1Apps: true,
         isBackgroundColorAllowed: true,
         isAsterikAllowed: false,
         featureFlags: {
@@ -54,13 +56,15 @@ const featureConfigs: FeatureConfiguration = {
                 nameInJournalEntry: false
             },
             importSettings: {
-                tax: false
+                tax: false,
+                importVendorsAsMerchants: false
             },
             advancedSettings: {
                 autoCreateVendors: false,
                 paymentsSync: false,
                 singleCreditLineJE: false,
-                emailNotification: false
+                emailNotification: false,
+                skipExport: false
             },
             exportLog: {
                 expenseType: false
