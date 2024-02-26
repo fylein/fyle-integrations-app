@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IntacctSkipExportLogComponent } from './skip-export-log.component';
+import { IntacctSkipExportLogComponent } from './intacct-skip-export-log.component';
 
 describe('SkipExportLogComponent', () => {
   let component: IntacctSkipExportLogComponent;

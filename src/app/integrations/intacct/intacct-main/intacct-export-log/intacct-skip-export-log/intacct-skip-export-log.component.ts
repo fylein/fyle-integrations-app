@@ -13,9 +13,9 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 
 @Component({
-  selector: 'app-skip-export-log',
-  templateUrl: './skip-export-log.component.html',
-  styleUrls: ['./skip-export-log.component.scss']
+  selector: 'app-intacct-skip-export-log',
+  templateUrl: './intacct-skip-export-log.component.html',
+  styleUrls: ['./intacct-skip-export-log.component.scss']
 })
 export class IntacctSkipExportLogComponent implements OnInit {
 
