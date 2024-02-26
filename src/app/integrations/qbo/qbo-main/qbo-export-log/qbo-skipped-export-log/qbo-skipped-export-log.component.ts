@@ -55,7 +55,7 @@ export class QboSkippedExportLogComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
     private paginatorService: PaginatorService
-  ) { 
+  ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
