@@ -207,7 +207,7 @@ export enum NameInJournalEntry {
   MERCHANT = 'MERCHANT'
 }
 
-export enum CorporateCreditCardExpensesObject {
+export enum IntacctCorporateCreditCardExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   EXPENSE_REPORT = 'EXPENSE_REPORT',
