@@ -7,8 +7,16 @@
     @apply tw-text-placeholder #{!important};
 }
 
-:host ::ng-deep .unmapped {
-    @apply tw-text-12-px tw-rounded-full tw-border tw-border-solid tw-border-unmapped-red-border tw-bg-unmapped-red-bg tw-py-4-px tw-px-12-px tw-text-alert-toast tw-w-fit #{!important}
+:host ::ng-deep .mappingFilterDropdown .p-dropdown {
+    @apply tw-w-200-px #{!important}
+}
+
+:host ::ng-deep .filterDropdown .p-dropdown .p-dropdown-label.p-inputtext {
+    @apply tw-py-10-px #{!important};
+}
+
+:host ::ng-deep .selectedItem  .p-dropdown .p-dropdown-label.p-inputtext {
+    @apply tw-py-5-px #{!important};
 }
 
 :host ::ng-deep .selectedItem  .p-dropdown-trigger {

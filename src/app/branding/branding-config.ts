@@ -12,7 +12,7 @@ const featureConfigs: FeatureConfiguration = {
         illustrationsAllowed: true,
         isGradientAllowed: true,
         isIconsInsideButtonAllowed: true,
-        exposeOnlyQBOApp: false,
+        exposeC1Apps: false,
         isBackgroundColorAllowed: false,
         isAsterikAllowed: true,
         featureFlags: {
@@ -23,13 +23,15 @@ const featureConfigs: FeatureConfiguration = {
                 nameInJournalEntry: true
             },
             importSettings: {
-                tax: true
+                tax: true,
+                importVendorsAsMerchants: true
             },
             advancedSettings: {
                 autoCreateVendors: true,
                 paymentsSync: true,
                 singleCreditLineJE: true,
-                emailNotification: true
+                emailNotification: true,
+                skipExport: true
             },
             exportLog: {
                 expenseType: true
@@ -43,7 +45,7 @@ const featureConfigs: FeatureConfiguration = {
         illustrationsAllowed: false,
         isGradientAllowed: false,
         isIconsInsideButtonAllowed: false,
-        exposeOnlyQBOApp: true,
+        exposeC1Apps: true,
         isBackgroundColorAllowed: true,
         isAsterikAllowed: false,
         featureFlags: {
@@ -54,13 +56,15 @@ const featureConfigs: FeatureConfiguration = {
                 nameInJournalEntry: false
             },
             importSettings: {
-                tax: false
+                tax: false,
+                importVendorsAsMerchants: false
             },
             advancedSettings: {
                 autoCreateVendors: false,
                 paymentsSync: false,
                 singleCreditLineJE: false,
-                emailNotification: false
+                emailNotification: false,
+                skipExport: false
             },
             exportLog: {
                 expenseType: false
@@ -83,7 +87,7 @@ const kbArticles: KbArticle = {
             INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             TRAVELPERK: 'https://help.fylehq.com/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle',
             SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration'
         },
         onboardingArticles: {
             INTACCT: {
@@ -114,10 +118,10 @@ const kbArticles: KbArticle = {
             },
             // TODO: Update KB articles for MS Dynamics
             BUSINESS_CENTRAL: {
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
+                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_a2dcb23212',
+                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_aea6d1e402',
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_9e9b1c5196',
+                LANDING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration',
                 SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
             }
         }

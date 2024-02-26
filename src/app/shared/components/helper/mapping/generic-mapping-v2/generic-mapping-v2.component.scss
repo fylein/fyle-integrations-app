@@ -7,6 +7,14 @@
     @apply tw-w-200-px #{!important}
 }
 
+:host ::ng-deep .filterDropdown .p-dropdown .p-dropdown-label.p-inputtext {
+    @apply tw-py-10-px #{!important};
+}
+
+:host ::ng-deep .selectedItem  .p-dropdown .p-dropdown-label.p-inputtext {
+    @apply tw-py-5-px #{!important};
+}
+
 :host ::ng-deep .selectedItem  .p-dropdown-trigger {
     @apply tw-hidden #{!important};
 }
