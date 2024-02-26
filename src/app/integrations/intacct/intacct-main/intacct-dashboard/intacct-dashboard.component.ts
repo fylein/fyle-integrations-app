@@ -48,23 +48,7 @@ export class IntacctDashboardComponent implements OnInit {
 
   errors: AccountingGroupedErrors;
 
-  isExportLogVisible: boolean = false;
-
-  isMappingResolveVisible: boolean = false;
-
-  intacctErrorDialogVisible: boolean = false;
-
-  intacctErrorExpenses: Expense[] = [];
-
   groupedError: Error[];
-
-  intacctErrorDetail: string;
-
-  taskLogStatusComplete: TaskLogState = TaskLogState.COMPLETE;
-
-  taskLogStatusFailed: TaskLogState = TaskLogState.FAILED;
-
-  exportLogHeader: string;
 
   lastExport: LastExport | null;
 
@@ -89,11 +73,7 @@ export class IntacctDashboardComponent implements OnInit {
 
   intacctErrorType: IntacctErrorType;
 
-  eventStartTime: Date;
-
   IntacctErrorType = IntacctErrorType;
-
-  isImportItemsEnabled: boolean;
 
   reimbursableImportState: ReimbursableImportState | null;
 
