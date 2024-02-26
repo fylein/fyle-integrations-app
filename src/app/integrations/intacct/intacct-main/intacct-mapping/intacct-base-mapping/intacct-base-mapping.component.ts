@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingDisplayName, AccountingField, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingField, AppName, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -17,6 +17,10 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 export class IntacctBaseMappingComponent implements OnInit {
 
   isLoading: boolean = true;
+
+  appName: AppName = AppName.INTACCT;
+
+  FyleField = FyleField;
 
   destinationOptions: DestinationAttribute[];
 
