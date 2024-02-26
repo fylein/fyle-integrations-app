@@ -61,8 +61,7 @@ export class GenericMappingTableComponent implements OnInit {
   ) { }
 
   getSearchWord(word: any) {
-    console.log("dcede")
-    this.searchOptions.emit(this.searchWord)
+    this.searchOptions.emit(this.searchWord);
   }
 
   isOverflowing(element: any): boolean {

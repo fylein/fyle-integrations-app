@@ -206,7 +206,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
     forkJoin([
       this.advancedSettingsService.getAdvancedSettings(),
       this.skipExportService.getExpenseFilter(),
-      // this.skipExportService.getExpenseFields('v1'),
+      // This.skipExportService.getExpenseFields('v1'),
       this.mappingService.getGroupedDestinationAttributes(['BANK_ACCOUNT'], 'v1', 'qbo'),
       this.configurationService.getAdditionalEmails(),
       this.workspaceService.getWorkspaceGeneralSettings()

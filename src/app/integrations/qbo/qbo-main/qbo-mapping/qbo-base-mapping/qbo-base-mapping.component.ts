@@ -56,12 +56,10 @@ export class QboBaseMappingComponent implements OnInit {
     });
   }
 
-  searchDestinationOptions(event:string) {
-    console.log("kjkj2")
+  searchDestinationOptions(event:any) {
     this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event, this.displayName).subscribe((responses) => {
       this.destinationOptions = responses.results;
-      console.log(this.destinationOptions, event)
-    })
+    });
   }
 
   private getDestinationField(workspaceGeneralSetting: QBOWorkspaceGeneralSetting, mappingSettings: MappingSetting[]): string {
@@ -91,16 +89,15 @@ export class QboBaseMappingComponent implements OnInit {
         this.displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
       }
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField,undefined,this.displayName).subscribe((responses) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((responses) => {
         this.destinationOptions = responses.results;
         this.isLoading = false;
-        console.log(responses, this.employeeFieldMapping)
-      })
+      });
 
-      // this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined, undefined, this.displayName).subscribe((response: any) => {
-      //   this.destinationOptions = response;
-      //   this.isLoading = false;
-      //   console.log(response)
+      // This.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined, undefined, this.displayName).subscribe((response: any) => {
+      //   This.destinationOptions = response;
+      //   This.isLoading = false;
+      //   Console.log(response)
       // });
     });
   }

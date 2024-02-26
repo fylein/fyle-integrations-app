@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
@@ -15,7 +15,7 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
   templateUrl: './generic-mapping-v2.component.html',
   styleUrls: ['./generic-mapping-v2.component.scss']
 })
-export class GenericMappingV2Component implements OnInit {
+export class GenericMappingV2Component implements OnInit, OnChanges {
 
   @Input() isLoading: boolean;
 
@@ -131,8 +131,23 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   searchOptions(event: any) {
-    console.log("edede")
-    this.searchTrigger.emit(event)
+    this.searchTrigger.emit(event);
+  }
+
+  destinationOptionsBuild() {
+    const mappingType = this.sourceType === FyleField.EMPLOYEE ? 'employeemapping' : 'mapping';
+    this.mappings.forEach((data: any) => {
+      if (data[mappingType].length > 0) {
+        const destinationValue = this.destinationField === FyleField.EMPLOYEE ? data[mappingType][0].destination_employee.value : this.destinationField === FyleField.VENDOR ? data[mappingType][0].destination_vendor.value : data[mappingType][0].destination.value;
+        if (!this.destinationOptions.some((map: any) => map.value === destinationValue)) {
+          if (mappingType === 'employeemapping') {
+            this.destinationField === FyleField.VENDOR ? this.destinationOptions.push(data[mappingType][0].destination_vendor) : this.destinationOptions.push(data[mappingType][0].destination_employee);
+          } else {
+            this.destinationOptions.push(data[mappingType][0].destination);
+          }
+        }
+      }
+    });
   }
 
   setupPage() {
@@ -141,8 +156,6 @@ export class GenericMappingV2Component implements OnInit {
     this.limit = paginator.limit;
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
-    const mappingType = this.sourceType === FyleField.EMPLOYEE.toUpperCase() ? 'employeemapping' : 'mapping'
-    const mappingDestinationType = this.sourceType === FyleField.EMPLOYEE.toUpperCase() ? 'destinayion_employee' : 'destination'
     forkJoin([
       this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric),
       this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
@@ -153,19 +166,7 @@ export class GenericMappingV2Component implements OnInit {
           this.filteredMappingCount = mappingResponse.count;
         }
         this.mappings = mappingResponse.results;
-        console.log(mappingResponse, this.destinationOptions)
-        this.mappings.forEach((data:any) => {
-          if (data[mappingType].length > 0) {
-            const mappingData = this.destinationOptions.filter((map: any) => {
-              if(mappingType === 'employeemapping')
-              {
-                return data[mappingType][0].destination_employee.value !== map.value
-              }
-              return data[mappingType][0].destination.value !== map.value
-            })
-            console.log(mappingData)
-          }
-        })
+        this.destinationOptionsBuild();
         this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
         this.isInitialSetupComplete = true;
@@ -176,6 +177,10 @@ export class GenericMappingV2Component implements OnInit {
 
   ngOnInit(): void {
     this.setupPage();
+  }
+
+  ngOnChanges() {
+    this.destinationOptionsBuild();
   }
 
 }
