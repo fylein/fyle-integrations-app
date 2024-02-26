@@ -149,7 +149,7 @@
                         [showExportPreview]="true"
                         [appName]="appName"
                         [exportTypeIconPathArray]="previewImagePaths"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.EXPENSE_REPORT">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -165,7 +165,7 @@
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.BILL">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.BILL">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -181,7 +181,7 @@
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -197,7 +197,7 @@
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType === CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                        <div *ngIf="exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <app-configuration-toggle-field 
                             [form]="exportSettingsForm"
                             [iconPath]="'list'"
@@ -205,7 +205,7 @@
                             [subLabel]="'Enabling this option would export the merchant name of each expense to the respective journal entry Vendor field'"
                             [formControllerName]="'useMerchantInJournalLine'"></app-configuration-toggle-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
@@ -223,7 +223,7 @@
                         </div>
                     </div>
                     <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <div *ngIf="!exportSettingsForm.value.reimbursableExportType && exportSettingsForm.value.cccExportType === CorporateCreditCardExpensesObject.JOURNAL_ENTRY">
+                        <div *ngIf="!exportSettingsForm.value.reimbursableExportType && exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
                             <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
                         </div>
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType"
@@ -250,7 +250,7 @@
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!==CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
+                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!==IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'how expenses to be grouped'"
@@ -260,7 +260,7 @@
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
+                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
                             <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
                                 <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
                                     <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
