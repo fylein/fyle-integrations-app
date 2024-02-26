@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenericMappingComponent } from './generic-mapping.component';
+import { IntacctMappingComponent } from './intacct-mapping.component';
 
-describe('GenericMappingComponent', () => {
-  let component: GenericMappingComponent;
-  let fixture: ComponentFixture<GenericMappingComponent>;
+describe('IntacctMappingComponent', () => {
+  let component: IntacctMappingComponent;
+  let fixture: ComponentFixture<IntacctMappingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GenericMappingComponent ]
+      declarations: [ IntacctMappingComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(GenericMappingComponent);
+    fixture = TestBed.createComponent(IntacctMappingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

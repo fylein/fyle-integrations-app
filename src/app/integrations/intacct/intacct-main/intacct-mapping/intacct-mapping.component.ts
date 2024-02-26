@@ -8,11 +8,11 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-  selector: 'app-mapping',
-  templateUrl: './mapping.component.html',
-  styleUrls: ['./mapping.component.scss']
+  selector: 'app-intacct-mapping',
+  templateUrl: './intacct-mapping.component.html',
+  styleUrls: ['./intacct-mapping.component.scss']
 })
-export class MappingComponent implements OnInit {
+export class IntacctMappingComponent implements OnInit {
 
   isLoading: boolean = true;
 
