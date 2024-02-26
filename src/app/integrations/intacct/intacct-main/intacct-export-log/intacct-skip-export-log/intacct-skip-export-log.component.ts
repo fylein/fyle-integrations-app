@@ -43,10 +43,6 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  isCalendarVisible: boolean;
-
-  isRecordPresent: boolean = false;
-
   isDateSelected: boolean = false;
 
   count: number;
@@ -56,12 +52,6 @@ export class IntacctSkipExportLogComponent implements OnInit {
   pageSize: number;
 
   pageNumber = 0;
-
-  clickedExportLogIndex: number = 0;
-
-  dateValue: Date;
-
-  visible: boolean = false;
 
   readonly illustrationsAllowed: boolean = brandingFeatureConfig.illustrationsAllowed;
 
