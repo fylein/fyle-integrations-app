@@ -33,6 +33,8 @@ export class GenericMappingV2Component implements OnInit, OnChanges {
 
   @Input() isCategoryMappingGeneric: boolean;
 
+  @Input() isAdvancedSerchRequired: boolean = false;
+
   isInitialSetupComplete: boolean = false;
 
   mappingStats: MappingStats;
@@ -135,16 +137,20 @@ export class GenericMappingV2Component implements OnInit, OnChanges {
   }
 
   destinationOptionsBuild() {
-    const mappingType = this.sourceType === FyleField.EMPLOYEE ? 'employeemapping' : 'mapping';
+    const mappingType:string = this.mappings.flatMap(mapping =>
+      Object.keys(mapping).filter(key => key.includes('mapping'))
+    )[0];
+
     this.mappings.forEach((data: any) => {
-      if (data[mappingType].length > 0) {
-        const destinationValue = this.destinationField === FyleField.EMPLOYEE ? data[mappingType][0].destination_employee.value : this.destinationField === FyleField.VENDOR ? data[mappingType][0].destination_vendor.value : data[mappingType][0].destination.value;
-        if (!this.destinationOptions.some((map: any) => map.value === destinationValue)) {
-          if (mappingType === 'employeemapping') {
-            this.destinationField === FyleField.VENDOR ? this.destinationOptions.push(data[mappingType][0].destination_vendor) : this.destinationOptions.push(data[mappingType][0].destination_employee);
-          } else {
-            this.destinationOptions.push(data[mappingType][0].destination);
-          }
+      const mappingData = data[mappingType];
+      if (mappingData && mappingData.length > 0) {
+        const destinationType: string = mappingData.flatMap((mapping: any) =>
+          Object.keys(mapping).find(key => key.includes('destination'))
+        )[0];
+        const destinationValue = this.destinationField === FyleField.EMPLOYEE ? 'destination_employee' : this.destinationField === FyleField.VENDOR ? 'destination_vendor' : destinationType;
+        const destinationValueData = mappingData[0][destinationValue];
+        if (destinationValueData && !this.destinationOptions.some((map: any) => map.value === destinationValueData.value)) {
+          this.destinationOptions.push(destinationValueData);
         }
       }
     });

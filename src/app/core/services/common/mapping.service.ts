@@ -157,14 +157,14 @@ export class MappingService {
 
   getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {limit: number, offset: number, attribute_type: string, value?: string, display_name?: string} = {
+    const params: {limit: number, offset: number, attribute_type: string, value__icontains?: string, display_name?: string} = {
       limit: 100,
       offset: 0,
       attribute_type: attributeType
     };
 
     if (value) {
-      params.value = value;
+      params.value__icontains = value;
     }
 
     if (display_name) {

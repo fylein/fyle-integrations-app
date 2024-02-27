@@ -42,6 +42,8 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() isDashboardMappingResolve: boolean;
 
+  @Input() isAdvancedSerchRequired: boolean = false;
+
   @Output() searchOptions: EventEmitter<string> = new EventEmitter();
 
   searchWord: string;
@@ -61,7 +63,7 @@ export class GenericMappingTableComponent implements OnInit {
   ) { }
 
   getSearchWord(word: any) {
-    this.searchOptions.emit(this.searchWord);
+    this.isAdvancedSerchRequired ? this.searchOptions.emit(this.searchWord) : this.destinationOptions.filter(word);
   }
 
   isOverflowing(element: any): boolean {

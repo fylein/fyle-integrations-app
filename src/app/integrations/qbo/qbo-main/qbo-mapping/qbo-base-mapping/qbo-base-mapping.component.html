@@ -7,6 +7,7 @@
     [showAutoMapEmployee]="showAutoMapEmployee"
     [appName]="AppName.QBO"
     [isCategoryMappingGeneric]="sourceField === FyleField.CATEGORY ? true : false"
+    [isAdvancedSerchRequired]="true"
     (triggerAutoMapEmployee)="triggerAutoMapEmployees()"
     (searchTrigger)="searchDestinationOptions($event)">
 </app-generic-mapping-v2>
