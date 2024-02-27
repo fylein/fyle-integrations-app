@@ -5,7 +5,7 @@
     <div class="tw-flex tw-items-center">
         <div class="tw-flex tw-items-center tw-pr-30-px">
             <span *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-pr-10-px">Show</span>
-            <span *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-pr-10-px">Items per page:</span>
+            <span *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-pr-10-px tw-text-lv-meta-text-color">Items per page:</span>
             <div>
                 <p-dropdown appendTo="body" [options]="pageNumbers" (onChange)="pageSizeChanges($event)" [(ngModel)]="dropDownValue">
                     <ng-template let-value pTemplate="selectedItem" >
@@ -42,12 +42,12 @@
                 </div>
             </div>
             <div *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-flex tw-justify-between">
-                <div class="">
+                <div>
                     <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-flex tw-place-items-center" (click)="navigateToPage(1)" [disabled]="page === 1" >
                         <app-svg-icon [svgSource]="'arrow-bar-left-medium'" [height]="'20px'" [width]="'20px'" [styleClasses]="page === 1 ? 'tw-text-lv-pagination-icon-disable-color': 'tw-text-lv-pagination-icon-active-color'" [isTextColorAllowed]="true"></app-svg-icon>
                     </button>
                 </div>
-                <div class="">
+                <div>
                     <button type="button" class="tw-h-32-px tw-w-32-px prevBtn" (click)="previousPageChange(page)" [disabled]="page === 1" >
                         <app-svg-icon [svgSource]="'arrow-left-medium'" [height]="'20px'" [width]="'20px'" [styleClasses]="page === 1 ? 'tw-text-lv-pagination-icon-disable-color': 'tw-text-lv-pagination-icon-active-color'" [isTextColorAllowed]="true"></app-svg-icon>
                     </button>
