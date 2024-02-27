@@ -27,7 +27,7 @@
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):hover {
-    @apply tw-bg-nav-tabs-hover-bg;
+    @apply tw-bg-nav-tabs-hover-bg tw-rounded-0-px;
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
