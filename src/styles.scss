@@ -480,7 +480,11 @@ p {
 }
 
 .p-datatable .p-datatable-thead>tr>th {
-    @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg #{!important}
+    @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg tw-border-l-0 #{!important}
+}
+
+.p-datatable .p-datatable-thead>tr>th:last-child {
+    @apply tw-border-r-0 #{!important};
 }
 
 .p-datatable .p-datatable-tbody>tr>td {

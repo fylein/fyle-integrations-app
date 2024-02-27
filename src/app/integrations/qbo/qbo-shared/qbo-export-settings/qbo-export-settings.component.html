@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="brandingContent.stepName"
-                [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Online'"
+                [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Online.'"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 (refreshDimensions)="refreshDimensions()">
@@ -19,7 +19,7 @@
                         <app-configuration-toggle-field
                             [form]="exportSettingForm"
                             [label]="'Export Reimbursable Expenses'"
-                            [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online'"
+                            [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online.'"
                             [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
                         </app-configuration-toggle-field>
                     </div>
@@ -47,7 +47,7 @@
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'bank account'"
                                     [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                    [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account'"
+                                    [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account.'"
                                     [destinationAttributes]="bankAccounts"
                                     [optionLabel]="'name'"
                                     [iconPath]="'list'"
@@ -62,7 +62,7 @@
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'expense account'"
                                     [label]="'To which Expense Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                    [subLabel]="'The expenses exported will be added to the selected Expense Payment Account'"
+                                    [subLabel]="'The expenses exported will be added to the selected Expense Payment Account.'"
                                     [destinationAttributes]="expenseAccounts"
                                     [optionLabel]="'name'"
                                     [iconPath]="'list'"
@@ -79,7 +79,7 @@
                                     [isFieldMandatory]="true"
                                     [mandatoryErrorListName]="'accounts payable'"
                                     [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                    [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'"
+                                    [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected accounts payable account.'"
                                     [iconPath]="'list'"
                                     [placeholder]="'Select accounts payable'"
                                     [formControllerName]="'accountsPayable'">
@@ -150,7 +150,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses'"
+                            [subLabel]="'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName +' expenses.'"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
@@ -213,7 +213,7 @@
                               [isFieldMandatory]="true"
                               [mandatoryErrorListName]="'corporate card vendor'"
                               [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
-                              [subLabel]="'The default vendor will apply to all corporate card transactions upon export'"
+                              [subLabel]="'The default vendor will apply to all corporate card transactions upon export.'"
                               [placeholder]="'Select default corporate card vendor'"
                               [formControllerName]="'defaultCreditCardVendor'">
                             </app-configuration-select-field>
