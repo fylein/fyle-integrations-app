@@ -129,7 +129,7 @@ export class IntacctDashboardComponent implements OnInit {
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
-      takeWhile((response: IntacctTaskResponse) => 
+      takeWhile((response: IntacctTaskResponse) =>
       response.results.filter(task =>
         (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
       ).length > 0, true)
@@ -169,26 +169,26 @@ export class IntacctDashboardComponent implements OnInit {
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.exportLogService.getExpenseGroupSettings()
     ]).subscribe((responses) => {
-      
+
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
       this.importState = responses[5].expense_state;
 
       if (responses[1]) {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
       }
-      
+
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
         CATEGORY: 'ACCOUNT'
       };
-      
+
       this.isLoading = false;
-      
+
       const queuedTasks: IntacctTaskLog[] = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
       this.failedExpenseGroupCount = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.FAILED).length;
-      
+
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
-      
+
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;

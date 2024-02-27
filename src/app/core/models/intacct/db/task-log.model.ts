@@ -23,7 +23,7 @@ export interface IntacctTaskLog extends TaskLog {
 
 export interface IntacctTaskResponse extends PaginatedResponse {
   results: IntacctTaskLog[];
-};
+}
 
 
 export type TaskGetParams = {
