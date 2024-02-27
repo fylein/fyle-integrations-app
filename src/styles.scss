@@ -686,13 +686,13 @@ p {
 }
 
 ::-webkit-scrollbar-track {
-    @apply tw-bg-scrollbar-track tw-rounded-99-px;
+    @apply tw-bg-[#eaeaea] tw-rounded-99-px;
 }
 
 ::-webkit-scrollbar-thumb {
-    @apply tw-bg-bg-disable tw-rounded-99-px;
+    @apply tw-bg-[#ccc] tw-rounded-99-px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    @apply tw-bg-scrollbar-thumb-hover tw-rounded-99-px;
+    @apply tw-bg-[#aaa] tw-rounded-99-px;
 }
