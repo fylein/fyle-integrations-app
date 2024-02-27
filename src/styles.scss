@@ -63,14 +63,12 @@ p {
 [data-theme='fyle'] {
     .pi-chevron-down {
         content: url('./assets/icons/arrow-down.svg') !important;
-        margin-right: 24px !important;
     }
 }
 
 [data-theme='co'] {
     .pi-chevron-down {
         content: url('./assets/icons/co/grv-chevron-down.svg') !important;
-        margin-right: 24px !important;
     }
 }
 
@@ -331,7 +329,7 @@ p {
 }
 
 .p-multiselect .p-multiselect-label {
-    @apply tw-text-select-focused-text tw-py-8-px tw-px-12-px tw-text-14-px #{!important};
+    @apply tw-text-select-focused-text tw-text-14-px tw-p-0 #{!important};
 }
 
 .p-multiselect:not(.p-disabled).p-focus {
