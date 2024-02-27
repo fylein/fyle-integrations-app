@@ -1,3 +1,5 @@
+import { PaginatedResponse } from "../../db/paginated-response.model";
+import { TaskLog } from "../../db/task-log.model";
 import { TaskLogState, TaskLogType } from "../../enum/enum.model";
 
 export type SageIntacctError = {
@@ -7,31 +9,22 @@ export type SageIntacctError = {
   type: string;
 };
 
-export type Task = {
-  id: number;
-  workspace: number;
+export interface IntacctTaskLog extends TaskLog {
   type: TaskLogType;
   task_id: string;
-  expense_group: number;
   bill: number;
   expense_report: number;
   charge_card_transaction: number;
   journal_entry: number;
   ap_payment: number;
   sage_intacct_reimbursement: number;
-  status: TaskLogState;
-  detail: any;
   sage_intacct_errors: SageIntacctError[];
-  created_at: Date;
-  updated_at: Date;
+}
+
+export interface IntacctTaskResponse extends PaginatedResponse {
+  results: IntacctTaskLog[];
 };
 
-export type TaskResponse = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: Task[];
-};
 
 export type TaskGetParams = {
   limit?: number;

@@ -40,7 +40,7 @@ export class DashboardExportSectionComponent implements OnInit {
 
   readonly brandingContent = brandingContent.dashboard;
 
-  importStates: string;
+  @Input() importStates: string;
 
   constructor() { }
 

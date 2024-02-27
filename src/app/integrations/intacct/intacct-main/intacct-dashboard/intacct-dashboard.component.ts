@@ -6,7 +6,7 @@ import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-settin
 import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
-import { Task } from 'src/app/core/models/intacct/db/task-log.model';
+import { IntacctTaskLog, IntacctTaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
 import { RefinerService } from 'src/app/core/services/integration/refiner.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
@@ -18,6 +18,7 @@ import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-intacct-dashboard',
@@ -51,8 +52,6 @@ export class IntacctDashboardComponent implements OnInit {
   groupedError: Error[];
 
   lastExport: LastExport | null;
-
-  employeeFieldMapping: FyleField;
 
   expenseGroupSetting: string;
 
@@ -116,10 +115,8 @@ export class IntacctDashboardComponent implements OnInit {
     private dashboardService: DashboardService,
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
-    private refinerService: RefinerService,
-    private trackingService: TrackingService,
     private userService: UserService,
-    private workspaceService: SiWorkspaceService
+    private workspaceService: WorkspaceService
   ) { }
 
   export() {
@@ -129,45 +126,18 @@ export class IntacctDashboardComponent implements OnInit {
     });
   }
 
-  getExpenseGroups(limit: number, offset: number, status: TaskLogState) {
-    const expenseGroups: ExpenseGroupList[] = [];
-    const exportedAt = status === TaskLogState.COMPLETE ? this.lastExport?.last_exported_at : null;
-
-    return this.exportLogService.getExpenseGroups(status===TaskLogState.COMPLETE ? TaskLogState.COMPLETE : TaskLogState.FAILED, limit, offset, null, exportedAt).subscribe(expenseGroupResponse => {
-      expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup) => {
-        const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
-
-        let referenceNumber: string = expenseGroup.description[referenceType];
-
-        if (referenceType === FyleReferenceType.EXPENSE) {
-          referenceNumber = expenseGroup.expenses[0].expense_number;
-        } else if (referenceType === FyleReferenceType.PAYMENT) {
-          referenceNumber = expenseGroup.expenses[0].payment_number;
-        }
-
-        expenseGroups.push({
-          exportedAt: (status===TaskLogState.COMPLETE ? expenseGroup.exported_at : expenseGroup.updated_at),
-          employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
-          referenceNumber: referenceNumber,
-          exportedAs: expenseGroup.export_type,
-          expenses: expenseGroup.expenses,
-          fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
-          intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`
-        });
-      });
-      this.expenseGroups = expenseGroups;
-    });
-  }
-
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
-      takeWhile((response) => response.results.filter((task: { status: string; expense_group: number; }) => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length > 0, true)
-    ).subscribe((res) => {
+      takeWhile((response: IntacctTaskResponse) => 
+      response.results.filter(task =>
+        (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
+      ).length > 0, true)
+    ).subscribe((res: IntacctTaskResponse) => {
       this.processedCount = res.results.filter((task: { status: string; type: TaskLogType; expense_group: number; }) => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableAccountingExportIds.includes(task.expense_group)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
 
-      if (res.results.filter((task: { status: string; expense_group: number; }) => (task.status === 'IN_PROGRESS' || task.status === 'ENQUEUED') && exportableAccountingExportIds.includes(task.expense_group)).length === 0) {
+      if (res.results.filter(task => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
         this.isLoading = true;
         forkJoin([
           this.getExportErrors$,
@@ -178,37 +148,16 @@ export class IntacctDashboardComponent implements OnInit {
             EMPLOYEE_MAPPING: null,
             CATEGORY_MAPPING: null
           };
-          this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
-          this.isLoading = false;
-        });
-        this.dashboardService.getAllTasks([TaskLogState.FAILED, TaskLogState.FATAL], undefined, this.accountingExportType).subscribe((taskResponse) => {
-          this.failedExpenseGroupCount = taskResponse.count;
-          this.exportableAccountingExportIds = taskResponse.results.map((task: Task) => task.expense_group);
+          this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+
+          this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.expense_group);
+
           this.isExportInProgress = false;
           this.exportProgressPercentage = 0;
           this.processedCount = 0;
-
-          if (this.failedExpenseGroupCount === 0) {
-            this.refinerService.triggerSurvey(
-              AppName.INTACCT, environment.refiner_survey.intacct.export_done_survery_id, RefinerSurveyType.EXPORT_DONE
-            );
-          }
         });
       }
     });
-  }
-
-  private getExpenseGroupingSetting(expenseGroupSetting: ExpenseGroupSetting): string {
-    const grouping: string[] = expenseGroupSetting.reimbursable_expense_group_fields ? expenseGroupSetting.reimbursable_expense_group_fields : expenseGroupSetting.corporate_credit_card_expense_group_fields;
-    if (grouping.includes(FyleReferenceType.EXPENSE)) {
-      return 'expense';
-    } else if (grouping.includes(FyleReferenceType.REPORT_ID)) {
-      return 'report';
-    } else if (grouping.includes(FyleReferenceType.PAYMENT)) {
-      return 'payment';
-    }
-
-    return '';
   }
 
   private setupPage(): void {
@@ -217,21 +166,33 @@ export class IntacctDashboardComponent implements OnInit {
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
       this.workspaceService.getConfiguration(),
+      this.dashboardService.getExportableAccountingExportIds('v1'),
       this.exportLogService.getExpenseGroupSettings()
     ]).subscribe((responses) => {
+      
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.employeeFieldMapping = responses[3].employee_field_mapping;
-      this.expenseGroupSetting = this.getExpenseGroupingSetting(responses[4]);
-      this.importState = responses[4].expense_state;
+      this.importState = responses[5].expense_state;
 
-      const queuedTasks: Task[] = responses[2].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
-      this.failedExpenseGroupCount = responses[2].results.filter((task: Task) => task.status === TaskLogState.FAILED).length;
-
+      if (responses[1]) {
+        this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
+      }
+      
+      this.destinationFieldMap = {
+        EMPLOYEE: responses[3].employee_field_mapping,
+        CATEGORY: 'ACCOUNT'
+      };
+      
+      this.isLoading = false;
+      
+      const queuedTasks: IntacctTaskLog[] = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
+      this.failedExpenseGroupCount = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.FAILED).length;
+      
+      this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
+      
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
-        this.exportableAccountingExportIds = responses[2].results.filter((task: Task) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS).map((task: Task) => task.expense_group);
-        this.pollExportStatus(this.exportableAccountingExportIds);
+        this.pollExportStatus();
       } else {
         this.accountingExportService.importExpensesFromFyle('v1').subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds('v1').subscribe((exportableAccountingExportIds) => {
@@ -240,7 +201,6 @@ export class IntacctDashboardComponent implements OnInit {
           });
         });
       }
-      this.isLoading = false;
     });
   }
 

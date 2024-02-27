@@ -16,8 +16,7 @@
         [exportProgressPercentage]="exportProgressPercentage"
         [accountingExportSummary]="accountingExportSummary"
         [processedCount]="processedCount"
-        [reimbursableImportState]="reimbursableImportState"
-        [cccImportState]="cccImportState">
+        [importStates]="importState">
     </app-dashboard-export-section>
 
     <app-zero-state *ngIf="!accountingExportSummary && !exportableAccountingExportIds.length"
