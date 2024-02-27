@@ -936,6 +936,9 @@ const componentVariables = {
   'sidebar-submenu-active-text-color': 'var(--sidebar-submenu-active-text-color)',
   'sidebar-submenu-text-color': 'var(--sidebar-submenu-text-color)',
   'sidebar-text-color': 'var(--sidebar-text-color)',
+
+  'scrollbar-track': 'var(--scrollbar-track)',
+  'scrollbar-thumb-hover': 'var(--scrollbar-thumb-hover)',
 };
 
 module.exports = {
@@ -1278,6 +1281,7 @@ module.exports = {
         '16-px': '16px',
         '20-px': '20px',
         '48-px': '48px',
+        '99-px': '99px',
         '50': '50%',
         ...borderRadius
       },
