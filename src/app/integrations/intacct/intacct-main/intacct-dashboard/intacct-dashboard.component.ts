@@ -19,6 +19,7 @@ import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dash
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
 
 @Component({
   selector: 'app-intacct-dashboard',
@@ -116,7 +117,8 @@ export class IntacctDashboardComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
     private userService: UserService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private intacctExportSettingService: SiExportSettingService
   ) { }
 
   export() {
@@ -167,11 +169,12 @@ export class IntacctDashboardComponent implements OnInit {
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
       this.workspaceService.getConfiguration(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
-      this.exportLogService.getExpenseGroupSettings()
+      this.intacctExportSettingService.getExportSettings()
     ]).subscribe((responses) => {
 
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.importState = responses[5].expense_state;
+      this.reimbursableImportState = responses[5].configurations.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
+      this.cccImportState = responses[5].configurations.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
 
       if (responses[1]) {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
