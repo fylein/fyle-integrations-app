@@ -552,6 +552,10 @@ p {
     @apply tw-bg-input-read-only-bg #{!important};
 }
 
+.p-dropdown-panel .p-dropdown-items .p-dropdown-empty-message {
+    @apply tw-text-dd-menu-item-default-text-color tw-py-6-px tw-px-12-px tw-text-14-px #{!important};
+}
+
 .p-calendar ::placeholder {
     @apply tw-text-sub-text-color #{!important};
 }
