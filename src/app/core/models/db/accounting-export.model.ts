@@ -205,13 +205,20 @@ export class AccountingExportModel {
     return [exportRedirection, exportId, exportType];
   }
 
+  static constructExportUrlQBO (type: any, id: any) {
+    return `${environment.qbo_app_url}/app/${type}?txnId=${id}`;
+  }
+
+  static constructExportUrlIntacct (urlId: any) {
+    return `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${urlId}`;
+  }
+
   static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, app_name: AppName): AccountingExportList {
-    if (app_name===AppName.QBO) {
       const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
-
+  
       const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
-
+  
       return {
         exportedAt: expenseGroup.exported_at,
         employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
@@ -219,28 +226,9 @@ export class AccountingExportModel {
         referenceNumber: referenceNumber,
         exportedAs: exportType,
         fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-        integrationUrl: `${environment.qbo_app_url}/app/${type}?txnId=${id}`,
+        integrationUrl: app_name===AppName.QBO ?  this.constructExportUrlQBO (type, id): this.constructExportUrlIntacct(expenseGroup.response_logs?.url_id),
         expenses: expenseGroup.expenses
       };
-    } else if (app_name===AppName.INTACCT) {
-      const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
-      const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
-
-      const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
-
-      return {
-        exportedAt: expenseGroup.exported_at,
-        employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
-        expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
-        referenceNumber: referenceNumber,
-        exportedAs: exportType,
-        fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-        integrationUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
-        expenses: expenseGroup.expenses
-      };
-    }
-
-    return {} as AccountingExportList;
   }
 }
 
