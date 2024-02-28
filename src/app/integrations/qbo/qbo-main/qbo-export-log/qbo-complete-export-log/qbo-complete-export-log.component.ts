@@ -69,7 +69,6 @@ export class QboCompleteExportLogComponent implements OnInit {
       debounceTime(1000)
     ).subscribe((query: string) => {
       this.searchQuery = query;
-      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       this.offset = 0;
       this.currentPage = Math.ceil(this.offset / this.limit) + 1;
       this.getAccountingExports(this.limit, this.offset);
