@@ -23,10 +23,6 @@
     @apply tw-block #{!important};
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-trigger {
-    @apply tw-w-32-px #{!important};
-}
-
 :host ::ng-deep .textbox {
     @apply tw-border-r-0 #{!important}
 }

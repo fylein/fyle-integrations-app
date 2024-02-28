@@ -27,10 +27,6 @@
     @apply tw-block #{!important};
 }
 
-:host ::ng-deep .p-dropdown .p-dropdown-trigger {
-    @apply tw-w-32-px #{!important};
-}
-
 :host ::ng-deep .textbox {
     @apply tw-border-r-0 #{!important}
 }
@@ -57,4 +53,12 @@ td {
 
 :host ::ng-deep .tooltip-return {
     @apply tw-mt-6-px tw-px-4-px tw-py-4-px tw-text-9-px tw-rounded-md tw-bg-placeholder  #{!important}
+}
+
+input[type="text"] {
+    @apply tw-border-border-primary tw-text-search-focused-text #{!important};
+}
+
+::placeholder {
+    @apply tw-text-search-focused-placeholder-text;
 }
