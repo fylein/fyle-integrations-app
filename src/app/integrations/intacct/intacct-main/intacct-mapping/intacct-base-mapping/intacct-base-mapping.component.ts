@@ -59,7 +59,7 @@ export class IntacctBaseMappingComponent implements OnInit {
       return intacctConfiguration.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
       return intacctConfiguration.employee_field_mapping === FyleField.EMPLOYEE ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT;
-      
+
     }
 
     return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
