@@ -203,6 +203,8 @@ const textColors = {
   'link-visited': 'var(--link-visited)',
   'link-hover': 'var(--link-hover)',
   'link-pressed': 'var(--link-pressed)',
+
+  'border-secondary': 'var(--border-secondary)',
 };
 
 const dimensions = {

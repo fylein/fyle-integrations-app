@@ -10,11 +10,11 @@ const routes: Routes = [
     component: IntacctExportLogComponent,
     children: [
       {
-        path: 'complete_export_log',
+        path: 'complete',
         component: IntacctCompletedExportLogComponent
       },
       {
-        path: 'skip_export_log',
+        path: 'skipped',
         component: IntacctSkipExportLogComponent
       }
     ]
