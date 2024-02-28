@@ -35,10 +35,10 @@
                         <div class="p-inputgroup">
                             <div class="p-input-icon-left">
                                 <i>
-                                    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
+                                    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
                                 </i>
-                                <input type="text" class="!tw-h-32-px !tw-w-260-px"
-                                (keyup)="options.filter($event)" pInputText />
+                                <input (focus)="isSearchFocused = true" (blur)="isSearchFocused = false" type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px"
+                                (keyup)="options.filter($event)" pInputText placeholder="Search" />
                             </div>
                         </div>
                     </ng-template>

@@ -16,7 +16,6 @@ const environment = {
   sentry_env: `${process.env.SENTRY_ENV ? process.env.SENTRY_ENV : '{{SENTRY_ENV}}'}`,
   qbo_callback_url: `${process.env.QBO_CALLBACK_URL ? process.env.QBO_CALLBACK_URL : '{{QBO_CALLBACK_URL}}'}`,
   ns_callback_url: `${process.env.NS_CALLBACK_URL ? process.env.NS_CALLBACK_URL : '{{NS_CALLBACK_URL}}'}`,
-  si_callback_url: `${process.env.SI_CALLBACK_URL ? process.env.SI_CALLBACK_URL : '{{SI_CALLBACK_URL}}'}`,
   xero_callback_url: `${process.env.XERO_CALLBACK_URL ? process.env.XERO_CALLBACK_URL : '{{XERO_CALLBACK_URL}}'}`,
   qbo_client_id: `${process.env.QBO_CLIENT_ID ? process.env.QBO_CLIENT_ID : '{{QBO_CLIENT_ID}}'}`,
   ns_client_id: `${process.env.NS_CLIENT_ID ? process.env.NS_CLIENT_ID : '{{NS_CLIENT_ID}}'}`,
