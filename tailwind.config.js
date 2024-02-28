@@ -1023,6 +1023,7 @@ module.exports = {
         '4-px': '4px',
         '5-px': '5px',
         '6-px': '6px',
+        '7-px': '7px',
         '8-px': '8px',
         '9-px': '9px',
         '10-px': '10px',

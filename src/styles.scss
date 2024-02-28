@@ -217,6 +217,12 @@ p {
     @apply tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
 }
 
+[data-theme='co'] {
+    .p-inputswitch .p-inputswitch-slider:before {
+        @apply tw-w-18-px tw-h-18-px tw-left-0 tw-mt-[-0.55rem] tw-ml-2-px #{!important};
+    }
+}
+
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
     @apply tw-translate-x-toggle-circle-translate #{!important};
 }
