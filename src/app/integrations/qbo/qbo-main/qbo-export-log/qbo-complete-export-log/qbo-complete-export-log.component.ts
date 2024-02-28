@@ -70,7 +70,9 @@ export class QboCompleteExportLogComponent implements OnInit {
     ).subscribe((query: string) => {
       this.searchQuery = query;
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      this.getAccountingExports(paginator.limit, paginator.offset);
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getAccountingExports(this.limit, this.offset);
     });
   }
 
@@ -96,17 +98,15 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number) {
-    this.isLoading = true;
+  private getAccountingExports(limit: number, offset:number, is_searched:boolean = false) {
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
     this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
-      if (!this.isDateSelected && !this.searchQuery) {
         this.totalCount = accountingExportResponse.count;
-      }
+
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id)
       );
@@ -133,11 +133,14 @@ export class QboCompleteExportLogComponent implements OnInit {
             endDate: dateRange[1]
           };
 
+          this.isDateSelected = true;
+
           this.getAccountingExports(paginator.limit, paginator.offset);
         }
       } else {
         this.dateOptions = AccountingExportModel.getDateOptionsV2();
         this.selectedDateFilter = null;
+        this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });
