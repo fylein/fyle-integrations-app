@@ -205,7 +205,8 @@ export class AccountingExportModel {
     return [exportRedirection, exportId, exportType];
   }
 
-  static constructExportUrlQBO (type: string, id: any) {
+  static constructExportUrlQBO (expenseGroup: ExpenseGroup) {
+    const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
     return `${environment.qbo_app_url}/app/${type}?txnId=${id}`;
   }
 
@@ -213,7 +214,17 @@ export class AccountingExportModel {
     return `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${urlId}`;
   }
 
-  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, app_name: AppName): AccountingExportList {
+  static constructExportUrl(appName: AppName, expenseGroup: ExpenseGroup) {
+    if(appName===AppName.QBO) {
+      return this.constructExportUrlQBO(expenseGroup);
+    } else if (appName===AppName.INTACCT) {
+      return this.constructExportUrlIntacct(expenseGroup.response_logs.urlId)
+    }
+
+    return '';
+  }
+
+  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName): AccountingExportList {
       const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
@@ -226,7 +237,7 @@ export class AccountingExportModel {
         referenceNumber: referenceNumber,
         exportedAs: exportType,
         fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-        integrationUrl: app_name===AppName.QBO ?  this.constructExportUrlQBO (type, id): this.constructExportUrlIntacct(expenseGroup.response_logs?.url_id),
+        integrationUrl: this.constructExportUrl(appName, expenseGroup),
         expenses: expenseGroup.expenses
       };
   }
