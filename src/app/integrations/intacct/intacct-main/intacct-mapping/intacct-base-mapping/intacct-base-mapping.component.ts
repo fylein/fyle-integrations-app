@@ -4,7 +4,7 @@ import { forkJoin } from 'rxjs';
 import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingDisplayName, AccountingField, AppName, FyleField, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingField, AppName, FyleField, IntacctCategoryDestination, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -58,7 +58,8 @@ export class IntacctBaseMappingComponent implements OnInit {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return intacctConfiguration.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
-      return AccountingField.ACCOUNT;
+      return intacctConfiguration.employee_field_mapping === FyleField.EMPLOYEE ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT;
+      
     }
 
     return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
@@ -77,12 +78,7 @@ export class IntacctBaseMappingComponent implements OnInit {
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
-      let displayName;
-      if (this.destinationField === AccountingField.ACCOUNT) {
-        displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
-      }
-
-      this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'intacct', undefined, undefined, displayName).subscribe((response: any) => {
+      this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'intacct', undefined, true, undefined).subscribe((response: any) => {
         this.destinationOptions = response;
         this.isLoading = false;
       });
