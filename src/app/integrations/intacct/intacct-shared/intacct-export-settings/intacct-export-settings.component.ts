@@ -7,7 +7,7 @@ import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { CCCExpenseState, ConfigurationCta, CorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, ConfigurationCta, IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel as IntacctExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -39,7 +39,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   IntacctReimbursableExpensesObject = IntacctReimbursableExpensesObject;
 
-  CorporateCreditCardExpensesObject = CorporateCreditCardExpensesObject;
+  IntacctCorporateCreditCardExpensesObject = IntacctCorporateCreditCardExpensesObject;
 
   expenseStateOptions: ExportSettingFormOption[];
 
@@ -128,11 +128,11 @@ export class IntacctExportSettingsComponent implements OnInit {
     },
     {
       label: 'Journal Entry',
-      value: CorporateCreditCardExpensesObject.JOURNAL_ENTRY
+      value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
     },
     {
       label: 'Charge Card Transaction',
-      value: CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
+      value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
     }
   ];
 
@@ -204,7 +204,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       return new TitleCasePipe().transform(employeeFieldMappingLabel);
     }
 
-    getExportType(exportType: IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject | null): string {
+    getExportType(exportType: IntacctReimbursableExpensesObject | IntacctCorporateCreditCardExpensesObject | null): string {
       if (exportType) {
         const lowerCaseWord = exportType.toLowerCase();
           return lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
@@ -237,8 +237,8 @@ export class IntacctExportSettingsComponent implements OnInit {
       ];
     }
 
-    private setCCExpenseDateOptions(cccExportType: CorporateCreditCardExpensesObject) : void {
-    if (cccExportType === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+    private setCCExpenseDateOptions(cccExportType: IntacctCorporateCreditCardExpensesObject) : void {
+    if (cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
       this.cccExpenseGroupingDateOptions = [
         {
           label: 'Card Transaction Post date',
@@ -300,7 +300,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     private cccExportTypeWatcher(): void {
       this.exportSettingsForm.controls.cccExportType.valueChanges.subscribe((isCCCExportTypeSelected) => {
         this.setCCExpenseDateOptions(isCCCExportTypeSelected);
-        if (isCCCExportTypeSelected === CorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+        if (isCCCExportTypeSelected === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
           this.exportSettingsForm.controls.creditCard.setValidators(Validators.required);
           this.exportSettingsForm.controls.employeeFieldMapping.enable();
         } else {
@@ -308,21 +308,21 @@ export class IntacctExportSettingsComponent implements OnInit {
           this.exportSettingsForm.controls.creditCard.setValue(null);
         }
 
-        if (isCCCExportTypeSelected === CorporateCreditCardExpensesObject.BILL) {
+        if (isCCCExportTypeSelected === IntacctCorporateCreditCardExpensesObject.BILL) {
           this.exportSettingsForm.controls.creditCardVendor.setValidators(Validators.required);
         } else {
           this.exportSettingsForm.controls.creditCardVendor.clearValidators();
           this.exportSettingsForm.controls.creditCardVendor.setValue(null);
         }
 
-        if (isCCCExportTypeSelected === CorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+        if (isCCCExportTypeSelected === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
           this.exportSettingsForm.controls.cccExpensePaymentType.setValidators(Validators.required);
         } else {
           this.exportSettingsForm.controls.cccExpensePaymentType.clearValidators();
           this.exportSettingsForm.controls.cccExpensePaymentType.setValue(null);
         }
 
-        if (isCCCExportTypeSelected === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+        if (isCCCExportTypeSelected === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
           this.exportSettingsForm.controls.chargeCard.setValidators(Validators.required);
         } else {
           this.exportSettingsForm.controls.chargeCard.clearValidators();
@@ -354,7 +354,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       const cccExportTypeControl = this.exportSettingsForm.controls.cccExportType;
 
       cccExportTypeControl.valueChanges.subscribe((cccExport) => {
-        if (cccExport === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+        if (cccExport === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
           cccExportGroup?.disable();
           cccExportGroup?.setValue('Expense');
         } else {
@@ -365,13 +365,13 @@ export class IntacctExportSettingsComponent implements OnInit {
 
 
     private exportFieldsWatcher(): void {
-      if (this.exportSettings?.configurations?.reimbursable_expenses_object === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || this.exportSettings?.configurations?.corporate_credit_card_expenses_object === CorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+      if (this.exportSettings?.configurations?.reimbursable_expenses_object === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || this.exportSettings?.configurations?.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
         this.exportSettingsForm.get('employeeFieldMapping')?.enable();
       } else {
         this.exportSettingsForm.get('employeeFieldMapping')?.disable();
       }
 
-      if (this.exportSettings?.configurations?.corporate_credit_card_expenses_object === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+      if (this.exportSettings?.configurations?.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
         this.exportSettingsForm.controls.cccExportGroup.setValue('Expense');
         this.exportSettingsForm.controls.cccExportGroup.disable();
       }
@@ -385,7 +385,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         const creditCardExpenseExportGroup = this.exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields ? this.exportSettings?.expense_group_settings.corporate_credit_card_expense_group_fields : ExpenseGroupedBy.EXPENSE;
         this.setCCExpenseDateOptions(this.exportSettings?.configurations?.corporate_credit_card_expenses_object);
       } else {
-        this.setCCExpenseDateOptions(CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
+        this.setCCExpenseDateOptions(IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION);
       }
     }
 
