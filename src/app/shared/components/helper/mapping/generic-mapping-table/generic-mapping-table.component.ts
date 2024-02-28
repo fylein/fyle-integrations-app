@@ -5,7 +5,7 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
-import { AppName, CorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -35,7 +35,7 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() reimbursableExpenseObject?: IntacctReimbursableExpensesObject;
 
-  @Input() cccExpenseObject?: CorporateCreditCardExpensesObject;
+  @Input() cccExpenseObject?: IntacctCorporateCreditCardExpensesObject;
 
   @Input() destinationOptions: DestinationAttribute[];
 
