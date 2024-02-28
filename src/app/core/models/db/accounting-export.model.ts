@@ -206,12 +206,12 @@ export class AccountingExportModel {
   }
 
   static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, app_name: AppName): AccountingExportList {
-    if(app_name===AppName.QBO) {
+    if (app_name===AppName.QBO) {
       const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
-  
+
       const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
-  
+
       return {
         exportedAt: expenseGroup.exported_at,
         employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],

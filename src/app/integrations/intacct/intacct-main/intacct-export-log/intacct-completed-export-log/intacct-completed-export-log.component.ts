@@ -126,17 +126,17 @@ export class IntacctCompletedExportLogComponent implements OnInit {
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      if (dateRange[1]) {
+      if (!dateRange) {
+        this.selectedDateFilter = null;
+        this.getAccountingExports(paginator.limit, paginator.offset);
+        } else if (dateRange.length && dateRange[1]) {
           this.selectedDateFilter = {
             startDate: dateRange[0],
             endDate: dateRange[1]
           };
-
+  
           this.trackDateFilter('existing', this.selectedDateFilter);
           this.getAccountingExports(paginator.limit, paginator.offset);
-      } else {
-        this.selectedDateFilter = null;
-        this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });
   }
