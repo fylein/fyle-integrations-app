@@ -1,5 +1,5 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
-import { AccountingExportStatus, AccountingExportType, FundSource, FyleReferenceType } from "../enum/enum.model";
+import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType } from "../enum/enum.model";
 import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intacct/db/expense-group.model";
 import { Expense } from "../intacct/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
@@ -205,22 +205,41 @@ export class AccountingExportModel {
     return [exportRedirection, exportId, exportType];
   }
 
-  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string): AccountingExportList {
-    const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
-    const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
-
+  static constructExportUrlQBO (expenseGroup: ExpenseGroup) {
     const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
+    return `${environment.qbo_app_url}/app/${type}?txnId=${id}`;
+  }
 
-    return {
-      exportedAt: expenseGroup.exported_at,
-      employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
-      expenseType: expenseGroup.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
-      referenceNumber: referenceNumber,
-      exportedAs: exportType,
-      fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-      integrationUrl: `${environment.qbo_app_url}/app/${type}?txnId=${id}`,
-      expenses: expenseGroup.expenses
-    };
+  static constructExportUrlIntacct (urlId: any) {
+    return `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${urlId}`;
+  }
+
+  static constructExportUrl(appName: AppName, expenseGroup: ExpenseGroup) {
+    if (appName===AppName.QBO) {
+      return this.constructExportUrlQBO(expenseGroup);
+    } else if (appName===AppName.INTACCT) {
+      return this.constructExportUrlIntacct(expenseGroup.response_logs?.url_id);
+    }
+
+    return '';
+  }
+
+  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName): AccountingExportList {
+      const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
+      const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
+
+      const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
+
+      return {
+        exportedAt: expenseGroup.exported_at,
+        employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
+        expenseType: expenseGroup.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
+        referenceNumber: referenceNumber,
+        exportedAs: exportType,
+        fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
+        integrationUrl: this.constructExportUrl(appName, expenseGroup),
+        expenses: expenseGroup.expenses
+      };
   }
 }
 

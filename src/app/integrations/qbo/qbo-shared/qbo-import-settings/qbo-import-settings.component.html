@@ -71,7 +71,7 @@
                     </app-configuration-select-field>
                   </div>
 
-                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed">
+                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="brandingContent.importVendorsAsMerchantsLabel"

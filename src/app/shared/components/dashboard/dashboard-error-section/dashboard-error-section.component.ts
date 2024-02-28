@@ -43,6 +43,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() isImportItemsEnabled: boolean;
 
+  @Input() exportKey: string = 'expense_group';
+
   filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];
@@ -150,7 +152,8 @@ export class DashboardErrorSectionComponent implements OnInit {
   showErrorDialog(accountingError: Error) {
     this.isAccountingErrorDialogVisible = true;
     this.errorDetail = accountingError.error_detail;
-    this.errorExpenses = accountingError.expense_group?.expenses;
+    // @ts-ignore
+    this.errorExpenses = accountingError[this.exportKey]?.expenses;
   }
 
   private formatErrors(errors: Error[]): AccountingGroupedErrors {

@@ -89,16 +89,15 @@ export class ImportSettingsModel {
       }
     });
 
-    if (mappedFieldMap.size === 0){
-      accountingAppFields.forEach((accountingAppField) => {
-        if (expenseFieldFormArray.length < 3) {
-          const fieldData = unmappedFieldMap.get(accountingAppField.attribute_type);
-          if (fieldData) {
-            expenseFieldFormArray.push(this.createFormGroup(fieldData));
-          }
+    accountingAppFields.forEach((accountingAppField) => {
+      if (expenseFieldFormArray.length < 3) {
+        const fieldData = unmappedFieldMap.get(accountingAppField.attribute_type);
+        if (fieldData) {
+          expenseFieldFormArray.push(this.createFormGroup(fieldData));
         }
-      });
-    }
+      }
+    });
+
     return expenseFieldFormArray;
   }
 

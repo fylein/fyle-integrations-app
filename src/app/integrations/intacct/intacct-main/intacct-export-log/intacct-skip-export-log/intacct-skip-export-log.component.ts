@@ -86,13 +86,6 @@ export class IntacctSkipExportLogComponent implements OnInit {
     this.getSkippedExpenses(this.limit, offset);
   }
 
-  dateFilter(event: any): void {
-    this.isLoading = true;
-    this.isDateSelected = true;
-    this.selectedDateFilter = event.value;
-    this.getSkippedExpenses(this.limit, this.offset);
-  }
-
   getSkippedExpenses(limit: number, offset: number) {
     this.isLoading = true;
     const skippedExpenseGroup: SkipExportList[] = [];
