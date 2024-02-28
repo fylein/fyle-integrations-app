@@ -158,8 +158,8 @@ export class MappingService {
     const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, display_name?: string} = {
       limit: 100,
       offset: 0,
-      attribute_type: attributeType
-      // Active: true
+      attribute_type: attributeType,
+      active: true
     };
 
     if (value) {
