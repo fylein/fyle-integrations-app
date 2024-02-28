@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import { Subject, debounceTime, interval } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -16,7 +16,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
   templateUrl: './generic-mapping-table.component.html',
   styleUrls: ['./generic-mapping-table.component.scss']
 })
-export class GenericMappingTableComponent implements OnInit {
+export class GenericMappingTableComponent implements OnInit, OnChanges {
 
   @Input() isLoading: boolean;
 
@@ -42,11 +42,13 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() isDashboardMappingResolve: boolean;
 
-  @Input() isAdvancedSerchRequired: boolean = false;
+  @Output() handleAdvancedSearch: EventEmitter<string> = new EventEmitter();
 
-  @Output() searchOptions: EventEmitter<string> = new EventEmitter();
+  private searchSubject = new Subject<string>();
 
-  searchWord: string;
+  searchQuery: string;
+
+  isSearching: boolean;
 
   form: FormGroup = new FormGroup({
     searchOption: new FormControl('')
@@ -62,8 +64,8 @@ export class GenericMappingTableComponent implements OnInit {
     private workspaceService: WorkspaceService
   ) { }
 
-  getSearchWord(word: any) {
-    this.isAdvancedSerchRequired ? this.searchOptions.emit(this.searchWord) : this.destinationOptions.filter(word);
+  getSearchWord(searchQuery: string) {
+    this.handleAdvancedSearch.emit(searchQuery);
   }
 
   isOverflowing(element: any): boolean {
@@ -153,7 +155,24 @@ export class GenericMappingTableComponent implements OnInit {
     return [];
   }
 
+  onSearch() {
+    this.isSearching = true;
+    this.searchSubject.next(this.searchQuery);
+  }
+
+  clearSearch() {
+    this.searchQuery = '';
+    this.onSearch();
+  }
+
   ngOnInit(): void {
+    this.searchSubject.pipe(debounceTime(1000)).subscribe((searchValue) => {
+      this.getSearchWord(searchValue);
+    });
+  }
+
+  ngOnChanges() {
+    this.isSearching = false;
   }
 
 }

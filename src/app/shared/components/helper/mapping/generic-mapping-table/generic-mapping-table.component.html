@@ -37,9 +37,16 @@
                                 <i>
                                     <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
                                 </i>
-                                <input type="text" class="!tw-h-32-px !tw-w-260-px" [(ngModel)]="searchWord"
-                                (keyup)="getSearchWord($event)" pInputText />
+                                <input type="text" class="!tw-h-32-px !tw-w-260-px" [(ngModel)]="searchQuery" (input)="onSearch()" (blur)="clearSearch()" pInputText />
                             </div>
+                            <span class="p-input-icon-right" *ngIf="isSearching">
+                                <i class="pi pi-spin pi-spinner"></i>
+                            </span>
+                            <span class="p-input-icon-right tw-cursor-pointer" *ngIf="!isSearching && searchQuery" (click)="clearSearch()">
+                                <i>
+                                    <app-svg-icon [svgSource]="'cross-medium'" [width]="'18px'" [height]="'18px'"></app-svg-icon>
+                                </i>
+                            </span>
                         </div>
                     </ng-template>
                 </p-dropdown>

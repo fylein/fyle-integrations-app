@@ -56,12 +56,6 @@ export class QboBaseMappingComponent implements OnInit {
     });
   }
 
-  searchDestinationOptions(event:any) {
-    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event, this.displayName).subscribe((responses) => {
-      this.destinationOptions = responses.results;
-    });
-  }
-
   private getDestinationField(workspaceGeneralSetting: QBOWorkspaceGeneralSetting, mappingSettings: MappingSetting[]): string {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return workspaceGeneralSetting.employee_field_mapping;
@@ -93,12 +87,6 @@ export class QboBaseMappingComponent implements OnInit {
         this.destinationOptions = responses.results;
         this.isLoading = false;
       });
-
-      // This.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined, undefined, this.displayName).subscribe((response: any) => {
-      //   This.destinationOptions = response;
-      //   This.isLoading = false;
-      //   Console.log(response)
-      // });
     });
   }
 

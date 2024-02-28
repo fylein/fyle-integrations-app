@@ -15,7 +15,7 @@ import { PaginatorService } from 'src/app/core/services/common/paginator.service
   templateUrl: './generic-mapping-v2.component.html',
   styleUrls: ['./generic-mapping-v2.component.scss']
 })
-export class GenericMappingV2Component implements OnInit, OnChanges {
+export class GenericMappingV2Component implements OnInit {
 
   @Input() isLoading: boolean;
 
@@ -33,7 +33,7 @@ export class GenericMappingV2Component implements OnInit, OnChanges {
 
   @Input() isCategoryMappingGeneric: boolean;
 
-  @Input() isAdvancedSerchRequired: boolean = false;
+  @Input() displayName: string | undefined;
 
   isInitialSetupComplete: boolean = false;
 
@@ -64,8 +64,6 @@ export class GenericMappingV2Component implements OnInit, OnChanges {
   alphabetFilter: string = 'All';
 
   @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
-
-  @Output() searchTrigger = new EventEmitter<string>();
 
   readonly brandingConfig = brandingConfig;
 
@@ -132,11 +130,15 @@ export class GenericMappingV2Component implements OnInit, OnChanges {
     this.getFilteredMappings();
   }
 
-  searchOptions(event: any) {
-    this.searchTrigger.emit(event);
+  searchDestinationOptions(event:any) {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event, this.displayName).subscribe((responses) => {
+        this.destinationOptions = responses.results;
+        this.constructDestinationOptions();
+      });
   }
 
-  destinationOptionsBuild() {
+
+  constructDestinationOptions() {
     const mappingType:string = this.mappings.flatMap(mapping =>
       Object.keys(mapping).filter(key => key.includes('mapping'))
     )[0];
@@ -172,7 +174,7 @@ export class GenericMappingV2Component implements OnInit, OnChanges {
           this.filteredMappingCount = mappingResponse.count;
         }
         this.mappings = mappingResponse.results;
-        this.destinationOptionsBuild();
+        this.constructDestinationOptions();
         this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
         this.isInitialSetupComplete = true;
@@ -183,10 +185,6 @@ export class GenericMappingV2Component implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.setupPage();
-  }
-
-  ngOnChanges() {
-    this.destinationOptionsBuild();
   }
 
 }
