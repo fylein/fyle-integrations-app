@@ -15,12 +15,14 @@ export type FeatureConfiguration = {
             },
             importSettings: {
                 tax: boolean;
+                importVendorsAsMerchants: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;
                 paymentsSync: boolean;
                 singleCreditLineJE: boolean;
                 emailNotification: boolean;
+                skipExport: boolean;
             },
             exportLog: {
                 expenseType: boolean;

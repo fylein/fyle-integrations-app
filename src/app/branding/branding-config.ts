@@ -23,13 +23,15 @@ const featureConfigs: FeatureConfiguration = {
                 nameInJournalEntry: true
             },
             importSettings: {
-                tax: true
+                tax: true,
+                importVendorsAsMerchants: true
             },
             advancedSettings: {
                 autoCreateVendors: true,
                 paymentsSync: true,
                 singleCreditLineJE: true,
-                emailNotification: true
+                emailNotification: true,
+                skipExport: true
             },
             exportLog: {
                 expenseType: true
@@ -54,13 +56,15 @@ const featureConfigs: FeatureConfiguration = {
                 nameInJournalEntry: false
             },
             importSettings: {
-                tax: false
+                tax: false,
+                importVendorsAsMerchants: false
             },
             advancedSettings: {
                 autoCreateVendors: false,
                 paymentsSync: false,
                 singleCreditLineJE: false,
-                emailNotification: false
+                emailNotification: false,
+                skipExport: false
             },
             exportLog: {
                 expenseType: false
@@ -83,7 +87,7 @@ const kbArticles: KbArticle = {
             INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
             TRAVELPERK: 'https://help.fylehq.com/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle',
             SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration'
         },
         onboardingArticles: {
             INTACCT: {
