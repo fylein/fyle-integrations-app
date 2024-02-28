@@ -215,10 +215,10 @@ export class AccountingExportModel {
   }
 
   static constructExportUrl(appName: AppName, expenseGroup: ExpenseGroup) {
-    if(appName===AppName.QBO) {
+    if (appName===AppName.QBO) {
       return this.constructExportUrlQBO(expenseGroup);
     } else if (appName===AppName.INTACCT) {
-      return this.constructExportUrlIntacct(expenseGroup.response_logs?.url_id)
+      return this.constructExportUrlIntacct(expenseGroup.response_logs?.url_id);
     }
 
     return '';
