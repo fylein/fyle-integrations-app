@@ -7,9 +7,9 @@ import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.ser
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  selector: 'app-intacct-main',
+  templateUrl: './intacct-main.component.html',
+  styleUrls: ['./intacct-main.component.scss']
 })
 export class MainComponent implements OnInit {
 
