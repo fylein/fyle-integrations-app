@@ -3,8 +3,9 @@ export type FeatureConfiguration = {
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;
         isIconsInsideButtonAllowed: boolean;
-        exposeOnlyQBOApp: boolean;
+        exposeC1Apps: boolean;
         isBackgroundColorAllowed: boolean;
+        isAsterikAllowed: boolean;
         featureFlags: {
             cloneSettings: boolean;
             mapEmployees: boolean;
@@ -14,12 +15,14 @@ export type FeatureConfiguration = {
             },
             importSettings: {
                 tax: boolean;
+                importVendorsAsMerchants: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;
                 paymentsSync: boolean;
                 singleCreditLineJE: boolean;
                 emailNotification: boolean;
+                skipExport: boolean;
             },
             exportLog: {
                 expenseType: boolean;

@@ -88,6 +88,8 @@ import { MultiSelectComponent } from './components/input/multi-select/multi-sele
 import { ConfigurationMappingFieldsComponent } from './components/configuration/configuration-mapping-fields/configuration-mapping-fields.component';
 import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component';
 import { SearchComponent } from './components/input/search/search.component';
+import { OptionalFieldComponent } from './components/helper/optional-field/optional-field.component';
+import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 
 
 @NgModule({
@@ -158,7 +160,9 @@ import { SearchComponent } from './components/input/search/search.component';
     MultiSelectComponent,
     ConfigurationMappingFieldsComponent,
     SvgIconComponent,
-    SearchComponent
+    SearchComponent,
+    OptionalFieldComponent,
+    SentenceCasePipe
   ],
   imports: [
     CommonModule,
@@ -252,7 +256,9 @@ import { SearchComponent } from './components/input/search/search.component';
     ConfigurationMappingFieldsComponent,
     SvgIconComponent,
     SearchComponent,
-    SkipExportComponent
+    SkipExportComponent,
+    OptionalFieldComponent,
+    SentenceCasePipe
   ]
 })
 export class SharedModule { }

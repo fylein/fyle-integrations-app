@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -27,6 +27,8 @@ export class ConfigurationStepHeaderComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingContent = brandingContent.common;
 
   constructor(
     public windowService: WindowService

@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-search',
@@ -21,6 +22,8 @@ export class SearchComponent implements OnInit {
   @Output() handleSimpleSearch = new EventEmitter<any>();
 
   isSearchFocused: boolean;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

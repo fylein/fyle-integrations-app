@@ -19,7 +19,7 @@
                         [subLabel]="'Imported account will be available as Categories in ' + brandingConfig.brandName " 
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-up-down'">
+                        [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                 </div>
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-mt-16-px">
@@ -29,7 +29,7 @@
                         [subLabel]="'Imported Vendor will be available as Merchants in ' + brandingConfig.brandName " 
                         [formControllerName]="'importVendorAsMerchant'"
                         [isSectionHeader]="false"
-                        [iconPath]="'arrow-tail-up-down'">
+                        [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                 </div>
                 <div>
@@ -41,14 +41,14 @@
                         [isDestinationFixedImport]="true">
                     </app-configuration-import-field>
                 </div>
-                <app-configuration-step-footer 
-                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
-                    [showBackButton] = "isOnboarding"
-                    [isButtonDisabled]="!importSettingForm.valid"
-                    (navigateToPreviousStep)="navigateBack()"
-                    (save)="save()">
-                </app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer 
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                [showBackButton] = "isOnboarding"
+                [isButtonDisabled]="!importSettingForm.valid"
+                (navigateToPreviousStep)="navigateBack()"
+                (save)="save()">
+            </app-configuration-step-footer>
         </form>
     </div>
     <div>

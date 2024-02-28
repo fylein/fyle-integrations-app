@@ -12,9 +12,9 @@
                     [redirectLink]="redirectLink">
                 </app-configuration-step-header>
             </div>
-            <div class="tw-px-24-px tw-pb-24-px">
+            <div class="tw-px-24-px">
                 <app-configuration-connector
-                    [accountingAppTitle]="'QuickBooks Online Company'"
+                    [accountingAppTitle]="'QuickBooks Online company'"
                     [accountingCompanyName]="qboCompanyName"
                     [fyleOrgName]="fyleOrgName"
                     [accountingCompanyTokenExpired]="qboTokenExpired"
@@ -35,8 +35,8 @@
                     [confirmBtnText]="primaryButtonText"
                     [showSecondaryCTA]="false">
                 </app-configuration-confirmation-dialog>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
         </div>
     </div>
 </div>

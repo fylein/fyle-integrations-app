@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -14,6 +14,7 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { QboExportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-export-settings.service';
+import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
   selector: 'app-qbo-export-settings',
@@ -101,9 +102,12 @@ export class QboExportSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
+  readonly brandingContent = brandingContent.configuration.exportSetting;
+
   constructor(
     private exportSettingService: QboExportSettingsService,
     public helperService: HelperService,
+    private qboHelperService: QboHelperService,
     private mappingService: MappingService,
     private router: Router,
     private toastService: IntegrationsToastService,
@@ -126,8 +130,6 @@ export class QboExportSettingsComponent implements OnInit {
           this.router.navigate([`/integrations/qbo/onboarding/import_settings`]);
         } else if (this.isAdvancedSettingAffected()) {
           this.router.navigate(['/integrations/qbo/main/configuration/advanced_settings']);
-        } else {
-          this.router.navigate(['/integrations/qbo/main/dashboard']);
         }
       }, () => {
         this.isSaveInProgress = false;
@@ -137,7 +139,15 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   navigateToPreviousStep(): void {
-    this.router.navigate([`/integrations/qbo/onboarding/employee_settings`]);
+    if (brandingFeatureConfig.featureFlags.mapEmployees) {
+      this.router.navigate([`/integrations/qbo/onboarding/employee_settings`]);
+    } else {
+      this.router.navigate([`/integrations/qbo/onboarding/connector`]);
+    }
+  }
+
+  refreshDimensions() {
+    this.qboHelperService.refreshQBODimensions().subscribe();
   }
 
   save(): void {

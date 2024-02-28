@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, filter, forkJoin } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
@@ -43,6 +43,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() isImportItemsEnabled: boolean;
 
+  @Input() exportKey: string = 'expense_group';
+
   filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];
@@ -74,6 +76,10 @@ export class DashboardErrorSectionComponent implements OnInit {
   alphabetFilter: string = 'All';
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.dashboard;
+
+  readonly brandingContentCommon = brandingContent.common;
 
   employeeFieldMapping: FyleField;
 
@@ -146,7 +152,8 @@ export class DashboardErrorSectionComponent implements OnInit {
   showErrorDialog(accountingError: Error) {
     this.isAccountingErrorDialogVisible = true;
     this.errorDetail = accountingError.error_detail;
-    this.errorExpenses = accountingError.expense_group?.expenses;
+    // @ts-ignore
+    this.errorExpenses = accountingError[this.exportKey]?.expenses;
   }
 
   private formatErrors(errors: Error[]): AccountingGroupedErrors {

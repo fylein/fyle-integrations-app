@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
@@ -15,9 +15,11 @@ export class QboMainComponent implements OnInit {
 
   appName: AppName = AppName.QBO;
 
+  readonly brandingContent = brandingContent.common;
+
   modules: MenuItem[] = [
     {label: 'Dashboard', routerLink: '/integrations/qbo/main/dashboard'},
-    {label: 'Export Log', routerLink: '/integrations/qbo/main/export_log'},
+    {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/qbo/main/export_log'},
     {label: 'Mapping', routerLink: '/integrations/qbo/main/mapping'},
     {label: 'Configuration', routerLink: '/integrations/qbo/main/configuration'}
   ];

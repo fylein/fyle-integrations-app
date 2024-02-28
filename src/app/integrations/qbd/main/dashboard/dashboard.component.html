@@ -22,7 +22,7 @@
                             <p class="tw-text-14-px tw-font-400 tw-pl-5px" *ngIf="exportInProgress">Exporting ...
                             </p>
                         </button><br>
-                        <p *ngIf="nextExportDate" class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-faded-text-color">Next automated export schedule: {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
+                        <p *ngIf="nextExportDate" class="tw-pt-8-px tw-float-right tw-text-12-px tw-font-500 tw-text-text-muted">Next automated export schedule: {{ nextExportDate | date : 'd MMM, yyyy'}}</p>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                     </div>
                     <div>
                         <h3 class="tw-text-20-px tw-font-400 tw-text-normal-text-color">You are all caught up!</h3>
-                        <h5 class="tw-text-14-px tw-font-400 tw-text-faded-text-color tw-pt-4-px"> There are no expense in {{ brandingConfig.brandName }} as per the configuration setup to export.</h5>
+                        <h5 class="tw-text-14-px tw-font-400 tw-text-text-muted tw-pt-4-px"> There are no expense in {{ brandingConfig.brandName }} as per the configuration setup to export.</h5>
                     </div>
                 </div>
                 <div>
