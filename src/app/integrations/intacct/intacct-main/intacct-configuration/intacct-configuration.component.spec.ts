@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConfigurationComponent } from './configuration.component';
+import { IntacctConfigurationComponent } from './intacct-configuration.component';
 
 describe('ConfigurationComponent', () => {
-  let component: ConfigurationComponent;
-  let fixture: ComponentFixture<ConfigurationComponent>;
+  let component: IntacctConfigurationComponent;
+  let fixture: ComponentFixture<IntacctConfigurationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ConfigurationComponent ]
+      declarations: [ IntacctConfigurationComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ConfigurationComponent);
+    fixture = TestBed.createComponent(IntacctConfigurationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

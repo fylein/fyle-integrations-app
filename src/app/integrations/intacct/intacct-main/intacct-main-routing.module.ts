@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './main.component';
+import { MainComponent } from './intacct-main.component';
 
 const routes: Routes = [
   {
@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'configuration',
-        loadChildren: () => import('./intacct-configuration/configuration.module').then(m => m.ConfigurationModule)
+        loadChildren: () => import('./intacct-configuration/intacct-configuration.module').then(m => m.IntacctConfigurationModule)
       }
     ]
   }
