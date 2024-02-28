@@ -16,7 +16,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
   templateUrl: './generic-mapping-table.component.html',
   styleUrls: ['./generic-mapping-table.component.scss']
 })
-export class GenericMappingTableComponent implements OnInit, OnChanges {
+export class GenericMappingTableComponent implements OnInit {
 
   @Input() isLoading: boolean;
 
@@ -42,7 +42,7 @@ export class GenericMappingTableComponent implements OnInit, OnChanges {
 
   @Input() isDashboardMappingResolve: boolean;
 
-  @Output() handleAdvancedSearch: EventEmitter<string> = new EventEmitter();
+  @Input() displayName: string | undefined;
 
   private searchSubject = new Subject<string>();
 
@@ -58,15 +58,15 @@ export class GenericMappingTableComponent implements OnInit, OnChanges {
 
   readonly brandingConfig = brandingConfig;
 
+  optionSearchUpdate = new Subject<{searchTerm: string}>();
+
+  private optionsMap: {[key: string]: boolean} = {};
+
   constructor(
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
-
-  getSearchWord(searchQuery: string) {
-    this.handleAdvancedSearch.emit(searchQuery);
-  }
 
   isOverflowing(element: any): boolean {
     return element.offsetWidth < element.scrollWidth;
@@ -79,7 +79,79 @@ export class GenericMappingTableComponent implements OnInit, OnChanges {
     }
   }
 
-  getDropdownValue(genericMapping: ExtendedGenericMapping) {
+  constructDestinationOptions() {
+    const mappingType:string = this.filteredMappings.flatMap(mapping =>
+      Object.keys(mapping).filter(key => key.includes('mapping'))
+    )[0];
+
+    this.filteredMappings.forEach((data: any) => {
+      const mapping = data[mappingType];
+      if (mapping && mapping.length > 0) {
+        const mappingDestinationKey = this.getMappingDestinationValue(data);
+        const destinationAttribute = mapping[0][mappingDestinationKey];
+        if (destinationAttribute && !this.destinationOptions.some((map: any) => map.value === destinationAttribute.value)) {
+          this.destinationOptions.push(destinationAttribute);
+        }
+      }
+    });
+
+    this.destinationOptions.forEach((option) => {
+      this.optionsMap[option.id.toString()] = true;
+    });
+  }
+
+  sortDropdownOptions() {
+    this.destinationOptions.sort((a, b) => a.value.localeCompare(b.value));
+  }
+
+  optionSearchWatcher() {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+      ).subscribe((event: any) => {
+      const existingOptions = this.destinationOptions.concat();
+      const newOptions: DestinationAttribute[] = [];
+
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event.searchTerm, this.displayName).subscribe((response) => {
+        response.results.forEach((option) => {
+          // If option is not already present in the list, add it
+          if (!this.optionsMap[option.id.toString()]) {
+            this.optionsMap[option.id.toString()] = true;
+            newOptions.push(option);
+          }
+        });
+
+        this.destinationOptions = existingOptions.concat(newOptions);
+        this.sortDropdownOptions();
+        this.isSearching = false;
+      });
+    });
+  }
+
+  searchOptions(event: any) {
+    if (event.filter) {
+      this.isSearching = true;
+      this.optionSearchUpdate.next({searchTerm: event.filter});
+    }
+  }
+
+  getMappingDestinationValue(genericMapping: ExtendedGenericMapping) {
+    if (genericMapping.employeemapping?.length) {
+      if (this.employeeFieldMapping===FyleField.VENDOR) {
+        return 'destination_vendor';
+      } else if (this.employeeFieldMapping===FyleField.EMPLOYEE) {
+        return 'destination_employee';
+      }
+    } else if (genericMapping.categorymapping?.length) {
+      if (this.destinationField === 'ACCOUNT') {
+        return 'destination_account';
+      }
+        return 'destination_expense_head';
+
+    }
+    return 'destination';
+  }
+
+  getDropdownValue(genericMapping: ExtendedGenericMapping, isForDestinationType: boolean = false) {
     if (genericMapping.employeemapping?.length) {
       if (this.employeeFieldMapping===FyleField.VENDOR) {
         return genericMapping?.employeemapping[0].destination_vendor;
@@ -155,24 +227,9 @@ export class GenericMappingTableComponent implements OnInit, OnChanges {
     return [];
   }
 
-  onSearch() {
-    this.isSearching = true;
-    this.searchSubject.next(this.searchQuery);
-  }
-
-  clearSearch() {
-    this.searchQuery = '';
-    this.onSearch();
-  }
-
   ngOnInit(): void {
-    this.searchSubject.pipe(debounceTime(1000)).subscribe((searchValue) => {
-      this.getSearchWord(searchValue);
-    });
-  }
-
-  ngOnChanges() {
-    this.isSearching = false;
+    this.constructDestinationOptions();
+    this.optionSearchWatcher();
   }
 
 }

@@ -10,7 +10,7 @@
                 <app-mapping-filter [appName]="appName" [selectedAlphabeticalFilter]="alphabetFilter" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)" (mappingFilterUpdateHandler)="mappingFilterUpdate($event)" [isAlphabetFilterHidden]="false"></app-mapping-filter>
             </div>
             <div *ngIf="filteredMappingCount">
-                <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" (handleAdvancedSearch)="searchDestinationOptions($event)"></app-generic-mapping-table>
+                <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" [displayName]="displayName"></app-generic-mapping-table>
             </div>
             <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount" >
                 <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>

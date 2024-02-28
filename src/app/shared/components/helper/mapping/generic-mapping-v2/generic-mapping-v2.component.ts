@@ -130,34 +130,6 @@ export class GenericMappingV2Component implements OnInit {
     this.getFilteredMappings();
   }
 
-  searchDestinationOptions(event:any) {
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event, this.displayName).subscribe((responses) => {
-        this.destinationOptions = responses.results;
-        this.constructDestinationOptions();
-      });
-  }
-
-
-  constructDestinationOptions() {
-    const mappingType:string = this.mappings.flatMap(mapping =>
-      Object.keys(mapping).filter(key => key.includes('mapping'))
-    )[0];
-
-    this.mappings.forEach((data: any) => {
-      const mappingData = data[mappingType];
-      if (mappingData && mappingData.length > 0) {
-        const destinationType: string = mappingData.flatMap((mapping: any) =>
-          Object.keys(mapping).find(key => key.includes('destination'))
-        )[0];
-        const destinationValue = this.destinationField === FyleField.EMPLOYEE ? 'destination_employee' : this.destinationField === FyleField.VENDOR ? 'destination_vendor' : destinationType;
-        const destinationValueData = mappingData[0][destinationValue];
-        if (destinationValueData && !this.destinationOptions.some((map: any) => map.value === destinationValueData.value)) {
-          this.destinationOptions.push(destinationValueData);
-        }
-      }
-    });
-  }
-
   setupPage() {
     this.isLoading = true;
     const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.MAPPING);
@@ -174,7 +146,6 @@ export class GenericMappingV2Component implements OnInit {
           this.filteredMappingCount = mappingResponse.count;
         }
         this.mappings = mappingResponse.results;
-        this.constructDestinationOptions();
         this.mappingStats = mappingStat;
         this.filteredMappings = this.mappings.concat();
         this.isInitialSetupComplete = true;
