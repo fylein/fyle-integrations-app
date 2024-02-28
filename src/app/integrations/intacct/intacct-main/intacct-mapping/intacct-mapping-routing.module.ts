@@ -3,12 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { IntacctMappingComponent } from './intacct-mapping.component';
 import { IntacctBaseMappingComponent } from './intacct-base-mapping/intacct-base-mapping.component';
 
-
 const routes: Routes = [
   {
-    path: ':source_field',
-    component: IntacctBaseMappingComponent,
+    path: '',
+    component: IntacctMappingComponent,
     children: [
+      {
+        path: ':source_field',
+        component: IntacctBaseMappingComponent
+      }
     ]
   }
 ];
