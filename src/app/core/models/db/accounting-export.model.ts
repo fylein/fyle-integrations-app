@@ -1,5 +1,5 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
-import { AccountingExportStatus, AccountingExportType, FundSource, FyleReferenceType } from "../enum/enum.model";
+import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType } from "../enum/enum.model";
 import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intacct/db/expense-group.model";
 import { Expense } from "../intacct/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
@@ -205,22 +205,42 @@ export class AccountingExportModel {
     return [exportRedirection, exportId, exportType];
   }
 
-  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string): AccountingExportList {
-    const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
-    const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
+  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, app_name: AppName): AccountingExportList {
+    if(app_name===AppName.QBO) {
+      const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
+      const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
+  
+      const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
+  
+      return {
+        exportedAt: expenseGroup.exported_at,
+        employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
+        expenseType: expenseGroup.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
+        referenceNumber: referenceNumber,
+        exportedAs: exportType,
+        fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
+        integrationUrl: `${environment.qbo_app_url}/app/${type}?txnId=${id}`,
+        expenses: expenseGroup.expenses
+      };
+    } else if (app_name===AppName.INTACCT) {
+      const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
+      const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
-    const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
+      const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
 
-    return {
-      exportedAt: expenseGroup.exported_at,
-      employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
-      expenseType: expenseGroup.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
-      referenceNumber: referenceNumber,
-      exportedAs: exportType,
-      fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-      integrationUrl: `${environment.qbo_app_url}/app/${type}?txnId=${id}`,
-      expenses: expenseGroup.expenses
-    };
+      return {
+        exportedAt: expenseGroup.exported_at,
+        employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
+        expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
+        referenceNumber: referenceNumber,
+        exportedAs: exportType,
+        fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
+        integrationUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
+        expenses: expenseGroup.expenses
+      };
+    }
+
+    return {} as AccountingExportList;
   }
 }
 

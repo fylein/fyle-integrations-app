@@ -95,47 +95,6 @@ export class IntacctCompletedExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  // getAccountingExports(limit: number, offset:number) {
-  //   this.isLoading = true;
-  //   const expenseGroups: ExpenseGroupList[] = [];
-
-  //   if (this.limit !== limit) {
-  //     this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
-  //   }
-
-  //   return this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter).subscribe(expenseGroupResponse => {
-  //     if (!this.isDateSelected) {
-  //       this.totalCount = expenseGroupResponse.count;
-  //     }
-  //     expenseGroupResponse.results.forEach((expenseGroup: ExpenseGroup, index: number = 0) => {
-  //       const referenceType: FyleReferenceType = this.exportLogService.getReferenceType(expenseGroup.description);
-  //       let referenceNumber: string = expenseGroup.description[referenceType];
-
-  //       if (referenceType === FyleReferenceType.EXPENSE) {
-  //         referenceNumber = expenseGroup.expenses[0].expense_number;
-  //       } else if (referenceType === FyleReferenceType.PAYMENT) {
-  //         referenceNumber = expenseGroup.expenses[0].payment_number;
-  //       }
-
-  //       expenseGroups.push({
-  //         index: index++,
-  //         exportedAt: expenseGroup.exported_at,
-  //         employee: [expenseGroup.employee_name, expenseGroup.description.employee_email],
-  //         expenseType: expenseGroup.fund_source === 'CCC' ? 'Corporate Card' : 'Reimbursable',
-  //         fyleReferenceType: null,
-  //         referenceNumber: referenceNumber,
-  //         exportedAs: expenseGroup.export_type,
-  //         fyleUrl: this.exportLogService.generateFyleUrl(expenseGroup, referenceType),
-  //         intacctUrl: `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`,
-  //         expenses: expenseGroup.expenses
-  //       });
-  //     });
-  //     this.filteredExpenseGroups = expenseGroups;
-  //     this.expenseGroups = [...this.filteredExpenseGroups];
-  //     this.isLoading = false;
-  //   });
-  // }
-
 
   private getAccountingExports(limit: number, offset:number) {
     this.isLoading = true;
@@ -149,7 +108,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
       }
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id)
+        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];
@@ -168,7 +127,6 @@ export class IntacctCompletedExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (dateRange[1]) {
-        if (dateRange) {
           this.selectedDateFilter = {
             startDate: dateRange[0],
             endDate: dateRange[1]
@@ -176,7 +134,6 @@ export class IntacctCompletedExportLogComponent implements OnInit {
 
           this.trackDateFilter('existing', this.selectedDateFilter);
           this.getAccountingExports(paginator.limit, paginator.offset);
-        }
       } else {
         this.selectedDateFilter = null;
         this.getAccountingExports(paginator.limit, paginator.offset);
