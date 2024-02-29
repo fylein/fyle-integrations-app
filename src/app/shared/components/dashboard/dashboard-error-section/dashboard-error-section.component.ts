@@ -82,7 +82,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   readonly brandingContentCommon = brandingContent.common;
 
   employeeFieldMapping: FyleField;
-  
+
   displayName: string | undefined = undefined;
 
   constructor(
@@ -99,7 +99,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     if (this.destinationField === AccountingField.ACCOUNT) {
       this.displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
     } else {
-      this.displayName = undefined
+      this.displayName = undefined;
     }
 
     this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((response: any) => {
