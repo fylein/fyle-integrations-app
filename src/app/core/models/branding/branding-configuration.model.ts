@@ -3,4 +3,5 @@ export type BrandingConfiguration = {
     webpageTitle: string;
     brandId: 'fyle' | 'co';
     supportEmail: string;
+    helpArticleDomain: string;
 };
