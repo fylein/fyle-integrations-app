@@ -54,6 +54,8 @@ export class GenericMappingTableComponent implements OnInit {
     searchOption: new FormControl('')
   });
 
+  isSearchFocused: boolean;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingConfig = brandingConfig;
