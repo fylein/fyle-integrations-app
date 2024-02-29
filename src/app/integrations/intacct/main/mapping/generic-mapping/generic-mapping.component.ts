@@ -15,6 +15,8 @@ import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-generic-mapping',
@@ -35,7 +37,7 @@ export class GenericMappingComponent implements OnInit {
 
   filteredMappings: ExtendedExpenseAttribute[];
 
-  dropdownOptions: IntacctDestinationAttribute[];
+  dropdownOptions: DestinationAttribute[];
 
   page: string;
 
@@ -73,7 +75,8 @@ export class GenericMappingComponent implements OnInit {
     private paginatorService: PaginatorService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService,
-    private mappingService: SiMappingsService
+    private mappingService: SiMappingsService,
+    private commonMappingService: MappingService
   ) { }
 
   tableDropdownWidth() {
@@ -183,7 +186,7 @@ export class GenericMappingComponent implements OnInit {
       this.page = `${new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.mappingSetting.source_field))} Mapping`;
       this.configuration = response[0];
       forkJoin([
-        this.mappingService.getSageIntacctDestinationAttributes(this.mappingSetting.destination_field),
+        this.commonMappingService.getPaginatedDestinationAttributes(this.mappingSetting.destination_field),
         this.mappingService.getMappingStats(this.sourceType.toUpperCase(), this.mappingSetting.destination_field),
         this.mappingService.getMappings(MappingState.ALL, this.limit, this.offset, this.sourceType, this.mappingSetting.destination_field, this.alphabetFilter)
       ]).subscribe(([options, mappingStats, mappings]) => {
@@ -195,7 +198,7 @@ export class GenericMappingComponent implements OnInit {
         this.isInitialSetupComplete = true;
         this.mappings = mappings.results;
         this.filteredMappings = this.mappings.concat();
-        this.dropdownOptions = options;
+        this.dropdownOptions = options.results;
         this.isLoading = false;
       });
     });

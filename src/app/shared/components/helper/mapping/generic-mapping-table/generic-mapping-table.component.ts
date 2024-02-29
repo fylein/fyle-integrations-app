@@ -1,5 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Subject, debounceTime, interval } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -23,8 +24,6 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() filteredMappings: ExtendedGenericMapping[];
 
-  @Input() mappingError: Error[];
-
   @Input() sourceField: string;
 
   @Input() mappingStats: MappingStats;
@@ -41,6 +40,14 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() isDashboardMappingResolve: boolean;
 
+  @Input() displayName: string | undefined;
+
+  private searchSubject = new Subject<string>();
+
+  searchQuery: string;
+
+  isSearching: boolean;
+
   form: FormGroup = new FormGroup({
     searchOption: new FormControl('')
   });
@@ -51,14 +58,18 @@ export class GenericMappingTableComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  optionSearchUpdate = new Subject<{searchTerm: string}>();
+
+  private optionsMap: {[key: string]: boolean} = {};
+
   constructor(
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
 
-  isOverflowing(element: any): boolean {
-    return element.offsetWidth < element.scrollWidth;
+  isOverflowing(element: any, mapping: DestinationAttribute): string {
+    return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
 
   tableDropdownWidth() {
@@ -68,7 +79,79 @@ export class GenericMappingTableComponent implements OnInit {
     }
   }
 
-  getDropdownValue(genericMapping: ExtendedGenericMapping) {
+  constructDestinationOptions() {
+    const mappingType:string = this.filteredMappings.flatMap(mapping =>
+      Object.keys(mapping).filter(key => key.includes('mapping'))
+    )[0];
+
+    this.filteredMappings.forEach((data: any) => {
+      const mapping = data[mappingType];
+      if (mapping && mapping.length > 0) {
+        const mappingDestinationKey = this.getMappingDestinationKey(data);
+        const destinationAttribute = mapping[0][mappingDestinationKey];
+        if (destinationAttribute && !this.destinationOptions.some((map: any) => map.value === destinationAttribute.value)) {
+          this.destinationOptions.push(destinationAttribute);
+        }
+      }
+    });
+
+    this.destinationOptions.forEach((option) => {
+      this.optionsMap[option.id.toString()] = true;
+    });
+  }
+
+  sortDropdownOptions() {
+    this.destinationOptions.sort((a, b) => a.value.localeCompare(b.value));
+  }
+
+  optionSearchWatcher() {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+      ).subscribe((event: any) => {
+      const existingOptions = this.destinationOptions.concat();
+      const newOptions: DestinationAttribute[] = [];
+
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event.searchTerm, this.displayName).subscribe((response) => {
+        response.results.forEach((option) => {
+          // If option is not already present in the list, add it
+          if (!this.optionsMap[option.id.toString()]) {
+            this.optionsMap[option.id.toString()] = true;
+            newOptions.push(option);
+          }
+        });
+
+        this.destinationOptions = existingOptions.concat(newOptions);
+        this.sortDropdownOptions();
+        this.isSearching = false;
+      });
+    });
+  }
+
+  searchOptions(event: any) {
+    if (event.filter) {
+      this.isSearching = true;
+      this.optionSearchUpdate.next({searchTerm: event.filter});
+    }
+  }
+
+  getMappingDestinationKey(genericMapping: ExtendedGenericMapping) {
+    if (genericMapping.employeemapping?.length) {
+      if (this.employeeFieldMapping===FyleField.VENDOR) {
+        return 'destination_vendor';
+      } else if (this.employeeFieldMapping===FyleField.EMPLOYEE) {
+        return 'destination_employee';
+      }
+    } else if (genericMapping.categorymapping?.length) {
+      if (this.destinationField === 'ACCOUNT') {
+        return 'destination_account';
+      }
+        return 'destination_expense_head';
+
+    }
+    return 'destination';
+  }
+
+  getDropdownValue(genericMapping: ExtendedGenericMapping, isForDestinationType: boolean = false) {
     if (genericMapping.employeemapping?.length) {
       if (this.employeeFieldMapping===FyleField.VENDOR) {
         return genericMapping?.employeemapping[0].destination_vendor;
@@ -134,17 +217,9 @@ export class GenericMappingTableComponent implements OnInit {
     this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
   }
 
-
-  getTableSourceData() {
-    if (this.filteredMappings) {
-      return this.filteredMappings;
-    } else if (this.mappingError) {
-      return this.mappingError;
-    }
-    return [];
-  }
-
   ngOnInit(): void {
+    this.constructDestinationOptions();
+    this.optionSearchWatcher();
   }
 
 }

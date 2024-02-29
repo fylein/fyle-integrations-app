@@ -40,11 +40,19 @@ p {
     .pi-times-circle {
         content: url('./assets/icons/cross-xs-small.svg') !important;
     }
+
+    .pi-search {
+        content: url('./assets/icons/search-medium.svg') !important ;
+    }
 }
 
 [data-theme='co'] {
     .pi-times-circle {
         content: url('./assets/icons/co/grv-cross-encircled-xs-small.svg') !important;
+    }
+
+    .pi-search {
+        content: url('./assets/icons/co/grv-search-medium.svg') !important;
     }
 }
 
@@ -324,6 +332,10 @@ p {
 
 .p-dropdown:hover {
     @apply tw-shadow-none #{!important};
+}
+
+.p-dropdown-header {
+    @apply tw-bg-bg-tertiary tw-p-6-px #{!important}
 }
 
 .p-multiselect {
@@ -618,6 +630,18 @@ p {
 
 .p-dropdown-filter {
     @apply tw-h-32-px;
+}
+
+.p-dropdown-filter {
+    @apply tw-pl-40-px tw-pr-12-px tw-py-12-px tw-rounded-4-px tw-border-border-primary #{!important}
+}
+
+.p-inputtext:enabled:focus {
+    @apply tw-border-border-primary #{!important};
+}
+
+.p-dropdown-filter-icon {
+    @apply tw-left-[10px] tw-text-search-focused-search-icon #{!important};
 }
 
 .p-dialog .p-dialog-header .p-dialog-title {

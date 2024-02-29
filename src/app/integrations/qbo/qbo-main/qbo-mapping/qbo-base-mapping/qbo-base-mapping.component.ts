@@ -36,6 +36,8 @@ export class QboBaseMappingComponent implements OnInit {
 
   FyleField = FyleField;
 
+  displayName: string | undefined = undefined;
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
@@ -77,13 +79,14 @@ export class QboBaseMappingComponent implements OnInit {
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
-      let displayName;
       if (this.destinationField === AccountingField.ACCOUNT) {
-        displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+        this.displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+      } else {
+        this.displayName = undefined;
       }
 
-      this.mappingService.getDestinationAttributes(this.destinationField, 'v1', 'qbo', undefined, undefined, displayName).subscribe((response: any) => {
-        this.destinationOptions = response;
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((responses) => {
+        this.destinationOptions = responses.results;
         this.isLoading = false;
       });
     });
