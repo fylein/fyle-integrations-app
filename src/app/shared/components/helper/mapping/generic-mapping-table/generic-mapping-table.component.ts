@@ -95,6 +95,8 @@ export class GenericMappingTableComponent implements OnInit {
       }
     });
 
+    this.sortDropdownOptions();
+
     this.destinationOptions.forEach((option) => {
       this.optionsMap[option.id.toString()] = true;
     });
