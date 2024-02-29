@@ -106,7 +106,7 @@
             </div>
         </div>
 
-        <div *ngIf="isTravelperkAllowed && !exposeC1Apps">
+        <div *ngIf="isTravelperkAllowed && !exposeC1Apps && (integrationTabs.ALL || integrationTabs.TRAVEL)">
             <p *ngIf="integrationTabs.ALL" class="tw-mt-1-px landing--section-divider"></p>
             <p class="landing--section-heading">
                 Travel

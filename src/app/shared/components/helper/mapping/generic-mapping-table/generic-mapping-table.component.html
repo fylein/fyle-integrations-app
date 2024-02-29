@@ -1,4 +1,4 @@
-<p-table [value]="getTableSourceData()" [tableStyle]="{ 'min-width': '50rem'}">
+<p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
         <th class="!tw-pl-40-px">{{sourceField | snakeCaseToSpaceCase | titlecase}} in {{brandingConfig.brandName}}</th>
@@ -15,31 +15,23 @@
                 </div>
             </td>
             <td>
-                <p-dropdown appendTo="body" (onShow)="tableDropdownWidth()"
-                    [ngClass]="{'dropdown-width': isDashboardMappingResolve}"
+                <p-dropdown 
+                    appendTo="body" 
+                    (onShow)="tableDropdownWidth()"
                     [ngModel]="getDropdownValue(mapping)" 
                     [options]="destinationOptions" 
                     optionLabel="value" 
                     placeholder="Select an Option" 
                     (onChange)="save(mapping, $event); getDropdownValue(mapping)"
                     [filter]="true"
-                    filterBy="value">
+                    filterBy="value"
+                    [emptyFilterMessage]="isSearching ? 'Searching...' : 'No results found'"
+                    (onFilter)="searchOptions($event)">
                     <ng-template let-options pTemplate="item">
                         <div #textElement
                             [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                            [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                            [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
                             {{options.value}}
-                        </div>
-                    </ng-template>
-                    <ng-template pTemplate="filter" let-options="options">
-                        <div class="p-inputgroup">
-                            <div class="p-input-icon-left">
-                                <i>
-                                    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
-                                </i>
-                                <input (focus)="isSearchFocused = true" (blur)="isSearchFocused = false" type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px"
-                                (keyup)="options.filter($event)" pInputText placeholder="Search" />
-                            </div>
                         </div>
                     </ng-template>
                 </p-dropdown>

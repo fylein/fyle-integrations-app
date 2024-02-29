@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
@@ -32,6 +32,8 @@ export class GenericMappingV2Component implements OnInit {
   @Input() appName: AppName;
 
   @Input() isCategoryMappingGeneric: boolean;
+
+  @Input() displayName: string | undefined;
 
   isInitialSetupComplete: boolean = false;
 
