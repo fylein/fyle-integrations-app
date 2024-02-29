@@ -82,6 +82,8 @@ export class DashboardErrorSectionComponent implements OnInit {
   readonly brandingContentCommon = brandingContent.common;
 
   employeeFieldMapping: FyleField;
+  
+  displayName: string | undefined = undefined;
 
   constructor(
     private dashboardService: DashboardService,
@@ -94,12 +96,13 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   getDestinationOptionsV1(errorType: AccountingErrorType): void {
-    let displayName;
     if (this.destinationField === AccountingField.ACCOUNT) {
-      displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+      this.displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+    } else {
+      this.displayName = undefined
     }
 
-    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, displayName).subscribe((response: any) => {
+    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((response: any) => {
       this.destinationOptions = response.results;
 
       this.setErrors(errorType);
