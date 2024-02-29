@@ -115,19 +115,19 @@ export class QboSkippedExportLogComponent implements OnInit {
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      if (dateRange[1]) {
-        if (dateRange) {
-          this.selectedDateFilter = {
-            startDate: dateRange[0],
-            endDate: dateRange[1]
-          };
-          this.isDateSelected = true;
-          this.getSkippedExpenses(paginator.limit, paginator.offset);
-        }
-      } else {
-        this.isDateSelected = false;
+      if (!dateRange) {
         this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.isDateSelected = false;
         this.selectedDateFilter = null;
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
+      } else if (dateRange.length && dateRange[1]) {
+        this.selectedDateFilter = {
+          startDate: dateRange[0],
+          endDate: dateRange[1]
+        };
+
+        this.isDateSelected = true;
+
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       }
     });

@@ -173,8 +173,17 @@ export class QboImportSettingsComponent implements OnInit {
     });
   }
 
+  private createCOAWatcher(): void {
+    this.importSettingForm.controls.importCategories.valueChanges.subscribe((isImportCategoriesEnabled) => {
+      if (!isImportCategoriesEnabled) {
+        this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
+      }
+    });
+  }
+
   private setupFormWatchers(): void {
     this.createTaxCodeWatcher();
+    this.createCOAWatcher();
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
