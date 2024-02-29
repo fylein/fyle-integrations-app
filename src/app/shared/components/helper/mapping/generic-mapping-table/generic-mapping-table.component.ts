@@ -89,7 +89,7 @@ export class GenericMappingTableComponent implements OnInit {
     this.filteredMappings.forEach((data: any) => {
       const mapping = data[mappingType];
       if (mapping && mapping.length > 0) {
-        const mappingDestinationKey = this.getMappingDestinationValue(data);
+        const mappingDestinationKey = this.getMappingDestinationKey(data);
         const destinationAttribute = mapping[0][mappingDestinationKey];
         if (destinationAttribute && !this.destinationOptions.some((map: any) => map.value === destinationAttribute.value)) {
           this.destinationOptions.push(destinationAttribute);
@@ -136,7 +136,7 @@ export class GenericMappingTableComponent implements OnInit {
     }
   }
 
-  getMappingDestinationValue(genericMapping: ExtendedGenericMapping) {
+  getMappingDestinationKey(genericMapping: ExtendedGenericMapping) {
     if (genericMapping.employeemapping?.length) {
       if (this.employeeFieldMapping===FyleField.VENDOR) {
         return 'destination_vendor';
