@@ -20,7 +20,7 @@ export class ExportLogFilterComponent implements OnInit {
 
   isSearchFocused: boolean;
 
-  isDateFieldFocused: boolean;
+  isDateFilterFocused: boolean;
 
   @Output() handleSimpleSearch = new EventEmitter<any>();
 
@@ -64,8 +64,8 @@ export class ExportLogFilterComponent implements OnInit {
   }
 
   showCalendar(event: Event) {
-    event.stopPropagation();
     this.isCalendarVisible = true;
+    event?.stopPropagation();
   }
 
   onSelect(event: Date) {

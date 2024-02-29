@@ -69,8 +69,9 @@ export class QboCompleteExportLogComponent implements OnInit {
       debounceTime(1000)
     ).subscribe((query: string) => {
       this.searchQuery = query;
-      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      this.getAccountingExports(paginator.limit, paginator.offset);
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getAccountingExports(this.limit, this.offset);
     });
   }
 
@@ -96,7 +97,8 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number) {
+  private getAccountingExports(limit: number, offset:number, is_searched:boolean = false) {
+
     this.isLoading = true;
 
     if (this.limit !== limit) {
@@ -104,9 +106,8 @@ export class QboCompleteExportLogComponent implements OnInit {
     }
 
     this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
-      if (!this.isDateSelected && !this.searchQuery) {
         this.totalCount = accountingExportResponse.count;
-      }
+
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id)
       );
@@ -126,18 +127,19 @@ export class QboCompleteExportLogComponent implements OnInit {
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      if (dateRange[1]) {
-        if (dateRange) {
-          this.selectedDateFilter = {
-            startDate: dateRange[0],
-            endDate: dateRange[1]
-          };
-
-          this.getAccountingExports(paginator.limit, paginator.offset);
-        }
-      } else {
+      if (!dateRange) {
         this.dateOptions = AccountingExportModel.getDateOptionsV2();
         this.selectedDateFilter = null;
+        this.isDateSelected = false;
+        this.getAccountingExports(paginator.limit, paginator.offset);
+      } else if (dateRange.length && dateRange[1]) {
+        this.selectedDateFilter = {
+          startDate: dateRange[0],
+          endDate: dateRange[1]
+        };
+
+        this.isDateSelected = true;
+
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });

@@ -55,13 +55,14 @@ export class QboSkippedExportLogComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
     private paginatorService: PaginatorService
-  ) { 
+  ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
       this.searchQuery = query;
-      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      this.getSkippedExpenses(paginator.limit, paginator.offset);
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getSkippedExpenses(this.limit, this.offset);
     });
   }
 
@@ -78,9 +79,7 @@ export class QboSkippedExportLogComponent implements OnInit {
     }
 
     return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
-      if (!this.isDateSelected && !this.searchQuery) {
         this.totalCount = skippedExpenses.count;
-      }
 
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
         skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
@@ -116,18 +115,19 @@ export class QboSkippedExportLogComponent implements OnInit {
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      if (dateRange[1]) {
-        if (dateRange) {
-          this.selectedDateFilter = {
-            startDate: dateRange[0],
-            endDate: dateRange[1]
-          };
-
-          this.getSkippedExpenses(paginator.limit, paginator.offset);
-        }
-      } else {
+      if (!dateRange) {
         this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.isDateSelected = false;
         this.selectedDateFilter = null;
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
+      } else if (dateRange.length && dateRange[1]) {
+        this.selectedDateFilter = {
+          startDate: dateRange[0],
+          endDate: dateRange[1]
+        };
+
+        this.isDateSelected = true;
+
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       }
     });

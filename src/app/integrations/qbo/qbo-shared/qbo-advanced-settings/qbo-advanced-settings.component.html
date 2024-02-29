@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'Schedule automatic export'" 
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Online'"
+                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Online.'"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -37,7 +37,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'automatic export method'"
                             [label]="'Set up export frequency'"
-                            [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to QuickBooks Online'"
+                            [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to QuickBooks Online.'"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                             [formControllerName]="'exportScheduleFrequency'"
@@ -104,7 +104,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
-                    [subLabel]="brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online'"
+                    [subLabel]="brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online.'"
                     [formControllerName]="'autoCreateMerchantsAsVendors'">
                 </app-configuration-toggle-field>
             </div>
@@ -128,7 +128,7 @@
                     [formControllerName]="'memoStructure'">
                 </app-configuration-multi-select>
                 <div class="preview-text">
-                    <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
+                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the Description Field</h4>
                     <div class="preview-box">
                         {{memoPreviewText}}
                     </div>

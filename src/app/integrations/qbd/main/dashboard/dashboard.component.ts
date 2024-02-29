@@ -212,15 +212,15 @@ export class DashboardComponent implements OnInit {
 
   private setupDateFilterWatcher(): void {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
-      if (dateRange[1]) {
+      if (!dateRange) {
+        this.selectedDateFilter = null;
+        this.dateFilter();
+      } else if (dateRange.length && dateRange[1]) {
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
 
-        this.dateFilter();
-      } else {
-        this.selectedDateFilter = null;
         this.dateFilter();
       }
     });

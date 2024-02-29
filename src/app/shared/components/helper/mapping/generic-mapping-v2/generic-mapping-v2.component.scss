@@ -7,6 +7,10 @@
     @apply tw-w-200-px #{!important}
 }
 
+:host ::ng-deep .mapping-filter-applied .p-dropdown {
+    @apply tw-py-0 #{!important}
+}
+
 :host ::ng-deep .filterDropdown .p-dropdown .p-dropdown-label.p-inputtext {
     @apply tw-py-10-px #{!important};
 }
@@ -21,10 +25,6 @@
 
 :host ::ng-deep .filterDropdown  .p-dropdown-trigger {
     @apply tw-block #{!important};
-}
-
-:host ::ng-deep .p-dropdown .p-dropdown-trigger {
-    @apply tw-w-32-px #{!important};
 }
 
 :host ::ng-deep .textbox {

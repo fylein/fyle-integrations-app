@@ -16,7 +16,7 @@
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="brandingContent.importCategoriesLabel + brandingConfig.brandName"
-                        [subLabel]="brandingContent.importCategoriesSubLabel + brandingConfig.brandName"
+                        [subLabel]="brandingContent.importCategoriesSubLabel"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -25,13 +25,13 @@
                     <div class="tw-p-24-px tw-pl-60-px tw-pt-0" *ngIf="importSettingForm.value.importCategories">
                         <div class="tw-flex tw-justify-between tw-items-center">
                             <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                                Select the accounts from QuickBooks to import as categories in Fyle
+                                Select the accounts from QuickBooks to import as categories in {{brandingConfig.brandName}}
                                 <p class="tw-text-text-muted" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
-                                    By default expense will be selected. Open the dropdown to select more as per your requirements
+                                    By default expense will be selected. Open the dropdown to select more as per your requirements.
                                 </p>
                             </h5>
                             <div class="p-field-checkbox tw-pl-34-px">
-                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select Chart of Accouts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2" [formControlName]="'chartOfAccountTypes'">
+                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select Chart of Accouts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
                                 </p-multiSelect>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
                       [label]="brandingContent.importItemsLabel"
-                      [subLabel]="brandingContent.importCategoriesSubLabel + brandingConfig.brandName"
+                      [subLabel]="brandingContent.importCategoriesSubLabel"
                       [formControllerName]="'importItems'"
                       [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
