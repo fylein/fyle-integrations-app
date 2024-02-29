@@ -225,6 +225,12 @@ p {
     @apply tw-mt-[-0.425rem] tw-w-14-px tw-h-14-px #{!important};
 }
 
+[data-theme='co'] {
+    .p-inputswitch .p-inputswitch-slider:before {
+        @apply tw-w-18-px tw-h-18-px tw-left-0 tw-mt-[-0.55rem] tw-ml-2-px #{!important};
+    }
+}
+
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
     @apply tw-translate-x-toggle-circle-translate #{!important};
 }
@@ -492,7 +498,11 @@ p {
 }
 
 .p-datatable .p-datatable-thead>tr>th {
-    @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg #{!important}
+    @apply tw-text-lv-table-header-text-color tw-text-12-px tw-font-nav-link-font-weight tw-py-12-px tw-px-24-px tw-border tw-border-lv-table-header-border-color tw-bg-lv-table-default-bg tw-border-l-0 #{!important}
+}
+
+.p-datatable .p-datatable-thead>tr>th:last-child {
+    @apply tw-border-r-0 #{!important};
 }
 
 .p-datatable .p-datatable-tbody>tr>td {
@@ -558,6 +568,10 @@ p {
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext,
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext {
     @apply tw-bg-input-read-only-bg #{!important};
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-empty-message {
+    @apply tw-text-dd-menu-item-default-text-color tw-py-6-px tw-px-12-px tw-text-14-px #{!important};
 }
 
 .p-calendar ::placeholder {
