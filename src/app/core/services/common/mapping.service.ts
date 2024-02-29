@@ -155,7 +155,7 @@ export class MappingService {
 
   getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, display_name?: string} = {
+    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, display_name__in?: string} = {
       limit: 100,
       offset: 0,
       attribute_type: attributeType,
@@ -167,7 +167,7 @@ export class MappingService {
     }
 
     if (display_name) {
-      params.display_name = display_name;
+      params.display_name__in = display_name;
     }
 
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/paginated_destination_attributes/`, params);
