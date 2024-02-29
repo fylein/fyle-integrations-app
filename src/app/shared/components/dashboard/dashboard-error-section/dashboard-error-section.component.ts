@@ -99,8 +99,8 @@ export class DashboardErrorSectionComponent implements OnInit {
       displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
     }
 
-    this.mappingService.getDestinationAttributes(this.destinationField, 'v1', this.apiModuleUrl, undefined, undefined, displayName).subscribe((response: any) => {
-      this.destinationOptions = response;
+    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, displayName).subscribe((response: any) => {
+      this.destinationOptions = response.results;
 
       this.setErrors(errorType);
     });

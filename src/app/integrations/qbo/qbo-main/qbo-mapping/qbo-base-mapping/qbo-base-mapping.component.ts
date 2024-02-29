@@ -81,6 +81,8 @@ export class QboBaseMappingComponent implements OnInit {
 
       if (this.destinationField === AccountingField.ACCOUNT) {
         this.displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+      } else {
+        this.displayName = undefined;
       }
 
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((responses) => {

@@ -24,8 +24,6 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() filteredMappings: ExtendedGenericMapping[];
 
-  @Input() mappingError: Error[];
-
   @Input() sourceField: string;
 
   @Input() mappingStats: MappingStats;
@@ -70,8 +68,8 @@ export class GenericMappingTableComponent implements OnInit {
     private workspaceService: WorkspaceService
   ) { }
 
-  isOverflowing(element: any): boolean {
-    return element.offsetWidth < element.scrollWidth;
+  isOverflowing(element: any, mapping: DestinationAttribute): string {
+    return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
 
   tableDropdownWidth() {
@@ -217,16 +215,6 @@ export class GenericMappingTableComponent implements OnInit {
 
   displayErrorToast(): void {
     this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
-  }
-
-
-  getTableSourceData() {
-    if (this.filteredMappings) {
-      return this.filteredMappings;
-    } else if (this.mappingError) {
-      return this.mappingError;
-    }
-    return [];
   }
 
   ngOnInit(): void {

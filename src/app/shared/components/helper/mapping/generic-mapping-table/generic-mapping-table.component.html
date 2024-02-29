@@ -1,4 +1,4 @@
-<p-table [value]="getTableSourceData()" [tableStyle]="{ 'min-width': '50rem'}">
+<p-table [value]="filteredMappings" [tableStyle]="{ 'min-width': '50rem'}">
     <ng-template pTemplate="header">
         <tr>
         <th class="!tw-pl-40-px">{{sourceField | snakeCaseToSpaceCase | titlecase}} in {{brandingConfig.brandName}}</th>
@@ -30,7 +30,7 @@
                     <ng-template let-options pTemplate="item">
                         <div #textElement
                             [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                            [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                            [pTooltip]="isOverflowing(textElement, options)" tooltipPosition="top">
                             {{options.value}}
                         </div>
                     </ng-template>
