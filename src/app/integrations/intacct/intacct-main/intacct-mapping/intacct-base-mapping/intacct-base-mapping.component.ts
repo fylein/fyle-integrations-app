@@ -81,7 +81,6 @@ export class IntacctBaseMappingComponent implements OnInit {
 
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined).subscribe((response: any) => {
         this.destinationOptions = response.results;
-        console.log(this.destinationOptions);
         this.isLoading = false;
       });
     });
