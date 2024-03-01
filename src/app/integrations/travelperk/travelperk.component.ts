@@ -77,7 +77,7 @@ export class TravelperkComponent implements OnInit {
     this.isConnectionInProgress = true;
     const url = `${environment.travelperk_base_url}/oauth2/authorize?client_id=${environment.travelperk_client_id}&redirect_uri=${environment.travelperk_redirect_uri}&scope=expenses:read&response_type=code&state=${environment.production ? this.org.id : `${this.org.id}_travelperk_local_redirect`}`;
 
-    const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
+    const popup = window.open(url);
 
     const activePopup = setInterval(() => {
       try {
