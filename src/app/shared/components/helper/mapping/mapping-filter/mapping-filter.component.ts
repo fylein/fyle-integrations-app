@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, MappingState } from 'src/app/core/models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, trackingAppMap } from 'src/app/core/models/misc/tracking.model';
@@ -42,6 +42,8 @@ export class MappingFilterComponent implements OnInit {
   @Output() mappingFilterUpdateHandler = new EventEmitter<string>();
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.mapping;
 
   constructor(
     private formBuilder: UntypedFormBuilder,

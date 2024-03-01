@@ -91,7 +91,7 @@ export class AccountingExportModel {
   }
 
   static getfilteredAccountingExports(query: string, group: AccountingExportList): boolean {
-    query = query.toLowerCase();
+    query = query.toLowerCase().trim();
     const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';
@@ -226,6 +226,7 @@ export class AccountingExportModel {
 
 export class SkippedAccountingExportModel {
   static getfilteredSkippedAccountingExports(query: string, group: SkipExportList): boolean {
+    query = query.toLowerCase().trim();
     const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';

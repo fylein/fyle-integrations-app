@@ -97,22 +97,19 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
     });
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
-      if (dateRange[1]) {
-        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-        if (dateRange) {
-          this.selectedDateFilter = {
-            startDate: dateRange[0],
-            endDate: dateRange[1]
-          };
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+      if (!dateRange) {
+        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.selectedDateFilter = null;
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
+      } else if (dateRange.length && dateRange[1]) {
+        this.selectedDateFilter = {
+          startDate: dateRange[0],
+          endDate: dateRange[1]
+        };
 
-          this.trackDateFilter('existing', this.selectedDateFilter);
-          this.getSkippedExpenses(paginator.limit, paginator.offset);
-        } else {
-          this.dateOptions = AccountingExportModel.getDateOptionsV2();
-          this.skipExportLogForm.controls.start.patchValue([]);
-          this.selectedDateFilter = null;
-          this.getSkippedExpenses(paginator.limit, paginator.offset);
-        }
+        this.trackDateFilter('existing', this.selectedDateFilter);
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
       }
     });
   }
