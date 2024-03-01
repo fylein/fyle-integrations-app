@@ -28,7 +28,7 @@ import { SiExportSettingService } from 'src/app/core/services/si/si-configuratio
 })
 export class IntacctDashboardComponent implements OnInit {
 
-  isLoading: boolean = false;
+  isLoading: boolean = true;
 
   AppUrl = AppUrl;
 
@@ -184,6 +184,8 @@ export class IntacctDashboardComponent implements OnInit {
         EMPLOYEE: responses[3].employee_field_mapping,
         CATEGORY: responses[3].employee_field_mapping === FyleField.EMPLOYEE ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT
       };
+
+      console.log(this.destinationFieldMap, 'anishhhh');
 
       this.isLoading = false;
 
