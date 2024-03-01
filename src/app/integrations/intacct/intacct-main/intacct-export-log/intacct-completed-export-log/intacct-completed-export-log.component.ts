@@ -107,11 +107,14 @@ export class IntacctCompletedExportLogComponent implements OnInit {
       if (!this.isDateSelected) {
         this.totalCount = accountingExportResponse.count;
       }
+      console.log(accountingExportResponse);
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];
+
+      // console.log(this.filteredAccountingExports);
       this.isLoading = false;
     });
   }

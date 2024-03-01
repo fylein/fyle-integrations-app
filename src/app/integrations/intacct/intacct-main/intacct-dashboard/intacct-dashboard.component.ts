@@ -173,8 +173,8 @@ export class IntacctDashboardComponent implements OnInit {
     ]).subscribe((responses) => {
 
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.reimbursableImportState = responses[5].configurations.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
-      this.cccImportState = responses[5].configurations.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
+      this.reimbursableImportState = responses[5].configurations?.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
+      this.cccImportState = responses[5].configurations?.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
 
       if (responses[1]) {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
