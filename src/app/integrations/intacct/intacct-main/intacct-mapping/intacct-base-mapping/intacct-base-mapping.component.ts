@@ -68,7 +68,7 @@ export class IntacctBaseMappingComponent implements OnInit {
   private setupPage(): void {
     this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
     forkJoin([
-      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.workspaceService.getConfiguration(),
       this.mappingService.getMappingSettings()
     ]).subscribe((responses) => {
       this.reimbursableExpenseObject = responses[0].reimbursable_expenses_object;

@@ -13,8 +13,8 @@ export class IntacctExportLogComponent implements OnInit {
   isLoading: boolean = false;
 
   modules: MenuItem[] = [
-    {label: 'Completed', routerLink: '/integrations/intacct/main/export_log/complete_export_log'},
-    {label: 'Skipped', routerLink: '/integrations/intacct/main/export_log/skip_export_log'}
+    {label: 'Completed', routerLink: '/integrations/intacct/main/export_log/complete'},
+    {label: 'Skipped', routerLink: '/integrations/intacct/main/export_log/skipped'}
   ];
 
   activeModule: MenuItem;
