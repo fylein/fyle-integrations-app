@@ -39,7 +39,7 @@
 }
 
 .sub-text {
-    @apply tw-text-text-muted tw-text-12-px tw-pl-2-px tw-max-w-300-px tw-pt-2-px;
+    @apply tw-text-text-muted tw-text-12-px tw-pl-2-px lg:tw-w-300-px md:tw-w-260-px tw-pt-2-px;
 }
 
 .smaller-th th {

@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
-import { GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
+import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
 import { AccountingDisplayName, MappingState } from '../../models/enum/enum.model';
@@ -11,7 +11,6 @@ import { GenericMappingResponse } from '../../models/db/extended-generic-mapping
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
 import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -152,6 +151,26 @@ export class MappingService {
 
   postMapping(mapping: GenericMappingPost): Observable<GenericMapping> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
+  }
+
+  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string): Observable<PaginatedDestinationAttribute> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, display_name__in?: string} = {
+      limit: 100,
+      offset: 0,
+      attribute_type: attributeType,
+      active: true
+    };
+
+    if (value) {
+      params.value__icontains = value;
+    }
+
+    if (display_name) {
+      params.display_name__in = display_name;
+    }
+
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/paginated_destination_attributes/`, params);
   }
 
 }
