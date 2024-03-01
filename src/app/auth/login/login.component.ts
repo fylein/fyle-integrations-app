@@ -14,6 +14,7 @@ import { AppUrl } from 'src/app/core/models/enum/enum.model';
 import { ClusterDomainWithToken } from 'src/app/core/models/misc/token.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
+import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     private sage300AuthService: Sage300AuthService,
     private siAuthService : SiAuthService,
     private netsuiteAuthService: NetsuiteAuthService,
+    private xeroAuthService: XeroAuthService,
     private storageService: StorageService,
     private userService: UserService
   ) { }
@@ -73,6 +75,8 @@ export class LoginComponent implements OnInit {
         this.helperService.setBaseApiURL(AppUrl.NETSUITE);
         this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
 
+        this.helperService.setBaseApiURL(AppUrl.XERO);
+        this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
 
         // Only local dev needs this, login happens via postMessage for prod/staging through webapp
         if (!environment.production) {
@@ -83,6 +87,8 @@ export class LoginComponent implements OnInit {
           this.siAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           this.helperService.setBaseApiURL(AppUrl.NETSUITE);
           this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          this.helperService.setBaseApiURL(AppUrl.XERO);
+          this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           this.redirect(redirectUri);
         } else {
           this.redirect(redirectUri);
