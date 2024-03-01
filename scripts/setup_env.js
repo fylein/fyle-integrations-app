@@ -30,6 +30,10 @@ const environment = {
   qbo_oauth_redirect_uri: `${process.env.QBO_OAUTH_REDIRECT_URI ? process.env.QBO_OAUTH_REDIRECT_URI : '{{QBO_OAUTH_REDIRECT_URI}}'}`,
   qbo_authorize_uri: `${process.env.QBO_AUTHORIZE_URI ? process.env.QBO_AUTHORIZE_URI : '{{QBO_AUTHORIZE_URI}}'}`,
   qbo_oauth_client_id: `${process.env.QBO_OAUTH_CLIENT_ID ? process.env.QBO_OAUTH_CLIENT_ID : '{{QBO_OAUTH_CLIENT_ID}}'}`,
+  xero_oauth_client_id: `${process.env.XERO_OAUTH_CLIENT_ID ? process.env.XERO_OAUTH_CLIENT_ID : '{{XERO_OAUTH_CLIENT_ID}}'}`,
+  xero_scope: `${process.env.XERO_SCOPE ? process.env.XERO_SCOPE : '{{XERO_SCOPE}}'}`,
+  xero_authorize_uri: `${process.env.XERO_AUTHORIZE_URI ? process.env.XERO_AUTHORIZE_URI : '{{XERO_AUTHORIZE_URI}}'}`,
+  xero_oauth_redirect_uri: `${process.env.XERO_OAUTH_REDIRECT_URI ? process.env.XERO_OAUTH_REDIRECT_URI : '{{XERO_OAUTH_REDIRECT_URI}}'}`,
   refiner_survey: {
     intacct: {
       onboarding_done_survery_id: `${process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID ? process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID : '{{REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID}}'}`,
