@@ -229,7 +229,6 @@ export class AccountingExportModel {
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
       const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
-      console.log(expenseGroup);
       return {
         exportedAt: expenseGroup.exported_at,
         employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
