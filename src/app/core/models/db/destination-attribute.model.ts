@@ -1,5 +1,6 @@
 import { BusinessCentralDestinationAttributes } from "../business-central/db/business-central-destination-attribute.model";
 import { Sage300DestinationAttributes } from "../sage300/db/sage300-destination-attribuite.model";
+import { PaginatedResponse } from "./paginated-response.model";
 
 export type DestinationAttributeDetail = {
   email: string;
@@ -28,6 +29,10 @@ export type DefaultDestinationAttribute = {
   id: string | null,
   name: string | null,
 };
+
+export interface PaginatedDestinationAttribute extends PaginatedResponse {
+  results: DestinationAttribute[];
+}
 
 export type GroupedDestinationAttribute = {
   ACCOUNT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AppName, CCCImportState, LoaderType, ReimbursableImportState } from 'src/app/core/models/enum/enum.model';
 
@@ -37,6 +37,8 @@ export class DashboardExportSectionComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingContent = brandingContent.dashboard;
 
   importStates: string;
 

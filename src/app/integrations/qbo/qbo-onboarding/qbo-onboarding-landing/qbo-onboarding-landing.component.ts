@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
@@ -23,13 +23,15 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 
   brandingConfig = brandingConfig;
 
-  redirectLink = brandingKbArticles.onboardingArticles.QBO.CONNECTOR;
+  redirectLink = brandingKbArticles.topLevelArticles.QBO;
 
   embedVideoLink = brandingDemoVideoLinks.onboarding.QBO;
 
   isIncorrectQBOConnectedDialogVisible: boolean = false;
 
   private oauthCallbackSubscription: Subscription;
+
+  readonly brandingContent = brandingContent.landing;
 
   constructor(
     private helperService: HelperService,

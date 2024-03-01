@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
@@ -20,7 +20,7 @@ export class ExportLogFilterComponent implements OnInit {
 
   isSearchFocused: boolean;
 
-  isDateFieldFocused: boolean;
+  isDateFilterFocused: boolean;
 
   @Output() handleSimpleSearch = new EventEmitter<any>();
 
@@ -36,7 +36,13 @@ export class ExportLogFilterComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingContent = brandingContent.exportLog;
+
   constructor() { }
+
+  clearDateFilter(): void {
+    this.exportLogForm.controls.start.patchValue('');
+  }
 
   setupSearchWatcher() {
     this.exportLogForm.controls.searchOption.valueChanges.subscribe((value) => {
@@ -58,8 +64,8 @@ export class ExportLogFilterComponent implements OnInit {
   }
 
   showCalendar(event: Event) {
-    event.stopPropagation();
     this.isCalendarVisible = true;
+    event?.stopPropagation();
   }
 
   onSelect(event: Date) {

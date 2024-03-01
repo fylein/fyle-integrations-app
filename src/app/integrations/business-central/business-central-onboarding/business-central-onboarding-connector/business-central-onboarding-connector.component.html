@@ -35,8 +35,8 @@
                     [confirmBtnText]="'Re connect'"
                     [showSecondaryCTA]="false">
                 </app-configuration-confirmation-dialog>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="save()" ></app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="save()" ></app-configuration-step-footer>
         </div>
     </div>
 </div>

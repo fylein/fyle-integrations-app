@@ -1,7 +1,6 @@
 .custom-search-field {
     border: 1px solid #ccc;
     border-radius: 4px;
-    padding: 8px 12px;
     display: inline-flex;
     align-items: center;
 }
@@ -14,7 +13,14 @@
 .custom-search-field input[type="text"] {
     border: none;
     outline: none;
-    width: 100%;
+}
+
+.hideInput {
+    transition: 0.3s ease-out all;
+  }
+
+.showInput {
+    transition: 0.3s ease-in all;
 }
 
 ::placeholder {
