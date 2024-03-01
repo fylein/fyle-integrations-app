@@ -23,7 +23,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 
   brandingConfig = brandingConfig;
 
-  redirectLink = brandingKbArticles.onboardingArticles.QBO.CONNECTOR;
+  redirectLink = brandingKbArticles.topLevelArticles.QBO;
 
   embedVideoLink = brandingDemoVideoLinks.onboarding.QBO;
 
@@ -93,6 +93,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    // window.open('https://google.com', 'popup', 'popup=true, width=500, height=800, left=500');
   }
 
   ngOnDestroy(): void {
