@@ -158,6 +158,15 @@ export enum QBOOnboardingState {
   CLONE_SETTINGS = 'CLONE_SETTINGS'
 }
 
+export enum XeroOnboardingState {
+  CONNECTION = 'CONNECTION',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  COMPLETE = 'COMPLETE',
+  CLONE_SETTINGS = 'CLONE_SETTINGS'
+}
+
 export enum NetsuiteOnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
@@ -200,6 +209,14 @@ export enum QBOCorporateCreditCardExpensesObject {
   JOURNAL_ENTRY = 'JOURNAL ENTRY',
   EXPENSE = 'EXPENSE',
   DEBIT_CARD_EXPENSE = 'DEBIT CARD EXPENSE'
+}
+
+export enum XeroReimbursableExpensesObject {
+  PURCHASE_BILL = 'PURCHASE BILL'
+}
+
+export enum XeroCorporateCreditCardExpensesObject {
+  BANK_TRANSACTION = 'BANK TRANSACTION'
 }
 
 export enum NameInJournalEntry {
@@ -325,7 +342,9 @@ export enum QBDAccountingExportsType {
 
 export enum PaymentSyncDirection {
   FYLE_TO_INTACCT = 'fyle_to_intacct',
-  INTACCT_TO_FYLE = 'intacct_to_fyle'
+  INTACCT_TO_FYLE = 'intacct_to_fyle',
+  FYLE_TO_XERO = 'fyle_to_xero',
+  XERO_TO_FYLE = 'xero_to_fyle'
 }
 
 export enum QBOPaymentSyncDirection {
@@ -583,6 +602,13 @@ export enum QBOTaskLogType {
   CREATING_CREDIT_CARD_CREDIT = 'CREATING_CREDIT_CARD_CREDIT',
   CREATING_DEBIT_CARD_EXPENSE = 'CREATING_DEBIT_CARD_EXPENSE',
   CREATING_BILL_PAYMENT = 'CREATING_BILL_PAYMENT',
+  FETCHING_EXPENSE = 'FETCHING_EXPENSE'
+}
+
+export enum XeroTaskLogType {
+  CREATING_BILL = 'CREATING_BILL',
+  CREATING_BANK_TRANSACTION = 'CREATING_BANK_TRANSACTION',
+  CREATING_PAYMENT = 'CREATING_PAYMENT',
   FETCHING_EXPENSE = 'FETCHING_EXPENSE'
 }
 
