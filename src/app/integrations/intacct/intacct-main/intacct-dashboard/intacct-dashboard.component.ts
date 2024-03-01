@@ -185,8 +185,6 @@ export class IntacctDashboardComponent implements OnInit {
         CATEGORY: responses[3].employee_field_mapping === FyleField.EMPLOYEE ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT
       };
 
-      console.log(this.destinationFieldMap, 'anishhhh');
-
       this.isLoading = false;
 
       const queuedTasks: IntacctTaskLog[] = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
