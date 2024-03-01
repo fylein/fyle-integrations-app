@@ -114,7 +114,6 @@ export class IntacctCompletedExportLogComponent implements OnInit {
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];
 
-      // console.log(this.filteredAccountingExports);
       this.isLoading = false;
     });
   }
