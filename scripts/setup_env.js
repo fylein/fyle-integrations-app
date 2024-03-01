@@ -33,6 +33,7 @@ const environment = {
   xero_oauth_client_id: `${process.env.XERO_OAUTH_CLIENT_ID ? process.env.XERO_OAUTH_CLIENT_ID : '{{XERO_OAUTH_CLIENT_ID}}'}`,
   xero_scope: `${process.env.XERO_SCOPE ? process.env.XERO_SCOPE : '{{XERO_SCOPE}}'}`,
   xero_authorize_uri: `${process.env.XERO_AUTHORIZE_URI ? process.env.XERO_AUTHORIZE_URI : '{{XERO_AUTHORIZE_URI}}'}`,
+  xero_oauth_redirect_uri: `${process.env.XERO_OAUTH_REDIRECT_URI ? process.env.XERO_OAUTH_REDIRECT_URI : '{{XERO_OAUTH_REDIRECT_URI}}'}`,
   refiner_survey: {
     intacct: {
       onboarding_done_survery_id: `${process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID ? process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID : '{{REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID}}'}`,

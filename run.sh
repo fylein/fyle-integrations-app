@@ -43,6 +43,7 @@ do
     sed -i $SED_EXTRA_ARGS "s?{{XERO_OAUTH_CLIENT_ID}}?${XERO_OAUTH_CLIENT_ID}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{XERO_SCOPE}}?${XERO_SCOPE}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{XERO_AUTHORIZE_URI}}?${XERO_AUTHORIZE_URI}?g" $f;
+    sed -i $SED_EXTRA_ARGS "s?{{XERO_OAUTH_REDIRECT_URI}}?${XERO_OAUTH_REDIRECT_URI}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{BRAND_NAME}}?${BRAND_NAME}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{WEBPAGE_TITLE}}?${WEBPAGE_TITLE}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{BRAND_ID}}?${BRAND_ID}?g" $f;
