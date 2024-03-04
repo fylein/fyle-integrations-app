@@ -117,24 +117,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   cccExpenseGroupingDateOptions: ExportSettingFormOption[];
 
-  creditCardExportTypes: ExportSettingFormOption[] = [
-    {
-      label: 'Bill',
-      value: IntacctReimbursableExpensesObject.BILL
-    },
-    {
-      label: 'Expense Report',
-      value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
-    },
-    {
-      label: 'Journal Entry',
-      value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-    },
-    {
-      label: 'Charge Card Transaction',
-      value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
-    }
-  ];
+  creditCardExportTypes: ExportSettingFormOption[] = ExportSettingModel.constructCCCOptions(brandingConfig.brandId);
 
   autoMapEmployeeOptions: ExportSettingFormOption[] = [
     { label: 'Based on Employee E-mail ID', value: 'EMAIL' },
