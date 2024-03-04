@@ -64,9 +64,15 @@ export class DashboardService {
       return this.apiService.get(next.split('/api')[1], {});
     }
 
-    return this.apiService.get(
-      `/workspaces/${this.workspaceId}/tasks/all/`, apiParams
-    );
+    let url = '';
+
+    if (appName === AppName.INTACCT) {
+      url = `/workspaces/${this.workspaceId}/tasks/v2/all/`;
+    } else {
+      url = `/workspaces/${this.workspaceId}/tasks/all/`;
+    }
+
+    return this.apiService.get(url, apiParams);
   }
 
   private getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: TaskResponse, appName?: AppName): Promise<TaskResponse> {
