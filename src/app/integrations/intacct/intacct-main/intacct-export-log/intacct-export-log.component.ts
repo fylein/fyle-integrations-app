@@ -23,6 +23,8 @@ export class IntacctExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   constructor(
     private router: Router
   ) { }
