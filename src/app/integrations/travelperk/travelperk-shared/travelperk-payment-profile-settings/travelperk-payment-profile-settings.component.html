@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header 
             [headerText]="'Payment Profile Settings'"
-            [contentText]="'Each invoice in TravelPerk is linked to multiple user roles such as Booker, Traveler, and Card Holder. You can establish the User Role for each Payment Profile, based on which expenses will be created in ' + brandingConfig.brandName + '. '"
+            [contentText]="'Each invoice in TravelPerk is linked to multiple user roles such as Booker, Traveler and Card Holder. You can create expenses for all your TravelPerk invoices in '+ brandingConfig.brandName +' based on the User Role you configure for each Payment Profile. '"
             [redirectLink]="supportArticleLink" 
             [appName]="appName">
         </app-configuration-step-header>
@@ -15,8 +15,8 @@
             <div class="tw-p-24-px">
                 <div class="tw-pb-24-px">
                     <app-configuration-step-sub-header
-                        [label]="'Add Payment Profiles for Expense Creation'"
-                        [subLabel]="'Add the required Payment Profiles and assign a User Role to each of them based on your requirement. Expenses will be created for every invoice generated in TravelPerk based on the settings.'"
+                        [label]="'Assign User Role for Required Payment Profiles'"
+                        [subLabel]="'Assign User Role for TravelPerk Payment Profiles requiring automated expense creation in '+ brandingConfig.brandName +'. Expenses will be created on behalf of the User Roles configured below.'"
                         [showPreview]="true"
                         (isPreviewClick)="showPreviewDialog(true)">
                     </app-configuration-step-sub-header>
@@ -45,7 +45,7 @@
                     (loadMoreClick)="getProfileMappings(paymentProfileSettings.count)">
                 </app-configuration-mapping-fields>
             </div>
-            <div class="tw-px-24-px tw-pb-24-px tw-border-t-1-px tw-border-t-box-color">
+            <div class="tw-px-24-px tw-py-16-px tw-border-t-1-px tw-border-t-border-tertiary">
                 <app-configuration-step-footer 
                     [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
                     [showBackButton] = "isOnboarding"
@@ -56,11 +56,10 @@
             </div>
         </form>
     </div>
-    <!-- TODO change the image path here -->
     <div *ngIf="isPreviewDialogVisible">
         <app-preview-dialog 
             [isPreviewDialogVisible]="true"
-            [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+            [iconPath]="'assets/pngs/preview-screens/travelperk-pps.png'" (closeDialog)="closeDialog()"
             [header]="'Preview'">
         </app-preview-dialog>
     </div>

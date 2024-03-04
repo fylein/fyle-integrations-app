@@ -8,14 +8,16 @@
                     <img src="{{ iconPath }}" width="logoWidth" height="44px" [ngClass]="logoStyleClasses" />
                 </div>
                 <div class="tw-pl-16-px tw-flex tw-flex-col">
-                    <div class="tw-flex tw-pt-6-px">
+                    <div class="tw-flex tw-items-center tw-pt-6-px">
                         <p class="tw-text-20-px tw-font-500 tw-text-text-primary">{{ appName }}</p>
-                        <app-svg-icon *ngIf="isIntegrationConnected && !isLoading && !hideRefreshIcon" [tooltipText]="'Sync Data'" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-pt-6-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
+                        <div>
+                            <app-svg-icon *ngIf="isIntegrationConnected && !isLoading && !hideRefreshIcon" [tooltipText]="'Sync Data'" [tooltipPosition]="'right'" [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-cursor-pointer tw-ml-10-px tw-text-faded-text-color'" (iconClick)="syncData()"></app-svg-icon>
+                        </div>
                     </div>
-                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-secondary tw-pt-2-px tw-text-14-px tw-font-400 tw-max-w-700-px tw-text-pretty">
+                    <p *ngIf="!isIntegrationSetupInProgress" class="tw-text-text-secondary tw-pt-4-px tw-text-14-px tw-font-400 tw-max-w-700-px tw-text-pretty">
                         {{ appDescription }}
                         <a *ngIf="redirectLink"
-                            class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                            class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center tw-pl-2-px"
                             (click)="windowService.openInNewTab(redirectLink)">
                             Read More
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"

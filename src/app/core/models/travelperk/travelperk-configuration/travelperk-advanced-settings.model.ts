@@ -52,8 +52,8 @@ export class TravelperkAdvancedSettingModel {
                 value: 'Flights'
             },
             {
-                label: 'Stays',
-                value: 'Stays'
+                label: 'Hotels',
+                value: 'Hotels'
             },
             {
                 label: 'Trains',
@@ -78,7 +78,8 @@ export class TravelperkAdvancedSettingModel {
     static createFormGroup(data: TravelperkAdvancedSettingArray): FormGroup {
         return new FormGroup ({
             destinationName: new FormControl(data.destination_name || '', Validators.required),
-            sourceName: new FormControl(data.source_name || null, Validators.required)
+            sourceName: new FormControl(data.source_name || null, Validators.required),
+            isRequired: new FormControl(true)
         });
     }
 

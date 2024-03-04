@@ -40,6 +40,8 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() sourceAttributeNames: SelectFormLabel;
 
+  @Input() isMandatory: boolean;
+
   @Output() loadMoreClick =  new EventEmitter();
 
   readonly brandingConfig = brandingConfig;

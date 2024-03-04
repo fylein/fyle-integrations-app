@@ -1,9 +1,9 @@
 :host ::ng-deep .p-tabmenu {
-    @apply tw-text-text-primary tw-text-14-px tw-font-nav-link-font-weight;
+    @apply tw-text-14-px tw-font-nav-link-font-weight;
 }
 
 :host ::ng-deep .p-tabmenu-nav .p-menuitem-text {
-    @apply tw-text-text-primary tw-font-nav-link-font-weight;
+    @apply tw-font-nav-link-font-weight;
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav {
@@ -15,11 +15,11 @@
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link:not(.p-disabled):hover {
-    @apply tw-text-nav-tabs-active tw-border-b-transparent tw-bg-nav-tabs-active-bg #{!important};
+    @apply tw-text-text-primary tw-border-b-transparent tw-bg-nav-tabs-active-bg #{!important};
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover .p-menuitem-link{
-    @apply tw-border-b-nav-tabs-active-border #{!important};
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight) .p-menuitem-link, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover .p-menuitem-link{
+    @apply tw-border-b-nav-tabs-active-border tw-text-text-disable tw-bg-nav-tabs-hover-bg #{!important};
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-highlight):hover{

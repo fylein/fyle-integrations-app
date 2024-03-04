@@ -116,7 +116,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   showExportTable() {
-    this.dialogHeader = 'Export Module';
+    this.dialogHeader = this.appName === AppName.TRAVELPERK ? 'Line item created in TravelPerk' : 'Export Module';
     this.exportTypeIconPath = this.exportConfigurationIconPath;
     this.isPreviewDialogVisible = true;
   }
