@@ -157,6 +157,7 @@ export class IntacctDashboardComponent implements OnInit {
           this.isExportInProgress = false;
           this.exportProgressPercentage = 0;
           this.processedCount = 0;
+          this.isLoading = false;
         });
       }
     });
