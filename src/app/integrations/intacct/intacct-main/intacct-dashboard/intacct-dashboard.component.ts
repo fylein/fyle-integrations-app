@@ -130,7 +130,7 @@ export class IntacctDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, AppName.INTACCT))),
       takeWhile((response: IntacctTaskResponse) =>
       response.results.filter(task =>
         (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)

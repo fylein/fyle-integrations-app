@@ -5,7 +5,7 @@ import { Observable, from } from 'rxjs';
 import { Error, ErrorResponse } from '../../models/db/error.model';
 import { HelperService } from './helper.service';
 import { ExportableAccountingExport } from '../../models/db/accounting-export.model';
-import { TaskLogState } from '../../models/enum/enum.model';
+import { AppName, TaskLogState } from '../../models/enum/enum.model';
 import { TaskLogGetParams, TaskResponse } from '../../models/db/task-log.model';
 
 @Injectable({
@@ -39,7 +39,7 @@ export class DashboardService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/errors/`, {is_resolved: false});
   }
 
-  private getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null): Observable<any> {
+  private getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null, appName?: AppName): Observable<any> {
     const offset = 0;
     const apiParams: TaskLogGetParams = {
       limit: limit,
@@ -51,12 +51,12 @@ export class DashboardService {
     }
 
     if (expenseGroupIds.length) {
-      const expenseKey = 'expense_group_id__in';
+      const expenseKey = appName===AppName.INTACCT ? 'expense_group_ids' : 'expense_group_id__in';
       apiParams[expenseKey] = expenseGroupIds;
     }
 
     if (taskType) {
-      const typeKey = 'type__in';
+      const typeKey = appName===AppName.INTACCT ? 'task_type' : 'type__in';
       apiParams[typeKey] = taskType;
     }
 
@@ -69,9 +69,9 @@ export class DashboardService {
     );
   }
 
-  private getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: TaskResponse): Promise<TaskResponse> {
+  private getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: TaskResponse, appName?: AppName): Promise<TaskResponse> {
     const that = this;
-    return that.getTasks(limit, status, expenseGroupIds, taskType, allTasks.next).toPromise().then((taskResponse) => {
+    return that.getTasks(limit, status, expenseGroupIds, taskType, allTasks.next, appName).toPromise().then((taskResponse) => {
 
       if (allTasks.count === 0) {
         allTasks = taskResponse;
@@ -90,7 +90,7 @@ export class DashboardService {
     });
   }
 
-  getAllTasks(status: TaskLogState[], expenseGroupIds: number[] = [], taskType: string[] = []): Observable<any> {
+  getAllTasks(status: TaskLogState[], expenseGroupIds: number[] = [], taskType: string[] = [], appName: AppName|undefined = undefined): Observable<any> {
     const limit = 500;
     const allTasks = {
       count: 0,
@@ -99,6 +99,6 @@ export class DashboardService {
       results: []
     };
 
-    return from(this.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks));
+    return from(this.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks, appName));
   }
 }
