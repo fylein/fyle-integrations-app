@@ -97,9 +97,10 @@ export class QboCompleteExportLogComponent implements OnInit {
     this.getAccountingExports(this.limit, offset);
   }
 
-  private getAccountingExports(limit: number, offset:number, is_searched:boolean = false) {
+  private getAccountingExports(limit: number, offset:number) {
 
-    this.isLoading = true;
+      this.isLoading = true;
+
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
