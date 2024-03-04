@@ -12,7 +12,7 @@
     (refreshDimension)="refreshDimensions($event)"></app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingsForm">
-        <div class="tw-p-24-px">
+        <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
             <div *ngIf="brandingConfig.brandId === 'fyle'" class="tw-mb-16-px">
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field 
@@ -126,8 +126,8 @@
                 </div>
             </div>
             <div>
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
-                    <app-configuration-toggle-field 
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                    <app-configuration-toggle-field
                     [form]="exportSettingsForm"
                     [label]="'Export Corporate Card Expenses'" 
                     [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage Intacct.'" 
@@ -283,7 +283,7 @@
 </div>
 
 <ng-template #employeeFieldMapping>
-    <div [formGroup]="exportSettingsForm">
+    <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" [formGroup]="exportSettingsForm">
         <app-configuration-select-field
             *ngIf="!exportSettingsForm.controls.employeeFieldMapping.disabled"
             [form]="exportSettingsForm"

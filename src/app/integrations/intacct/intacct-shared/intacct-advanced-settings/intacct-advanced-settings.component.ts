@@ -18,6 +18,7 @@ import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/a
 import { environment } from 'src/environments/environment';
 import { AdvancedSettingsModel } from 'src/app/core/models/common/advanced-settings.model';
 import { SkipExportComponent } from 'src/app/shared/components/si/helper/skip-export/skip-export.component';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-intacct-advanced-settings',
@@ -51,7 +52,12 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOptions[] = [];
 
-  hours: HourOption[] = [];
+  hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
+    return {
+      label: (day + 1).toString(),
+      value: day + 1
+    };
+  });
 
   memoStructure: string[] = [];
 
@@ -189,6 +195,9 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   private initializeAdvancedSettingsFormWithData(isSkippedExpense: boolean): void {
     const findObjectByDestinationId = (array: IntacctDestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     this.advancedSettingsForm = this.formBuilder.group({
+      exportSchedule: [this.advancedSettings?.workspace_schedules?.enabled ? true : false],
+      exportScheduleFrequency: [this.advancedSettings?.workspace_schedules?.enabled ? this.advancedSettings?.workspace_schedules.interval_hours : 1],
+      additionalEmails: [[]],
       scheduleAutoExport: [(this.advancedSettings.workspace_schedules?.interval_hours && this.advancedSettings.workspace_schedules?.enabled) ? this.advancedSettings.workspace_schedules?.interval_hours : null],
       email: [this.advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(this.advancedSettings?.workspace_schedules?.emails_selected, this.adminEmails) : []],
       search: [],
@@ -253,11 +262,6 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     const advancedSettings$ = this.advancedSettingsService.getAdvancedSettings();
     const expenseFilters$ = this.advancedSettingsService.getExpenseFilter();
     const config$ = this.mappingService.getConfiguration();
-
-    // Hours Options for Scheduled Exports
-    for (let i = 1; i <= 24; i++) {
-      this.hours.push({ label: `${i} hour${i > 1 ? 's' : ''}`, value: i });
-    }
 
     forkJoin({
       advancedSettings: advancedSettings$,

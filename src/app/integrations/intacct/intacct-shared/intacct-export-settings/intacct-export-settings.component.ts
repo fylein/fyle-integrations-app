@@ -428,6 +428,10 @@ export class IntacctExportSettingsComponent implements OnInit {
         useMerchantInJournalLine: [brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine ? (configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false) : true]
       });
 
+      if (brandingConfig.brandId === 'co') {
+        this.exportSettingsForm.controls.creditCardExpense.patchValue(true);
+      }
+
       this.exportFieldsWatcher();
       this.optionSearchWatcher();
     }

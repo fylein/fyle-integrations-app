@@ -19,32 +19,32 @@
                     [label]="'Automation'"
                     [subLabel]="'You can automate the export and sync of your data in this section.'">
                 </app-configuration-step-sub-header>
-            <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                <app-configuration-select-field
-                    [form]="advancedSettingsForm"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'automatic export method'"
-                    [label]="'Schedule Automatic Export'"
-                    [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Sage Intacct.'"
-                    [options]="hours"
-                    [iconPath]="'envelope'"
-                    [showClearIcon]="true"
-                    [placeholder]="'Set Schedule'"
-                    [formControllerName]="'scheduleAutoExport'">
-                </app-configuration-select-field>
-                <app-email-multi-select-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification"
-                    [form]="advancedSettingsForm"
-                    [appName]="AppName.INTACCT"
-                    [label]="'Send Error Notification to'"
-                    [isFieldMandatory]="false"
-                    [mandatoryErrorListName]="'email for error notification'"
-                    [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
-                    [options]="adminEmails"
-                    [iconPath]="'list'"
-                    [placeholder]="'Select email address'"
-                    [formControllerName]="'email'">
-                </app-email-multi-select-field>
-            </div>
+                <div class="tw-mb-16-px">
+                    <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
+                        <app-configuration-toggle-field
+                            [form]="advancedSettingsForm"
+                            [label]="'Schedule automatic export'" 
+                            [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Sage Intacct.'"
+                            [formControllerName]="'exportSchedule'"
+                            [iconPath]="'calendar'">
+                        </app-configuration-toggle-field>
+
+                        <div *ngIf="advancedSettingsForm.value.exportSchedule">
+                            <app-configuration-schedule-export
+                                [form]="advancedSettingsForm"
+                                [appName]="appName"
+                                [isFieldMandatory]="false"
+                                [mandatoryErrorListName]="'automatic export method'"
+                                [label]="'Set up export frequency'"
+                                [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Sage Intacct.'"
+                                [options]="hours"
+                                [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
+                                [formControllerName]="'exportScheduleFrequency'"
+                                [adminEmails]="adminEmails">
+                            </app-configuration-schedule-export>
+                        </div>
+                    </div>
+                </div>
             <div *ngIf="(reimbursableExpense==='EXPENSE_REPORT' || reimbursableExpense==='BILL') && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-select-field
                 [form]="advancedSettingsForm"
@@ -139,17 +139,15 @@
                 <div><label>Default Location</label></div>
                 <div class="tw-pt-2">
                     <p-dropdown appendTo="body" [options]="sageIntacctLocations" optionLabel="value" 
-                    formControlName="defaultLocation" placeholder="Select Location" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value}">
-                        <ng-template pTemplate="selectedItem" let-item>
-                            <div class="tw-flex tw-justify-between tw-items-center">
-                                <span>
-                                    {{ item.value }}
-                                </span>
-                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-                            </div>
-                        </ng-template>
+                    formControlName="defaultLocation" placeholder="Select Location" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}">
+                        <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
+                            <p>
+                                {{ item.value }}
+                            </p>
+                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultLocation)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                            </ng-template>
                     </p-dropdown>
-                    <span class="tw-pl-24-px">
+                    <span *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-pl-24-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in Sage Intacct</label>
                     </span>
@@ -160,17 +158,15 @@
                 <div><label>Default Department</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
-                  formControlName="defaultDepartment" placeholder="Select Department" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value}">
-                        <ng-template pTemplate="selectedItem" let-item>
-                            <div class="tw-flex tw-justify-between tw-items-center">
-                                <span>
-                                    {{ item.value }}
-                                </span>
-                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-                            </div>
+                  formControlName="defaultDepartment" placeholder="Select Department" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}">
+                        <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
+                            <p>
+                                {{ item.value }}
+                            </p>
+                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultDepartment)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
                     </p-dropdown>
-                    <span class="tw-pl-24-px">
+                    <span *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-pl-24-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Sage Intacct</label>
                     </span>
@@ -181,14 +177,12 @@
                 <div><label>Default Project</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctProjects" optionLabel="value"
-                  formControlName="defaultProject" placeholder="Select Project" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value}">
-                        <ng-template pTemplate="selectedItem" let-item>
-                            <div class="tw-flex tw-justify-between tw-items-center">
-                                <span>
-                                    {{ item.value }}
-                                </span>
-                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                  formControlName="defaultProject" placeholder="Select Project" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value, 'hideClearIcon': advancedSettingsForm.controls['defaultProject'].value}">
+                        <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
+                            <div>
+                                {{ item.value }}
                             </div>
+                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultProject)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
                     </p-dropdown>
                 </div>  
@@ -198,14 +192,12 @@
                 <div><label>Default Class</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctClasses" optionLabel="value"
-                  formControlName="defaultClass" placeholder="Select Class" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value}">
-                        <ng-template pTemplate="selectedItem" let-item>
-                            <div class="tw-flex tw-justify-between tw-items-center">
-                                <span>
-                                    {{ item.value }}
-                                </span>
-                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                  formControlName="defaultClass" placeholder="Select Class" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value, 'hideClearIcon': advancedSettingsForm.controls['defaultClass'].value}">
+                        <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
+                            <div>
+                                {{ item.value }}
                             </div>
+                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultClass)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
                     </p-dropdown>
                 </div>  
@@ -215,14 +207,12 @@
                 <div><label>Default Items</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
-                  formControlName="defaultItems" placeholder="Select Item" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value}">
-                        <ng-template pTemplate="selectedItem" let-item>
-                            <div class="tw-flex tw-justify-between tw-items-center">
-                                <span>
-                                    {{ item.value }}
-                                </span>
-                                <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
+                  formControlName="defaultItems" placeholder="Select Item" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}">
+                        <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
+                            <div>
+                                {{ item.value }}
                             </div>
+                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(advancedSettingsForm.controls.defaultItems)" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                         </ng-template>
                     </p-dropdown>
                 </div>  
