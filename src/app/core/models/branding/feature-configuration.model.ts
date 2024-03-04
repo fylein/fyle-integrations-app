@@ -1,7 +1,7 @@
 export type FeatureConfiguration = {
     [brandingId: string]: {
         intacct: {
-            employeeMapping: boolean;
+
         },
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;

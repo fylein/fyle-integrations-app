@@ -10,7 +10,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 const featureConfigs: FeatureConfiguration = {
     fyle: {
         intacct: {
-            employeeMapping: true
+
         },
         illustrationsAllowed: true,
         isGradientAllowed: true,
@@ -47,7 +47,7 @@ const featureConfigs: FeatureConfiguration = {
     },
     co: {
         intacct: {
-            employeeMapping: false
+
         },
         illustrationsAllowed: false,
         isGradientAllowed: false,
