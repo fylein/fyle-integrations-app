@@ -14,12 +14,14 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { IntacctAdvancedSettingsComponent } from './intacct-advanced-settings/intacct-advanced-settings.component';
+import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings/intacct-c1-import-settings.component';
 
 @NgModule({
   declarations: [
     IntacctExportSettingsComponent,
     IntacctImportSettingsComponent,
-    IntacctAdvancedSettingsComponent
+    IntacctAdvancedSettingsComponent,
+    IntacctC1ImportSettingsComponent
   ],
   imports: [
     CommonModule,
