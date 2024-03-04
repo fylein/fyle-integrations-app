@@ -49,7 +49,7 @@ export class ExportSettingModel {
                   value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
                 }
               ];
-        } else {
+        }
             return [
                 {
                   label: 'Bill',
@@ -64,6 +64,6 @@ export class ExportSettingModel {
                   value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
                 }
               ];
-        }
+
     }
 }
