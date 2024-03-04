@@ -73,15 +73,15 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
           this.travelperkService.getTravelperkData().subscribe(() => {
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
-            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected TravelPerk successfully');
-            this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
+            this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
+            this.travelperkData.onboarding_state === TravelPerkOnboardingState.COMPLETE ? '' : this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
             forkJoin([
               this.travelperkService.syncPaymentProfile(),
               this.travelperkService.syncCategories()
             ]).subscribe(() => {
               popup?.close();
               clearInterval(activePopup);
-              this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
+              this.travelperkData.onboarding_state === TravelPerkOnboardingState.COMPLETE ? this.router.navigateByUrl('/integrations/travelperk/main') : this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
             });
           });
         }
