@@ -82,8 +82,11 @@ export class GenericMappingV2Component implements OnInit {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
     ).subscribe((query: string) => {
-      this.searchQuery = query;
       this.isLoading = false;
+      this.searchQuery = query;
+      this.offset = 0;
+      this.currentPage = 1;
+      this.paginatorService.storePageSize(PaginatorPage.MAPPING, this.limit);
       this.getFilteredMappings();
     });
   }
