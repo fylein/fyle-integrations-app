@@ -71,7 +71,7 @@ export class QboCompleteExportLogComponent implements OnInit {
       this.searchQuery = query;
       this.offset = 0;
       this.currentPage = Math.ceil(this.offset / this.limit) + 1;
-      this.getAccountingExports(this.limit, this.offset);
+      this.getAccountingExports(this.limit, this.offset, true);
     });
   }
 
@@ -99,7 +99,10 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   private getAccountingExports(limit: number, offset:number, is_searched:boolean = false) {
 
-    this.isLoading = true;
+    if (!is_searched){
+      this.isLoading = true;
+    }
+
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
@@ -131,7 +134,7 @@ export class QboCompleteExportLogComponent implements OnInit {
         this.dateOptions = AccountingExportModel.getDateOptionsV2();
         this.selectedDateFilter = null;
         this.isDateSelected = false;
-        this.getAccountingExports(paginator.limit, paginator.offset);
+        this.getAccountingExports(paginator.limit, paginator.offset, true);
       } else if (dateRange.length && dateRange[1]) {
         this.selectedDateFilter = {
           startDate: dateRange[0],
@@ -140,7 +143,7 @@ export class QboCompleteExportLogComponent implements OnInit {
 
         this.isDateSelected = true;
 
-        this.getAccountingExports(paginator.limit, paginator.offset);
+        this.getAccountingExports(paginator.limit, paginator.offset, true);
       }
     });
   }

@@ -83,6 +83,7 @@ export class GenericMappingV2Component implements OnInit {
       debounceTime(1000)
     ).subscribe((query: string) => {
       this.searchQuery = query;
+      this.isLoading = false;
       this.getFilteredMappings();
     });
   }
