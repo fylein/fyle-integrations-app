@@ -10,7 +10,11 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 const featureConfigs: FeatureConfiguration = {
     fyle: {
         intacct: {
-            importVendorAsMerchant: true
+            importVendorAsMerchant: true,
+            skipExport: true,
+            autoCreateVendors: true,
+            autoSyncPayments: true,
+            emailNotification: true
         },
         illustrationsAllowed: true,
         isGradientAllowed: true,
@@ -46,7 +50,11 @@ const featureConfigs: FeatureConfiguration = {
     },
     co: {
         intacct: {
-            importVendorAsMerchant: false
+            importVendorAsMerchant: false,
+            skipExport: false,
+            autoCreateVendors: true,
+            autoSyncPayments: false,
+            emailNotification: false
         },
         illustrationsAllowed: false,
         isGradientAllowed: false,
