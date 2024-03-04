@@ -205,30 +205,31 @@ export class AccountingExportModel {
     return [exportRedirection, exportId, exportType];
   }
 
-  static constructExportUrlQBO (expenseGroup: ExpenseGroup) {
-    const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
-    return `${environment.qbo_app_url}/app/${type}?txnId=${id}`;
+  static constructQBOExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+    const [exportRedirection, exportId, exportType] = this.generateExportTypeAndId(expenseGroup);
+    return [`${environment.qbo_app_url}/app/${exportRedirection}?txnId=${exportId}`, exportType];
   }
 
-  static constructExportUrlIntacct (urlId: any) {
-    return `https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${urlId}`;
+  static constructIntacctExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+    return [`https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`, expenseGroup.export_type];
   }
 
-  static constructExportUrl(appName: AppName, expenseGroup: ExpenseGroup) {
-    if (appName===AppName.QBO) {
-      return this.constructExportUrlQBO(expenseGroup);
-    } else if (appName===AppName.INTACCT) {
-      return this.constructExportUrlIntacct(expenseGroup.response_logs?.url_id);
+  static constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup): [string, string] {
+    if (appName === AppName.QBO) {
+      return this.constructQBOExportUrlAndType(expenseGroup);
+    } else if (appName === AppName.INTACCT) {
+      return this.constructIntacctExportUrlAndType(expenseGroup.response_logs?.url_id);
     }
 
-    return '';
+    return ['', ''];
   }
 
   static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName): AccountingExportList {
       const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
-      const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
+      const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup);
+
       return {
         exportedAt: expenseGroup.exported_at,
         employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
@@ -236,7 +237,7 @@ export class AccountingExportModel {
         referenceNumber: referenceNumber,
         exportedAs: exportType,
         fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-        integrationUrl: this.constructExportUrl(appName, expenseGroup),
+        integrationUrl: url,
         expenses: expenseGroup.expenses
       };
   }
