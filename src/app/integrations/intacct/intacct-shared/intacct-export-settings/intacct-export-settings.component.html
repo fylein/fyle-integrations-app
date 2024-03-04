@@ -197,7 +197,7 @@
                             [isAdvanceSearchEnabled]="true"
                             (searchOptionsDropdown)="searchOptionsDropdown($event)"></app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && brandingFeatureConfig.intacct.importVendorAsMerchant">
+                        <div *ngIf="exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine">
                             <app-configuration-toggle-field 
                             [form]="exportSettingsForm"
                             [iconPath]="'list'"

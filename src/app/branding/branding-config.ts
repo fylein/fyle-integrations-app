@@ -10,11 +10,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 const featureConfigs: FeatureConfiguration = {
     fyle: {
         intacct: {
-            importVendorAsMerchant: true,
-            skipExport: true,
-            autoCreateVendors: true,
-            autoSyncPayments: true,
-            emailNotification: true
+
         },
         illustrationsAllowed: true,
         isGradientAllowed: true,
@@ -27,7 +23,8 @@ const featureConfigs: FeatureConfiguration = {
             mapEmployees: true,
             exportSettings: {
                 reimbursableExpenses: true,
-                nameInJournalEntry: true
+                nameInJournalEntry: true,
+                useMerchantInJournalLine: false
             },
             importSettings: {
                 tax: true,
@@ -50,11 +47,7 @@ const featureConfigs: FeatureConfiguration = {
     },
     co: {
         intacct: {
-            importVendorAsMerchant: false,
-            skipExport: false,
-            autoCreateVendors: true,
-            autoSyncPayments: false,
-            emailNotification: false
+
         },
         illustrationsAllowed: false,
         isGradientAllowed: false,
@@ -67,7 +60,8 @@ const featureConfigs: FeatureConfiguration = {
             mapEmployees: false,
             exportSettings: {
                 reimbursableExpenses: false,
-                nameInJournalEntry: false
+                nameInJournalEntry: false,
+                useMerchantInJournalLine: false
             },
             importSettings: {
                 tax: false,
