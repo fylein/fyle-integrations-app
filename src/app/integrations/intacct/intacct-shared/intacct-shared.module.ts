@@ -36,7 +36,8 @@ import { IntacctC1ImportSettingsComponent } from './intacct-c1-import-settings/i
   exports: [
     IntacctExportSettingsComponent,
     IntacctImportSettingsComponent,
-    IntacctAdvancedSettingsComponent
+    IntacctAdvancedSettingsComponent,
+    IntacctC1ImportSettingsComponent
   ]
 })
 export class IntacctSharedModule { }

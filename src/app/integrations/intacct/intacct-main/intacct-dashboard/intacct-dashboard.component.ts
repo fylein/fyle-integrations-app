@@ -143,7 +143,7 @@ export class IntacctDashboardComponent implements OnInit {
         this.isLoading = true;
         forkJoin([
           this.getExportErrors$,
-          this.getAccountingExportSummary$
+          this.getAccountingExportSummary$.pipe(catchError(() => of(null)))
         ]).subscribe(responses => {
           this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
           this.groupedErrorStat = {
