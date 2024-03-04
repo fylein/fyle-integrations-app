@@ -83,7 +83,7 @@ export class GenericMappingV2Component implements OnInit {
       debounceTime(1000)
     ).subscribe((query: string) => {
       this.searchQuery = query;
-      this.pageSizeChanges(this.limit, true);
+      this.pageSizeChanges(this.limit);
     });
   }
 
@@ -96,15 +96,12 @@ export class GenericMappingV2Component implements OnInit {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = mappingResponse.count;
-      console.log(this.totalCount, this.limit)
       this.isLoading = false;
     });
   }
 
-  pageSizeChanges(limit: number, is_searched: boolean = false): void {
-    if (!is_searched){
-      this.isLoading = true;
-    }
+  pageSizeChanges(limit: number): void {
+    this.isLoading = true;
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.MAPPING, limit);
     }
