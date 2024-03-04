@@ -218,7 +218,7 @@ export class AccountingExportModel {
     if (appName === AppName.QBO) {
       return this.constructQBOExportUrlAndType(expenseGroup);
     } else if (appName === AppName.INTACCT) {
-      return this.constructIntacctExportUrlAndType(expenseGroup.response_logs?.url_id);
+      return this.constructIntacctExportUrlAndType(expenseGroup);
     }
 
     return ['', ''];
