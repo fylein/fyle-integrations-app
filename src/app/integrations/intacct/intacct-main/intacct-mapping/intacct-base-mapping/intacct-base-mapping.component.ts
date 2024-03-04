@@ -8,6 +8,7 @@ import { AccountingDisplayName, AccountingField, AppName, FyleField, IntacctCate
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 
 @Component({
   selector: 'app-intacct-base-mapping',
@@ -38,7 +39,7 @@ export class IntacctBaseMappingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private mappingService: MappingService,
+    private mappingService: SiMappingsService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
@@ -78,8 +79,8 @@ export class IntacctBaseMappingComponent implements OnInit {
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, undefined).subscribe((response: any) => {
-        this.destinationOptions = response;
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined).subscribe((response: any) => {
+        this.destinationOptions = response.results;
         this.isLoading = false;
       });
     });
