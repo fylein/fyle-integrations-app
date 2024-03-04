@@ -9,6 +9,9 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 
 const featureConfigs: FeatureConfiguration = {
     fyle: {
+        intacct: {
+            importVendorAsMerchant: true
+        },
         illustrationsAllowed: true,
         isGradientAllowed: true,
         isIconsInsideButtonAllowed: true,
@@ -42,6 +45,9 @@ const featureConfigs: FeatureConfiguration = {
         }
     },
     co: {
+        intacct: {
+            importVendorAsMerchant: false
+        },
         illustrationsAllowed: false,
         isGradientAllowed: false,
         isIconsInsideButtonAllowed: false,

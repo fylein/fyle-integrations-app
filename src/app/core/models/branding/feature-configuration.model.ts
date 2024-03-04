@@ -1,5 +1,9 @@
 export type FeatureConfiguration = {
     [brandingId: string]: {
+        intacct: {
+            importVendorAsMerchant: boolean;
+            
+        },
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;
         isIconsInsideButtonAllowed: boolean;
