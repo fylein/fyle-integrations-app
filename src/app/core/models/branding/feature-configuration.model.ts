@@ -2,7 +2,10 @@ export type FeatureConfiguration = {
     [brandingId: string]: {
         intacct: {
             importVendorAsMerchant: boolean;
-            
+            skipExport: boolean;
+            autoCreateVendors: boolean;
+            autoSyncPayments: boolean;
+            emailNotification: boolean;
         },
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;
