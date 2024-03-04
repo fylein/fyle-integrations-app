@@ -425,7 +425,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         creditCardVendor: [findObjectById(this.destinationOptions.VENDOR, generalMappings?.default_ccc_vendor.id)],
         creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
         chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)],
-        useMerchantInJournalLine: [brandingFeatureConfig.intacct.importVendorAsMerchant ? (configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false) : true]
+        useMerchantInJournalLine: [brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine ? (configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false) : true]
       });
 
       this.exportFieldsWatcher();

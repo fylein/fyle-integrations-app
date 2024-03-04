@@ -32,7 +32,7 @@
                     [placeholder]="'Set Schedule'"
                     [formControllerName]="'scheduleAutoExport'">
                 </app-configuration-select-field>
-                <app-email-multi-select-field *ngIf="brandingFeatureConfig.intacct.emailNotification"
+                <app-email-multi-select-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification"
                     [form]="advancedSettingsForm"
                     [appName]="AppName.INTACCT"
                     [label]="'Send Error Notification to'"
@@ -45,7 +45,7 @@
                     [formControllerName]="'email'">
                 </app-email-multi-select-field>
             </div>
-            <div *ngIf="(reimbursableExpense==='EXPENSE_REPORT' || reimbursableExpense==='BILL') && brandingFeatureConfig.intacct.autoSyncPayments" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div *ngIf="(reimbursableExpense==='EXPENSE_REPORT' || reimbursableExpense==='BILL') && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-select-field
                 [form]="advancedSettingsForm"
                 [isFieldMandatory]="false"
@@ -76,7 +76,7 @@
                 [label]="'Other Preferences'"
                 [subLabel]="'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'">
             </app-configuration-step-sub-header>
-            <div *ngIf="employeeFieldMapping" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Auto-Create ' + getEmployeeField()" 
@@ -113,7 +113,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="brandingFeatureConfig.intacct.skipExport" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+            <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
                 [label]="'Skip Selective Expenses from being Exported to Sage Intacct'" 
