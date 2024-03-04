@@ -150,7 +150,7 @@ export class IntacctDashboardComponent implements OnInit {
             CATEGORY_MAPPING: null
           };
 
-          if (this.accountingExportSummary) {
+          if (responses[1]) {
             this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
           }
 
