@@ -3,6 +3,7 @@ export type KbArticle = {
         topLevelArticles: {
             BAMBOO_HR: string;
             QBD: string;
+            QBO: string;
             INTACCT: string;
             TRAVELPERK: string;
             SAGE300: string;
