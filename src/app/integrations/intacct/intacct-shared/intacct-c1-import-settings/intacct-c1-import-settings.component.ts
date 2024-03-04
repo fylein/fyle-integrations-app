@@ -253,16 +253,12 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       }
     });
 
-    if (mappedFieldMap.size === 0){
-      this.sageIntacctFields.forEach((sageIntacctField) => {
-        if (expenseFieldFormArray.length < 3) {
-          const fieldData = unmappedFieldMap.get(sageIntacctField.attribute_type);
-          if (fieldData) {
-            expenseFieldFormArray.push(this.createFormGroup(fieldData));
-          }
-        }
-      });
-    }
+    this.sageIntacctFields.forEach((sageIntacctField) => {
+      const fieldData = unmappedFieldMap.get(sageIntacctField.attribute_type);
+      if (fieldData) {
+        expenseFieldFormArray.push(this.createFormGroup(fieldData));
+      }
+    });
 
     return expenseFieldFormArray;
   }
