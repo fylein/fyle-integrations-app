@@ -79,7 +79,7 @@ export type ExportSettingOptionSearch = {
             configurations: {
                 reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
                 corporate_credit_card_expenses_object: cccExportType,
-                employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : null,
+                employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : 'VENDOR',
                 auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees')),
                 use_merchant_in_journal_line: exportSettingsForm.get('useMerchantInJournalLine')?.value ? exportSettingsForm.get('useMerchantInJournalLine')?.value : false
             },
