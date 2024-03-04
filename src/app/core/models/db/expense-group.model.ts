@@ -34,6 +34,9 @@ export type ExpenseGroupParam = {
   exported_at__gte?: string;
   exported_at__lte?: string;
   state?: string;
+  exported_at?: string;
+  start_date?: string;
+  end_date?: string;
 }
 
 export type SkipExportParam = {
