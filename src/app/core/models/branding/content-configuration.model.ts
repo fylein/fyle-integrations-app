@@ -22,9 +22,6 @@ export type ContentConfiguration = {
                 connector: {
                     stepName: string;
                 },
-                employeeSetting: {
-                    stepName: string;
-                },
                 exportSetting: {
                     stepName: string;
                     headerText: string;

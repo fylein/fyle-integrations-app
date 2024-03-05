@@ -9,9 +9,6 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 
 const featureConfigs: FeatureConfiguration = {
     fyle: {
-        intacct: {
-
-        },
         illustrationsAllowed: true,
         isGradientAllowed: true,
         isIconsInsideButtonAllowed: true,
@@ -46,9 +43,6 @@ const featureConfigs: FeatureConfiguration = {
         }
     },
     co: {
-        intacct: {
-
-        },
         illustrationsAllowed: false,
         isGradientAllowed: false,
         isIconsInsideButtonAllowed: false,
@@ -231,13 +225,10 @@ const content: ContentConfiguration = {
             },
             configuration: {
                 connector: {
-                    stepName: '',
-                },
-                employeeSetting: {
-                    stepName: '',
+                    stepName: 'Connect to Sage Intacct',
                 },
                 exportSetting: {
-                    stepName: '',
+                    stepName: 'Export Settings',
                     headerText: '',
                     contentText: '',
                     corporateCard: {
@@ -259,7 +250,7 @@ const content: ContentConfiguration = {
                     }
                 },
                 importSetting: {
-                    stepName: '',
+                    stepName: 'Import Settings',
                     headerText: '',
                     contentText: '',
                     importCategoriesLabel: '',
@@ -272,7 +263,7 @@ const content: ContentConfiguration = {
                     importVendorsAsMerchantsLabel: '',
                 },
                 advancedSettings: {
-                    stepName: '',
+                    stepName: 'Advanced Settings',
                     autoCreateVendorsLabel: '',
                     paymentSyncLabel: '',
                     customizationSubLabel: '',
@@ -415,13 +406,10 @@ const content: ContentConfiguration = {
             },
             configuration: {
                 connector: {
-                    stepName: '',
-                },
-                employeeSetting: {
-                    stepName: '',
+                    stepName: 'Connect to Sage Intacct',
                 },
                 exportSetting: {
-                    stepName: '',
+                    stepName: 'Export settings',
                     headerText: '',
                     contentText: '',
                     corporateCard: {
