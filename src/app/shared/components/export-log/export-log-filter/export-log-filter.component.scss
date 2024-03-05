@@ -2,12 +2,12 @@
   .clickable-row:hover {
     @apply tw-cursor-pointer;
     &:hover {
-      @apply tw-bg-bg-info-lightest;
+        @apply tw-bg-lv-table-hover-bg;
     }
 }
 
 :host ::ng-deep .drop-down .p-calendar {
-    @apply tw-w-200-px tw-h-30-px tw-border-0 #{!important};
+    @apply tw-w-200-px tw-h-30-px #{!important};
 }
 
 :host ::ng-deep .selectedItem  .p-dropdown-trigger {

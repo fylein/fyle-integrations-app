@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-preview-dialog',
@@ -14,6 +15,8 @@ export class PreviewDialogComponent implements OnInit {
   @Input() header: string;
 
   @Output() closeDialog = new EventEmitter();
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 

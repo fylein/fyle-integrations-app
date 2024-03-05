@@ -53,7 +53,7 @@ export class BambooHrModel {
     return {
       org: orgId,
       additional_email_options: bambooHrConfigurationForm.value.additionalEmails ? bambooHrConfigurationForm.value.additionalEmails : [],
-      emails_selected: bambooHrConfigurationForm.value.emails
+      emails_selected: bambooHrConfigurationForm.value.email
     };
   }
 }

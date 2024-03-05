@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class LoaderComponent implements OnInit {
 
-  @Input() styleClass: string;
+  @Input() styleClass: string = '!tw-w-50-px !tw-h-50-px spinner-default';
 
   constructor() { }
 

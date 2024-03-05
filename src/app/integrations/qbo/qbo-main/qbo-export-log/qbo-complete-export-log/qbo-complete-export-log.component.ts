@@ -12,6 +12,9 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-qbo-complete-export-log',
   templateUrl: './qbo-complete-export-log.component.html',
@@ -51,22 +54,33 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
   constructor(
     private formBuilder: FormBuilder,
     private exportLogService: ExportLogService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+      debounceTime(1000)
+    ).subscribe((query: string) => {
+      this.searchQuery = query;
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getAccountingExports(this.limit, this.offset);
+    });
+  }
 
   openExpenseinFyle(expense_id: string) {
     this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(query: string) {
-    this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
-      return AccountingExportModel.getfilteredAccountingExports(query, group);
-    });
+    this.searchQuerySubject.next(query);
   }
 
   pageSizeChanges(limit: number): void {
@@ -84,16 +98,17 @@ export class QboCompleteExportLogComponent implements OnInit {
   }
 
   private getAccountingExports(limit: number, offset:number) {
-    this.isLoading = true;
+
+      this.isLoading = true;
+
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
-      if (!this.isDateSelected) {
+    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
         this.totalCount = accountingExportResponse.count;
-      }
+
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id)
       );
@@ -112,21 +127,21 @@ export class QboCompleteExportLogComponent implements OnInit {
     });
 
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
-      if (dateRange[1]) {
-        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-        if (dateRange) {
-          this.selectedDateFilter = {
-            startDate: dateRange[0],
-            endDate: dateRange[1]
-          };
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+      if (!dateRange) {
+        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.selectedDateFilter = null;
+        this.isDateSelected = false;
+        this.getAccountingExports(paginator.limit, paginator.offset);
+      } else if (dateRange.length && dateRange[1]) {
+        this.selectedDateFilter = {
+          startDate: dateRange[0],
+          endDate: dateRange[1]
+        };
 
-          this.getAccountingExports(paginator.limit, paginator.offset);
-        } else {
-          this.dateOptions = AccountingExportModel.getDateOptionsV2();
-          this.exportLogForm.controls.start.patchValue([]);
-          this.selectedDateFilter = null;
-          this.getAccountingExports(paginator.limit, paginator.offset);
-        }
+        this.isDateSelected = true;
+
+        this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });
   }

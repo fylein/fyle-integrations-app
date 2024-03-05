@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page } from 'src/app/core/models/enum/enum.model';
 import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
-import { EXPOSE_INTACCT_NEW_APP, EventsService } from 'src/app/core/services/common/events.service';
+import { EventsService } from 'src/app/core/services/common/events.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { environment } from 'src/environments/environment';
@@ -31,9 +31,7 @@ export class LandingComponent implements OnInit {
 
   isTravelperkAllowed: boolean = this.org.allow_travelperk;
 
-  exposeIntacctNewApp: boolean = EXPOSE_INTACCT_NEW_APP;
-
-  readonly exposeOnlyQBOApp = brandingFeatureConfig.exposeOnlyQBOApp;
+  readonly exposeC1Apps = brandingFeatureConfig.exposeC1Apps;
 
   private readonly integrationTabsInitialState: IntegrationsView = {
     [IntegrationView.ACCOUNTING]: false,
@@ -52,7 +50,7 @@ export class LandingComponent implements OnInit {
   private readonly integrationCallbackUrlMap: IntegrationCallbackUrl = {
     [AccountingIntegrationApp.NETSUITE]: [environment.ns_callback_url, environment.ns_client_id],
     [AccountingIntegrationApp.QBO]: [`${environment.fyle_app_url}/quickbooks`, environment.qbo_client_id],
-    [AccountingIntegrationApp.SAGE_INTACCT]: [environment.si_callback_url, environment.si_client_id],
+    [AccountingIntegrationApp.SAGE_INTACCT]: [`${environment.fyle_app_url}/sage-intacct`, environment.si_client_id],
     [AccountingIntegrationApp.XERO]: [environment.xero_callback_url, environment.xero_client_id]
   };
 

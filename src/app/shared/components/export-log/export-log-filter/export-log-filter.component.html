@@ -1,8 +1,7 @@
 <div [formGroup]="exportLogForm" class="tw-flex tw-items-center" [ngClass]="{'tw-p-24-px': isSimpleSearchRequired}">
-    <app-search *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="'Search by Employee Name or Expense ID'" [styleClasses]="'tw-w-350-px tw-h-40-px'"></app-search>
+    <app-search *ngIf="isSimpleSearchRequired" [form]="exportLogForm" [placeholder]="brandingContent.searchPlaceholder" [width]="'300-px'" [height]="'40-px'"></app-search>
     <div *ngIf="isSimpleSearchRequired" class="tw-flex tw-mr-4"></div>
-    <span [ngClass]="{'tw-border-select-focused-border': isDateFieldFocused}" class="tw-flex tw-justify-start tw-items-center tw-px-12-px tw-py-4-px tw-rounded-4-px drop-down" [ngClass]="{'tw-border tw-border-select-default-border': isSimpleSearchRequired}">
-        <p-calendar (onSelect)="onSelect($event)" (click)="showCalendar($event)" placeholder="Select date range" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [monthNavigator]="false">
+        <p-calendar (onClickOutside)="isDateFilterFocused = false" (onShow)="isDateFilterFocused = true" class="tw-pl-12-px tw-py-4-px tw-rounded-4-px drop-down tw-border tw-border-select-default-border tw-border-r-0 tw-rounded-br-0-px tw-rounded-tr-0-px" (onSelect)="onSelect($event)" (click)="showCalendar($event)" placeholder="Select date range" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [monthNavigator]="false" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
             <ng-template pTemplate="header">
                 <div class="tw-flex tw-items-center tw-justify-between">
                     <div class="tw-pr-8-px">
@@ -31,7 +30,7 @@
 
                 <div class="tw-pt-14-px tw-h-32-px tw-rounded-4-px">
                     <span class="tw-text-calendar-day-text-color tw-text-12-px tw-font-nav-link-font-weight">
-                        Or, Select Date range
+                        {{brandingContent.dateRangeLabel}}
                     </span>
                 </div>
 
@@ -50,8 +49,8 @@
                 </div>
             </ng-template>
         </p-calendar>
-        <div>
-            <app-svg-icon [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+        <div (click)="showCalendar($event)" class="tw-py-7-px tw-border tw-cursor-pointer tw-border-select-default-border tw-border-l-0 tw-rounded-tr-4-px tw-rounded-br-4-px" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
+            <app-svg-icon *ngIf="!(exportLogForm.value.start[0] && exportLogForm.value.start[1])" [svgSource]="'calendar'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
+            <app-svg-icon (iconClick)="clearDateFilter()" *ngIf="exportLogForm.value.start[0] && exportLogForm.value.start[1]" [svgSource]="'cross'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-cursor-pointer tw-text-date-picker-filled-icon-color tw-pr-12-px'" [isTextColorAllowed]="true"></app-svg-icon>
         </div>
-    </span>
 </div>

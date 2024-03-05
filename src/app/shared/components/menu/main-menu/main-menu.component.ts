@@ -20,7 +20,7 @@ export class MainMenuComponent implements OnInit {
 
   @Input() isDropdrownRequired: boolean;
 
-  @Input() isSyncRequired: boolean = true;
+  @Input() isSyncVisible: boolean;
 
   @Input() isDisconnectRequired: boolean = false;
 
