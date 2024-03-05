@@ -229,6 +229,65 @@ const content: ContentConfiguration = {
                 customFieldType: 'Field Type',
                 customFieldCreateandSave: 'Create and save'
             },
+            configuration: {
+                connector: {
+                    stepName: '',
+                },
+                employeeSetting: {
+                    stepName: '',
+                },
+                exportSetting: {
+                    stepName: '',
+                    headerText: '',
+                    contentText: '',
+                    corporateCard: {
+                        expenseState: '',
+                        sectionLabel: '',
+                        subLabel: '',
+                        exportSubLabel: '',
+                        defaultCCCAccountLabel: '',
+                        defaultCCCAccountPlaceholder: '',
+                        defaultDebitCardAccountLabel: '',
+                        defaultDebitCardAccountPlaceholder: '',
+                        defaultCCCVendorLabel: '',
+                        accountsPayableLabel: '',
+                        accountsPayableSubLabel: '',
+                        creditCardExpenseSubLabel: '',
+                        creditCardExportTypeSubLabel: '',
+                        journalOptionLabel: '',
+                        journalOptionSubLabel: '',
+                    }
+                },
+                importSetting: {
+                    stepName: '',
+                    headerText: '',
+                    contentText: '',
+                    importCategoriesLabel: '',
+                    importCategoriesSubLabel: '',
+                    importItemsLabel: '',
+                    importItemsSubLabel: '',
+                    taxCodeLabel: '',
+                    taxCodeSubLabel: '',
+                    defaultTaxCodeLabel: '',
+                    importVendorsAsMerchantsLabel: '',
+                },
+                advancedSettings: {
+                    stepName: '',
+                    autoCreateVendorsLabel: '',
+                    paymentSyncLabel: '',
+                    customizationSubLabel: '',
+                    autoCreateMerchantsAsVendorsLabel: '',
+                    singleCreditLineJELabel: '',
+                    singleCreditLineJESubLabel: '',
+                    billPaymentAccountLabel: '',
+                    billPaymentAccountSubLabel: '',
+                    memoStructureLabel: '',
+                },
+                done: {
+                    ctaText: '',
+                    hintText: '',
+                }
+            },
         },
         configuration: {
             connector: {
@@ -353,7 +412,66 @@ const content: ContentConfiguration = {
                 customFieldPlaceholderName: 'Placeholder name',
                 customFieldType: 'Field type',
                 customFieldCreateandSave: 'Create and save'
-            }
+            },
+            configuration: {
+                connector: {
+                    stepName: '',
+                },
+                employeeSetting: {
+                    stepName: '',
+                },
+                exportSetting: {
+                    stepName: '',
+                    headerText: '',
+                    contentText: '',
+                    corporateCard: {
+                        expenseState: '',
+                        sectionLabel: '',
+                        subLabel: '',
+                        exportSubLabel: '',
+                        defaultCCCAccountLabel: '',
+                        defaultCCCAccountPlaceholder: '',
+                        defaultDebitCardAccountLabel: '',
+                        defaultDebitCardAccountPlaceholder: '',
+                        defaultCCCVendorLabel: '',
+                        accountsPayableLabel: '',
+                        accountsPayableSubLabel: '',
+                        creditCardExpenseSubLabel: '',
+                        creditCardExportTypeSubLabel: '',
+                        journalOptionLabel: '',
+                        journalOptionSubLabel: '',
+                    }
+                },
+                importSetting: {
+                    stepName: '',
+                    headerText: '',
+                    contentText: '',
+                    importCategoriesLabel: '',
+                    importCategoriesSubLabel: '',
+                    importItemsLabel: '',
+                    importItemsSubLabel: '',
+                    taxCodeLabel: '',
+                    taxCodeSubLabel: '',
+                    defaultTaxCodeLabel: '',
+                    importVendorsAsMerchantsLabel: '',
+                },
+                advancedSettings: {
+                    stepName: '',
+                    autoCreateVendorsLabel: '',
+                    paymentSyncLabel: '',
+                    customizationSubLabel: '',
+                    autoCreateMerchantsAsVendorsLabel: '',
+                    singleCreditLineJELabel: '',
+                    singleCreditLineJESubLabel: '',
+                    billPaymentAccountLabel: '',
+                    billPaymentAccountSubLabel: '',
+                    memoStructureLabel: '',
+                },
+                done: {
+                    ctaText: '',
+                    hintText: '',
+                }
+            },
         },
         configuration: {
             connector: {
