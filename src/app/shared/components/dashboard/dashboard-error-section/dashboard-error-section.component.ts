@@ -96,7 +96,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   getDestinationOptionsV1(errorType: AccountingErrorType): void {
-    if (this.destinationField === AccountingField.ACCOUNT) {
+    if (this.destinationField === AccountingField.ACCOUNT && this.appName===AppName.QBO) {
       this.displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
     } else {
       this.displayName = undefined;

@@ -103,7 +103,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, AppName.INTACCT).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
       if (!this.isDateSelected) {
         this.totalCount = accountingExportResponse.count;
       }

@@ -52,6 +52,8 @@ export class IntacctConnectorComponent implements OnInit {
       const userPassword = this.connectSageIntacctForm.value.userPassword;
 
       this.isLoading = true;
+      this.saveInProgress = true;
+
       this.connectorService.connectSageIntacct({
         si_user_id: userID,
         si_company_id: companyID,
@@ -61,11 +63,13 @@ export class IntacctConnectorComponent implements OnInit {
           this.setupConnectionStatus.emit(true);
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
           this.isLoading = false;
+          this.saveInProgress = false;
         });
       }, () => {
         this.setupConnectionStatus.emit(false);
         this.clearField();
         this.isLoading = false;
+        this.saveInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
       });
     }

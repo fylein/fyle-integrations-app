@@ -4,7 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { CCCExpenseState, ConfigurationCta, IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -117,24 +117,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   cccExpenseGroupingDateOptions: ExportSettingFormOption[];
 
-  creditCardExportTypes: ExportSettingFormOption[] = [
-    {
-      label: 'Bill',
-      value: IntacctReimbursableExpensesObject.BILL
-    },
-    {
-      label: 'Expense Report',
-      value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
-    },
-    {
-      label: 'Journal Entry',
-      value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
-    },
-    {
-      label: 'Charge Card Transaction',
-      value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
-    }
-  ];
+  creditCardExportTypes: ExportSettingFormOption[] = ExportSettingModel.constructCCCOptions(brandingConfig.brandId);
 
   autoMapEmployeeOptions: ExportSettingFormOption[] = [
     { label: 'Based on Employee E-mail ID', value: 'EMAIL' },
@@ -173,6 +156,8 @@ export class IntacctExportSettingsComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingConfig = brandingConfig;
+
+  brandingContent = brandingContent;
 
   constructor(
     private router: Router,
@@ -442,8 +427,12 @@ export class IntacctExportSettingsComponent implements OnInit {
         creditCardVendor: [findObjectById(this.destinationOptions.VENDOR, generalMappings?.default_ccc_vendor.id)],
         creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
         chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)],
-        useMerchantInJournalLine: [configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false]
+        useMerchantInJournalLine: [brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine ? (configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false) : true]
       });
+
+      if (brandingConfig.brandId === 'co') {
+        this.exportSettingsForm.controls.creditCardExpense.patchValue(true);
+      }
 
       this.exportFieldsWatcher();
       this.optionSearchWatcher();

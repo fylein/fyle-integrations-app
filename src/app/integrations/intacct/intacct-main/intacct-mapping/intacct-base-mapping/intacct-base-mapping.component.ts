@@ -39,7 +39,7 @@ export class IntacctBaseMappingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private mappingService: SiMappingsService,
+    private mappingService: MappingService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
