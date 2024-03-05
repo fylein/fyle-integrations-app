@@ -1,6 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { PaymentSyncDirection } from "../../enum/enum.model";
 import { EmailOptions } from "../../qbd/qbd-configuration/advanced-setting.model";
+import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
 
   export interface GeneralMappingEntity {
     id: string;
@@ -109,7 +110,7 @@ export type AdvancedSettingsPost = {
     workspace_schedules: WorkspaceSchedules;
   }
 
-  export class AdvancedSetting {
+  export class AdvancedSetting extends AdvancedSettingsModel {
     static constructPayload(advancedSettingsForm: FormGroup): AdvancedSettingsPost {
       const getFormValue = (key: string) => advancedSettingsForm.get(key)?.value;
 
@@ -138,11 +139,11 @@ export type AdvancedSettingsPost = {
           use_intacct_employee_locations: !!getFormValue('useEmployeeLocation')
         },
         workspace_schedules: {
-          enabled: !!getFormValue('scheduleAutoExport'),
           start_datetime: '',
-          interval_hours: getFormValue('scheduleAutoExport'),
-          emails_selected: advancedSettingsForm.get('email')?.value ? advancedSettingsForm.get('email')?.value.map((item: EmailOptions) => item.email) : [],
-          additional_email_options: getFormValue('addedEmail')
+          enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
+          interval_hours: advancedSettingsForm.get('exportSchedule')?.value && advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
+          emails_selected: advancedSettingsForm.get('email')?.value ? this.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : [],
+          additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value[0] : null
         }
       };
 

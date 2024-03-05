@@ -63,7 +63,7 @@ export class WorkspaceService {
   }
 
   // The return type is made any intentionally, the caller can specify the return type to be aligned with the app
-  getConfiguration(): any {
+  getConfiguration(): Observable<any> {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/configuration/`, {});
   }
 

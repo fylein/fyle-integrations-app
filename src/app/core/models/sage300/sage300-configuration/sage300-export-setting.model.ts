@@ -1,11 +1,11 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption, CorporateCreditCardExpensesObject } from "../../enum/enum.model";
+import { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject } from "../../enum/enum.model";
 import { Sage300DestinationAttributes } from "../db/sage300-destination-attribuite.model";
 import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
 
 export type Sage300ExportSettingFormOption = {
     label: string,
-    value: ExpenseState | CCCExpenseState | CorporateCreditCardExpensesObject | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
+    value: ExpenseState | CCCExpenseState | IntacctCorporateCreditCardExpensesObject | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
 }
 
 export type ExportSettingValidatorRule = {
