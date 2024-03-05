@@ -21,6 +21,7 @@ export type ContentConfiguration = {
             configuration: {
                 connector: {
                     stepName: string;
+                    subLabel: string;
                 },
                 exportSetting: {
                     stepName: string;
