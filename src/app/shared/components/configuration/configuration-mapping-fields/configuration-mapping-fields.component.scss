@@ -1,5 +1,5 @@
 :host ::ng-deep .p-disabled {
-    @apply tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-border tw-opacity-100 #{!important};
+    @apply tw-text-input-read-only-text tw-bg-disabled-bg-color tw-border tw-opacity-100 #{!important};
 }
 
 :host ::ng-deep .p-dropdown .p-dropdown-label .p-placeholder .p-dropdown-trigger {

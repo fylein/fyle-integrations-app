@@ -63,5 +63,5 @@
 }
 
 :host ::ng-deep .p-disabled {
-    @apply tw-text-text-secondary tw-bg-select-disabled-bg tw-border-select-disabled-border tw-border-solid tw-opacity-100 #{!important};
+    @apply tw-text-input-read-only-text tw-bg-select-disabled-bg tw-border-select-disabled-border tw-border-solid tw-opacity-100 #{!important};
 }
