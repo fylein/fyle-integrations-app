@@ -24,7 +24,7 @@
         </div>
         <div class="tw-flex tw-justify-end tw-p-24-px">
             <div>
-                <button [disabled]="!cofigurationForm.valid" pButton type="button" class="remove-bg p-button-raised" [ngClass]="isConfigurationSaveInProgress ? '!tw-bg-cta-disabled !tw-cursor-no-drop' : '!tw-bg-mandatory-field-color'" (click)="saveSettings()">
+                <button [disabled]="!cofigurationForm.valid" pButton type="button" class="p-button-raised" [ngClass]="isConfigurationSaveInProgress ? '!tw-bg-cta-disabled !tw-cursor-no-drop' : '!tw-bg-mandatory-field-color'" (click)="saveSettings()" [disabled]="isConfigurationSaveInProgress">
                     {{ isConfigurationSaveInProgress ? 'Saving': 'Save' }}
                     <app-loader class="tw-ml-10-px" *ngIf="isConfigurationSaveInProgress" [styleClass]="'spinner-16-white tw-top-2-px'"></app-loader>
                 </button>

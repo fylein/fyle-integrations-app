@@ -262,13 +262,13 @@
                     </div>
                 </div>
             </div>
-            <app-configuration-step-footer 
-                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                [showBackButton] = "isOnboarding"
-                [isButtonDisabled]="!exportSettingForm.valid"
-                (navigateToPreviousStep)="navigateBack()"
-                (save)="save()">
-            </app-configuration-step-footer>
         </div>
+        <app-configuration-step-footer 
+            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [showBackButton] = "isOnboarding"
+            [isButtonDisabled]="!exportSettingForm.valid"
+            (navigateToPreviousStep)="navigateBack()"
+            (save)="save()">
+        </app-configuration-step-footer>
     </form>
 </div>

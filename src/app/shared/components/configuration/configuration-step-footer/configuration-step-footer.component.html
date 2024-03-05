@@ -15,12 +15,17 @@
     </div>
     <div>
         <button *ngIf="ctaText !== 'Saving' && ctaText !== 'Syncing'" pButton type="button" class="p-button-raised" (click)="saveChanges()" [disabled]="isButtonDisabled">
-            {{ ctaText }}
+            <span *ngIf="brandingConfig.brandId === 'co'">
+                {{ ctaText | sentenceCase}}
+            </span>
+            <span *ngIf="brandingConfig.brandId === 'fyle'">
+                {{ ctaText }}
+            </span>
             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && ctaText !== 'Save'" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-text-white tw-pl-10-px tw-pt-2-px tw-text-12-px'"></app-svg-icon>
         </button>
         <button *ngIf="ctaText === 'Saving' || ctaText === 'Syncing'" pButton type="button" class="p-button-raised" disabled>
             {{ ctaText }}
-            <div class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-white tw-border-r-white tw-border-l-white tw-border-t-border-tertiary tw-border-solid tw-rounded-full tw-animate-spin"></div>
+            <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" class="tw-w-5 tw-h-5 tw-ml-2 tw-border-2 tw-border-b-white tw-border-r-white tw-border-l-white tw-border-t-border-tertiary tw-border-solid tw-rounded-full tw-animate-spin"></div>
         </button>
     </div>
 </div>

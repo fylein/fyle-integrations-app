@@ -1,5 +1,5 @@
 .label-content {
-    @apply tw-bg-disabled-bg-color tw-border tw-border-box-color tw-rounded-4-px tw-h-100-px ;
+    @apply tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-rounded-4-px tw-h-100-px ;
 }
   
 .name-text {
@@ -11,7 +11,7 @@
 }
 
 .form-input {
-    @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-h-40-px tw-bg-white tw-border tw-border-box-color tw-box-border tw-rounded-8-px ;
+    @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-h-32-px tw-bg-white tw-border tw-border-input-read-only-border tw-box-border tw-rounded-8-px ;
 }
 
 :host ::ng-deep .p-button {
@@ -19,5 +19,13 @@
 }
 
 .form-input-disabled {
-    @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-bg-disabled-bg-color tw-border tw-border-box-color tw-box-border tw-rounded-8-px ;
+    @apply tw-text-14-px tw-pt-10-px tw-pr-0 tw-pb-10-px tw-pl-14-px tw-bg-input-read-only-bg tw-border tw-border-input-read-only-border tw-box-border tw-rounded-8-px ;
+}
+
+input[type="text"] {
+    @apply tw-rounded-4-px tw-border tw-border-input-read-only-border #{!important};
+}
+
+::placeholder {
+    @apply tw-text-input-default-placeholder-text tw-text-14-px #{!important};
 }

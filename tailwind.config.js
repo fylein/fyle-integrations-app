@@ -203,6 +203,8 @@ const textColors = {
   'link-visited': 'var(--link-visited)',
   'link-hover': 'var(--link-hover)',
   'link-pressed': 'var(--link-pressed)',
+
+  'border-secondary': 'var(--border-secondary)',
 };
 
 const dimensions = {
@@ -934,6 +936,9 @@ const componentVariables = {
   'sidebar-submenu-active-text-color': 'var(--sidebar-submenu-active-text-color)',
   'sidebar-submenu-text-color': 'var(--sidebar-submenu-text-color)',
   'sidebar-text-color': 'var(--sidebar-text-color)',
+
+  'scrollbar-track': 'var(--scrollbar-track)',
+  'scrollbar-thumb-hover': 'var(--scrollbar-thumb-hover)',
 };
 
 module.exports = {
@@ -964,6 +969,7 @@ module.exports = {
       '24-px': '24px',
       '36-px': '36px',
       '40-px': '40px',
+      'label-text-size': 'var(--label-text-size)',
       ...fontSizes
     },
     fontWeight: {
@@ -983,6 +989,7 @@ module.exports = {
     },
     lineHeight: {
       'normal': 'normal',
+      'app': 'var(--app-line-height)',
       '1.14': '1.14',
       '1.2': '1.2',
       '1.4': '1.4',
@@ -1016,6 +1023,7 @@ module.exports = {
         '4-px': '4px',
         '5-px': '5px',
         '6-px': '6px',
+        '7-px': '7px',
         '8-px': '8px',
         '9-px': '9px',
         '10-px': '10px',
@@ -1213,6 +1221,7 @@ module.exports = {
         '260-px': '260px',
         '270-px': '270px',
         '282-px': '282px',
+        '288-px': '288px',
         '296-px': '296px',
         '300-px': '300px',
         '302-px': '302px',
@@ -1250,6 +1259,7 @@ module.exports = {
         'toggle-width': 'var(--toggle-width)',
       },
       minWidth: {
+        '120-px': '120px',
         '160-px': '160px',
         '250-px': '250px',
         '300-px': '300px',
@@ -1272,6 +1282,7 @@ module.exports = {
         '16-px': '16px',
         '20-px': '20px',
         '48-px': '48px',
+        '99-px': '99px',
         '50': '50%',
         ...borderRadius
       },
