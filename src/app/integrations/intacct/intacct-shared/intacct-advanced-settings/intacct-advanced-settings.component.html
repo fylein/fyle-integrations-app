@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
     <app-configuration-step-header 
-    [headerText]="'Advanced Settings'"
+    [headerText]="brandingContent.intacct.configuration.advancedSettings.stepName"
     [contentText]="'In this section, you can customize the integration based on your accounting requirements.'"
     [redirectLink]="redirectLink"
     [showSyncButton]="isOnboarding"
@@ -50,7 +50,7 @@
                 [form]="advancedSettingsForm"
                 [isFieldMandatory]="false"
                 [mandatoryErrorListName]="'payment sync method'"
-                [label]="'Auto-Sync Payment Status for Reimbursable Expenses'"
+                [label]="brandingContent.intacct.configuration.advancedSettings.autoSyncPayments"
                 [subLabel]="'You can set the sync preference based on whether you are handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
                 [options]="paymentSyncOptions"
                 [iconPath]="'arrow-rotate'"
@@ -61,11 +61,11 @@
                     [form]="advancedSettingsForm"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'payment account'"
-                    [label]="'Select Payment Account'"
+                    [label]="brandingContent.intacct.configuration.advancedSettings.defaultPaymentAccount"
                     [subLabel]="'Select a Payment Account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
                     [destinationAttributes]="sageIntacctPaymentAccount"
                     [iconPath]="'list'"
-                    [placeholder]="'Select Payment Account'"
+                    [placeholder]="brandingContent.intacct.configuration.advancedSettings.defaultPaymentAccount"
                     [formControllerName]="'defaultPaymentAccount'"></app-configuration-select-field>
                 </div>
             </div>
@@ -79,14 +79,14 @@
             <div *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
-                [label]="'Auto-Create ' + getEmployeeField()" 
+                [label]="brandingContent.intacct.configuration.advancedSettings.autoCreateEmployeeVendor + getEmployeeField()" 
                 [subLabel]="'When matching ' + getEmployeeField() +' record is not found for an employee in ' + brandingConfig.brandName + ', the integration will auto-create a new record in Sage Intacct.'"
                 [formControllerName]="'autoCreateEmployeeVendor'"></app-configuration-toggle-field>
             </div>
             <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
                 [form]="advancedSettingsForm"
-                [label]="'Post Entries in the Current Accounting Period'" 
+                [label]="brandingContent.intacct.configuration.advancedSettings.postEntriesCurrentPeriod" 
                 [subLabel]="'If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.'" 
                 [formControllerName]="'postEntriesCurrentPeriod'"></app-configuration-toggle-field>
             </div>
@@ -100,7 +100,7 @@
             <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-multi-select
                 [form]="advancedSettingsForm"
-                [label]="'Set the Description Field in Sage Intacct'"
+                [label]="brandingContent.intacct.configuration.advancedSettings.setDescriptionField"
                 [subLabel]="'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.'"
                 [options]="defaultMemoFields"
                 [iconPath]="'list'"
