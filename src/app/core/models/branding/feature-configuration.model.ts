@@ -1,8 +1,5 @@
 export type FeatureConfiguration = {
     [brandingId: string]: {
-        intacct: {
-
-        },
         illustrationsAllowed: boolean;
         isGradientAllowed: boolean;
         isIconsInsideButtonAllowed: boolean;

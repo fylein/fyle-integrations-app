@@ -9,9 +9,6 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 
 const featureConfigs: FeatureConfiguration = {
     fyle: {
-        intacct: {
-
-        },
         illustrationsAllowed: true,
         isGradientAllowed: true,
         isIconsInsideButtonAllowed: true,
@@ -46,9 +43,6 @@ const featureConfigs: FeatureConfiguration = {
         }
     },
     co: {
-        intacct: {
-
-        },
         illustrationsAllowed: false,
         isGradientAllowed: false,
         isIconsInsideButtonAllowed: false,
@@ -211,6 +205,61 @@ export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
 
 const content: ContentConfiguration = {
     fyle: {
+        intacct: {
+            landing: {
+                contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
+                guideHeaderText: 'Guide to setup your Integrations'
+            },
+            common: {
+                readMoreText: 'Read More',
+                exportLogTabName: 'Export Log',
+                viewExpenseText: 'View Expense',
+                corporateCard: 'Corporate Card',
+                errors: 'Errors',
+                autoMap: 'Auto Map',
+                customField: 'Add new Custom Field',
+                customFieldName: 'Field Name',
+                customFieldPlaceholderName: 'Placeholder Name',
+                customFieldType: 'Field Type',
+                customFieldCreateandSave: 'Create and save'
+            },
+            configuration: {
+                connector: {
+                    stepName: 'Connect to Sage Intacct',
+                    subLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.'
+                },
+                exportSetting: {
+                    stepName: 'Export Settings',
+                    headerText: '',
+                    contentText: 'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage Intacct.',
+                    corporateCard: {
+                        cccExpensePaymentType: 'Set the Default Expense Payment Type as?',
+                        cccExpensePaymentTypeSubLabel: 'The selected Expense Payment Type will be added to the Corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Sage Intacct.',
+                        creditCardVendor: 'Set the Default Credit Card Vendor as',
+                        creditCardVendorSublabel: 'The vendor configured here will be added to all the Credit Card expenses exported as Bills.',
+                        chargeCard: 'Set the Default Charge Card',
+                        chargeCardSublabel: 'Expenses of Corporate Cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the Card configured here. You can map your cards in the Mapping section after configuring the integration.',
+                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (Approved) or when the transaction has been settled (Closed)',
+                        cccExportGroup: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
+                        employeeFieldMapping: 'How are your Employees represented in Sage Intacct?'
+                    }
+                },
+                advancedSettings: {
+                    stepName: 'Advanced Settings',
+                    scheduleAutoExport: 'Schedule Automatic Export',
+                    email: 'Send Error Notification to',
+                    autoSyncPayments: 'Auto-Sync Payment Status for Reimbursable Expenses',
+                    defaultPaymentAccount: 'Select Payment Account',
+                    autoCreateEmployeeVendor: 'Auto-Create ',
+                    postEntriesCurrentPeriod: 'Post Entries in the Current Accounting Period',
+                    setDescriptionField: 'Set the Description Field in Sage Intacct'
+                },
+                done: {
+                    ctaText: '',
+                    hintText: ''
+                }
+            }
+        },
         configuration: {
             connector: {
                 stepName: 'Connect to Quickbooks Online'
@@ -317,6 +366,61 @@ const content: ContentConfiguration = {
         }
     },
     co: {
+        intacct: {
+            landing: {
+                contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
+                guideHeaderText: 'Guide to setup your integrations'
+            },
+            common: {
+                readMoreText: 'Read more',
+                exportLogTabName: 'Export log',
+                viewExpenseText: 'View expense',
+                corporateCard: 'Corporate card',
+                errors: 'errors',
+                autoMap: 'Auto map',
+                customField: 'Add new custom field',
+                customFieldName: 'Field name',
+                customFieldPlaceholderName: 'Placeholder name',
+                customFieldType: 'Field type',
+                customFieldCreateandSave: 'Create and save'
+            },
+            configuration: {
+                connector: {
+                    stepName: 'Connect to Sage Intacct',
+                    subLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or location entity.'
+                },
+                exportSetting: {
+                    stepName: 'Export settings',
+                    headerText: '',
+                    contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Sage Intacct.',
+                    corporateCard: {
+                        cccExpensePaymentType: 'Set the default expense payment type as?',
+                        cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Sage Intacct.',
+                        creditCardVendor: 'Set the Default Credit Card Vendor as',
+                        creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
+                        chargeCard: 'Set the default charge card',
+                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
+                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transaction has been settled (closed)',
+                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report)',
+                        employeeFieldMapping: 'How are your employees represented in Sage Intacct?'
+                    }
+                },
+                advancedSettings: {
+                    stepName: 'Advanced settings',
+                    scheduleAutoExport: 'Schedule automatic export',
+                    email: 'Send error notification to',
+                    autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
+                    defaultPaymentAccount: 'Select payment account',
+                    autoCreateEmployeeVendor: 'Auto-create ',
+                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                    setDescriptionField: 'Set the description field in Sage Intacct'
+                },
+                done: {
+                    ctaText: '',
+                    hintText: ''
+                }
+            }
+        },
         configuration: {
             connector: {
                 stepName: 'Connect to Quickbooks Online'
@@ -420,7 +524,6 @@ const content: ContentConfiguration = {
             customFieldPlaceholderName: 'Placeholder name',
             customFieldType: 'Field type',
             customFieldCreateandSave: 'Create and save'
-
         }
     }
 };
