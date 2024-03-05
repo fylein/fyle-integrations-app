@@ -12,8 +12,8 @@
     (refreshDimension)="refreshDimensions($event)"></app-configuration-step-header>
     </div>
     <form [formGroup]="exportSettingsForm">
-        <div class="tw-p-24-px">
-            <div class="tw-mb-16-px">
+        <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
+            <div *ngIf="brandingConfig.brandId === 'fyle'" class="tw-mb-16-px">
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field 
                     [form]="exportSettingsForm"
@@ -126,8 +126,8 @@
                 </div>
             </div>
             <div>
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
-                    <app-configuration-toggle-field 
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                    <app-configuration-toggle-field
                     [form]="exportSettingsForm"
                     [label]="brandingContent.configuration.exportSetting.headerText" 
                     [subLabel]="brandingContent.intacct.configuration.exportSetting.headerText" 
@@ -283,7 +283,7 @@
 </div>
 
 <ng-template #employeeFieldMapping>
-    <div [formGroup]="exportSettingsForm">
+    <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" [formGroup]="exportSettingsForm">
         <app-configuration-select-field
             *ngIf="!exportSettingsForm.controls.employeeFieldMapping.disabled"
             [form]="exportSettingsForm"
