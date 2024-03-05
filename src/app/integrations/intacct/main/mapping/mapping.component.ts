@@ -37,7 +37,7 @@ export class MappingComponent implements OnInit {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!==FyleField.CATEGORY) {
           this.mappingPages.push({
             label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
-            routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
+            routerLink: `/integrations/intacct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
           });
 }
         });
