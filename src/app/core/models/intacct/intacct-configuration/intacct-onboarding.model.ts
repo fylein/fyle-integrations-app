@@ -16,7 +16,7 @@ export class IntacctOnboardingModel {
         {
           active: false,
           completed: false,
-          step:  brandingContent.intacct.configuration.connector.stepName,
+          step: brandingContent.intacct.configuration.connector.stepName,
           icon: 'link-vertical-medium',
           route: '/integrations/intacct/onboarding/connector',
           styleClasses: ['step-name-connector--text']
