@@ -114,7 +114,7 @@ export class MappingService {
     }
   }
 
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean): Observable<GenericMappingResponse> {
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean, searchQuery? :string | null): Observable<GenericMappingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = mappingState === MappingState.UNMAPPED ? false : true;
     const params: GenericMappingApiParams = {
@@ -124,6 +124,10 @@ export class MappingService {
       destination_type: destinationType,
       source_type: sourceType
     };
+
+    if (searchQuery) {
+      params.value = searchQuery;
+    }
 
     if (alphabetsFilter && alphabetsFilter !== 'All') {
       params.mapping_source_alphabets = alphabetsFilter;

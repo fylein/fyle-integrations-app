@@ -43,7 +43,7 @@ export class IntacctMappingComponent implements OnInit {
             const mappingPage = new SnakeCaseToSpaceCasePipe().transform(item.source_field);
             this.mappingPages.push({
               label: brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(mappingPage) : new TitleCasePipe().transform(mappingPage),
-              routerLink: `/integrations/intacct/main/mapping/${item.source_field.toLowerCase()}`
+              routerLink: `/integrations/intacct/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }
         });

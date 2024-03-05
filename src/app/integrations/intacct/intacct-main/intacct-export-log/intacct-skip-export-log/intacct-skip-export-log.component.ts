@@ -94,7 +94,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter).subscribe((skippedExpenses: SkipExportLogResponse) => {
+    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, null).subscribe((skippedExpenses: SkipExportLogResponse) => {
       if (!this.isDateSelected) {
         this.totalCount = skippedExpenses.count;
       }

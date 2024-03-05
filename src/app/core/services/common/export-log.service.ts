@@ -23,7 +23,7 @@ export class ExportLogService {
     private workspaceService: WorkspaceService
   ) { }
 
-  getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null): Observable<SkipExportLogResponse> {
+  getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, query: string | null): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: SkipExportParam = {
       limit,
@@ -31,6 +31,14 @@ export class ExportLogService {
       org_id: this.userService.getUserProfile().org_id,
       is_skipped: true
     };
+
+    if (query){
+      params.expense_number = query;
+      params.employee_email = query;
+      params.employee_name = query;
+      params.claim_number = query;
+    }
+
     params.org_id = this.userService.getUserProfile().org_id;
 
     if (selectedDateFilter) {
@@ -42,7 +50,7 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, params);
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, appName?: AppName): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: AppName): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
       offset
@@ -52,6 +60,13 @@ export class ExportLogService {
       params.state = state;
     } else {
       params.tasklog__status = state;
+    }
+
+    if (query) {
+      params.expenses__expense_number = query;
+      params.expenses__employee_name = query;
+      params.expenses__employee_email = query;
+      params.expenses__claim_number = query;
     }
 
     if (selectedDateFilter) {
