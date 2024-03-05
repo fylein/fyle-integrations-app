@@ -225,7 +225,7 @@ const content: ContentConfiguration = {
             },
             configuration: {
                 connector: {
-                    stepName: 'Connect to Sage Intacct',
+                    stepName: 'Connect to Sage Intacct'
                 },
                 exportSetting: {
                     stepName: 'Export Settings',
@@ -251,13 +251,13 @@ const content: ContentConfiguration = {
                     defaultPaymentAccount: 'Select Payment Account',
                     autoCreateEmployeeVendor: 'Auto-Create ',
                     postEntriesCurrentPeriod: 'Post Entries in the Current Accounting Period',
-                    setDescriptionField: 'Set the Description Field in Sage Intacct',
+                    setDescriptionField: 'Set the Description Field in Sage Intacct'
                 },
                 done: {
                     ctaText: '',
-                    hintText: '',
+                    hintText: ''
                 }
-            },
+            }
         },
         configuration: {
             connector: {
@@ -385,7 +385,7 @@ const content: ContentConfiguration = {
             },
             configuration: {
                 connector: {
-                    stepName: 'Connect to Sage Intacct',
+                    stepName: 'Connect to Sage Intacct'
                 },
                 exportSetting: {
                     stepName: 'Export settings',
@@ -415,9 +415,9 @@ const content: ContentConfiguration = {
                 },
                 done: {
                     ctaText: '',
-                    hintText: '',
+                    hintText: ''
                 }
-            },
+            }
         },
         configuration: {
             connector: {

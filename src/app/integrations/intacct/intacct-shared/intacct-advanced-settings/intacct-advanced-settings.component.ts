@@ -99,7 +99,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
-  
+
   readonly brandingContent = brandingContent;
 
   readonly AppName = AppName;
