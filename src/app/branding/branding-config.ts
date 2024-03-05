@@ -397,7 +397,7 @@ const content: ContentConfiguration = {
                         cccExpensePaymentType: 'Set the default expense payment type as?',
                         cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Sage Intacct.',
                         creditCardVendor: 'Set the Default Credit Card Vendor as',
-                        creditCardVendorSublabel: 'The vendor configured here will be added to all the Credit Card expenses exported as Bills.',
+                        creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                         chargeCard: 'Set the default charge card',
                         chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
                         cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transaction has been settled (closed)',
