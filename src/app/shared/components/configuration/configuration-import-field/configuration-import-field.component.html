@@ -86,11 +86,13 @@
                                 {{ option.display_name }}
                             </div>
                             </ng-template>
-                            <ng-template pTemplate="selectedItem" let-item class="tw-flex tw-justify-between tw-items-center">
+                            <ng-template pTemplate="selectedItem" let-item>
                                 <p>
                                     {{ item.display_name }}
                                 </p>
-                                <app-svg-icon [svgSource]="'cross-medium-large'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                                <div class="tw-self-end">
+                                    <app-svg-icon [svgSource]="'cross-medium-large'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                                </div>
                             </ng-template>
                       </p-dropdown>
                       <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">

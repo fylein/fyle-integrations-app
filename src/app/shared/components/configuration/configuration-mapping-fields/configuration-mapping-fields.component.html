@@ -38,14 +38,14 @@
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="selectedItem" let-item>
-                                <div class="tw-flex tw-justify-between tw-items-center ">
                                     <span #textElement
                                     [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                                     [pTooltip]="isOverflowing(textElement) ? item[sourceAttributeNames.label] : null" tooltipPosition="top">
                                         {{ item[sourceAttributeNames.label] }}
                                     </span>
-                                    <i *ngIf="showCrossIcon  && mappingField.value.sourceName" class="pi pi-times tw-mt-[-2px]" (click)="removeFilter(mappingField)"></i>
-                                </div>
+                                    <div class="tw-self-end">
+                                        <i *ngIf="showCrossIcon  && mappingField.value.sourceName" class="pi pi-times tw-mr-4-px" (click)="removeFilter(mappingField)"></i>
+                                    </div>
                             </ng-template>
                         </p-dropdown>
                     </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingKbArticles, brandingConfig } from 'src/app/branding/branding-config';
+import { brandingKbArticles, brandingConfig, brandingDemoVideoLinks } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity, TravelPerkOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
@@ -33,6 +33,8 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
   org: Org = this.orgService.getCachedOrg();
 
   readonly brandingConfig = brandingConfig;
+
+  embedVideoLink = brandingDemoVideoLinks.onboarding.SAGE300;
 
   isLoading: boolean;
 

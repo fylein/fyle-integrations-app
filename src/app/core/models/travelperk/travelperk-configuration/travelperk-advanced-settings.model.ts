@@ -122,7 +122,7 @@ export class TravelperkAdvancedSettingModel {
             descriptionStructure: new FormControl(advancedSettings?.description_structure ? advancedSettings?.description_structure : defaultMemoOptions),
             defaultEmployee: new FormControl(advancedSettings?.default_employee_name ? advancedSettings?.default_employee_name : null),
             defaultEmployeeId: new FormControl(advancedSettings?.default_employee_id ? advancedSettings?.default_employee_id : null),
-            defaultCategory: new FormControl(advancedSettings?.default_category_name ? findObjectByDestinationId(sourceOptions, advancedSettings.default_category_id) : null, Validators.required),
+            defaultCategory: new FormControl(null, Validators.required),
             invoiceLineitemStructure: new FormControl(advancedSettings?.invoice_lineitem_structure ? advancedSettings.invoice_lineitem_structure : null, Validators.required),
             searchOption: new FormControl('')
         });

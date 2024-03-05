@@ -192,7 +192,8 @@ const demoVideoLinks: DemoVideo = {
             SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
             // TODO: Update link for MS Dynamics
-            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk'
         }
     },
     co: {
@@ -202,7 +203,8 @@ const demoVideoLinks: DemoVideo = {
             SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
             // TODO: Update link for MS Dynamics
-            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk'
         }
     }
 };

@@ -19,7 +19,9 @@
                 <p-dropdown appendTo="body" [options]="destinationAttributes" [optionLabel]="optionLabel" class="!tw-w-300-px" 
                     [formControlName]="formControllerName" 
                     [placeholder]="placeholder" 
-                    [ngClass]="[form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && form.controls[formControllerName].dirty ? 'error-box' : 'normal-box']" 
+                    [ngClass]="{
+                        'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
+                        'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched)}" 
                     [filter]="true" [filterBy]="optionLabel"
                     (onFilter)="searchOptions($event)"
                     (onHide)="clearSearch()" 
@@ -58,11 +60,11 @@
                         </div>
                     </ng-template>
                     <ng-template pTemplate="selectedItem" let-item>
-                        <div class="tw-flex tw-justify-between tw-items-center">
-                            <span>
-                                {{ item.label }}
-                            </span>
-                            <i *ngIf="showClearIcon && !isDisabled" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(form.controls[formControllerName])"></i>
+                        <span>
+                            {{ item.label }}
+                        </span>
+                        <div class="tw-self-end">
+                            <i *ngIf="showClearIcon && !isDisabled" class="tw-align-top" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(form.controls[formControllerName])"></i>
                         </div>
                     </ng-template>
                 </p-dropdown>
@@ -129,7 +131,7 @@
                 </p-dropdown>
             </div>
             <div [ngClass]="[formControllerName !== 'dayOfMonth' ? 'tw-pl-34-px' : 'tw-pl-70-px', formControllerName === 'dayOfWeek' ? 'tw-pl-30-px' : 'tw-pl-34-px']">
-                <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled && form.controls[formControllerName].dirty" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
+                <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
             </div>
         </div>
     </div>
