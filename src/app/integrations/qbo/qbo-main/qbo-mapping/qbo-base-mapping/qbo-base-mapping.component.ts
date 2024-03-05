@@ -67,7 +67,7 @@ export class QboBaseMappingComponent implements OnInit {
   }
 
   private setupPage(): void {
-    this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field);
+    this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
     forkJoin([
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.mappingService.getMappingSettings()
