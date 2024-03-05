@@ -38,30 +38,15 @@ export type ContentConfiguration = {
                         employeeFieldMapping: string;
                     }
                 },
-                importSetting: {
-                    stepName: string;
-                    headerText: string;
-                    contentText: string;
-                    importCategoriesLabel: string;
-                    importCategoriesSubLabel: string;
-                    importItemsLabel: string;
-                    importItemsSubLabel: string;
-                    taxCodeLabel: string;
-                    taxCodeSubLabel: string;
-                    defaultTaxCodeLabel: string;
-                    importVendorsAsMerchantsLabel: string;
-                },
                 advancedSettings: {
                     stepName: string;
-                    autoCreateVendorsLabel: string;
-                    paymentSyncLabel: string;
-                    customizationSubLabel: string;
-                    autoCreateMerchantsAsVendorsLabel: string;
-                    singleCreditLineJELabel: string;
-                    singleCreditLineJESubLabel: string;
-                    billPaymentAccountLabel: string;
-                    billPaymentAccountSubLabel: string;
-                    memoStructureLabel: string;
+                    scheduleAutoExport: string;
+                    email: string;
+                    autoSyncPayments: string;
+                    defaultPaymentAccount: string;
+                    autoCreateEmployeeVendor: string;
+                    postEntriesCurrentPeriod: string;
+                    setDescriptionField: string;
                 },
                 done: {
                     ctaText: string;
