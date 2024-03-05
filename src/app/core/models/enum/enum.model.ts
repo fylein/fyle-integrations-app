@@ -7,7 +7,8 @@ export enum IntegrationView {
 
 export enum IntacctCategoryDestination {
   EXPENSE_TYPE = 'EXPENSE_TYPE',
-  ACCOUNT = 'GL_ACCOUNT'
+  ACCOUNT = 'ACCOUNT',
+  GL_ACCOUNT = 'GL_ACCOUNT'
 }
 
 export enum AutoMapEmployeeOptions {
@@ -207,7 +208,7 @@ export enum NameInJournalEntry {
   MERCHANT = 'MERCHANT'
 }
 
-export enum CorporateCreditCardExpensesObject {
+export enum IntacctCorporateCreditCardExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   EXPENSE_REPORT = 'EXPENSE_REPORT',
@@ -353,7 +354,7 @@ export enum MappingState {
 }
 
 export enum AccountingField {
-  ACCOUNT = 'ACCOUNT',
+  ACCOUNT = 'ACCOUNT'
 }
 
 export enum Sage300Field {

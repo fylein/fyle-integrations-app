@@ -7,7 +7,3 @@
         <app-export-log-table [appName]="appName" [filteredExpenseGroups]="accountingExports" [isDashboardFailed]="exportLogHeader==='Successful' ? false : true" [isExportLogTable]="false"></app-export-log-table>
     </div>
 </p-dialog>
-
-<ng-template #shimmers>
-    <app-shimmers [isExportLogFetchInProgress]="isExportLogFetchInProgress" [exportLogHeader]="exportLogHeader"></app-shimmers>
-</ng-template>

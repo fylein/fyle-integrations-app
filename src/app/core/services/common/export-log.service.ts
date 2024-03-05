@@ -4,7 +4,7 @@ import { UserService } from '../misc/user.service';
 import { WorkspaceService } from './workspace.service';
 import { environment } from 'src/environments/environment';
 import { SkipExportLogResponse } from '../../models/intacct/db/expense-group.model';
-import { FyleReferenceType, TaskLogState } from '../../models/enum/enum.model';
+import { AppName, FyleReferenceType, TaskLogState } from '../../models/enum/enum.model';
 import { Observable } from 'rxjs';
 import { AccountingExport } from '../../models/db/accounting-export.model';
 import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
@@ -50,14 +50,19 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, params);
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: AppName): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
-      offset,
-      tasklog__status: state
+      offset
     };
 
-    if (query){
+    if (appName === AppName.INTACCT) {
+      params.state = state;
+    } else {
+      params.tasklog__status = state;
+    }
+
+    if (query) {
       params.expenses__expense_number = query;
       params.expenses__employee_name = query;
       params.expenses__employee_email = query;
@@ -67,12 +72,21 @@ export class ExportLogService {
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-      params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+      if (appName === AppName.INTACCT) {
+        params.start_date = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
+        params.end_date = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+      } else {
+        params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
+        params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
+      }
     }
 
     if (exportedAt) {
-      params.exported_at__gte = exportedAt;
+      if (appName === AppName.INTACCT) {
+        params.exported_at = exportedAt;
+      } else {
+        params.exported_at__gte = exportedAt;
+      }
     }
 
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);

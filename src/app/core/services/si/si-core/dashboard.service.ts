@@ -4,7 +4,7 @@ import { Cacheable } from 'ts-cacheable';
 import { SiWorkspaceService } from './si-workspace.service';
 import { LastExport } from 'src/app/core/models/intacct/db/last-export.model';
 import { TaskLogState, TaskLogType } from 'src/app/core/models/enum/enum.model';
-import { TaskGetParams, TaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
+import { TaskGetParams, IntacctTaskResponse } from 'src/app/core/models/intacct/db/task-log.model';
 import { Error } from 'src/app/core/models/intacct/db/error.model';
 import { ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
 import { ApiService } from '../../common/api.service';
@@ -48,9 +48,9 @@ export class DashboardService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_detail/`, {});
   }
 
-  getAllTasks(status: TaskLogState[], expenseGroupIds: number[] = [], taskType: TaskLogType[] = []): Observable<TaskResponse> {
+  getAllTasks(status: TaskLogState[], expenseGroupIds: number[] = [], taskType: TaskLogType[] = []): Observable<IntacctTaskResponse> {
     const limit = 500;
-    const allTasks: TaskResponse = {
+    const allTasks: IntacctTaskResponse = {
       count: 0,
       next: null,
       previous: null,
@@ -60,7 +60,7 @@ export class DashboardService {
     return from(this.getAllTasksInternal(limit, status, expenseGroupIds, taskType, allTasks));
   }
 
-  private async getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: TaskResponse): Promise<TaskResponse> {
+  private async getAllTasksInternal(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], allTasks: IntacctTaskResponse): Promise<IntacctTaskResponse> {
     const taskResponse = await firstValueFrom(this.getTasks(limit, status, expenseGroupIds, taskType, allTasks.next));
 
     if (allTasks.count === 0) {
@@ -79,7 +79,7 @@ export class DashboardService {
     return allTasks;
   }
 
-  getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null): Observable<TaskResponse> {
+  getTasks(limit: number, status: string[], expenseGroupIds: number[], taskType: string[], next: string | null): Observable<IntacctTaskResponse> {
     const offset = 0;
     const apiParams: TaskGetParams = {
       limit: limit,

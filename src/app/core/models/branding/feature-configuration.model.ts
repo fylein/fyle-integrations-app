@@ -12,6 +12,7 @@ export type FeatureConfiguration = {
             exportSettings: {
                 reimbursableExpenses: boolean;
                 nameInJournalEntry: boolean;
+                useMerchantInJournalLine: boolean;
             },
             importSettings: {
                 tax: boolean;

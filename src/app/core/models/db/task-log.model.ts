@@ -21,4 +21,6 @@ export type TaskLogGetParams = {
   status__in?: string[];
   expense_group_id__in?: number[];
   type__in?: string[];
+  expense_group_ids?: number[];
+  task_type?: string[];
 };

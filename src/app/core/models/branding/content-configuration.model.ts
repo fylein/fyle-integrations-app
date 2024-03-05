@@ -1,5 +1,60 @@
 export type ContentConfiguration = {
     [brandingId: string]: {
+        intacct : {
+            landing: {
+                contentText: string;
+                guideHeaderText: string;
+            },
+            common: {
+                readMoreText: string;
+                exportLogTabName: string;
+                viewExpenseText: string;
+                corporateCard: string;
+                errors: string;
+                autoMap: string;
+                customField: string;
+                customFieldName: string;
+                customFieldPlaceholderName: string;
+                customFieldType: string;
+                customFieldCreateandSave: string;
+            },
+            configuration: {
+                connector: {
+                    stepName: string;
+                    subLabel: string;
+                },
+                exportSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    corporateCard: {
+                        cccExpensePaymentType: string;
+                        cccExpensePaymentTypeSubLabel: string;
+                        creditCardVendor: string;
+                        creditCardVendorSublabel: string;
+                        chargeCard: string;
+                        chargeCardSublabel: string;
+                        cccExpenseState: string;
+                        cccExportGroup: string;
+                        employeeFieldMapping: string;
+                    }
+                },
+                advancedSettings: {
+                    stepName: string;
+                    scheduleAutoExport: string;
+                    email: string;
+                    autoSyncPayments: string;
+                    defaultPaymentAccount: string;
+                    autoCreateEmployeeVendor: string;
+                    postEntriesCurrentPeriod: string;
+                    setDescriptionField: string;
+                },
+                done: {
+                    ctaText: string;
+                    hintText: string;
+                }
+            },
+        }
         configuration: {
             connector: {
                 stepName: string;
