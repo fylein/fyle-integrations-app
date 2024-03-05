@@ -226,7 +226,7 @@ const content: ContentConfiguration = {
             configuration: {
                 connector: {
                     stepName: 'Connect to Sage Intacct',
-                    subLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.',
+                    subLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.'
                 },
                 exportSetting: {
                     stepName: 'Export Settings',
@@ -387,7 +387,7 @@ const content: ContentConfiguration = {
             configuration: {
                 connector: {
                     stepName: 'Connect to Sage Intacct',
-                    subLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or location entity.',
+                    subLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or location entity.'
                 },
                 exportSetting: {
                     stepName: 'Export settings',
