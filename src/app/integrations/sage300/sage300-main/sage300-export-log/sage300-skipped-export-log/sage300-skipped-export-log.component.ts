@@ -64,7 +64,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter).subscribe((skippedExpenses: SkipExportLogResponse) => {
+    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, null).subscribe((skippedExpenses: SkipExportLogResponse) => {
       if (!this.isDateSelected) {
         this.totalCount = skippedExpenses.count;
       }
@@ -103,20 +103,18 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      if (dateRange[1]) {
-        if (dateRange) {
-          this.selectedDateFilter = {
-            startDate: dateRange[0],
-            endDate: dateRange[1]
-          };
-
-          this.trackDateFilter('existing', this.selectedDateFilter);
-          this.getSkippedExpenses(paginator.limit, paginator.offset);
-          this.dateOptions = AccountingExportModel.getDateOptionsV2();
-        }
-      } else {
+      if (!dateRange) {
         this.selectedDateFilter = null;
         this.getSkippedExpenses(paginator.limit, paginator.offset);
+      } else if (dateRange.length && dateRange[1]) {
+        this.selectedDateFilter = {
+          startDate: dateRange[0],
+          endDate: dateRange[1]
+        };
+
+        this.trackDateFilter('existing', this.selectedDateFilter);
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
+        this.dateOptions = AccountingExportModel.getDateOptionsV2();
       }
     });
   }

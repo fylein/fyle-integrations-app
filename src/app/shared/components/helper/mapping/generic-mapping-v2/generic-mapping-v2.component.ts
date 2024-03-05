@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
@@ -9,6 +9,9 @@ import { AppName, FyleField, MappingState, PaginatorPage, ToastSeverity } from '
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
+
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-generic-mapping-v2',
@@ -32,6 +35,8 @@ export class GenericMappingV2Component implements OnInit {
   @Input() appName: AppName;
 
   @Input() isCategoryMappingGeneric: boolean;
+
+  @Input() displayName: string | undefined;
 
   isInitialSetupComplete: boolean = false;
 
@@ -61,6 +66,10 @@ export class GenericMappingV2Component implements OnInit {
 
   alphabetFilter: string = 'All';
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
   @Output() triggerAutoMapEmployee = new EventEmitter<boolean>();
 
   readonly brandingConfig = brandingConfig;
@@ -69,14 +78,21 @@ export class GenericMappingV2Component implements OnInit {
     private mappingService: MappingService,
     private paginatorService: PaginatorService,
     private route: ActivatedRoute
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+      debounceTime(1000)
+    ).subscribe((query: string) => {
+      this.searchQuery = query;
+      this.pageSizeChanges(this.limit);
+    });
+  }
 
   triggerAutoMapEmployees() {
     this.triggerAutoMapEmployee.emit(true);
   }
 
   private getFilteredMappings() {
-    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric).subscribe((mappingResponse: GenericMappingResponse) => {
+    this.mappingService.getGenericMappingsV2(this.limit, this.offset, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, this.searchQuery).subscribe((mappingResponse: GenericMappingResponse) => {
       this.filteredMappings = mappingResponse.results.concat();
       this.filteredMappingCount = this.filteredMappings.length;
       this.totalCount = mappingResponse.count;
@@ -111,18 +127,14 @@ export class GenericMappingV2Component implements OnInit {
   }
 
   mappingSearchFilter(searchValue: string) {
-    if (searchValue.length > 0) {
-      const query = searchValue.toLowerCase().trim();
-      this.filteredMappings = this.mappings.filter((mapping) => mapping.value?.toLowerCase().includes(query));
-    } else {
-      this.filteredMappings = this.mappings.concat();
-    }
-    this.filteredMappingCount = this.filteredMappings.length;
+    const query = searchValue;
+    this.searchQuerySubject.next(query);
   }
 
   mappingFilterUpdate(alphabet: string) {
     this.isLoading = true;
     this.alphabetFilter = alphabet;
+    this.searchQuery = null;
     this.currentPage = 1;
     this.offset = 0;
     this.getFilteredMappings();
@@ -135,7 +147,7 @@ export class GenericMappingV2Component implements OnInit {
     this.offset = paginator.offset;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field)).toUpperCase();
     forkJoin([
-      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric),
+      this.mappingService.getGenericMappingsV2(this.limit, 0, this.destinationField, this.selectedMappingFilter, this.alphabetFilter, this.sourceField, this.isCategoryMappingGeneric, null),
       this.mappingService.getMappingStats(this.sourceField, this.destinationField, this.appName)
     ]).subscribe(
       ([mappingResponse, mappingStat]) => {

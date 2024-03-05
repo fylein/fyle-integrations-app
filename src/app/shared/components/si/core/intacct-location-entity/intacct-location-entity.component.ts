@@ -126,7 +126,7 @@ export class IntacctLocationEntityComponent implements OnInit {
   }
 
   private setupPage() {
-    this.workspaceId = this.storageService.get('si.workspaceId');
+    this.workspaceId = this.storageService.get('workspaceId');
     this.isOnboarding = this.router.url.includes('onboarding');
     this.mappingsService.getSageIntacctDestinationAttributes(IntacctField.LOCATION_ENTITY).subscribe((locationEntities) => {
       const topLevelOption = {

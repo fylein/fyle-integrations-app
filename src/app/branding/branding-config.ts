@@ -82,47 +82,46 @@ export const brandingFeatureConfig = featureConfigs[brandingConfig.brandId];
 const kbArticles: KbArticle = {
     fyle: {
         topLevelArticles: {
-            BAMBOO_HR: 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
-            QBD: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
-            INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            TRAVELPERK: 'https://help.fylehq.com/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle',
-            SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration'
+            BAMBOO_HR: `${brandingConfig.helpArticleDomain}/en/articles/6845034-fyle-bamboo-hr-integration`,
+            QBD: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
+            QBO: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
+            INTACCT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
+            TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
+            SAGE300: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
+            BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`
         },
         onboardingArticles: {
             INTACCT: {
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-                CONNECTOR: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6',
-                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
             // TODO: Update KB articles for Sage 300
             SAGE300: {
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
-            // TODO: Update KB articles for QBO
             QBO: {
-                LANDING: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-2-0',
-                CONNECTOR: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0',
-                EMPLOYEE_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686',
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7',
-                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online'
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0`,
+                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686`,
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online`
             },
-            // TODO: Update KB articles for MS Dynamics
             BUSINESS_CENTRAL: {
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_a2dcb23212',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_aea6d1e402',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_9e9b1c5196',
-                LANDING: 'https://help.fylehq.com/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration',
-                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_a2dcb23212`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_aea6d1e402`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_9e9b1c5196`,
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
             TRAVELPERK: {
                 PAYMENT_PROFILE_SETTINGS: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct',
@@ -133,47 +132,45 @@ const kbArticles: KbArticle = {
     },
     co: {
         topLevelArticles: {
-            BAMBOO_HR: 'https://help.fylehq.com/en/articles/6845034-fyle-bamboo-hr-integration',
-            QBD: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-desktop',
-            INTACCT: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            TRAVELPERK: 'https://help.fylehq.com/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle',
-            SAGE300: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle',
-            BUSINESS_CENTRAL: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle'
+            BAMBOO_HR: `${brandingConfig.helpArticleDomain}/en/articles/6845034-fyle-bamboo-hr-integration`,
+            QBD: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
+            QBO: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
+            INTACCT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
+            TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
+            SAGE300: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
+            BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`
         },
         onboardingArticles: {
             INTACCT: {
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-                CONNECTOR: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6',
-                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
-            // TODO: Update KB articles for Sage 300
             SAGE300: {
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
-            // TODO: Update KB articles for QBO
             QBO: {
-                LANDING: 'https://help.fylehq.com/en/collections/215867-integrations-with-fyle#quickbooks-2-0',
-                CONNECTOR: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0',
-                EMPLOYEE_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686',
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7',
-                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online'
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0`,
+                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686`,
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online`
             },
-            // TODO: Update KB articles for MS Dynamics
             BUSINESS_CENTRAL: {
-                IMPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c',
-                EXPORT_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c',
-                LANDING: 'https://help.fylehq.com/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration',
-                SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
             TRAVELPERK: {
                 PAYMENT_PROFILE_SETTINGS: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct',
@@ -226,7 +223,7 @@ const content: ContentConfiguration = {
             exportSetting: {
                 stepName: 'Export Settings',
                 headerText: 'Export Corporate Card Expenses',
-                contentText: 'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online',
+                contentText: 'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online.',
                 corporateCard: {
                     expenseState: 'Select CCC expense state',
                     sectionLabel: '',
@@ -240,9 +237,9 @@ const content: ContentConfiguration = {
                     accountsPayableLabel: 'To which Accounts Payable account should the ',
                     accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.',
-                    creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)',
+                    creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report).',
                     journalOptionLabel: 'Name in Journal Entry (CCC)',
-                    journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries'
+                    journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
                 }
             },
             importSetting: {
@@ -250,7 +247,7 @@ const content: ContentConfiguration = {
                 headerText: '',
                 contentText: '',
                 importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
-                importCategoriesSubLabel: 'Imported account will be available as Categories in ',
+                importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
                 importItemsLabel: 'Import Products/Services from QuickBooks Online',
                 importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as Categories in ',
                 taxCodeLabel: 'Import Tax from QuickBooks Online',
@@ -332,7 +329,7 @@ const content: ContentConfiguration = {
             exportSetting: {
                 stepName: 'Export settings',
                 headerText: 'Export corporate card expenses',
-                contentText: 'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + ' if not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online',
+                contentText: 'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + ' if not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online.',
                 corporateCard: {
                     expenseState: 'Select ccc expense state',
                     sectionLabel: '',
@@ -346,9 +343,9 @@ const content: ContentConfiguration = {
                     accountsPayableLabel: 'To which accounts payable account should the ',
                     accountsPayableSubLabel: ' to the selected accounts payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
-                    creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report)',
+                    creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report).',
                     journalOptionLabel: 'Name in journal entry (ccc)',
-                    journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries'
+                    journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
                 }
             },
             importSetting: {
@@ -356,7 +353,7 @@ const content: ContentConfiguration = {
                 headerText: '',
                 contentText: '',
                 importCategoriesLabel: 'Import the chart of accounts as categories in ',
-                importCategoriesSubLabel: 'Imported account will be available as categories in ',
+                importCategoriesSubLabel: 'Imported account will be available as categories in ' + brandingConfig.brandName + '.',
                 importItemsLabel: 'Import products/services from QuickBooks Online',
                 importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in ',
                 taxCodeLabel: 'Import tax from QuickBooks Online',

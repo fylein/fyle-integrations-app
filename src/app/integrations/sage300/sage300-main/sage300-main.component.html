@@ -1,5 +1,5 @@
 <div>
-    <app-main-menu [modules]="modules" [activeItem]="modules[0]" [appName]="appName" [isDropdrownRequired]="false" (refreshDimensionClick)="refreshDimensions($event)"></app-main-menu>
+    <app-main-menu [modules]="modules" [activeItem]="modules[0]" [appName]="appName" [isDropdrownRequired]="false" (refreshDimensionClick)="refreshDimensions($event)" [isSyncVisible]="true"></app-main-menu>
     <div>
         <router-outlet></router-outlet>
     </div>

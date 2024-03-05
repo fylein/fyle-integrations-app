@@ -56,7 +56,7 @@
                 Please hold on; we are fetching data from your {{ accountingAppTitle }} account, which may take a few seconds.
             </p>
             <p *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-text-muted ">
-                Token expired
+                Token expired.
             </p>
             <div *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" class="tw-h-60-px">
                 <span (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">

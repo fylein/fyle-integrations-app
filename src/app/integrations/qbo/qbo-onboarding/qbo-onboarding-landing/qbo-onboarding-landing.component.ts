@@ -23,7 +23,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 
   brandingConfig = brandingConfig;
 
-  redirectLink = brandingKbArticles.onboardingArticles.QBO.CONNECTOR;
+  redirectLink = brandingKbArticles.topLevelArticles.QBO;
 
   embedVideoLink = brandingDemoVideoLinks.onboarding.QBO;
 

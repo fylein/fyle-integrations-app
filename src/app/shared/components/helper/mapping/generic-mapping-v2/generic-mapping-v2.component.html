@@ -1,25 +1,30 @@
-<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+<div *ngIf="!mappings" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading">
+
+<div>
         <div>
-            <app-card-mapping-header (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceField" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees"></app-card-mapping-header>
+            <app-card-mapping-header *ngIf="mappings" (triggerAutoMapEmployee)="triggerAutoMapEmployees()" [sourceField]="sourceField" [showAutoMapEmployee]="showAutoMapEmployee" [mappingStats]="mappingStats" (triggerAutoMapEmployee)="triggerAutoMapEmployees"></app-card-mapping-header>
         </div>
+
         <div class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-mt-16-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
             <div class="tw-p-24-px tw-border-b-separator">
                 <app-mapping-filter [appName]="appName" [selectedAlphabeticalFilter]="alphabetFilter" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSearchFilter($event)" (mappingFilterUpdateHandler)="mappingFilterUpdate($event)" [isAlphabetFilterHidden]="false"></app-mapping-filter>
             </div>
-            <div *ngIf="filteredMappingCount">
-                <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions"></app-generic-mapping-table>
+            <div *ngIf="!isLoading">
+                <div *ngIf="filteredMappingCount">
+                    <app-generic-mapping-table [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="false" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [mappingStats]="mappingStats" [employeeFieldMapping]="employeeFieldMapping" [destinationOptions]="destinationOptions" [displayName]="displayName"></app-generic-mapping-table>
+                </div>
+                <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount && !isLoading" >
+                    <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
+                </div>
+                <div *ngIf="!filteredMappingCount">
+                    <app-zero-state-with-illustration 
+                    [mainText]="brandingConfig.brandId === 'fyle' ? 'No search result to show yet!': 'No search result to show yet'"
+                    [subText]="brandingConfig.brandId === 'fyle' ? 'Looks like your search term does not match any of ' + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings': 'Looks like your search term does not match any of ' + (this.sourceField | snakeCaseToSpaceCase | lowercase) + ' mappings'">
+                  </app-zero-state-with-illustration>              
+                </div>
             </div>
-            <div class="tw-p-24-px tw-border-t-separator" *ngIf="filteredMappingCount" >
-                <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
-            </div>
-            <div *ngIf="!filteredMappingCount">
-                <app-zero-state-with-illustration 
-                [mainText]="brandingConfig.brandId === 'fyle' ? 'No search result to show yet!': 'No search result to show yet'"
-                [subText]="brandingConfig.brandId === 'fyle' ? 'Looks like your search term does not match any of ' + (this.sourceField | snakeCaseToSpaceCase | titlecase) + ' mappings': 'Looks like your search term does not match any of ' + (this.sourceField | snakeCaseToSpaceCase | lowercase) + ' mappings'">
-              </app-zero-state-with-illustration>              
-            </div>
+            
         </div>
 </div>

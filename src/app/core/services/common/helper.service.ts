@@ -207,7 +207,7 @@ export class HelperService {
   }
 
   oauthHandler(url: string): void {
-    const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
+    const popup = window.open(url);
 
     const activePopup = setInterval(() => {
       if (popup?.location?.href?.includes('code')) {
