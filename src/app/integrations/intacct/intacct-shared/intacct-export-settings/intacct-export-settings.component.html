@@ -129,8 +129,8 @@
                 <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field 
                     [form]="exportSettingsForm"
-                    [label]="'Export Corporate Card Expenses'" 
-                    [subLabel]="'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to Sage Intacct.'" 
+                    [label]="brandingContent.configuration.exportSetting.headerText" 
+                    [subLabel]="brandingContent.intacct.configuration.exportSetting.headerText" 
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -154,8 +154,8 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense payment type'"
-                            [label]="'Set the Default Expense Payment Type as?'"
-                            [subLabel]="'The selected Expense Payment Type will be added to the Corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Sage Intacct.'"
+                            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpensePaymentType"
+                            [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpensePaymentTypeSubLabel"
                             [destinationAttributes]="this.destinationOptions['CCC_EXPENSE_PAYMENT_TYPE']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -170,8 +170,8 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'credit card vendor'"
-                            [label]="'Set the Default Credit Card Vendor as'"
-                            [subLabel]="'The vendor configured here will be added to all the Credit Card expenses exported as Bills.'"
+                            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardVendor"
+                            [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardVendorSublabel"
                             [destinationAttributes]="this.destinationOptions['VENDOR']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.VENDOR"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -210,8 +210,8 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'charge card'"
-                            [label]="'Set the Default Charge Card'"
-                            [subLabel]="'Expenses of Corporate Cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the Card configured here. You can map your cards in the Mapping section after configuring the integration.'"
+                            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.chargeCard"
+                            [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.chargeCardSublabel"
                             [destinationAttributes]="this.destinationOptions['CHARGE_CARD']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.CHARGE_CARD"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -231,7 +231,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
                         [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                        [subLabel]="'You can export expenses either when they are awaiting closure after approval (Approved) or when the transaction has been settled (Closed)'"
+                        [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpenseState"
                         [options]="cccExpenseStateOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select export state'"
@@ -255,7 +255,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'how expenses to be grouped'"
                         [label]="'How should the expenses be grouped?'"
-                        [subLabel]="'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)'"
+                        [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExportGroup"
                         [options]="expenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
@@ -289,7 +289,7 @@
             [form]="exportSettingsForm"
             [isFieldMandatory]="true"
             [mandatoryErrorListName]="'employee field'"
-            [label]="'How are your Employees represented in Sage Intacct?'"
+            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.employeeFieldMapping"
             [subLabel]="'Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct'"
             [options]="employeeFieldOptions"
             [iconPath]="'user-two'"
@@ -303,7 +303,7 @@
                         <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
                     </div>
                     <div class="tw-pl-16-px">
-                        <h4 class="!tw-text-14-px !tw-font-500">How are your Employees represented in Sage Intacct?<app-mandatory-field></app-mandatory-field></h4>
+                        <h4 class="!tw-text-14-px !tw-font-500">{{brandingContent.intacct.configuration.exportSetting.corporateCard.employeeFieldMapping}}<app-mandatory-field></app-mandatory-field></h4>
                         <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Select how your employees are represented in Sage Intacct. This would help to export the expenses to the correct record in Sage Intacct</h5>
                     </div>
                 </div>
