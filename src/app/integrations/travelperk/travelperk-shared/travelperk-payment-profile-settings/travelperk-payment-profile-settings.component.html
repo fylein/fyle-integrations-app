@@ -45,7 +45,7 @@
                     (loadMoreClick)="getProfileMappings(paymentProfileSettings.count)">
                 </app-configuration-mapping-fields>
             </div>
-            <div class="tw-px-24-px tw-py-16-px tw-border-t-1-px tw-border-t-border-tertiary">
+            <div>
                 <app-configuration-step-footer 
                     [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
                     [showBackButton] = "isOnboarding"

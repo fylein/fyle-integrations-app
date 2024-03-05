@@ -118,9 +118,9 @@ const kbArticles: KbArticle = {
                 SKIP_EXPORT: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
             },
             TRAVELPERK: {
-                PAYMENT_PROFILE_SETTINGS: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct',
-                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct',
-                LANDING: 'https://help.fylehq.com/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct'
+                PAYMENT_PROFILE_SETTINGS: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration#h_0f8ebdfa10',
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration#h_281acb3026',
+                LANDING: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration'
             }
         }
     },

@@ -91,7 +91,7 @@
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
                         [appName]="appName"
-                        [exportConfigurationIconPath]="'assets/illustrations/ms-dynamics/journal-entry.png'"
+                        [exportConfigurationIconPath]="'assets/pngs/preview-screens/travelperk-expense-grouping-preview.png'"
                         [formControllerName]="'invoiceLineitemStructure'">
                     </app-configuration-select-field>
                 </div>
@@ -116,7 +116,7 @@
                 </div>
             </div>
         </div>
-        <div class="tw-px-24-px tw-py-16-px tw-border-t-1-px tw-border-t-border-tertiary">
+        <div>
             <app-configuration-step-footer 
                 [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
                 [showBackButton] = "isOnboarding"
