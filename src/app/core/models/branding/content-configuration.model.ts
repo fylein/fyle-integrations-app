@@ -1,5 +1,24 @@
 export type ContentConfiguration = {
     [brandingId: string]: {
+        intacct : {
+            landing: {
+                contentText: string;
+                guideHeaderText: string;
+            },
+            common: {
+                readMoreText: string;
+                exportLogTabName: string;
+                viewExpenseText: string;
+                corporateCard: string;
+                errors: string;
+                autoMap: string;
+                customField: string;
+                customFieldName: string;
+                customFieldPlaceholderName: string;
+                customFieldType: string;
+                customFieldCreateandSave: string;
+            }
+        }
         configuration: {
             connector: {
                 stepName: string;

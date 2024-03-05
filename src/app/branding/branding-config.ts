@@ -211,6 +211,25 @@ export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
 
 const content: ContentConfiguration = {
     fyle: {
+        intacct: {
+            landing: {
+                contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
+                guideHeaderText: 'Guide to setup your Integrations'
+            },
+            common: {
+                readMoreText: 'Read More',
+                exportLogTabName: 'Export Log',
+                viewExpenseText: 'View Expense',
+                corporateCard: 'Corporate Card',
+                errors: 'Errors',
+                autoMap: 'Auto Map',
+                customField: 'Add new Custom Field',
+                customFieldName: 'Field Name',
+                customFieldPlaceholderName: 'Placeholder Name',
+                customFieldType: 'Field Type',
+                customFieldCreateandSave: 'Create and save'
+            },
+        },
         configuration: {
             connector: {
                 stepName: 'Connect to Quickbooks Online'
@@ -317,6 +336,25 @@ const content: ContentConfiguration = {
         }
     },
     co: {
+        intacct: {
+            landing: {
+                contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
+                guideHeaderText: 'Guide to setup your integrations'
+            },
+            common: {
+                readMoreText: 'Read more',
+                exportLogTabName: 'Export log',
+                viewExpenseText: 'View expense',
+                corporateCard: 'Corporate card',
+                errors: 'errors',
+                autoMap: 'Auto map',
+                customField: 'Add new custom field',
+                customFieldName: 'Field name',
+                customFieldPlaceholderName: 'Placeholder name',
+                customFieldType: 'Field type',
+                customFieldCreateandSave: 'Create and save'
+            }
+        },
         configuration: {
             connector: {
                 stepName: 'Connect to Quickbooks Online'
@@ -420,7 +458,6 @@ const content: ContentConfiguration = {
             customFieldPlaceholderName: 'Placeholder name',
             customFieldType: 'Field type',
             customFieldCreateandSave: 'Create and save'
-
         }
     }
 };
