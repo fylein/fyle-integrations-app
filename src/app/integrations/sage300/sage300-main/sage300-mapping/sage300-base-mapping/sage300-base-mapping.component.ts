@@ -60,7 +60,7 @@ export class Sage300BaseMappingComponent implements OnInit {
   }
 
   setupPage(): void {
-    this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
+    this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
     forkJoin(
       this.mappingService.getExportSettings(),
       this.mappingService.getMappingSettings()
