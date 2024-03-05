@@ -18,12 +18,8 @@
     @apply tw-text-text-primary tw-border-b-transparent tw-bg-nav-tabs-active-bg #{!important};
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight) .p-menuitem-link, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover .p-menuitem-link{
-    @apply tw-border-b-nav-tabs-active-border tw-text-text-disable tw-bg-nav-tabs-hover-bg #{!important};
-}
-
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-highlight):hover{
-    @apply tw-bg-nav-tabs-hover-bg #{!important};
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight) .p-menuitem-link{
+    @apply tw-border-b-nav-tabs-active-border tw-text-nav-tabs-inactive-text-color tw-bg-nav-tabs-active-bg #{!important};
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav {
