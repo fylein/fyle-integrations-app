@@ -9,6 +9,8 @@ import { ExportLogService } from 'src/app/core/services/common/export-log.servic
 import { PaginatorService } from 'src/app/core/services/si/si-core/paginator.service';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-intacct-skip-export-log',
@@ -57,17 +59,29 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
+
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+    debounceTime(1000)
+  ).subscribe((query: string) => {
+    this.searchQuery = query;
+    this.offset = 0;
+    this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+    this.getSkippedExpenses(this.limit, this.offset);
+  });
+}
 
   public handleSimpleSearch(query: string) {
-    this.filteredExpenses = this.expenses.filter((group: SkipExportList) => {
-      return SkippedAccountingExportModel.getfilteredSkippedAccountingExports(query, group);
-    });
+    this.searchQuerySubject.next(query);
   }
 
   pageSizeChanges(limit: number): void {
@@ -94,10 +108,8 @@ export class IntacctSkipExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, null).subscribe((skippedExpenses: SkipExportLogResponse) => {
-      if (!this.isDateSelected) {
+    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
         this.totalCount = skippedExpenses.count;
-      }
 
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
         skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
@@ -118,18 +130,24 @@ export class IntacctSkipExportLogComponent implements OnInit {
     });
 
     this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
-      if (dateRange[1]) {
+      const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
+      if (!dateRange) {
+        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.isDateSelected = false;
+        this.selectedDateFilter = null;
+
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
+      } else if (dateRange.length && dateRange[1]) {
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
 
-        this.trackDateFilter('existing', this.selectedDateFilter);
+        this.isDateSelected = true;
 
-        const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
         this.getSkippedExpenses(paginator.limit, paginator.offset);
-      }
-    });
+    }
+  });
   }
 
   private getSkippedExpensesAndSetupPage(): void {

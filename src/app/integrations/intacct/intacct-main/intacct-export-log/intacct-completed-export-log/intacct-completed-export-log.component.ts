@@ -12,6 +12,8 @@ import { environment } from 'src/environments/environment';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
+import { Subject } from 'rxjs/internal/Subject';
+import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 
 @Component({
   selector: 'app-intacct-completed-export-log',
@@ -60,13 +62,26 @@ export class IntacctCompletedExportLogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,
     private userService: UserService
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+      debounceTime(1000)
+    ).subscribe((query: string) => {
+      this.searchQuery = query;
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getAccountingExports(this.limit, this.offset);
+    });
+  }
 
   openExpenseinFyle(expense_id: string) {
     const url = `${environment.fyle_app_url}/app/admin/#/view_expense/${expense_id}`;
@@ -74,9 +89,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
   }
 
   public handleSimpleSearch(query: string) {
-    this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
-      return AccountingExportModel.getfilteredAccountingExports(query, group);
-    });
+    this.searchQuerySubject.next(query);
   }
 
   pageSizeChanges(limit: number): void {
@@ -103,10 +116,10 @@ export class IntacctCompletedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, null, AppName.INTACCT).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
-      if (!this.isDateSelected) {
-        this.totalCount = accountingExportResponse.count;
-      }
+    this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+
+      this.totalCount = accountingExportResponse.count;
+
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
       );
@@ -128,13 +141,16 @@ export class IntacctCompletedExportLogComponent implements OnInit {
     this.exportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
       if (!dateRange) {
+        this.dateOptions = AccountingExportModel.getDateOptionsV2();
         this.selectedDateFilter = null;
+        this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
         } else if (dateRange.length && dateRange[1]) {
           this.selectedDateFilter = {
             startDate: dateRange[0],
             endDate: dateRange[1]
           };
+          this.isDateSelected = true;
 
           this.trackDateFilter('existing', this.selectedDateFilter);
           this.getAccountingExports(paginator.limit, paginator.offset);
