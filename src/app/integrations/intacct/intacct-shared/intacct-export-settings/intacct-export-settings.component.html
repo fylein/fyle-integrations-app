@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
     <app-configuration-step-header 
-    [headerText]="'Export Settings'"
+    [headerText]="brandingContent.intacct.configuration.exportSetting.stepName"
     [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Sage Intacct.'"
     [redirectLink]="redirectLink"
     [showSyncButton]="isOnboarding"
@@ -117,7 +117,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
                         [label]="'Set the ' + getExportType(exportSettingsForm.value.reimbursableExportType ? exportSettingsForm.value.reimbursableExportType : IntacctReimbursableExpensesObject.EXPENSE_REPORT) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct. Click here for more details.'"
+                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct.'"
                         [options]="reimbursableExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
                         [placeholder]="'Select date'"
@@ -186,8 +186,8 @@
                             [form]="exportSettingsForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'GL account'"
-                            [label]="'To which GL Account should the expenses be credited to?'"
-                            [subLabel]="'The integration will credit the account selected here for Corporate Credit Card Expenses exported as Journal Entries.'"
+                            [label]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCard"
+                            [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.creditCardSubLabel"
                             [destinationAttributes]="this.destinationOptions['ACCOUNT']"
                             [destinationOptionKey]="IntacctExportSettingDestinationOptionKey.ACCOUNT"
                             [isOptionSearchInProgress]="isOptionSearchInProgress"
@@ -269,7 +269,7 @@
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
                         [label]="'Set the ' + getExportType(exportSettingsForm.value.cccExportType) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct. Click here for more details.'"
+                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct.'"
                         [options]="cccExpenseGroupingDateOptions"
                         [iconPath]="'calendar'"
                         [placeholder]="'Select date'"
