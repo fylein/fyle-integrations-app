@@ -221,7 +221,12 @@ const content: ContentConfiguration = {
                 customFieldName: 'Field Name',
                 customFieldPlaceholderName: 'Placeholder Name',
                 customFieldType: 'Field Type',
-                customFieldCreateandSave: 'Create and save'
+                customFieldCreateandSave: 'Create and save',
+                userId: 'User ID',
+                companyId: 'Company ID',
+                userPassword: 'User Password',
+                password: 'password',
+                locationEntity: 'Location Entity'
             },
             configuration: {
                 connector: {
@@ -252,7 +257,14 @@ const content: ContentConfiguration = {
                     defaultPaymentAccount: 'Select Payment Account',
                     autoCreateEmployeeVendor: 'Auto-Create ',
                     postEntriesCurrentPeriod: 'Post Entries in the Current Accounting Period',
-                    setDescriptionField: 'Set the Description Field in Sage Intacct'
+                    setDescriptionField: 'Set the Description Field in Sage Intacct',
+                    dfvLabel:'Default Field Values',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For Location and Department, you can opt to use the values from your employee records in Sage Intacct.',
+                    location: 'Location',
+                    department: 'Department',
+                    project: 'Project',
+                    class: 'Class',
+                    item: 'Item',
                 },
                 done: {
                     ctaText: '',
@@ -382,7 +394,12 @@ const content: ContentConfiguration = {
                 customFieldName: 'Field name',
                 customFieldPlaceholderName: 'Placeholder name',
                 customFieldType: 'Field type',
-                customFieldCreateandSave: 'Create and save'
+                customFieldCreateandSave: 'Create and save',
+                userId: 'user ID',
+                companyId: 'company ID',
+                userPassword: 'User password',
+                password: 'password',
+                locationEntity: 'Location entity'
             },
             configuration: {
                 connector: {
@@ -396,7 +413,7 @@ const content: ContentConfiguration = {
                     corporateCard: {
                         cccExpensePaymentType: 'Set the default expense payment type as?',
                         cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Sage Intacct.',
-                        creditCardVendor: 'Set the Default Credit Card Vendor as',
+                        creditCardVendor: 'Set the default credit card vendor as',
                         creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                         chargeCard: 'Set the default charge card',
                         chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
@@ -413,7 +430,14 @@ const content: ContentConfiguration = {
                     defaultPaymentAccount: 'Select payment account',
                     autoCreateEmployeeVendor: 'Auto-create ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                    setDescriptionField: 'Set the description field in Sage Intacct'
+                    setDescriptionField: 'Set the description field in Sage Intacct',
+                    dfvLabel:'Default field values',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Sage Intacct.',
+                    location: 'location',
+                    department: 'department',
+                    project: 'project',
+                    class: 'class',
+                    item: 'item',
                 },
                 done: {
                     ctaText: '',

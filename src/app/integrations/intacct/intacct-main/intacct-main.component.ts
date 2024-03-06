@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
+import { brandingContent } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { DashboardService } from 'src/app/core/services/si/si-core/dashboard.service';
@@ -13,9 +14,11 @@ import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.
 })
 export class MainComponent implements OnInit {
 
+  readonly brandingContent = brandingContent.common;
+
   modules: MenuItem[] = [
     {label: 'Dashboard', routerLink: '/integrations/intacct/main/dashboard'},
-    {label: 'Export Log', routerLink: '/integrations/intacct/main/export_log'},
+    {label: this.brandingContent.exportLogTabName, routerLink: '/integrations/intacct/main/export_log'},
     {label: 'Mapping', routerLink: '/integrations/intacct/main/mapping'},
     {label: 'Configuration', routerLink: '/integrations/intacct/main/configuration'}
   ];

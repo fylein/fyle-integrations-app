@@ -14,7 +14,7 @@
     <div class="tw-flex">
       <div class="tw-w-40-vw tw-h-240-px tw-flex tw-flex-col tw-items-center tw-justify-center">
         <h5 class="tw-text-14-px tw-font-500 align-center tw-text-sub-text-color tw-cursor-default">
-          {{ brandingConfig.brandName | uppercase }}
+          {{(brandingConfig.brandId==='fyle' ? (brandingConfig.brandName | uppercase) : brandingConfig.brandName)}}
         </h5>
         <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px tw-pt-18-px tw-whitespace-nowrap tw-cursor-default">
           {{ fyleOrgName | trimCharacter: 26 }}
@@ -29,12 +29,12 @@
           <div class="tw-whitespace-nowrap">
             <div>
               <h5 class="tw-text-14-px tw-font-500 tw-items-center tw-text-sub-text-color">
-              SAGE INTACCT
+              {{(brandingConfig.brandId==='fyle' ? (appName | uppercase) : appName)}}
             </h5>
             </div>
           </div>
             <div class="tw-pt-16-px">
-              <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select Location Entity" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
+              <p-dropdown appendTo="body" (onChange)="patchFormValue($event)" class="tw-pl-7" *ngIf="!locationEntity?.location_entity_name" placeholder="Select {{brandingContent.intacct.common.locationEntity}}" formControllerName="locationEntity" [options]="locationEntityOptions" optionLabel="value">
               </p-dropdown>
           </div>
             <h3 *ngIf="locationEntity" [pTooltip]="locationEntity.location_entity_name" [tooltipDisabled]="locationEntity.location_entity_name.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px center-align-text tw-whitespace-nowrap tw-cursor-default">
@@ -42,7 +42,7 @@
             </h3>
 
             <div *ngIf="!locationEntity" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              Please select a Location (Entity) from Sage Intacct to proceed further.
+              Please select a {{brandingContent.intacct.common.locationEntity | lowercase}} from Sage Intacct to proceed further.
             </div>
 
             <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">

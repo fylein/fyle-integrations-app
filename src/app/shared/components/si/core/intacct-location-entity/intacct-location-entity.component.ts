@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
@@ -36,6 +36,8 @@ export class IntacctLocationEntityComponent implements OnInit {
   saveInProgress: boolean = false;
 
   workspaceId: number;
+
+  appName: AppName = AppName.INTACCT
 
   ConfigurationCtaText = ConfigurationCta;
 

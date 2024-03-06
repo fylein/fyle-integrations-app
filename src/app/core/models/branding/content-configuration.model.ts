@@ -17,6 +17,11 @@ export type ContentConfiguration = {
                 customFieldPlaceholderName: string;
                 customFieldType: string;
                 customFieldCreateandSave: string;
+                userId: string;
+                companyId: string;
+                userPassword: string;
+                password: string;
+                locationEntity: string;
             },
             configuration: {
                 connector: {
@@ -48,6 +53,13 @@ export type ContentConfiguration = {
                     autoCreateEmployeeVendor: string;
                     postEntriesCurrentPeriod: string;
                     setDescriptionField: string;
+                    dfvLabel: string;
+                    dfvSubLabel: string;
+                    location: string;
+                    department: string;
+                    project: string;
+                    class: string;
+                    item: string;
                 },
                 done: {
                     ctaText: string;
