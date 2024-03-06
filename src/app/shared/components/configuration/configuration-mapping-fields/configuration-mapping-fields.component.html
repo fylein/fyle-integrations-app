@@ -1,8 +1,8 @@
 <div class="tw-px-24-px tw-pb-24-px">
     <div [formGroup]="form">
         <div [formArrayName]="formControllerName">
-            <div *ngFor="let mappingField of mappingsFieldsGetter.controls ; let i = index" [formGroupName]="i">
-                <div class="tw-flex tw-justify-start tw-items-center tw-mb-18-px">
+            <div *ngFor="let mappingField of mappingsFieldsGetter.controls ; let i = index" [formGroupName]="i" class="tw-mb-24-px">
+                <div class="tw-flex tw-justify-start tw-items-center">
                     <div>
                         <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
                             <p>{{ destinationFieldText }}</p>
@@ -25,27 +25,34 @@
                     </div>
                     <div>
                         <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
-                            <p>{{ sourceFieldText }}</p>
+                            <p>{{ sourceFieldText }} <app-mandatory-field *ngIf="isMandatory"></app-mandatory-field></p>
                         </div>
                         <p-dropdown appendTo="body" [options]="sourceFieldOptions" [placeholder]="sourceFieldPlaceholderText" [formControlName]="'sourceName'"
-                        [optionLabel]="sourceAttributeNames.label" [optionValue]="sourceAttributeNames.value" [ngClass]="{'selectedItem': mappingField.value.sourceName, 'filterDropdown': !mappingField.value.sourceName, 'showClearIcon': showCrossIcon && mappingField.value.sourceName}" dropdownIcon="pi pi-chevron-down">    
-                            <ng-template let-option pTemplate="item">
-                                <div>
-                                    {{ option[sourceAttributeNames.label] }}
+                        [optionLabel]="sourceAttributeNames.label" [optionValue]="sourceAttributeNames.value" [ngClass]="{'selectedItem': mappingField.value.sourceName, 'filterDropdown': !mappingField.value.sourceName, 'showClearIcon': showCrossIcon && mappingField.value.sourceName, 'error-box': mappingField.invalid && mappingField.value.isRequired && mappingField.touched,
+                        'normal-box': !(mappingField.invalid && mappingField.value.isRequired && mappingField.touched)}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">    
+                            <ng-template let-options pTemplate="item">
+                                <div #textElement
+                                    [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                                    [pTooltip]="isOverflowing(textElement) ? options[sourceAttributeNames.label] : null" tooltipPosition="top">
+                                    {{ options[sourceAttributeNames.label] }}
                                 </div>
                             </ng-template>
                             <ng-template pTemplate="selectedItem" let-item>
-                                <div class="tw-flex tw-justify-between tw-items-center ">
-                                    <span>
+                                    <span #textElement
+                                    [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                                    [pTooltip]="isOverflowing(textElement) ? item[sourceAttributeNames.label] : null" tooltipPosition="top">
                                         {{ item[sourceAttributeNames.label] }}
                                     </span>
-                                    <i *ngIf="showCrossIcon  && mappingField.value.sourceName" class="pi pi-times" (click)="removeFilter(mappingField)"></i>
-                                </div>
+                                    <app-svg-icon  *ngIf="showCrossIcon  && mappingField.value.sourceName" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(mappingField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                         </p-dropdown>
                     </div>
-                </div>                      
-            </div>  
+                </div>    
+                <div class="tw-flex">
+                    <div class="tw-w-400-px"></div>
+                    <app-mandatory-error-message class="tw-mr-20-px" *ngIf="mappingField.invalid && mappingField.value.isRequired && mappingField.touched" [customErrorMessage]="'Please Select a Category as this is a Mandatory Field'"></app-mandatory-error-message>
+                </div>                  
+            </div> 
         </div>               
     </div>
     <div *ngIf="showOrHideLoadMoreButton()" class="tw-mt-30-px">

@@ -40,6 +40,8 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   @Input() sourceAttributeNames: SelectFormLabel;
 
+  @Input() isMandatory: boolean;
+
   @Output() loadMoreClick =  new EventEmitter();
 
   readonly brandingConfig = brandingConfig;
@@ -48,6 +50,10 @@ export class ConfigurationMappingFieldsComponent implements OnInit {
 
   get mappingsFieldsGetter() {
     return this.form.get(this.formControllerName) as FormArray;
+  }
+
+  isOverflowing(element: any): boolean {
+    return element.offsetWidth < element.scrollWidth;
   }
 
   showOrHideLoadMoreButton() {

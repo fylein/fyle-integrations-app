@@ -88,7 +88,7 @@ export const travelperkDestinationAttribute: TravelperkDestinationAttribuite[] =
     {
         "id": 1,
         "attribute_type": FyleField.CATEGORY,
-        "value": "Truck:Original Cost",
+        "value": "Truck:Original Costdherthre rthrhyheryhrt ujyujtyhrtgeg wfewrfgergergrth",
         "active": true,
         "detail": null,
         "created_at": new Date("12/11/1999"),
