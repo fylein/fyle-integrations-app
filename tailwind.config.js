@@ -780,6 +780,7 @@ const componentVariables = {
   'nav-tabs-hover-bg': 'var(--nav-tabs-hover-bg)',
   'nav-tabs-hover-border': 'var(--nav-tabs-hover-border)',
   'nav-tabs-text': 'var(--nav-tabs-text)',
+  'nav-tabs-inactive-text-color': 'var(--nav-tabs-inactive-text-color)',
 
   // Tabs - Nav Link (Primary)
   'nav-link-active-border': 'var(--nav-link-active-border)',

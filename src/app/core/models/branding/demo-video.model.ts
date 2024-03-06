@@ -5,6 +5,7 @@ export type DemoVideo = {
             SAGE300: string;
             QBO: string;
             BUSINESS_CENTRAL: string;
+            TRAVELPERK: string;
         }
     }
 };
