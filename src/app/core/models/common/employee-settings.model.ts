@@ -5,7 +5,7 @@ export class EmployeeSettingModel {
     static getEmployeeFieldMappingOptions(): SelectFormOption[] {
         return [
             {
-              label: 'Employees',
+              label: 'Employee',
               value: FyleField.EMPLOYEE
             },
             {

@@ -489,6 +489,10 @@ p {
     @apply tw-border-none #{!important};
 }
 
+.p-toast .p-toast-message.p-toast-message-info {
+    @apply tw-border-none #{!important};
+}
+
 .p-toast .p-toast-message .p-toast-message-content {
     @apply tw-border-0 tw-p-0 tw-text-white #{!important};
 }
