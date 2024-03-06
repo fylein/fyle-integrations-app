@@ -22,6 +22,7 @@ export type ContentConfiguration = {
                 userPassword: string;
                 password: string;
                 locationEntity: string;
+                descriptionText: string;
             },
             configuration: {
                 connector: {

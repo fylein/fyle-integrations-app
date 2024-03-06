@@ -226,7 +226,8 @@ const content: ContentConfiguration = {
                 companyId: 'Company ID',
                 userPassword: 'User Password',
                 password: 'password',
-                locationEntity: 'Location Entity'
+                locationEntity: 'Location Entity',
+                descriptionText: 'of the Description Field'
             },
             configuration: {
                 connector: {
@@ -401,7 +402,8 @@ const content: ContentConfiguration = {
                 companyId: 'company ID',
                 userPassword: 'User password',
                 password: 'password',
-                locationEntity: 'Location entity'
+                locationEntity: 'Location entity',
+                descriptionText: 'of the description field'
             },
             configuration: {
                 connector: {
