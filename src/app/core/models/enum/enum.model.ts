@@ -69,15 +69,15 @@ export enum BusinessCentralUpdateEvent {
 }
 
 export enum TravelperkUpdateEvent {
-  CONNECT_TRAVELPERK = 'Connect Travelperk',
-  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Import Settings Travelperk',
-  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings Travelperk',
+  CONNECT_TRAVELPERK = 'Connect TravelPerk',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Import Settings TravelPerk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
 }
 
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
-  TRAVELPERK = 'Travelperk',
+  TRAVELPERK = 'TravelPerk',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',

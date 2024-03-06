@@ -2,8 +2,14 @@
     <p-tabMenu [model]="modules" [activeItem]="modules[0]" ></p-tabMenu>
 
     <div class="tw-flex tw-items-center">
+        <button *ngIf="isDisconnectRequired" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-text-danger tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()" [disabled]="isDisabled">
+            <span class="tw-text-14-px">
+                {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
+            </span>
+        </button>
+        
         <span *ngIf="isSyncVisible">
-            <button *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated ' + appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'"
+            <button *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText"
             (click)="refreshDimensions()"
             class="tw-py-8-px tw-px-12-px tw-h-32-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
             <app-svg-icon [svgSource]="'arrow-rotate-sync'" [width]="'14px'" [height]="'14px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
@@ -12,7 +18,7 @@
             </span>
         </button>
         <div class="tw-mr-22-px">
-            <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated ' + appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'">
+            <span class="p-button primary-outline" *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="toolTipText">
                 Sync
             </span>
         </div>
@@ -26,11 +32,5 @@
                 </div>
             </ng-template>
         </p-dropdown>
-
-        <button *ngIf="isDisconnectRequired" class="tw-flex tw-items-center tw-h-32-px tw-py-8-px tw-px-12-px tw-mr-12-px tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform" (click)="disconnect()">
-            <span class="tw-text-14-px">
-                {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
-            </span>
-        </button>
     </div>
 </div>

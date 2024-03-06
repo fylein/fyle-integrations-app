@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingKbArticles, brandingConfig } from 'src/app/branding/branding-config';
+import { brandingKbArticles, brandingConfig, brandingDemoVideoLinks } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity, TravelPerkOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { Org } from 'src/app/core/models/org/org.model';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
@@ -34,6 +34,8 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  embedVideoLink = brandingDemoVideoLinks.onboarding.SAGE300;
+
   isLoading: boolean;
 
   constructor(
@@ -49,7 +51,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     this.travelperkService.disconnect().subscribe(() => {
       this.isIntegrationConnected = false;
       this.isConnectionInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected Travelperk successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected TravelPerk successfully');
     });
   }
 
@@ -74,14 +76,14 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
             this.isIntegrationConnected = true;
             this.isConnectionInProgress = false;
             this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connected Travelperk successfully');
-            this.travelperkData.onboarding_state === TravelPerkOnboardingState.COMPLETE ? '' : this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
+            this.travelperkData?.onboarding_state === TravelPerkOnboardingState.COMPLETE ? '' : this.storageService.set('onboarding-state', TravelPerkOnboardingState.PAYMENT_PROFILE_SETTINGS);
             forkJoin([
               this.travelperkService.syncPaymentProfile(),
               this.travelperkService.syncCategories()
             ]).subscribe(() => {
               popup?.close();
               clearInterval(activePopup);
-              this.travelperkData.onboarding_state === TravelPerkOnboardingState.COMPLETE ? this.router.navigateByUrl('/integrations/travelperk/main') : this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
+              this.travelperkData?.onboarding_state === TravelPerkOnboardingState.COMPLETE ? this.router.navigateByUrl('/integrations/travelperk/main') : this.router.navigateByUrl('/integrations/travelperk/onboarding/payment_profile_settings');
             });
           });
         }

@@ -37,6 +37,12 @@ export class TravelperkMainComponent implements OnInit {
     });
   }
 
+  refreshDimentions():void {
+    this.travelperkService.syncCategories().subscribe();
+    this.travelperkService.syncPaymentProfile().subscribe;
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from TravelPerk CRE');
+  }
+
   private setupPage() {
     this.activeModule = this.modules[0];
     this.router.navigateByUrl(this.modules[0].routerLink);
