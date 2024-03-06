@@ -59,8 +59,8 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),
             costCategory: new FormControl(importSettings?.dependent_field_settings?.cost_category_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_category_field_name, importSettings.dependent_field_settings.cost_category_placeholder) : null),
-            dependentFieldImportToggle: new FormControl(true),
-            addCommitmentDetails: new FormControl(importSettings?.import_settings?.add_commitment_details ?? false)
+            addCommitmentDetails: new FormControl(importSettings?.import_settings?.add_commitment_details ?? false),
+            dependentFieldImportToggle: new FormControl(true)
         });
     }
 
