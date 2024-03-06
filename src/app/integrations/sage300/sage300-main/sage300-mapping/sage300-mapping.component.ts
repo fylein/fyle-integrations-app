@@ -2,7 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -26,6 +26,8 @@ export class Sage300MappingComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
+  readonly brandingConfig = brandingConfig;
+
   constructor(
     private router: Router,
     private mappingService: MappingService
@@ -39,7 +41,7 @@ export class Sage300MappingComponent implements OnInit {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY') {
             this.mappingPages.push({
               label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
-              routerLink: `/integrations/sage300/main/mapping/${item.source_field.toLowerCase()}`
+              routerLink: `/integrations/sage300/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }
         });

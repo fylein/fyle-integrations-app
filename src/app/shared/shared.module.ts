@@ -86,6 +86,9 @@ import { CloneSettingFieldComponent } from './components/onboarding/clone-settin
 import { ToggleComponent } from './components/input/toggle/toggle.component';
 import { MultiSelectComponent } from './components/input/multi-select/multi-select.component';
 import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component';
+import { SearchComponent } from './components/input/search/search.component';
+import { OptionalFieldComponent } from './components/helper/optional-field/optional-field.component';
+import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 
 
 @NgModule({
@@ -154,7 +157,10 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     CloneSettingFieldComponent,
     ToggleComponent,
     MultiSelectComponent,
-    SvgIconComponent
+    SvgIconComponent,
+    SearchComponent,
+    OptionalFieldComponent,
+    SentenceCasePipe
   ],
   imports: [
     CommonModule,
@@ -246,7 +252,10 @@ import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component'
     ToggleComponent,
     MultiSelectComponent,
     SvgIconComponent,
-    SkipExportComponent
+    SearchComponent,
+    SkipExportComponent,
+    OptionalFieldComponent,
+    SentenceCasePipe
   ]
 })
 export class SharedModule { }

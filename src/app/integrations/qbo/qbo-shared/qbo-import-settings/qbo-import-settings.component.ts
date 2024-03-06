@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
@@ -79,6 +79,8 @@ export class QboImportSettingsComponent implements OnInit {
   isImportMerchantsAllowed: boolean;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingContent = brandingContent.configuration.importSetting;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -171,8 +173,17 @@ export class QboImportSettingsComponent implements OnInit {
     });
   }
 
+  private createCOAWatcher(): void {
+    this.importSettingForm.controls.importCategories.valueChanges.subscribe((isImportCategoriesEnabled) => {
+      if (!isImportCategoriesEnabled) {
+        this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
+      }
+    });
+  }
+
   private setupFormWatchers(): void {
     this.createTaxCodeWatcher();
+    this.createCOAWatcher();
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
@@ -199,9 +210,10 @@ export class QboImportSettingsComponent implements OnInit {
       this.mappingService.getFyleFields('v1'),
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.qboConnectorService.getQBOCredentials(),
-      this.mappingService.getDestinationAttributes(QBOField.TAX_CODE, 'v1', 'qbo')
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboCredentials, taxCodes]) => {
-      this.qboFields = QBOImportSettingModel.getQBOFields();
+      this.mappingService.getDestinationAttributes(QBOField.TAX_CODE, 'v1', 'qbo'),
+      this.importSettingService.getQBOFields()
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboCredentials, taxCodes, qboFields]) => {
+      this.qboFields = qboFields;
       this.importSettings = importSettingsResponse;
       this.workspaceGeneralSettings = workspaceGeneralSettings;
       this.taxCodes = taxCodes.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
@@ -211,7 +223,7 @@ export class QboImportSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings);
+      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();

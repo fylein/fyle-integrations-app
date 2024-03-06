@@ -11,15 +11,23 @@
 }
 
 :host ::ng-deep .error-box .p-dropdown {
-    @apply tw-border-alert-toast #{!important};
+    @apply tw-border-select-error-border #{!important};
 }
 
 :host ::ng-deep .normal-box .p-dropdown {
-    @apply tw-border-box-color #{!important};
+    @apply tw-border-select-default-border #{!important};
 }
 
 :host ::ng-deep .normal-box .p-dropdown.p-focus {
-    @apply tw-border-slightly-normal-text-color #{!important};
+    @apply tw-border-select-focused-border #{!important};
+}
+
+:host ::ng-deep .normal-box .p-dropdown.p-disabled {
+    @apply tw-bg-input-read-only-bg tw-border-input-read-only-border tw-border-solid #{!important};
+}
+
+:host ::ng-deep .normal-box .p-dropdown.p-disabled .p-dropdown-label {
+    @apply tw-text-input-read-only-text #{!important};
 }
 
 :host ::ng-deep  .dropdown-size-schedule .p-dropdown {
@@ -31,7 +39,7 @@
 }
 
 .sub-text {
-    @apply tw-text-faded-text-color tw-text-12-px tw-pl-2-px tw-max-w-300-px;
+    @apply tw-text-text-muted tw-text-12-px tw-pl-2-px lg:tw-w-300-px md:tw-w-260-px tw-pt-2-px;
 }
 
 .smaller-th th {
@@ -55,5 +63,5 @@
 }
 
 :host ::ng-deep .p-disabled {
-    @apply tw-text-slightly-normal-text-color tw-bg-disabled-bg-color tw-border tw-opacity-100 #{!important};
-} 
+    @apply tw-text-select-disabled-text tw-bg-select-disabled-bg tw-border-select-disabled-border tw-border-solid tw-opacity-100 #{!important};
+}

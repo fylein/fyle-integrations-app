@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { ExportSettingFormOption, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { AppName, ClickEvent, CorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
@@ -68,6 +68,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() showExportPreview: boolean = false;
 
+  @Input() isAdvanceSearchEnabled: boolean;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
@@ -83,6 +85,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   isOnboarding: boolean = false;
 
   isCCCExportTableVisible: boolean = false;
+
+  optionsCopy: any[];
 
   exportTableData = [
     { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
@@ -123,17 +127,19 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     this.isPreviewDialogVisible = true;
   }
 
-  showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
-    const data: PreviewPage = {
-      intacctReimburse: reimbursableExportType,
-      intacctCCC: creditCardExportType
-    };
-
-    this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.PREVIEW_INTACCT_EXPORT);
-  }
-
   closeDialog() {
     this.isPreviewDialogVisible = false;
+  }
+
+  simpleSearch(query: string) {
+    this.destinationAttributes = this.optionsCopy.filter(attribute => attribute.name?.toLowerCase().includes(query.toLowerCase()) || attribute.value?.toLowerCase().includes(query.toLowerCase()));
+  }
+
+  clearSearch(): void {
+    this.form.controls.searchOption.patchValue('');
+    if (this.destinationAttributes) {
+      this.destinationAttributes = this.optionsCopy.concat();
+    }
   }
 
   searchOptions(event: any) {
@@ -142,5 +148,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
+    if (this.destinationAttributes) {
+      this.optionsCopy = this.destinationAttributes.slice();
+    }
   }
 }

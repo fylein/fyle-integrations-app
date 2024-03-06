@@ -1,17 +1,17 @@
 :host ::ng-deep .error-box .p-dropdown {
-    @apply tw-border-alert-toast #{!important};
+  @apply tw-border-select-error-border #{!important};
 }
 
 :host ::ng-deep .normal-box .p-dropdown {
-    @apply tw-border-box-color #{!important};
+  @apply tw-border-select-default-border #{!important};
 }
 
 :host ::ng-deep .normal-box .p-dropdown.p-focus {
-    @apply tw-border-slightly-normal-text-color #{!important};
+  @apply tw-border-select-focused-border #{!important};
 }
 
 .fields-header {
-    @apply tw-text-14-px tw-text-faded-text-color ;
+    @apply tw-pb-8-px tw-text-14-px tw-text-form-label-text-color;
 }
   
 .delete-icon {
@@ -28,10 +28,6 @@
   
 :host ::ng-deep .p-dropdown .p-dropdown-trigger-icon {
     @apply tw-text-12-px tw-mr-12-px tw-w-auto;
-}
-  
-:host ::ng-deep .p-dropdown .p-dropdown-trigger {
-    @apply tw-w-auto;
 }
   
 :host ::ng-deep .p-calendar .p-inputtext {
@@ -62,7 +58,7 @@
   
   /* Change text color to black */
   :host ::ng-deep .p-chips-token-label {
-    @apply tw-py-4-px tw-px-8-px tw-text-slightly-normal-text-color #{!important};
+    @apply tw-text-chips-body-text-color #{!important};
   }
   
   
@@ -75,7 +71,7 @@
   }
   
   :host ::ng-deep .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext{
-    @apply tw-bg-disabled-bg-color #{!important};
+    @apply tw-bg-input-read-only-bg #{!important};
   }
   
   :host ::ng-deep .p-calendar ::placeholder {
@@ -83,8 +79,7 @@
   }
   
   .chip-hint {
-    font-size: 12px !important;
-    color: grey !important;
+    @apply tw-text-12-px tw-text-form-default-help-text-color #{!important};
   }
   
   :host ::ng-deep .p-dropdown {

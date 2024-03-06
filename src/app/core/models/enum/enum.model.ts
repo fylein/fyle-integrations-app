@@ -7,7 +7,8 @@ export enum IntegrationView {
 
 export enum IntacctCategoryDestination {
   EXPENSE_TYPE = 'EXPENSE_TYPE',
-  ACCOUNT = 'GL_ACCOUNT'
+  ACCOUNT = 'ACCOUNT',
+  GL_ACCOUNT = 'GL_ACCOUNT'
 }
 
 export enum AutoMapEmployeeOptions {
@@ -30,7 +31,8 @@ export enum InAppIntegration {
   TRAVELPERK = 'TravelPerk',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
-  BUSINESS_CENTRAL = 'Dynamics 365 Business Central'
+  BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
+  NETSUITE = 'NetSuite'
 }
 
 export enum ToastSeverity {
@@ -73,7 +75,8 @@ export enum AppName {
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
-  BUSINESS_CENTRAL = 'Dynamics 365 Business Central'
+  BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
+  NETSUITE = 'NetSuite'
 }
 
 export enum AppNameInService {
@@ -156,6 +159,14 @@ export enum QBOOnboardingState {
   CLONE_SETTINGS = 'CLONE_SETTINGS'
 }
 
+export enum NetsuiteOnboardingState {
+  CONNECTION = 'CONNECTION',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  COMPLETE = 'COMPLETE',
+}
+
 export enum Sage300OnboardingState {
   CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
@@ -197,7 +208,7 @@ export enum NameInJournalEntry {
   MERCHANT = 'MERCHANT'
 }
 
-export enum CorporateCreditCardExpensesObject {
+export enum IntacctCorporateCreditCardExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   EXPENSE_REPORT = 'EXPENSE_REPORT',
@@ -343,7 +354,7 @@ export enum MappingState {
 }
 
 export enum AccountingField {
-  ACCOUNT = 'ACCOUNT',
+  ACCOUNT = 'ACCOUNT'
 }
 
 export enum Sage300Field {
@@ -443,7 +454,8 @@ export enum AppUrl {
   SAGE300 = 'sage300',
   BUSINESS_CENTRAL = 'business_central',
   INTEGRATION = 'integration',
-  QBO = 'qbo'
+  QBO = 'qbo',
+  NETSUITE = 'netsuite'
 }
 
 export enum Sage300ExportType {

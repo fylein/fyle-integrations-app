@@ -1,7 +1,7 @@
 <div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
     <app-loader></app-loader>
 </div>
-<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6">
+<div *ngIf="!isLoading" class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header 
             [headerText]="'Advanced Settings'"
@@ -64,7 +64,7 @@
                         [formControllerName]="'memoStructure'">
                     </app-configuration-multi-select>
                     <div class="preview-text">
-                        <h4 class="tw-mb-12-px">Preview of the Description Field</h4>
+                        <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the Description Field</h4>
                         <div class="preview-box">
                             {{memoPreviewText}}
                         </div>
@@ -89,14 +89,14 @@
                         </app-configuration-skip-export>
                     </div>
                 </div>
-                <app-configuration-step-footer 
-                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
-                    [showBackButton] = "isOnboarding"
-                    [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue()"
-                    (save)="save()" 
-                    (navigateToPreviousStep)="navigateBack()">
-                </app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer 
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                [showBackButton] = "isOnboarding"
+                [isButtonDisabled]="!advancedSettingForm.valid || !skipExportForm.valid || !getSkipExportValue()"
+                (save)="save()" 
+                (navigateToPreviousStep)="navigateBack()">
+            </app-configuration-step-footer>
         </form>
     </div>
 </div>

@@ -52,9 +52,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  constructor(
-    public windowService: WindowService
-  ) { }
+  readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
+
+  constructor() { }
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;

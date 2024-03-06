@@ -22,7 +22,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
 
   skipExportLogForm: FormGroup;
 
-  dateOptions: DateFilter[] = AccountingExportModel.getDateOptions();
+  dateOptions: DateFilter[] = AccountingExportModel.getDateOptionsV2();
 
   expenses: SkipExportList[];
 
@@ -45,9 +45,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
     private paginatorService: PaginatorService
   ) { }
 
-  public handleSimpleSearch(event: any) {
-    const query = event.target.value.toLowerCase();
-
+  public handleSimpleSearch(query: string) {
     this.filteredExpenses = this.expenses.filter((group: SkipExportList) => {
       return SkippedAccountingExportModel.getfilteredSkippedAccountingExports(query, group);
     });
@@ -61,7 +59,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter).subscribe((skippedExpenses: SkipExportLogResponse) => {
+    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, null).subscribe((skippedExpenses: SkipExportLogResponse) => {
       if (!this.isDateSelected) {
         this.totalCount = skippedExpenses.count;
       }
@@ -98,20 +96,19 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
       end: ['']
     });
 
-    this.skipExportLogForm.controls.dateRange.valueChanges.subscribe((dateRange) => {
+    this.skipExportLogForm.controls.start.valueChanges.subscribe((dateRange) => {
       const paginator: Paginator = this.paginatorService.getPageSize(PaginatorPage.EXPORT_LOG);
-      if (dateRange) {
+      if (!dateRange) {
+        this.dateOptions = AccountingExportModel.getDateOptionsV2();
+        this.selectedDateFilter = null;
+        this.getSkippedExpenses(paginator.limit, paginator.offset);
+      } else if (dateRange.length && dateRange[1]) {
         this.selectedDateFilter = {
-          startDate: dateRange.startDate,
-          endDate: dateRange.endDate
+          startDate: dateRange[0],
+          endDate: dateRange[1]
         };
 
         this.trackDateFilter('existing', this.selectedDateFilter);
-        this.getSkippedExpenses(paginator.limit, paginator.offset);
-      } else {
-        this.dateOptions = AccountingExportModel.getDateOptions();
-        this.skipExportLogForm.controls.start.patchValue([]);
-        this.selectedDateFilter = null;
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       }
     });

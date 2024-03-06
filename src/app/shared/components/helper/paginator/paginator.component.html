@@ -5,7 +5,7 @@
     <div class="tw-flex tw-items-center">
         <div class="tw-flex tw-items-center tw-pr-30-px">
             <span *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-pr-10-px">Show</span>
-            <span *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-pr-10-px">Items per page:</span>
+            <span *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-pr-10-px tw-text-lv-meta-text-color">Items per page:</span>
             <div>
                 <p-dropdown appendTo="body" [options]="pageNumbers" (onChange)="pageSizeChanges($event)" [(ngModel)]="dropDownValue">
                     <ng-template let-value pTemplate="selectedItem" >
@@ -26,10 +26,10 @@
         </div>
         <div class="tw-flex tw-items-center">
             <span *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-pr-10-px">Page</span>
-            <div *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-border tw-border-separator tw-flex tw-items-center tw-rounded-4-px">
+            <div *ngIf="pageType === PaginatorPage.DASHBOARD" class="tw-border tw-border-border-tertiary tw-flex tw-items-center tw-rounded-4-px">
                 <div class="tw-border-r tw-border-r-separator">
                     <button type="button" class="tw-h-32-px tw-w-30-px prevBtn" (click)="previousPageChange(page)" [disabled]="page === 1" >
-                        <app-svg-icon [svgSource]="'arrow-left-medium'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'arrow-left-medium'" [styleClasses]="'tw-pl-6-px ' + (page === 1 ? 'tw-text-lv-pagination-icon-disable-color': 'tw-text-lv-pagination-icon-active-color')" [height]="'20px'" [width]="'20px'"></app-svg-icon>
                     </button>
                 </div>
                 <div class="tw-w-30-px tw-h-32-px tw-flex tw-items-center tw-justify-center">
@@ -37,32 +37,32 @@
                 </div>
                 <div class="tw-border-l tw-border-l-separator">
                     <button type="button" class="tw-h-32-px tw-w-30-px nextBtn" (click)="nextPageChange(page)" [disabled]="page === totalPages">
-                        <app-svg-icon [svgSource]="'arrow-right-medium'" [styleClasses]="'tw-w-6-px tw-h-12-px tw-pt-6-px'" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'arrow-right-medium'" [styleClasses]="'tw-pl-6-px'" [height]="'20px'" [width]="'20px'"></app-svg-icon>
                     </button>
                 </div>
             </div>
             <div *ngIf="pageType !== PaginatorPage.DASHBOARD" class="tw-flex tw-justify-between">
-                <div class="">
+                <div>
                     <button type="button" class="tw-h-32-px tw-w-32-px prevBtn tw-flex tw-place-items-center" (click)="navigateToPage(1)" [disabled]="page === 1" >
-                        <app-svg-icon [svgSource]="'arrow-bar-left-medium'" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'arrow-bar-left-medium'" [height]="'20px'" [width]="'20px'" [styleClasses]="page === 1 ? 'tw-text-lv-pagination-icon-disable-color': 'tw-text-lv-pagination-icon-active-color'" [isTextColorAllowed]="true"></app-svg-icon>
                     </button>
                 </div>
-                <div class="">
+                <div>
                     <button type="button" class="tw-h-32-px tw-w-32-px prevBtn" (click)="previousPageChange(page)" [disabled]="page === 1" >
-                        <app-svg-icon [svgSource]="'arrow-left-medium'" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'arrow-left-medium'" [height]="'20px'" [width]="'20px'" [styleClasses]="page === 1 ? 'tw-text-lv-pagination-icon-disable-color': 'tw-text-lv-pagination-icon-active-color'" [isTextColorAllowed]="true"></app-svg-icon>
                     </button>
                 </div>
-                <div class="tw-w-fix tw-h-32-px tw-flex tw-items-center tw-justify-center tw-border-2-px tw-border-separator tw-py-8-px tw-px-12-px tw-rounded-4-px tw-bg-white tw-mr-10-px">
+                <div class="tw-w-fix tw-h-32-px tw-flex tw-items-center tw-justify-center tw-border-2-px tw-border-border-tertiary tw-py-8-px tw-px-12-px tw-rounded-4-px tw-bg-white tw-mr-10-px">
                     {{page}} of {{totalPages}}
                 </div>
                 <div >
                     <button type="button" class="tw-h-32-px tw-w-32-px nextBtn" (click)="nextPageChange(page)" [disabled]="page === totalPages">
-                        <app-svg-icon [svgSource]="'arrow-right-medium'" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'arrow-right-medium'" [height]="'20px'" [width]="'20px'" [styleClasses]="page === totalPages ? 'tw-text-lv-pagination-icon-disable-color': 'tw-text-lv-pagination-icon-active-color'" [isTextColorAllowed]="true"></app-svg-icon>
                     </button>
                 </div>
                 <div>
                     <button type="button" class="tw-h-32-px tw-w-32-px nextBtn tw-flex tw-place-items-center" (click)="navigateToPage(totalPages)" [disabled]="page === totalPages">
-                        <app-svg-icon [svgSource]="'arrow-bar-right-medium'" [height]="'18px'" [width]="'18px'"></app-svg-icon>
+                        <app-svg-icon [svgSource]="'arrow-bar-right-medium'" [height]="'20px'" [width]="'20px'" [styleClasses]="page === totalPages ? 'tw-text-lv-pagination-icon-disable-color': 'tw-text-lv-pagination-icon-active-color'" [isTextColorAllowed]="true"></app-svg-icon>
                     </button>
                 </div>
             </div>

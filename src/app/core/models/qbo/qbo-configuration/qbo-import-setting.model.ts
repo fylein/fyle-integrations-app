@@ -34,23 +34,6 @@ export type QBOImportSettingGet = {
 
 
 export class QBOImportSettingModel extends ImportSettingsModel {
-  static getQBOFields(): IntegrationField[] {
-    return [
-      {
-        attribute_type: QBOField.CLASS,
-        display_name: 'Class'
-      },
-      {
-        attribute_type: QBOField.DEPARTMENT,
-        display_name: 'Department'
-      },
-      {
-        attribute_type: QBOField.CUSTOMER,
-        display_name: 'Customer'
-      }
-    ];
-  }
-
   static getChartOfAccountTypesList(): string[] {
     return [
       'Expense', 'Other Expense', 'Fixed Asset', 'Cost of Goods Sold', 'Current Liability', 'Equity',
@@ -58,16 +41,17 @@ export class QBOImportSettingModel extends ImportSettingsModel {
     ];
   }
 
-  static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null): FormGroup {
-    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, this.getQBOFields()) : [];
+  static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null, qboFields: IntegrationField[]): FormGroup {
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, qboFields) : [];
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
-      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts : []),
+      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts : ['Expense']),
       importItems: new FormControl(importSettings?.workspace_general_settings.import_items ?? false),
       taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
       importVendorsAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_vendors_as_merchants ?? false),
-      defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null)
+      defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
+      searchOption: new FormControl('')
     });
   }
 

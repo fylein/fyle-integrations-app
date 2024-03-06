@@ -3,15 +3,14 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { Observable, from } from 'rxjs';
 import { HelperService } from './helper.service';
-import { GroupedDestinationAttribute } from '../../models/db/destination-attribute.model';
+import { GroupedDestinationAttribute, PaginatedDestinationAttribute } from '../../models/db/destination-attribute.model';
 import { IntegrationField, FyleField, MappingStats, GenericMappingApiParams } from '../../models/db/mapping.model';
 import { EmployeeMapping, EmployeeMappingPost } from '../../models/db/employee-mapping.model';
-import { AccountingDisplayName, MappingState } from '../../models/enum/enum.model';
+import { AccountingDisplayName, AppName, AppUrl, MappingState } from '../../models/enum/enum.model';
 import { GenericMappingResponse } from '../../models/db/extended-generic-mapping.model';
 import { CategoryMapping, CategoryMappingPost } from '../../models/db/category-mapping.model';
 import { GenericMapping, GenericMappingPost } from '../../models/db/generic-mapping.model';
 import { MappingSettingResponse } from '../../models/db/mapping-setting.model';
-
 
 @Injectable({
   providedIn: 'root'
@@ -115,7 +114,7 @@ export class MappingService {
     }
   }
 
-  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean): Observable<GenericMappingResponse> {
+  getGenericMappingsV2(pageLimit: number, pageOffset: number, destinationType: string, mappingState: MappingState, alphabetsFilter: string, sourceType: string, isCategoryMappingGeneric?: boolean, searchQuery? :string | null): Observable<GenericMappingResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const isMapped: boolean = mappingState === MappingState.UNMAPPED ? false : true;
     const params: GenericMappingApiParams = {
@@ -126,6 +125,10 @@ export class MappingService {
       source_type: sourceType
     };
 
+    if (searchQuery) {
+      params.value = searchQuery;
+    }
+
     if (alphabetsFilter && alphabetsFilter !== 'All') {
       params.mapping_source_alphabets = alphabetsFilter;
     }
@@ -135,13 +138,13 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/${endpoint}/`, params);
   }
 
-  getMappingStats(sourceType: string, destinationType: string, appName: string): Observable<MappingStats> {
+  getMappingStats(sourceType: string, destinationType: string, appName: AppName): Observable<MappingStats> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, {
       source_type: sourceType,
       destination_type: destinationType,
-      app_name: appName
+      app_name: appName !== AppName.INTACCT ? appName : AppUrl.INTACCT.toUpperCase()
     });
   }
 
@@ -152,6 +155,26 @@ export class MappingService {
 
   postMapping(mapping: GenericMappingPost): Observable<GenericMapping> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
+  }
+
+  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string): Observable<PaginatedDestinationAttribute> {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, display_name__in?: string} = {
+      limit: 100,
+      offset: 0,
+      attribute_type: attributeType,
+      active: true
+    };
+
+    if (value) {
+      params.value__icontains = value;
+    }
+
+    if (display_name) {
+      params.display_name__in = display_name;
+    }
+
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/paginated_destination_attributes/`, params);
   }
 
 }

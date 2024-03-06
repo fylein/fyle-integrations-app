@@ -10,17 +10,20 @@ const ICON_MAPPING = {
   'arrow-tail-down': 'grv-arrow-down',
   'arrow-tail-left-medium': 'grv-arrow-left-medium',
   'arrow-tail-right-medium': 'grv-arrow-right-medium',
+  'arrow-tail-right-small': 'grv-arrow-right-small',
   'arrow-tail-up-down': 'grv-sort',
   'arrow-tail-up-medium': 'grv-arrow-up-medium',
   'arrow-tail-up': 'grv-arrow-up',
   'bin': 'grv-trash',
   'calendar': 'grv-calendar',
+  'calendar-medium': 'grv-calendar-medium',
   'check-circle-outline-small': 'grv-checkmark-encircled-small',
   'check-circle-outline': 'grv-checkmark-encircled',
   'check-circle-outline-medium': 'grv-checkmark-encircled-medium',
   'check-medium': 'grv-checkmark-medium',
   'check': 'grv-checkmark',
   'check-large': 'grv-checkmark-large',
+  'cross-xs-small': 'grv-close-xs-small',
   'cross-medium': 'grv-close-medium',
   'cross-small': 'grv-close-small',
   'cross': 'grv-close',
@@ -34,8 +37,8 @@ const ICON_MAPPING = {
   'flash-on': 'grv-flash-on',
   'gear-medium': 'grv-settings-medium',
   'gear': 'grv-settings',
-  'info-circle-fill-medium': 'info-medium',
-  'info-circle-fill': 'info',
+  'info-circle-fill-medium': 'c1-info-medium',
+  'info-circle-fill': 'c1-info-small',
   'line': 'line',
   'link-vertical-medium': 'grv-link-medium',
   'list': 'grv-notes',
@@ -48,6 +51,7 @@ const ICON_MAPPING = {
   'user-plus': 'grv-person',
   'user-two': 'grv-persons',
   'warning-outline': 'grv-caution-triangle-small',
+  'grv-cross-filled-medium': 'grv-cross-filled-medium',
   'search-medium': 'grv-search-medium',
   'arrow-left-medium': 'grv-chevron-left-medium',
   'arrow-right-medium': 'grv-chevron-right-medium',
@@ -63,6 +67,8 @@ const ICON_MAPPING = {
 export class SvgIconComponent implements OnInit {
 
   @Input() svgSource: string;
+
+  @Input() c1SvgSource: string;
 
   @Input() width: string;
 
@@ -86,8 +92,12 @@ export class SvgIconComponent implements OnInit {
 
   private setupProperties(): void {
     if (brandingConfig.brandId === 'co') {
-      // @ts-ignore
-      this.svgSource = ICON_MAPPING[this.svgSource];
+      if (this.c1SvgSource) {
+        this.svgSource = this.c1SvgSource.toString();
+      } else {
+        // @ts-ignore
+        this.svgSource = ICON_MAPPING[this.svgSource];
+      }
 
       if (!this.isTextColorAllowed) {
         // Remove all text classes and add default text color

@@ -186,7 +186,8 @@ export class BusinessCentralExportSettingModel {
             reimbursableEmployeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : null, Validators.required),
             journalEntryNamePreference: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : null),
             autoMapEmployee: new FormControl(exportSettings?.auto_map_employees ? exportSettings?.auto_map_employees : null),
-            defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? findObjectByDestinationId(destinationAttribute.VENDOR, exportSettings?.default_vendor_id) : null)
+            defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? findObjectByDestinationId(destinationAttribute.VENDOR, exportSettings?.default_vendor_id) : null),
+            searchOption: new FormControl('')
         });
     }
 

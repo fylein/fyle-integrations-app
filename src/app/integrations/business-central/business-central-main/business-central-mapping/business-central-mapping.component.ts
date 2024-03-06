@@ -2,7 +2,7 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { FyleField } from 'src/app/core/models/enum/enum.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
@@ -25,6 +25,8 @@ export class BusinessCentralMappingComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
+  readonly brandingConfig = brandingConfig;
+
   constructor(
     private router: Router,
     private mappingService: MappingService
@@ -38,7 +40,7 @@ export class BusinessCentralMappingComponent implements OnInit {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!==FyleField.CATEGORY) {
             this.mappingPages.push({
               label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
-              routerLink: `/integrations/business_central/main/mapping/${item.source_field.toLowerCase()}`
+              routerLink: `/integrations/business_central/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }
         });

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { AccountingExportSummary } from 'src/app/core/models/db/accounting-export-summary.model';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
@@ -39,6 +40,10 @@ export class DashboardExportSummarySectionComponent implements OnInit {
 
   private org_id: string = this.userService.getUserProfile().org_id;
 
+  readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.dashboard;
+
   constructor(
     private accountingExportService: AccountingExportService,
     private exportLogService: ExportLogService,
@@ -55,9 +60,9 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   }
 
   private getExpenseGroups(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null): void {
-    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, null, lastExportedAt).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, null, lastExportedAt, null, this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id)
+        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
       );
       this.setFormattedAccountingExport(accountingExports);
     });
@@ -85,6 +90,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   }
 
   showExportLog(status: AccountingExportStatus) {
+    this.filteredAccountingExports = [];
     this.isExportLogFetchInProgress = true;
     this.exportLogHeader = status === AccountingExportStatus.COMPLETE ? 'Successful' : 'Failed';
     this.exportLogSubHeader = status === AccountingExportStatus.COMPLETE ? 'These expenses have been successfully exported to your ' + this.appName +'.' : 'These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again';

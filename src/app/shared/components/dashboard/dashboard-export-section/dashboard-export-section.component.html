@@ -1,33 +1,35 @@
-<div class="tw-py-32-px tw-px-120-px">
-    <div *ngIf="!isImportInProgress" class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator tw-z-1 tw-relative">
+<div class="tw-py-32-px" [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
+    <div *ngIf="!isImportInProgress" class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-z-1 tw-relative" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">
                 <div class="tw-w-4/5">
                     <div class="tw-flex tw-items-center">
-                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px'" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length" [svgSource]="'check'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
-                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px tw-text-icon-secondary'" *ngIf="(!isExportInProgress && exportableAccountingExportIds.length) || (isExportInProgress)" [svgSource]="'arrow-tail-up'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary"> Sit back and relax!</h3>
+                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px'" *ngIf="brandingFeatureConfig.illustrationsAllowed && !isExportInProgress && !exportableAccountingExportIds.length" [svgSource]="'check'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
+                        <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px tw-text-icon-secondary'" *ngIf="brandingFeatureConfig.illustrationsAllowed && ((!isExportInProgress && exportableAccountingExportIds.length) || (isExportInProgress))" [svgSource]="'arrow-tail-up'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
+                        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary">{{brandingContent.exportHeaderFirstTimeZeroStateText}}</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="isExportInProgress"> Exporting {{ processedCount }} of {{ exportableAccountingExportIds.length }} expense{{exportableAccountingExportIds.length > 1 ? 's' : ''}} to your {{appName}} account</h3>
                         <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && exportableAccountingExportIds.length"> {{ exportableAccountingExportIds.length }} expense{{exportableAccountingExportIds.length > 1 ? 's' : ''}} ready to export</h3>
-                        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">You are all caught up!</h3>
+                        <h3 class="tw-text-20-px tw-font-500 tw-text-text-primary" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">{{brandingContent.exportHeaderZeroStateText}}</h3>
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-flex tw-text-info tw-ml-4-px'" [tooltipText]="'All expenses that have reached your export state in ' + brandingConfig.brandName + ' will be automatically imported and kept ready for export.'" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pl-34-px tw-pt-8-px" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary">
-                        No new expenses to export right now
-                        <br>
-                        Once expenses are {{ importStates }}, they'll automatically be available here for export
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && !accountingExportSummary">
+                        No new expenses to export right now.
+                        <p class="tw-pt-4-px">
+                            Once expenses are {{ importStates }}, they'll automatically be available here for export.
+                        </p>
                     </h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pl-34-px tw-pt-8-px" *ngIf="isExportInProgress">This may take a few minutes...</h5>
-                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pl-34-px tw-pt-8-px" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">
-                        No new expenses to export right now
-                        <br>
-                        Once expenses are {{ importStates }}, they'll automatically be available here for export
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="isExportInProgress">This may take a few minutes...</h5>
+                    <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">
+                        No new expenses to export right now.
+                        <p class="tw-pt-4-px">
+                            Once expenses are {{ importStates }}, they'll automatically be available here for export.
+                        </p>
                     </h5>
-                    <div *ngIf="!isExportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-34-px tw-pt-8-px tw-flex">
-                        <h5>{{ exportableAccountingExportIds.length - failedExpenseGroupCount > 0 ? exportableAccountingExportIds.length - failedExpenseGroupCount : 0 }} new expense{{(exportableAccountingExportIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed expense{{failedExpenseGroupCount > 1 ? 's' : ''}}</h5>
+                    <div *ngIf="!isExportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pt-8-px tw-flex" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}">
+                        <h5>{{ exportableAccountingExportIds.length - failedExpenseGroupCount > 0 ? exportableAccountingExportIds.length - failedExpenseGroupCount : 0 }} new expense{{(exportableAccountingExportIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed expense{{failedExpenseGroupCount > 1 ? 's' : ''}}.</h5>
                     </div>
-                    <div *ngIf="!isExportInProgress && exportableAccountingExportIds.length && (failedExpenseGroupCount === null || failedExpenseGroupCount === 0)" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pl-34-px tw-pt-8-px tw-flex">
-                        <h5>{{ exportableAccountingExportIds.length }} new expense{{(exportableAccountingExportIds.length) > 1 ? 's' : ''}}, {{ 0 }} previously failed expense</h5>
+                    <div *ngIf="!isExportInProgress && exportableAccountingExportIds.length && (failedExpenseGroupCount === null || failedExpenseGroupCount === 0)" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pt-8-px tw-flex" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}">
+                        <h5>{{ exportableAccountingExportIds.length }} new expense{{(exportableAccountingExportIds.length) > 1 ? 's' : ''}}, {{ 0 }} previously failed expense.</h5>
                     </div>
                 </div>
                 <div class="tw-flex tw-items-end tw-justify-end">

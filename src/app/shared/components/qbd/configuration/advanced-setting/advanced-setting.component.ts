@@ -198,7 +198,8 @@ export class AdvancedSettingComponent implements OnInit {
           dayOfWeek: [this.advancedSettings?.day_of_week ? this.advancedSettings?.day_of_week : null],
           timeOfDay: [resultTime[0]],
           meridiem: [resultTime[1]],
-          search: []
+          search: [],
+          searchOption: []
       });
       this.isLoading = false;
       this.setCustomValidator();
