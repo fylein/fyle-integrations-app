@@ -54,6 +54,10 @@ p {
     .pi-search {
         content: url('./assets/icons/co/grv-search-medium.svg') !important;
     }
+
+    .pi-check {
+        content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
+    }
 }
 
 [data-theme='fyle'] {
@@ -408,7 +412,11 @@ p {
 }
 
 .p-checkbox .p-checkbox-box {
-    @apply tw-h-16-px tw-w-16-px tw-rounded-4-px tw-transition-none tw-border tw-border-checkbox-icon-color #{!important};
+    @apply tw-h-16-px tw-w-16-px tw-rounded-5-px tw-transition-none tw-border-[1.5px] tw-border-checkbox-icon-color #{!important};
+}
+
+.p-checkbox-box {
+    @apply tw-border-[1.5px] #{!important};
 }
 
 .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
@@ -428,7 +436,7 @@ p {
 }
 
 .p-checkbox .p-checkbox-box.p-highlight {
-    @apply tw-bg-checkbox-icon-selected-color tw-border-none tw-pb-5-px #{!important};
+    @apply tw-bg-checkbox-icon-selected-color tw-border-none tw-pb-checkbox-marked-icon-spacing #{!important};
 }
 
 .pi-check:before {
