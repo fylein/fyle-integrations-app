@@ -258,13 +258,13 @@ const content: ContentConfiguration = {
                     autoCreateEmployeeVendor: 'Auto-Create ',
                     postEntriesCurrentPeriod: 'Post Entries in the Current Accounting Period',
                     setDescriptionField: 'Set the Description Field in Sage Intacct',
-                    dfvLabel:'Default Field Values',
+                    dfvLabel: 'Default Field Values',
                     dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For Location and Department, you can opt to use the values from your employee records in Sage Intacct.',
                     location: 'Location',
                     department: 'Department',
                     project: 'Project',
                     class: 'Class',
-                    item: 'Item',
+                    item: 'Item'
                 },
                 done: {
                     ctaText: '',
@@ -431,13 +431,13 @@ const content: ContentConfiguration = {
                     autoCreateEmployeeVendor: 'Auto-create ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     setDescriptionField: 'Set the description field in Sage Intacct',
-                    dfvLabel:'Default field values',
+                    dfvLabel: 'Default field values',
                     dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Sage Intacct.',
                     location: 'location',
                     department: 'department',
                     project: 'project',
                     class: 'class',
-                    item: 'item',
+                    item: 'item'
                 },
                 done: {
                     ctaText: '',

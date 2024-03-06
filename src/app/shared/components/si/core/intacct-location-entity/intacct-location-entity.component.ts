@@ -37,7 +37,7 @@ export class IntacctLocationEntityComponent implements OnInit {
 
   workspaceId: number;
 
-  appName: AppName = AppName.INTACCT
+  appName: AppName = AppName.INTACCT;
 
   ConfigurationCtaText = ConfigurationCta;
 
