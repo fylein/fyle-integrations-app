@@ -150,9 +150,9 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
-      this.travelperkService.getTravelperkAdvancedSettings().pipe(catchError(() => of(null)))
-      // This.travelperkService.getCategories()
-    ]).subscribe(([travelperkAdvancedSettingsResponse]) => {
+      this.travelperkService.getTravelperkAdvancedSettings().pipe(catchError(() => of(null))),
+      this.travelperkService.getCategories()
+    ]).subscribe(([travelperkAdvancedSettingsResponse, travelperkDestinationAttribute]) => {
       this.advancedSettings = travelperkAdvancedSettingsResponse;
       this.defaultCategories = travelperkDestinationAttribute;
       this.advancedSettingsForm = TravelperkAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, travelperkDestinationAttribute);

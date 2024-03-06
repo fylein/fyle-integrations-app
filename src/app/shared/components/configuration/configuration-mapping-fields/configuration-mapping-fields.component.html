@@ -5,7 +5,7 @@
                 <div class="tw-flex tw-justify-start tw-items-center">
                     <div>
                         <div *ngIf="i===0" class="tw-text-16-px tw-font-500 tw-text-normal-text-color tw-mb-18-px">
-                            <p>{{ destinationFieldText }}<app-mandatory-field *ngIf="isMandatory"></app-mandatory-field></p>
+                            <p>{{ destinationFieldText }}</p>
                         </div>
                         <p-dropdown appendTo="body" [options]="destinationFieldOptions" [placeholder]="destinationPlaceholderFieldText" [formControlName]="'destinationName'" dropdownIcon="pi pi-chevron-down"
                         [optionLabel]="destinationAttributeNames.label" [optionValue]="destinationAttributeNames.value" class="!tw-w-360-px" [disabled]="isDestinationDisabled">
@@ -43,9 +43,7 @@
                                     [pTooltip]="isOverflowing(textElement) ? item[sourceAttributeNames.label] : null" tooltipPosition="top">
                                         {{ item[sourceAttributeNames.label] }}
                                     </span>
-                                    <div class="tw-self-end">
-                                        <i *ngIf="showCrossIcon  && mappingField.value.sourceName" class="pi pi-times tw-mr-4-px" (click)="removeFilter(mappingField)"></i>
-                                    </div>
+                                    <app-svg-icon  *ngIf="showCrossIcon  && mappingField.value.sourceName" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(mappingField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                         </p-dropdown>
                     </div>

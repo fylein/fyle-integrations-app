@@ -63,9 +63,7 @@
                         <span>
                             {{ item.label }}
                         </span>
-                        <div class="tw-self-end">
-                            <i *ngIf="showClearIcon && !isDisabled" class="tw-align-top" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-times fyle' : 'pi pi-times co']" (click)="removeFilter(form.controls[formControllerName])"></i>
-                        </div>
+                        <app-svg-icon  *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                     </ng-template>
                 </p-dropdown>
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
