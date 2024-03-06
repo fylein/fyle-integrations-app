@@ -42,6 +42,8 @@ export type ContentConfiguration = {
                         cccExpenseState: string;
                         cccExportGroup: string;
                         employeeFieldMapping: string;
+                        creditCard: string;
+                        creditCardSubLabel: string;
                     }
                 },
                 advancedSettings: {
