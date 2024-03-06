@@ -103,18 +103,6 @@
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingsForm.value.reimbursableExportType ? exportSettingsForm.value.reimbursableExportType : IntacctReimbursableExpensesObject.EXPENSE_REPORT) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct.'"
-                        [options]="reimbursableExpenseGroupingDateOptions"
-                        [iconPath]="'calendar'"
-                        [placeholder]="'Select date'"
-                        [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'how expenses to be grouped'"
                         [label]="'How should the expenses be grouped?'"
                         [subLabel]="'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)'"
@@ -123,6 +111,18 @@
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
                     </div>
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export date'"
+                        [label]="'Set the ' + getExportType(exportSettingsForm.value.reimbursableExportType ? exportSettingsForm.value.reimbursableExportType : IntacctReimbursableExpensesObject.EXPENSE_REPORT) + ' date as'"
+                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct. Click here for more details.'"
+                        [options]="reimbursableExpenseGroupingDateOptions"
+                        [iconPath]="'calendar'"
+                        [placeholder]="'Select date'"
+                        [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
+                    </div>
                 </div>
             </div>
             <div>
@@ -130,7 +130,7 @@
                     <app-configuration-toggle-field
                     [form]="exportSettingsForm"
                     [label]="brandingContent.configuration.exportSetting.headerText" 
-                    [subLabel]="brandingContent.intacct.configuration.exportSetting.headerText" 
+                    [subLabel]="brandingContent.intacct.configuration.exportSetting.contentText" 
                     [formControllerName]="'creditCardExpense'"
                     [isSectionHeader]="true"></app-configuration-toggle-field>
                 </div>
@@ -238,18 +238,6 @@
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field
-                        [form]="exportSettingsForm"
-                        [isFieldMandatory]="true"
-                        [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + getExportType(exportSettingsForm.value.cccExportType) + ' date as'"
-                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct.'"
-                        [options]="cccExpenseGroupingDateOptions"
-                        [iconPath]="'calendar'"
-                        [placeholder]="'Select date'"
-                        [formControllerName]="'cccExportDate'"></app-configuration-select-field>
-                    </div>
-                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!==IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -274,6 +262,18 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'export date'"
+                        [label]="'Set the ' + getExportType(exportSettingsForm.value.cccExportType) + ' date as'"
+                        [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage Intacct. Click here for more details.'"
+                        [options]="cccExpenseGroupingDateOptions"
+                        [iconPath]="'calendar'"
+                        [placeholder]="'Select date'"
+                        [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     </div>
                 </div>
             </div>

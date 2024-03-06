@@ -19,7 +19,7 @@
                     [label]="'Automation'"
                     [subLabel]="'You can automate the export and sync of your data in this section.'">
                 </app-configuration-step-sub-header>
-                <div class="tw-mb-16-px">
+                <div class="tw-my-16-px">
                     <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                         <app-configuration-toggle-field
                             [form]="advancedSettingsForm"
@@ -136,7 +136,7 @@
                 [subLabel]="brandingContent.intacct.configuration.advancedSettings.dfvSubLabel">
             </app-configuration-step-sub-header>
             <div class="tw-pt-28-px tw-pl-6 field-label">
-                <div><label>Default {{brandingContent.intacct.configuration.advancedSettings.location}}</label></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.location}}</label></div>
                 <div class="tw-pt-2">
                     <p-dropdown appendTo="body" [options]="sageIntacctLocations" optionLabel="value" 
                     formControlName="defaultLocation" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.location}}" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultLocation.value, 'filterDropdown': !advancedSettingsForm.controls.defaultLocation.value, 'hideClearIcon': advancedSettingsForm.controls['defaultLocation'].value}">
@@ -155,7 +155,7 @@
               </div>
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
-                <div><label>Default {{brandingContent.intacct.configuration.advancedSettings.department}}</label></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.department}}</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctDepartments" optionLabel="value"
                   formControlName="defaultDepartment" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.department}}" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultDepartment.value, 'filterDropdown': !advancedSettingsForm.controls.defaultDepartment.value, 'hideClearIcon': advancedSettingsForm.controls['defaultDepartment'].value}">
@@ -174,7 +174,7 @@
               </div> 
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
-                <div><label>Default {{brandingContent.intacct.configuration.advancedSettings.project}}</label></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.project}}</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctProjects" optionLabel="value"
                   formControlName="defaultProject" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.project}}" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultProject.value, 'filterDropdown': !advancedSettingsForm.controls.defaultProject.value, 'hideClearIcon': advancedSettingsForm.controls['defaultProject'].value}">
@@ -189,7 +189,7 @@
               </div> 
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
-                <div><label>Default {{brandingContent.intacct.configuration.advancedSettings.class}}</label></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.class}}</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctClasses" optionLabel="value"
                   formControlName="defaultClass" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.class}}" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultClass.value, 'filterDropdown': !advancedSettingsForm.controls.defaultClass.value, 'hideClearIcon': advancedSettingsForm.controls['defaultClass'].value}">
@@ -204,7 +204,7 @@
               </div> 
 
               <div class="tw-pt-20-px tw-pl-6 field-label">
-                <div><label>Default {{brandingContent.intacct.configuration.advancedSettings.item}}</label></div>
+                <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.item}}</label></div>
                 <div class="tw-pt-2">
                   <p-dropdown appendTo="body" [options]="sageIntacctDefaultItem" optionLabel="value"
                   formControlName="defaultItems" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.item}}" [ngClass]="{'selectedItem': advancedSettingsForm.controls.defaultItems.value, 'filterDropdown': !advancedSettingsForm.controls.defaultItems.value, 'hideClearIcon': advancedSettingsForm.controls['defaultItems'].value}">

@@ -348,6 +348,55 @@ export class IntacctExportSettingsComponent implements OnInit {
       });
     }
 
+    private updateCCCGroupingDateOptions(cccExportGroup: ExpenseGroupingFieldOption): void {
+      const options: ExportSettingFormOption[] = [];
+      if (cccExportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || cccExportGroup === ExpenseGroupingFieldOption.REPORT_ID) {
+        options.push(
+          {
+            label: 'Current Date',
+            value: ExportDateType.CURRENT_DATE
+          },
+          {
+            label: 'Last Spend Date',
+            value: ExportDateType.LAST_SPENT_AT
+          },
+          {
+            label: 'Approved Date',
+            value: ExportDateType.APPROVAL_DATE
+          }
+        );
+      } else {
+        options.push(
+          {
+            label: 'Current Date',
+            value: ExportDateType.CURRENT_DATE
+          },
+          {
+            label: 'Spend Date',
+            value: ExportDateType.SPENT_AT
+          }
+        );
+      }
+
+      if (this.exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+        options.push(
+          {
+            label: 'Card Transaction Post date',
+            value: ExportDateType.POSTED_AT
+          }
+        );
+      }
+      this.cccExpenseGroupingDateOptions = options.concat();
+    }
+
+    private setupCCCGroupingWatcher(): void {
+      if (brandingConfig.brandId === 'co') {
+        this.updateCCCGroupingDateOptions(this.exportSettingsForm.value.cccExportGroup);
+        this.exportSettingsForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {
+          this.updateCCCGroupingDateOptions(cccExportGroup);
+        });
+      }
+    }
 
     private exportFieldsWatcher(): void {
       if (this.exportSettings?.configurations?.reimbursable_expenses_object === IntacctReimbursableExpensesObject.JOURNAL_ENTRY || this.exportSettings?.configurations?.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
@@ -363,6 +412,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.createReimbursableExpenseWatcher();
       this.createCreditCardExpenseWatcher();
       this.cccWatcher();
+      this.setupCCCGroupingWatcher();
     }
 
     private setupCCCExpenseGroupingDateOptions(): void {
@@ -427,11 +477,13 @@ export class IntacctExportSettingsComponent implements OnInit {
         creditCardVendor: [findObjectById(this.destinationOptions.VENDOR, generalMappings?.default_ccc_vendor.id)],
         creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
         chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)],
-        useMerchantInJournalLine: [brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine ? (configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false) : true]
+        useMerchantInJournalLine: [brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine ? (configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false) : true],
+        searchOption: ['']
       });
 
       if (brandingConfig.brandId === 'co') {
         this.exportSettingsForm.controls.creditCardExpense.patchValue(true);
+        this.exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
       }
 
       this.exportFieldsWatcher();
