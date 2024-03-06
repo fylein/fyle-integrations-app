@@ -63,7 +63,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   showOrHideAddButton() {
-    if (this.form.controls.expenseFields.value.length === this.accountingFieldOptions.length) {
+    if (this.form.controls.expenseFields.value.length === this.accountingFieldOptions?.length) {
       return false;
     }
     return true;
