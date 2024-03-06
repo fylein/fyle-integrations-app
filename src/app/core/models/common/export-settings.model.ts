@@ -1,5 +1,5 @@
 import { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
-import { ExpenseGroupingFieldOption } from "../enum/enum.model";
+import { ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from "../enum/enum.model";
 
 export type ExportSettingValidatorRule = {
     reimbursableExpense: string[];
@@ -27,5 +27,43 @@ export class ExportSettingModel {
             name: destinationAttribute.value,
             id: destinationAttribute.destination_id
         };
+    }
+
+    static constructCCCOptions(brandId: string) {
+        if (brandId === 'fyle') {
+            return [
+                {
+                  label: 'Bill',
+                  value: IntacctReimbursableExpensesObject.BILL
+                },
+                {
+                  label: 'Expense Report',
+                  value: IntacctReimbursableExpensesObject.EXPENSE_REPORT
+                },
+                {
+                  label: 'Journal Entry',
+                  value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
+                },
+                {
+                  label: 'Charge Card Transaction',
+                  value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
+                }
+              ];
+        }
+            return [
+                {
+                  label: 'Bill',
+                  value: IntacctReimbursableExpensesObject.BILL
+                },
+                {
+                  label: 'Journal Entry',
+                  value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
+                },
+                {
+                  label: 'Charge Card Transaction',
+                  value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
+                }
+              ];
+
     }
 }

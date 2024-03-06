@@ -1,0 +1,3 @@
+:host ::ng-deep .p-disabled .p-dropdown-trigger, :host ::ng-deep .hideClearIcon .p-dropdown-trigger{
+    @apply tw-hidden #{!important};
+}

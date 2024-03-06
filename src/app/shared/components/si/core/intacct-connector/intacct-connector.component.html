@@ -3,7 +3,7 @@
 </div>
 <div  class="configuration--contents tw-border-separator tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
    <div>
-      <app-configuration-step-header 
+      <app-configuration-step-header *ngIf="!isLoading"
       [headerText]="'Connect to Sage Intacct'"
       [contentText]="'Connect to your Sage Intacct account to establish a connection between ' + brandingConfig.brandName + ' and Sage Intacct.'"
       [redirectLink]="redirectLink"></app-configuration-step-header>
@@ -38,5 +38,5 @@
        </form>
        
       </div>
-      <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
+      <app-configuration-step-footer *ngIf="!isLoading" [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectSageIntacctForm.valid"></app-configuration-step-footer>
 </div>

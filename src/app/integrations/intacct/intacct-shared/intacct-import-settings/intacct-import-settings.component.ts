@@ -506,7 +506,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         if (configuration.employee_field_mapping==='EMPLOYEE') {
           this.intacctCategoryDestination = IntacctCategoryDestination.EXPENSE_TYPE;
         } else {
-          this.intacctCategoryDestination = IntacctCategoryDestination.ACCOUNT;
+          this.intacctCategoryDestination = IntacctCategoryDestination.GL_ACCOUNT;
         }
         this.initializeForm(importSettings);
       }
