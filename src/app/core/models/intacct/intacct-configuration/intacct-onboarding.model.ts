@@ -1,4 +1,4 @@
-import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { IntacctOnboardingState } from "../../enum/enum.model";
 import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
@@ -16,7 +16,7 @@ export class IntacctOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Connect to Sage Intacct',
+          step: brandingContent.intacct.configuration.connector.stepName,
           icon: 'link-vertical-medium',
           route: '/integrations/intacct/onboarding/connector',
           styleClasses: ['step-name-connector--text']
@@ -24,7 +24,7 @@ export class IntacctOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Export Settings',
+          step: brandingContent.intacct.configuration.exportSetting.stepName,
           icon: 'arrow-tail-up-medium',
           route: '/integrations/intacct/onboarding/export_settings',
           styleClasses: ['step-name-export--text']
@@ -32,7 +32,7 @@ export class IntacctOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Import Settings',
+          step: brandingContent.configuration.importSetting.stepName,
           icon: 'arrow-tail-down-medium',
           route: '/integrations/intacct/onboarding/import_settings',
           styleClasses: ['step-name-export--text']
@@ -40,7 +40,7 @@ export class IntacctOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Advanced Settings',
+          step: brandingContent.intacct.configuration.advancedSettings.stepName,
           icon: 'gear-medium',
           route: '/integrations/intacct/onboarding/advanced_settings',
           styleClasses: ['step-name-advanced--text']
@@ -67,10 +67,6 @@ export class IntacctOnboardingModel {
 
         for (let index = this.onboardingStateStepMap[onboardingState] - 2; index > 0; index--) {
           this.onboardingSteps[index - 1].completed = true;
-        }
-
-        if (!brandingFeatureConfig.featureFlags.mapEmployees) {
-          this.onboardingSteps.splice(1, 1);
         }
 
         return this.onboardingSteps;
