@@ -248,7 +248,7 @@ const content: ContentConfiguration = {
                         cccExportGroup: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
                         employeeFieldMapping: 'How are your Employees represented in Sage Intacct?',
                         creditCard: 'To which GL Account should the expenses be credited to?',
-                        creditCardSubLabel: 'The integration will credit the account selected here for Corporate Credit Card Expenses exported as Journal Entries.',
+                        creditCardSubLabel: 'The integration will credit the account selected here for Corporate Credit Card Expenses exported as Journal Entries.'
                     }
                 },
                 advancedSettings: {
@@ -423,7 +423,7 @@ const content: ContentConfiguration = {
                         cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
                         employeeFieldMapping: 'How are your employees represented in Sage Intacct?',
                         creditCard: 'To which gl account should the expenses be credited to?',
-                        creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.',
+                        creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
                     }
                 },
                 advancedSettings: {
