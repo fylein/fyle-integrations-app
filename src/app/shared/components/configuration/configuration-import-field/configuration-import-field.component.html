@@ -114,7 +114,7 @@
                     </label>
                 </div>
                 <div *ngIf="form.value.isDependentImportEnabled && dependentImportFields">
-                    <div *ngFor="let dependentField of dependentImportFields; index as i" class="tw-flex tw-items-strat tw-pt-4" [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']">
+                    <div *ngFor="let dependentField of dependentImportFields; index as i" class="tw-flex tw-items-start tw-pt-4" [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']">
                         <div class="tw-pt-2-px">
                             <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'line'" [width]="'21px'" [height]="'49px'" [styleClasses]="'tw-text-box-color'"></app-svg-icon>
                         </div>

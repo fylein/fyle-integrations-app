@@ -54,7 +54,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
 
-  constructor() { }
+  constructor(
+    public windowService: WindowService
+  ) { }
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
