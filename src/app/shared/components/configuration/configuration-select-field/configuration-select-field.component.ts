@@ -101,10 +101,16 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   readonly AppName = AppName;
 
+  isSearchFocused: boolean = false;
+
   constructor(
     private trackingService: TrackingService,
     private router: Router
   ) { }
+
+  onSearchFocus(isSearchFocused: boolean): void {
+    this.isSearchFocused = isSearchFocused;
+  }
 
   removeFilter(formField: AbstractControl) {
     (formField as FormGroup).reset();
