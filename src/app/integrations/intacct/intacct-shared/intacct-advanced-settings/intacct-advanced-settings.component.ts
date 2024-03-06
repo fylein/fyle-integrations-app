@@ -108,6 +108,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent;
 
+  readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
+
   readonly AppName = AppName;
 
   constructor(
