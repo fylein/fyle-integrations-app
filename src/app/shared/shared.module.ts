@@ -85,6 +85,7 @@ import { DropdownComponent } from './components/input/dropdown/dropdown.componen
 import { CloneSettingFieldComponent } from './components/onboarding/clone-setting/clone-setting-field/clone-setting-field.component';
 import { ToggleComponent } from './components/input/toggle/toggle.component';
 import { MultiSelectComponent } from './components/input/multi-select/multi-select.component';
+import { ConfigurationMappingFieldsComponent } from './components/configuration/configuration-mapping-fields/configuration-mapping-fields.component';
 import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component';
 import { SearchComponent } from './components/input/search/search.component';
 import { OptionalFieldComponent } from './components/helper/optional-field/optional-field.component';
@@ -157,6 +158,7 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     CloneSettingFieldComponent,
     ToggleComponent,
     MultiSelectComponent,
+    ConfigurationMappingFieldsComponent,
     SvgIconComponent,
     SearchComponent,
     OptionalFieldComponent,
@@ -251,6 +253,7 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     CloneSettingFieldComponent,
     ToggleComponent,
     MultiSelectComponent,
+    ConfigurationMappingFieldsComponent,
     SvgIconComponent,
     SearchComponent,
     SkipExportComponent,

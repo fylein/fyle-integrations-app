@@ -1,0 +1,35 @@
+:host ::ng-deep .p-disabled {
+    @apply tw-text-input-read-only-text tw-bg-disabled-bg-color tw-border tw-opacity-100 #{!important};
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-label .p-placeholder .p-dropdown-trigger {
+    @apply tw-visible #{!important};
+}
+
+:host ::ng-deep .p-disabled .p-dropdown-trigger, :host ::ng-deep .showClearIcon .p-dropdown-trigger{
+    @apply tw-hidden #{!important};
+}
+
+:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-dropdown-trigger, :host ::ng-deep .filterDropdown .p-dropdown-trigger {
+    @apply tw-visible #{!important};
+}
+
+:host ::ng-deep .hide-chevron .p-dropdown-trigger {
+    @apply tw-hidden #{!important};
+}
+
+:host ::ng-deep .error-box .p-dropdown {
+    @apply tw-border-select-error-border #{!important};
+}
+
+:host ::ng-deep .normal-box .p-dropdown {
+    @apply tw-border-select-default-border #{!important};
+}
+
+:host ::ng-deep .normal-box .p-dropdown.p-focus {
+    @apply tw-border-select-focused-border #{!important};
+}
+
+:host ::ng-deep .normal-box .p-dropdown.p-disabled {
+    @apply tw-border-select-disabled-border tw-border-solid #{!important};
+}

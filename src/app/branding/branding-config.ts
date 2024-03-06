@@ -124,6 +124,11 @@ const kbArticles: KbArticle = {
                 ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration#h_9e9b1c5196`,
                 LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+            },
+            TRAVELPERK: {
+                PAYMENT_PROFILE_SETTINGS: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration#h_0f8ebdfa10',
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration#h_281acb3026',
+                LANDING: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration'
             }
         }
     },
@@ -168,6 +173,11 @@ const kbArticles: KbArticle = {
                 ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
                 LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+            },
+            TRAVELPERK: {
+                PAYMENT_PROFILE_SETTINGS: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration#h_0f8ebdfa10',
+                ADVANCED_SETTING: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration#h_281acb3026',
+                LANDING: 'https://help.fylehq.com/en/articles/7193187-how-to-set-up-the-fyle-travelperk-integration'
             }
         }
     }
@@ -184,7 +194,8 @@ const demoVideoLinks: DemoVideo = {
             SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
             // TODO: Update link for MS Dynamics
-            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk'
         }
     },
     co: {
@@ -194,7 +205,8 @@ const demoVideoLinks: DemoVideo = {
             SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
             // TODO: Update link for MS Dynamics
-            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk'
         }
     }
 };

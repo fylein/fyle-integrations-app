@@ -8,14 +8,16 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { QbdComponent } from './qbd/qbd.component';
 import { SharedModule } from '../shared/shared.module';
 import { Sage300Component } from './sage300/sage300.component';
-import { BusinessCentralComponent } from './business-central/business-central.component';
+import { TravelperkComponent } from './travelperk/travelperk.component';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @NgModule({
   declarations: [
     IntegrationsComponent,
     LandingComponent,
     QbdComponent,
-    Sage300Component
+    Sage300Component,
+    TravelperkComponent
   ],
   imports: [
     CommonModule,

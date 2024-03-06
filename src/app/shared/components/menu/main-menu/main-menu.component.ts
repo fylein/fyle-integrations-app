@@ -16,19 +16,34 @@ export class MainMenuComponent implements OnInit {
 
   @Input() moreDropdown = null;
 
-  @Input() appName: AppName;
+  @Input() appName: string = '';
 
   @Input() isDropdrownRequired: boolean;
 
   @Input() isSyncVisible: boolean;
 
+  @Input() isDisconnectRequired: boolean = false;
+
+  @Input() isConnectionInProgress: boolean;
+
+  @Input() toolTipText: string = 'The integration will import all the newly updated ' + this.appName + ' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export';
+
   @Output() refreshDimensionClick = new EventEmitter<boolean>();
+
+  @Output() disconnectClick = new EventEmitter();
+
+  isDisabled: boolean = false;
 
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor() { }
+
+  disconnect() {
+    this.isDisabled = true;
+    this.disconnectClick.emit();
+  }
 
   refreshDimensions() {
     this.refreshDimensionClick.emit(true);
