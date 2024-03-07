@@ -10,6 +10,7 @@ const environment = {
   netsuite_api_url: `${process.env.NETSUITE_API_URL ? process.env.NETSUITE_API_URL : '{{NETSUITE_API_URL}}'}`,
   business_central_api_url: `${process.env.BUSINESS_CENTRAL_API_URL ? process.env.BUSINESS_CENTRAL_API_URL : '{{BUSINESS_CENTRAL_API_URL}}'}`,
   qbo_api_url: `${process.env.QBO_API_URL ? process.env.QBO_API_URL : '{{QBO_API_URL}}'}`,
+  xero_api_url: `${process.env.XERO_API_URL ? process.env.XERO_API_URL : '{{XERO_API_URL}}'}`,
   netsuite_api_url: `${process.env.NETSUITE_API_URL ? process.env.NETSUITE_API_URL : '{{NETSUITE_API_URL}}'}`,
   cluster_domain_api_url: `${process.env.CLUSTER_DOMAIN_API_URL ? process.env.CLUSTER_DOMAIN_API_URL : '{{CLUSTER_DOMAIN_API_URL}}'}`,
   fyle_app_url: `${process.env.FYLE_APP_URL ? process.env.FYLE_APP_URL : '{{FYLE_APP_URL}}'}`,
@@ -31,6 +32,10 @@ const environment = {
   qbo_oauth_redirect_uri: `${process.env.QBO_OAUTH_REDIRECT_URI ? process.env.QBO_OAUTH_REDIRECT_URI : '{{QBO_OAUTH_REDIRECT_URI}}'}`,
   qbo_authorize_uri: `${process.env.QBO_AUTHORIZE_URI ? process.env.QBO_AUTHORIZE_URI : '{{QBO_AUTHORIZE_URI}}'}`,
   qbo_oauth_client_id: `${process.env.QBO_OAUTH_CLIENT_ID ? process.env.QBO_OAUTH_CLIENT_ID : '{{QBO_OAUTH_CLIENT_ID}}'}`,
+  xero_oauth_client_id: `${process.env.XERO_OAUTH_CLIENT_ID ? process.env.XERO_OAUTH_CLIENT_ID : '{{XERO_OAUTH_CLIENT_ID}}'}`,
+  xero_scope: `${process.env.XERO_SCOPE ? process.env.XERO_SCOPE : '{{XERO_SCOPE}}'}`,
+  xero_authorize_uri: `${process.env.XERO_AUTHORIZE_URI ? process.env.XERO_AUTHORIZE_URI : '{{XERO_AUTHORIZE_URI}}'}`,
+  xero_oauth_redirect_uri: `${process.env.XERO_OAUTH_REDIRECT_URI ? process.env.XERO_OAUTH_REDIRECT_URI : '{{XERO_OAUTH_REDIRECT_URI}}'}`,
   refiner_survey: {
     intacct: {
       onboarding_done_survery_id: `${process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID ? process.env.REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID : '{{REFINER_INTACCT_ONBOARDING_DONE_SURVEY_ID}}'}`,
