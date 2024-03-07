@@ -473,7 +473,8 @@ export enum AppUrl {
   BUSINESS_CENTRAL = 'business_central',
   INTEGRATION = 'integration',
   QBO = 'qbo',
-  NETSUITE = 'netsuite'
+  NETSUITE = 'netsuite',
+  XERO = 'xero'
 }
 
 export enum Sage300ExportType {
