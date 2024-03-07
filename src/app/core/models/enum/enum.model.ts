@@ -7,7 +7,8 @@ export enum IntegrationView {
 
 export enum IntacctCategoryDestination {
   EXPENSE_TYPE = 'EXPENSE_TYPE',
-  ACCOUNT = 'GL_ACCOUNT'
+  ACCOUNT = 'ACCOUNT',
+  GL_ACCOUNT = 'GL_ACCOUNT'
 }
 
 export enum AutoMapEmployeeOptions {
@@ -67,10 +68,16 @@ export enum BusinessCentralUpdateEvent {
   ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings Business Central',
 }
 
+export enum TravelperkUpdateEvent {
+  CONNECT_TRAVELPERK = 'Connect TravelPerk',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Import Settings TravelPerk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
-  TRAVELPERK = 'Travelperk',
+  TRAVELPERK = 'TravelPerk',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
@@ -107,6 +114,8 @@ export enum Page {
   EXPORT_SETTING_BUSINESS_CENTRAL = 'Export Settings BusinessCentral',
   IMPORT_SETTINGS_BUSINESS_CENTRAL = 'Import Settings BusinessCentral',
   ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings BusinessCentral',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Payment Profile Settings TravelPerk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
 }
 
 export enum ClickEvent {
@@ -224,7 +233,7 @@ export enum NameInJournalEntry {
   MERCHANT = 'MERCHANT'
 }
 
-export enum CorporateCreditCardExpensesObject {
+export enum IntacctCorporateCreditCardExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   EXPENSE_REPORT = 'EXPENSE_REPORT',
@@ -372,7 +381,7 @@ export enum MappingState {
 }
 
 export enum AccountingField {
-  ACCOUNT = 'ACCOUNT',
+  ACCOUNT = 'ACCOUNT'
 }
 
 export enum Sage300Field {
@@ -528,22 +537,22 @@ export enum AccountingExport {
 }
 
 export enum Operator {
-  IsNull = "isnull",
-  IExact = "iexact",
-  IContains = "icontains",
-  LessThan = "lt",
-  LessThanOrEqual = "lte"
+  IsNull = 'isnull',
+  IExact = 'iexact',
+  IContains = 'icontains',
+  LessThan = 'lt',
+  LessThanOrEqual = 'lte'
 }
 
 export enum JoinOption {
-  AND = "AND",
-  OR = "OR"
+  AND = 'AND',
+  OR = 'OR'
 }
 
 export enum CustomOperatorOption {
-  Is = "iexact",
-  IsEmpty = "is_empty",
-  IsNotEmpty = "is_not_empty"
+  Is = 'iexact',
+  IsEmpty = 'is_empty',
+  IsNotEmpty = 'is_not_empty'
 }
 
 export enum IntacctExportSettingDestinationOptionKey {
@@ -667,4 +676,22 @@ export enum ReimbursableImportState {
 export enum CCCImportState {
   APPROVED = 'approved',
   PAID = 'closed'
+}
+
+export enum TravelPerkExpenseGroup {
+  SINGLE= 'SINGLE',
+  MULTIPLE = 'MULTIPLE'
+}
+
+export enum TravelPerkUserRole {
+  CARD_HOLDER = 'CARD_HOLDER',
+  TRAVELLER = 'TRAVELLER',
+  BOOKER = 'BOOKER'
+}
+
+export enum TravelPerkOnboardingState {
+  CONNECTION = 'CONNECTION',
+  PAYMENT_PROFILE_SETTINGS = 'PAYMENT_PROFILE_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
 }

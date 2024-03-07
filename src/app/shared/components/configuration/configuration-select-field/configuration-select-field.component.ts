@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { ExportSettingFormOption, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { AppName, ClickEvent, CorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
@@ -15,6 +15,7 @@ import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sag
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -26,7 +27,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | HourOption[] | SelectFormOption[];
 
   // TODO: kill app specific type
-  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[] | DestinationAttribute[] | DefaultDestinationAttribute[];
+  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[] | DestinationAttribute[] | DefaultDestinationAttribute[] | TravelperkDestinationAttribuite[];
 
   @Input() form: FormGroup;
 
@@ -100,10 +101,16 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   readonly AppName = AppName;
 
+  isSearchFocused: boolean = false;
+
   constructor(
     private trackingService: TrackingService,
     private router: Router
   ) { }
+
+  onSearchFocus(isSearchFocused: boolean): void {
+    this.isSearchFocused = isSearchFocused;
+  }
 
   removeFilter(formField: AbstractControl) {
     (formField as FormGroup).reset();
@@ -115,7 +122,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   showExportTable() {
-    this.dialogHeader = 'Export Module';
+    this.dialogHeader = this.appName === AppName.TRAVELPERK ? 'Preview' : 'Export Module';
     this.exportTypeIconPath = this.exportConfigurationIconPath;
     this.isPreviewDialogVisible = true;
   }

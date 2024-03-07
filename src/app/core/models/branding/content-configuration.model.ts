@@ -1,5 +1,75 @@
 export type ContentConfiguration = {
     [brandingId: string]: {
+        intacct : {
+            landing: {
+                contentText: string;
+                guideHeaderText: string;
+            },
+            common: {
+                readMoreText: string;
+                exportLogTabName: string;
+                viewExpenseText: string;
+                corporateCard: string;
+                errors: string;
+                autoMap: string;
+                customField: string;
+                customFieldName: string;
+                customFieldPlaceholderName: string;
+                customFieldType: string;
+                customFieldCreateandSave: string;
+                userId: string;
+                companyId: string;
+                userPassword: string;
+                password: string;
+                locationEntity: string;
+                descriptionText: string;
+            },
+            configuration: {
+                connector: {
+                    stepName: string;
+                    subLabel: string;
+                },
+                exportSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    corporateCard: {
+                        cccExpensePaymentType: string;
+                        cccExpensePaymentTypeSubLabel: string;
+                        creditCardVendor: string;
+                        creditCardVendorSublabel: string;
+                        chargeCard: string;
+                        chargeCardSublabel: string;
+                        cccExpenseState: string;
+                        cccExportGroup: string;
+                        employeeFieldMapping: string;
+                        creditCard: string;
+                        creditCardSubLabel: string;
+                    }
+                },
+                advancedSettings: {
+                    stepName: string;
+                    scheduleAutoExport: string;
+                    email: string;
+                    autoSyncPayments: string;
+                    defaultPaymentAccount: string;
+                    autoCreateEmployeeVendor: string;
+                    postEntriesCurrentPeriod: string;
+                    setDescriptionField: string;
+                    dfvLabel: string;
+                    dfvSubLabel: string;
+                    location: string;
+                    department: string;
+                    project: string;
+                    class: string;
+                    item: string;
+                },
+                done: {
+                    ctaText: string;
+                    hintText: string;
+                }
+            },
+        }
         configuration: {
             connector: {
                 stepName: string;

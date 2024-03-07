@@ -26,6 +26,8 @@ export class SearchComponent implements OnInit {
 
   @Output() handleSimpleSearch = new EventEmitter<any>();
 
+  @Output() searchFocused = new EventEmitter<boolean>();
+
   isSearchFocused: boolean;
 
   readonly brandingConfig = brandingConfig;
@@ -47,6 +49,12 @@ export class SearchComponent implements OnInit {
     if (!this.form.value[this.formControllerName]) {
       this.isSearchFocused = false;
     }
+    this.searchFocused.emit(false);
+  }
+
+  onFocus(): void {
+    this.isSearchFocused = true;
+    this.searchFocused.emit(this.isSearchFocused);
   }
 
   private searchQueryWatcher(): void {

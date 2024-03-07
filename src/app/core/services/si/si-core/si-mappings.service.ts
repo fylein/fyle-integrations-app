@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { SiWorkspaceService } from './si-workspace.service';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
-import { Configuration } from 'src/app/core/models/db/configuration.model';
+import { IntacctConfiguration } from 'src/app/core/models/db/configuration.model';
 import { MappingSetting, MappingSettingResponse } from 'src/app/core/models/intacct/db/mapping-setting.model';
 import { CategoryMappingsResponse } from 'src/app/core/models/intacct/db/category-mapping-response.model';
 import { EmployeeMapping, EmployeeMappingPost, EmployeeMappingsResponse } from 'src/app/core/models/intacct/db/employee-mapping.model';
@@ -48,7 +48,7 @@ export class SiMappingsService {
     });
   }
 
-  getConfiguration(): Observable<Configuration>{
+  getConfiguration(): Observable<IntacctConfiguration>{
     const workspaceId = this.workspaceService.getWorkspaceId();
     return this.apiService.get(`/workspaces/${workspaceId}/configuration/`, {});
   }

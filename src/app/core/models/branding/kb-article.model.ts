@@ -33,13 +33,18 @@ export type KbArticle = {
                 IMPORT_SETTING: string;
                 ADVANCED_SETTING: string;
                 SKIP_EXPORT: string;
-            }
+            },
             BUSINESS_CENTRAL: {
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;
                 ADVANCED_SETTING: string;
                 LANDING: string;
                 SKIP_EXPORT: string;
+            },
+            TRAVELPERK: {
+                PAYMENT_PROFILE_SETTINGS: string;
+                ADVANCED_SETTING: string;
+                LANDING: string;
             }
         }
     }

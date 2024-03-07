@@ -5,7 +5,8 @@ import { BusinessCentralConnectorService } from '../services/business-central/bu
 import { IntegrationsToastService } from '../services/common/integrations-toast.service';
 import { WorkspaceService } from '../services/common/workspace.service';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
-import { BusinessCentralOnboardingState, ToastSeverity } from '../models/enum/enum.model';
+import { AppUrl, BusinessCentralOnboardingState, ToastSeverity } from '../models/enum/enum.model';
+import { HelperService } from '../services/common/helper.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class BusinessCentralTokenGuard implements CanActivate {
 
   constructor(
     private businessCentralConnectorService: BusinessCentralConnectorService,
+    private helperService: HelperService,
     private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
@@ -22,6 +24,7 @@ export class BusinessCentralTokenGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
       const workspaceId = this.workspaceService.getWorkspaceId();
 
       if (!workspaceId) {
