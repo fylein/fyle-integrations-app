@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { XeroComponent } from './xero.component';
+import { XeroTokenGuard } from 'src/app/core/guard/xero-token.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
       },
       {
         path: 'main',
-        loadChildren: () => import('./xero-main/xero-main.module').then(m => m.XeroMainModule)
+        loadChildren: () => import('./xero-main/xero-main.module').then(m => m.XeroMainModule),
+        canActivate: [XeroTokenGuard]
       }
     ]
   }
