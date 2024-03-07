@@ -1,5 +1,7 @@
 import { FormGroup } from "@angular/forms";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { FyleField } from "../../enum/enum.model";
+import { brandingConfig } from "src/app/branding/branding-config";
 
 const emptyDestinationAttribute = { id: null, name: null };
 
@@ -52,7 +54,7 @@ export class ImportSettings {
         const filteredExpenseFieldArray = expenseFieldArray.filter((field: MappingSetting) => field.destination_field && field.source_field);
 
         // Then map over the filtered array
-        const mappingSettings = filteredExpenseFieldArray.map((field: MappingSetting) => {
+        const mappingSettings = filteredExpenseFieldArray.filter((field: MappingSetting) => field.source_field !== 'CATEGORY').map((field: MappingSetting) => {
           return {
             source_field: field.source_field.toUpperCase(),
             destination_field: field.destination_field,
@@ -74,9 +76,17 @@ export class ImportSettings {
             };
         }
 
+        let isCategoryImportEnabled = false;
+
+        if (brandingConfig.brandId === 'fyle') {
+            isCategoryImportEnabled = importSettingsForm.value.importCategories ? importSettingsForm.value.importCategories : false;
+        } else {
+            isCategoryImportEnabled = filteredExpenseFieldArray.filter((field: MappingSetting) => field.source_field === 'CATEGORY' && field.import_to_fyle).length > 0 ? true : false;
+        }
+
         const importSettingPayload: ImportSettingPost = {
                 configurations: {
-                    import_categories: importSettingsForm.value.importCategories ? importSettingsForm.value.importCategories : false,
+                    import_categories: isCategoryImportEnabled,
                     import_tax_codes: importSettingsForm.value.importTaxCodes ? importSettingsForm.value.importTaxCodes : false,
                     import_vendors_as_merchants: importSettingsForm.value.importVendorAsMerchant ? importSettingsForm.value.importVendorAsMerchant : false
                 },
