@@ -7,6 +7,8 @@ import { XeroOnboardingExportSettingsComponent } from './xero-onboarding-export-
 import { XeroOnboardingImportSettingsComponent } from './xero-onboarding-import-settings/xero-onboarding-import-settings.component';
 import { XeroOnboardingLandingComponent } from './xero-onboarding-landing/xero-onboarding-landing.component';
 import { XeroOnboardingComponent } from './xero-onboarding.component';
+import { XeroTokenGuard } from 'src/app/core/guard/xero-token.guard';
+import { TenantGuard } from 'src/app/core/guard/tenant.guard';
 
 const routes: Routes = [
   {
@@ -22,19 +24,23 @@ const routes: Routes = [
         component: XeroOnboardingConnectorComponent
       },
       { path: 'export_settings',
-        component: XeroOnboardingExportSettingsComponent
+        component: XeroOnboardingExportSettingsComponent,
+        canActivate: [XeroTokenGuard, TenantGuard]
       },
       {
         path: 'import_settings',
-        component: XeroOnboardingImportSettingsComponent
+        component: XeroOnboardingImportSettingsComponent,
+        canActivate: [XeroTokenGuard, TenantGuard]
       },
       {
         path: 'advanced_settings',
-        component: XeroOnboardingAdvancedSettingsComponent
+        component: XeroOnboardingAdvancedSettingsComponent,
+        canActivate: [XeroTokenGuard, TenantGuard]
       },
       {
         path: 'done',
-        component: XeroOnboardingDoneComponent
+        component: XeroOnboardingDoneComponent,
+        canActivate: [XeroTokenGuard, TenantGuard]
       }
     ]
   }
