@@ -97,7 +97,7 @@
                         {{brandingConfig.brandName}} Fields should be unique
                         </p>
                     </div>
-                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onShowWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section tw-pt-10-px"></p-inputSwitch>
+                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onShowWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="input-toggle-section tw-pt-10-px"></p-inputSwitch>
             </div>
             <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex">
@@ -131,7 +131,7 @@
                                   </ng-template>
                             </p-dropdown>
                         </div>
-                        <p-inputSwitch class="tw-pl-128-px input-toggle-section tw-pt-30-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                        <p-inputSwitch class="tw-pl-32-px input-toggle-section tw-pt-40-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                     </div>
                 </div>
             </div>                      
