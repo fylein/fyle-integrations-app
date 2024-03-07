@@ -15,7 +15,7 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingsForm"
-                        [label]="'Import gl account account from Sage Intacct (optional)'"
+                        [label]="'Import gl account account from Sage Intacct'"
                         [subLabel]="'Imported ' + (intacctCategoryDestination | snakeCaseToSpaceCase | sentenceCase | lowercase) + ' will be available as categories in ' + brandingConfig.brandName + '.'"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
