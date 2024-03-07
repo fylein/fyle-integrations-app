@@ -9,6 +9,7 @@ import { XeroOnboardingExportSettingsComponent } from './xero-onboarding-export-
 import { XeroOnboardingImportSettingsComponent } from './xero-onboarding-import-settings/xero-onboarding-import-settings.component';
 import { XeroOnboardingAdvancedSettingsComponent } from './xero-onboarding-advanced-settings/xero-onboarding-advanced-settings.component';
 import { XeroOnboardingDoneComponent } from './xero-onboarding-done/xero-onboarding-done.component';
+import { XeroSharedModule } from '../xero-shared/xero-shared.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { XeroOnboardingDoneComponent } from './xero-onboarding-done/xero-onboard
   ],
   imports: [
     CommonModule,
+    XeroSharedModule,
     XeroOnboardingRoutingModule
   ]
 })

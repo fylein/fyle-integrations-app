@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { XeroConfigurationRoutingModule } from './xero-configuration-routing.module';
 import { XeroConfigurationComponent } from './xero-configuration.component';
+import { XeroSharedModule } from '../../xero-shared/xero-shared.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { XeroConfigurationComponent } from './xero-configuration.component';
   ],
   imports: [
     CommonModule,
+    XeroSharedModule,
     XeroConfigurationRoutingModule
   ]
 })
