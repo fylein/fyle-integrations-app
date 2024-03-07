@@ -62,7 +62,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     const chartOfAccounts = XeroImportSettingModel.formatChartOfAccounts(importSettingsForm.get('chartOfAccountTypes')?.value);
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
-    
+
     const importSettingPayload: XeroImportSettingPost = {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('chartOfAccount')?.value,
