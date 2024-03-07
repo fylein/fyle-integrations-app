@@ -414,7 +414,7 @@ const content: ContentConfiguration = {
                 companyId: 'company ID',
                 userPassword: 'User password',
                 password: 'password',
-                locationEntity: 'Location entity',
+                locationEntity: 'location entity',
                 descriptionText: 'of the description field'
             },
             configuration: {

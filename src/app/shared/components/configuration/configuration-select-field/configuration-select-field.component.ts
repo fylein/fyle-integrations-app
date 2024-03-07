@@ -87,6 +87,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   isCCCExportTableVisible: boolean = false;
 
+  IntacctCorporateCreditCardExpensesObject = IntacctCorporateCreditCardExpensesObject;
+
   optionsCopy: any[];
 
   exportTableData = [
