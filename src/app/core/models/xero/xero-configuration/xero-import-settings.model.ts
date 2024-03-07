@@ -6,6 +6,7 @@ import { MappingDestinationField, MappingSourceField } from "../../enum/enum.mod
 import { GeneralMapping } from "../../intacct/db/mappings.model";
 import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
 import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
+import { ImportSettingsModel } from "../../common/import-settings.model";
 
 
 export type XeroImportSettingWorkspaceGeneralSetting = {
@@ -54,10 +55,14 @@ export interface XeroImportSettingFormOption extends SelectFormOption {
 }
 
 
-export class XeroImportSettingModel {
-  static constructPayload(importSettingsForm: FormGroup, customMappingSettings: MappingSetting[]): XeroImportSettingPost {
+export class XeroImportSettingModel extends ImportSettingsModel {
+  static constructPayload(importSettingsForm: FormGroup): XeroImportSettingPost {
+
     const emptyDestinationAttribute = {id: null, name: null};
     const chartOfAccounts = XeroImportSettingModel.formatChartOfAccounts(importSettingsForm.get('chartOfAccountTypes')?.value);
+    const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
+    const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
+    
     const importSettingPayload: XeroImportSettingPost = {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('chartOfAccount')?.value,
@@ -69,42 +74,12 @@ export class XeroImportSettingModel {
       general_mappings: {
         default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? importSettingsForm.get('defaultTaxCode')?.value : emptyDestinationAttribute
       },
-      mapping_settings: XeroImportSettingModel.formatMappingSettings(importSettingsForm.get('expenseFields')?.value, customMappingSettings)
+      mapping_settings: mappingSettings
     };
     return importSettingPayload;
   }
 
   static formatChartOfAccounts(chartOfAccounts: {enabled: boolean, name: string}[]): string[] {
     return chartOfAccounts.filter(chartOfAccount => chartOfAccount.enabled).map(chartOfAccount => chartOfAccount.name.toUpperCase());
-  }
-
-  static formatMappingSettings(expenseFields: ExpenseFieldsFormOption[], existingMappingSettings: MappingSetting[]): XeroImportSettingMappingSetting[] {
-    const mappingSettings: XeroImportSettingMappingSetting[] = [];
-    expenseFields.forEach((expenseField: ExpenseFieldsFormOption) => {
-      if (expenseField.source_field) {
-        mappingSettings.push({
-          source_field: expenseField.source_field,
-          destination_field: expenseField.destination_field,
-          import_to_fyle: expenseField.import_to_fyle,
-          is_custom: expenseField.source_field === MappingSourceField.COST_CENTER || expenseField.source_field === MappingSourceField.PROJECT ? false : true,
-          source_placeholder: expenseField.source_placeholder ? expenseField.source_placeholder : null
-        });
-      }
-    });
-
-    // Add custom mapping payload to preserve them
-    existingMappingSettings.forEach((existingMappingSetting: MappingSetting) => {
-      if (!mappingSettings.find(mappingSetting => mappingSetting.source_field === existingMappingSetting.source_field && !existingMappingSetting.import_to_fyle)) {
-        mappingSettings.push({
-          source_field: existingMappingSetting.source_field,
-          destination_field: existingMappingSetting.destination_field,
-          import_to_fyle: existingMappingSetting.import_to_fyle,
-          is_custom: existingMappingSetting.is_custom,
-          source_placeholder: existingMappingSetting.source_placeholder
-        });
-      }
-    });
-
-    return mappingSettings;
   }
 }
