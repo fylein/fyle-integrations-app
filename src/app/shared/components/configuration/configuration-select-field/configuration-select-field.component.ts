@@ -87,6 +87,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   isCCCExportTableVisible: boolean = false;
 
+  IntacctCorporateCreditCardExpensesObject = IntacctCorporateCreditCardExpensesObject;
+
   optionsCopy: any[];
 
   exportTableData = [
@@ -128,7 +130,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.dialogHeader = 'Preview how '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' is made in '+ this.appName;
+    this.dialogHeader = 'Preview of a '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' exported to '+ this.appName;
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
     this.isPreviewDialogVisible = true;
