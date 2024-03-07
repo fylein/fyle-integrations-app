@@ -86,7 +86,7 @@
                                 {{ option.display_name }}
                             </div>
                             </ng-template>
-                            <ng-template pTemplate="selectedItem" let-item>
+                            <ng-template pTemplate="selectedItem" let-item class="tw-flex tw-justify-between tw-items-center">
                                 <p>
                                     {{ item.display_name }}
                                 </p>
@@ -102,6 +102,13 @@
             <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex">
                     <label class="container tw-pl-24-px tw-text-14-px">Import Cost Code and Cost Type from {{appName}} as dependent fields
+                        <a *ngIf="appName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                            (click)="windowService.openInNewTab(redirectLink)">
+                            Read More
+                            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                                class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                            </app-svg-icon>
+                        </a>
                         <input type="checkbox" formControlName="isDependentImportEnabled">
                         <span class="checkmark"></span>
                     </label>
@@ -132,6 +139,19 @@
                             </p-dropdown>
                         </div>
                         <p-inputSwitch class="tw-pl-128-px input-toggle-section tw-pt-30-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                    </div>
+                    <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px">
+                        <label class="container tw-pl-24-px tw-text-14-px">Auto-Export Commitment based on the Cost Code and Cost Category.
+                            <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
+                                (click)="windowService.openInNewTab(redirectLink)">
+                                Read More
+                                <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
+                                    class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+                                </app-svg-icon>
+                            </a>
+                            <input type="checkbox" formControlName="addCommitmentDetails">
+                            <span class="checkmark"></span>
+                        </label>
                     </div>
                 </div>
             </div>                      
