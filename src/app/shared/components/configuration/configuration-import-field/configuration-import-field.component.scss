@@ -55,7 +55,7 @@
   }
     
   .add-button-container {
-    @apply tw-flex tw-items-center tw-pt-7 tw-pl-50-px ;
+    @apply tw-flex tw-items-center tw-pt-7 tw-pl-20-px ;
   }
   
   .add-row-text {
@@ -124,4 +124,8 @@
 /* Style the checkmark/indicator */
 .container .checkmark:after {
   @apply tw-left-[5px] tw-top-0.5 tw-w-6-px tw-h-10-px tw-border-t-0-px tw-border-r-3-px tw-border-b-3-px tw-border-l-0-px tw-border-white tw-rotate-45;
+}
+
+.inputbox input, :host ::ng-deep .inputbox .p-dropdown {
+  @apply xl:tw-w-300-px lg:tw-w-220-px #{!important};
 }
