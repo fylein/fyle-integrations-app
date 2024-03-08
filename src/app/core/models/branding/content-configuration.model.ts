@@ -39,6 +39,7 @@ export type ContentConfiguration = {
                         creditCardVendor: string;
                         creditCardVendorSublabel: string;
                         chargeCard: string;
+                        chargeCardPlaceholder: string;
                         chargeCardSublabel: string;
                         cccExpenseState: string;
                         cccExportGroup: string;

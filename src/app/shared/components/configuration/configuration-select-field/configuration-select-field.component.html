@@ -74,7 +74,7 @@
                     <div *ngIf="!showExportPreview && isDisabled" class="sub-text tw-text-pretty">
                         <span>Auto-selected based on your export module</span>
                     </div>
-                    <div *ngIf="form.controls[formControllerName].value==='spent_at' && isOnboarding" class="sub-text">
+                    <div *ngIf="form.controls[formControllerName].value==='spent_at' && isOnboarding && form.value.cccExportType!==IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION" class="sub-text">
                         <span>Using the Spend Date may lead to multiple single line<br>item entries.</span>
                     </div>
                 </div>
@@ -142,12 +142,10 @@
                 <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="value"
                 [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}">
                     <ng-template pTemplate="selectedItem" let-item>
-                        <div class="tw-flex tw-justify-between tw-items-center">
-                            <span>
-                                {{ item.value }}
-                            </span>
-                            <app-svg-icon [svgSource]="'cross-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'16px'" [width]="'16px'"></app-svg-icon>
-                        </div>
+                        <p>
+                            {{ item.value }}
+                        </p>
+                        <app-svg-icon [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                     </ng-template>
                 </p-dropdown>
             </div>  
