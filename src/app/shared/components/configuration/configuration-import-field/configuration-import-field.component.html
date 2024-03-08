@@ -76,7 +76,7 @@
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
                     <div class="tw-w-28-vw">
-                        <p-dropdown [disabled]="expenseField.value.source_field === 'CATEGORY'" (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="fyleFieldOptions" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
+                        <p-dropdown [disabled]="expenseField.value.source_field === 'CATEGORY'" (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="expenseField.value.source_field === 'CATEGORY' ? fyleFieldOptions: filteredFyleFields" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'selectedAccItem !tw-text-text-secondary': expenseField.value.source_field === 'CATEGORY', 'filterDropdown': !expenseField.value.source_field}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">

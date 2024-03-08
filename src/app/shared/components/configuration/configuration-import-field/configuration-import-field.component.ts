@@ -42,6 +42,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Output() showWarningForDependentFields = new EventEmitter();
 
+  filteredFyleFields: FyleField[];
+
   showDependentFieldWarning: boolean;
 
   showAddButton: any;
@@ -130,6 +132,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.filteredFyleFields = this.fyleFieldOptions.filter(option => option.attribute_type !== 'CATEGORY');
   }
 
 }
