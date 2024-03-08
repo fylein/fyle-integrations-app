@@ -1063,6 +1063,7 @@ module.exports = {
         '128-px': '128px',
         '130-px': '130px',
         '168-px': '168px',
+        'checkbox-marked-icon-spacing': 'var(--checkbox-marked-icon-spacing)',
         ...spacings
       },
       margin: {
@@ -1276,6 +1277,7 @@ module.exports = {
       borderRadius: {
         '0-px': '0px',
         '4-px': '4px',
+        '5-px': '5px',
         '6-px': '6px',
         '8-px': '8px',
         '10-px': '10px',

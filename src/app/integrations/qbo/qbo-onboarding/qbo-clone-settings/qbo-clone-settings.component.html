@@ -171,7 +171,7 @@
     
                 <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.creditCardExportType">
                     <app-clone-setting-field *ngIf="showNameInJournalOption"
-                        [label]="'Name in Journal Entry (CCC)'"
+                        [label]="'Name in Journal Entry'"
                         [options]="nameInJournalOptions"
                         [placeholder]="'Select a name'"
                         [form]="exportSettingForm"
@@ -214,16 +214,18 @@
                         [tooltipText]="'The default vendor will apply to all corporate card transactions upon export'">
                     </app-clone-setting-field>
     
-                    <app-clone-setting-field *ngIf="(exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR)))"
-                        [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                        [options]="accountsPayables"
-                        [placeholder]="'Select accounts payable'"
-                        [form]="exportSettingForm"
-                        [isFieldMandatory]="true"
-                        [formControllerName]="'accountsPayable'"
-                        [dropdownDisplayKey]="'name'"
-                        [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'">
-                    </app-clone-setting-field>
+                    <div [ngClass]="{'clone-setting--dependent-field': helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')}">
+                        <app-clone-setting-field *ngIf="(exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === QBOReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR)))"
+                            [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                            [options]="accountsPayables"
+                            [placeholder]="'Select accounts payable'"
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [formControllerName]="'accountsPayable'"
+                            [dropdownDisplayKey]="'name'"
+                            [tooltipText]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'">
+                        </app-clone-setting-field>
+                    </div>
                 </div>
             </div>
     
