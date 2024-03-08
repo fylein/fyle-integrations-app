@@ -11,7 +11,7 @@ export class IntegrationsToastService {
     private messageService: MessageService
   ) { }
 
-  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3243000): void {
+  displayToastMessage(severity: ToastSeverity, summary: string, life: number = 3000): void {
     this.messageService.add({
       severity,
       summary,
