@@ -461,7 +461,7 @@ const content: ContentConfiguration = {
                     class: 'class',
                     item: 'item',
                     customPreferencesLabel: 'Custom preferences',
-                    customPreferencesSubLabel: 'In this section, you have the flexibility to tailor the data export process to Sage Intacct according to your specific needs and preferences'
+                    customPreferencesSubLabel: 'In this section, you have the flexibility to tailor the data export process to Sage Intacct according to your specific needs and preferences.'
                 },
                 done: {
                     ctaText: '',
