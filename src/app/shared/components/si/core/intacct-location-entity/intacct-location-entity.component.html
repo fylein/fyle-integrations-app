@@ -40,12 +40,13 @@
               {{ locationEntity.location_entity_name | trimCharacter: 26 }}
             </h3>
 
-            <div *ngIf="!locationEntity" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              Please select a {{brandingContent.intacct.common.locationEntity | lowercase}} from Sage Intacct to proceed further.
+            <div *ngIf="!locationEntity" class="tw-text-14-px tw-pl-24-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
+              Please select a {{brandingContent.intacct.common.locationEntity}} from Sage Intacct to proceed further.
             </div>
 
             <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
               Please hold on; we are fetching data from your Sage Intacct account, which may take a few seconds.
+              <app-loader [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
             </div>
         </form>
     </div>

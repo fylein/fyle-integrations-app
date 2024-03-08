@@ -6,6 +6,7 @@
       <app-configuration-step-header *ngIf="!isLoading"
       [headerText]="'Connect to Sage Intacct'"
       [contentText]="'Connect to your Sage Intacct account to establish a connection between ' + brandingConfig.brandName + ' and Sage Intacct.'"
+      [contentText]="'To connect your ' + brandingConfig.brandName + ' and Sage Intacct accounts, follow the detailed instructions provided in the article to generate the credentials and establish a secure connection.'"
       [redirectLink]="redirectLink"></app-configuration-step-header>
    </div>
    <div *ngIf="!isLoading" class="tw-px-24-px tw-pb-24-px">

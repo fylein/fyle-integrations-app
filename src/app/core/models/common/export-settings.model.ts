@@ -52,16 +52,16 @@ export class ExportSettingModel {
         }
             return [
                 {
-                  label: 'Bill',
-                  value: IntacctReimbursableExpensesObject.BILL
+                  label: 'Charge Card Transaction',
+                  value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
                 },
                 {
                   label: 'Journal Entry',
                   value: IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY
                 },
                 {
-                  label: 'Charge Card Transaction',
-                  value: IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION
+                  label: 'Bill',
+                  value: IntacctReimbursableExpensesObject.BILL
                 }
               ];
 
