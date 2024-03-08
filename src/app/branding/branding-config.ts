@@ -241,6 +241,77 @@ export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
 
 const content: ContentConfiguration = {
     fyle: {
+        xero: {
+            landing: {
+                contentText: 'Import data from Xero to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Xero. ',
+                guideHeaderText: 'Guide to setup your integrations'
+            },
+            common: {
+                readMoreText: 'Read more',
+                exportLogTabName: 'Export log',
+                viewExpenseText: 'View expense',
+                corporateCard: 'Corporate card',
+                errors: 'errors',
+                autoMap: 'Auto map',
+                customField: 'Add new custom field',
+                customFieldName: 'Field name',
+                customFieldPlaceholderName: 'Placeholder name',
+                customFieldType: 'Field type',
+                customFieldCreateandSave: 'Create and save',
+                userId: 'user ID',
+                companyId: 'company ID',
+                userPassword: 'User password',
+                password: 'password',
+                tenantMapping: 'Tenant Mapping',
+                descriptionText: 'of the description field'
+            },
+            configuration: {
+                connector: {
+                    stepName: 'Connect to Xero',
+                    subLabel: 'Expenses will be posted to the Xero Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
+                },
+                exportSetting: {
+                    stepName: 'Export settings',
+                    headerText: '',
+                    contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
+                    corporateCard: {
+                        cccExpensePaymentType: 'Set the default expense payment type as?',
+                        cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
+                        creditCardVendor: 'Set the default credit card vendor as',
+                        creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
+                        chargeCard: 'Set the default charge card',
+                        chargeCardPlaceholder: 'Select a charge card',
+                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Xero will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
+                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
+                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
+                        employeeFieldMapping: 'How are your employees represented in Xero?',
+                        creditCard: 'To which general ledger account should the expenses be credited to?',
+                        creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
+                    }
+                },
+                advancedSettings: {
+                    stepName: 'Advanced settings',
+                    scheduleAutoExport: 'Schedule automatic export',
+                    email: 'Send error notification to',
+                    autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
+                    defaultPaymentAccount: 'Select payment account',
+                    autoCreateEmployeeVendor: 'Auto-create ',
+                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                    setDescriptionField: 'Set the description field in Xero',
+                    dfvLabel: 'Default field values',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.',
+                    location: 'location',
+                    department: 'department',
+                    project: 'project',
+                    class: 'class',
+                    item: 'item'
+                },
+                done: {
+                    ctaText: '',
+                    hintText: ''
+                }
+            }
+        },
         intacct: {
             landing: {
                 contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
@@ -418,6 +489,77 @@ const content: ContentConfiguration = {
         }
     },
     co: {
+        xero: {
+            landing: {
+                contentText: 'Import data from Xero to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Xero. ',
+                guideHeaderText: 'Guide to setup your integrations'
+            },
+            common: {
+                readMoreText: 'Read more',
+                exportLogTabName: 'Export log',
+                viewExpenseText: 'View expense',
+                corporateCard: 'Corporate card',
+                errors: 'errors',
+                autoMap: 'Auto map',
+                customField: 'Add new custom field',
+                customFieldName: 'Field name',
+                customFieldPlaceholderName: 'Placeholder name',
+                customFieldType: 'Field type',
+                customFieldCreateandSave: 'Create and save',
+                userId: 'user ID',
+                companyId: 'company ID',
+                userPassword: 'User password',
+                password: 'password',
+                tenantMapping: 'Tenant Mapping',
+                descriptionText: 'of the description field'
+            },
+            configuration: {
+                connector: {
+                    stepName: 'Connect to Xero',
+                    subLabel: 'Expenses will be posted to the Xero Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
+                },
+                exportSetting: {
+                    stepName: 'Export settings',
+                    headerText: '',
+                    contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
+                    corporateCard: {
+                        cccExpensePaymentType: 'Set the default expense payment type as?',
+                        cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
+                        creditCardVendor: 'Set the default credit card vendor as',
+                        creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
+                        chargeCard: 'Set the default charge card',
+                        chargeCardPlaceholder: 'Select a charge card',
+                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Xero will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
+                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
+                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
+                        employeeFieldMapping: 'How are your employees represented in Xero?',
+                        creditCard: 'To which general ledger account should the expenses be credited to?',
+                        creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
+                    }
+                },
+                advancedSettings: {
+                    stepName: 'Advanced settings',
+                    scheduleAutoExport: 'Schedule automatic export',
+                    email: 'Send error notification to',
+                    autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
+                    defaultPaymentAccount: 'Select payment account',
+                    autoCreateEmployeeVendor: 'Auto-create ',
+                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                    setDescriptionField: 'Set the description field in Xero',
+                    dfvLabel: 'Default field values',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.',
+                    location: 'location',
+                    department: 'department',
+                    project: 'project',
+                    class: 'class',
+                    item: 'item'
+                },
+                done: {
+                    ctaText: '',
+                    hintText: ''
+                }
+            }
+        },
         intacct: {
             landing: {
                 contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
