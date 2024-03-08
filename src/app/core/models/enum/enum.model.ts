@@ -82,7 +82,8 @@ export enum AppName {
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
-  NETSUITE = 'NetSuite'
+  NETSUITE = 'NetSuite',
+  XERO = 'Xero'
 }
 
 export enum AppNameInService {
