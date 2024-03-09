@@ -5,8 +5,8 @@ import { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
 import { environment } from 'src/environments/environment';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { TenantMapping, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
+import { XeroDestinationAttributes } from 'src/app/core/models/xero/db/xero-destination-attribute.model';
 
 const xeroCredentialsCache = new Subject<void>();
 
@@ -49,11 +49,11 @@ export class XeroConnectorService {
     return this.apiService.get(`/workspaces/${workspaceId}/xero/token_health/`, {});
   }
 
-  getXeroTenants(): Observable<DestinationAttribute[]> {
+  getXeroTenants(): Observable<XeroDestinationAttributes[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/xero/tenants/`, {attribute_type: 'TENANT'});
   }
 
-  postXeroTenants(): Observable<DestinationAttribute[]> {
+  postXeroTenants(): Observable<XeroDestinationAttributes[]> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
     return this.apiService.post(`/workspaces/${workspaceId}/xero/tenants/`, {});

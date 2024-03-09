@@ -24,7 +24,7 @@
                     [accountingCompanyList]="tenantList"
                     [switchLinkText]="'Disconnect'"
                     (switchCompany)="disconnectXero()"
-                    (connectCompany)="connectXero()">
+                    (connectCompany)="connectXero($event)">
                 </app-configuration-connector>
 
                 <app-configuration-confirmation-dialog

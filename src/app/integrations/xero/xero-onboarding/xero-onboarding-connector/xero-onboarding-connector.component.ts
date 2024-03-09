@@ -4,12 +4,12 @@ import { Subscription } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, ConfigurationWarningEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { ConfigurationCta, ConfigurationWarningEvent, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
-import { TenantMapping } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
+import { XeroDestinationAttributes } from 'src/app/core/models/xero/db/xero-destination-attribute.model';
+import { TenantMapping, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
 import { XeroExportSettingGet } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration/xero-onboarding.model';
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
@@ -19,6 +19,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
+import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -72,7 +73,9 @@ export class XeroOnboardingConnectorComponent implements OnInit {
 
   showDisconnectXero: boolean;
 
-  tenantList: DestinationAttribute[];
+  tenantList: XeroDestinationAttributes[];
+
+  xeroTenantselected: XeroDestinationAttributes;
 
   constructor(
     private workspaceService: WorkspaceService,
@@ -82,7 +85,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private helperService: HelperService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private cloneSettingService: CloneSettingService
+    private cloneSettingService: CloneSettingService,
+    private xeroHelperService: XeroHelperService
   ) { }
 
   private checkCloneSettingsAvailablity(): void {
@@ -97,7 +101,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
         this.isContinueDisabled = false;
         this.isCloneSettingsDisabled = true;
       } else {
-        this.router.navigate(['/integrations/qbo/onboarding/employee_settings']);
+        this.router.navigate(['/integrations/xero/onboarding/export_settings']);
       }
     });
   }
@@ -144,7 +148,12 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     });
   }
 
-  connectXero(): void {
+  connectXero(companyDetails: XeroDestinationAttributes): void {
+    this.xeroTenantselected = companyDetails;
+    this.isContinueDisabled = false;
+  }
+
+  connectToXero() {
     this.xeroConnectionInProgress = true;
     const url = `${environment.xero_authorize_uri}?client_id=${environment.xero_oauth_client_id}&scope=${environment.xero_scope}&response_type=code&redirect_uri=${environment.xero_oauth_redirect_uri}&state=xero_local_redirect`;
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
@@ -164,7 +173,33 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   }
 
   private constructPayloadAndSave(): void {
-    // TODO
+    if (this.isContinueDisabled) {
+      return;
+    } else if (this.isCloneSettingsDisabled) {
+      this.router.navigate(['/integrations/xero/onboarding/export_settings']);
+      return;
+    }
+    if (this.xeroTenantselected && !this.isContinueDisabled) {
+      this.xeroConnectionInProgress = true;
+      this.isContinueDisabled = true;
+      const tenantMappingPayload: TenantMappingPost = {
+        tenant_id: this.xeroTenantselected.id.toString(),
+        tenant_name: this.xeroTenantselected.value
+      };
+      this.xeroConnectorService.postTenantMapping(tenantMappingPayload).subscribe((response:TenantMapping) => {
+        this.xeroHelperService.refreshXeroDimensions().subscribe(() => {
+          this.workspaceService.setOnboardingState(XeroOnboardingState.EXPORT_SETTINGS);
+          this.xeroConnectionInProgress = false;
+          this.xeroTokenExpired = false;
+          this.showOrHideDisconnectXero();
+          this.isXeroConnected = true;
+          this.xeroCompanyName = response.tenant_name;
+          this.checkCloneSettingsAvailablity();
+        });
+      });
+    } else if (!this.isContinueDisabled && this.xeroCompanyName){
+      this.checkCloneSettingsAvailablity();
+    }
   }
 
   save(): void {
@@ -183,7 +218,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   }
 
   getTenant() {
-    this.xeroConnectorService.getXeroTenants().subscribe((tenantList: DestinationAttribute[]) => {
+    this.xeroConnectorService.getXeroTenants().subscribe((tenantList: XeroDestinationAttributes[]) => {
       this.tenantList = tenantList;
     });
   }
