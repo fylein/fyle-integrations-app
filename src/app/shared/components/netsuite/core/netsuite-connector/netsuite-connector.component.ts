@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { NetsuiteConnectorModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
@@ -38,7 +39,7 @@ export class NetsuiteConnectorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private connectorService: NetsuiteConnectorService,
-    private mappingsService: NetsuiteMappingsService
+    private mappingsService: NetsuiteMappingsService,
   ) { }
 
   private clearField() {
@@ -48,16 +49,15 @@ export class NetsuiteConnectorComponent implements OnInit {
   }
 
   save() {
-    const accountId = this.connectNetsuiteForm.value.accountId;
-    const tokenId = this.connectNetsuiteForm.value.tokenId;
-    const token_secret = this.connectNetsuiteForm.value.tokenSecret;
+
+    const connector_payload = NetsuiteConnectorModel.constructPayload(
+      this.connectNetsuiteForm.value.accountId,
+      this.connectNetsuiteForm.value.tokenId,
+      this.connectNetsuiteForm.value.tokenSecret
+    )
 
     this.isLoading = true;
-    this.connectorService.connectNetsuite({
-      ns_account_id: accountId,
-      ns_token_id: tokenId,
-      ns_token_secret: token_secret
-    }).subscribe((response) => {
+    this.connectorService.connectNetsuite(connector_payload).subscribe((response) => {
       this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
         this.setupConnectionStatus.emit(true);
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
