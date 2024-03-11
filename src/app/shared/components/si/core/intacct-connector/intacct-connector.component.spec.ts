@@ -7,7 +7,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { SageIntacctCredential } from 'src/app/core/models/intacct/db/sage-credentials.model';
-import { SiComponent } from 'src/app/integrations/intacct/intacct.component';
+import { IntacctComponent } from 'src/app/integrations/intacct/intacct.component';
 import { HttpClientModule } from '@angular/common/http';
 import { IntacctOnboardingConnectorComponent } from 'src/app/integrations/intacct/intacct-onboarding/intacct-onboarding-connector/intacct-onboarding-connector.component';
 
@@ -26,14 +26,14 @@ describe('IntacctConnectorComponent', () => {
     mockMessageService = jasmine.createSpyObj('MessageService', ['add']);
     localStorage.setItem('si.workspaceId', '1');
     TestBed.configureTestingModule({
-      declarations: [IntacctConnectorComponent, SiComponent],
+      declarations: [IntacctConnectorComponent, IntacctComponent],
       imports: [ReactiveFormsModule, HttpClientModule],
       providers: [
         FormBuilder,
         { provide: IntacctConnectorService, useValue: mockConnectorService },
         { provide: SiMappingsService, useValue: mockMappingsService },
         { provide: MessageService, useValue: mockMessageService },
-        SiComponent,
+        IntacctComponent,
         IntacctOnboardingConnectorComponent
       ]
     }).compileComponents();

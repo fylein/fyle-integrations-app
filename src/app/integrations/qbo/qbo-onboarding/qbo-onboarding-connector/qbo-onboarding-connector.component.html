@@ -8,13 +8,13 @@
             <div>
                 <app-configuration-step-header
                     [headerText]="'Connect to QuickBooks Online'"
-                    [contentText]="'Connect to the QuickBooks Online Company from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and QuickBooks Online company cannot be changed once the configuration steps are complete'"
+                    [contentText]="'Connect to the QuickBooks Online Company from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and QuickBooks Online company cannot be changed once the configuration steps are complete.'"
                     [redirectLink]="redirectLink">
                 </app-configuration-step-header>
             </div>
-            <div class="tw-px-24-px tw-pb-24-px">
+            <div class="tw-px-24-px">
                 <app-configuration-connector
-                    [accountingAppTitle]="'QuickBooks Online Company'"
+                    [accountingAppTitle]="'QuickBooks Online company'"
                     [accountingCompanyName]="qboCompanyName"
                     [fyleOrgName]="fyleOrgName"
                     [accountingCompanyTokenExpired]="qboTokenExpired"
@@ -35,8 +35,8 @@
                     [confirmBtnText]="primaryButtonText"
                     [showSecondaryCTA]="false">
                 </app-configuration-confirmation-dialog>
-                <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" [isButtonDisabled]="isContinueDisabled" (save)="continueToNextStep()"></app-configuration-step-footer>
         </div>
     </div>
 </div>

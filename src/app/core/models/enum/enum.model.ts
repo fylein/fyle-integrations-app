@@ -7,7 +7,8 @@ export enum IntegrationView {
 
 export enum IntacctCategoryDestination {
   EXPENSE_TYPE = 'EXPENSE_TYPE',
-  ACCOUNT = 'GL_ACCOUNT'
+  ACCOUNT = 'ACCOUNT',
+  GL_ACCOUNT = 'GL_ACCOUNT'
 }
 
 export enum AutoMapEmployeeOptions {
@@ -36,7 +37,8 @@ export enum InAppIntegration {
 
 export enum ToastSeverity {
   SUCCESS = 'success',
-  ERROR = 'error'
+  ERROR = 'error',
+  INFO = 'info'
 }
 
 export enum UpdateEvent {
@@ -67,10 +69,16 @@ export enum BusinessCentralUpdateEvent {
   ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings Business Central',
 }
 
+export enum TravelperkUpdateEvent {
+  CONNECT_TRAVELPERK = 'Connect TravelPerk',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Import Settings TravelPerk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
+}
+
 export enum AppName {
   BAMBOO_HR = 'BambooHR',
   QBD = 'QuickBooks Desktop',
-  TRAVELPERK = 'Travelperk',
+  TRAVELPERK = 'TravelPerk',
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
@@ -107,6 +115,8 @@ export enum Page {
   EXPORT_SETTING_BUSINESS_CENTRAL = 'Export Settings BusinessCentral',
   IMPORT_SETTINGS_BUSINESS_CENTRAL = 'Import Settings BusinessCentral',
   ADVANCED_SETTINGS_BUSINESS_CENTRAL = 'Advanced Settings BusinessCentral',
+  PAYMENT_PROFILE_SETTINGS_TRAVELPERK = 'Payment Profile Settings TravelPerk',
+  ADVANCED_SETTINGS_TRAVELPERK = 'Advanced Settings TravelPerk',
 }
 
 export enum ClickEvent {
@@ -151,6 +161,15 @@ export enum IntacctOnboardingState {
 export enum QBOOnboardingState {
   CONNECTION = 'CONNECTION',
   MAP_EMPLOYEES = 'MAP_EMPLOYEES',
+  EXPORT_SETTINGS = 'EXPORT_SETTINGS',
+  IMPORT_SETTINGS = 'IMPORT_SETTINGS',
+  ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
+  COMPLETE = 'COMPLETE',
+  CLONE_SETTINGS = 'CLONE_SETTINGS'
+}
+
+export enum XeroOnboardingState {
+  CONNECTION = 'CONNECTION',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
@@ -203,12 +222,20 @@ export enum QBOCorporateCreditCardExpensesObject {
   DEBIT_CARD_EXPENSE = 'DEBIT CARD EXPENSE'
 }
 
+export enum XeroReimbursableExpensesObject {
+  PURCHASE_BILL = 'PURCHASE BILL'
+}
+
+export enum XeroCorporateCreditCardExpensesObject {
+  BANK_TRANSACTION = 'BANK TRANSACTION'
+}
+
 export enum NameInJournalEntry {
   EMPLOYEE = 'EMPLOYEE',
   MERCHANT = 'MERCHANT'
 }
 
-export enum CorporateCreditCardExpensesObject {
+export enum IntacctCorporateCreditCardExpensesObject {
   BILL = 'BILL',
   JOURNAL_ENTRY = 'JOURNAL_ENTRY',
   EXPENSE_REPORT = 'EXPENSE_REPORT',
@@ -326,7 +353,9 @@ export enum QBDAccountingExportsType {
 
 export enum PaymentSyncDirection {
   FYLE_TO_INTACCT = 'fyle_to_intacct',
-  INTACCT_TO_FYLE = 'intacct_to_fyle'
+  INTACCT_TO_FYLE = 'intacct_to_fyle',
+  FYLE_TO_XERO = 'fyle_to_xero',
+  XERO_TO_FYLE = 'xero_to_fyle'
 }
 
 export enum QBOPaymentSyncDirection {
@@ -354,7 +383,7 @@ export enum MappingState {
 }
 
 export enum AccountingField {
-  ACCOUNT = 'ACCOUNT',
+  ACCOUNT = 'ACCOUNT'
 }
 
 export enum Sage300Field {
@@ -455,7 +484,8 @@ export enum AppUrl {
   BUSINESS_CENTRAL = 'business_central',
   INTEGRATION = 'integration',
   QBO = 'qbo',
-  NETSUITE = 'netsuite'
+  NETSUITE = 'netsuite',
+  XERO = 'xero'
 }
 
 export enum Sage300ExportType {
@@ -509,22 +539,22 @@ export enum AccountingExport {
 }
 
 export enum Operator {
-  IsNull = "isnull",
-  IExact = "iexact",
-  IContains = "icontains",
-  LessThan = "lt",
-  LessThanOrEqual = "lte"
+  IsNull = 'isnull',
+  IExact = 'iexact',
+  IContains = 'icontains',
+  LessThan = 'lt',
+  LessThanOrEqual = 'lte'
 }
 
 export enum JoinOption {
-  AND = "AND",
-  OR = "OR"
+  AND = 'AND',
+  OR = 'OR'
 }
 
 export enum CustomOperatorOption {
-  Is = "iexact",
-  IsEmpty = "is_empty",
-  IsNotEmpty = "is_not_empty"
+  Is = 'iexact',
+  IsEmpty = 'is_empty',
+  IsNotEmpty = 'is_not_empty'
 }
 
 export enum IntacctExportSettingDestinationOptionKey {
@@ -587,6 +617,13 @@ export enum QBOTaskLogType {
   FETCHING_EXPENSE = 'FETCHING_EXPENSE'
 }
 
+export enum XeroTaskLogType {
+  CREATING_BILL = 'CREATING_BILL',
+  CREATING_BANK_TRANSACTION = 'CREATING_BANK_TRANSACTION',
+  CREATING_PAYMENT = 'CREATING_PAYMENT',
+  FETCHING_EXPENSE = 'FETCHING_EXPENSE'
+}
+
 export enum LoaderType {
   DETERMINATE = 'determinate',
   INDETERMINATE = 'indeterminate'
@@ -641,4 +678,22 @@ export enum ReimbursableImportState {
 export enum CCCImportState {
   APPROVED = 'approved',
   PAID = 'closed'
+}
+
+export enum TravelPerkExpenseGroup {
+  SINGLE= 'SINGLE',
+  MULTIPLE = 'MULTIPLE'
+}
+
+export enum TravelPerkUserRole {
+  CARD_HOLDER = 'CARD_HOLDER',
+  TRAVELLER = 'TRAVELLER',
+  BOOKER = 'BOOKER'
+}
+
+export enum TravelPerkOnboardingState {
+  CONNECTION = 'CONNECTION',
+  PAYMENT_PROFILE_SETTINGS = 'PAYMENT_PROFILE_SETTINGS',
+  ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
+  COMPLETE = 'COMPLETE'
 }

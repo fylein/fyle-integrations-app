@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { brandingContent } from 'src/app/branding/branding-config';
 import { IntacctOnboardingModel } from 'src/app/core/models/intacct/intacct-configuration/intacct-onboarding.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -14,7 +15,9 @@ export class IntacctOnboardingConnectorComponent implements OnInit {
 
   isIntacctConnected: boolean = false;
 
-  onboardingSteps: OnboardingStepper[] = new IntacctOnboardingModel().getOnboardingSteps('Connect to Sage Intacct', this.workspaceService.getOnboardingState());
+  readonly brandingContent = brandingContent.intacct.configuration.connector;
+
+  onboardingSteps: OnboardingStepper[] = new IntacctOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
 
   constructor(
     private workspaceService: WorkspaceService

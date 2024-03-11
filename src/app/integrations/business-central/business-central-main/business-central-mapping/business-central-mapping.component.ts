@@ -40,7 +40,7 @@ export class BusinessCentralMappingComponent implements OnInit {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!==FyleField.CATEGORY) {
             this.mappingPages.push({
               label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
-              routerLink: `/integrations/business_central/main/mapping/${item.source_field.toLowerCase()}`
+              routerLink: `/integrations/business_central/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
             });
           }
         });

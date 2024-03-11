@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -29,6 +29,12 @@ export class ConfigurationToggleFieldComponent implements OnInit {
   @Input() hideToggle: boolean = false;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
+
+  readonly brandingContent = brandingContent.common;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     public windowService: WindowService

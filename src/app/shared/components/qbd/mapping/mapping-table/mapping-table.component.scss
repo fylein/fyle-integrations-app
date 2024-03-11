@@ -7,7 +7,7 @@ td {
 }
 
 .pi-check:before {
-    @apply tw-text-14-px tw-cursor-pointer tw-text-faded-text-color #{!important};
+    @apply tw-text-14-px tw-cursor-pointer tw-text-text-muted #{!important};
 }
 
 .p-inputtext {

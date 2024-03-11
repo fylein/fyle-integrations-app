@@ -54,7 +54,7 @@ export class IntacctComponent implements OnInit {
 
   setupWorkspace(workspace:IntacctWorkspace) {
     this.workspace = workspace;
-    this.storageService.set('si.workspaceId', this.workspace.id);
+    this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
     this.appcuesService.initialiseAppcues(AppName.INTACCT, this.workspace.created_at);
     this.workspaceService.syncFyleDimensions().subscribe();

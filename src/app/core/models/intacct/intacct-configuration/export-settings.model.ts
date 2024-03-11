@@ -1,18 +1,18 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { CorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption, IntacctExportSettingDestinationOptionKey } from "../../enum/enum.model";
+import { IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption, IntacctExportSettingDestinationOptionKey } from "../../enum/enum.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { IntacctDestinationAttribute } from "../db/destination-attribute.model";
 
 export type ExportSettingFormOption = {
     label: string,
-    value: ExpenseState | IntacctReimbursableExpensesObject | CorporateCreditCardExpensesObject | ExportDateType | string | FyleField | null;
+    value: ExpenseState | IntacctReimbursableExpensesObject | IntacctCorporateCreditCardExpensesObject | ExportDateType | string | FyleField | null;
 }
 
 export type ExportSettingConfiguration = {
     employee_field_mapping: string,
     auto_map_employees: string,
     reimbursable_expenses_object: IntacctReimbursableExpensesObject | null,
-    corporate_credit_card_expenses_object: CorporateCreditCardExpensesObject | null,
+    corporate_credit_card_expenses_object: IntacctCorporateCreditCardExpensesObject | null,
     use_merchant_in_journal_line: boolean
   }
 
@@ -63,7 +63,7 @@ export type ExportSettingOptionSearch = {
         const cccExportType = getValueOrDefault(exportSettingsForm.get('cccExportType'));
         let cccExportGroup = exportSettingsForm.get('cccExportGroup')?.value ? [exportSettingsForm.value.cccExportGroup] : null;
 
-        if (cccExportType === CorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
+        if (cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
             cccExportGroup = [ExpenseGroupingFieldOption.EXPENSE_ID];
         }
 
@@ -79,7 +79,7 @@ export type ExportSettingOptionSearch = {
             configurations: {
                 reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
                 corporate_credit_card_expenses_object: cccExportType,
-                employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : null,
+                employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value ? exportSettingsForm.get('employeeFieldMapping')?.value.toUpperCase() : 'VENDOR',
                 auto_map_employees: getValueOrDefault(exportSettingsForm.get('autoMapEmployees')),
                 use_merchant_in_journal_line: exportSettingsForm.get('useMerchantInJournalLine')?.value ? exportSettingsForm.get('useMerchantInJournalLine')?.value : false
             },

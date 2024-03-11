@@ -42,4 +42,5 @@ export type AppUrlMap = {
     [AppUrl.BUSINESS_CENTRAL]: string
     [AppUrl.QBO]: string
     [AppUrl.NETSUITE]: string
+    [AppUrl.XERO]: string
 }

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, filter, forkJoin } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
@@ -43,6 +43,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() isImportItemsEnabled: boolean;
 
+  @Input() exportKey: string = 'expense_group';
+
   filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];
@@ -75,7 +77,13 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingContent = brandingContent.dashboard;
+
+  readonly brandingContentCommon = brandingContent.common;
+
   employeeFieldMapping: FyleField;
+
+  displayName: string | undefined = undefined;
 
   constructor(
     private dashboardService: DashboardService,
@@ -88,13 +96,14 @@ export class DashboardErrorSectionComponent implements OnInit {
   }
 
   getDestinationOptionsV1(errorType: AccountingErrorType): void {
-    let displayName;
-    if (this.destinationField === AccountingField.ACCOUNT) {
-      displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+    if (this.destinationField === AccountingField.ACCOUNT && this.appName===AppName.QBO) {
+      this.displayName = this.isImportItemsEnabled ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;
+    } else {
+      this.displayName = undefined;
     }
 
-    this.mappingService.getDestinationAttributes(this.destinationField, 'v1', this.apiModuleUrl, undefined, undefined, displayName).subscribe((response: any) => {
-      this.destinationOptions = response;
+    this.mappingService.getPaginatedDestinationAttributes(this.destinationField, undefined, this.displayName).subscribe((response: any) => {
+      this.destinationOptions = response.results;
 
       this.setErrors(errorType);
     });
@@ -146,7 +155,8 @@ export class DashboardErrorSectionComponent implements OnInit {
   showErrorDialog(accountingError: Error) {
     this.isAccountingErrorDialogVisible = true;
     this.errorDetail = accountingError.error_detail;
-    this.errorExpenses = accountingError.expense_group?.expenses;
+    // @ts-ignore
+    this.errorExpenses = accountingError[this.exportKey]?.expenses;
   }
 
   private formatErrors(errors: Error[]): AccountingGroupedErrors {

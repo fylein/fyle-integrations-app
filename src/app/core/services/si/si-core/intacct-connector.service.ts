@@ -29,7 +29,7 @@ export class IntacctConnectorService {
     cacheBusterObserver: sageIntacctCredentialCache
   })
   getSageIntacctCredential(): Observable<SageIntacctCredential> {
-    this.workspaceId = this.storageService.get('si.workspaceId');
+    this.workspaceId = this.storageService.get('workspaceId');
     return this.apiService.get('/workspaces/' + this.workspaceId + '/credentials/sage_intacct/', {});
   }
 
@@ -37,7 +37,7 @@ export class IntacctConnectorService {
     cacheBusterNotifier: sageIntacctCredentialCache
   })
   connectSageIntacct(data: SageIntacctCredential): Observable<SageIntacctCredential> {
-    this.workspaceId = this.storageService.get('si.workspaceId');
+    this.workspaceId = this.storageService.get('workspaceId');
     globalCacheBusterNotifier.next();
     return this.apiService.post('/workspaces/' + this.workspaceId + '/credentials/sage_intacct/', data);
   }
