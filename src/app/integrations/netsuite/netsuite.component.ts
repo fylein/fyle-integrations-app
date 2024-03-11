@@ -54,7 +54,7 @@ export class NetsuiteComponent implements OnInit {
 
   private storeWorkspaceAndNavigate(workspace: NetsuiteWorkspace): void {
     this.workspace = workspace;
-    this.storageService.set('netsuite.workspaceId', this.workspace.id);
+    this.storageService.set('workspaceId', this.workspace.id);
     this.storageService.set('onboarding-state', this.workspace.onboarding_state);
     this.netsuiteHelperService.syncFyleDimensions().subscribe();
     this.netsuiteHelperService.syncNetsuiteDimensions().subscribe();

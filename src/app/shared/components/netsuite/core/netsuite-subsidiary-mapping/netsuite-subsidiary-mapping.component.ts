@@ -91,7 +91,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
       subsidiary_name: subsidiaries[0].value,
       internal_id: subsidiaries[0].destination_id,
       country_name: subsidiaries[0].detail?.country ? subsidiaries[0].detail.country : null,
-      workspace: 1
+      workspace: this.workspaceId
     };
   }
 
@@ -122,7 +122,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   }
 
   private setupPage() {
-    this.workspaceId = this.storageService.get('netsuite.workspaceId');
+    this.workspaceId = this.storageService.get('workspaceId');
     this.isOnboarding = this.router.url.includes('onboarding');
     this.mappingService.getDestinationAttributes('SUBSIDIARY', 'v2', 'netsuite').subscribe((subsidiaries) => {
       this.netsuiteSubsidiaryOptions = subsidiaries;
