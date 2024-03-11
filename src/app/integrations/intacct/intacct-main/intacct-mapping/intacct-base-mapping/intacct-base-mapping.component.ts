@@ -59,7 +59,11 @@ export class IntacctBaseMappingComponent implements OnInit {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return intacctConfiguration.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
-      return IntacctCategoryDestination.ACCOUNT;
+      if (intacctConfiguration.reimbursable_expenses_object===IntacctReimbursableExpensesObject.EXPENSE_REPORT || intacctConfiguration.corporate_credit_card_expenses_object===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+        return IntacctCategoryDestination.EXPENSE_TYPE;
+      } else {
+        return IntacctCategoryDestination.ACCOUNT;
+      }
     }
 
     return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
