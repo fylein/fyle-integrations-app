@@ -70,7 +70,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.saveInProgress = true;
 
     const netsuiteSubsidiaryId = this.netsuiteSubsidiaryForm.value.netsuiteSubsidiary;
-    const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost = NetsuiteSubsidiaryMappingModel.constructPayload(netsuiteSubsidiaryId, this.netsuiteSubsidiaryOptions, this.workspaceId)
+    const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost = NetsuiteSubsidiaryMappingModel.constructPayload(netsuiteSubsidiaryId, this.netsuiteSubsidiaryOptions, this.workspaceId);
 
     this.connectorService.postSubsdiaryMapping(netsuiteSubsidiaryMappingPayload).subscribe(
       (netsuiteSubsidiary) => {
