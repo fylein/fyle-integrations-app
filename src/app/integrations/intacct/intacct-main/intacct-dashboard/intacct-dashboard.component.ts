@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, catchError, forkJoin, from, interval, map, of, switchMap, takeWhile } from 'rxjs';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
-import { AccountingErrorType, AppName, AppUrl, CCCImportState, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctCategoryDestination, IntacctErrorType, RefinerSurveyType, ReimbursableImportState, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AppName, AppUrl, CCCImportState, ClickEvent, ExpenseState, ExportState, FyleField, FyleReferenceType, IntacctCategoryDestination, IntacctErrorType, IntacctReimbursableExpensesObject, RefinerSurveyType, ReimbursableImportState, TaskLogState, TaskLogType, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { ExpenseGroup, ExpenseGroupList, ExportableExpenseGroup } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
@@ -185,7 +185,7 @@ export class IntacctDashboardComponent implements OnInit {
 
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
-        CATEGORY: responses[3].employee_field_mapping === FyleField.EMPLOYEE ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT
+        CATEGORY: responses[3].reimbursable_expenses_object === IntacctReimbursableExpensesObject.EXPENSE_REPORT ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT
       };
 
       this.isLoading = false;
