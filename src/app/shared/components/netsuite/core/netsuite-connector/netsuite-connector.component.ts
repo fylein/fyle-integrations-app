@@ -39,7 +39,7 @@ export class NetsuiteConnectorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private connectorService: NetsuiteConnectorService,
-    private mappingsService: NetsuiteMappingsService,
+    private mappingsService: NetsuiteMappingsService
   ) { }
 
   private clearField() {
@@ -54,7 +54,7 @@ export class NetsuiteConnectorComponent implements OnInit {
       this.connectNetsuiteForm.value.accountId,
       this.connectNetsuiteForm.value.tokenId,
       this.connectNetsuiteForm.value.tokenSecret
-    )
+    );
 
     this.isLoading = true;
     this.connectorService.connectNetsuite(connector_payload).subscribe((response) => {
