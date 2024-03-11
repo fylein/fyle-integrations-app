@@ -73,8 +73,8 @@
 
         <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
-                [label]="'Other Preferences'"
-                [subLabel]="'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'">
+                [label]="brandingContent.intacct.configuration.advancedSettings.customPreferencesLabel"
+                [subLabel]="brandingContent.intacct.configuration.advancedSettings.customPreferencesSubLabel">
             </app-configuration-step-sub-header>
             <div *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 

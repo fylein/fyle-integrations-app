@@ -148,7 +148,7 @@
                         [exportConfigurationIconPath]="'assets/illustrations/sageIntacct/'+brandingConfig.brandId+'CCCExportTypeTable.svg'"
                         [showExportPreview]="true"
                         [appName]="appName"
-                        [exportTypeIconPathArray]="previewImagePaths"></app-configuration-select-field>
+                        [exportTypeIconPathArray]="brandingConfig.brandId==='fyle' ? previewImagePaths : coPreviewImagePaths"></app-configuration-select-field>
                         <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT">
                             <app-configuration-select-field
                             [form]="exportSettingsForm"

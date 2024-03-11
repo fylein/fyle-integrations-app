@@ -22,6 +22,8 @@ export class AppLandingPageBodyComponent implements OnInit {
 
   @Input() appName: string;
 
+  @Input() embedImage: string;
+
   embedVideoUrl: SafeResourceUrl;
 
   readonly brandingConfig = brandingConfig;

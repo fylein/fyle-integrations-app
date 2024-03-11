@@ -81,6 +81,19 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   ];
 
+  coPreviewImagePaths =[
+    {
+      'EXPENSE_REPORT': '',
+      'BILL': '',
+      'JOURNAL_ENTRY': ''
+    },
+    {
+      'BILL': 'assets/illustrations/sageIntacct/coBill.svg',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/coJournalEntry.svg',
+      'CHARGE_CARD_TRANSACTION': 'assets/illustrations/sageIntacct/coChargeCard.svg'
+    }
+  ];
+
   expenseGroupingFieldOptions: ExportSettingFormOption[] = [
     {
       label: 'Expense',

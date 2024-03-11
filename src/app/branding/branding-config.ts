@@ -280,7 +280,9 @@ const content: ContentConfiguration = {
                     department: 'Department',
                     project: 'Project',
                     class: 'Class',
-                    item: 'Item'
+                    item: 'Item',
+                    customPreferencesLabel: 'Other Preferences',
+                    customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'
                 },
                 done: {
                     ctaText: '',
@@ -457,7 +459,9 @@ const content: ContentConfiguration = {
                     department: 'department',
                     project: 'project',
                     class: 'class',
-                    item: 'item'
+                    item: 'item',
+                    customPreferencesLabel: 'Custom preferences',
+                    customPreferencesSubLabel: 'In this section, you have the flexibility to tailor the data export process to Sage Intacct according to your specific needs and preferences.'
                 },
                 done: {
                     ctaText: '',
