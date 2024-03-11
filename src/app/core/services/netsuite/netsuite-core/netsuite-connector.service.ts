@@ -29,7 +29,7 @@ export class NetsuiteConnectorService {
     cacheBusterObserver: netsuiteCredentialCache
   })
   getNetsuiteCredentials(): Observable<NetsuiteCredential> {
-    this.workspaceId = this.storageService.get('netsuite.workspaceId');
+    this.workspaceId = this.storageService.get('workspaceId');
     return this.apiService.get(`/workspaces/${this.workspaceId}/credentials/netsuite/`, {});
   }
 
@@ -37,7 +37,7 @@ export class NetsuiteConnectorService {
     cacheBusterNotifier: netsuiteCredentialCache
   })
   connectNetsuite(data: NetsuiteConnectorPost): Observable<NetsuiteCredential> {
-    this.workspaceId = this.storageService.get('netsuite.workspaceId');
+    this.workspaceId = this.storageService.get('workspaceId');
     globalCacheBusterNotifier.next();
     return this.apiService.post(`/workspaces/${this.workspaceId}/credentials/netsuite/`, data);
   }
