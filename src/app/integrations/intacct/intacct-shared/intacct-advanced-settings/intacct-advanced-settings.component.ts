@@ -283,6 +283,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
         this.employeeFieldMapping = configuration.employee_field_mapping;
+        
+        if (this.advancedSettings.workspace_schedules?.additional_email_options) {
+          this.adminEmails = this.adminEmails.concat(this.advancedSettings.workspace_schedules?.additional_email_options);
+        }
         this.initializeAdvancedSettingsFormWithData(!!expenseFilter.count);
         this.initializeSkipExportForm();
         this.isLoading = false;
