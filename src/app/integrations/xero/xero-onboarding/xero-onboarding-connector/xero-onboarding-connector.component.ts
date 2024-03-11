@@ -29,7 +29,7 @@ import { environment } from 'src/environments/environment';
 })
 export class XeroOnboardingConnectorComponent implements OnInit {
 
-  brandingContent = brandingContent.configuration.connector;
+  brandingContent = brandingContent.xero.configuration.connector;
 
   onboardingSteps: OnboardingStepper[] = new XeroOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
 
@@ -188,7 +188,6 @@ export class XeroOnboardingConnectorComponent implements OnInit {
       };
       this.xeroConnectorService.postTenantMapping(tenantMappingPayload).subscribe((response:TenantMapping) => {
         this.xeroHelperService.refreshXeroDimensions().subscribe(() => {
-          this.workspaceService.setOnboardingState(XeroOnboardingState.EXPORT_SETTINGS);
           this.xeroConnectionInProgress = false;
           this.xeroTokenExpired = false;
           this.showOrHideDisconnectXero();

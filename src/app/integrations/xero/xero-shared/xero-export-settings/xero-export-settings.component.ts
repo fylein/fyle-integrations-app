@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
@@ -93,7 +94,8 @@ export class XeroExportSettingsComponent implements OnInit {
     public helperService: HelperService,
     private exportSettingService: XeroExportSettingsService,
     private mappingService: MappingService,
-    private xeroHelperService: XeroHelperService
+    private xeroHelperService: XeroHelperService,
+    private router : Router
   ) { }
 
   refreshDimensions() {
@@ -109,12 +111,12 @@ export class XeroExportSettingsComponent implements OnInit {
   }
 
   setupPage() {
-    this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
+    this.isOnboarding = this.router.url.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT'];
 
     forkJoin([
       this.exportSettingService.getExportSettings(),
-      this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v2', 'xero')
+      this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v1', 'xero')
     ]).subscribe(response => {
       this.exportSettings = response[0];
       this.bankAccounts = response[1].BANK_ACCOUNT;
