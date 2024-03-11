@@ -13,7 +13,7 @@ import { DragDropModule } from 'primeng/dragdrop';
 import { ProgressBarModule } from 'primeng/progressbar';
 
 // External Libraries
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
+// import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
@@ -185,7 +185,7 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     ChipsModule,
     TableModule,
     TabMenuModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+    // IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [
     LoaderComponent,

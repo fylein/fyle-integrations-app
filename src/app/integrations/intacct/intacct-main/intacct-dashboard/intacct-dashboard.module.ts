@@ -6,7 +6,6 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SkeletonModule } from 'primeng/skeleton';
 import { IntacctDashboardComponent } from './intacct-dashboard.component';
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule } from 'primeng/table';
 
@@ -22,8 +21,7 @@ import { TableModule } from 'primeng/table';
     DashboardRoutingModule,
     SkeletonModule,
     DialogModule,
-    TableModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+    TableModule
   ]
 })
 export class IntacctDashboardModule { }
