@@ -30,9 +30,17 @@ export interface ExpenseGroupResponse extends PaginatedResponse {
 export type ExpenseGroupParam = {
   limit: number;
   offset: number;
-  tasklog__status: string;
+  tasklog__status?: string;
   exported_at__gte?: string;
   exported_at__lte?: string;
+  state?: string;
+  exported_at?: string;
+  start_date?: string;
+  end_date?: string;
+  expenses__expense_number?: string;
+  expenses__employee_name?: string;
+  expenses__employee_email?: string;
+  expenses__claim_number?: string;
 }
 
 export type SkipExportParam = {
@@ -42,4 +50,8 @@ export type SkipExportParam = {
   is_skipped: boolean;
   updated_at__gte?: string;
   updated_at__lte?: string;
+  expense_number?: string;
+  employee_name?: string;
+  employee_email?: string;
+  claim_number?: string;
 }

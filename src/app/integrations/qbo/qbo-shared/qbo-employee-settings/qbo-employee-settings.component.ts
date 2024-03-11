@@ -107,8 +107,6 @@ export class QboEmployeeSettingsComponent implements OnInit {
         this.router.navigate(['/integrations/qbo/onboarding/export_settings']);
       } else if (this.exportSettingAffected()) {
         this.router.navigate(['/integrations/qbo/main/configuration/export_settings']);
-      } else {
-        this.router.navigate(['/integrations/qbo/main/dashboard']);
       }
     }, () => {
       this.isSaveInProgress = false;

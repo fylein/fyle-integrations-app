@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
+import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
+import { NetsuiteSubsidiaryMappingModel, SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -26,7 +26,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   netsuiteSubsidiaryForm: FormGroup;
 
-  netsuiteSubsidiaryOptions: IntacctDestinationAttribute[];
+  netsuiteSubsidiaryOptions: NetsuiteDestinationAttribute[];
 
   netsuiteSubsidiary: SubsidiaryMapping;
 
@@ -70,7 +70,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.saveInProgress = true;
 
     const netsuiteSubsidiaryId = this.netsuiteSubsidiaryForm.value.netsuiteSubsidiary;
-    const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost = this.getSubsdiaryMappingPayload(netsuiteSubsidiaryId);
+    const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost = NetsuiteSubsidiaryMappingModel.constructPayload(netsuiteSubsidiaryId, this.netsuiteSubsidiaryOptions, this.workspaceId)
 
     this.connectorService.postSubsdiaryMapping(netsuiteSubsidiaryMappingPayload).subscribe(
       (netsuiteSubsidiary) => {
@@ -83,16 +83,6 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
         this.saveInProgress = false;
       }
     );
-  }
-
-  private getSubsdiaryMappingPayload(netsuiteSubsidiaryId: any): NetsuiteSubsidiaryMappingPost {
-    const subsidiaries = this.netsuiteSubsidiaryOptions.filter(entity => entity.destination_id === netsuiteSubsidiaryId.destination_id);
-    return {
-      subsidiary_name: subsidiaries[0].value,
-      internal_id: subsidiaries[0].destination_id,
-      country_name: subsidiaries[0].detail?.country ? subsidiaries[0].detail.country : null,
-      workspace: this.workspaceId
-    };
   }
 
   navigateToExportSetting() {

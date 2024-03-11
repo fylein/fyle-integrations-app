@@ -1,3 +1,6 @@
+import { NetsuiteDestinationAttribute } from "./destination-attribute.model";
+import { NetsuiteSubsidiaryMappingPost } from "../netsuite-configuration/netsuite-connector.model";
+
 export type SubsidiaryMapping = {
     id?: number;
     subsidiary_name: string;
@@ -7,3 +10,16 @@ export type SubsidiaryMapping = {
     updated_at?: Date;
     workspace: number;
 };
+
+
+export class NetsuiteSubsidiaryMappingModel {
+    static constructPayload(netsuiteSubsidiaryId: any, subsidiaries: NetsuiteDestinationAttribute[], workspaceId: number): NetsuiteSubsidiaryMappingPost {
+        const filtered_subsidiaries = subsidiaries.filter(entity => entity.destination_id === netsuiteSubsidiaryId.destination_id);
+        return {
+          subsidiary_name: subsidiaries[0].value,
+          internal_id: subsidiaries[0].destination_id,
+          country_name: subsidiaries[0].detail?.country ? subsidiaries[0].detail.country : null,
+          workspace: workspaceId
+        };
+    }
+}

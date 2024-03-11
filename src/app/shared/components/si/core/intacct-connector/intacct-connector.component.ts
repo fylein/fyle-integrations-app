@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
@@ -32,6 +32,8 @@ export class IntacctConnectorComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingContent = brandingContent;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -52,6 +54,8 @@ export class IntacctConnectorComponent implements OnInit {
       const userPassword = this.connectSageIntacctForm.value.userPassword;
 
       this.isLoading = true;
+      this.saveInProgress = true;
+
       this.connectorService.connectSageIntacct({
         si_user_id: userID,
         si_company_id: companyID,
@@ -61,11 +65,13 @@ export class IntacctConnectorComponent implements OnInit {
           this.setupConnectionStatus.emit(true);
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
           this.isLoading = false;
+          this.saveInProgress = false;
         });
       }, () => {
         this.setupConnectionStatus.emit(false);
         this.clearField();
         this.isLoading = false;
+        this.saveInProgress = false;
         this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
       });
     }

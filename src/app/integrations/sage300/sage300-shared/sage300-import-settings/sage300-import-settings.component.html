@@ -17,7 +17,7 @@
                         <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
                             Import / Map Sage 300 CRE Dimensions
                         </h4>
-                        <p class="tw-text-14-px tw-text-faded-text-color">
+                        <p class="tw-text-14-px tw-text-text-muted">
                             The Sage 300 CRE dimensions listed below can be mapped to an existing {{brandingConfig.brandName}} field of your preference,
                             or a new custom field. Importing these dimensions from Sage 300 CRE to {{brandingConfig.brandName}} will make the values
                             available as a dropdown in the expense form for your employees to choose from.<a
@@ -41,18 +41,19 @@
                         [accountingFieldOptions]="sage300Fields" 
                         [fyleFieldOptions]="fyleFields" 
                         [dependentImportFields]="dependentImportFields" 
+                        [redirectLink]="supportArticleLink"
                         [dependentDestinationValue] = "'JOB'"
                         (showWarningForDependentFields)="showWarningForDependentFields()">
                     </app-configuration-import-field>
                 </div>
-                <app-configuration-step-footer 
-                    [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
-                    [showBackButton] = "isOnboarding"
-                    [isButtonDisabled]="!importSettingForm.valid"
-                    (navigateToPreviousStep)="navigateBack()"
-                    (save)="save()">
-                </app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer 
+                [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" 
+                [showBackButton] = "isOnboarding"
+                [isButtonDisabled]="!importSettingForm.valid"
+                (navigateToPreviousStep)="navigateBack()"
+                (save)="save()">
+            </app-configuration-step-footer>
         </form>
     </div>
     <div>

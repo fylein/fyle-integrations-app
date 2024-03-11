@@ -39,7 +39,7 @@ export class SiWorkspaceService {
   }
 
   getWorkspaceId(): string {
-    return this.storageService.get('si.workspaceId');
+    return this.storageService.get('workspaceId');
   }
 
   setIntacctOnboardingState(onboardingState: IntacctOnboardingState): void {

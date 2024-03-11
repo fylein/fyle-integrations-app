@@ -3,7 +3,7 @@
 }
 
 :host ::ng-deep .p-tabmenu-nav .p-menuitem-text {
-    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-16-px ;
+    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-16-px;
 }
 
 :host ::ng-deep .p-tabmenu-nav .p-menuitem-text:hover {
@@ -27,7 +27,7 @@
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):hover {
-    @apply tw-bg-nav-tabs-hover-bg;
+    @apply tw-bg-nav-tabs-hover-bg tw-rounded-0-px;
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {

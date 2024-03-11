@@ -49,7 +49,8 @@ export class HelperService {
       [AppUrl.INTEGRATION]: `${this.apiBaseUrl}/${environment.production ? 'integrations-api/': ''}api`,
       [AppUrl.BUSINESS_CENTRAL]: environment.business_central_api_url,
       [AppUrl.QBO]: environment.production ? `${this.apiBaseUrl}/quickbooks-api/api` : environment.qbo_api_url,
-      [AppUrl.NETSUITE]: environment.production ? `${this.apiBaseUrl}/netsuite-api/api` : environment.netsuite_api_url
+      [AppUrl.NETSUITE]: environment.production ? `${this.apiBaseUrl}/netsuite-api/api` : environment.netsuite_api_url,
+      [AppUrl.XERO]: environment.production ? `${this.apiBaseUrl}/xero-api/api` : environment.xero_api_url
     };
 
     const apiUrl = apiUrlMap[module] ?? apiUrlMap.integration;
@@ -207,7 +208,7 @@ export class HelperService {
   }
 
   oauthHandler(url: string): void {
-    const popup = window.open(url, 'popup', 'popup=true, width=500, height=800, left=500');
+    const popup = window.open(url);
 
     const activePopup = setInterval(() => {
       if (popup?.location?.href?.includes('code')) {
