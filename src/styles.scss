@@ -284,7 +284,7 @@ p {
 
 // Dropdown
 .p-dropdown {
-    @apply tw-h-40-px lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] tw-border-select-default-border tw-py-8-px tw-px-12-px tw-rounded-4-px #{!important};
+    @apply tw-h-40-px lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] tw-border tw-border-select-default-border tw-py-8-px tw-px-12-px tw-rounded-4-px #{!important};
 }
 
 .p-dropdown:disabled {
