@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -44,7 +44,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
   customFieldType: string;
 
-  customFieldControl: any;
+  customFieldControl: AbstractControl;
 
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],
@@ -56,7 +56,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
   isPreviewDialogVisible: boolean;
 
-  customField: { attribute_type: string; display_name: string; source_placeholder: string; is_dependent: boolean; };
+  customField: ExpenseField;
 
   customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
 
