@@ -46,7 +46,7 @@ export class XeroExportSettingsComponent implements OnInit {
 
   isImportItemsEnabled: boolean;
 
-  reimbursableExportTypes: SelectFormOption[];
+  reimbursableExportTypes: SelectFormOption[] = XeroExportSettingModel.getReimbursableExportTypes();
 
   creditCardExportTypes =  XeroExportSettingModel.getCreditCardExportTypes();
 
@@ -88,8 +88,6 @@ export class XeroExportSettingsComponent implements OnInit {
 
   is_simplify_report_closure_enabled: boolean = false;
 
-  reimbursableExpenseStateOptions: any;
-
   constructor(
     public helperService: HelperService,
     private exportSettingService: XeroExportSettingsService,
@@ -122,7 +120,7 @@ export class XeroExportSettingsComponent implements OnInit {
       this.bankAccounts = response[1].BANK_ACCOUNT;
       this.is_simplify_report_closure_enabled = (response[0].workspace_general_settings)?.is_simplify_report_closure_enabled;
 
-      this.reimbursableExpenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions(this.is_simplify_report_closure_enabled);
+      this.expenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions(this.is_simplify_report_closure_enabled);
       this.cccExpenseStateOptions = XeroExportSettingModel.getCCCExpenseStateOptions(this.is_simplify_report_closure_enabled);
       this.exportSettingForm = XeroExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
 
