@@ -24,6 +24,22 @@
                         </app-configuration-toggle-field>
                     </div>
                     <div *ngIf="exportSettingForm.value?.reimbursableExpense">
+                        <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Contact in Xero?'"
+                                [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in Xero Contacts based on a unique parameter.'"
+                                [options]="autoMapEmployeeTypes"
+                                [iconPath]="'user-two'"
+                                [placeholder]="'Select auto map employee type'"
+                                [formControllerName]="'autoMapEmployees'">
+                            </app-configuration-select-field>
+                            <div class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty tw-pb-24-px tw-pl-64-px tw-pr-12-px">
+                                <h5>
+                                    Note: In case the employee records are not auto matched by the integration, you could still manually map the records from the Mappings section of the integration.
+                                </h5>
+                            </div>
+                        </div>
                         <div
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
@@ -105,7 +121,6 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in Xero to export your ' + brandingConfig.brandName +' expenses.'"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
@@ -113,21 +128,21 @@
                             [appName]="appName"
                             [showExportPreview]="true">
                         </app-configuration-select-field>
+                    </div>
 
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'bank account'"
-                                [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account.'"
-                                [destinationAttributes]="bankAccounts"
-                                [optionLabel]="'name'"
-                                [iconPath]="'list'"
-                                [placeholder]="'Select bank account'"
-                                [formControllerName]="'bankAccount'">
-                            </app-configuration-select-field>
-                        </div>
+                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'bank account'"
+                            [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                            [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account.'"
+                            [destinationAttributes]="bankAccounts"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [placeholder]="'Select bank account'"
+                            [formControllerName]="'bankAccount'">
+                        </app-configuration-select-field>
                     </div>
 
                     <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
