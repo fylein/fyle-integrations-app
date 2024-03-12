@@ -24,13 +24,13 @@ const routes: Routes = [
         component: XeroOnboardingConnectorComponent
       },
       { path: 'export_settings',
-        component: XeroOnboardingExportSettingsComponent,
-        canActivate: [XeroTokenGuard, TenantGuard]
+        component: XeroOnboardingExportSettingsComponent
+        // CanActivate: [XeroTokenGuard, TenantGuard]
       },
       {
         path: 'import_settings',
-        component: XeroOnboardingImportSettingsComponent,
-        canActivate: [XeroTokenGuard]
+        component: XeroOnboardingImportSettingsComponent
+        // CanActivate: [XeroTokenGuard]
       },
       {
         path: 'advanced_settings',

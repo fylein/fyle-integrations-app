@@ -57,6 +57,10 @@ export interface XeroImportSettingFormOption extends SelectFormOption {
 
 export class XeroImportSettingModel extends ImportSettingsModel {
 
+  static getChartOfAccountTypesList(): string[] {
+    return ['EXPENSE', 'ASSET', 'EQUITY', 'LIABILITY', 'REVENUE'];
+  }
+
   static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[]): FormGroup {
     const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, xeroFields) : [];
     return new FormGroup({

@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExpenseField, ImportSettingMappingRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
+import { AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
 import { XeroImportSettingGet, XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -21,6 +23,8 @@ export class XeroImportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  appName: string = AppName.XERO;
+
   isOnboarding: boolean;
 
   importSettings: XeroImportSettingGet;
@@ -29,15 +33,13 @@ export class XeroImportSettingsComponent implements OnInit {
 
   workspaceGeneralSettings: XeroWorkspaceGeneralSetting;
 
-  customMappedFyleFields: any;
-
   xeroExpenseFields: IntegrationField[];
 
   isProjectMapped: boolean;
 
   taxCodes: DestinationAttribute[];
 
-  importSettingsForm: FormGroup<any>;
+  importSettingsForm: FormGroup;
 
   customFieldType: string;
 
@@ -53,9 +55,23 @@ export class XeroImportSettingsComponent implements OnInit {
 
   isPreviewDialogVisible: boolean;
 
-  customField: { attribute_type: any; display_name: any; source_placeholder: any; is_dependent: boolean; };
+  customField: { attribute_type: string; display_name: string; source_placeholder: string; is_dependent: boolean; };
 
   customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
+
+  isSaveInProgress: boolean;
+
+  ConfigurationCtaText = ConfigurationCta;
+
+  chartOfAccountTypesList: string[] = XeroImportSettingModel.getChartOfAccountTypesList();
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly brandingContent = brandingContent.xero.configuration.importSetting;
+
+  readonly supportArticleLink = brandingKbArticles.onboardingArticles.XERO.EXPORT_SETTING;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private importSettingService: XeroImportSettingsService,

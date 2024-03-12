@@ -295,12 +295,12 @@ const content: ContentConfiguration = {
                     contentText: '',
                     importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
                     importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
-                    importItemsLabel: 'Import Products/Services from Xero',
-                    importItemsSubLabel: 'Products/services from Xero will be imported as Categories in ',
+                    importCustomersLabel: 'Import Customers from Xero',
+                    importCustomersSubLabel: 'The Customers in Xero will be imported as Projects in Fyle and will be a selectable field while creating an expense',
                     taxCodeLabel: 'Import Tax from Xero',
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
-                    importVendorsAsMerchantsLabel: 'Import Vendors from Xero'
+                    importSuppliersAsMerchantsLabel: 'Import Suppilers from Xero as Merchants'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
@@ -556,12 +556,12 @@ const content: ContentConfiguration = {
                     contentText: '',
                     importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
                     importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
-                    importItemsLabel: 'Import Products/Services from Xero',
-                    importItemsSubLabel: 'Products/services from Xero will be imported as Categories in ',
+                    importCustomersLabel: 'Import Customers from Xero',
+                    importCustomersSubLabel: 'The Customers in Xero will be imported as Projects in Fyle and will be a selectable field while creating an expense',
                     taxCodeLabel: 'Import Tax from Xero',
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
-                    importVendorsAsMerchantsLabel: 'Import Vendors from Xero'
+                    importSuppliersAsMerchantsLabel: 'Import Suppilers from Xero as Merchants'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
