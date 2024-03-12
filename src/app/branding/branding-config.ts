@@ -15,6 +15,7 @@ const featureConfigs: FeatureConfiguration = {
         exposeC1Apps: false,
         isBackgroundColorAllowed: false,
         isAsterikAllowed: true,
+        locationEntityLoader: false,
         featureFlags: {
             cloneSettings: true,
             mapEmployees: true,
@@ -49,6 +50,7 @@ const featureConfigs: FeatureConfiguration = {
         exposeC1Apps: true,
         isBackgroundColorAllowed: true,
         isAsterikAllowed: false,
+        locationEntityLoader: true,
         featureFlags: {
             cloneSettings: false,
             mapEmployees: false,

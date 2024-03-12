@@ -6,6 +6,7 @@ export type FeatureConfiguration = {
         exposeC1Apps: boolean;
         isBackgroundColorAllowed: boolean;
         isAsterikAllowed: boolean;
+        locationEntityLoader: boolean;
         featureFlags: {
             cloneSettings: boolean;
             mapEmployees: boolean;
