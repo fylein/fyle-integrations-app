@@ -6,9 +6,10 @@ import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArtic
 import { ExpenseField, ImportSettingMappingRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
 import { XeroImportSettingGet, XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
+import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
@@ -79,7 +80,8 @@ export class XeroImportSettingsComponent implements OnInit {
     private router: Router,
     private mappingService: MappingService,
     private xeroHelperService: XeroHelperService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastService: IntegrationsToastService
   ) { }
 
   closeModel() {
@@ -175,8 +177,27 @@ export class XeroImportSettingsComponent implements OnInit {
     });
   }
 
+  private constructPayloadAndSave() {
+    this.isSaveInProgress = true;
+    const importSettingPayload = XeroImportSettingModel.constructPayload(this.importSettingsForm);
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(XeroOnboardingState.ADVANCED_CONFIGURATION);
+        this.router.navigate([`/integrations/xero/onboarding/advanced_settings`]);
+      }
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+    });
+  }
+
   save(): void {
-    // ToDo
+    if (this.importSettingsForm.valid) {
+      this.constructPayloadAndSave();
+    }
   }
 
   setupPage() {

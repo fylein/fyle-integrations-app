@@ -84,7 +84,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
 
     const importSettingPayload: XeroImportSettingPost = {
       workspace_general_settings: {
-        import_categories: importSettingsForm.get('chartOfAccount')?.value,
+        import_categories: importSettingsForm.get('chartOfAccount')?.value ?? false,
         charts_of_accounts: importSettingsForm.get('chartOfAccount')?.value ? chartOfAccounts : ['Expense'],
         import_tax_codes: importSettingsForm.get('taxCode')?.value,
         import_suppliers_as_merchants: importSettingsForm.get('importSuppliersAsMerchants')?.value,
