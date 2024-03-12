@@ -39,6 +39,7 @@ export type ContentConfiguration = {
                         creditCardVendor: string;
                         creditCardVendorSublabel: string;
                         chargeCard: string;
+                        chargeCardPlaceholder: string;
                         chargeCardSublabel: string;
                         cccExpenseState: string;
                         cccExportGroup: string;
@@ -63,6 +64,8 @@ export type ContentConfiguration = {
                     project: string;
                     class: string;
                     item: string;
+                    customPreferencesLabel: string;
+                    customPreferencesSubLabel: string;
                 },
                 done: {
                     ctaText: string;

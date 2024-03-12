@@ -37,7 +37,8 @@ export enum InAppIntegration {
 
 export enum ToastSeverity {
   SUCCESS = 'success',
-  ERROR = 'error'
+  ERROR = 'error',
+  INFO = 'info'
 }
 
 export enum UpdateEvent {

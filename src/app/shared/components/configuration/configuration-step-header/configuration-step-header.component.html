@@ -25,8 +25,8 @@
                 Sync
             </span>
         </button>
-        <div *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed">
-          <span (click)="refreshDimensions()" class="p-button primary-outline tw-mr-12-px" [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'">
+        <div *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed" tooltipPosition="bottom" [pTooltip]="'If you are unable to find a required value, click the sync button to instantly retrieve the latest values from ' + appName">
+          <span (click)="refreshDimensions()" class="p-button primary-outline tw-mr-12-px">
             Sync
         </span>
         </div>

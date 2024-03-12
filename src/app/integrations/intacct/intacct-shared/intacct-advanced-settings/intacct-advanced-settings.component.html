@@ -73,8 +73,8 @@
 
         <div class="tw-mb-16-px">
             <app-configuration-step-sub-header
-                [label]="'Other Preferences'"
-                [subLabel]="'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'">
+                [label]="brandingContent.intacct.configuration.advancedSettings.customPreferencesLabel"
+                [subLabel]="brandingContent.intacct.configuration.advancedSettings.customPreferencesSubLabel">
             </app-configuration-step-sub-header>
             <div *ngIf="employeeFieldMapping && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                 <app-configuration-toggle-field 
@@ -219,6 +219,6 @@
               </div>
         </div>
     </div>
-    <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)"></app-configuration-step-footer>
+    <app-configuration-step-footer [ctaText] = "!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!advancedSettingsForm.valid || (advancedSettingsForm.value.skipSelectiveExpenses ? !skipExportForm.valid : false)" [showBackButton]="isOnboarding ? true : false"></app-configuration-step-footer>
     </form>
 </div>

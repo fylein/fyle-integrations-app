@@ -136,7 +136,7 @@ const kbArticles: KbArticle = {
         topLevelArticles: {
             BAMBOO_HR: `${brandingConfig.helpArticleDomain}/en/articles/6845034-fyle-bamboo-hr-integration`,
             QBD: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
-            QBO: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
+            QBO: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
             INTACCT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
             TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
             SAGE300: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
@@ -159,13 +159,13 @@ const kbArticles: KbArticle = {
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
             QBO: {
-                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0`,
-                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc`,
-                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686`,
-                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f`,
-                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7`,
-                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online`
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
+                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_6c60e48783`,
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_faf3a93ed6`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_fe18937876`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`
             },
             BUSINESS_CENTRAL: {
                 IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
@@ -256,11 +256,12 @@ const content: ContentConfiguration = {
                         creditCardVendor: 'Set the Default Credit Card Vendor as',
                         creditCardVendorSublabel: 'The vendor configured here will be added to all the Credit Card expenses exported as Bills.',
                         chargeCard: 'Set the Default Charge Card',
+                        chargeCardPlaceholder: 'Select Corporate Charge Card',
                         chargeCardSublabel: 'Expenses of Corporate Cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the Card configured here. You can map your cards in the Mapping section after configuring the integration.',
-                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (Approved) or when the transaction has been settled (Closed)',
+                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (Approved) or when the transactions has been settled (Closed)',
                         cccExportGroup: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
                         employeeFieldMapping: 'How are your Employees represented in Sage Intacct?',
-                        creditCard: 'To which GL Account should the expenses be credited to?',
+                        creditCard: 'To which General Ledger Account should the expenses be credited to?',
                         creditCardSubLabel: 'The integration will credit the account selected here for Corporate Credit Card Expenses exported as Journal Entries.'
                     }
                 },
@@ -279,7 +280,9 @@ const content: ContentConfiguration = {
                     department: 'Department',
                     project: 'Project',
                     class: 'Class',
-                    item: 'Item'
+                    item: 'Item',
+                    customPreferencesLabel: 'Other Preferences',
+                    customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'
                 },
                 done: {
                     ctaText: '',
@@ -312,7 +315,7 @@ const content: ContentConfiguration = {
                     accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.',
                     creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report).',
-                    journalOptionLabel: 'Name in Journal Entry (CCC)',
+                    journalOptionLabel: 'Name in Journal Entry',
                     journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
                 }
             },
@@ -414,7 +417,7 @@ const content: ContentConfiguration = {
                 companyId: 'company ID',
                 userPassword: 'User password',
                 password: 'password',
-                locationEntity: 'Location entity',
+                locationEntity: 'location entity',
                 descriptionText: 'of the description field'
             },
             configuration: {
@@ -432,11 +435,12 @@ const content: ContentConfiguration = {
                         creditCardVendor: 'Set the default credit card vendor as',
                         creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                         chargeCard: 'Set the default charge card',
+                        chargeCardPlaceholder: 'Select a charge card',
                         chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
-                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transaction has been settled (closed).',
+                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
                         cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
                         employeeFieldMapping: 'How are your employees represented in Sage Intacct?',
-                        creditCard: 'To which gl account should the expenses be credited to?',
+                        creditCard: 'To which general ledger account should the expenses be credited to?',
                         creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
                     }
                 },
@@ -455,7 +459,9 @@ const content: ContentConfiguration = {
                     department: 'department',
                     project: 'project',
                     class: 'class',
-                    item: 'item'
+                    item: 'item',
+                    customPreferencesLabel: 'Custom preferences',
+                    customPreferencesSubLabel: 'In this section, you have the flexibility to tailor the data export process to Sage Intacct according to your specific needs and preferences.'
                 },
                 done: {
                     ctaText: '',
@@ -488,7 +494,7 @@ const content: ContentConfiguration = {
                     accountsPayableSubLabel: ' to the selected accounts payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
                     creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report).',
-                    journalOptionLabel: 'Name in journal entry (ccc)',
+                    journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
                 }
             },

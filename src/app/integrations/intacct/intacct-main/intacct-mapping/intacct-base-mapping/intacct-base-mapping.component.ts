@@ -48,7 +48,7 @@ export class IntacctBaseMappingComponent implements OnInit {
     this.isLoading = true;
     this.mappingService.triggerAutoMapEmployees().subscribe(() => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
+      this.toastService.displayToastMessage(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
     }, () => {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
@@ -59,7 +59,10 @@ export class IntacctBaseMappingComponent implements OnInit {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return intacctConfiguration.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
-      return intacctConfiguration.employee_field_mapping === FyleField.EMPLOYEE ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT;
+      if (intacctConfiguration.reimbursable_expenses_object===IntacctReimbursableExpensesObject.EXPENSE_REPORT || intacctConfiguration.corporate_credit_card_expenses_object===IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+        return IntacctCategoryDestination.EXPENSE_TYPE;
+      }
+        return IntacctCategoryDestination.ACCOUNT;
 
     }
 
