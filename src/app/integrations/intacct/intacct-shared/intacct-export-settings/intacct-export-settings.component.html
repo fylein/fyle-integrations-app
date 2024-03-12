@@ -238,7 +238,7 @@
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <app-configuration-select-field *ngIf="exportSettingsForm.value.cccExportType!==IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
+                        <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'how expenses to be grouped'"
@@ -248,20 +248,6 @@
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
-                        <div *ngIf="exportSettingsForm.value.cccExportType===IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION">
-                            <div class="tw-p-24-px tw-flex tw-flex-row tw-justify-between tw-items-center">
-                                <div class="tw-flex tw-items-start lg:tw-w-3/5 md:tw-w-1/2">
-                                    <app-svg-icon [svgSource]="'list'" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
-                                    <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-pl-6">
-                                        <h4 class="!tw-text-14-px !tw-font-500">How should the expenses be grouped?<app-mandatory-field></app-mandatory-field></h4>
-                                        <h5 class="!tw-text-text-muted !tw-font-400 !tw-text-14-px tw-pt-6-px !tw-leading-4">Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report).</h5>
-                                    </div>
-                                </div>
-                                <div class="tw-pl-18-px tw-pt-18-px">
-                                    <input type="text" class="tw-text-14-px !tw-font-500 tw-w-300-px !tw-px-10-px !tw-py-8-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" formControlName="cccExportGroup">
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
