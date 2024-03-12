@@ -188,6 +188,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
       };
       this.xeroConnectorService.postTenantMapping(tenantMappingPayload).subscribe((response:TenantMapping) => {
         this.xeroHelperService.refreshXeroDimensions().subscribe(() => {
+          this.workspaceService.setOnboardingState(XeroOnboardingState.EXPORT_SETTINGS);
           this.xeroConnectionInProgress = false;
           this.xeroTokenExpired = false;
           this.showOrHideDisconnectXero();
