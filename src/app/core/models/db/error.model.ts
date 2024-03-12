@@ -50,7 +50,12 @@ export type AccountingGroupedErrorStat = {
 export class ErrorModel {
   static formatErrors(errors: Error[]): AccountingGroupedErrors {
     return errors.reduce((groupedErrors: AccountingGroupedErrors, error: Error) => {
-      const errorType = error.type === AccountingErrorType.EMPLOYEE_MAPPING || AccountingErrorType.CATEGORY_MAPPING ? error.type : AccountingErrorType.ACCOUNTING_ERROR;
+      let errorType;
+      if (error.type === AccountingErrorType.EMPLOYEE_MAPPING || error.type === AccountingErrorType.CATEGORY_MAPPING) {
+        errorType = error.type
+      } else {
+        errorType = AccountingErrorType.ACCOUNTING_ERROR;
+      }
       const group: Error[] = groupedErrors[errorType] || [];
       group.push(error);
       groupedErrors[error.type] = group;
