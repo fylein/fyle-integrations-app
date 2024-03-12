@@ -289,6 +289,19 @@ const content: ContentConfiguration = {
                         creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
                     }
                 },
+                importSetting: {
+                    stepName: 'Import Settings',
+                    headerText: '',
+                    contentText: '',
+                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                    importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
+                    importItemsLabel: 'Import Products/Services from Xero',
+                    importItemsSubLabel: 'Products/services from Xero will be imported as Categories in ',
+                    taxCodeLabel: 'Import Tax from Xero',
+                    taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
+                    defaultTaxCodeLabel: 'Select Default Tax Code',
+                    importVendorsAsMerchantsLabel: 'Import Vendors from Xero'
+                },    
                 advancedSettings: {
                     stepName: 'Advanced settings',
                     scheduleAutoExport: 'Schedule automatic export',
@@ -537,6 +550,19 @@ const content: ContentConfiguration = {
                         creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
                     }
                 },
+                importSetting: {
+                    stepName: 'Import Settings',
+                    headerText: '',
+                    contentText: '',
+                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                    importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
+                    importItemsLabel: 'Import Products/Services from Xero',
+                    importItemsSubLabel: 'Products/services from Xero will be imported as Categories in ',
+                    taxCodeLabel: 'Import Tax from Xero',
+                    taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
+                    defaultTaxCodeLabel: 'Select Default Tax Code',
+                    importVendorsAsMerchantsLabel: 'Import Vendors from Xero'
+                },    
                 advancedSettings: {
                     stepName: 'Advanced settings',
                     scheduleAutoExport: 'Schedule automatic export',

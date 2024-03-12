@@ -48,6 +48,19 @@ export type ContentConfiguration = {
                         creditCardSubLabel: string;
                     }
                 },
+                importSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    importCategoriesLabel: string;
+                    importCategoriesSubLabel: string;
+                    importItemsLabel: string;
+                    importItemsSubLabel: string;
+                    taxCodeLabel: string;
+                    taxCodeSubLabel: string;
+                    defaultTaxCodeLabel: string;
+                    importVendorsAsMerchantsLabel: string;
+                },
                 advancedSettings: {
                     stepName: string;
                     scheduleAutoExport: string;
