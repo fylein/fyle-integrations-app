@@ -52,7 +52,7 @@ export class ErrorModel {
     return errors.reduce((groupedErrors: AccountingGroupedErrors, error: Error) => {
       let errorType;
       if (error.type === AccountingErrorType.EMPLOYEE_MAPPING || error.type === AccountingErrorType.CATEGORY_MAPPING) {
-        errorType = error.type
+        errorType = error.type;
       } else {
         errorType = AccountingErrorType.ACCOUNTING_ERROR;
       }
