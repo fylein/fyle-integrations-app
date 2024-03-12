@@ -301,7 +301,7 @@ const content: ContentConfiguration = {
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
                     importVendorsAsMerchantsLabel: 'Import Vendors from Xero'
-                },    
+                },
                 advancedSettings: {
                     stepName: 'Advanced settings',
                     scheduleAutoExport: 'Schedule automatic export',
@@ -562,7 +562,7 @@ const content: ContentConfiguration = {
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
                     importVendorsAsMerchantsLabel: 'Import Vendors from Xero'
-                },    
+                },
                 advancedSettings: {
                     stepName: 'Advanced settings',
                     scheduleAutoExport: 'Schedule automatic export',

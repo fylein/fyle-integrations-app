@@ -1,4 +1,4 @@
-import { FormGroup } from "@angular/forms";
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { MappingSetting } from "../../db/mapping-setting.model";
@@ -7,6 +7,7 @@ import { GeneralMapping } from "../../intacct/db/mappings.model";
 import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
 import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
 import { ImportSettingsModel } from "../../common/import-settings.model";
+import { IntegrationField } from "../../db/mapping.model";
 
 
 export type XeroImportSettingWorkspaceGeneralSetting = {
@@ -45,7 +46,7 @@ export type ExpenseFieldsFormOption = {
 
 export type XeroImportSettingGet = {
   workspace_general_settings: XeroWorkspaceGeneralSetting,
-  general_mappings: GeneralMapping,
+  general_mappings: XeroImportSettingGeneralMapping,
   mapping_settings: MappingSetting[],
   workspace_id:number
 }
@@ -56,6 +57,21 @@ export interface XeroImportSettingFormOption extends SelectFormOption {
 
 
 export class XeroImportSettingModel extends ImportSettingsModel {
+
+  static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[]): FormGroup {
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, xeroFields) : [];
+    return new FormGroup({
+      importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
+      expenseFields: new FormArray(expenseFieldsArray),
+      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts : ['Expense']),
+      importCustomers: new FormControl(importSettings?.workspace_general_settings.import_customers ?? false),
+      taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
+      importSuppliersAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_suppliers_as_merchants ?? false),
+      defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
+      searchOption: new FormControl('')
+    });
+  }
+
   static constructPayload(importSettingsForm: FormGroup): XeroImportSettingPost {
 
     const emptyDestinationAttribute = {id: null, name: null};
