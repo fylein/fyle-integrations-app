@@ -46,7 +46,7 @@
 
             <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
               Please hold on; we are fetching data from your Sage Intacct account, which may take a few seconds.
-              <app-loader *ngIf="brandingFeatureConfig.locationEntityLoader" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
+              <app-loader *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
             </div>
         </form>
     </div>
