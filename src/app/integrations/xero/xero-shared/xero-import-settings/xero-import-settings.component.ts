@@ -11,6 +11,7 @@ import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-wo
 import { XeroImportSettingGet, XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
 import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
 
@@ -65,6 +66,8 @@ export class XeroImportSettingsComponent implements OnInit {
 
   chartOfAccountTypesList: string[] = XeroImportSettingModel.getChartOfAccountTypesList();
 
+  isTaxGroupSyncAllowed: boolean;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.xero.configuration.importSetting;
@@ -79,7 +82,8 @@ export class XeroImportSettingsComponent implements OnInit {
     private router: Router,
     private mappingService: MappingService,
     private xeroHelperService: XeroHelperService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private xeroConnectorService: XeroConnectorService
   ) { }
 
   closeModel() {
@@ -186,7 +190,8 @@ export class XeroImportSettingsComponent implements OnInit {
       this.mappingService.getFyleFields('v1'),
       this.importSettingService.getXeroField(),
       this.mappingService.getDestinationAttributes('TAX_CODE', 'v1', 'xero'),
-      this.workspaceService.getWorkspaceGeneralSettings()
+      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId())
     ]).subscribe(response => {
       this.importSettings = response[0];
       this.fyleExpenseFields = response[1];
@@ -195,6 +200,10 @@ export class XeroImportSettingsComponent implements OnInit {
       this.workspaceGeneralSettings = response[4];
 
       this.importSettingsForm = XeroImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields);
+
+      if (response[5] && response[5].country !== 'US') {
+        this.isTaxGroupSyncAllowed = true;
+      }
 
       this.fyleExpenseFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
