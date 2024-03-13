@@ -3,16 +3,16 @@ import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWh
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { AccountingGroupedErrorStat, AccountingGroupedErrors } from 'src/app/core/models/db/error.model';
-import { AccountingErrorType, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingField, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
+import { XeroTask, XeroTaskResponse } from 'src/app/core/models/xero/db/xero-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroExportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-export-settings.service';
-
+import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
 @Component({
   selector: 'app-xero-dashboard',
   templateUrl: './xero-dashboard.component.html',
@@ -116,14 +116,14 @@ export class XeroDashboardComponent implements OnInit {
     interval(3000).pipe(
       switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, AppName.INTACCT))),
       takeWhile((response: XeroTaskResponse) =>
-      response.results.filter(task =>
+      response.results.filter((task: { status: TaskLogState; }) =>
         (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
       ).length > 0, true)
     ).subscribe((res: XeroTaskResponse) => {
       this.processedCount = res.results.filter((task: { status: string; type: TaskLogType; expense_group: number; }) => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES && task.type !== TaskLogType.CREATING_AP_PAYMENT && task.type !== TaskLogType.CREATING_REIMBURSEMENT) && exportableAccountingExportIds.includes(task.expense_group)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
 
-      if (res.results.filter(task => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
+      if (res.results.filter((task: { status: TaskLogState; }) => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
         forkJoin([
           this.getExportErrors$,
           this.getAccountingExportSummary$.pipe(catchError(() => of(null)))
@@ -138,9 +138,9 @@ export class XeroDashboardComponent implements OnInit {
             this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
           }
 
-          this.failedExpenseGroupCount = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+          this.failedExpenseGroupCount = res.results.filter((task: { status: TaskLogState; }) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
-          this.exportableAccountingExportIds = res.results.filter(task => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map(taskLog => taskLog.expense_group);
+          this.exportableAccountingExportIds = res.results.filter((task: { status: TaskLogState; }) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).map((taskLog: { expense_group: any; }) => taskLog.expense_group);
 
           this.isExportInProgress = false;
           this.exportProgressPercentage = 0;
@@ -160,8 +160,8 @@ export class XeroDashboardComponent implements OnInit {
       this.xeroExportSettingService.getExportSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.reimbursableImportState = responses[5].configurations?.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
-      this.cccImportState = responses[5].configurations?.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
+      this.reimbursableImportState = responses[5].workspace_general_settings?.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
+      this.cccImportState = responses[5].workspace_general_settings?.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
 
       if (responses[1]) {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
@@ -169,13 +169,13 @@ export class XeroDashboardComponent implements OnInit {
 
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
-        CATEGORY: (responses[3].reimbursable_expenses_object === XeroReimbursableExpensesObject.EXPENSE_REPORT || responses[3].corporate_credit_card_expenses_object === XeroReimbursableExpensesObject.EXPENSE_REPORT) ? IntacctCategoryDestination.EXPENSE_TYPE : IntacctCategoryDestination.ACCOUNT
+        CATEGORY: AccountingField.ACCOUNT
       };
 
       this.isLoading = false;
 
-      const queuedTasks: IntacctTaskLog[] = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
-      this.failedExpenseGroupCount = responses[2].results.filter((task: IntacctTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+      const queuedTasks: XeroTask[] = responses[2].results.filter((task: XeroTask) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
+      this.failedExpenseGroupCount = responses[2].results.filter((task: XeroTask) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
 
