@@ -343,6 +343,11 @@ export enum QBDFyleField {
   COST_CENTER = 'COST_CENTER'
 }
 
+export enum XeroFyleField {
+  PROJECT = 'PROJECT',
+  CUSTOMER = 'CUSTOMER'
+}
+
 export enum QBDAccountingExportsState {
   COMPLETE = 'COMPLETE',
   ENQUEUED = 'ENQUEUED',
