@@ -300,7 +300,8 @@ const content: ContentConfiguration = {
                     taxCodeLabel: 'Import Tax from Xero',
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
-                    importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants'
+                    importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants',
+                    notes: 'NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
@@ -557,11 +558,12 @@ const content: ContentConfiguration = {
                     importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
                     importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
                     importCustomersLabel: 'Import Customers from Xero',
-                    importCustomersSubLabel: 'The Customers in Xero will be imported as Projects in Fyle and will be a selectable field while creating an expense',
+                    importCustomersSubLabel: 'The Customers in Xero will be imported as Projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
                     taxCodeLabel: 'Import Tax from Xero',
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
-                    importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants'
+                    importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants',
+                    notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
