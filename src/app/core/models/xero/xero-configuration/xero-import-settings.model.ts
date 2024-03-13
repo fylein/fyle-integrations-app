@@ -2,11 +2,12 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { MappingSetting } from "../../db/mapping-setting.model";
-import { MappingDestinationField, MappingSourceField } from "../../enum/enum.model";
+import { MappingDestinationField, MappingSourceField, XeroFyleField } from "../../enum/enum.model";
 import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
 import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-setting.model";
-import { ImportSettingsModel } from "../../common/import-settings.model";
+import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
+import { brandingConfig } from "src/app/branding/branding-config";
 
 
 export type XeroImportSettingWorkspaceGeneralSetting = {
@@ -62,7 +63,18 @@ export class XeroImportSettingModel extends ImportSettingsModel {
   }
 
   static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[]): FormGroup {
-    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, xeroFields) : [];
+    let additionalOption: any[] = [];
+    if (brandingConfig.brandId === 'co') {
+      const coaddtional = {
+        source_field: 'XeroFyleField.PROJECT',
+        destination_field: XeroFyleField.CUSTOMER,
+        import_to_fyle: importSettings?.workspace_general_settings.import_categories || false,
+        is_custom: false,
+        source_placeholder: null
+      };
+      additionalOption = [ImportSettingsModel.createFormGroup(coaddtional)];
+    }
+    const expenseFieldsArray = importSettings?.mapping_settings ? additionalOption.concat(this.constructFormArray(importSettings.mapping_settings, xeroFields)) : [];
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
