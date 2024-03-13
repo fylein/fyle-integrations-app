@@ -667,7 +667,7 @@ export enum TrackingApp {
   BUSINESS_CENTRAL = 'BC',
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
-  TRAVELPERK = 'TP',
+  TRAVELPERK = 'TP'
 }
 
 export enum ReimbursableImportState {
