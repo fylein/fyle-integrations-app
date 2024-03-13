@@ -155,7 +155,7 @@ export class XeroDashboardComponent implements OnInit {
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType, AppName.INTACCT),
-      this.workspaceService.getConfiguration(),
+      this.workspaceService.getWorkspaceGeneralSettings(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.xeroExportSettingService.getExportSettings()
     ]).subscribe((responses) => {
