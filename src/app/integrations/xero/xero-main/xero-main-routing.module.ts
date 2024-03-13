@@ -14,15 +14,15 @@ const routes: Routes = [
       {
         path: 'configuration',
         loadChildren: () => import('./xero-configuration/xero-configuration.module').then(m => m.XeroConfigurationModule)
-      }
+      },
       // {
       //   Path: 'mapping',
       //   LoadChildren: () => import('./xero-mapping/xero-mapping.module').then(m => m.XeroMappingModule)
       // },
-      // {
-      //   Path: 'export_log',
-      //   LoadChildren: () => import('./xero-export-log/xero-export-log.module').then(m => m.XeroExportLogModule)
-      // }
+      {
+        path: 'export_log',
+        loadChildren: () => import('./xero-export-log/xero-export-log.module').then(m => m.XeroExportLogModule)
+      }
     ]
   }
 ];
