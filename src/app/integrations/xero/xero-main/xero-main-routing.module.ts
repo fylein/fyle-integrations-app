@@ -7,10 +7,10 @@ const routes: Routes = [
     path: '',
     component: XeroMainComponent,
     children: [
-      // {
-      //   Path: 'dashboard',
-      //   LoadChildren: () => import('./xero-dashboard/xero-dashboard.module').then(m => m.XeroDashboardModule)
-      // },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./xero-dashboard/xero-dashboard.module').then(m => m.XeroDashboardModule)
+      },
       {
         path: 'configuration',
         loadChildren: () => import('./xero-configuration/xero-configuration.module').then(m => m.XeroConfigurationModule)
