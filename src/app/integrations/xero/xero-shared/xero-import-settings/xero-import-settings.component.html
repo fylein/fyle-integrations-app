@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header [headerText]="brandingContent.stepName"
-            [contentText]="'In this section, you can choose the fields required to be imported from QuickBooks Online to ' + brandingConfig.brandName + '. '"
+            [contentText]="'In this section, you can choose the fields required to be imported from Xero to ' + brandingConfig.brandName + '. '"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -27,23 +27,10 @@
                             [form]="importSettingsForm"
                             [options]="chartOfAccountTypesList"
                             [formControllerName]="'chartOfAccountTypes'"
-                            [label]="'Select the accounts from QuickBooks to import as categories in' + brandingConfig.brandName"
+                            [label]="'Select the accounts from Xero to import as categories in' + brandingConfig.brandName"
                             [placeholder]="'Select Chart of Accouts'"
                             [subLabel]="'By default expense will be selected. Open the dropdown to select more as per your requirements.'">
                         </app-configuration-multi-select>
-
-                        <!-- <div class="tw-flex tw-justify-between tw-items-center">
-                            <h5 class="lg:tw-w-3/5 md:tw-w-1/2 tw-text-slightly-normal-text-color tw-text-14-px !tw-font-500">
-                                Select the accounts from QuickBooks to import as categories in {{brandingConfig.brandName}}
-                                <p class="tw-text-text-muted" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
-                                    By default expense will be selected. Open the dropdown to select more as per your requirements.
-                                </p>
-                            </h5>
-                            <div class="p-field-checkbox tw-pl-34-px">
-                                <p-multiSelect [optionDisabled]="'Expense'" [placeholder]="'Select Chart of Accouts'" [options]="chartOfAccountTypesList" styleClass="tw-z-2 tw-py-8-px tw-px-12-px" [formControlName]="'chartOfAccountTypes'">
-                                </p-multiSelect>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
 
@@ -60,11 +47,11 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants && workspaceGeneralSettings.corporate_credit_card_expenses_object">
                     <app-configuration-toggle-field
                         [form]="importSettingsForm"
                         [label]="brandingContent.importSuppliersAsMerchantsLabel"
-                        [subLabel]="'The Suppilers in Xero will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [subLabel]="'The Suppliers in Xero will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
                         [formControllerName]="'importSuppliersAsMerchants'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
@@ -80,7 +67,7 @@
                     </app-configuration-import-field>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.tax">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.tax && isTaxGroupSyncAllowed">
                     <app-configuration-toggle-field
                       [form]="importSettingsForm"
                       [label]="brandingContent.taxCodeLabel"
