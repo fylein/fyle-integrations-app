@@ -4,8 +4,9 @@ import { XeroConnectorService } from "../services/xero/xero-configuration/xero-c
 import { Observable, forkJoin, map, catchError, throwError } from "rxjs";
 import { globalCacheBusterNotifier } from "ts-cacheable";
 import { WorkspaceService } from "../services/common/workspace.service";
-import { ToastSeverity, XeroOnboardingState } from "../models/enum/enum.model";
+import { AppUrl, ToastSeverity, XeroOnboardingState } from "../models/enum/enum.model";
 import { IntegrationsToastService } from "../services/common/integrations-toast.service";
+import { HelperService } from "../services/common/helper.service";
 
 
 @Injectable({
@@ -17,13 +18,14 @@ export class XeroTokenGuard implements CanActivate {
     private xeroConnectorService: XeroConnectorService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private helperService: HelperService
   ) { }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
+      this.helperService.setBaseApiURL(AppUrl.XERO);
       const workspaceId = this.workspaceService.getWorkspaceId();
 
       if (!workspaceId) {
@@ -43,6 +45,10 @@ export class XeroTokenGuard implements CanActivate {
             this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Xero connection expired, please connect again');
 
             const onboardingState: XeroOnboardingState = this.workspaceService.getOnboardingState();
+
+            if (onboardingState !== XeroOnboardingState.COMPLETE) {
+              return this.router.navigateByUrl('integrations/xero/onboarding/connector');
+            }
 
             return this.router.navigateByUrl('integrations/xero/onboarding/landing');
           }
