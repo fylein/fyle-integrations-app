@@ -91,7 +91,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
 
     const emptyDestinationAttribute = {id: null, name: null};
     const chartOfAccounts = XeroImportSettingModel.formatChartOfAccounts(importSettingsForm.get('chartOfAccountTypes')?.value);
-    const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
+    const expenseFieldArray = importSettingsForm.getRawValue().expenseFields.filter(((data:any) => data.destination_field !== XeroFyleField.CUSTOMER));
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
     const importSettingPayload: XeroImportSettingPost = {
