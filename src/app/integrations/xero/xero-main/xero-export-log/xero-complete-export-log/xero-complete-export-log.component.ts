@@ -72,6 +72,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
       this.getAccountingExports(this.limit, this.offset);
     });
   }
+
   openExpenseinFyle(expense_id: string) {
     this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
   }
