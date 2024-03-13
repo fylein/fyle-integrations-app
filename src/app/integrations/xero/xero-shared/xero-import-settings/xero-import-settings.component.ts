@@ -198,8 +198,10 @@ export class XeroImportSettingsComponent implements OnInit {
       formArray.controls.at(index)?.get('import_to_fyle')?.valueChanges.subscribe((isCustomerImportEnabled) => {
         if (isCustomerImportEnabled) {
           formArray.controls.at(index)?.get('source_field')?.patchValue(XeroFyleField.PROJECT);
+          this.importSettingsForm.controls.importCustomers.patchValue(true);
         } else {
           formArray.controls.at(index)?.get('source_field')?.patchValue('XeroFyleField.PROJECT');
+          this.importSettingsForm.controls.importCustomers.patchValue(false);
         }
       });
     } else {
