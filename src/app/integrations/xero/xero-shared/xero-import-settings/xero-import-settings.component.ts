@@ -72,7 +72,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.xero.configuration.importSetting;
 
-  readonly supportArticleLink = brandingKbArticles.onboardingArticles.XERO.EXPORT_SETTING;
+  readonly supportArticleLink = brandingKbArticles.onboardingArticles.XERO.IMPORT_SETTING;
 
   readonly brandingConfig = brandingConfig;
 
