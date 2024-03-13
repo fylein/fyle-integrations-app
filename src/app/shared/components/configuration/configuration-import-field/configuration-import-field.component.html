@@ -47,7 +47,7 @@
                       </div>
                     </div>
                     <div class="configuration--input-toggle-section">
-                      <p-inputSwitch formControlName="import_to_fyle"></p-inputSwitch>
+                      <p-inputSwitch formControlName="import_to_fyle" [disabled]="(expenseField.value.destination_field === 'CUSTOMER' && isProjectMapped)" [tooltipPosition]="'top'" [pTooltip]="expenseField.value.destination_field === 'CUSTOMER' && isProjectMapped ? 'You have already mapped a tracking category from Xero to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.' : ''"></p-inputSwitch>
                     </div>
                 </div>
             </div>
@@ -76,8 +76,8 @@
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
                     <div class="tw-w-28-vw">
-                        <p-dropdown [disabled]="expenseField.value.source_field === 'CATEGORY'" (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="expenseField.value.source_field === 'CATEGORY' ? fyleFieldOptions: filteredFyleFields" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
-                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'selectedAccItem !tw-text-text-secondary': expenseField.value.source_field === 'CATEGORY', 'filterDropdown': !expenseField.value.source_field}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+                        <p-dropdown [disabled]="(expenseField.value.source_field === 'CATEGORY') || (expenseField.value.destination_field === 'CUSTOMER')" (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="expenseField.value.source_field === 'CATEGORY' ? fyleFieldOptions : (expenseField.value.destination_field === 'CUSTOMER' && !expenseField.value.import_to_fyle) ? filteredFyleFields : fyleFieldOptions" [placeholder]="'Choose ' + brandingConfig.brandName + ' Expense field'" formControlName="source_field"
+                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'selectedAccItem !tw-text-text-secondary': expenseField.value.source_field === 'CATEGORY' || expenseField.value.destination_field === 'CUSTOMER', 'filterDropdown': !expenseField.value.source_field}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                 <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && option.attribute_type === 'custom_field'" class="tw-ml-0 tw-mr-6-px ">
@@ -90,7 +90,7 @@
                                 <p>
                                     {{ item.display_name }}
                                 </p>
-                                <app-svg-icon *ngIf="expenseField.value.source_field !== 'CATEGORY'" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                                <app-svg-icon *ngIf="expenseField.value.source_field !== 'CATEGORY' || expenseField.value.destination_field !== 'CUSTOMER'" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                       </p-dropdown>
                       <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">

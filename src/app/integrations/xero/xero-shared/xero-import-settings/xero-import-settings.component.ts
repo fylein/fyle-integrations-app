@@ -7,6 +7,7 @@ import { ExpenseField, ImportSettingMappingRow, ImportSettingsModel } from 'src/
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
 import { XeroImportSettingGet, XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -37,7 +38,6 @@ export class XeroImportSettingsComponent implements OnInit {
 
   xeroExpenseFields: IntegrationField[];
 
-  isProjectMapped: boolean;
 
   taxCodes: DestinationAttribute[];
 
@@ -67,6 +67,10 @@ export class XeroImportSettingsComponent implements OnInit {
 
   chartOfAccountTypesList: string[] = XeroImportSettingModel.getChartOfAccountTypesList();
 
+  isTaxGroupSyncAllowed: boolean;
+
+  isProjectMapped: boolean;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.xero.configuration.importSetting;
@@ -74,8 +78,6 @@ export class XeroImportSettingsComponent implements OnInit {
   readonly supportArticleLink = brandingKbArticles.onboardingArticles.XERO.IMPORT_SETTING;
 
   readonly brandingConfig = brandingConfig;
-
-  isTaxGroupSyncAllowed: boolean;
 
   constructor(
     private importSettingService: XeroImportSettingsService,
@@ -159,9 +161,15 @@ export class XeroImportSettingsComponent implements OnInit {
     });
   }
 
+  private expenseFieldWatcher() {
+
+  }
+
   private setupFormWatchers(): void {
     this.createTaxCodeWatcher();
+    this.createImportCustomerWatcher();
     this.createCOAWatcher();
+    this.expenseFieldWatcher();
     const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
@@ -204,6 +212,42 @@ export class XeroImportSettingsComponent implements OnInit {
     }
   }
 
+  private createImportCustomerWatcher(): void {
+    if (brandingConfig.brandId === 'co') {
+      const formArray = this.importSettingsForm.get('expenseFields') as FormArray;
+      const index = formArray.value.findIndex((data:any) => data.destination_field === XeroFyleField.CUSTOMER);
+      formArray.controls.at(index)?.get('import_to_fyle')?.valueChanges.subscribe((isCustomerImportEnabled) => {
+        if (isCustomerImportEnabled) {
+          formArray.controls.at(index)?.get('source_field')?.patchValue(XeroFyleField.PROJECT);
+        } else {
+          formArray.controls.at(index)?.get('source_field')?.patchValue('XeroFyleField.PROJECT');
+        }
+      });
+    } else {
+      this.importSettingsForm.controls.importCustomers.valueChanges.subscribe((isCustomerImportEnabled) => {
+        if (isCustomerImportEnabled) {
+          this.fyleExpenseFields = this.fyleExpenseFields.filter((field) => field.attribute_type !== XeroFyleField.PROJECT);
+        } else {
+          const fyleField = this.fyleExpenseFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
+          if (fyleField.length === 0) {
+            this.fyleExpenseFields.pop();
+            this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: 'Project', is_dependent: false });
+            this.fyleExpenseFields.push(this.customFieldOption[0]);
+          }
+        }
+      });
+    }
+  }
+
+  customerOptions() {
+    this.xeroExpenseFields.push({ attribute_type: XeroFyleField.CUSTOMER, display_name: 'Customer' });
+    const fyleField = this.fyleExpenseFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
+    if (fyleField.length === 0) {
+      this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: 'Project', is_dependent: false });
+      this.fyleExpenseFields.push(this.customFieldOption[0]);
+    }
+  }
+
   setupPage() {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
@@ -226,12 +270,23 @@ export class XeroImportSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
 
+      // This is only for C1
+      if (brandingConfig.brandId === 'co') {
+        this.customerOptions();
+      }
+
+      this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT) !== -1 ? true : false;
+
       this.fyleExpenseFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
 
       this.isLoading = false;
     });
+  }
+
+  projectisMapped(isMapped: boolean) {
+    this.isProjectMapped = isMapped;
   }
 
   ngOnInit(): void {

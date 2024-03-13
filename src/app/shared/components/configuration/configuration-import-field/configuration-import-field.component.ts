@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, MappingSourceField } from 'src/app/core/models/enum/enum.model';
+import { AppName, MappingSourceField, XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -50,11 +50,15 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   AppName = AppName;
 
+  isProjectMapped: boolean;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
+
+  @Output() projectMapping:EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     public windowService: WindowService
@@ -105,6 +109,14 @@ export class ConfigurationImportFieldComponent implements OnInit {
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
+
+    if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER) {
+      this.isProjectMapped = true;
+      this.projectMapping.emit(this.isProjectMapped);
+    } else {
+      this.isProjectMapped = false;
+      this.projectMapping.emit(this.isProjectMapped);
+    }
   }
 
   removeFilter(expenseField: AbstractControl) {
@@ -112,6 +124,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     (expenseField as FormGroup).controls.import_to_fyle.enable();
     event?.stopPropagation();
+    this.isProjectMapped = false;
+    this.projectMapping.emit(this.isProjectMapped);
   }
 
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
@@ -132,7 +146,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filteredFyleFields = this.fyleFieldOptions.filter(option => option.attribute_type !== 'CATEGORY');
+    this.filteredFyleFields = this.appName !== AppName.XERO ? this.fyleFieldOptions.filter(option => option.attribute_type !== 'CATEGORY') : [{ attribute_type: 'XeroFyleField.PROJECT', display_name: 'Project', is_dependent: false }];
   }
 
 }

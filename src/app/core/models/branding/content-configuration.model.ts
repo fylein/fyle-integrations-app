@@ -60,6 +60,7 @@ export type ContentConfiguration = {
                     taxCodeSubLabel: string;
                     defaultTaxCodeLabel: string;
                     importSuppliersAsMerchantsLabel: string;
+                    notes: string
                 },
                 advancedSettings: {
                     stepName: string;

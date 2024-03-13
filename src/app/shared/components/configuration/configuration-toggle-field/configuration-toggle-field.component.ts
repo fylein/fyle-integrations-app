@@ -28,6 +28,8 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   @Input() hideToggle: boolean = false;
 
+  @Input() disabled: boolean = false;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;

@@ -22,6 +22,6 @@
       </div>
     </div>
     <div *ngIf="!hideToggle" class="configuration--input-toggle-section">
-      <p-inputSwitch [formControlName]="formControllerName"></p-inputSwitch>
+      <p-inputSwitch [formControlName]="formControllerName" [disabled]="disabled" [tooltipPosition]="'top'" [pTooltip]="disabled ? 'You have already mapped a tracking category from Xero to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.' : ''"></p-inputSwitch>
     </div>
   </div>
