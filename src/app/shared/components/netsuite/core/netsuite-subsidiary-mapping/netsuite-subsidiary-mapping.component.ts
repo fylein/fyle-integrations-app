@@ -48,7 +48,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   isContinueDisabled: boolean = true;
 
-  redirectLink: string = brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR;
+  redirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR;
 
   netsuiteSubsdiarySelected: NetsuiteDestinationAttribute;
 
