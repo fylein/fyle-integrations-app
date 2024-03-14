@@ -194,7 +194,7 @@
     
                     <app-clone-setting-field *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultDebitCardAccount')"
                         [label]="'Set Default Debit Card Account as'"
-                        [options]="accountsPayables"
+                        [options]="bankAccounts"
                         [placeholder]="'Select Default Debit Card Account'"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
