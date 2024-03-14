@@ -165,6 +165,8 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     NetsuiteSubsidiaryMappingComponent,
     ConfigurationMappingFieldsComponent,
     SvgIconComponent,
+    NetsuiteConnectorComponent,
+    NetsuiteSubsidiaryMappingComponent,
     SearchComponent,
     OptionalFieldComponent,
     SentenceCasePipe

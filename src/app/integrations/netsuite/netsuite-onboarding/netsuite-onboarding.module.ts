@@ -12,7 +12,6 @@ import { NetsuiteOnboardingDoneComponent } from './netsuite-onboarding-done/nets
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NetsuiteSharedModule } from '../netsuite-shared/netsuite-shared-module';
-import { IntacctSharedModule } from '../../intacct/intacct-shared/intacct-shared.module';
 
 
 @NgModule({

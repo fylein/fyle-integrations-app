@@ -72,10 +72,6 @@ export class LoginComponent implements OnInit {
         this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
         this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
 
-        this.helperService.setBaseApiURL(AppUrl.NETSUITE);
-        this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
-
-
         // Only local dev needs this, login happens via postMessage for prod/staging through webapp
         if (!environment.production) {
           this.userService.storeUserProfile(user);

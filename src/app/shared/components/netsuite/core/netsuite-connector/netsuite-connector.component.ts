@@ -3,7 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { NetsuiteConnectorModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
 
@@ -25,7 +27,7 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   saveInProgress: boolean = false;
 
-  redirectLink: string = brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR;
+  redirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR;
 
   windowReference: Window;
 
@@ -38,26 +40,22 @@ export class NetsuiteConnectorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private connectorService: NetsuiteConnectorService,
-    private mappingsService: NetsuiteMappingsService
+    private mappingsService: NetsuiteMappingsService,
+    private workspaceService: WorkspaceService
   ) { }
 
-  clearField() {
+  private clearField() {
     this.connectNetsuiteForm.get("accountId")?.setValue('');
     this.connectNetsuiteForm.get("tokenId")?.setValue('');
     this.connectNetsuiteForm.get("tokenSecret")?.setValue('');
   }
 
   save() {
-    const accountId = this.connectNetsuiteForm.value.accountId;
-    const tokenId = this.connectNetsuiteForm.value.tokenId;
-    const token_secret = this.connectNetsuiteForm.value.tokenSecret;
+
+    const connectoPayload = NetsuiteConnectorModel.constructPayload(this.connectNetsuiteForm);
 
     this.isLoading = true;
-    this.connectorService.connectNetsuite({
-      ns_account_id: accountId,
-      ns_token_id: tokenId,
-      ns_token_secret: token_secret
-    }).subscribe((response) => {
+    this.connectorService.connectNetsuite(connectoPayload).subscribe((response) => {
       this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
         this.setupConnectionStatus.emit(true);
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');

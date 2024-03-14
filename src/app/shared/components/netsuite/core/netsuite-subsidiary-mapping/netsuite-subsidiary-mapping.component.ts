@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
-import { SubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
+import { NetsuiteSubsidiaryMappingModel, SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
+import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
@@ -25,7 +26,11 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   netsuiteSubsidiaryForm: FormGroup;
 
-  netsuiteSubsidiaryOptions: IntacctDestinationAttribute[];
+  netsuiteSubsidiaryOptions: NetsuiteDestinationAttribute[];
+
+  netsuiteSubsdiaryName: string | null;
+
+  isNetsuiteSubsidiaryConnected: boolean = false;
 
   netsuiteSubsidiary: SubsidiaryMapping;
 
@@ -41,7 +46,11 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  redirectLink: string = brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR;
+  isContinueDisabled: boolean = true;
+
+  redirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR;
+
+  netsuiteSubsdiarySelected: NetsuiteDestinationAttribute;
 
   fyleOrgName: string = this.userService.getUserProfile().org_name;
 
@@ -49,7 +58,8 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private mappingsService: NetsuiteMappingsService,
+    private netsuiteMappingsService: NetsuiteMappingsService,
+    private mappingService: MappingService,
     private connectorService: NetsuiteConnectorService,
     private userService: UserService,
     private storageService: StorageService,
@@ -59,16 +69,18 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
-  patchFormValue(event: any): void {
-    this.netsuiteSubsidiaryForm.controls.netsuiteSubsidiary.patchValue(event.value);
+
+  connectNetsuiteSubsdiary(companyDetails: NetsuiteDestinationAttribute): void {
+    this.netsuiteSubsdiarySelected = companyDetails;
+    this.isContinueDisabled = false;
   }
 
   save() {
     this.isLoading = true;
     this.saveInProgress = true;
 
-    const netsuiteSubsidiaryId = this.netsuiteSubsidiaryForm.value.netsuiteSubsidiary;
-    const netsuiteSubsidiaryMappingPayload: SubsidiaryMappingPost = this.getSubsdiaryMappingPayload(netsuiteSubsidiaryId);
+    const netsuiteSubsidiaryId = this.netsuiteSubsdiarySelected.destination_id;
+    const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost = NetsuiteSubsidiaryMappingModel.constructPayload(netsuiteSubsidiaryId, this.netsuiteSubsidiaryOptions, this.workspaceId);
 
     this.connectorService.postSubsdiaryMapping(netsuiteSubsidiaryMappingPayload).subscribe(
       (netsuiteSubsidiary) => {
@@ -83,21 +95,11 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     );
   }
 
-  private getSubsdiaryMappingPayload(netsuiteSubsidiaryId: any): SubsidiaryMappingPost {
-    const subsidiaries = this.netsuiteSubsidiaryOptions.filter(entity => entity.destination_id === netsuiteSubsidiaryId.destination_id);
-    return {
-      subsidiary_name: subsidiaries[0].value,
-      internal_id: subsidiaries[0].destination_id,
-      country_name: subsidiaries[0].detail?.country ? subsidiaries[0].detail.country : null,
-      workspace: 1
-    };
-  }
-
   navigateToExportSetting() {
     this.router.navigate(['/integrations/netsuite/onboarding/export_settings']);
   }
 
-  private setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload: SubsidiaryMappingPost): void {
+  private setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
     if (this.workspaceService.getNetsuiteOnboardingState() === NetsuiteOnboardingState.CONNECTION) {
       this.trackingService.integrationsOnboardingCompletion(TrackingApp.NETSUITE, NetsuiteOnboardingState.CONNECTION, 2, netsuiteSubsidiaryMappingPayload);
     }
@@ -110,9 +112,9 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Subsidiary Selected Successfully.');
   }
 
-  private handleSuccess(netsuiteSubsidiaryMappingPayload: SubsidiaryMappingPost): void {
+  private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
     this.isRefreshDimensionInProgress = true;
-    this.mappingsService.refreshNetsuiteDimensions().subscribe(() => {
+    this.netsuiteMappingsService.refreshNetsuiteDimensions().subscribe(() => {
       this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
     }, () => {
       this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
@@ -120,9 +122,9 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   }
 
   private setupPage() {
-    this.workspaceId = this.storageService.get('netsuite.workspaceId');
+    this.workspaceId = this.storageService.get('workspaceId');
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.mappingsService.getNetsuiteDestinationAttributes('SUBSIDIARY').subscribe((subsidiaries) => {
+    this.mappingService.getDestinationAttributes('SUBSIDIARY', 'v2', 'netsuite').subscribe((subsidiaries) => {
       this.netsuiteSubsidiaryOptions = subsidiaries;
       this.setupSubsidiaryMapping();
     });
@@ -131,15 +133,10 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   private setupSubsidiaryMapping() {
     this.connectorService.getSubsidiaryMapping().subscribe(netsuiteSubsidiaryMappings => {
       this.netsuiteSubsidiary = netsuiteSubsidiaryMappings;
-      this.netsuiteSubsidiaryForm = this.formBuilder.group({
-        netsuiteSubsidiary: [this.netsuiteSubsidiary ? this.netsuiteSubsidiary : '']
-      });
-      this.netsuiteSubsidiaryForm.controls.netsuiteSubsidiary.disable();
+      this.netsuiteSubsdiaryName = netsuiteSubsidiaryMappings.subsidiary_name;
       this.isLoading = false;
     }, () => {
-      this.netsuiteSubsidiaryForm = this.formBuilder.group({
-        netsuiteSubsidiary: [null, Validators.required]
-      });
+      this.isContinueDisabled = true;
       this.isLoading = false;
     });
   }
@@ -148,3 +145,4 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.setupPage();
   }
 }
+
