@@ -120,10 +120,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   getOptions(expenseField: AbstractControl): FyleField[]{
-    if(expenseField.value.destination_field === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.value.import_to_fyle) {
-      return this.filteredFyleFields
+    if (expenseField.value.destination_field === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.value.import_to_fyle) {
+      return this.filteredFyleFields;
     } else if (expenseField.value.source_field === 'CATEGORY') {
-      return this.fyleFieldOptions
+      return this.fyleFieldOptions;
     }
     return this.fyleFieldOptions;
   }
