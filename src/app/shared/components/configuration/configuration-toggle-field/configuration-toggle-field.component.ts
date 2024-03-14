@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
@@ -29,6 +30,10 @@ export class ConfigurationToggleFieldComponent implements OnInit {
   @Input() hideToggle: boolean = false;
 
   @Input() disabled: boolean = false;
+
+  @Input() appName: string;
+
+  AppName = AppName;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
