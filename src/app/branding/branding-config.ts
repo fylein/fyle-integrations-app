@@ -275,18 +275,10 @@ const content: ContentConfiguration = {
                     headerText: '',
                     contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
                     corporateCard: {
-                        cccExpensePaymentType: 'Set the default expense payment type as?',
-                        cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
-                        creditCardVendor: 'Set the default credit card vendor as',
-                        creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
-                        chargeCard: 'Set the default charge card',
-                        chargeCardPlaceholder: 'Select a charge card',
-                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Xero will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
-                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
-                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
-                        employeeFieldMapping: 'How are your employees represented in Xero?',
-                        creditCard: 'To which general ledger account should the expenses be credited to?',
-                        creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
+                        cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
+                        creditCardExportTypeSubLabel: '',
+                        expenseState: '',
+                        creditCardExpenseSubLabel: ''
                     }
                 },
                 advancedSettings: {
@@ -523,18 +515,10 @@ const content: ContentConfiguration = {
                     headerText: '',
                     contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
                     corporateCard: {
-                        cccExpensePaymentType: 'Set the default expense payment type as?',
-                        cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
-                        creditCardVendor: 'Set the default credit card vendor as',
-                        creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
-                        chargeCard: 'Set the default charge card',
-                        chargeCardPlaceholder: 'Select a charge card',
-                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Xero will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
-                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
-                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
-                        employeeFieldMapping: 'How are your employees represented in Xero?',
-                        creditCard: 'To which general ledger account should the expenses be credited to?',
-                        creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
+                        cccExpenseBankAccountSubLabel: '',
+                        creditCardExportTypeSubLabel: '',
+                        expenseState: '',
+                        creditCardExpenseSubLabel: ''
                     }
                 },
                 advancedSettings: {

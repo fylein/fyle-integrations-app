@@ -70,7 +70,7 @@ export class XeroExportSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.configuration.exportSetting;
+  readonly brandingContent = brandingContent.xero.configuration.exportSetting;
 
   constructor(
     public helperService: HelperService,
