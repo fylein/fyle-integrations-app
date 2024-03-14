@@ -42,7 +42,7 @@ export class NetsuiteComponent implements OnInit {
     if (pathName === '/integrations/netsuite') {
       const onboardingStateComponentMap = {
         [NetsuiteOnboardingState.CONNECTION]: '/integrations/netsuite/onboarding/landing',
-        [NetsuiteOnboardingState.SUBSIDIARY_MAPPING]: '/integrations/netsuite/onboarding/landing',
+        [NetsuiteOnboardingState.SUBSIDIARY]: '/integrations/netsuite/onboarding/landing',
         [NetsuiteOnboardingState.EXPORT_SETTINGS]: '/integrations/netsuite/onboarding/export_settings',
         [NetsuiteOnboardingState.IMPORT_SETTINGS]: '/integrations/netsuite/onboarding/import_settings',
         [NetsuiteOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/netsuite/onboarding/advanced_settings',

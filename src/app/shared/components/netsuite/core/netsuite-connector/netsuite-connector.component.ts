@@ -26,7 +26,7 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   saveInProgress: boolean = false;
 
-  redirectLink: string = brandingKbArticles.onboardingArticles.INTACCT.CONNECTOR;
+  redirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR;
 
   windowReference: Window;
 
@@ -50,14 +50,10 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   save() {
 
-    const connector_payload = NetsuiteConnectorModel.constructPayload(
-      this.connectNetsuiteForm.value.accountId,
-      this.connectNetsuiteForm.value.tokenId,
-      this.connectNetsuiteForm.value.tokenSecret
-    );
+    const connectoPayload = NetsuiteConnectorModel.constructPayload(this.connectNetsuiteForm);
 
     this.isLoading = true;
-    this.connectorService.connectNetsuite(connector_payload).subscribe((response) => {
+    this.connectorService.connectNetsuite(connectoPayload).subscribe((response) => {
       this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
         this.setupConnectionStatus.emit(true);
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
