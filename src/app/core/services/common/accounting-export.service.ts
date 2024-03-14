@@ -39,13 +39,20 @@ export class AccountingExportService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count/`, apiParams);
   }
 
-  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null): Observable<any> {
+  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null, searchQuery?: string | null): Observable<any> {
     const apiParams: AccountingExportGetParam = {
       type__in: type,
       status__in: status,
       limit: limit,
       offset: offset
     };
+
+    if (searchQuery){
+      apiParams.expenses__claim_number = searchQuery;
+      apiParams.expenses__employee_email = searchQuery;
+      apiParams.expenses__employee_name = searchQuery;
+      apiParams.expenses__expense_number = searchQuery;
+    }
 
     if (exportableAccountingExportIds?.length) {
       apiParams.id__in = exportableAccountingExportIds;
