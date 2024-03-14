@@ -1,3 +1,4 @@
+import { FormGroup } from "@angular/forms";
 import { environment } from "src/environments/environment";
 
 export type NetsuiteConnector = {
@@ -11,11 +12,11 @@ export interface NetsuiteConnectorPost extends NetsuiteConnector {
 
 
 export class NetsuiteConnectorModel {
-  static constructPayload(accountId: string, tokenId: string, tokenSecret: string): NetsuiteConnectorPost {
+  static constructPayload(form: FormGroup): NetsuiteConnectorPost {
     return {
-      ns_account_id: accountId,
-      ns_token_id: tokenId,
-      ns_token_secret: tokenSecret
+      ns_account_id: form.value.accountId,
+      ns_token_id: form.value.tokenId,
+      ns_token_secret: form.value.tokenSecret
     };
   }
 }
