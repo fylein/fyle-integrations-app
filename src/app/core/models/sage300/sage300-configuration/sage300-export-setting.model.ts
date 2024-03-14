@@ -1,11 +1,11 @@
 import { FormControl, FormGroup } from "@angular/forms";
-import { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption, CorporateCreditCardExpensesObject } from "../../enum/enum.model";
+import { ExpenseState, CCCExpenseState, Sage300ExpenseDate, Sage300ExportType, FyleField, ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject } from "../../enum/enum.model";
 import { Sage300DestinationAttributes } from "../db/sage300-destination-attribuite.model";
 import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
 
 export type Sage300ExportSettingFormOption = {
     label: string,
-    value: ExpenseState | CCCExpenseState | CorporateCreditCardExpensesObject | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
+    value: ExpenseState | CCCExpenseState | IntacctCorporateCreditCardExpensesObject | Sage300ExportType | Sage300ExpenseDate | ExpenseGroupingFieldOption | FyleField
 }
 
 export type ExportSettingValidatorRule = {
@@ -67,7 +67,8 @@ export class ExportSettingModel {
       defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_credit_card_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_ccc_credit_card_account_id) : null),
       defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? findObjectByDestinationId(destinationAttribute.VENDOR, exportSettings?.default_vendor_id) : null),
       defaultDebitCardAccountName: new FormControl(exportSettings?.default_debit_card_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_debit_card_account_id) : null),
-      defaultJobName: new FormControl(exportSettings?.default_job_name ? findObjectByDestinationId(destinationAttribute.JOB, exportSettings?.default_job_id) : null)
+      defaultJobName: new FormControl(exportSettings?.default_job_name ? findObjectByDestinationId(destinationAttribute.JOB, exportSettings?.default_job_id) : null),
+      searchOption: new FormControl('')
     });
   }
 

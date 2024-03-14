@@ -43,7 +43,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
     this.isLoading = true;
     this.mappingService.triggerAutoMapEmployees().subscribe(() => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
+      this.toastService.displayToastMessage(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
     }, () => {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');
@@ -61,7 +61,7 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
   }
 
   setupPage(): void {
-    this.sourceField = this.route.snapshot.params.source_field.toUpperCase();
+    this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
 
     forkJoin([
       this.mappingService.getMappingSettings(),
@@ -73,11 +73,8 @@ export class BusinessCentralBaseMappingComponent implements OnInit {
       this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
 
-      this.mappingService
-        .getDestinationAttributes(this.destinationField, 'v2', undefined, undefined, undefined, undefined
-        )
-        .subscribe((destinationAttributesResponse: any) => {
-          this.destinationOptions = destinationAttributesResponse;
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField).subscribe((destinationAttributesResponse: any) => {
+          this.destinationOptions = destinationAttributesResponse.results;
           this.isLoading = false;
         });
     });

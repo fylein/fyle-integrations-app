@@ -2,17 +2,13 @@
     @apply tw-border-alert-toast #{!important};
 }
 
-:host ::ng-deep .normal-box  {
-    @apply tw-border-box-color #{!important};
-}
-
-:host ::ng-deep .normal-box :enabled:focus-visible {
-    @apply tw-border-slightly-normal-text-color #{!important};
+:host ::ng-deep .normal-box {
+    @apply tw-border-input-default-border #{!important};
 }
 
 input.custom-focus:focus {
   outline: none;
-  border: 1px solid black !important;
+  @apply tw-border-input-focused-border #{!important};
 }
 
 .container {
@@ -21,19 +17,10 @@ input.custom-focus:focus {
     align-items: center;
   }
 
-  /* Add these styles to highlight the input fields with red border */
-.tw-border-red-600 {
-  border-color: #EF4444; /* Red color */
+.incorrect-credential {
+  @apply tw-text-text-danger tw-text-12-px;
 }
 
-.incorrect-credential {
-  color: #DA1E28;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  }
-
 ::placeholder {
-  @apply tw-text-placeholder tw-text-14-px;
+  @apply tw-text-input-default-placeholder-text tw-text-14-px;
 }

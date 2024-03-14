@@ -2,14 +2,15 @@
 </router-outlet>
 <p-toast position="bottom-center" [baseZIndex]="5000">
     <ng-template let-message pTemplate="message">
-        <div class="tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px tw-px-10-px" [ngClass]="message.severity === 'success' ? 'tw-bg-success-toast' : 'tw-bg-alert-toast'">
+        <div class="tw-flex tw-justify-between tw-items-center tw-h-44-px tw-text-14-px tw-p-12-px" [ngClass]="{'tw-bg-toast-success-bg': message.severity === 'success', 'tw-bg-toast-error-bg': message.severity === 'error', 'tw-bg-bg-info': 'info'}">
             <div class="tw-inline-flex tw-items-center">
-                <app-svg-icon *ngIf="message.severity === 'success'" [svgSource]="'check-circle-outline-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px'"></app-svg-icon>
-                <app-svg-icon *ngIf="message.severity !== 'success'" [svgSource]="'warning-outline'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-white tw-pl-14-px tw-pr-10-px tw-pt-2-px'"></app-svg-icon>
-                <span class="tw-pl-10-px">{{ message.summary }}</span>
+                <app-svg-icon *ngIf="message.severity === 'success'" [svgSource]="'check-circle-outline-medium'" [c1SvgSource]="'grv-checkmark-encircled-success-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-alerts-success-icon-color'" [isTextColorAllowed]="true"></app-svg-icon>
+                <app-svg-icon *ngIf="message.severity === 'error'" [svgSource]="'warning-outline-medium'" [c1SvgSource]="'grv-caution-triangle-critical-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-toast-text-color'" [isTextColorAllowed]="true"></app-svg-icon>
+                <app-svg-icon *ngIf="message.severity === 'info'" [svgSource]="'danger-outline'" [c1SvgSource]="'grv-info-informational-medium'" [width]="'20px'" [height]="'20px'" [styleClasses]="'tw-text-toast-text-color'" [isTextColorAllowed]="true"></app-svg-icon>
+                <span class="tw-text-toast-text-color tw-pl-8-px">{{ message.summary }}</span>
             </div>
             <div class="tw-inline-flex tw-items-center tw-cursor-pointer">
-                <app-svg-icon (iconClick)="closeToast()" [svgSource]="'cross-medium'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-white'"></app-svg-icon>
+                <app-svg-icon (iconClick)="closeToast()" [svgSource]="'cross-medium'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-toast-text-color'" [isTextColorAllowed]="true"></app-svg-icon>
             </div>
         </div>
     </ng-template>

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { ExportSettingFormOption, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { AppName, ClickEvent, CorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ClickEvent, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { PreviewPage } from 'src/app/core/models/misc/preview-page.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
@@ -15,6 +15,7 @@ import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sag
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -26,7 +27,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | HourOption[] | SelectFormOption[];
 
   // TODO: kill app specific type
-  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[] | DestinationAttribute[] | DefaultDestinationAttribute[];
+  @Input() destinationAttributes: IntacctDestinationAttribute[] | Sage300DestinationAttributes[] | DestinationAttribute[] | DefaultDestinationAttribute[] | TravelperkDestinationAttribuite[];
 
   @Input() form: FormGroup;
 
@@ -68,6 +69,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() showExportPreview: boolean = false;
 
+  @Input() isAdvanceSearchEnabled: boolean;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;
@@ -84,6 +87,10 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   isCCCExportTableVisible: boolean = false;
 
+  IntacctCorporateCreditCardExpensesObject = IntacctCorporateCreditCardExpensesObject;
+
+  optionsCopy: any[];
+
   exportTableData = [
     { exportModule: 'Expense Report', employeeMapping: 'Employee', chartOfAccounts: 'Expense Types', sageIntacctModule: 'Time & Expense' },
     { exportModule: 'Bill', employeeMapping: 'Vendor', chartOfAccounts: 'General Ledger Accounts', sageIntacctModule: 'Accounts Payable' },
@@ -96,10 +103,16 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   readonly AppName = AppName;
 
+  isSearchFocused: boolean = false;
+
   constructor(
     private trackingService: TrackingService,
     private router: Router
   ) { }
+
+  onSearchFocus(isSearchFocused: boolean): void {
+    this.isSearchFocused = isSearchFocused;
+  }
 
   removeFilter(formField: AbstractControl) {
     (formField as FormGroup).reset();
@@ -111,29 +124,31 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   showExportTable() {
-    this.dialogHeader = 'Export Module';
+    this.dialogHeader = this.appName === AppName.TRAVELPERK ? 'Preview' : 'Export Module';
     this.exportTypeIconPath = this.exportConfigurationIconPath;
     this.isPreviewDialogVisible = true;
   }
 
   showExportPreviewDialog(exportType: string) {
-    this.dialogHeader = 'Preview how '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' is made in '+ this.appName;
+    this.dialogHeader = 'Preview of a '+ new SnakeCaseToSpaceCasePipe().transform(new TitleCasePipe().transform(exportType)) +' exported to '+ this.appName;
     const index = this.formControllerName === 'reimbursableExportType' ? 0 : 1;
     this.exportTypeIconPath = this.exportTypeIconPathArray[index][exportType];
     this.isPreviewDialogVisible = true;
   }
 
-  showIntacctExportTable(reimbursableExportType: IntacctReimbursableExpensesObject | null, creditCardExportType: CorporateCreditCardExpensesObject | null): void {
-    const data: PreviewPage = {
-      intacctReimburse: reimbursableExportType,
-      intacctCCC: creditCardExportType
-    };
-
-    this.trackingService.onClickEvent(TrackingApp.INTACCT, ClickEvent.PREVIEW_INTACCT_EXPORT);
-  }
-
   closeDialog() {
     this.isPreviewDialogVisible = false;
+  }
+
+  simpleSearch(query: string) {
+    this.destinationAttributes = this.optionsCopy.filter(attribute => attribute.name?.toLowerCase().includes(query.toLowerCase()) || attribute.value?.toLowerCase().includes(query.toLowerCase()));
+  }
+
+  clearSearch(): void {
+    this.form.controls.searchOption.patchValue('');
+    if (this.destinationAttributes) {
+      this.destinationAttributes = this.optionsCopy.concat();
+    }
   }
 
   searchOptions(event: any) {
@@ -142,5 +157,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   ngOnInit(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
+    if (this.destinationAttributes) {
+      this.optionsCopy = this.destinationAttributes.slice();
+    }
   }
 }

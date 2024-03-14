@@ -688,6 +688,7 @@
     --nav-tabs-active: var(--text-primary);
     --nav-tabs-active-bg: #{$white};
     --nav-tabs-active-border: var(--border-secondary);
+    --nav-tabs-inactive-text-color: var(--text-primary);
     --nav-tabs-border: var(--border-secondary);
     --nav-tabs-hover: var(--text-primary);
     --nav-tabs-hover-bg: var(--bg-tertiary);
@@ -762,7 +763,7 @@
     --lv-table-header-border-color: var(--border-secondary);
     --lv-table-header-text-color: var(--text-secondary);
     --lv-table-default-bg: var(--bg-tertiary);
-    --lv-table-hover-bg: var(--bg-white);
+    --lv-table-hover-bg: rgba(12, 16, 19, 0.02);
     --lv-table-icon-color: var(--icon-secondary);
     --lv-table-icon-muted-color: var(--icon-muted);
 
@@ -851,5 +852,25 @@
     --sidebar-text-color: var(--text-primary);
 
     --nav-link-font-weight: 600;
+
+    --dropdown-option-height: 30px;
+
+    --toggle-circle-translate: 16px;
+
+    --toggle-width: 38px;
+
+    --toggle-height: 22px;
+
+    --border-date-picker-border: var(--border-primary);
+
+    --app-line-height: 16px;
+
+    --label-text-size: 12px;
+
+    --font-smoothing: antialiased;
+
+    --scrollbar-track: #eaeaea;
+
+    --scrollbar-thumb-hover: #aaa;
   }
 }

@@ -4,7 +4,7 @@ import { UserService } from '../misc/user.service';
 import { WorkspaceService } from './workspace.service';
 import { environment } from 'src/environments/environment';
 import { SkipExportLogResponse } from '../../models/intacct/db/expense-group.model';
-import { FyleReferenceType, TaskLogState } from '../../models/enum/enum.model';
+import { AppName, FyleReferenceType, TaskLogState } from '../../models/enum/enum.model';
 import { Observable } from 'rxjs';
 import { AccountingExport } from '../../models/db/accounting-export.model';
 import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
@@ -23,7 +23,7 @@ export class ExportLogService {
     private workspaceService: WorkspaceService
   ) { }
 
-  getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null): Observable<SkipExportLogResponse> {
+  getSkippedExpenses(limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, query: string | null): Observable<SkipExportLogResponse> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     const params: SkipExportParam = {
       limit,
@@ -31,6 +31,14 @@ export class ExportLogService {
       org_id: this.userService.getUserProfile().org_id,
       is_skipped: true
     };
+
+    if (query){
+      params.expense_number = query;
+      params.employee_email = query;
+      params.employee_name = query;
+      params.claim_number = query;
+    }
+
     params.org_id = this.userService.getUserProfile().org_id;
 
     if (selectedDateFilter) {
@@ -42,22 +50,26 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, params);
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
-      offset,
-      tasklog__status: state
+      offset
     };
+
+    params.tasklog__status = state;
+
+    if (query) {
+      params.expenses__expense_number = query;
+      params.expenses__employee_name = query;
+      params.expenses__employee_email = query;
+      params.expenses__claim_number = query;
+    }
 
     if (selectedDateFilter) {
       const startDate = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const endDate = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
-      params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
-    }
-
-    if (exportedAt) {
-      params.exported_at__gte = exportedAt;
+        params.exported_at__gte = `${startDate[2]}-${startDate[1]}-${startDate[0]}T00:00:00`;
+        params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
     }
 
     return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);

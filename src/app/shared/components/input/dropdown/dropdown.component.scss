@@ -11,15 +11,15 @@
 }
 
 :host ::ng-deep .error-box .p-dropdown {
-    @apply tw-border-alert-toast #{!important};
+    @apply tw-border-select-error-border #{!important};
 }
 
 :host ::ng-deep .normal-box .p-dropdown {
-    @apply tw-border-box-color #{!important};
+    @apply tw-border-select-default-border #{!important};
 }
 
 :host ::ng-deep .normal-box .p-dropdown.p-focus {
-    @apply tw-border-slightly-normal-text-color #{!important};
+    @apply tw-border-select-focused-border #{!important};
 }
 
 :host ::ng-deep  .dropdown-size-schedule .p-dropdown {
@@ -31,7 +31,7 @@
 }
 
 .sub-text {
-    @apply tw-text-faded-text-color tw-text-12-px ;
+    @apply tw-text-text-muted tw-text-12-px ;
 }
 
 :host ::ng-deep .selectedItem .p-dropdown-trigger {

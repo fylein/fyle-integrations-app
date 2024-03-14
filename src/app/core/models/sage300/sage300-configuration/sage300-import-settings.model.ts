@@ -26,7 +26,8 @@ export type Sage300ImportSettingsDependentFieldSetting = {
 export type Sage300ImportSetting = {
     import_settings: {
         import_categories: boolean,
-        import_vendors_as_merchants: boolean
+        import_vendors_as_merchants: boolean,
+        add_commitment_details: boolean
     },
     mapping_settings: ImportSettingMappingRow[] | [],
     dependent_field_settings: Sage300ImportSettingsDependentFieldSetting | null,
@@ -58,6 +59,7 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),
             costCategory: new FormControl(importSettings?.dependent_field_settings?.cost_category_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_category_field_name, importSettings.dependent_field_settings.cost_category_placeholder) : null),
+            addCommitmentDetails: new FormControl(importSettings?.import_settings?.add_commitment_details ?? false),
             dependentFieldImportToggle: new FormControl(true)
         });
     }
@@ -69,7 +71,8 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
         return {
             import_settings: {
                 import_categories: importSettingsForm.get('importCategories')?.value,
-                import_vendors_as_merchants: importSettingsForm.get('importVendorAsMerchant')?.value
+                import_vendors_as_merchants: importSettingsForm.get('importVendorAsMerchant')?.value,
+                add_commitment_details: importSettingsForm.get('addCommitmentDetails')?.value
             },
             mapping_settings: mappingSettings,
             dependent_field_settings: importSettingsForm.get('isDependentImportEnabled')?.value ? {

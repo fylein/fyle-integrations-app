@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-configuration-multi-select',
@@ -35,6 +36,8 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   selected: any[];
 
   startIndex: number;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor(
     private formBuilder: FormBuilder

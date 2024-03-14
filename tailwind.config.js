@@ -119,6 +119,7 @@ const borderColors = {
   'border-brand-pressed': 'var(--border-brand-pressed)',
   'border-disable': 'var(--border-disable)',
   'border-neutral': 'var(--border-neutral)',
+  'border-date-picker-border': 'var(--border-date-picker-border)',
 };
 
 const colors = {
@@ -202,6 +203,8 @@ const textColors = {
   'link-visited': 'var(--link-visited)',
   'link-hover': 'var(--link-hover)',
   'link-pressed': 'var(--link-pressed)',
+
+  'border-secondary': 'var(--border-secondary)',
 };
 
 const dimensions = {
@@ -777,6 +780,7 @@ const componentVariables = {
   'nav-tabs-hover-bg': 'var(--nav-tabs-hover-bg)',
   'nav-tabs-hover-border': 'var(--nav-tabs-hover-border)',
   'nav-tabs-text': 'var(--nav-tabs-text)',
+  'nav-tabs-inactive-text-color': 'var(--nav-tabs-inactive-text-color)',
 
   // Tabs - Nav Link (Primary)
   'nav-link-active-border': 'var(--nav-link-active-border)',
@@ -933,6 +937,9 @@ const componentVariables = {
   'sidebar-submenu-active-text-color': 'var(--sidebar-submenu-active-text-color)',
   'sidebar-submenu-text-color': 'var(--sidebar-submenu-text-color)',
   'sidebar-text-color': 'var(--sidebar-text-color)',
+
+  'scrollbar-track': 'var(--scrollbar-track)',
+  'scrollbar-thumb-hover': 'var(--scrollbar-thumb-hover)',
 };
 
 module.exports = {
@@ -963,6 +970,7 @@ module.exports = {
       '24-px': '24px',
       '36-px': '36px',
       '40-px': '40px',
+      'label-text-size': 'var(--label-text-size)',
       ...fontSizes
     },
     fontWeight: {
@@ -982,6 +990,7 @@ module.exports = {
     },
     lineHeight: {
       'normal': 'normal',
+      'app': 'var(--app-line-height)',
       '1.14': '1.14',
       '1.2': '1.2',
       '1.4': '1.4',
@@ -1015,6 +1024,7 @@ module.exports = {
         '4-px': '4px',
         '5-px': '5px',
         '6-px': '6px',
+        '7-px': '7px',
         '8-px': '8px',
         '9-px': '9px',
         '10-px': '10px',
@@ -1053,6 +1063,7 @@ module.exports = {
         '128-px': '128px',
         '130-px': '130px',
         '168-px': '168px',
+        'checkbox-marked-icon-spacing': 'var(--checkbox-marked-icon-spacing)',
         ...spacings
       },
       margin: {
@@ -1143,11 +1154,14 @@ module.exports = {
         '62-vh': '62vh',
         '68-vh': '68vh',
         '100-vh': '100vh',
+        'dropdown-option-height': 'var(--dropdown-option-height)',
+        'toggle-height': 'var(--toggle-height)',
         ...dimensions
       },
       minHeight: {
         '70-px': '70px',
         '228-px': '228px',
+        'dropdown-option-height': 'var(--dropdown-option-height)',
         ...dimensions
       },
       maxHeight: {
@@ -1187,6 +1201,7 @@ module.exports = {
         '68-px': '68px',
         '70-px': '70px',
         '80-px': '80px',
+        '82-px': '82px',
         '92-px': '92px',
         '98-px': '98px',
         '100-px': '100px',
@@ -1199,6 +1214,7 @@ module.exports = {
         '180-px': '180px',
         '184-px': '184px',
         '200-px': '200px',
+        '218-px': '218px',
         '220-px': '220px',
         '226-px': '226px',
         '240-px': '240px',
@@ -1207,10 +1223,12 @@ module.exports = {
         '260-px': '260px',
         '270-px': '270px',
         '282-px': '282px',
+        '288-px': '288px',
         '296-px': '296px',
         '300-px': '300px',
         '302-px': '302px',
         '320-px': '320px',
+        '350-px': '350px',
         '354-px': '354px',
         '360-px': '360px',
         '388-px': '388px',
@@ -1239,9 +1257,11 @@ module.exports = {
         '50-vw': '50vw',
         '52-vw': '52vw',
         '75-vw': '75vw',
-        '100-vh': '100vh'
+        '100-vh': '100vh',
+        'toggle-width': 'var(--toggle-width)',
       },
       minWidth: {
+        '120-px': '120px',
         '160-px': '160px',
         '250-px': '250px',
         '300-px': '300px',
@@ -1257,6 +1277,7 @@ module.exports = {
       borderRadius: {
         '0-px': '0px',
         '4-px': '4px',
+        '5-px': '5px',
         '6-px': '6px',
         '8-px': '8px',
         '10-px': '10px',
@@ -1264,6 +1285,7 @@ module.exports = {
         '16-px': '16px',
         '20-px': '20px',
         '48-px': '48px',
+        '99-px': '99px',
         '50': '50%',
         ...borderRadius
       },
@@ -1309,6 +1331,7 @@ module.exports = {
         'app-card': '0px 2px 10px rgba(44, 48, 78, 0.1)',
         'btn-cta-shadow': 'var(--btn-cta-shadow)',
         'chip-shadow': '0 2px 4px rgba(0, 0, 0, 0.2)',
+        'stats-box': '0px 4px 4px 0px rgba(255, 255, 255, 0.02), 3px 3px 6px 0px rgba(255, 255, 255, 0.60) inset',
         ...shadow
       },
       dropShadow: {
@@ -1319,10 +1342,16 @@ module.exports = {
       },
       spacing: {
         '2-px': '2px',
+        '8-px': '8px',
         '10-px': '10px',
         '12-px': '12px',
         '14-px': '14px',
-        '30-px': '30px'
+        '24-px': '24px',
+        '30-px': '30px',
+        '36-px': '36px',
+      },
+      translate: {
+        'toggle-circle-translate': 'var(--toggle-circle-translate)',
       },
       top: {
         '70': '70%'
@@ -1333,12 +1362,17 @@ module.exports = {
       content: {
         'no': "'No'",
         'yes': "'Yes'",
-        'empty': "''"
+        'empty': "''",
+        'toggle-text-yes': 'var(--toggle-text-yes)',
+        'toggle-text-no': 'var(--toggle-text-no)',
       },
       left: {
         '5px': '5px',
         '2': '0.5rem',
         '6': '1.5rem'
+      },
+      bottom: {
+        '0': '0',
       }
     },
   },

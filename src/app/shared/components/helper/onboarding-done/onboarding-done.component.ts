@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { brandingFeatureConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-onboarding-done',
@@ -11,6 +11,10 @@ export class OnboardingDoneComponent implements OnInit {
   @Output() launchIntegrationClick = new EventEmitter();
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
+
+  readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.configuration.done;
 
   constructor() { }
 

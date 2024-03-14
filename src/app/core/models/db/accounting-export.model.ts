@@ -1,5 +1,5 @@
 import { SnakeCaseToSpaceCasePipe } from "src/app/shared/pipes/snake-case-to-space-case.pipe";
-import { AccountingExportStatus, AccountingExportType, FundSource, FyleReferenceType } from "../enum/enum.model";
+import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType } from "../enum/enum.model";
 import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intacct/db/expense-group.model";
 import { Expense } from "../intacct/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
@@ -57,29 +57,28 @@ export type AccountingExportGetParam = {
 }
 
 export class AccountingExportModel {
-
-  static getDateOptions(): DateFilter[] {
+  static getDateOptionsV2(): DateFilter[] {
     const currentDateTime = new Date();
     const dateOptions: DateFilter[] = [
-      {
-        dateRange: 'This Month',
-        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
-        endDate: currentDateTime
-      },
       {
         dateRange: 'This Week',
         startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay()),
         endDate: currentDateTime
       },
       {
-        dateRange: 'Today',
-        startDate: currentDateTime,
+        dateRange: 'Last Week',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 7),
+        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), currentDateTime.getDate() - currentDateTime.getDay() - 1)
+      },
+      {
+        dateRange: 'This Month',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 1),
         endDate: currentDateTime
       },
       {
-        dateRange: currentDateTime.toLocaleDateString(),
-        startDate: currentDateTime,
-        endDate: currentDateTime
+        dateRange: 'Last Month',
+        startDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth() - 1, 1),
+        endDate: new Date(currentDateTime.getFullYear(), currentDateTime.getMonth(), 0)
       }
     ];
 
@@ -92,6 +91,7 @@ export class AccountingExportModel {
   }
 
   static getfilteredAccountingExports(query: string, group: AccountingExportList): boolean {
+    query = query.toLowerCase().trim();
     const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';
@@ -205,27 +205,47 @@ export class AccountingExportModel {
     return [exportRedirection, exportId, exportType];
   }
 
-  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string): AccountingExportList {
-    const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
-    const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
+  static constructQBOExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+    const [exportRedirection, exportId, exportType] = this.generateExportTypeAndId(expenseGroup);
+    return [`${environment.qbo_app_url}/app/${exportRedirection}?txnId=${exportId}`, exportType];
+  }
 
-    const [type, id, exportType] = this.generateExportTypeAndId(expenseGroup);
+  static constructIntacctExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+    return [`https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`, expenseGroup.export_type];
+  }
 
-    return {
-      exportedAt: expenseGroup.exported_at,
-      employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
-      expenseType: expenseGroup.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
-      referenceNumber: referenceNumber,
-      exportedAs: exportType,
-      fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
-      integrationUrl: `${environment.qbo_app_url}/app/${type}?txnId=${id}`,
-      expenses: expenseGroup.expenses
-    };
+  static constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup): [string, string] {
+    if (appName === AppName.QBO) {
+      return this.constructQBOExportUrlAndType(expenseGroup);
+    } else if (appName === AppName.INTACCT) {
+      return this.constructIntacctExportUrlAndType(expenseGroup);
+    }
+
+    return ['', ''];
+  }
+
+  static parseExpenseGroupAPIResponseToExportLog(expenseGroup: ExpenseGroup, org_id: string, appName: AppName): AccountingExportList {
+      const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
+      const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
+
+      const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup);
+
+      return {
+        exportedAt: expenseGroup.exported_at,
+        employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
+        expenseType: expenseGroup.fund_source === FundSource.CCC ? FundSource.CORPORATE_CARD : FundSource.REIMBURSABLE,
+        referenceNumber: referenceNumber,
+        exportedAs: exportType,
+        fyleUrl: this.generateFyleUrl(expenseGroup.expenses[0], referenceType, org_id),
+        integrationUrl: url,
+        expenses: expenseGroup.expenses
+      };
   }
 }
 
 export class SkippedAccountingExportModel {
   static getfilteredSkippedAccountingExports(query: string, group: SkipExportList): boolean {
+    query = query.toLowerCase().trim();
     const employeeName = group.employee ? group.employee[0] : '';
     const employeeID = group.employee ? group.employee[1] : '';
     const expenseType = group.expenseType ? group.expenseType : '';
