@@ -345,7 +345,8 @@ export enum QBDFyleField {
 
 export enum XeroFyleField {
   PROJECT = 'PROJECT',
-  CUSTOMER = 'CUSTOMER'
+  CUSTOMER = 'CUSTOMER',
+  TAX_CODE = 'TAX_CODE'
 }
 
 export enum QBDAccountingExportsState {

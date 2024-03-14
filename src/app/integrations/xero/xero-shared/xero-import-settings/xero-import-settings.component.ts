@@ -241,22 +241,13 @@ export class XeroImportSettingsComponent implements OnInit {
     }
   }
 
-  customerOptions() {
-    this.xeroExpenseFields.push({ attribute_type: XeroFyleField.CUSTOMER, display_name: 'Customer' });
-    const fyleField = this.fyleExpenseFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
-    if (fyleField.length === 0) {
-      this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: 'Project', is_dependent: false });
-      this.fyleExpenseFields.push(this.customFieldOption[0]);
-    }
-  }
-
   setupPage() {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
       this.importSettingService.getImportSettings(),
       this.mappingService.getFyleFields('v1'),
       this.importSettingService.getXeroField(),
-      this.mappingService.getDestinationAttributes('TAX_CODE', 'v1', 'xero'),
+      this.mappingService.getDestinationAttributes(XeroFyleField.TAX_CODE, 'v1', 'xero'),
       this.workspaceService.getWorkspaceGeneralSettings(),
       this.xeroConnectorService.getXeroCredentials(this.workspaceService.getWorkspaceId())
     ]).subscribe(response => {
@@ -274,10 +265,10 @@ export class XeroImportSettingsComponent implements OnInit {
 
       // This is only for C1
       if (brandingConfig.brandId === 'co') {
-        this.customerOptions();
+        this.xeroExpenseFields.push({ attribute_type: XeroFyleField.CUSTOMER, display_name: 'Customer' });
       }
 
-      this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT) !== -1 ? true : false;
+      this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
       this.fyleExpenseFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
@@ -287,7 +278,7 @@ export class XeroImportSettingsComponent implements OnInit {
     });
   }
 
-  projectisMapped(isMapped: boolean) {
+  updateCustomerImportAvailability(isMapped: boolean) {
     this.isProjectMapped = isMapped;
   }
 

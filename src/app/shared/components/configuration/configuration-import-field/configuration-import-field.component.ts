@@ -50,7 +50,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   AppName = AppName;
 
-  isProjectMapped: boolean;
+  isXeroProjectMapped: boolean;
 
   readonly brandingConfig = brandingConfig;
 
@@ -58,7 +58,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
 
-  @Output() projectMapping:EventEmitter<boolean> = new EventEmitter();
+  @Output() xeroProjectMapping:EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     public windowService: WindowService
@@ -110,13 +110,22 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
 
-    if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER) {
-      this.isProjectMapped = true;
-      this.projectMapping.emit(this.isProjectMapped);
+    if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER && this.appName === AppName.XERO) {
+      this.isXeroProjectMapped = true;
+      this.xeroProjectMapping.emit(this.isXeroProjectMapped);
     } else {
-      this.isProjectMapped = false;
-      this.projectMapping.emit(this.isProjectMapped);
+      this.isXeroProjectMapped = false;
+      this.xeroProjectMapping.emit(this.isXeroProjectMapped);
     }
+  }
+
+  getOptions(expenseField: AbstractControl): FyleField[]{
+    if(expenseField.value.destination_field === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.value.import_to_fyle) {
+      return this.filteredFyleFields
+    } else if (expenseField.value.source_field === 'CATEGORY') {
+      return this.fyleFieldOptions
+    }
+    return this.fyleFieldOptions;
   }
 
   removeFilter(expenseField: AbstractControl) {
@@ -124,8 +133,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     (expenseField as FormGroup).controls.import_to_fyle.enable();
     event?.stopPropagation();
-    this.isProjectMapped = false;
-    this.projectMapping.emit(this.isProjectMapped);
+    this.isXeroProjectMapped = false;
+    this.xeroProjectMapping.emit(this.isXeroProjectMapped);
   }
 
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {

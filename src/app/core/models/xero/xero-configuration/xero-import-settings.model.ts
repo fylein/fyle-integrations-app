@@ -65,14 +65,14 @@ export class XeroImportSettingModel extends ImportSettingsModel {
   static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[]): FormGroup {
     let additionalOption: any[] = [];
     if (brandingConfig.brandId === 'co') {
-      const coaddtional = {
+      const additionalMappingSetting = {
         source_field: 'XeroFyleField.PROJECT',
         destination_field: XeroFyleField.CUSTOMER,
-        import_to_fyle: importSettings?.workspace_general_settings.import_categories || false,
+        import_to_fyle: importSettings?.workspace_general_settings.import_customers || false,
         is_custom: false,
         source_placeholder: null
       };
-      additionalOption = [ImportSettingsModel.createFormGroup(coaddtional)];
+      additionalOption = [ImportSettingsModel.createFormGroup(additionalMappingSetting)];
     }
     const expenseFieldsArray = importSettings?.mapping_settings ? additionalOption.concat(this.constructFormArray(importSettings.mapping_settings, xeroFields)) : [];
     return new FormGroup({
