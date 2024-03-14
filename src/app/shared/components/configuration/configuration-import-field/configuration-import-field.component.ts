@@ -155,7 +155,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filteredFyleFields = this.appName !== AppName.XERO ? this.fyleFieldOptions.filter(option => option.attribute_type !== 'CATEGORY') : [{ attribute_type: 'XeroFyleField.PROJECT', display_name: 'Project', is_dependent: false }];
+    this.filteredFyleFields = this.appName !== AppName.XERO ? this.fyleFieldOptions.filter(option => option.attribute_type !== 'CATEGORY') : [{ attribute_type: 'DISABLED_XERO_SOURCE_FIELD', display_name: 'Project', is_dependent: false }];
   }
 
 }

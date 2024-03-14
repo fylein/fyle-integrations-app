@@ -34,7 +34,7 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingConfig.brandId !== 'co'">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingConfig.brandId !== 'co' && isCustomerPresent">
                     <app-configuration-toggle-field
                       [form]="importSettingsForm"
                       [label]="brandingContent.importCustomersLabel"

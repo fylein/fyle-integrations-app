@@ -62,11 +62,11 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     return ['EXPENSE', 'ASSET', 'EQUITY', 'LIABILITY', 'REVENUE'];
   }
 
-  static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[]): FormGroup {
+  static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean): FormGroup {
     let additionalOption: any[] = [];
-    if (brandingConfig.brandId === 'co') {
+    if (brandingConfig.brandId === 'co' && isCustomerPresent) {
       const additionalMappingSetting = {
-        source_field: 'XeroFyleField.PROJECT',
+        source_field: 'DISABLED_XERO_SOURCE_FIELD',
         destination_field: XeroFyleField.CUSTOMER,
         import_to_fyle: importSettings?.workspace_general_settings.import_customers || false,
         is_custom: false,

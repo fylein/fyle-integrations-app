@@ -71,6 +71,8 @@ export class XeroImportSettingsComponent implements OnInit {
 
   isProjectMapped: boolean;
 
+  isCustomerPresent: boolean;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.xero.configuration.importSetting;
@@ -221,7 +223,7 @@ export class XeroImportSettingsComponent implements OnInit {
           formArray.controls.at(index)?.get('source_field')?.patchValue(XeroFyleField.PROJECT);
           this.importSettingsForm.controls.importCustomers.patchValue(true);
         } else {
-          formArray.controls.at(index)?.get('source_field')?.patchValue('XeroFyleField.PROJECT');
+          formArray.controls.at(index)?.get('source_field')?.patchValue('DISABLED_XERO_SOURCE_FIELD');
           this.importSettingsForm.controls.importCustomers.patchValue(false);
         }
       });
@@ -257,15 +259,17 @@ export class XeroImportSettingsComponent implements OnInit {
       this.taxCodes = response[3];
       this.workspaceGeneralSettings = response[4];
 
-      this.importSettingsForm = XeroImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields);
+      this.isCustomerPresent = this.xeroExpenseFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false
+
+      this.importSettingsForm = XeroImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent);
 
       if (response[5] && response[5].country !== 'US') {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      // This is only for C1
-      if (brandingConfig.brandId === 'co') {
-        this.xeroExpenseFields.push({ attribute_type: XeroFyleField.CUSTOMER, display_name: 'Customer' });
+      // This is only for Fyle
+      if (brandingConfig.brandId !== 'co') {
+        this.xeroExpenseFields = this.xeroExpenseFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER)
       }
 
       this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
