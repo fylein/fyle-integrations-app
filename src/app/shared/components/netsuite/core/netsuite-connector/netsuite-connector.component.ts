@@ -3,9 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { NetsuiteConnectorModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
-import { NetsuiteOnboardingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-onboarding.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
@@ -24,8 +22,6 @@ export class NetsuiteConnectorComponent implements OnInit {
   connectNetsuiteForm: FormGroup;
 
   ConfigurationCtaText = ConfigurationCta;
-
-  onboardingSteps: OnboardingStepper[] = new NetsuiteOnboardingModel().getOnboardingSteps('Connect to Netsuite', this.workspaceService.getOnboardingState());
 
   isOnboarding: boolean;
 
