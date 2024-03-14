@@ -34,29 +34,15 @@ export class XeroExportSettingsComponent implements OnInit {
 
   exportSettings:  XeroExportSettingGet;
 
-  employeeFieldMapping: EmployeeFieldMapping;
-
   bankAccounts: DestinationAttribute[];
-
-  cccAccounts: DefaultDestinationAttribute[];
-
-  accountsPayables: DefaultDestinationAttribute[];
-
-  vendors: DefaultDestinationAttribute[];
-
-  expenseAccounts: DefaultDestinationAttribute[];
-
-  isImportItemsEnabled: boolean;
 
   reimbursableExportTypes: SelectFormOption[] = XeroExportSettingModel.getReimbursableExportTypes();
 
   creditCardExportTypes =  XeroExportSettingModel.getCreditCardExportTypes();
 
-  cccExpenseStateOptions: SelectFormOption[];
+  reimbursableExpenseGroupByOptions =  XeroExportSettingModel.getReimbursableExpenseGroupingOptions();
 
-  expenseStateOptions: SelectFormOption[];
-
-  expenseGroupByOptions =  XeroExportSettingModel.getExpenseGroupingOptions();
+  cccExpenseGroupByOptions =  XeroExportSettingModel.getCCCExpenseGroupingOptions();
 
   reimbursableExpenseGroupingDateOptions =  XeroExportSettingModel.getReimbursableExpenseGroupingDateOptions();
 
@@ -64,7 +50,9 @@ export class XeroExportSettingsComponent implements OnInit {
 
   autoMapEmployeeTypes = XeroExportSettingModel.getAutoMapEmployeeOptions();
 
-  showNameInJournalOption: boolean;
+  expenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions();
+
+  cccExpenseStateOptions = XeroExportSettingModel.getCCCExpenseStateOptions();
 
   exportSettingForm: FormGroup;
 
@@ -76,10 +64,6 @@ export class XeroExportSettingsComponent implements OnInit {
 
   appName: AppName = AppName.XERO;
 
-  XeroCorporateCreditCardExpensesObject =  XeroCorporateCreditCardExpensesObject;
-
-  XeroReimbursableExpensesObject =  XeroReimbursableExpensesObject;
-
   EmployeeFieldMapping = EmployeeFieldMapping;
 
   ConfigurationCtaText = ConfigurationCta;
@@ -87,8 +71,6 @@ export class XeroExportSettingsComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.configuration.exportSetting;
-
-  is_simplify_report_closure_enabled: boolean = false;
 
   constructor(
     public helperService: HelperService,
@@ -100,7 +82,7 @@ export class XeroExportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService
   ) { }
 
-  refreshDimensions() {
+  refreshDimensions(isRefresh: boolean) {
     this.xeroHelperService.refreshXeroDimensions().subscribe();
   }
 
@@ -142,10 +124,7 @@ export class XeroExportSettingsComponent implements OnInit {
     ]).subscribe(response => {
       this.exportSettings = response[0];
       this.bankAccounts = response[1].BANK_ACCOUNT;
-      this.is_simplify_report_closure_enabled = (response[0].workspace_general_settings)?.is_simplify_report_closure_enabled;
 
-      this.expenseStateOptions = XeroExportSettingModel.getReimbursableExpenseStateOptions(this.is_simplify_report_closure_enabled);
-      this.cccExpenseStateOptions = XeroExportSettingModel.getCCCExpenseStateOptions(this.is_simplify_report_closure_enabled);
       this.exportSettingForm = XeroExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
