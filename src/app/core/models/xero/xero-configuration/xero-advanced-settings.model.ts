@@ -1,8 +1,9 @@
-import { FormGroup } from "@angular/forms";
-import { EmailOption } from "../../common/advanced-settings.model";
+import { FormControl, FormGroup } from "@angular/forms";
+import { AdvancedSettingValidatorRule, AdvancedSettingsModel, EmailOption } from "../../common/advanced-settings.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { PaymentSyncDirection } from "../../enum/enum.model";
+import { HelperUtility } from "../../common/helper.model";
 
 
 export type XeroAdvancedSettingWorkspaceGeneralSetting = {
@@ -56,7 +57,70 @@ export interface XeroAdvancedSettingFormOption extends SelectFormOption {
   value: PaymentSyncDirection | number | 'None';
 }
 
-export class XeroAdvancedSettingModel {
+export class XeroAdvancedSettingModel extends HelperUtility{
+
+  static getPaymentSyncOptions(): SelectFormOption[] {
+    return [
+      {
+        label: 'None',
+        value: 'None'
+      },
+      {
+        label: 'Export Fyle ACH Payments to Xero',
+        value: PaymentSyncDirection.FYLE_TO_XERO
+      },
+      {
+        label: 'Import Xero Payments into Fyle',
+        value: PaymentSyncDirection.XERO_TO_FYLE
+      }
+    ];
+  }
+
+  static getValidators(): AdvancedSettingValidatorRule {
+    return {
+      paymentSync: 'billPaymentAccount',
+      exportSchedule: 'exportScheduleFrequency'
+    };
+  }
+
+  static setConfigurationSettingValidatorsAndWatchers(form: FormGroup): void {
+    const validatorRule = this.getValidators();
+    const keys = Object.keys(validatorRule);
+
+    Object.values(validatorRule).forEach((value, index) => {
+      form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
+        if (selectedValue && ((keys[index] === 'billPaymentAccount' && selectedValue === PaymentSyncDirection.FYLE_TO_XERO) || (keys[index] !== 'billPaymentAccount'))) {
+          this.markControllerAsRequired(form, value);
+        } else {
+          this.clearValidatorAndResetValue(form, value);
+        }
+      });
+    });
+  }
+
+  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[]): FormGroup {
+    let paymentSync = '';
+    if (advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
+      paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
+    } else if (advancedSettings.workspace_general_settings.sync_xero_to_fyle_payments) {
+      paymentSync = PaymentSyncDirection.XERO_TO_FYLE;
+    }
+    return new FormGroup({
+      paymentSync: new FormControl(paymentSync),
+      billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account),
+      changeAccountingPeriod: new FormControl(advancedSettings.workspace_general_settings.change_accounting_period),
+      autoCreateVendors: new FormControl(advancedSettings.workspace_general_settings.auto_create_destination_entity),
+      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : false),
+      exportScheduleFrequency: new FormControl(advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : null),
+      autoCreateMerchantDestinationEntity: new FormControl(advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false),
+      skipExport: new FormControl(isSkipExportEnabled),
+      search: new FormControl(),
+      searchOption: new FormControl(),
+      email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : []),
+      addedEmail: new FormControl([])
+    });
+  }
+
   static constructPayload(advancedSettingsForm: FormGroup): XeroAdvancedSettingPost {
     const emptyDestinationAttribute = {id: null, name: null};
     const advancedSettingPayload: XeroAdvancedSettingPost = {
