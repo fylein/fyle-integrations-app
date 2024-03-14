@@ -50,7 +50,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   isImportItemsEnabled: boolean;
 
   reimbursableExportTypes: SelectFormOption[];
-  
+
   employeeFieldOptions: ExportSettingFormOption[] = [
     {
       label: 'Employee',
@@ -98,7 +98,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     {
       [NetsuiteReimbursableExpensesObject.EXPENSE_REPORT]: 'assets/pngs/preview-screens/qbo-reimburse-expense.png',
       [NetsuiteReimbursableExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-reimburse-bill.png',
-      [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-reimburse-journal-entry.png',
+      [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-reimburse-journal-entry.png'
     },
     {
       [NetSuiteCorporateCreditCardExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-ccc-bill.png',
@@ -123,7 +123,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
-  
+
   getEmployeeFieldMapping(employeeFieldMapping: FyleField | null, reimbursableExportType: string): string {
     let employeeFieldMappingLabel = '';
     if (employeeFieldMapping) {
@@ -271,11 +271,11 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
     forkJoin({
       exportSetting: this.exportSettingService.getExportSettings(),
-      destinationAttributes: this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v2', 'netsuite'),
-      //workspaceGeneralSettings: this.workspaceService.getWorkspaceGeneralSettings()
+      destinationAttributes: this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v2', 'netsuite')
+      // WorkspaceGeneralSettings: this.workspaceService.getWorkspaceGeneralSettings()
     }).subscribe(({exportSetting, destinationAttributes}) => {
       this.exportSettings = exportSetting;
-      //this.employeeFieldMapping = workspaceGeneralSettings.employee_field_mapping;
+      // This.employeeFieldMapping = workspaceGeneralSettings.employee_field_mapping;
 
       this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.cccAccounts = destinationAttributes.CREDIT_CARD_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));

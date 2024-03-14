@@ -31,7 +31,7 @@ import { IntacctSharedModule } from '../../intacct/intacct-shared/intacct-shared
     NetsuiteSharedModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ]
 })
 export class NetsuiteOnboardingModule { }

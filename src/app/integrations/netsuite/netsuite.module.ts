@@ -15,7 +15,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     NetsuiteRoutingModule,
-    SharedModule,
+    SharedModule
   ]
 })
 export class NetsuiteModule { }

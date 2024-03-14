@@ -13,6 +13,7 @@ import { HelperUtility } from 'src/app/core/models/common/helper.model';
 export class NetsuiteExportSettingsService {
 
   private mandatoryFormController: string[] = [];
+
   @Output() creditCardExportTypeChange: EventEmitter<string> = new EventEmitter();
 
   constructor(
@@ -27,7 +28,7 @@ export class NetsuiteExportSettingsService {
   postExportSettings(exportSettingsPayload: NetSuiteExportSettingPost): Observable<NetSuiteExportSettingGet> {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
-  
+
   setupDynamicValidators(form: FormGroup, values: ExportModuleRule, selectedValue: string): void {
     Object.entries(values.requiredValue).forEach(([key, value]) => {
       if (key === selectedValue) {

@@ -63,7 +63,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         ]
       }[employeeFieldMapping];
     }
-  
+
     static getCreditCardExportTypes(): SelectFormOption[] {
       return [
         {
@@ -81,10 +81,10 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         {
             label: 'Expense Report',
             value: NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT
-          },
+          }
       ];
     }
-    
+
     static getCCCExpenseStateOptions(): SelectFormOption[] {
         return [
           {
@@ -110,7 +110,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           }
         ];
       }
-    
+
       static getExpenseGroupByOptions(): SelectFormOption[] {
         return [
           {
@@ -123,7 +123,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           }
         ];
       }
-    
+
       static getNameInJournalOptions(): SelectFormOption[] {
         return [
           {
@@ -136,7 +136,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           }
         ];
       }
-    
+
       static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
         return [
           {
@@ -161,7 +161,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           }
         ];
       }
-    
+
       static getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
         return [
           {
@@ -174,7 +174,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           }
         ];
       }
-    
+
       static getMandatoryField(form: FormGroup, controllerName: string): boolean {
         switch (controllerName) {
           case 'bankAccount':
@@ -193,31 +193,31 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             return false;
         }
       }
-    
+
       static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
           reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
           creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState']
         };
-    
+
         const exportModuleRule: ExportModuleRule[] = [
           {
             formController: 'reimbursableExportType',
             requiredValue: {
-              [NetsuiteReimbursableExpensesObject.BILL]: ['accountsPayable'],
+              [NetsuiteReimbursableExpensesObject.BILL]: ['accountsPayable']
             }
           },
           {
             formController: 'creditCardExportType',
             requiredValue: {
-              [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['defaultCreditCardVendor', 'accountsPayable'],
+              [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['defaultCreditCardVendor', 'accountsPayable']
             }
           }
         ];
-    
+
         return [exportSettingValidatorRule, exportModuleRule];
       }
-    
+
       static mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null, employeeFieldMapping: EmployeeFieldMapping): FormGroup {
         return new FormGroup({
           employeeMapping: new FormControl(employeeFieldMapping),
@@ -234,21 +234,21 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
           defaultCCCAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
           accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
-          defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
-          //nameInJournalEntry: new FormControl(exportSettings?.configurations.name_in_journal_entry ? exportSettings.configurations.name_in_journal_entry : NameInJournalEntry.EMPLOYEE )
+          defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null)
+          // NameInJournalEntry: new FormControl(exportSettings?.configurations.name_in_journal_entry ? exportSettings.configurations.name_in_journal_entry : NameInJournalEntry.EMPLOYEE )
         });
       }
-    
+
       static constructPayload(exportSettingsForm: FormGroup): NetSuiteExportSettingPost {
         const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
         let nameInJournalEntry = NameInJournalEntry.EMPLOYEE;
-    
+
         if (!brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
           nameInJournalEntry = NameInJournalEntry.MERCHANT;
         } else {
           nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value;
         }
-    
+
         const exportSettingPayload: NetSuiteExportSettingPost = {
           expense_group_settings: {
             expense_state: exportSettingsForm.get('expenseState')?.value,
@@ -271,9 +271,9 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             default_ccc_vendor: exportSettingsForm.get('defaultDebitCardAccount')?.value ? exportSettingsForm.get('defaultDebitCardAccount')?.value : emptyDestinationAttribute
           }
         };
-    
+
         return exportSettingPayload;
-      }    
+      }
 }
 
 

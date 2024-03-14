@@ -11,7 +11,7 @@ import { NetsuiteConnectorComponent } from './netsuite-connector/netsuite-connec
   declarations: [
     NetsuiteExportSettingsComponent,
     NetsuiteImportSettingsComponent,
-    NetsuiteAdvancedSettingsComponent,
+    NetsuiteAdvancedSettingsComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +20,7 @@ import { NetsuiteConnectorComponent } from './netsuite-connector/netsuite-connec
   exports: [
     NetsuiteExportSettingsComponent,
     NetsuiteImportSettingsComponent,
-    NetsuiteAdvancedSettingsComponent,
+    NetsuiteAdvancedSettingsComponent
   ]
 })
 export class NetsuiteSharedModule { }
