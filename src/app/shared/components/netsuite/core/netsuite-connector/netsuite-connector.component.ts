@@ -49,11 +49,10 @@ export class NetsuiteConnectorComponent implements OnInit {
   }
 
   save() {
-
-    const connectoPayload = NetsuiteConnectorModel.constructPayload(this.connectNetsuiteForm);
+    const connectorPayload = NetsuiteConnectorModel.constructPayload(this.connectNetsuiteForm);
 
     this.isLoading = true;
-    this.connectorService.connectNetsuite(connectoPayload).subscribe((response) => {
+    this.connectorService.connectNetsuite(connectorPayload).subscribe((response) => {
       this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
         this.setupConnectionStatus.emit(true);
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
