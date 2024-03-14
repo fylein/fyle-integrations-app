@@ -17,7 +17,7 @@ export class NetsuiteOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Connect to Netsuite',
+          step: 'Connect to NetSuite',
           icon: 'link-vertical-medium',
           route: '/integrations/netsuite/onboarding/connector',
           styleClasses: ['step-name-connector--text']

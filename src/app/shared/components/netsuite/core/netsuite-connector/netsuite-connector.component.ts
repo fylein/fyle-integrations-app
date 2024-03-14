@@ -5,6 +5,7 @@ import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-co
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConnectorModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
 
@@ -39,7 +40,8 @@ export class NetsuiteConnectorComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private connectorService: NetsuiteConnectorService,
-    private mappingsService: NetsuiteMappingsService
+    private mappingsService: NetsuiteMappingsService,
+    private workspaceService: WorkspaceService
   ) { }
 
   private clearField() {

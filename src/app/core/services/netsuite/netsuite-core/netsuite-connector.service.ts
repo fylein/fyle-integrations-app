@@ -5,8 +5,7 @@ import { StorageService } from '../../common/storage.service';
 import { NetsuiteCredential } from 'src/app/core/models/netsuite/db/netsuite-credentials.model';
 import { SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { Observable, Subject } from 'rxjs';
-import { NetsuiteWorkspaceService } from './netsuite-workspace.service';
-import { NetsuiteConnectorPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import { NetsuiteConnectorPost, NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { WorkspaceService } from '../../common/workspace.service';
 
 
@@ -43,7 +42,7 @@ export class NetsuiteConnectorService {
     return this.apiService.post(`/workspaces/${this.workspaceId}/credentials/netsuite/`, data);
   }
 
-  postSubsdiaryMapping(subsdiaryMappingPayload: SubsidiaryMapping): Observable<SubsidiaryMapping> {
+  postSubsdiaryMapping(subsdiaryMappingPayload: NetsuiteSubsidiaryMappingPost): Observable<SubsidiaryMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
 
     return this.apiService.post(`/workspaces/${workspaceId}/mappings/subsidiaries/`, subsdiaryMappingPayload);

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { NetsuiteWorkspaceService } from './netsuite-workspace.service';
 import { ApiService } from '../../common/api.service';
+import { Observable } from 'rxjs';
 import { WorkspaceService } from '../../common/workspace.service';
 
 @Injectable({
