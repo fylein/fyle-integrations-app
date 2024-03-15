@@ -125,7 +125,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
-        
+
         this.isDateSelected = true;
         this.trackDateFilter('existing', this.selectedDateFilter);
         this.getSkippedExpenses(paginator.limit, paginator.offset);
