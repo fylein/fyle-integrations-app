@@ -6,9 +6,7 @@ import { XeroBaseMappingComponent } from './xero-base-mapping/xero-base-mapping.
 
 
 @NgModule({
-  declarations: [
-    XeroBaseMappingComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule,
     XeroMappingRoutingModule

@@ -383,7 +383,8 @@ export enum MappingState {
 }
 
 export enum AccountingField {
-  ACCOUNT = 'ACCOUNT'
+  ACCOUNT = 'ACCOUNT',
+  CONTACT = 'CONTACT'
 }
 
 export enum Sage300Field {
