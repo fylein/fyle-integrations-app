@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingDisplayName, AccountingField, AppName, FyleField, MappingDestinationField, MappingSourceField, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AccountingField, AppName, FyleField, MappingDestinationField, MappingSourceField, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
