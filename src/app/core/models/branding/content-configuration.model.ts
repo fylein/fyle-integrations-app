@@ -49,10 +49,6 @@ export type ContentConfiguration = {
                     setDescriptionField: string;
                     dfvLabel: string;
                     dfvSubLabel: string;
-                },
-                done: {
-                    ctaText: string;
-                    hintText: string;
                 }
             },
         },

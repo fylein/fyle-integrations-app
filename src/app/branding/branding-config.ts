@@ -290,10 +290,6 @@ const content: ContentConfiguration = {
                     setDescriptionField: 'Set the description field in Xero',
                     dfvLabel: 'Default field values',
                     dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
-                },
-                done: {
-                    ctaText: '',
-                    hintText: ''
                 }
             }
         },
@@ -523,10 +519,6 @@ const content: ContentConfiguration = {
                     setDescriptionField: 'Set the description field in Xero',
                     dfvLabel: 'Default field values',
                     dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
-                },
-                done: {
-                    ctaText: '',
-                    hintText: ''
                 }
             }
         },
