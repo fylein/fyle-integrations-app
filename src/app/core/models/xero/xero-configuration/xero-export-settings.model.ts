@@ -157,7 +157,7 @@ export class XeroExportSettingModel {
     return [
       {
         label: 'Payment Processing',
-        value: XeroCCCExpenseState.PAYMENT_PROCESSING
+        value: XeroCCCExpenseState.APPROVED
       },
       {
         label: 'Closed',
