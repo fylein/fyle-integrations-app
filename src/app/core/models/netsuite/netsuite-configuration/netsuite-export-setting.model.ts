@@ -25,14 +25,14 @@ export type NetsuiteExportSettingGeneralMapping = {
 
 export type NetSuiteExportSettingPost = {
   expense_group_settings: ExpenseGroupSettingPost,
-    configurations: NetsuiteExportSettingWorkspaceGeneralSettingPost,
+    configuration: NetsuiteExportSettingWorkspaceGeneralSettingPost,
     general_mappings: NetsuiteExportSettingGeneralMapping
   }
 
 
 export type NetSuiteExportSettingGet = {
     expense_group_settings: ExpenseGroupSettingGet,
-    configurations: NetsuiteExportSettingWorkspaceGeneralSettingPost,
+    configuration: NetsuiteExportSettingWorkspaceGeneralSettingPost,
     general_mappings: NetsuiteExportSettingGeneralMapping,
     workspace_id: number
 }
@@ -222,14 +222,14 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         return new FormGroup({
           employeeMapping: new FormControl(employeeFieldMapping),
           expenseState: new FormControl(exportSettings?.expense_group_settings?.expense_state),
-          employeeFieldMapping: new FormControl(exportSettings?.configurations?.employee_field_mapping),
-          reimbursableExpense: new FormControl(exportSettings?.configurations?.reimbursable_expenses_object ? true : false),
-          reimbursableExportType: new FormControl(exportSettings?.configurations?.reimbursable_expenses_object),
+          employeeFieldMapping: new FormControl(exportSettings?.configuration?.employee_field_mapping),
+          reimbursableExpense: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object ? true : false),
+          reimbursableExportType: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object),
           reimbursableExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields)),
           reimbursableExportDate: new FormControl(exportSettings?.expense_group_settings?.reimbursable_export_date_type),
           cccExpenseState: new FormControl(exportSettings?.expense_group_settings?.ccc_expense_state),
-          creditCardExpense: new FormControl(exportSettings?.configurations?.corporate_credit_card_expenses_object ? true : false),
-          creditCardExportType: new FormControl(exportSettings?.configurations?.corporate_credit_card_expenses_object),
+          creditCardExpense: new FormControl(exportSettings?.configuration?.corporate_credit_card_expenses_object ? true : false),
+          creditCardExportType: new FormControl(exportSettings?.configuration?.corporate_credit_card_expenses_object),
           creditCardExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
           creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
           defaultCCCAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
@@ -248,7 +248,8 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         } else {
           nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value;
         }
-
+        
+        console.log('sdf', exportSettingsForm)
         const exportSettingPayload: NetSuiteExportSettingPost = {
           expense_group_settings: {
             expense_state: exportSettingsForm.get('expenseState')?.value,
@@ -258,7 +259,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             corporate_credit_card_expense_group_fields: exportSettingsForm.get('creditCardExportGroup')?.value ? [exportSettingsForm.get('creditCardExportGroup')?.value] : null,
             ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value
           },
-          configurations: {
+          configuration: {
             reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,
             corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value,
             employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value,

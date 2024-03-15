@@ -42,13 +42,12 @@ export class NetsuiteExportSettingsService {
             this.mandatoryFormController.push(formController);
             HelperUtility.markControllerAsRequired(form, formController);
           } else {
-            HelperUtility.clearValidatorAndResetValue(form, formController);
           }
         });
       } else {
         value.forEach((formController: string) => {
           if (!this.mandatoryFormController.includes(formController)) {
-            HelperUtility.clearValidatorAndResetValue(form, formController);
+           
           }
         });
       }

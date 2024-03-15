@@ -165,12 +165,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   save(): void {
-    if (this.isAdvancedSettingAffected()) {
-      this.warningDialogText = this.constructWarningMessage();
-      this.isConfirmationDialogVisible = true;
-      return;
-    }
-
     this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS});
   }
 
@@ -201,8 +195,8 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   private constructWarningMessage(): string {
     let content: string = '';
-    const existingReimbursableExportType = this.exportSettings.configurations?.reimbursable_expenses_object ? this.exportSettings.configurations.reimbursable_expenses_object : 'None';
-    const existingCorporateCardExportType = this.exportSettings.configurations?.corporate_credit_card_expenses_object ? this.exportSettings.configurations.corporate_credit_card_expenses_object : 'None';
+    const existingReimbursableExportType = this.exportSettings.configuration?.reimbursable_expenses_object ? this.exportSettings.configuration.reimbursable_expenses_object : 'None';
+    const existingCorporateCardExportType = this.exportSettings.configuration?.corporate_credit_card_expenses_object ? this.exportSettings.configuration.corporate_credit_card_expenses_object : 'None';
     const updatedReimbursableExportType = this.exportSettingForm.value.reimbursableExportType ? this.exportSettingForm.value.reimbursableExportType : 'None';
     const updatedCorporateCardExportType = this.exportSettingForm.value.creditCardExportType ? this.exportSettingForm.value.creditCardExportType : 'None';
 
@@ -222,15 +216,15 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   private isExportSettingsUpdated(): boolean {
-    return this.exportSettings.configurations.reimbursable_expenses_object !== null || this.exportSettings.configurations.corporate_credit_card_expenses_object !== null;
+    return this.exportSettings.configuration.reimbursable_expenses_object !== null || this.exportSettings.configuration.corporate_credit_card_expenses_object !== null;
   }
 
   private isSingleItemizedJournalEntryAffected(): boolean {
-    return (this.exportSettings?.configurations?.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.value.reimbursableExportType === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) || (this.exportSettings?.configurations?.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.value.creditCardExportType === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+    return (this.exportSettings?.configuration?.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.value.reimbursableExportType === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) || (this.exportSettings?.configuration?.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && this.exportSettingForm.value.creditCardExportType === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
   }
 
   private isPaymentsSyncAffected(): boolean {
-    return this.exportSettings?.configurations?.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.BILL && this.exportSettingForm.value.reimbursableExportType  === NetsuiteReimbursableExpensesObject.BILL;
+    return this.exportSettings?.configuration?.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.BILL && this.exportSettingForm.value.reimbursableExportType  === NetsuiteReimbursableExpensesObject.BILL;
   }
 
   private isAdvancedSettingAffected(): boolean {
@@ -283,7 +277,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.vendors = destinationAttributes.VENDOR.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
 
       this.reimbursableExportTypes = NetSuiteExportSettingModel.getReimbursableExportTypeOptions(this.EmployeeFieldMapping.EMPLOYEE);
-      this.showNameInJournalOption = this.exportSettings.configurations?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
+      this.showNameInJournalOption = this.exportSettings.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.exportSettingForm = NetSuiteExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
 
@@ -297,14 +291,14 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
-      if (this.exportSettings.configurations?.reimbursable_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.configurations.reimbursable_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.configurations.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
+      if (this.exportSettings.configuration?.reimbursable_expenses_object) {
+        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.configuration.reimbursable_expenses_object);
+        this.helperService.setOrClearValidators(this.exportSettings.configuration.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
       }
 
-      if (this.exportSettings.configurations?.corporate_credit_card_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.configurations.corporate_credit_card_expenses_object);
-        this.helperService.setOrClearValidators(this.exportSettings.configurations.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
+      if (this.exportSettings.configuration?.corporate_credit_card_expenses_object) {
+        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.configuration.corporate_credit_card_expenses_object);
+        this.helperService.setOrClearValidators(this.exportSettings.configuration.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);

@@ -84,7 +84,7 @@ export class MappingService {
   }
 
   getFyleFields(version?: 'v1'): Observable<FyleField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fyle_fields'}/`, {});
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
