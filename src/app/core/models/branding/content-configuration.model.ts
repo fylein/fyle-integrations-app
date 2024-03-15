@@ -17,10 +17,6 @@ export type ContentConfiguration = {
                 customFieldPlaceholderName: string;
                 customFieldType: string;
                 customFieldCreateandSave: string;
-                userId: string;
-                companyId: string;
-                userPassword: string;
-                password: string;
                 tenantMapping: string;
                 descriptionText: string;
             },
@@ -28,6 +24,8 @@ export type ContentConfiguration = {
                 connector: {
                     stepName: string;
                     subLabel: string;
+                    configurationHeaderText: string;
+                    configurationSubHeaderText: string;
                 },
                 exportSetting: {
                     stepName: string;
@@ -51,11 +49,6 @@ export type ContentConfiguration = {
                     setDescriptionField: string;
                     dfvLabel: string;
                     dfvSubLabel: string;
-                    location: string;
-                    department: string;
-                    project: string;
-                    class: string;
-                    item: string;
                 },
                 done: {
                     ctaText: string;

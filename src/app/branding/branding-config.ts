@@ -258,15 +258,13 @@ const content: ContentConfiguration = {
                 customFieldPlaceholderName: 'Placeholder name',
                 customFieldType: 'Field type',
                 customFieldCreateandSave: 'Create and save',
-                userId: 'user ID',
-                companyId: 'company ID',
-                userPassword: 'User password',
-                password: 'password',
                 tenantMapping: 'Tenant Mapping',
                 descriptionText: 'of the description field'
             },
             configuration: {
                 connector: {
+                    configurationHeaderText: 'Connect to Xero Tenant',
+                    configurationSubHeaderText: 'Connect to the Xero Tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Xero Tenant cannot be changed once the configuration steps are complete.',
                     stepName: 'Connect to Xero',
                     subLabel: 'Expenses will be posted to the Xero Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
                 },
@@ -291,12 +289,7 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     setDescriptionField: 'Set the description field in Xero',
                     dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.',
-                    location: 'location',
-                    department: 'department',
-                    project: 'project',
-                    class: 'class',
-                    item: 'item'
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
                 },
                 done: {
                     ctaText: '',
@@ -498,17 +491,15 @@ const content: ContentConfiguration = {
                 customFieldPlaceholderName: 'Placeholder name',
                 customFieldType: 'Field type',
                 customFieldCreateandSave: 'Create and save',
-                userId: 'user ID',
-                companyId: 'company ID',
-                userPassword: 'User password',
-                password: 'password',
                 tenantMapping: 'Tenant Mapping',
                 descriptionText: 'of the description field'
             },
             configuration: {
                 connector: {
+                    configurationHeaderText: 'Connect to Xero tenant',
+                    configurationSubHeaderText: 'Connect to the Xero tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Xero tenant cannot be changed once the configuration steps are complete.',
                     stepName: 'Connect to Xero',
-                    subLabel: 'Expenses will be posted to the Xero Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
+                    subLabel: 'Expenses will be posted to the Xero tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or tenant mapping.'
                 },
                 exportSetting: {
                     stepName: 'Export settings',
@@ -531,12 +522,7 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     setDescriptionField: 'Set the description field in Xero',
                     dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.',
-                    location: 'location',
-                    department: 'department',
-                    project: 'project',
-                    class: 'class',
-                    item: 'item'
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
                 },
                 done: {
                     ctaText: '',
