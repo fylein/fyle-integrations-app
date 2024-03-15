@@ -52,8 +52,7 @@
                                 [iconPath]="'list'"
                                 [formControllerName]="'reimbursableExportType'"
                                 [appName]="appName"
-                                [isDisabled]="true"
-                                [showExportPreview]="true">
+                                [isDisabled]="true">
                             </app-configuration-select-field>
                         </div>
                         <div *ngIf="exportSettingForm.value.reimbursableExportType"
@@ -125,7 +124,7 @@
                             [placeholder]="'Select expense export type'"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
-                            [showExportPreview]="true">
+                            [isDisabled]="true">
                         </app-configuration-select-field>
                     </div>
 
@@ -134,8 +133,8 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'bank account'"
-                            [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                             [subLabel]="brandingContent.corporateCard.cccExpenseBankAccountSubLabel"
+                            [label]="'To which Bank Account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                             [destinationAttributes]="bankAccounts"
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
