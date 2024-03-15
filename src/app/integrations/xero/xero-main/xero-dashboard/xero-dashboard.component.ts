@@ -3,7 +3,7 @@ import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWh
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { AccountingErrorType, AccountingField, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingField, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject, XeroTaskLogType } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
 import { XeroTask, XeroTaskResponse } from 'src/app/core/models/xero/db/xero-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
@@ -71,7 +71,7 @@ export class XeroDashboardComponent implements OnInit {
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1');
 
-  accountingExportType: TaskLogType[] = [TaskLogType.FETCHING_EXPENSE, TaskLogType.CREATING_BILL, TaskLogType.CREATING_BANK_TRANSACTION];
+  accountingExportType: XeroTaskLogType[] = [XeroTaskLogType.FETCHING_EXPENSE, XeroTaskLogType.CREATING_BILL, XeroTaskLogType.CREATING_BANK_TRANSACTION];
 
   destinationFieldMap : DestinationFieldMap;
 
