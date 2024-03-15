@@ -116,7 +116,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
       search: new FormControl(),
       searchOption: new FormControl(),
       email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : []),
-      addedEmail: new FormControl([])
+      additionalEmails: new FormControl([])
     });
   }
 
@@ -137,8 +137,8 @@ export class XeroAdvancedSettingModel extends HelperUtility{
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
         interval_hours: advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
         start_datetime: new Date(),
-        emails_selected: advancedSettingsForm.get('emails')?.value ? advancedSettingsForm.get('emails')?.value : [],
-        additional_email_options: advancedSettingsForm.get('addedEmail')?.value ? advancedSettingsForm.get('addedEmail')?.value : []
+        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsModel.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : [],
+        additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value : []
       }
     };
     return advancedSettingPayload;
