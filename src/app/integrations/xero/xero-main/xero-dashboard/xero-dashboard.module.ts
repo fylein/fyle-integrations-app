@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { XeroExportLogRoutingModule } from './xero-export-log-routing.module';
+import { XeroDashboardRoutingModule } from './xero-dashboard-routing.module';
+
 
 
 
@@ -8,7 +9,7 @@ import { XeroExportLogRoutingModule } from './xero-export-log-routing.module';
   declarations: [],
   imports: [
     CommonModule,
-    XeroExportLogRoutingModule
+    XeroDashboardRoutingModule
   ]
 })
-export class XeroExportLogModule { }
+export class XeroDashboardModule { }

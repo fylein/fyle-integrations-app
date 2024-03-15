@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
-import { XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppUrl, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { XeroWorkspace } from 'src/app/core/models/xero/db/xero-workspace.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -31,7 +31,8 @@ export class XeroComponent implements OnInit {
     private xeroHelperService: XeroHelperService,
     private userService: UserService,
     private windowService: WindowService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private helperService: HelperService
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }
@@ -64,6 +65,7 @@ export class XeroComponent implements OnInit {
   }
 
   private setupWorkspace(): void {
+    this.helperService.setBaseApiURL(AppUrl.XERO);
     this.user = this.userService.getUserProfile();
     this.getOrCreateWorkspace().then((workspace: XeroWorkspace) => {
       this.workspace = workspace;
