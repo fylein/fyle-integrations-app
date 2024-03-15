@@ -9,7 +9,7 @@
                 [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Xero.'"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
-                (refreshDimensions)="refreshDimensions()">
+                (refreshDimension)="refreshDimensions($event)">
             </app-configuration-step-header>
         </div>
         <form [formGroup]="exportSettingForm">
@@ -74,11 +74,10 @@
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'how expenses to be grouped'"
+                                [isDisabled]="true"
                                 [label]="'How should the expenses be grouped?'"
                                 [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
-                                [options]="expenseGroupByOptions"
+                                [options]="reimbursableExpenseGroupByOptions"
                                 [iconPath]="'question-square-outline'"
                                 [placeholder]="'Select expense grouping'"
                                 [formControllerName]="'reimbursableExportGroup'">
@@ -134,8 +133,8 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'bank account'"
+                            [subLabel]="brandingContent.corporateCard.cccExpenseBankAccountSubLabel"
                             [label]="'To which Bank Account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                            [subLabel]="'All the offset entry in the Journal will be posted to the selected Bank account.'"
                             [destinationAttributes]="bankAccounts"
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
@@ -161,11 +160,10 @@
                     <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'how expenses to be grouped'"
+                            [isDisabled]="true"
                             [label]="'How should the expenses be grouped?'"
                             [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
-                            [options]="expenseGroupByOptions"
+                            [options]="cccExpenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
                             [formControllerName]="'creditCardExportGroup'">

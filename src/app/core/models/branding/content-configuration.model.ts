@@ -34,18 +34,10 @@ export type ContentConfiguration = {
                     headerText: string;
                     contentText: string;
                     corporateCard: {
-                        cccExpensePaymentType: string;
-                        cccExpensePaymentTypeSubLabel: string;
-                        creditCardVendor: string;
-                        creditCardVendorSublabel: string;
-                        chargeCard: string;
-                        chargeCardPlaceholder: string;
-                        chargeCardSublabel: string;
-                        cccExpenseState: string;
-                        cccExportGroup: string;
-                        employeeFieldMapping: string;
-                        creditCard: string;
-                        creditCardSubLabel: string;
+                        cccExpenseBankAccountSubLabel: string;
+                        creditCardExportTypeSubLabel: string;
+                        expenseState: string;
+                        creditCardExpenseSubLabel: string
                     }
                 },
                 advancedSettings: {
