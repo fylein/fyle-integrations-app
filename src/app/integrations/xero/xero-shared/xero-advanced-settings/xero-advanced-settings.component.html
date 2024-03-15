@@ -70,7 +70,7 @@
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
+                <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync && workspaceGeneralSettings.reimbursable_expenses_object"
                     [form]="advancedSettingForm"
                     [options]="paymentSyncOptions"
                     [iconPath]="'arrow-rotate'"
@@ -92,7 +92,7 @@
                     [formControllerName]="'billPaymentAccount'">
                 </app-configuration-select-field>
 
-                <app-configuration-toggle-field
+                <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
