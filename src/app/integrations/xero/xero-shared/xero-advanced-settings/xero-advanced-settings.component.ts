@@ -30,21 +30,13 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   supportArticleLink: string = brandingKbArticles.onboardingArticles.XERO.ADVANCED_SETTING;
 
-  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.XERO.SKIP_EXPORT;
-
   advancedSettings: XeroAdvancedSettingGet;
 
   workspaceGeneralSettings: XeroWorkspaceGeneralSetting;
 
   billPaymentAccounts: DestinationAttribute[];
 
-  expenseFilters: ExpenseFilterResponse;
-
-  conditionFieldOptions: ConditionField[];
-
   advancedSettingForm: FormGroup;
-
-  skipExportForm: FormGroup;
 
   memoStructure: string[] = [];
 
