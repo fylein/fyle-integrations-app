@@ -5,6 +5,16 @@ import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expens
 import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
 import { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
 
+export type XeroExpenseGroupSettingPost = {
+  ccc_expense_state: XeroCCCExpenseState;
+  reimbursable_expense_group_fields?: string[] | null;
+  reimbursable_export_date_type: ExportDateType | null;
+  corporate_credit_card_expense_group_fields?: string[] | null;
+  ccc_export_date_type: ExportDateType | null;
+  reimbursable_expense_state: ExpenseState
+};
+
+export interface XeroExpenseGroupSettingGet extends XeroExpenseGroupSettingPost {}
 
 export type XeroExportSettingWorkspaceGeneralSettingPost = {
   reimbursable_expenses_object: XeroReimbursableExpensesObject | null,
@@ -21,13 +31,13 @@ export type XeroExportSettingGeneralMapping = {
 }
 
 export type XeroExportSettingPost = {
-  expense_group_settings: ExpenseGroupSettingPost,
+  expense_group_settings: XeroExpenseGroupSettingPost,
   workspace_general_settings: XeroExportSettingWorkspaceGeneralSettingPost,
   general_mappings: XeroExportSettingGeneralMapping
 }
 
 export type XeroExportSettingGet = {
-  expense_group_settings: ExpenseGroupSettingGet,
+  expense_group_settings: XeroExpenseGroupSettingGet,
   workspace_general_settings: XeroExportSettingWorkspaceGeneralSetting,
   general_mappings: XeroExportSettingGeneralMapping,
   workspace_id: number
@@ -57,16 +67,17 @@ export class XeroExportSettingModel {
     ];
   }
 
-  static getExpenseGroupingOptions(): SelectFormOption[] {
+  static getReimbursableExpenseGroupingOptions(): SelectFormOption[] {
     return [
       {
         label: 'Report',
         value: ExpenseGroupingFieldOption.CLAIM_NUMBER
-      },
-      {
-        label: 'Payment',
-        value: ExpenseGroupingFieldOption.SETTLEMENT_ID
-      },
+      }
+    ];
+  }
+
+  static getCCCExpenseGroupingOptions(): SelectFormOption[] {
+    return [
       {
         label: 'Expense',
         value: ExpenseGroupingFieldOption.EXPENSE_ID
@@ -129,27 +140,27 @@ export class XeroExportSettingModel {
    ];
  }
 
-  static getReimbursableExpenseStateOptions(isSimplifyReportClosureEnabled: boolean): SelectFormOption[] {
+  static getReimbursableExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: isSimplifyReportClosureEnabled ? 'Processing' : 'Payment Processing',
+        label: 'Processing',
         value: ExpenseState.PAYMENT_PROCESSING
       },
       {
-        label: isSimplifyReportClosureEnabled ? 'Closed' : 'Paid',
+        label: 'Closed',
         value: ExpenseState.PAID
       }
     ];
   }
 
-  static getCCCExpenseStateOptions(isSimplifyReportClosureEnabled: boolean): SelectFormOption[] {
+  static getCCCExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: isSimplifyReportClosureEnabled ? 'Approved' : 'Payment Processing',
-        value: isSimplifyReportClosureEnabled ? XeroCCCExpenseState.APPROVED: XeroCCCExpenseState.PAYMENT_PROCESSING
+        label: 'Payment Processing',
+        value: XeroCCCExpenseState.APPROVED
       },
       {
-        label: isSimplifyReportClosureEnabled ? 'Closed' : 'Paid',
+        label: 'Closed',
         value: XeroCCCExpenseState.PAID
       }
     ];
@@ -158,7 +169,7 @@ export class XeroExportSettingModel {
   static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
       reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
-      creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState']
+      creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState', 'bankAccount']
     };
 
     const exportModuleRule: ExportModuleRule[] = [
@@ -170,7 +181,6 @@ export class XeroExportSettingModel {
       {
         formController: 'creditCardExportType',
         requiredValue: {
-          [XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION]: ['bankAccount']
         }
       }
     ];
@@ -180,15 +190,15 @@ export class XeroExportSettingModel {
 
   static mapAPIResponseToFormGroup(exportSettings: XeroExportSettingGet | null): FormGroup {
     return new FormGroup({
-      expenseState: new FormControl(exportSettings?.expense_group_settings?.expense_state),
+      expenseState: new FormControl(exportSettings?.expense_group_settings?.reimbursable_expense_state),
       reimbursableExpense: new FormControl(exportSettings?.workspace_general_settings?.reimbursable_expenses_object ? true : false),
       reimbursableExportType: new FormControl(exportSettings?.workspace_general_settings?.reimbursable_expenses_object ? exportSettings?.workspace_general_settings?.reimbursable_expenses_object : XeroReimbursableExpensesObject.PURCHASE_BILL),
-      reimbursableExportGroup: new FormControl(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields),
+      reimbursableExportGroup: new FormControl(ExpenseGroupingFieldOption.CLAIM_NUMBER),
       reimbursableExportDate: new FormControl(exportSettings?.expense_group_settings?.reimbursable_export_date_type),
       cccExpenseState: new FormControl(exportSettings?.expense_group_settings?.ccc_expense_state),
       creditCardExpense: new FormControl(exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false),
       creditCardExportType: new FormControl(exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object ? exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object : XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION),
-      creditCardExportGroup: new FormControl(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields),
+      creditCardExportGroup: new FormControl(ExpenseGroupingFieldOption.EXPENSE_ID),
       creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
       bankAccount: new FormControl(exportSettings?.general_mappings?.bank_account?.id ? exportSettings.general_mappings.bank_account : null),
       autoMapEmployees: new FormControl(exportSettings?.workspace_general_settings?.auto_map_employees),
@@ -200,7 +210,7 @@ export class XeroExportSettingModel {
     const emptyDestinationAttribute = {id: null, name: null};
     const exportSettingPayload: XeroExportSettingPost = {
       expense_group_settings: {
-        expense_state: exportSettingsForm.get('reimbursableExpenseState')?.value,
+        reimbursable_expense_state: exportSettingsForm.get('expenseState')?.value,
         reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : ExportDateType.CURRENT_DATE,
         ccc_expense_state: exportSettingsForm.get('cccExpenseState')?.value,
         ccc_export_date_type: exportSettingsForm.get('cccExportDate')?.value ? exportSettingsForm.get('cccExportDate')?.value : ExportDateType.SPENT_AT
@@ -208,7 +218,7 @@ export class XeroExportSettingModel {
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExpense')?.value ? XeroReimbursableExpensesObject.PURCHASE_BILL : null,
         corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExpense')?.value ? XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION : null,
-        auto_map_employees: exportSettingsForm.get('AutoMapEmployeeOptionss')?.value
+        auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value
       },
       general_mappings: {
         bank_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute
