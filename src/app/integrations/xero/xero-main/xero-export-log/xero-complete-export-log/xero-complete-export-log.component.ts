@@ -108,7 +108,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
         this.totalCount = accountingExportResponse.count;
 
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.QBO)
+        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO)
       );
       this.filteredAccountingExports = accountingExports;
       this.accountingExports = [...this.filteredAccountingExports];
