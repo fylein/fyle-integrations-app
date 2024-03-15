@@ -65,7 +65,6 @@ export class XeroComponent implements OnInit {
   }
 
   private setupWorkspace(): void {
-    console.log('1234');
     this.helperService.setBaseApiURL(AppUrl.XERO);
     this.user = this.userService.getUserProfile();
     this.getOrCreateWorkspace().then((workspace: XeroWorkspace) => {
