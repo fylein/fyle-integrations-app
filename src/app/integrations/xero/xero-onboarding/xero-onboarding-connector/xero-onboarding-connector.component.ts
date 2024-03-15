@@ -29,7 +29,7 @@ import { environment } from 'src/environments/environment';
 })
 export class XeroOnboardingConnectorComponent implements OnInit {
 
-  brandingContent = brandingContent.configuration.connector;
+  brandingContent = brandingContent.xero.configuration.connector;
 
   onboardingSteps: OnboardingStepper[] = new XeroOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
 
