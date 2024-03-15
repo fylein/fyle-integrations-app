@@ -61,8 +61,8 @@ export class AccountingExportService {
     if (selectedDateFilter) {
       const exportedAtLte = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const exportedAtGte = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      apiParams.exported_at__lte = `${exportedAtLte[2]}-${exportedAtLte[1]}-${exportedAtLte[0]}T00:00:00`;
-      apiParams.exported_at__gte = `${exportedAtGte[2]}-${exportedAtGte[1]}-${exportedAtGte[0]}T23:59:59`;
+      apiParams.exported_at__gte = `${exportedAtLte[2]}-${exportedAtLte[1]}-${exportedAtLte[0]}T00:00:00`;
+      apiParams.exported_at__lte = `${exportedAtGte[2]}-${exportedAtGte[1]}-${exportedAtGte[0]}T23:59:59`;
     }
 
     if (exportedAt) {
