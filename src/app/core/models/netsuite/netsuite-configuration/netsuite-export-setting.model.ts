@@ -216,7 +216,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       static mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null): FormGroup {
         return new FormGroup({
           expenseState: new FormControl(exportSettings?.expense_group_settings?.expense_state),
-          employeeFieldMapping: new FormControl({value: exportSettings?.configuration?.employee_field_mapping, disable: true}),
+          employeeFieldMapping: new FormControl(exportSettings?.configuration?.employee_field_mapping),
           autoMapEmployees: new FormControl(exportSettings?.configuration?.auto_map_employees),
           reimbursableExpense: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object ? true : false),
           reimbursableExportType: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object),
@@ -230,7 +230,6 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           defaultCCCAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
           accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
           defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null)
-          // NameInJournalEntry: new FormControl(exportSettings?.configuration.name_in_journal_entry ? exportSettings.configuration.name_in_journal_entry : NameInJournalEntry.EMPLOYEE )
         });
       }
 
