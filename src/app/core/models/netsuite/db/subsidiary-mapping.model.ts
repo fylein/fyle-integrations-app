@@ -14,11 +14,11 @@ export type SubsidiaryMapping = {
 
 export class NetsuiteSubsidiaryMappingModel {
     static constructPayload(netsuiteSubsidiaryId: any, subsidiaries: NetsuiteDestinationAttribute[], workspaceId: number): NetsuiteSubsidiaryMappingPost {
-        const filtered_subsidiaries = subsidiaries.filter(entity => entity.destination_id === netsuiteSubsidiaryId);
+        const filteredSubsidiary = subsidiaries.filter(entity => entity.destination_id === netsuiteSubsidiaryId);
         return {
-          subsidiary_name: filtered_subsidiaries[0].value,
-          internal_id: filtered_subsidiaries[0].destination_id,
-          country_name: filtered_subsidiaries[0].detail?.country ? filtered_subsidiaries[0].detail.country : null,
+          subsidiary_name: filteredSubsidiary[0].value,
+          internal_id: filteredSubsidiary[0].destination_id,
+          country_name: filteredSubsidiary[0].detail?.country ? filteredSubsidiary[0].detail.country : null,
           workspace: workspaceId
         };
     }

@@ -27,7 +27,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  redirectLink: string = brandingKbArticles.onboardingArticles.QBO.EXPORT_SETTING;
+  redirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.EXPORT_SETTING;
 
   brandingConfig = brandingConfig;
 
