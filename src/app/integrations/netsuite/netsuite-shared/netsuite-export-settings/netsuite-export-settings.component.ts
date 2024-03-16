@@ -226,7 +226,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   save(): void {
-    this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS});
+    this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.NETSUITE_EXPORT_SETTINGS});
   }
 
   private getSettingsAndSetupForm(): void {
