@@ -170,25 +170,6 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         ];
       }
 
-      static getMandatoryField(form: FormGroup, controllerName: string): boolean {
-        switch (controllerName) {
-          case 'bankAccount':
-            return form.value.employeeMapping === EmployeeFieldMapping.EMPLOYEE && form.controls.reimbursableExportType.value && form.controls.reimbursableExportType.value !== NetsuiteReimbursableExpensesObject.EXPENSE_REPORT;
-          case 'accountsPayable':
-            return (form.controls.reimbursableExportType.value === NetsuiteReimbursableExpensesObject.BILL || (form.controls.reimbursableExportType.value === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY && form.value.employeeMapping === EmployeeFieldMapping.VENDOR)) || (form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL);
-          case 'defaultCCCAccount':
-            return form.controls.creditCardExportType.value && form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.BILL && form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE;
-          case 'defaultCreditCardVendor':
-            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL;
-          case 'qboExpenseAccount':
-            return form.controls.reimbursableExportType.value === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT;
-          case 'defaultDebitCardAccount':
-            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE;
-          default:
-            return false;
-        }
-      }
-
       static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
           reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],

@@ -27,7 +27,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  redirectLink: string = brandingKbArticles.onboardingArticles.QBO.EXPORT_SETTING;
+  redirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.EXPORT_SETTING;
 
   brandingConfig = brandingConfig;
 
@@ -226,7 +226,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   save(): void {
-    this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.QBO_EXPORT_SETTINGS});
+    this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.NETSUITE_EXPORT_SETTINGS});
   }
 
   private getSettingsAndSetupForm(): void {
