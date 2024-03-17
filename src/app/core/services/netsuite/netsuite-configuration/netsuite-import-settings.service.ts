@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
-import { QBOImportSettingGet, QBOImportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
+import { NetsuiteImportSettingGet, NetsuiteImportSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 
 
-const qboImportSettingGetCache$ = new Subject<void>();
+const netsuiteImportSettingGetCache$ = new Subject<void>();
 
 @Injectable({
   providedIn: 'root'
@@ -22,20 +22,20 @@ export class NetsuiteImportSettingsService {
   ) { }
 
   @Cacheable({
-    cacheBusterObserver: qboImportSettingGetCache$
+    cacheBusterObserver: netsuiteImportSettingGetCache$
   })
-  getImportSettings(): Observable<QBOImportSettingGet> {
+  getImportSettings(): Observable<NetsuiteImportSettingGet> {
     return this.apiService.get(`/v2/workspaces/${this.workspaceId}/import_settings/`, {});
   }
 
   @CacheBuster({
-    cacheBusterNotifier: qboImportSettingGetCache$
+    cacheBusterNotifier: netsuiteImportSettingGetCache$
   })
-  postImportSettings(importSettingsPayload: QBOImportSettingPost): Observable<QBOImportSettingGet> {
+  postImportSettings(importSettingsPayload: NetsuiteImportSettingPost): Observable<NetsuiteImportSettingGet> {
     return this.apiService.put(`/v2/workspaces/${this.workspaceId}/import_settings/`, importSettingsPayload);
   }
 
-  getQBOFields(): Observable<IntegrationField[]> {
+  getNetsuiteFields(): Observable<IntegrationField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/netsuite/netsuite_fields/`, {});
   }
 }

@@ -646,6 +646,6 @@ export class IntacctExportSettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoading = false;
+    this.setupPage();
   }
 }

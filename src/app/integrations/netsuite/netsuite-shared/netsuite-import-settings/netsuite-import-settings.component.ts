@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteImportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
-import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
-import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
-import { QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -17,8 +15,6 @@ import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/ne
 import { NetsuiteImportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-import-settings.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
-import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
-import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
   selector: 'app-netsuite-import-settings',
@@ -29,7 +25,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   isLoading: boolean = true;
 
-  supportArticleLink: string = brandingKbArticles.onboardingArticles.QBO.IMPORT_SETTING;
+  supportArticleLink: string = brandingKbArticles.onboardingArticles.NETSUITE.IMPORT_SETTING;
 
   isOnboarding: boolean;
 
@@ -39,23 +35,17 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   importSettingForm: FormGroup;
 
-  chartOfAccountTypesList: string[] = QBOImportSettingModel.getChartOfAccountTypesList();
-
-  workspaceGeneralSettings: QBOWorkspaceGeneralSetting;
-
-  QBOReimbursableExpensesObject = QBOReimbursableExpensesObject;
-
-  QBOCorporateCreditCardExpensesObject = QBOCorporateCreditCardExpensesObject;
+  netsuiteConfiguration: NetsuiteConfiguration;
 
   isTaxGroupSyncAllowed: boolean;
 
   taxCodes: DefaultDestinationAttribute[];
 
   isImportMerchantsAllowed: boolean;
-  
+
   isImportEmployeeAllowed: boolean;
 
-  qboFields: IntegrationField[];
+  netsuiteFields: IntegrationField[];
 
   fyleFields: FyleField[];
 
@@ -65,6 +55,11 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   importSettings: any;
 
+  customFieldForm: FormGroup = this.formBuilder.group({
+    attribute_type: ['', Validators.required],
+    display_name: [''],
+    source_placeholder: ['', Validators.required]
+  });
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -83,12 +78,25 @@ export class NetsuiteImportSettingsComponent implements OnInit {
   ) { }
 
   save() {
-    console.log('save');
+    this.isSaveInProgress = true;
+    const importSettingPayload = NetsuiteImportSettingModel.constructPayload(this.importSettingForm);
+    this.importSettingService.postImportSettings(importSettingPayload).subscribe(() => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
+
+      if (this.isOnboarding) {
+        this.workspaceService.setOnboardingState(NetsuiteOnboardingState.ADVANCED_CONFIGURATION);
+        this.router.navigate([`/integrations/netsuite/onboarding/advanced_settings`]);
+      }
+    }, () => {
+      this.isSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error saving import settings, please try again later');
+    });
   }
 
 
   navigateToPreviousStep(): void {
-    this.router.navigate([`/integrations/qbo/onboarding/export_settings`]);
+  this.router.navigate([`/integrations/netsuite/onboarding/export_settings`]);
   }
 
 
@@ -101,23 +109,24 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     forkJoin([
       this.importSettingService.getImportSettings(),
       this.mappingService.getFyleFields(),
-      this.workspaceService.getWorkspaceGeneralSettings(),
+      this.workspaceService.getConfiguration(),
       this.netsuiteConnectorService.getSubsidiaryMapping(),
-      this.importSettingService.getQBOFields(),
+      this.importSettingService.getNetsuiteFields(),
       this.netsuiteExportSettingService.getExportSettings()
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, workspaceGeneralSettings, qboCredentials, qboFields, exportSetting]) => {
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, netsuiteConfiguration, netsuiteCredentials, netsuiteFields, exportSetting]) => {
       this.importSettings = importSettingsResponse;
-      this.workspaceGeneralSettings = workspaceGeneralSettings;
+      this.netsuiteConfiguration = netsuiteConfiguration;
 
-      if (qboCredentials && qboCredentials.country_name !== 'US') {
+      if (netsuiteCredentials && netsuiteCredentials.country_name !== 'US') {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      console.log('this.wo', exportSetting)
-      if (exportSetting.configuration.employee_field_mapping == 'EMPLOYEE'){
+      if (exportSetting.configuration.employee_field_mapping === 'EMPLOYEE'){
         this.isImportEmployeeAllowed = true;
       }
-      this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields);
+
+      this.netsuiteFields = netsuiteFields;
+      this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields);
       this.fyleFields = fyleFieldsResponse;
       this.isLoading = false;
     });

@@ -5,32 +5,35 @@
     <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
         <div>
             <app-configuration-step-header
-                [headerText]="'Export Settings'"
-                [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to NetSuite'"
-                [redirectLink]="redirectLink">
+                [headerText]="brandingContent.stepName"
+                [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to NetSuite.'"
+                [redirectLink]="redirectLink"
+                [showSyncButton]="isOnboarding"
+                (refreshDimensions)="refreshDimensions()">
             </app-configuration-step-header>
         </div>
         <form [formGroup]="exportSettingForm">
-            <div class="tw-p-24-px">
+            <div class="tw-p-24-px" [ngClass]="{'tw-pt-0': !brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses}">
                 <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-mb-16-px">
-                    <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                    <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
                         <app-configuration-toggle-field
                             [form]="exportSettingForm"
                             [label]="'Export Reimbursable Expenses'"
-                            [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to NetSuite'"
+                            [subLabel]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to NetSuite.'"
                             [formControllerName]="'reimbursableExpense'" [isSectionHeader]="true">
                         </app-configuration-toggle-field>
                     </div>
+
                     <div *ngIf="exportSettingForm.value?.reimbursableExpense">
                         <div
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export module'"
                                 [label]="'How should the expenses be exported?'"
                                 [subLabel]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses'"
-                                [options]="reimbursableExportTypes"
+                            [options]="reimbursableExportTypes"
                                 [iconPath]="'list'"
                                 [placeholder]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses'"
                                 [formControllerName]="'reimbursableExportType'"
@@ -38,28 +41,27 @@
                                 [showExportPreview]="true"
                                 [exportTypeIconPathArray]="previewImagePaths">
                             </app-configuration-select-field>
-
-                            <div *ngIf="(exportSettingForm.controls.reimbursableExportType.value === NetSuiteReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR))">
-                                <app-configuration-select-field
-                                    [form]="exportSettingForm"
-                                    [destinationAttributes]="accountsPayables"
-                                    [optionLabel]="'name'"
-                                    [isFieldMandatory]="true"
-                                    [mandatoryErrorListName]="'accounts payable'"
-                                    [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                                    [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'"
-                                    [iconPath]="'list'"
-                                    [placeholder]="'Select accounts payable'"
-                                    [formControllerName]="'accountsPayable'">
-                                </app-configuration-select-field>
-                            </div>
                         </div>
+
                         <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                             <ng-container *ngTemplateOutlet="employeeFieldMapping"></ng-container>
+                            <div *ngIf="exportSettingForm.value.reimbursableExportType">
+                                <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="false"
+                                [showClearIcon]="true"
+                                [mandatoryErrorListName]="'employee mapping'"
+                                [label]="'How should Employees in ' + brandingConfig.brandName + ' be mapped to ' + getEmployeeFieldMapping(exportSettingForm.value.employeeFieldMapping, exportSettingForm.value.reimbursableExportType) + ' in NetSuite?'"
+                                [subLabel]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in NetSuite based on a unique parameter.'"
+                                [options]="autoMapEmployeeOptions"
+                                [iconPath]="'question-square-outline'"
+                                [placeholder]="'Select mapping method'"
+                                [formControllerName]="'autoMapEmployees'"></app-configuration-select-field>
+                            </div>
                         </div>
 
                         <div *ngIf="exportSettingForm.value.reimbursableExportType"
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -74,7 +76,7 @@
                         </div>
 
                         <div *ngIf="exportSettingForm.value.reimbursableExportType"
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -89,7 +91,7 @@
                         </div>
 
                         <div *ngIf="exportSettingForm.value.reimbursableExportType"
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -104,25 +106,26 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
-                        [label]="'Export Corporate Card Expenses'"
-                        [subLabel]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to NetSuite'"
+                        [label]="brandingContent.headerText"
+                        [subLabel]="brandingContent.contentText"
                         [formControllerName]="'creditCardExpense'"
                         [isSectionHeader]="true"
                         [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
                     </app-configuration-toggle-field>
                 </div>
 
+
                 <div *ngIf="exportSettingForm.value?.creditCardExpense">
-                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses'"
+                            [subLabel]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses.'"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
@@ -131,88 +134,29 @@
                             [showExportPreview]="true"
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
-
-                        <!-- <div *ngIf="showNameInJournalOption && brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="false"
-                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
-                                [label]="'Name in Journal Entry (CCC)'"
-                                [subLabel]="'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries'"
-                                [options]="nameInJournalOptions"
-                                [iconPath]="'list'"
-                                [placeholder]="'Select a name'"
-                                [formControllerName]="'nameInJournalEntry'">
-                            </app-configuration-select-field>
-                        </div> -->
-
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCCCAccount')">
-                            <app-configuration-select-field
-                              [form]="exportSettingForm"
-                              [destinationAttributes]="cccAccounts"
-                              [optionLabel]="'name'"
-                              [iconPath]="'list'"
-                              [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'credit card account'"
-                              [label]="'Set Default Credit Card Account as'"
-                              [subLabel]="'Post all your company corporate card transactions to a default credit card account.'"
-                              [placeholder]="'Select Default Credit Card Account'"
-                              [formControllerName]="'defaultCCCAccount'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
-                            <app-configuration-select-field
-                              [form]="exportSettingForm"
-                              [destinationAttributes]="vendors"
-                              [optionLabel]="'name'"
-                              [iconPath]="'list'"
-                              [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'corporate card vendor'"
-                              [label]="'Set default corporate Card Vendor as'"
-                              [subLabel]="'The default vendor will apply to all corporate card transactions upon export'"
-                              [placeholder]="'Select default corporate card vendor'"
-                              [formControllerName]="'defaultCreditCardVendor'">
-                            </app-configuration-select-field>
-                        </div>
-
-                        <div *ngIf="(exportSettingForm.value.creditCardExportType === NetSuiteCorporateCreditCardExpensesObject.BILL) && !((exportSettingForm.controls.reimbursableExportType.value === NetSuiteReimbursableExpensesObject.BILL || (exportSettingForm.controls.reimbursableExportType.value === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY && exportSettingForm.value.employeeMapping === EmployeeFieldMapping.VENDOR)))">
-                            <app-configuration-select-field
-                              [form]="exportSettingForm"
-                              [destinationAttributes]="accountsPayables"
-                              [optionLabel]="'name'"
-                              [iconPath]="'list'"
-                              [isFieldMandatory]="true"
-                              [mandatoryErrorListName]="'accounts payable'"
-                              [label]="'To which Accounts Payable account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
-                              [subLabel]="'The integration will post the offset credit entry in ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' to the selected Accounts Payable Account.'"
-                              [placeholder]="'Select accounts payable'"
-                              [formControllerName]="'accountsPayable'">
-                            </app-configuration-select-field>
-                        </div>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out'"
+                            [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
-                            [placeholder]="'Select CCC expense state'"
+                            [placeholder]="brandingContent.corporateCard.expenseState"
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be grouped'"
                             [label]="'How should the expenses be grouped?'"
-                            [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                            [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
@@ -220,28 +164,28 @@
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | lowercase))  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to NetSuite.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase)"
+                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
                     </div>
                 </div>
-                <app-configuration-step-footer
-                    [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
-                    [isButtonDisabled]="!exportSettingForm.valid"
-                    [showBackButton]="isOnboarding ? true : false"
-                    (save)="save()"
-                    (navigateToPreviousStep)="navigateToPreviousStep()">
-                </app-configuration-step-footer>
             </div>
+            <app-configuration-step-footer
+            [ctaText]="!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [isButtonDisabled]="!exportSettingForm.valid"
+            [showBackButton]="isOnboarding ? true : false"
+            (save)="save()"
+            (navigateToPreviousStep)="navigateToPreviousStep()">
+        </app-configuration-step-footer>
         </form>
     </div>
 </div>
