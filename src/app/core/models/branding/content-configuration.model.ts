@@ -1,5 +1,72 @@
 export type ContentConfiguration = {
     [brandingId: string]: {
+        xero: {
+            landing: {
+                contentText: string;
+                guideHeaderText: string;
+            },
+            common: {
+                readMoreText: string;
+                exportLogTabName: string;
+                viewExpenseText: string;
+                corporateCard: string;
+                errors: string;
+                autoMap: string;
+                customField: string;
+                customFieldName: string;
+                customFieldPlaceholderName: string;
+                customFieldType: string;
+                customFieldCreateandSave: string;
+                tenantMapping: string;
+                descriptionText: string;
+            },
+            configuration: {
+                connector: {
+                    stepName: string;
+                    subLabel: string;
+                    configurationHeaderText: string;
+                    configurationSubHeaderText: string;
+                },
+                exportSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    corporateCard: {
+                        cccExpenseBankAccountSubLabel: string;
+                        creditCardExportTypeSubLabel: string;
+                        expenseState: string;
+                        creditCardExpenseSubLabel: string
+                    }
+                },
+                importSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    importCategoriesLabel: string;
+                    importCategoriesSubLabel: string;
+                    importCustomersLabel: string;
+                    importCustomersSubLabel: string;
+                    taxCodeLabel: string;
+                    taxCodeSubLabel: string;
+                    defaultTaxCodeLabel: string;
+                    importSuppliersAsMerchantsLabel: string;
+                    notes: string,
+                    toggleToastMessage: string
+                },
+                advancedSettings: {
+                    stepName: string;
+                    scheduleAutoExport: string;
+                    email: string;
+                    autoSyncPayments: string;
+                    defaultPaymentAccount: string;
+                    autoCreateEmployeeVendor: string;
+                    postEntriesCurrentPeriod: string;
+                    setDescriptionField: string;
+                    dfvLabel: string;
+                    dfvSubLabel: string;
+                }
+            },
+        },
         intacct : {
             landing: {
                 contentText: string;

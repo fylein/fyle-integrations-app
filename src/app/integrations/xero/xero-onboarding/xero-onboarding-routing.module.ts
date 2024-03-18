@@ -30,17 +30,17 @@ const routes: Routes = [
       {
         path: 'import_settings',
         component: XeroOnboardingImportSettingsComponent,
-        canActivate: [XeroTokenGuard, TenantGuard]
+        canActivate: [XeroTokenGuard]
       },
       {
         path: 'advanced_settings',
         component: XeroOnboardingAdvancedSettingsComponent,
-        canActivate: [XeroTokenGuard, TenantGuard]
+        canActivate: [XeroTokenGuard]
       },
       {
         path: 'done',
         component: XeroOnboardingDoneComponent,
-        canActivate: [XeroTokenGuard, TenantGuard]
+        canActivate: [XeroTokenGuard]
       }
     ]
   }

@@ -5,8 +5,8 @@ import { WorkspaceService } from '../../common/workspace.service';
 import { CacheBuster, Cacheable, globalCacheBusterNotifier } from 'ts-cacheable';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
 import { environment } from 'src/environments/environment';
-import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { TenantMapping, TenantMappingPost } from 'src/app/core/models/xero/db/xero-tenant-mapping.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 const xeroCredentialsCache = new Subject<void>();
 

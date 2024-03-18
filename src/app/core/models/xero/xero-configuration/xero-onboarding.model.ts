@@ -21,7 +21,7 @@ export class XeroOnboardingModel {
             step: 'Connect to Xero',
             icon: 'link-vertical-medium',
             route: '/integrations/xero/onboarding/connector',
-            styleClasses: ['step-name-connector--text']
+            styleClasses: ['step-name-connector--text tw-pl-24-px']
           },
           {
             active: false,
