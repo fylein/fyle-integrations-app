@@ -28,6 +28,8 @@ export class XeroExportLogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.activeModule = this.modules[0];
+    this.router.navigateByUrl(this.modules[0].routerLink);
   }
 
 }
