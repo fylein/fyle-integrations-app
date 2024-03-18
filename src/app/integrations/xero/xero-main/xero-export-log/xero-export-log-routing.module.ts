@@ -11,7 +11,7 @@ const routes: Routes = [
     component: XeroExportLogComponent,
     children: [
       {
-        path: '',
+        path: 'complete',
         component: XeroCompleteExportLogComponent
       }
     ]
