@@ -1,3 +1,5 @@
+import { PaginatedResponse } from "../../db/paginated-response.model";
+import { TaskLog } from "../../db/task-log.model";
 import { TaskLogState, TaskLogType } from "../../enum/enum.model";
 
 
@@ -8,31 +10,20 @@ export type XeroError = {
   type: string;
 };
 
-export type XeroTask = {
+export interface XeroTaskLog extends TaskLog {
   bill: number;
   cheque: number;
-  created_at: Date;
   credit_card_purchase: number;
-  // Having any here is okay, didn't differentiate xero errors and fyle errors
-  detail: any;
   xero_errors: XeroError[];
-  expense_group: number;
-  id: number;
   journal_entry: number;
   bill_payment: number;
-  status: TaskLogState;
   task_id: string;
   type: TaskLogType;
-  updated_at: Date;
-  workspace: number;
-};
+}
 
-export type XeroTaskResponse = {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: XeroTask[];
-};
+export interface XeroTaskResponse extends PaginatedResponse {
+  results: XeroTaskLog[];
+}
 
 export type TaskGetParams = {
   limit?: number;
