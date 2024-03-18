@@ -212,10 +212,11 @@
             <div class="clone-setting--field" *ngIf="brandingConfig.brandId !== 'co' && isCustomerPresent">
                 <app-clone-setting-field
                     [iconSource]="'arrow-tail-down'"
-                    [label]="'brandingContent.importCustomersLabel'"
+                    [label]="brandingContent.xero.configuration.importSetting.importCustomersLabel"
                     [form]="importSettingForm"
                     [formControllerName]="'importCustomers'"
                     [inputType]="InputType.TOGGLE"
+                    [isDisabled]="isProjectMapped"
                     [tooltipText]="brandingContent.xero.configuration.importSetting.importCustomersSubLabel">
                 </app-clone-setting-field>
             </div>
@@ -261,7 +262,8 @@
                 [accountingFieldOptions]="xeroFields"
                 [fyleFieldOptions]="fyleFields"
                 [isDestinationFixedImport]="true"
-                [isCloneSettingView]="true">
+                [isCloneSettingView]="true"
+                (xeroProjectMapping)="updateCustomerImportAvailability($event)">
             </app-configuration-import-field>
         </div>
     

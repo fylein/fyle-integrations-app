@@ -19,6 +19,7 @@
         </app-dropdown>
         <app-toggle *ngIf="inputType === InputType.TOGGLE"
             [form]="form"
+            [isDisabled]="isDisabled"
             [formControllerName]="formControllerName">
         </app-toggle>
         <app-multi-select *ngIf="inputType === InputType.MULTI_SELECT"

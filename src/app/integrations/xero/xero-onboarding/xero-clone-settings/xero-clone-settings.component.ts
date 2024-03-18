@@ -314,6 +314,10 @@ export class XeroCloneSettingsComponent implements OnInit {
     XeroAdvancedSettingModel.setConfigurationSettingValidatorsAndWatchers(this.advancedSettingForm);
   }
 
+  updateCustomerImportAvailability(isMapped: boolean) {
+    this.isProjectMapped = isMapped;
+  }
+
   private setupPage(): void {
     this.setupOnboardingSteps();
     const destinationAttributes = [
@@ -352,6 +356,12 @@ export class XeroCloneSettingsComponent implements OnInit {
       }
 
       this.isCustomerPresent = this.xeroFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false;
+
+      if (brandingConfig.brandId !== 'co') {
+        this.xeroFields = this.xeroFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
+      }
+
+      this.isProjectMapped = cloneSetting.import_settings.mapping_settings.findIndex((data: { source_field: XeroFyleField; destination_field: XeroFyleField; }) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
       this.importSettingForm = XeroImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent);
       this.fyleFields = fyleFieldsResponse;
