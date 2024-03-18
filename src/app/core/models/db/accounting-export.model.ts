@@ -59,6 +59,7 @@ export type AccountingExportGetParam = {
 
 export class AccountingExportModel {
   static xeroShortCode: string;
+
   static getDateOptionsV2(): DateFilter[] {
     const currentDateTime = new Date();
     const dateOptions: DateFilter[] = [
@@ -221,7 +222,7 @@ export class AccountingExportModel {
     let exportType = '';
     let exportId = null;
     let accountId = null;
-    
+
     const xeroUrl = 'https://go.xero.com';
     if ('Invoices' in expenseGroup.response_logs && expenseGroup.response_logs.Invoices) {
       exportType = 'Bill';
@@ -261,7 +262,7 @@ export class AccountingExportModel {
       const referenceType = AccountingExportModel.getReferenceType(expenseGroup.description);
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
-      const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup);       
+      const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup);
       return {
         exportedAt: expenseGroup.exported_at,
         employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
