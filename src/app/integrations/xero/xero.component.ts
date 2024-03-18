@@ -77,7 +77,7 @@ export class XeroComponent implements OnInit {
       this.storageService.set('workspaceId', this.workspace.id);
       this.storageService.set('onboarding-state', this.workspace.onboarding_state);
       this.storageService.set('currency', currency);
-      this.storageService.set('xeroShortCode', xeroShortCode)
+      this.storageService.set('xeroShortCode', xeroShortCode);
       this.xeroHelperService.syncFyleDimensions().subscribe();
       this.xeroHelperService.syncXeroDimensions().subscribe();
       this.isLoading = false;
