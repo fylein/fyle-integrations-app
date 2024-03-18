@@ -54,12 +54,14 @@ export type ContentConfiguration = {
                     contentText: string;
                     importCategoriesLabel: string;
                     importCategoriesSubLabel: string;
-                    importItemsLabel: string;
-                    importItemsSubLabel: string;
+                    importCustomersLabel: string;
+                    importCustomersSubLabel: string;
                     taxCodeLabel: string;
                     taxCodeSubLabel: string;
                     defaultTaxCodeLabel: string;
-                    importVendorsAsMerchantsLabel: string;
+                    importSuppliersAsMerchantsLabel: string;
+                    notes: string,
+                    toggleToastMessage: string
                 },
                 advancedSettings: {
                     stepName: string;
