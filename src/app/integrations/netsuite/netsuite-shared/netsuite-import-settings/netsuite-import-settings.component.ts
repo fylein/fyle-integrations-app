@@ -73,7 +73,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     display_name: [''],
     source_placeholder: ['', Validators.required]
   });
-  
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.configuration.importSetting;
@@ -129,7 +129,6 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       is_dependent: false
     };
 
-    console.log('thsdf', this.customField)
     if (this.customFieldControl) {
       this.fyleFields.pop();
       this.fyleFields.push(this.customField);
