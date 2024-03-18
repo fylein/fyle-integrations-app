@@ -31,7 +31,6 @@ export class NetsuiteExportSettingsService {
 
   setupDynamicValidators(form: FormGroup, values: ExportModuleRule, selectedValue: string): void {
     Object.entries(values.requiredValue).forEach(([key, value]) => {
-      console.log('is field sdf', key, value)
       if (key === selectedValue) {
         value.forEach((formController: string) => {
           if (values.formController === 'creditCardExportType') {
@@ -39,7 +38,6 @@ export class NetsuiteExportSettingsService {
           }
 
           const isFieldMandatory = NetSuiteExportSettingModel.getMandatoryField(form, formController);
-          console.log('is field', isFieldMandatory)
           if (isFieldMandatory) {
             this.mandatoryFormController.push(formController);
             HelperUtility.markControllerAsRequired(form, formController);

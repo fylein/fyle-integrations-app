@@ -171,7 +171,6 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       }
 
       static getMandatoryField(form: FormGroup, controllerName: string): boolean {
-        console.log('cdsfsd', form.controls)
         switch (controllerName) {
           case 'bankAccount':
             return form.value.employeeFieldMapping === EmployeeFieldMapping.EMPLOYEE;
@@ -180,19 +179,19 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           case 'creditCardAccount':
             return form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.BILL;
           case 'defaultCreditCardVendor':
-            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
+            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE;
 
           default:
             return false;
         }
       }
-  
+
       static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
           reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
           creditCardExpense: ['creditCardExportType', 'creditCardExportGroup', 'creditCardExportDate', 'cccExpenseState']
         };
-    
+
         const exportModuleRule: ExportModuleRule[] = [
           {
             formController: 'reimbursableExportType',
@@ -208,11 +207,11 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
               [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor'],
               [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['bankAccount', 'defaultCreditCardVendor'],
               [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor'],
-              [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['creditCardAccount'],
+              [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['creditCardAccount']
             }
           }
         ];
-    
+
         return [exportSettingValidatorRule, exportModuleRule];
       }
 

@@ -236,7 +236,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
     forkJoin({
       exportSetting: this.exportSettingService.getExportSettings(),
-      destinationAttributes: this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v2', 'netsuite'),
+      destinationAttributes: this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v2', 'netsuite')
     }).subscribe(({exportSetting, destinationAttributes}) => {
       this.exportSettings = exportSetting;
 
@@ -252,7 +252,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
       }
-    
+
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
 
       const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
