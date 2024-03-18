@@ -38,6 +38,21 @@ export type ContentConfiguration = {
                         creditCardExpenseSubLabel: string
                     }
                 },
+                importSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    importCategoriesLabel: string;
+                    importCategoriesSubLabel: string;
+                    importCustomersLabel: string;
+                    importCustomersSubLabel: string;
+                    taxCodeLabel: string;
+                    taxCodeSubLabel: string;
+                    defaultTaxCodeLabel: string;
+                    importSuppliersAsMerchantsLabel: string;
+                    notes: string,
+                    toggleToastMessage: string
+                },
                 advancedSettings: {
                     stepName: string;
                     scheduleAutoExport: string;

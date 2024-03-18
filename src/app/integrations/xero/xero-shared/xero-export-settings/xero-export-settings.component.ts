@@ -124,7 +124,6 @@ export class XeroExportSettingsComponent implements OnInit {
     ]).subscribe(response => {
       this.exportSettings = response[0];
       this.bankAccounts = response[1].BANK_ACCOUNT;
-
       this.exportSettingForm = XeroExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
