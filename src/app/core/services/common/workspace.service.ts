@@ -73,9 +73,4 @@ export class WorkspaceService {
   getWorkspaceGeneralSettings(): Observable<any> {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
   }
-
-  getWorkspaceById(): Observable<XeroWorkspace> {
-    const workspaceId = this.getWorkspaceId();
-    return this.apiService.get(`/workspaces/${workspaceId}/`, {});
-  }
 }

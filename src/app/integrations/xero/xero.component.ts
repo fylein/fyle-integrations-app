@@ -69,6 +69,7 @@ export class XeroComponent implements OnInit {
     this.user = this.userService.getUserProfile();
     this.getOrCreateWorkspace().then((workspace: XeroWorkspace) => {
       this.workspace = workspace;
+      const xeroShortCode = this.workspace.xero_short_code;
       const currency = {
         fyle_currency: workspace.fyle_currency,
         xero_currency: workspace.xero_currency
@@ -76,6 +77,7 @@ export class XeroComponent implements OnInit {
       this.storageService.set('workspaceId', this.workspace.id);
       this.storageService.set('onboarding-state', this.workspace.onboarding_state);
       this.storageService.set('currency', currency);
+      this.storageService.set('xeroShortCode', xeroShortCode);
       this.xeroHelperService.syncFyleDimensions().subscribe();
       this.xeroHelperService.syncXeroDimensions().subscribe();
       this.isLoading = false;

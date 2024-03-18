@@ -111,19 +111,15 @@ export class XeroCompleteExportLogComponent implements OnInit {
 
     this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
         this.totalCount = accountingExportResponse.count;
-
-        this.workspaceService.getWorkspaceById().subscribe((workspace: XeroWorkspace) => {
-          this.storageService.set('workspace', workspace);
-          this.xeroShortCode = workspace.xero_short_code;
-          AccountingExportModel.assignXeroShortCode(this.xeroShortCode);
-          const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
+        this.xeroShortCode = this.storageService.get('xeroShortCode');
+        AccountingExportModel.assignXeroShortCode(this.xeroShortCode);
+        const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
           AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO)
         );
 
         this.filteredAccountingExports = accountingExports;
         this.accountingExports = [...this.filteredAccountingExports];
         this.isLoading = false;
-        });
     });
   }
 

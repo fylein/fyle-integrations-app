@@ -109,7 +109,7 @@ export class XeroDashboardComponent implements OnInit {
     this.processedCount = res.results.filter(task => (task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
 
-      if (res.results.filter((task: { status: TaskLogState; }) => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
+      if (res.results.filter(task => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
       forkJoin([
         this.getExportErrors$,
         this.getAccountingExportSummary$.pipe(catchError(() => of(null)))
