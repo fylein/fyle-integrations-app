@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
-import { AppUrl, BusinessCentralExportType, ExpenseState, FyleField, ProgressPhase, Sage300ExportType } from '../../models/enum/enum.model';
+import { AppUrl, BusinessCentralExportType, ExpenseGroupingFieldOption, ExpenseState, FyleField, ProgressPhase, Sage300ExportType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from '../../models/enum/enum.model';
 import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
 import { TitleCasePipe } from '@angular/common';
@@ -85,6 +85,16 @@ export class HelperService {
     form.controls[controllerName].setValue(Sage300ExportType.PURCHASE_INVOICE);
   }
 
+  setXeroExportTypeControllerValue(form: FormGroup, controllerName: string): void {
+    if (controllerName === 'reimbursableExportType') {
+      form.controls[controllerName].patchValue(XeroReimbursableExpensesObject.PURCHASE_BILL);
+      form.controls.reimbursableExportGroup.patchValue(ExpenseGroupingFieldOption.CLAIM_NUMBER);
+    } else {
+      form.controls[controllerName].patchValue(XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION);
+      form.controls.creditCardExportGroup.patchValue(ExpenseGroupingFieldOption.EXPENSE_ID);
+    }
+  }
+
   enableFormField(form: FormGroup, controllerName: string): void {
     form.controls[controllerName].enable();
   }
@@ -104,6 +114,8 @@ export class HelperService {
         const urlSplit = this.router.url.split('/');
         if (urlSplit[2] === AppUrl.SAGE300 && (controllerName === 'cccExportType' || controllerName === 'reimbursableExportType')) {
           this.setSage300ExportTypeControllerValue(form, controllerName);
+        } else if (urlSplit[2] === AppUrl.XERO && (controllerName === 'creditCardExportType' || controllerName === 'reimbursableExportType')) {
+          this.setXeroExportTypeControllerValue(form,controllerName)
         }
       });
     } else {
