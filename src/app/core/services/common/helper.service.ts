@@ -115,7 +115,7 @@ export class HelperService {
         if (urlSplit[2] === AppUrl.SAGE300 && (controllerName === 'cccExportType' || controllerName === 'reimbursableExportType')) {
           this.setSage300ExportTypeControllerValue(form, controllerName);
         } else if (urlSplit[2] === AppUrl.XERO && (controllerName === 'creditCardExportType' || controllerName === 'reimbursableExportType')) {
-          this.setXeroExportTypeControllerValue(form,controllerName)
+          this.setXeroExportTypeControllerValue(form, controllerName);
         }
       });
     } else {
