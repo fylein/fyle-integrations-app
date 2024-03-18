@@ -5,7 +5,7 @@ import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/c
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingErrorType, AccountingField, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject, XeroTaskLogType } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
-import { XeroTask, XeroTaskResponse } from 'src/app/core/models/xero/db/xero-task-log.model';
+import { XeroTaskLog, XeroTaskResponse } from 'src/app/core/models/xero/db/xero-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
@@ -99,15 +99,17 @@ export class XeroDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, AppName.XERO))),
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
       takeWhile((response: XeroTaskResponse) =>
-      response.results.filter((task: { status: TaskLogState; }) =>
+      response.results.filter(task =>
         (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
-      ).length > 0, true)
-    ).subscribe((res: XeroTaskResponse) => {
-      this.processedCount = res.results.filter((task: { status: string; type: TaskLogType; expense_group: number; }) => (task.status !== 'IN_PROGRESS' && task.status !== 'ENQUEUED') && (task.type !== TaskLogType.FETCHING_EXPENSES) && exportableAccountingExportIds.includes(task.expense_group)).length;
+      ).length > 0, true
+    )
+  ).subscribe((res: XeroTaskResponse) => {
+    this.processedCount = res.results.filter(task => (task.status !== TaskLogState.IN_PROGRESS && task.status !== TaskLogState.ENQUEUED)).length;
       this.exportProgressPercentage = Math.round((this.processedCount / exportableAccountingExportIds.length) * 100);
 
+      if (res.results.filter((task: { status: TaskLogState; }) => (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)).length === 0) {
       forkJoin([
         this.getExportErrors$,
         this.getAccountingExportSummary$.pipe(catchError(() => of(null)))
@@ -130,6 +132,7 @@ export class XeroDashboardComponent implements OnInit {
         this.exportProgressPercentage = 0;
         this.processedCount = 0;
       });
+    }
     });
   }
 
@@ -156,8 +159,8 @@ export class XeroDashboardComponent implements OnInit {
 
       this.isLoading = false;
 
-      const queuedTasks: XeroTask[] = responses[2].results.filter((task: XeroTask) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
-      this.failedExpenseGroupCount = responses[2].results.filter((task: XeroTask) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
+      const queuedTasks: XeroTaskLog[] = responses[2].results.filter((task: XeroTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
+      this.failedExpenseGroupCount = responses[2].results.filter((task: XeroTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
       this.exportableAccountingExportIds = responses[3].exportable_expense_group_ids;
 
