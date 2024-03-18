@@ -50,7 +50,7 @@
             <div>
                 <h4 class="tw-font-500">IIF file logs</h4>
             </div>
-            <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-border tw-border-box-color tw-rounded-4-px drop-down">
+            <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-rounded-4-px drop-down">
                 <app-export-log-filter *ngIf="totalCount > 0 || selectedDateFilter"
                     [exportLogForm]="exportLogForm"
                     [dateOptions]="dateOptions"
