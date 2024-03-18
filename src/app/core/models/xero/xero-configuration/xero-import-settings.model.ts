@@ -59,7 +59,7 @@ export interface XeroImportSettingFormOption extends SelectFormOption {
 export class XeroImportSettingModel extends ImportSettingsModel {
 
   static getChartOfAccountTypesList(): string[] {
-    return ['EXPENSE', 'ASSET', 'EQUITY', 'LIABILITY', 'REVENUE'];
+    return ['Expense', 'Asset', 'Equity', 'Liability', 'Revenue'];
   }
 
   static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean): FormGroup {
@@ -90,14 +90,13 @@ export class XeroImportSettingModel extends ImportSettingsModel {
   static constructPayload(importSettingsForm: FormGroup): XeroImportSettingPost {
 
     const emptyDestinationAttribute = {id: null, name: null};
-    const chartOfAccounts = XeroImportSettingModel.formatChartOfAccounts(importSettingsForm.get('chartOfAccountTypes')?.value);
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields.filter(((data:any) => data.destination_field !== XeroFyleField.CUSTOMER));
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
     const importSettingPayload: XeroImportSettingPost = {
       workspace_general_settings: {
-        import_categories: importSettingsForm.get('chartOfAccount')?.value ?? false,
-        charts_of_accounts: importSettingsForm.get('chartOfAccount')?.value ? chartOfAccounts : ['Expense'],
+        import_categories: importSettingsForm.get('importCategories')?.value ?? false,
+        charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value ? importSettingsForm.get('chartOfAccountTypes')?.value : ['Expense'],
         import_tax_codes: importSettingsForm.get('taxCode')?.value,
         import_suppliers_as_merchants: importSettingsForm.get('importSuppliersAsMerchants')?.value,
         import_customers: importSettingsForm.get('importCustomers')?.value ? importSettingsForm.get('importCustomers')?.value : false
@@ -108,9 +107,5 @@ export class XeroImportSettingModel extends ImportSettingsModel {
       mapping_settings: mappingSettings
     };
     return importSettingPayload;
-  }
-
-  static formatChartOfAccounts(chartOfAccounts: {enabled: boolean, name: string}[]): string[] {
-    return chartOfAccounts.filter(chartOfAccount => chartOfAccount.enabled).map(chartOfAccount => chartOfAccount.name.toUpperCase());
   }
 }
