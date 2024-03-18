@@ -35,11 +35,11 @@
 
     <app-dashboard-error-section *ngIf="errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length"
         [appName]="appName"
-        [apiModuleUrl]="AppUrl.INTACCT"
+        [apiModuleUrl]="AppUrl.XERO"
         [errors]="errors"
         [groupedErrorStat]="groupedErrorStat"
         [destinationFieldMap]="destinationFieldMap"
-        [isCategoryMappingGeneric]="false"
+        [isCategoryMappingGeneric]="true"
         [destinationOptionsVersion]="'v1'"
         [errorsVersion]="'v1'">
     </app-dashboard-error-section>
