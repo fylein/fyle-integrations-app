@@ -12,6 +12,7 @@ import { HelperUtility } from 'src/app/core/models/common/helper.model';
 })
 export class NetsuiteExportSettingsService {
 
+  private mandatoryFormController: string[] = [];
 
   @Output() creditCardExportTypeChange: EventEmitter<string> = new EventEmitter();
 
@@ -28,4 +29,40 @@ export class NetsuiteExportSettingsService {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/export_settings/`, exportSettingsPayload);
   }
 
+  setupDynamicValidators(form: FormGroup, values: ExportModuleRule, selectedValue: string): void {
+    Object.entries(values.requiredValue).forEach(([key, value]) => {
+      console.log('is field sdf', key, value)
+      if (key === selectedValue) {
+        value.forEach((formController: string) => {
+          if (values.formController === 'creditCardExportType') {
+            this.creditCardExportTypeChange.emit(selectedValue);
+          }
+
+          const isFieldMandatory = NetSuiteExportSettingModel.getMandatoryField(form, formController);
+          console.log('is field', isFieldMandatory)
+          if (isFieldMandatory) {
+            this.mandatoryFormController.push(formController);
+            HelperUtility.markControllerAsRequired(form, formController);
+          } else {
+            HelperUtility.clearValidatorAndResetValue(form, formController);
+          }
+        });
+      } else {
+        value.forEach((formController: string) => {
+          if (!this.mandatoryFormController.includes(formController)) {
+            HelperUtility.clearValidatorAndResetValue(form, formController);
+          }
+        });
+      }
+    });
+  }
+
+  setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
+    Object.values(exportTypeValidatorRule).forEach((values) => {
+      form.controls[values.formController].valueChanges.subscribe((selectedValue) => {
+        this.mandatoryFormController = [];
+        this.setupDynamicValidators(form, values, selectedValue);
+      });
+    });
+  }
 }

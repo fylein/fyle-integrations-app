@@ -98,6 +98,7 @@ export class HelperService {
   }
 
   setOrClearValidators(selectedValue: string, value: string[], form: FormGroup): void {
+    console.log('i am here')
     if (selectedValue) {
       value.forEach((controllerName: string) => {
         this.markControllerAsRequired(form, controllerName);
