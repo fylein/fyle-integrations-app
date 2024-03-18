@@ -59,7 +59,7 @@ export interface XeroImportSettingFormOption extends SelectFormOption {
 export class XeroImportSettingModel extends ImportSettingsModel {
 
   static getChartOfAccountTypesList(): string[] {
-    return ['Expense', 'Asset', 'Equity', 'Liability', 'Revenue'];
+    return ['EXPENSE', 'ASSET', 'EQUITY', 'LIABILITY', 'REVENUE'];
   }
 
   static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean): FormGroup {
@@ -78,7 +78,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
-      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts : ['Expense']),
+      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts : ['EXPENSE']),
       importCustomers: new FormControl(importSettings?.workspace_general_settings.import_customers ?? false),
       taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
       importSuppliersAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_suppliers_as_merchants ?? false),
@@ -90,13 +90,14 @@ export class XeroImportSettingModel extends ImportSettingsModel {
   static constructPayload(importSettingsForm: FormGroup): XeroImportSettingPost {
 
     const emptyDestinationAttribute = {id: null, name: null};
+    const COA = importSettingsForm.get('chartOfAccountTypes')?.value.map((name: string) => name.toUpperCase());
     const expenseFieldArray = importSettingsForm.getRawValue().expenseFields.filter(((data:any) => data.destination_field !== XeroFyleField.CUSTOMER));
     const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
 
     const importSettingPayload: XeroImportSettingPost = {
       workspace_general_settings: {
         import_categories: importSettingsForm.get('importCategories')?.value ?? false,
-        charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value ? importSettingsForm.get('chartOfAccountTypes')?.value : ['Expense'],
+        charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value ? COA : ['EXPENSE'],
         import_tax_codes: importSettingsForm.get('taxCode')?.value,
         import_suppliers_as_merchants: importSettingsForm.get('importSuppliersAsMerchants')?.value,
         import_customers: importSettingsForm.get('importCustomers')?.value ? importSettingsForm.get('importCustomers')?.value : false
