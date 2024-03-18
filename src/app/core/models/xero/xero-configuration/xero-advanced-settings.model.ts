@@ -89,7 +89,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
 
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
-        if (selectedValue && ((keys[index] === 'billPaymentAccount' && selectedValue === PaymentSyncDirection.FYLE_TO_XERO) || (keys[index] !== 'billPaymentAccount'))) {
+        if (selectedValue && ((keys[index] === 'paymentSync' && selectedValue === PaymentSyncDirection.FYLE_TO_XERO) || (keys[index] !== 'paymentSync'))) {
           this.markControllerAsRequired(form, value);
         } else {
           this.clearValidatorAndResetValue(form, value);
@@ -98,7 +98,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[]): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[]): FormGroup {
     let paymentSync = '';
     if (advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
@@ -107,17 +107,16 @@ export class XeroAdvancedSettingModel extends HelperUtility{
     }
     return new FormGroup({
       paymentSync: new FormControl(paymentSync),
-      billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account),
+      billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account.id ? advancedSettings.general_mappings.payment_account : null),
       changeAccountingPeriod: new FormControl(advancedSettings.workspace_general_settings.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings.workspace_general_settings.auto_create_destination_entity),
       exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : false),
-      exportScheduleFrequency: new FormControl(advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : null),
+      exportScheduleFrequency: new FormControl(advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : 1),
       autoCreateMerchantDestinationEntity: new FormControl(advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false),
-      skipExport: new FormControl(isSkipExportEnabled),
       search: new FormControl(),
       searchOption: new FormControl(),
       email: new FormControl(advancedSettings?.workspace_schedules?.emails_selected && advancedSettings?.workspace_schedules?.emails_selected?.length > 0 ? AdvancedSettingsModel.filterAdminEmails(advancedSettings?.workspace_schedules?.emails_selected, adminEmails) : []),
-      addedEmail: new FormControl([])
+      additionalEmails: new FormControl([])
     });
   }
 
@@ -138,8 +137,8 @@ export class XeroAdvancedSettingModel extends HelperUtility{
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
         interval_hours: advancedSettingsForm.get('exportScheduleFrequency')?.value ? advancedSettingsForm.get('exportScheduleFrequency')?.value : null,
         start_datetime: new Date(),
-        emails_selected: advancedSettingsForm.get('emails')?.value ? advancedSettingsForm.get('emails')?.value : [],
-        additional_email_options: advancedSettingsForm.get('addedEmail')?.value ? advancedSettingsForm.get('addedEmail')?.value : []
+        emails_selected: advancedSettingsForm.get('email')?.value ? AdvancedSettingsModel.formatSelectedEmails(advancedSettingsForm.get('email')?.value) : [],
+        additional_email_options: advancedSettingsForm.get('additionalEmails')?.value ? advancedSettingsForm.get('additionalEmails')?.value : []
       }
     };
     return advancedSettingPayload;
