@@ -74,7 +74,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
 
-  chartOfAccountTypesList: string[] = XeroImportSettingModel.getChartOfAccountTypesList();
+  chartOfAccountTypesList: string[] = XeroImportSettingModel.getChartOfAccountTypesList().map((name: string) => name[0]+name.substr(1).toLowerCase());
 
   isTaxGroupSyncAllowed: boolean;
 
@@ -360,6 +360,8 @@ export class XeroCloneSettingsComponent implements OnInit {
       if (brandingConfig.brandId !== 'co') {
         this.xeroFields = this.xeroFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
       }
+
+      cloneSetting.import_settings.workspace_general_settings.charts_of_accounts = cloneSetting.import_settings.workspace_general_settings.charts_of_accounts.map((name: string) => name[0]+name.substr(1).toLowerCase());
 
       this.isProjectMapped = cloneSetting.import_settings.mapping_settings.findIndex((data: { source_field: XeroFyleField; destination_field: XeroFyleField; }) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
