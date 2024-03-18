@@ -175,11 +175,11 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   private constructPayloadAndSave(): void {
     if (this.isContinueDisabled) {
       return;
-    } else if (this.isCloneSettingsDisabled) {
+    } else if (this.isCloneSettingsDisabled && this.xeroCompanyName) {
       this.router.navigate(['/integrations/xero/onboarding/export_settings']);
       return;
     }
-    if (this.xeroTenantselected && !this.isContinueDisabled) {
+    if (this.xeroTenantselected && !this.xeroCompanyName) {
       this.xeroConnectionInProgress = true;
       this.isContinueDisabled = true;
       const tenantMappingPayload: TenantMappingPost = TenantMappingModel.constructPayload(this.xeroTenantselected);

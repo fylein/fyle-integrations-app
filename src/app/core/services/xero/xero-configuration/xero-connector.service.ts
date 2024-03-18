@@ -50,7 +50,7 @@ export class XeroConnectorService {
   }
 
   getXeroTenants(): Observable<DestinationAttribute[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/xero/tenants/`, {attribute_type: 'TENANT'});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/xero/tenants/`, {attribute_type__exact: 'TENANT'});
   }
 
   postXeroTenants(): Observable<DestinationAttribute[]> {
