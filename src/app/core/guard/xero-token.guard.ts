@@ -44,12 +44,6 @@ export class XeroTokenGuard implements CanActivate {
             globalCacheBusterNotifier.next();
             this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! Your Xero connection expired, please connect again');
 
-            const onboardingState: XeroOnboardingState = this.workspaceService.getOnboardingState();
-
-            if (onboardingState !== XeroOnboardingState.COMPLETE) {
-              return this.router.navigateByUrl('integrations/xero/onboarding/connector');
-            }
-
             return this.router.navigateByUrl('integrations/xero/onboarding/landing');
           }
 

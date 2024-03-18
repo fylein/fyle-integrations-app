@@ -87,6 +87,8 @@ import { ToggleComponent } from './components/input/toggle/toggle.component';
 import { MultiSelectComponent } from './components/input/multi-select/multi-select.component';
 import { ConfigurationMappingFieldsComponent } from './components/configuration/configuration-mapping-fields/configuration-mapping-fields.component';
 import { SvgIconComponent } from './components/core/svg-icon/svg-icon.component';
+import { NetsuiteConnectorComponent } from './components/netsuite/core/netsuite-connector/netsuite-connector.component';
+import { NetsuiteSubsidiaryMappingComponent } from './components/netsuite/core/netsuite-subsidiary-mapping/netsuite-subsidiary-mapping.component';
 import { SearchComponent } from './components/input/search/search.component';
 import { OptionalFieldComponent } from './components/helper/optional-field/optional-field.component';
 import { SentenceCasePipe } from './pipes/sentence-case.pipe';
@@ -160,6 +162,8 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     MultiSelectComponent,
     ConfigurationMappingFieldsComponent,
     SvgIconComponent,
+    NetsuiteConnectorComponent,
+    NetsuiteSubsidiaryMappingComponent,
     SearchComponent,
     OptionalFieldComponent,
     SentenceCasePipe
@@ -217,6 +221,8 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     FormsModule, ReactiveFormsModule, ProgressBarModule,
     ToastModule,
     IntacctConnectorComponent,
+    NetsuiteConnectorComponent,
+    NetsuiteSubsidiaryMappingComponent,
     IntacctLocationEntityComponent,
     MappingTableComponent,
     MappingFilterComponent,

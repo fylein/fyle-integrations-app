@@ -5,6 +5,8 @@ import { AppUrl, BusinessCentralOnboardingState, IntacctOnboardingState, Netsuit
 import { ApiService } from './api.service';
 import { HelperService } from './helper.service';
 import { AppUrlMap } from '../../models/integrations/integrations.model';
+import { Workspace } from '../../models/db/workspaces.model';
+import { XeroWorkspace } from '../../models/xero/db/xero-workspace.model';
 
 @Injectable({
   providedIn: 'root'
@@ -70,5 +72,10 @@ export class WorkspaceService {
 
   getWorkspaceGeneralSettings(): Observable<any> {
     return this.apiService.get(`/workspaces/${this.getWorkspaceId()}/settings/general/`, {});
+  }
+
+  getWorkspaceById(): Observable<XeroWorkspace> {
+    const workspaceId = this.getWorkspaceId();
+    return this.apiService.get(`/workspaces/${workspaceId}/`, {});
   }
 }

@@ -13,10 +13,6 @@ const routes: Routes = [
       {
         path: 'complete',
         component: XeroCompleteExportLogComponent
-      },
-      {
-        path: 'skipped',
-        component: XeroSkippedExportLogComponent
       }
     ]
   }
