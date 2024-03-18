@@ -4,13 +4,17 @@ import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
+import { Workspace } from 'src/app/core/models/db/workspaces.model';
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { XeroWorkspace } from 'src/app/core/models/xero/db/xero-workspace.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
@@ -56,12 +60,16 @@ export class XeroCompleteExportLogComponent implements OnInit {
 
   private searchQuerySubject = new Subject<string>();
 
+  xeroShortCode: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private exportLogService: ExportLogService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,
-    private userService: UserService
+    private userService: UserService,
+    private storageService: StorageService,
+    private workspaceService: WorkspaceService
   ) {
     this.searchQuerySubject.pipe(
       debounceTime(1000)
@@ -96,10 +104,7 @@ export class XeroCompleteExportLogComponent implements OnInit {
   }
 
   private getAccountingExports(limit: number, offset:number) {
-
-      this.isLoading = true;
-
-
+    this.isLoading = true;
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
@@ -107,12 +112,18 @@ export class XeroCompleteExportLogComponent implements OnInit {
     this.exportLogService.getExpenseGroups(TaskLogState.COMPLETE, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
         this.totalCount = accountingExportResponse.count;
 
-      const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
-        AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO)
-      );
-      this.filteredAccountingExports = accountingExports;
-      this.accountingExports = [...this.filteredAccountingExports];
-      this.isLoading = false;
+        this.workspaceService.getWorkspaceById().subscribe((workspace: XeroWorkspace) => {
+          this.storageService.set('workspace', workspace);
+          this.xeroShortCode = workspace.xero_short_code;
+          AccountingExportModel.assignXeroShortCode(this.xeroShortCode);
+          const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
+          AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, AppName.XERO)
+        );
+
+        this.filteredAccountingExports = accountingExports;
+        this.accountingExports = [...this.filteredAccountingExports];
+        this.isLoading = false;
+        });
     });
   }
 
