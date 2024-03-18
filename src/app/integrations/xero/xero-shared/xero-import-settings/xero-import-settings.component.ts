@@ -38,7 +38,6 @@ export class XeroImportSettingsComponent implements OnInit {
 
   xeroExpenseFields: IntegrationField[];
 
-
   taxCodes: DestinationAttribute[];
 
   importSettingsForm: FormGroup;
@@ -163,15 +162,10 @@ export class XeroImportSettingsComponent implements OnInit {
     });
   }
 
-  private expenseFieldWatcher() {
-
-  }
-
   private setupFormWatchers(): void {
     this.createTaxCodeWatcher();
     this.createImportCustomerWatcher();
     this.createCOAWatcher();
-    this.expenseFieldWatcher();
     const expenseFieldArray = this.importSettingsForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {

@@ -138,10 +138,6 @@ export class XeroExportSettingsComponent implements OnInit {
     });
   }
 
-  setupForm() {
-    throw new Error('Method not implemented.');
-  }
-
   ngOnInit(): void {
     this.setupPage();
   }
