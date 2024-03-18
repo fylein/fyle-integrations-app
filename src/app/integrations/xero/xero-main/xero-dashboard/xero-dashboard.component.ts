@@ -3,7 +3,7 @@ import { Observable, catchError, forkJoin, from, interval, of, switchMap, takeWh
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
-import { AccountingErrorType, AccountingField, AppName, AppUrl, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject, XeroTaskLogType } from 'src/app/core/models/enum/enum.model';
+import { AccountingErrorType, AccountingField, AppName, AppUrl, CCCExpenseState, CCCImportState, ExpenseState, ExportState, FyleReferenceType, ReimbursableImportState, TaskLogState, TaskLogType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject, XeroTaskLogType } from 'src/app/core/models/enum/enum.model';
 import { ExpenseGroupList } from 'src/app/core/models/intacct/db/expense-group.model';
 import { XeroTaskLog, XeroTaskResponse } from 'src/app/core/models/xero/db/xero-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
@@ -145,8 +145,8 @@ export class XeroDashboardComponent implements OnInit {
       this.xeroExportSettingService.getExportSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.reimbursableImportState = responses[4].workspace_general_settings?.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[4].expense_group_settings.expense_state] : null;
-      this.cccImportState = responses[4].workspace_general_settings?.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[4].expense_group_settings.ccc_expense_state] : null;
+      this.reimbursableImportState = responses[4].workspace_general_settings?.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[ExpenseState.PAID] : null;
+      this.cccImportState = responses[4].workspace_general_settings?.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[CCCExpenseState.APPROVED] : null;
 
       if (responses[1]) {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);

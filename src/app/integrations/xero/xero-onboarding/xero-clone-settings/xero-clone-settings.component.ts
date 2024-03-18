@@ -8,7 +8,7 @@ import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/im
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, ToastSeverity, XeroFyleField } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, InputType, ToastSeverity, XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
@@ -34,9 +34,9 @@ import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-confi
 })
 export class XeroCloneSettingsComponent implements OnInit {
 
-  isLoading: boolean;
+  isLoading: boolean = true;
 
-  onboardingSteps: OnboardingStepper[];
+  onboardingSteps: OnboardingStepper[] = [];
 
   brandingConfig = brandingConfig;
 
@@ -70,7 +70,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   appName: AppName = AppName.XERO;
 
-  InputType: any;
+  InputType = InputType;
 
   customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
 
@@ -115,7 +115,11 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   primaryButtonText: string;
 
-  customFieldForm: FormGroup<any>;
+  customFieldForm: FormGroup = this.formBuilder.group({
+    attribute_type: ['', Validators.required],
+    display_name: [''],
+    source_placeholder: ['', Validators.required]
+  });
 
   showCustomFieldDialog: boolean;
 
@@ -126,8 +130,6 @@ export class XeroCloneSettingsComponent implements OnInit {
   customFieldControl: any;
 
   customFieldType: string;
-
-  xeroExpenseFields: any;
 
   brandingContent = brandingContent;
 
@@ -315,7 +317,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   private setupPage(): void {
     this.setupOnboardingSteps();
     const destinationAttributes = [
-      XeroFyleField.TAX_CODE
+      XeroFyleField.TAX_CODE, XeroFyleField.BANK_ACCOUNT
     ];
 
     forkJoin([
@@ -349,9 +351,9 @@ export class XeroCloneSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      this.isCustomerPresent = this.xeroExpenseFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false;
+      this.isCustomerPresent = this.xeroFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
-      this.importSettingForm = XeroImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroExpenseFields, this.isCustomerPresent);
+      this.importSettingForm = XeroImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupImportSettingFormWatcher();
@@ -360,12 +362,11 @@ export class XeroCloneSettingsComponent implements OnInit {
       // Advanced Settings
       this.adminEmails = adminEmails;
       if (this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options && this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options.length > 0) {
-        this.adminEmails = this.adminEmails.concat(this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options);
+        this.adminEmails = this.adminEmails.concat(this.cloneSetting.advanced_settings.workspace_schedules?.additional_email_options).flat();
       }
 
       this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => ExportSettingModel.formatGeneralMappingPayload(option));
       this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_settings, this.adminEmails);
-
       this.setupAdvancedSettingFormWatcher();
 
       this.isLoading = false;

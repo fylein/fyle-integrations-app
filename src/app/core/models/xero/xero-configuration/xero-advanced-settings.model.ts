@@ -110,7 +110,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
       billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account.id ? advancedSettings.general_mappings.payment_account : null),
       changeAccountingPeriod: new FormControl(advancedSettings.workspace_general_settings.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings.workspace_general_settings.auto_create_destination_entity),
-      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : false),
+      exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled ? true : false),
       exportScheduleFrequency: new FormControl(advancedSettings.workspace_schedules?.enabled ? advancedSettings.workspace_schedules.interval_hours : 1),
       autoCreateMerchantDestinationEntity: new FormControl(advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity ? advancedSettings.workspace_general_settings.auto_create_merchant_destination_entity : false),
       search: new FormControl(),
