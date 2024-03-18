@@ -108,5 +108,3 @@ describe('QbdWorkspaceService', () => {
   });
 
 });
-
-
