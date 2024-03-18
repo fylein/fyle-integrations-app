@@ -209,7 +209,7 @@
                 </div>
             </div>
 
-            <div class="clone-setting--field" *ngIf="brandingConfig.brandId !== 'co' && isCustomerPresent">
+            <div class="clone-setting--field" *ngIf="isCustomerPresent">
                 <app-clone-setting-field
                     [iconSource]="'arrow-tail-down'"
                     [label]="brandingContent.xero.configuration.importSetting.importCustomersLabel"

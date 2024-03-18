@@ -259,32 +259,18 @@ export class XeroCloneSettingsComponent implements OnInit {
   }
 
   private createImportCustomerWatcher(): void {
-    if (brandingConfig.brandId === 'co') {
-      const formArray = this.importSettingForm.get('expenseFields') as FormArray;
-      const index = formArray.value.findIndex((data:any) => data.destination_field === XeroFyleField.CUSTOMER);
-      formArray.controls.at(index)?.get('import_to_fyle')?.valueChanges.subscribe((isCustomerImportEnabled) => {
-        if (isCustomerImportEnabled) {
-          formArray.controls.at(index)?.get('source_field')?.patchValue(XeroFyleField.PROJECT);
-          this.importSettingForm.controls.importCustomers.patchValue(true);
-        } else {
-          formArray.controls.at(index)?.get('source_field')?.patchValue('DISABLED_XERO_SOURCE_FIELD');
-          this.importSettingForm.controls.importCustomers.patchValue(false);
+    this.importSettingForm.controls.importCustomers.valueChanges.subscribe((isCustomerImportEnabled) => {
+      if (isCustomerImportEnabled) {
+        this.fyleFields = this.fyleFields.filter((field) => field.attribute_type !== XeroFyleField.PROJECT);
+      } else {
+        const fyleField = this.fyleFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
+        if (fyleField.length === 0) {
+          this.fyleFields.pop();
+          this.fyleFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: 'Project', is_dependent: false });
+          this.fyleFields.push(this.customFieldOption[0]);
         }
-      });
-    } else {
-      this.importSettingForm.controls.importCustomers.valueChanges.subscribe((isCustomerImportEnabled) => {
-        if (isCustomerImportEnabled) {
-          this.fyleFields = this.fyleFields.filter((field) => field.attribute_type !== XeroFyleField.PROJECT);
-        } else {
-          const fyleField = this.fyleFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
-          if (fyleField.length === 0) {
-            this.fyleFields.pop();
-            this.fyleFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: 'Project', is_dependent: false });
-            this.fyleFields.push(this.customFieldOption[0]);
-          }
-        }
-      });
-    }
+      }
+    });
   }
 
   private setupImportSettingFormWatcher(): void {
@@ -357,9 +343,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
       this.isCustomerPresent = this.xeroFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false;
 
-      if (brandingConfig.brandId !== 'co') {
-        this.xeroFields = this.xeroFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
-      }
+      this.xeroFields = this.xeroFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
 
       cloneSetting.import_settings.workspace_general_settings.charts_of_accounts = cloneSetting.import_settings.workspace_general_settings.charts_of_accounts.map((name: string) => name[0]+name.substr(1).toLowerCase());
 
