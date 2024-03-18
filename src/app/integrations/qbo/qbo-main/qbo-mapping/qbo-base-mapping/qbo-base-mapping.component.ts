@@ -49,7 +49,7 @@ export class QboBaseMappingComponent implements OnInit {
     this.isLoading = true;
     this.mappingService.triggerAutoMapEmployees().subscribe(() => {
       this.isLoading = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Auto mapping of employees may take few minutes');
+      this.toastService.displayToastMessage(ToastSeverity.INFO, 'Auto mapping of employees may take few minutes');
     }, () => {
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again');

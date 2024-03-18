@@ -131,6 +131,8 @@ export type ContentConfiguration = {
                     project: string;
                     class: string;
                     item: string;
+                    customPreferencesLabel: string;
+                    customPreferencesSubLabel: string;
                 },
                 done: {
                     ctaText: string;

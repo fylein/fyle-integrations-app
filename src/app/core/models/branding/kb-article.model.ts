@@ -5,6 +5,7 @@ export type KbArticle = {
             QBD: string;
             QBO: string;
             INTACCT: string;
+            NETSUITE: string;
             TRAVELPERK: string;
             SAGE300: string;
             BUSINESS_CENTRAL: string;
@@ -19,6 +20,9 @@ export type KbArticle = {
                 CONNECTOR: string;
                 SKIP_EXPORT: string;
             },
+            NETSUITE: {
+                CONNECTOR: string;
+            }
             SAGE300: {
                 IMPORT_SETTING: string;
                 EXPORT_SETTING: string;

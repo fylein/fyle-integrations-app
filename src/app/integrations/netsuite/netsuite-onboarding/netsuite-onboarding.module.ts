@@ -10,6 +10,7 @@ import { NetsuiteOnboardingImportSettingsComponent } from './netsuite-onboarding
 import { NetsuiteOnboardingAdvancedSettingsComponent } from './netsuite-onboarding-advanced-settings/netsuite-onboarding-advanced-settings.component';
 import { NetsuiteOnboardingDoneComponent } from './netsuite-onboarding-done/netsuite-onboarding-done.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -25,7 +26,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     NetsuiteOnboardingRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class NetsuiteOnboardingModule { }

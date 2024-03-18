@@ -37,7 +37,8 @@ export enum InAppIntegration {
 
 export enum ToastSeverity {
   SUCCESS = 'success',
-  ERROR = 'error'
+  ERROR = 'error',
+  INFO = 'info'
 }
 
 export enum UpdateEvent {
@@ -179,6 +180,7 @@ export enum XeroOnboardingState {
 
 export enum NetsuiteOnboardingState {
   CONNECTION = 'CONNECTION',
+  SUBSIDIARY = 'SUBSDIARY',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',

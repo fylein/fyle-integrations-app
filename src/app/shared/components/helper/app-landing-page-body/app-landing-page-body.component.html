@@ -13,7 +13,10 @@
 
     <div *ngIf="embedVideo" class="tw-flex tw-justify-center tw-pt-24-px">
         <iframe class= "tw-rounded-8-px" width="720" height="420" [src]="embedVideoUrl" title="{{brandingConfig.brandName}} {{appName}} Integration" frameborder="0"></iframe>
-    </div>  
+    </div>
+    <div *ngIf="!embedVideo && embedImage" class="tw-flex tw-justify-center tw-pt-24-px">
+        <img src="{{embedImage}}" class= "tw-rounded-8-px" width="720" height="420">
+    </div> 
     <div class="tw-flex tw-justify-center tw-mt-80-px tw-mb-14">
         <img src="{{svgPath}}" />
     </div>    

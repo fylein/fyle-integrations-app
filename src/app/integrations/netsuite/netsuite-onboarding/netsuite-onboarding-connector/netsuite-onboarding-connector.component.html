@@ -1,1 +1,3 @@
-<p>netsuite-onboarding-connector works!</p>
+<app-onboarding-steppers [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
+<app-netsuite-connector (setupConnectionStatus)="setupConnectionStatus($event)" *ngIf="!isNetsuiteConnected" ></app-netsuite-connector>
+<app-netsuite-subsidiary-mapping *ngIf="isNetsuiteConnected"></app-netsuite-subsidiary-mapping>
