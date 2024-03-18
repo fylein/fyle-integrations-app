@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-xero-onboarding-done',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class XeroOnboardingDoneComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
+
+  navigateToDashboard(): void {
+    this.router.navigate([`/integrations/xero/main/dashboard`]);
+  }
 
   ngOnInit(): void {
   }
