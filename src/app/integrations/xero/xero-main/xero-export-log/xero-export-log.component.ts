@@ -11,8 +11,7 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 export class XeroExportLogComponent implements OnInit {
 
   modules: MenuItem[] = [
-    {label: 'Completed', routerLink: '/integrations/xero/main/export_log/complete'},
-    {label: 'Skipped', routerLink: '/integrations/qbo/main/export_log/skipped'}
+    {label: 'Completed', routerLink: '/integrations/xero/main/export_log/complete'}
   ];
 
   activeModule: MenuItem;
