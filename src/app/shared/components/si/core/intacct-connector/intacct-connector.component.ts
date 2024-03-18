@@ -42,7 +42,7 @@ export class IntacctConnectorComponent implements OnInit {
     private toastService: IntegrationsToastService
   ) { }
 
-  clearField() {
+  private clearField() {
     this.connectSageIntacctForm.get("userID")?.setValue('');
     this.connectSageIntacctForm.get("companyID")?.setValue('');
     this.connectSageIntacctForm.get("userPassword")?.setValue('');

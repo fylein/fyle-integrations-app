@@ -67,16 +67,17 @@ export class XeroExportSettingModel {
     ];
   }
 
-  static getExpenseGroupingOptions(): SelectFormOption[] {
+  static getReimbursableExpenseGroupingOptions(): SelectFormOption[] {
     return [
       {
         label: 'Report',
         value: ExpenseGroupingFieldOption.CLAIM_NUMBER
-      },
-      {
-        label: 'Payment',
-        value: ExpenseGroupingFieldOption.SETTLEMENT_ID
-      },
+      }
+    ];
+  }
+
+  static getCCCExpenseGroupingOptions(): SelectFormOption[] {
+    return [
       {
         label: 'Expense',
         value: ExpenseGroupingFieldOption.EXPENSE_ID
@@ -139,27 +140,27 @@ export class XeroExportSettingModel {
    ];
  }
 
-  static getReimbursableExpenseStateOptions(isSimplifyReportClosureEnabled: boolean): SelectFormOption[] {
+  static getReimbursableExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: isSimplifyReportClosureEnabled ? 'Processing' : 'Payment Processing',
+        label: 'Processing',
         value: ExpenseState.PAYMENT_PROCESSING
       },
       {
-        label: isSimplifyReportClosureEnabled ? 'Closed' : 'Paid',
+        label: 'Closed',
         value: ExpenseState.PAID
       }
     ];
   }
 
-  static getCCCExpenseStateOptions(isSimplifyReportClosureEnabled: boolean): SelectFormOption[] {
+  static getCCCExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: isSimplifyReportClosureEnabled ? 'Approved' : 'Payment Processing',
-        value: isSimplifyReportClosureEnabled ? XeroCCCExpenseState.APPROVED: XeroCCCExpenseState.PAYMENT_PROCESSING
+        label: 'Payment Processing',
+        value: XeroCCCExpenseState.APPROVED
       },
       {
-        label: isSimplifyReportClosureEnabled ? 'Closed' : 'Paid',
+        label: 'Closed',
         value: XeroCCCExpenseState.PAID
       }
     ];
@@ -192,12 +193,12 @@ export class XeroExportSettingModel {
       expenseState: new FormControl(exportSettings?.expense_group_settings?.reimbursable_expense_state),
       reimbursableExpense: new FormControl(exportSettings?.workspace_general_settings?.reimbursable_expenses_object ? true : false),
       reimbursableExportType: new FormControl(exportSettings?.workspace_general_settings?.reimbursable_expenses_object ? exportSettings?.workspace_general_settings?.reimbursable_expenses_object : XeroReimbursableExpensesObject.PURCHASE_BILL),
-      // ReimbursableExportGroup: new FormControl(exportSettings?.expense_group_settings?.reimbursable_expense_group_fields),
+      reimbursableExportGroup: new FormControl(ExpenseGroupingFieldOption.CLAIM_NUMBER),
       reimbursableExportDate: new FormControl(exportSettings?.expense_group_settings?.reimbursable_export_date_type),
       cccExpenseState: new FormControl(exportSettings?.expense_group_settings?.ccc_expense_state),
       creditCardExpense: new FormControl(exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object ? true : false),
       creditCardExportType: new FormControl(exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object ? exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object : XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION),
-      // CreditCardExportGroup: new FormControl(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields),
+      creditCardExportGroup: new FormControl(ExpenseGroupingFieldOption.EXPENSE_ID),
       creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
       bankAccount: new FormControl(exportSettings?.general_mappings?.bank_account?.id ? exportSettings.general_mappings.bank_account : null),
       autoMapEmployees: new FormControl(exportSettings?.workspace_general_settings?.auto_map_employees),

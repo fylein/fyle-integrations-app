@@ -43,6 +43,8 @@ export class ConfigurationToggleFieldComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  readonly brandingXeroContent = brandingContent.xero.configuration.importSetting.toggleToastMessage;
+
   constructor(
     public windowService: WindowService
   ) { }

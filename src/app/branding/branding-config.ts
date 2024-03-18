@@ -86,12 +86,13 @@ const kbArticles: KbArticle = {
         topLevelArticles: {
             BAMBOO_HR: `${brandingConfig.helpArticleDomain}/en/articles/6845034-fyle-bamboo-hr-integration`,
             QBD: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
+            NETSUITE: `${brandingConfig.helpArticleDomain}/en/articles/4424242-fyle-netsuite-integration`,
             QBO: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
             INTACCT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
             TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
             SAGE300: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
             BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`,
-            XERO: `${brandingConfig.helpArticleDomain}/en/articles/8911018-how-to-configure-the-fyle-dynamics-365-business-central-integration`
+            XERO: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#xero-2-0`
         },
         onboardingArticles: {
             INTACCT: {
@@ -101,6 +102,9 @@ const kbArticles: KbArticle = {
                 LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
                 CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6`,
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+            },
+            NETSUITE: {
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`
             },
             // TODO: Update KB articles for Sage 300
             SAGE300: {
@@ -133,13 +137,12 @@ const kbArticles: KbArticle = {
             },
             // TODO
             XERO: {
-                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0`,
-                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc`,
-                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686`,
-                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f`,
-                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7`,
-                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online`
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration-v2-0#h_e3ade308dc`,
+                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-xero-integration-v2-0#h_d70f1d54cc`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration-v2-0#h_ad07470d98`,
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration-v2-0#h_04d289fd42`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration-v2-0#h_d95b791edd`
             }
         }
     },
@@ -147,8 +150,9 @@ const kbArticles: KbArticle = {
         topLevelArticles: {
             BAMBOO_HR: `${brandingConfig.helpArticleDomain}/en/articles/6845034-fyle-bamboo-hr-integration`,
             QBD: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
-            QBO: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
+            QBO: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
             INTACCT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
+            NETSUITE: `${brandingConfig.helpArticleDomain}/en/articles/4424242-fyle-netsuite-integration`,
             TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
             SAGE300: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
             BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
@@ -163,6 +167,9 @@ const kbArticles: KbArticle = {
                 CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6`,
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
+            NETSUITE: {
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`
+            },
             SAGE300: {
                 IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
                 EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
@@ -171,13 +178,13 @@ const kbArticles: KbArticle = {
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
             QBO: {
-                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0`,
-                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc`,
-                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686`,
-                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f`,
-                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7`,
-                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online`
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
+                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_6c60e48783`,
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_faf3a93ed6`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration#h_fe18937876`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`
             },
             BUSINESS_CENTRAL: {
                 IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
@@ -193,13 +200,12 @@ const kbArticles: KbArticle = {
             },
             // TODO
             XERO: {
-                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration`,
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0`,
-                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_d70f1d54cc`,
-                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_dca1353686`,
-                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_b8a2df129f`,
-                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-quickbooks-online-integration-v2-0#h_18c28de6c7`,
-                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7044785-how-to-skip-exporting-specific-expenses-from-fyle-to-quickbooks-online`
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration-v2-0#h_e3ade308dc`,
+                EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-xero-integration-v2-0#h_d70f1d54cc`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration-v2-0#h_ad07470d98`,
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration-v2-0#h_04d289fd42`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration-v2-0#h_d95b791edd`
             }
         }
     }
@@ -218,7 +224,7 @@ const demoVideoLinks: DemoVideo = {
             // TODO: Update link for MS Dynamics
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            XERO: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            XERO: 'https://www.youtube.com/embed/IplJd7tGWBk'
         }
     },
     co: {
@@ -230,7 +236,7 @@ const demoVideoLinks: DemoVideo = {
             // TODO: Update link for MS Dynamics
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            XERO: 'https://www.youtube.com/embed/2oYdc8KcQnk'
+            XERO: 'https://www.youtube.com/embed/IplJd7tGWBk'
         }
     }
 };
@@ -258,15 +264,13 @@ const content: ContentConfiguration = {
                 customFieldPlaceholderName: 'Placeholder name',
                 customFieldType: 'Field type',
                 customFieldCreateandSave: 'Create and save',
-                userId: 'user ID',
-                companyId: 'company ID',
-                userPassword: 'User password',
-                password: 'password',
                 tenantMapping: 'Tenant Mapping',
                 descriptionText: 'of the description field'
             },
             configuration: {
                 connector: {
+                    configurationHeaderText: 'Connect to Xero Tenant',
+                    configurationSubHeaderText: 'Connect to the Xero Tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Xero Tenant cannot be changed once the configuration steps are complete.',
                     stepName: 'Connect to Xero',
                     subLabel: 'Expenses will be posted to the Xero Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
                 },
@@ -275,18 +279,10 @@ const content: ContentConfiguration = {
                     headerText: '',
                     contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
                     corporateCard: {
-                        cccExpensePaymentType: 'Set the default expense payment type as?',
-                        cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
-                        creditCardVendor: 'Set the default credit card vendor as',
-                        creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
-                        chargeCard: 'Set the default charge card',
-                        chargeCardPlaceholder: 'Select a charge card',
-                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Xero will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
-                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
-                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
-                        employeeFieldMapping: 'How are your employees represented in Xero?',
-                        creditCard: 'To which general ledger account should the expenses be credited to?',
-                        creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
+                        cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
+                        creditCardExportTypeSubLabel: '',
+                        expenseState: '',
+                        creditCardExpenseSubLabel: ''
                     }
                 },
                 importSetting: {
@@ -301,7 +297,8 @@ const content: ContentConfiguration = {
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
                     importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants',
-                    notes: 'NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.'
+                    notes: 'NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.',
+                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
@@ -313,16 +310,7 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     setDescriptionField: 'Set the description field in Xero',
                     dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.',
-                    location: 'location',
-                    department: 'department',
-                    project: 'project',
-                    class: 'class',
-                    item: 'item'
-                },
-                done: {
-                    ctaText: '',
-                    hintText: ''
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
                 }
             }
         },
@@ -389,7 +377,9 @@ const content: ContentConfiguration = {
                     department: 'Department',
                     project: 'Project',
                     class: 'Class',
-                    item: 'Item'
+                    item: 'Item',
+                    customPreferencesLabel: 'Other Preferences',
+                    customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'
                 },
                 done: {
                     ctaText: '',
@@ -422,7 +412,7 @@ const content: ContentConfiguration = {
                     accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.',
                     creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report).',
-                    journalOptionLabel: 'Name in Journal Entry (CCC)',
+                    journalOptionLabel: 'Name in Journal Entry',
                     journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
                 }
             },
@@ -520,50 +510,41 @@ const content: ContentConfiguration = {
                 customFieldPlaceholderName: 'Placeholder name',
                 customFieldType: 'Field type',
                 customFieldCreateandSave: 'Create and save',
-                userId: 'user ID',
-                companyId: 'company ID',
-                userPassword: 'User password',
-                password: 'password',
                 tenantMapping: 'Tenant Mapping',
                 descriptionText: 'of the description field'
             },
             configuration: {
                 connector: {
+                    configurationHeaderText: 'Connect to Xero tenant',
+                    configurationSubHeaderText: 'Connect to the Xero tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Xero tenant cannot be changed once the configuration steps are complete.',
                     stepName: 'Connect to Xero',
-                    subLabel: 'Expenses will be posted to the Xero Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
+                    subLabel: 'Expenses will be posted to the Xero tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or tenant mapping.'
                 },
                 exportSetting: {
                     stepName: 'Export settings',
                     headerText: '',
                     contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
                     corporateCard: {
-                        cccExpensePaymentType: 'Set the default expense payment type as?',
-                        cccExpensePaymentTypeSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
-                        creditCardVendor: 'Set the default credit card vendor as',
-                        creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
-                        chargeCard: 'Set the default charge card',
-                        chargeCardPlaceholder: 'Select a charge card',
-                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Xero will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
-                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
-                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
-                        employeeFieldMapping: 'How are your employees represented in Xero?',
-                        creditCard: 'To which general ledger account should the expenses be credited to?',
-                        creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
+                        cccExpenseBankAccountSubLabel: '',
+                        creditCardExportTypeSubLabel: '',
+                        expenseState: '',
+                        creditCardExpenseSubLabel: ''
                     }
                 },
                 importSetting: {
                     stepName: 'Import Settings',
                     headerText: '',
                     contentText: '',
-                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
-                    importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
-                    importCustomersLabel: 'Import Customers from Xero',
-                    importCustomersSubLabel: 'The Customers in Xero will be imported as Projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
-                    taxCodeLabel: 'Import Tax from Xero',
-                    taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
-                    defaultTaxCodeLabel: 'Select Default Tax Code',
-                    importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants',
-                    notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName
+                    importCategoriesLabel: 'Import the chart of accounts as categories in ',
+                    importCategoriesSubLabel: 'Imported account will be available as categories in ' + brandingConfig.brandName + '.',
+                    importCustomersLabel: 'Import customers from Xero',
+                    importCustomersSubLabel: 'The customers in Xero will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
+                    taxCodeLabel: 'Import tax from Xero',
+                    taxCodeSubLabel: 'The imported tax codes from Xero will be set as tax group in ',
+                    defaultTaxCodeLabel: 'Select default tax code',
+                    importSuppliersAsMerchantsLabel: 'Import suppliers from Xero as merchants',
+                    notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName,
+                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
@@ -575,16 +556,7 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     setDescriptionField: 'Set the description field in Xero',
                     dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.',
-                    location: 'location',
-                    department: 'department',
-                    project: 'project',
-                    class: 'class',
-                    item: 'item'
-                },
-                done: {
-                    ctaText: '',
-                    hintText: ''
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
                 }
             }
         },
@@ -651,7 +623,9 @@ const content: ContentConfiguration = {
                     department: 'department',
                     project: 'project',
                     class: 'class',
-                    item: 'item'
+                    item: 'item',
+                    customPreferencesLabel: 'Custom preferences',
+                    customPreferencesSubLabel: 'In this section, you have the flexibility to tailor the data export process to Sage Intacct according to your specific needs and preferences.'
                 },
                 done: {
                     ctaText: '',
@@ -684,7 +658,7 @@ const content: ContentConfiguration = {
                     accountsPayableSubLabel: ' to the selected accounts payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
                     creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (expense) or as a grouped report with multiple line items (expense report).',
-                    journalOptionLabel: 'Name in journal entry (ccc)',
+                    journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
                 }
             },

@@ -6,7 +6,7 @@
         <div class="tw-pl-16-px">
             <p class="tw-text-12-px tw-text-form-label-text-color tw-font-nav-link-font-weight tw-pb-8-px">Status</p>
         </div>
-        <div class="tw-border-l tw-border-l-separator tw-pl-16-px">
+        <div class="tw-border-l tw-border-l-qf-divider tw-pl-16-px">
             <p-dropdown appendTo="body" [options]="mappingsFilter" class="mappingFilterDropdown"  formControlName="filterOption" optionLabel="label"
                 [placeholder]="brandingContent.filterPlaceholder" [ngClass]="{'selectedItem': form.controls.filterOption.value !== null, 'filterDropdown': form.controls.filterOption.value === '', 'mapping-filter-applied': form.value.filterOption}">
                 <ng-template let-item pTemplate="item">
@@ -19,7 +19,7 @@
             </p-dropdown>
         </div>
     </div>
-    <div *ngIf="!isAlphabetFilterHidden" class="tw-pl-16-px tw-pb-6-px tw-text-14-px tw-items-center tw-justify-center">
+    <div *ngIf="!isAlphabetFilterHidden" class="tw-pl-16-px tw-pb-12-px tw-text-14-px tw-items-center tw-justify-center">
         <div class="tw-flex">
             <p class="tw-pr-8-px tw-cursor-pointer" [ngClass]="selectedAlphabeticalFilter === 'All' ? 'tw-text-text-secondary': 'tw-text-text-muted'" (click)="filterOptionUpdateHandler('All')">
                 All

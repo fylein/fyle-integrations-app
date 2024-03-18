@@ -81,6 +81,19 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   ];
 
+  coPreviewImagePaths =[
+    {
+      'EXPENSE_REPORT': '',
+      'BILL': '',
+      'JOURNAL_ENTRY': ''
+    },
+    {
+      'BILL': 'assets/illustrations/sageIntacct/coBill.svg',
+      'JOURNAL_ENTRY': 'assets/illustrations/sageIntacct/coJournalEntry.svg',
+      'CHARGE_CARD_TRANSACTION': 'assets/illustrations/sageIntacct/coChargeCard.svg'
+    }
+  ];
+
   expenseGroupingFieldOptions: ExportSettingFormOption[] = [
     {
       label: 'Expense',
@@ -341,7 +354,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       cccExportTypeControl.valueChanges.subscribe((cccExport) => {
         if (cccExport === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
           cccExportGroup?.disable();
-          cccExportGroup?.setValue('Expense');
+          cccExportGroup?.setValue(this.expenseGroupingFieldOptions[0].value);
         } else {
           cccExportGroup?.enable();
         }
@@ -406,7 +419,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       }
 
       if (this.exportSettings?.configurations?.corporate_credit_card_expenses_object === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
-        this.exportSettingsForm.controls.cccExportGroup.setValue('Expense');
+        this.exportSettingsForm.controls.cccExportGroup.setValue(this.expenseGroupingFieldOptions[0].value);
         this.exportSettingsForm.controls.cccExportGroup.disable();
       }
       this.createReimbursableExpenseWatcher();

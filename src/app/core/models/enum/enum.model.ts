@@ -37,7 +37,8 @@ export enum InAppIntegration {
 
 export enum ToastSeverity {
   SUCCESS = 'success',
-  ERROR = 'error'
+  ERROR = 'error',
+  INFO = 'info'
 }
 
 export enum UpdateEvent {
@@ -179,6 +180,7 @@ export enum XeroOnboardingState {
 
 export enum NetsuiteOnboardingState {
   CONNECTION = 'CONNECTION',
+  SUBSIDIARY = 'SUBSDIARY',
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
@@ -396,7 +398,8 @@ export enum MappingState {
 }
 
 export enum AccountingField {
-  ACCOUNT = 'ACCOUNT'
+  ACCOUNT = 'ACCOUNT',
+  CONTACT = 'CONTACT'
 }
 
 export enum Sage300Field {
@@ -446,7 +449,11 @@ export enum TaskLogType {
   CREATING_JOURNAL_ENTRIES = 'CREATING_JOURNAL_ENTRIES',
   FETCHING_EXPENSES = 'FETCHING_EXPENSES',
   CREATING_BILLS = 'CREATING_BILLS',
-  CREATING_REIMBURSEMENT = 'CREATING_REIMBURSEMENT'
+  CREATING_REIMBURSEMENT = 'CREATING_REIMBURSEMENT',
+  CREATING_BANK_TRANSACTION = 'CREATING_BANK_TRANSACTION',
+  CREATING_PAYMENT = 'CREATING_PAYMENT',
+  CREATING_BILL = 'CREATING_BILL',
+  FETCHING_EXPENSE = 'FETCHING_EXPENSE'
 }
 
 export enum TaskLogState {
@@ -681,7 +688,7 @@ export enum TrackingApp {
   BUSINESS_CENTRAL = 'BC',
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
-  TRAVELPERK = 'TP',
+  TRAVELPERK = 'TP'
 }
 
 export enum ReimbursableImportState {

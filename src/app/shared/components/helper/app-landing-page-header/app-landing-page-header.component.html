@@ -40,7 +40,7 @@
                 <button *ngIf="isIntegrationConnected && (appName === AppName.BAMBOO_HR || appName === AppName.TRAVELPERK)" pButton type="button" class="p-button danger-outline" (click)="disconnect()">
                     {{ isConnectionInProgress ? 'Disconnecting' : 'Disconnect' }}
                 </button>
-                <button *ngIf="!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL || appName === AppName.XERO)" pButton type="button" class="p-button-raised" (click)="connect()">
+                <button *ngIf="!isIntegrationConnected && (appName === AppName.QBD || appName === AppName.NETSUITE || appName === AppName.INTACCT || appName === AppName.SAGE300 || appName === AppName.BUSINESS_CENTRAL)" pButton type="button" class="p-button-raised" (click)="connect()">
                     {{buttonText}}
                     <app-svg-icon *ngIf="appName === AppName.QBD && brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-tail-right-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-pl-10-px tw-pt-2-px !tw-text-12-px'"></app-svg-icon>
                 </button>
@@ -51,6 +51,11 @@
                         (click)="initiateOAuth()"
                         (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
                         (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
+                </div>
+                <div *ngIf="showXeroButton" class="tw-cursor-pointer">
+                    <img
+                        [src]="xeroConnectButtonSource"
+                        (click)="initiateOAuth()">
                 </div>
             </div>
         </div>

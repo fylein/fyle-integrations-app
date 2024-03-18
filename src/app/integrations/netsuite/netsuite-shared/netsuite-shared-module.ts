@@ -4,6 +4,7 @@ import { NetsuiteExportSettingsComponent } from './netsuite-export-settings/nets
 import { NetsuiteImportSettingsComponent } from './netsuite-import-settings/netsuite-import-settings.component';
 import { NetsuiteAdvancedSettingsComponent } from './netsuite-advanced-settings/netsuite-advanced-settings.component';
 import { NetsuiteConnectorComponent } from './netsuite-connector/netsuite-connector.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -15,7 +16,8 @@ import { NetsuiteConnectorComponent } from './netsuite-connector/netsuite-connec
     NetsuiteConnectorComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ]
 })
 export class NetsuiteSharedModule { }

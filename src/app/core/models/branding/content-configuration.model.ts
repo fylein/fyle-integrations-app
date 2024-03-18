@@ -17,10 +17,6 @@ export type ContentConfiguration = {
                 customFieldPlaceholderName: string;
                 customFieldType: string;
                 customFieldCreateandSave: string;
-                userId: string;
-                companyId: string;
-                userPassword: string;
-                password: string;
                 tenantMapping: string;
                 descriptionText: string;
             },
@@ -28,24 +24,18 @@ export type ContentConfiguration = {
                 connector: {
                     stepName: string;
                     subLabel: string;
+                    configurationHeaderText: string;
+                    configurationSubHeaderText: string;
                 },
                 exportSetting: {
                     stepName: string;
                     headerText: string;
                     contentText: string;
                     corporateCard: {
-                        cccExpensePaymentType: string;
-                        cccExpensePaymentTypeSubLabel: string;
-                        creditCardVendor: string;
-                        creditCardVendorSublabel: string;
-                        chargeCard: string;
-                        chargeCardPlaceholder: string;
-                        chargeCardSublabel: string;
-                        cccExpenseState: string;
-                        cccExportGroup: string;
-                        employeeFieldMapping: string;
-                        creditCard: string;
-                        creditCardSubLabel: string;
+                        cccExpenseBankAccountSubLabel: string;
+                        creditCardExportTypeSubLabel: string;
+                        expenseState: string;
+                        creditCardExpenseSubLabel: string
                     }
                 },
                 importSetting: {
@@ -60,7 +50,8 @@ export type ContentConfiguration = {
                     taxCodeSubLabel: string;
                     defaultTaxCodeLabel: string;
                     importSuppliersAsMerchantsLabel: string;
-                    notes: string
+                    notes: string,
+                    toggleToastMessage: string
                 },
                 advancedSettings: {
                     stepName: string;
@@ -73,15 +64,6 @@ export type ContentConfiguration = {
                     setDescriptionField: string;
                     dfvLabel: string;
                     dfvSubLabel: string;
-                    location: string;
-                    department: string;
-                    project: string;
-                    class: string;
-                    item: string;
-                },
-                done: {
-                    ctaText: string;
-                    hintText: string;
                 }
             },
         },
@@ -149,6 +131,8 @@ export type ContentConfiguration = {
                     project: string;
                     class: string;
                     item: string;
+                    customPreferencesLabel: string;
+                    customPreferencesSubLabel: string;
                 },
                 done: {
                     ctaText: string;

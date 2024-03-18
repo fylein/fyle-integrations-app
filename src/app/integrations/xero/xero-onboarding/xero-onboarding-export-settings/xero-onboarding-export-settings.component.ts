@@ -11,7 +11,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 })
 export class XeroOnboardingExportSettingsComponent implements OnInit {
 
-  brandingContent = brandingContent.configuration.exportSetting;
+  brandingContent = brandingContent.xero.configuration.exportSetting;
 
   onboardingSteps: OnboardingStepper[] = new XeroOnboardingModel().getOnboardingSteps(this.brandingContent.stepName, this.workspaceService.getOnboardingState());
 
