@@ -326,14 +326,14 @@
                 </app-clone-setting-field>
             </div>
 
-            <div class="clone-setting--field">
+            <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object">
                 <app-clone-setting-field
                     [iconSource]="'user-plus'"
-                    [label]="'Auto-Create Vendors'"
+                    [label]="'Auto create Contacts'"
                     [form]="advancedSettingForm"
                     [formControllerName]="'autoCreateVendors'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in Xero already.'">
+                    [tooltipText]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a Contact if a match for an employee in ' + brandingConfig.brandName + ' does not exist in Xero already.'">
                 </app-clone-setting-field>
             </div>
     
@@ -370,33 +370,33 @@
                     [form]="advancedSettingForm"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="brandingConfig.brandName + ' will auto-create a new vendor in Xero if a merchant added by an employee does not have a corresponding match in Xero'">
+                    [tooltipText]="'While exporting corporate card expenses from ' + brandingConfig.brandName + ', the integration will auto-create a contact in Xero if a merchant added in ' + brandingConfig.brandName + ' does not exist in Xero.'">
                 </app-clone-setting-field>
             </div>
         </div>
         <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? (ConfigurationCtaText.SAVE_AND_CONTINUE) : ConfigurationCtaText.SAVING" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
         <app-configuration-confirmation-dialog
-    (warningAccepted)="acceptWarning($event)"
-    [isWarningVisible]="isWarningDialogVisible"
-    [event]="warningEvent"
-    [headerText]="warningHeaderText"
-    [contextText]="warningContextText"
-    [confirmBtnText]="primaryButtonText"
-    [showSecondaryCTA]="true">
-</app-configuration-confirmation-dialog>
+            (warningAccepted)="acceptWarning($event)"
+            [isWarningVisible]="isWarningDialogVisible"
+            [event]="warningEvent"
+            [headerText]="warningHeaderText"
+            [contextText]="warningContextText"
+            [confirmBtnText]="primaryButtonText"
+            [showSecondaryCTA]="true">
+        </app-configuration-confirmation-dialog>
 
-<app-configuration-custom-field-creation-dialog
-    [customFieldForm]="customFieldForm"
-    [showCustomFieldCreationDialog]="showCustomFieldDialog"
-    (saveCustomFieldFn)="saveFyleExpenseField()"
-    (closeModelFn)="closeModel()">
-</app-configuration-custom-field-creation-dialog>
+        <app-configuration-custom-field-creation-dialog
+            [customFieldForm]="customFieldForm"
+            [showCustomFieldCreationDialog]="showCustomFieldDialog"
+            (saveCustomFieldFn)="saveFyleExpenseField()"
+            (closeModelFn)="closeModel()">
+        </app-configuration-custom-field-creation-dialog>
 
-<app-preview-dialog *ngIf="isPreviewDialogVisible"
-    [isPreviewDialogVisible]="true"
-    [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
-    [header]="'Preview'">
-</app-preview-dialog>
+        <app-preview-dialog *ngIf="isPreviewDialogVisible"
+            [isPreviewDialogVisible]="true"
+            [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+            [header]="'Preview'">
+        </app-preview-dialog>
 
     </div>
 </div>
