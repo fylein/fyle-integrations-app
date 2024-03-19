@@ -230,12 +230,13 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
-      if (this.exportSettings.configuration.reimbursable_expenses_object) {
+      console.log('thisd', this.exportSettings)
+      if (this.exportSettings.configuration && this.exportSettings.configuration.reimbursable_expenses_object) {
         this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.configuration.reimbursable_expenses_object);
         this.helperService.setOrClearValidators(this.exportSettings.configuration.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
       }
 
-      if (this.exportSettings.configuration.corporate_credit_card_expenses_object) {
+      if (this.exportSettings.configuration && this.exportSettings.configuration.corporate_credit_card_expenses_object) {
         this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], this.exportSettings.configuration.corporate_credit_card_expenses_object);
         this.helperService.setOrClearValidators(this.exportSettings.configuration.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
