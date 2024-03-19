@@ -24,7 +24,7 @@
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav {
     background-color: transparent;
-    @apply tw-border-b tw-border-b-nav-tabs-active-border tw-pl-14-px #{!important};
+    @apply tw-border-b tw-border-b-nav-tabs-active-border #{!important};
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {

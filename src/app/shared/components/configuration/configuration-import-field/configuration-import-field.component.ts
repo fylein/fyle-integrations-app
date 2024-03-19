@@ -42,8 +42,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Output() showWarningForDependentFields = new EventEmitter();
 
-  filteredFyleFields: FyleField[];
-
   showDependentFieldWarning: boolean;
 
   showAddButton: any;
@@ -119,13 +117,14 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  getOptions(expenseField: AbstractControl): FyleField[]{
+  getOptions(expenseField: AbstractControl): FyleField[] {
     if (expenseField.value.destination_field === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.value.import_to_fyle) {
-      return this.filteredFyleFields;
+      return [{ attribute_type: 'DISABLED_XERO_SOURCE_FIELD', display_name: 'Project', is_dependent: false }];
     } else if (expenseField.value.source_field === 'CATEGORY') {
-      return this.fyleFieldOptions;
+      return this.fyleFieldOptions.filter(option => option.attribute_type === 'CATEGORY');
     }
-    return this.fyleFieldOptions;
+
+    return this.fyleFieldOptions.filter(option => option.attribute_type !== 'CATEGORY');
   }
 
   removeFilter(expenseField: AbstractControl) {
@@ -155,7 +154,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filteredFyleFields = this.appName !== AppName.XERO ? this.fyleFieldOptions.filter(option => option.attribute_type !== 'CATEGORY') : [{ attribute_type: 'DISABLED_XERO_SOURCE_FIELD', display_name: 'Project', is_dependent: false }];
   }
 
 }
