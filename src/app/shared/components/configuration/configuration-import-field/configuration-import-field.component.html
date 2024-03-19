@@ -72,7 +72,7 @@
                         {{appName}} Fields should be unique
                     </p>
                 </div>
-                    <div [ngClass]="{'tw-pt-14-px': brandingConfig.brandId === 'co', 'tw-pt-18-px': brandingConfig.brandId !== 'co'}">
+                    <div [ngClass]="{'tw-pt-16-px': brandingConfig.brandId === 'co', 'tw-pt-18-px': brandingConfig.brandId !== 'co'}">
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
                     <div class="tw-w-28-vw">
@@ -90,7 +90,7 @@
                                 <p>
                                     {{ item.display_name }}
                                 </p>
-                                <app-svg-icon *ngIf="expenseField.value.source_field !== 'CATEGORY' || expenseField.value.destination_field !== 'CUSTOMER'" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                                <app-svg-icon *ngIf="(expenseField.value.source_field !== 'CATEGORY') && (expenseField.value.destination_field !== 'CUSTOMER' && appName === AppName.XERO)" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                       </p-dropdown>
                       <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
