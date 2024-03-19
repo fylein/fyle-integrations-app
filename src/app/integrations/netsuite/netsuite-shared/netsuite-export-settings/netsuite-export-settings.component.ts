@@ -47,26 +47,11 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   vendors: DefaultDestinationAttribute[];
 
-  isImportItemsEnabled: boolean;
+  reimbursableExportTypes: SelectFormOption[] =  NetSuiteExportSettingModel.getReimbursableExportTypeOptions();
 
-  reimbursableExportTypes: SelectFormOption[];
+  autoMapEmployeeOptions: SelectFormOption[] = NetSuiteExportSettingModel.getAutoMapEmplyeeOptions();
 
-  autoMapEmployeeOptions: ExportSettingFormOption[] = [
-    { label: 'Based on Employee E-mail ID', value: 'EMAIL' },
-    { label: 'Based on Employee Name', value: 'NAME' },
-    { label: 'Based on Employee Code', value: 'EMPLOYEE_CODE' }
-  ];
-
-  employeeFieldOptions: ExportSettingFormOption[] = [
-    {
-      label: 'Employee',
-      value: FyleField.EMPLOYEE
-    },
-    {
-      label: 'Vendor',
-      value: FyleField.VENDOR
-    }
-  ];
+  employeeFieldOptions: SelectFormOption[] = NetSuiteExportSettingModel.getEmployeeFieldOptions();
 
   creditCardExportTypes = NetSuiteExportSettingModel.getCreditCardExportTypes();
 
@@ -211,8 +196,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         if (this.isOnboarding) {
           this.workspaceService.setOnboardingState(NetsuiteOnboardingState.IMPORT_SETTINGS);
           this.router.navigate([`/integrations/netsuite/onboarding/import_settings`]);
-        } else {
-          this.router.navigate(['/integrations/netsuite/main/dashboard']);
         }
       }, () => {
         this.isSaveInProgress = false;
@@ -236,7 +219,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     }).subscribe(({exportSetting}) => {
       this.exportSettings = exportSetting;
 
-      this.reimbursableExportTypes = NetSuiteExportSettingModel.getReimbursableExportTypeOptions();
       this.showNameInJournalOption = this.exportSettings.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.exportSettingForm = NetSuiteExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);

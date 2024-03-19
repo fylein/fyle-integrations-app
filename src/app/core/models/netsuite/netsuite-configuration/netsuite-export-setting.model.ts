@@ -3,7 +3,7 @@ import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
-import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
 import { brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingFormOption } from "../../intacct/intacct-configuration/export-settings.model";
 import { disable } from "@rxweb/reactive-form-validators";
@@ -27,7 +27,7 @@ export type NetsuiteExportSettingGeneralMapping = {
 
 
 export type NetSuiteExportSettingPost = {
-  expense_group_settings: ExpenseGroupSettingPost,
+    expense_group_settings: ExpenseGroupSettingPost,
     configuration: NetsuiteExportSettingWorkspaceGeneralSettingPost,
     general_mappings: NetsuiteExportSettingGeneralMapping
   }
@@ -42,6 +42,37 @@ export type NetSuiteExportSettingGet = {
 
 
 export class NetSuiteExportSettingModel extends ExportSettingModel {
+
+    static getEmployeeFieldOptions(): SelectFormOption[] {
+      return [
+        {
+          label: 'Employee',
+          value: FyleField.EMPLOYEE
+        },
+        {
+          label: 'Vendor',
+          value: FyleField.VENDOR
+        }
+      ];
+    }
+
+    static getAutoMapEmplyeeOptions(): SelectFormOption[] {
+      return  [
+        {
+          label: 'Based on Employee E-mail ID', 
+          value: 'EMAIL'
+        },
+        {
+          label: 'Based on Employee Name', 
+          value: 'NAME'
+        },
+        {
+          label: 'Based on Employee Code',
+          value: 'EMPLOYEE_CODE'
+        }
+      ];
+    }
+
     static getReimbursableExportTypeOptions(): SelectFormOption[] {
       return [
         {
