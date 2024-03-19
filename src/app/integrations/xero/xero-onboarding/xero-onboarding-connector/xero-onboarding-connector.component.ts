@@ -102,7 +102,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
         this.isCloneSettingsDisabled = true;
       } else {
         this.isContinueDisabled = false;
-        this.constructPayloadAndSave()
+        this.constructPayloadAndSave();
       }
     });
   }
@@ -195,6 +195,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
           this.router.navigate(['/integrations/xero/onboarding/export_settings']);
         });
       });
+    } else if (!this.isContinueDisabled && this.xeroCompanyName){
+      this.checkCloneSettingsAvailablity();
     }
   }
 
