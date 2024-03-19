@@ -40,7 +40,7 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   exportLogForm: FormGroup;
 
-  isCalendarVisible: boolean;
+  hideCalendar: boolean;
 
   accountingExports: AccountingExportList [];
 
@@ -98,9 +98,7 @@ export class QboCompleteExportLogComponent implements OnInit {
   }
 
   private getAccountingExports(limit: number, offset:number) {
-
-      this.isLoading = true;
-
+    this.isLoading = true;
 
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
@@ -134,12 +132,17 @@ export class QboCompleteExportLogComponent implements OnInit {
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
       } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
 
         this.isDateSelected = true;
+
+        setTimeout(() => {
+          this.hideCalendar = false;
+        }, 10);
 
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
