@@ -195,7 +195,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   private updateCCCExpenseGroupingDateOptions(selectedValue: NetSuiteCorporateCreditCardExpensesObject): void {
-    if ([NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT, NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT].includes(selectedValue)) {
+    if (selectedValue === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
       this.cccExpenseGroupingDateOptions = NetSuiteExportSettingModel.getAdditionalCreditCardExpenseGroupingDateOptions();
       this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
       this.exportSettingForm.controls.creditCardExportGroup.disable();
@@ -207,12 +207,12 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.value.creditCardExportType && [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT, NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT].includes(this.exportSettingForm.value.creditCardExportType)) {
+    if (this.exportSettingForm.value.creditCardExportType && (NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE === this.exportSettingForm.value.creditCardExportType)) {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     }
 
     this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: NetSuiteCorporateCreditCardExpensesObject) => {
-      this.showNameInJournalOption = selectedValue === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT ? true : false;
+      this.showNameInJournalOption = selectedValue === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.updateCCCExpenseGroupingDateOptions(selectedValue);
     });
