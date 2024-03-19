@@ -254,16 +254,16 @@ export class XeroImportSettingsComponent implements OnInit {
       this.workspaceGeneralSettings = response[4];
 
       this.isCustomerPresent = this.xeroExpenseFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false;
+      
+      // This is only for Fyle
+      if (brandingConfig.brandId !== 'co') {
+        this.xeroExpenseFields = this.xeroExpenseFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
+      }
 
       this.importSettingsForm = XeroImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent);
 
       if (response[5] && response[5].country !== 'US') {
         this.isTaxGroupSyncAllowed = true;
-      }
-
-      // This is only for Fyle
-      if (brandingConfig.brandId !== 'co') {
-        this.xeroExpenseFields = this.xeroExpenseFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
       }
 
       this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
