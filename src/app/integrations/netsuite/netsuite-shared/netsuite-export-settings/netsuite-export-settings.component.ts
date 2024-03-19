@@ -247,7 +247,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
-      console.log('thisd', this.exportSettings)
       if (this.exportSettings.configuration && this.exportSettings.configuration.reimbursable_expenses_object) {
         this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], this.exportSettings.configuration.reimbursable_expenses_object);
         this.helperService.setOrClearValidators(this.exportSettings.configuration.reimbursable_expenses_object, exportSettingValidatorRule.reimbursableExpense, this.exportSettingForm);
