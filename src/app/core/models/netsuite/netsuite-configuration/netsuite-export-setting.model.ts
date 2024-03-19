@@ -59,11 +59,11 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
     static getAutoMapEmplyeeOptions(): SelectFormOption[] {
       return  [
         {
-          label: 'Based on Employee E-mail ID', 
+          label: 'Based on Employee E-mail ID',
           value: 'EMAIL'
         },
         {
-          label: 'Based on Employee Name', 
+          label: 'Based on Employee Name',
           value: 'NAME'
         },
         {
