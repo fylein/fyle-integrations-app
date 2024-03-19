@@ -135,8 +135,9 @@
                             [subLabel]="brandingContent.corporateCard.cccExpenseBankAccountSubLabel"
                             [label]="'To which Bank Account should the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                             [destinationAttributes]="bankAccounts"
-                            [optionLabel]="'name'"
+                            [optionLabel]="'value'"
                             [iconPath]="'list'"
+                            [isAdvanceSearchEnabled]="true"
                             [placeholder]="'Select bank account'"
                             [formControllerName]="'bankAccount'">
                         </app-configuration-select-field>
