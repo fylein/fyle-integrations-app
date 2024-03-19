@@ -254,7 +254,7 @@ export class XeroImportSettingsComponent implements OnInit {
       this.workspaceGeneralSettings = response[4];
 
       this.isCustomerPresent = this.xeroExpenseFields.findIndex((data:IntegrationField) => data.attribute_type === XeroFyleField.CUSTOMER) !== -1 ? true : false;
-      
+
       // This is only for Fyle
       if (brandingConfig.brandId !== 'co') {
         this.xeroExpenseFields = this.xeroExpenseFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
