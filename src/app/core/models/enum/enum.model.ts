@@ -83,7 +83,8 @@ export enum AppName {
   SAGE300 = 'Sage 300 CRE',
   QBO = 'QuickBooks Online',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
-  NETSUITE = 'NetSuite'
+  NETSUITE = 'NetSuite',
+  XERO = 'Xero'
 }
 
 export enum AppNameInService {
@@ -396,7 +397,8 @@ export enum MappingState {
 }
 
 export enum AccountingField {
-  ACCOUNT = 'ACCOUNT'
+  ACCOUNT = 'ACCOUNT',
+  CONTACT = 'CONTACT'
 }
 
 export enum Sage300Field {
@@ -446,7 +448,11 @@ export enum TaskLogType {
   CREATING_JOURNAL_ENTRIES = 'CREATING_JOURNAL_ENTRIES',
   FETCHING_EXPENSES = 'FETCHING_EXPENSES',
   CREATING_BILLS = 'CREATING_BILLS',
-  CREATING_REIMBURSEMENT = 'CREATING_REIMBURSEMENT'
+  CREATING_REIMBURSEMENT = 'CREATING_REIMBURSEMENT',
+  CREATING_BANK_TRANSACTION = 'CREATING_BANK_TRANSACTION',
+  CREATING_PAYMENT = 'CREATING_PAYMENT',
+  CREATING_BILL = 'CREATING_BILL',
+  FETCHING_EXPENSE = 'FETCHING_EXPENSE'
 }
 
 export enum TaskLogState {
@@ -681,7 +687,7 @@ export enum TrackingApp {
   BUSINESS_CENTRAL = 'BC',
   QBD = 'QBD',
   BAMBOO_HR = 'BHR',
-  TRAVELPERK = 'TP',
+  TRAVELPERK = 'TP'
 }
 
 export enum ReimbursableImportState {
