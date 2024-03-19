@@ -101,7 +101,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
         this.isContinueDisabled = false;
         this.isCloneSettingsDisabled = true;
       } else {
-        this.router.navigate(['/integrations/xero/onboarding/export_settings']);
+        this.isContinueDisabled = false;
+        this.constructPayloadAndSave()
       }
     });
   }
@@ -191,11 +192,9 @@ export class XeroOnboardingConnectorComponent implements OnInit {
           this.showOrHideDisconnectXero();
           this.isXeroConnected = true;
           this.xeroCompanyName = response.tenant_name;
-          this.checkCloneSettingsAvailablity();
+          this.router.navigate(['/integrations/xero/onboarding/export_settings']);
         });
       });
-    } else if (!this.isContinueDisabled && this.xeroCompanyName){
-      this.checkCloneSettingsAvailablity();
     }
   }
 
