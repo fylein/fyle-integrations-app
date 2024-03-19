@@ -35,8 +35,6 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   importSettingForm: FormGroup;
 
-  netsuiteConfiguration: NetsuiteConfiguration;
-
   isTaxGroupSyncAllowed: boolean;
 
   taxCodes: DefaultDestinationAttribute[];
@@ -94,11 +92,9 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     });
   }
 
-
   navigateToPreviousStep(): void {
   this.router.navigate([`/integrations/netsuite/onboarding/export_settings`]);
   }
-
 
   refreshDimensions() {
     this.helperService.refreshNetsuiteDimensions().subscribe();
@@ -109,15 +105,13 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     forkJoin([
       this.importSettingService.getImportSettings(),
       this.mappingService.getFyleFields(),
-      this.workspaceService.getConfiguration(),
       this.netsuiteConnectorService.getSubsidiaryMapping(),
       this.importSettingService.getNetsuiteFields(),
       this.netsuiteExportSettingService.getExportSettings()
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, netsuiteConfiguration, netsuiteCredentials, netsuiteFields, exportSetting]) => {
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, exportSetting]) => {
       this.importSettings = importSettingsResponse;
-      this.netsuiteConfiguration = netsuiteConfiguration;
 
-      if (netsuiteCredentials && netsuiteCredentials.country_name !== 'US') {
+      if (subsidiaryMapping && subsidiaryMapping.country_name !== 'US') {
         this.isTaxGroupSyncAllowed = true;
       }
 
