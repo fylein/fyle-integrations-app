@@ -75,6 +75,14 @@ export class DashboardComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
+  dropDownWatcher() {
+    if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
+      this.isCalendarVisible = false;
+    } else {
+      this.isCalendarVisible = true;
+    }
+  }
+
   showCalendar(event: Event) {
     event.stopPropagation();
     this.isCalendarVisible = true;
