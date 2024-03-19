@@ -24,6 +24,8 @@ export class IntacctCompletedExportLogComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  hideCalendar: boolean;
+
   appName: AppName = AppName.INTACCT;
 
   accountingExports: AccountingExportList [];
@@ -146,11 +148,16 @@ export class IntacctCompletedExportLogComponent implements OnInit {
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
         } else if (dateRange.length && dateRange[1]) {
+          this.hideCalendar = true;
           this.selectedDateFilter = {
             startDate: dateRange[0],
             endDate: dateRange[1]
           };
           this.isDateSelected = true;
+
+          setTimeout(() => {
+            this.hideCalendar = false;
+          }, 10);
 
           this.trackDateFilter('existing', this.selectedDateFilter);
           this.getAccountingExports(paginator.limit, paginator.offset);

@@ -6,6 +6,7 @@
     <div>
         <app-export-log-filter *ngIf="totalCount > 0 || (isDateSelected || searchQuery)"
             [exportLogForm]="skipExportLogForm"
+            [hideCalendar]="hideCalendar"
             [dateOptions]="dateOptions"
             (handleSimpleSearch)="handleSimpleSearch($event)">
         </app-export-log-filter>

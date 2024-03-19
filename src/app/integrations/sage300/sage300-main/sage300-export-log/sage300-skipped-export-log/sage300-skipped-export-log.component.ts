@@ -41,6 +41,8 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   selectedDateFilter: SelectedDateFilter | null;
 
+  hideCalendar: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
@@ -107,12 +109,16 @@ export class Sage300SkippedExportLogComponent implements OnInit {
         this.selectedDateFilter = null;
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
 
         this.trackDateFilter('existing', this.selectedDateFilter);
+        setTimeout(() => {
+          this.hideCalendar = false;
+        }, 10);
         this.getSkippedExpenses(paginator.limit, paginator.offset);
         this.dateOptions = AccountingExportModel.getDateOptionsV2();
       }

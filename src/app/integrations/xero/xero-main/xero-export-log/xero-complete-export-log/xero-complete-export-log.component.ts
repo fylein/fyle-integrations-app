@@ -62,6 +62,8 @@ export class XeroCompleteExportLogComponent implements OnInit {
 
   xeroShortCode: string;
 
+  hideCalendar: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private exportLogService: ExportLogService,
@@ -139,12 +141,17 @@ export class XeroCompleteExportLogComponent implements OnInit {
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
       } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
 
         this.isDateSelected = true;
+
+        setTimeout(() => {
+          this.hideCalendar = false;
+        }, 10);
 
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
