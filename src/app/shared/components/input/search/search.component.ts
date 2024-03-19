@@ -64,12 +64,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isSearchFocused = this.form.value[this.formControllerName] ? true : false;
-    if (this.isSearchFocused) {
-      setTimeout(() => {
-        this.search.nativeElement.focus();
-      }, 1);
-    }
     this.searchQueryWatcher();
   }
+
 }

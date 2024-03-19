@@ -40,6 +40,8 @@ export class QboCompleteExportLogComponent implements OnInit {
 
   exportLogForm: FormGroup;
 
+  isCalendarVisible: boolean;
+
   accountingExports: AccountingExportList [];
 
   filteredAccountingExports: AccountingExportList [];
@@ -96,7 +98,10 @@ export class QboCompleteExportLogComponent implements OnInit {
   }
 
   private getAccountingExports(limit: number, offset:number) {
-    this.isLoading = true;
+
+      this.isLoading = true;
+
+
     if (this.limit !== limit) {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
