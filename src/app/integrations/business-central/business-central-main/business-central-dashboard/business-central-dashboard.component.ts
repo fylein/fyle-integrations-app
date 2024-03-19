@@ -23,7 +23,7 @@ export class BusinessCentralDashboardComponent implements OnInit {
 
   appName: AppName = AppName.BUSINESS_CENTRAL;
 
-  isImportInProgress: boolean;
+  isImportInProgress: boolean = true;
 
   isExportInProgress: boolean = false;
 

@@ -26,6 +26,8 @@ export class ExportLogFilterComponent implements OnInit {
 
   isCalendarVisible: boolean;
 
+  @Input() hideCalendar: boolean;
+
   presentDate = new Date().toLocaleDateString();
 
   startDate: Date;
@@ -50,14 +52,6 @@ export class ExportLogFilterComponent implements OnInit {
     });
   }
 
-  dropDownWatcher() {
-    if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
-      this.isCalendarVisible = false;
-    } else {
-      this.isCalendarVisible = true;
-    }
-  }
-
   removeFilter(formField: AbstractControl) {
     (formField as FormGroup).reset();
     event?.stopPropagation();
@@ -73,8 +67,12 @@ export class ExportLogFilterComponent implements OnInit {
       this.startDate = event;
       this.isSelectionStartDate = false;
     } else {
+      this.hideCalendar = true;
       this.endDate = event;
       this.isSelectionStartDate = true;
+      setTimeout(() => {
+        this.hideCalendar = false;
+      }, 10);
     }
   }
 
