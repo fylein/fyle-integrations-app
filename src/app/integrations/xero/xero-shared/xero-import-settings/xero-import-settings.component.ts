@@ -264,7 +264,7 @@ export class XeroImportSettingsComponent implements OnInit {
       }
       // This is only for C1
       if (brandingConfig.brandId === 'co') {
-        this.xeroExpenseFields = response[2]
+        this.xeroExpenseFields = response[2];
       }
 
       this.isProjectMapped = this.importSettings.mapping_settings.findIndex((data) => data.source_field ===  XeroFyleField.PROJECT && data.destination_field !== XeroFyleField.CUSTOMER) !== -1 ? true : false;
