@@ -261,7 +261,13 @@ export enum ExpenseState {
   PAID = 'PAID'
 }
 
+
 export enum CCCExpenseState {
+  PAID = 'PAID',
+  APPROVED = 'APPROVED',
+}
+
+export enum XeroCCCExpenseState {
   PAID = 'PAID',
   APPROVED = 'APPROVED'
 }
@@ -349,6 +355,13 @@ export enum QBDScheduleFrequency {
 export enum QBDFyleField {
   PROJECT = 'PROJECT',
   COST_CENTER = 'COST_CENTER'
+}
+
+export enum XeroFyleField {
+  PROJECT = 'PROJECT',
+  CUSTOMER = 'CUSTOMER',
+  TAX_CODE = 'TAX_CODE',
+  BANK_ACCOUNT = 'BANK_ACCOUNT'
 }
 
 export enum QBDAccountingExportsState {
@@ -668,8 +681,9 @@ export enum ConfigurationWarningEvent {
   CLONE_SETTINGS = 'CLONE_SETTINGS',
   INCORRECT_QBO_ACCOUNT_CONNECTED = 'INCORRECT_QBO_ACCOUNT_CONNECTED',
   QBO_EXPORT_SETTINGS = 'QBO_EXPORT_SETTINGS',
-  RESET_CONFIGURATION = 'RESET_CONFIGURATION',
-  NETSUITE_EXPORT_SETTINGS = 'NETSUITE_EXPORT_SETTINGS'
+  NETSUITE_EXPORT_SETTINGS = 'NETSUITE_EXPORT_SETTINGS',
+  XERO_EXPORT_SETTINGS = 'XERO_EXPORT_SETTINGS',
+  RESET_CONFIGURATION = 'RESET_CONFIGURATION'
 }
 
 export enum InputType {

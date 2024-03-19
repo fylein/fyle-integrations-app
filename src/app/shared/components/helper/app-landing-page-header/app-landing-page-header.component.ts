@@ -51,6 +51,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() showQBOButton: boolean;
 
+  @Input() showXeroButton: boolean;
+
   @Input() logoWidth: string = '140px';
 
   @Input() logoStyleClasses: string = 'tw-py-10-px tw-px-20-px';
@@ -58,6 +60,8 @@ export class AppLandingPageHeaderComponent implements OnInit {
   @Input() logoSectionStyleClasses: string = 'tw-rounded-4-px tw-border-1-px tw-border-bg-secondary tw-bg-white tw-w-176-px';
 
   qboConnectButtonSource: string = 'assets/buttons/connect-to-qbo.svg';
+
+  xeroConnectButtonSource: string = 'assets/buttons/connect-to-xero.svg';
 
   readonly brandingConfig = brandingConfig;
 
@@ -87,7 +91,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   connect(): void {
 
-    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR) {
+    if (this.appName === AppName.TRAVELPERK || this.appName === AppName.BUSINESS_CENTRAL || this.appName === AppName.BAMBOO_HR || this.appName === AppName.XERO) {
       this.initiateOAuth();
       return;
     } else if (this.postConnectionRoute === 'qbd/onboarding/export_settings') {
