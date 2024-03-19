@@ -36,6 +36,8 @@ export class DropdownComponent {
    */
   @Input() displayKey: string;
 
+  @Input() isDisabled: boolean;
+
   @Input() additionalClasses: string;
 
   constructor() { }

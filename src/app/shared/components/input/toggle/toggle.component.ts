@@ -12,6 +12,8 @@ export class ToggleComponent {
 
   @Input() formControllerName: string;
 
+  @Input() isDisabled: boolean;
+
   constructor() { }
 
 }

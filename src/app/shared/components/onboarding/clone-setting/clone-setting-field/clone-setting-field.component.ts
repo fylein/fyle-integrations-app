@@ -33,6 +33,8 @@ export class CloneSettingFieldComponent {
 
   @Input() inputType: InputType = InputType.DROPDOWN;
 
+  @Input() isDisabled: boolean;
+
   InputType = InputType;
 
   constructor() { }
