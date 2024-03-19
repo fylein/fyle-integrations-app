@@ -4,6 +4,7 @@
         [ngClass]="additionalClasses ? additionalClasses : ''"
         [placeholder]="placeholder"
         [options]="options"
+        [disabled]="isDisabled"
         [formControlName]="formControllerName">
         <ng-template pTemplate="item" let-item>
             <div

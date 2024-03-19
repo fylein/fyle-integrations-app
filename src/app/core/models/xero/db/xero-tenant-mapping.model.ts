@@ -1,3 +1,5 @@
+import { DestinationAttribute } from "../../db/destination-attribute.model";
+
 /* Tslint:disable */
 export type TenantMapping = {
     id: number;
@@ -12,4 +14,13 @@ export type TenantMapping = {
 export type TenantMappingPost = {
     tenant_id: string;
     tenant_name: string;
+}
+
+export class TenantMappingModel {
+    static constructPayload(tenantMapping: DestinationAttribute): TenantMappingPost {
+        return {
+            tenant_id: tenantMapping.id.toString(),
+            tenant_name: tenantMapping.value
+        };
+    }
 }

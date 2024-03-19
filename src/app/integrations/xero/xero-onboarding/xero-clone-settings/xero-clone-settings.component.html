@@ -1,0 +1,404 @@
+<app-onboarding-steppers [isCloneSettingView]="true" [onboardingSteps]="onboardingSteps"></app-onboarding-steppers>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-pt-80-px">
+    <app-loader></app-loader>
+</div>
+
+<div class=" tw-pb-48-px">
+    <div *ngIf="!isLoading" class="clone-setting configuration--contents tw-border-1-px tw-border-box-color tw-mt-24-px" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    
+        <app-clone-setting-header [headerText]="'Export Settings'" [subHeaderText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Xero.'"></app-clone-setting-header>
+        <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <div class="reimbursableExpense">
+                    <app-clone-setting-field
+                        [additionalClasses]="'!tw-text-16-px !tw-text-text-primary'"
+                        [label]="'Export Reimbursable Expenses'"
+                        [form]="exportSettingForm"
+                        [formControllerName]="'reimbursableExpense'"
+                        [inputType]="InputType.TOGGLE"
+                        [tooltipText]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to Xero'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+    
+            <div *ngIf="exportSettingForm.value?.reimbursableExpense" class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'list'"
+                    [label]="'How should the expenses be exported?'"
+                    [options]="reimbursableExportTypes"
+                    [placeholder]="'Choose the type of transaction in Xero to export your ' + brandingConfig.brandName +' expenses'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="false"
+                    [isDisabled]="true"
+                    [formControllerName]="'reimbursableExportType'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'Choose the type of transaction in Xero to export your ' + brandingConfig.brandName +' expenses'">
+                </app-clone-setting-field>
+            </div>
+
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'question-square-outline'"
+                    [label]="'How should Employees in ' + brandingConfig.brandName + ' be matched to Employees/Vendors in Xero?'"
+                    [options]="autoMapEmployeeTypes"
+                    [placeholder]="'Select representation'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="false"
+                    [formControllerName]="'autoMapEmployees'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'Automatically map the employees in ' + brandingConfig.brandName + ' to their corresponding records in Xero based on a unique parameter.'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+                <app-clone-setting-field
+                    [iconSource]="'question-square-outline'"
+                    [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                    [options]="expenseStateOptions"
+                    [placeholder]="'Select export state'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'expenseState'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'You can export expenses either when they\'re awaiting payment after approval (Processing) or when the payment has been settled (Closed).'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+                <app-clone-setting-field
+                    [iconSource]="'question-square-outline'"
+                    [label]="'How should the expenses be grouped?'"
+                    [options]="reimbursableExpenseGroupByOptions"
+                    [placeholder]="'Select expense grouping'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'reimbursableExportGroup'"
+                    [isDisabled]="true"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+                <app-clone-setting-field
+                    [iconSource]="'calendar'"
+                    [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                    [options]="reimbursableExpenseGroupingDateOptions"
+                    [placeholder]="'Select export date'"
+                    [form]="exportSettingForm"
+                    [isFieldMandatory]="true"
+                    [formControllerName]="'reimbursableExportDate'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Xero.'">
+                </app-clone-setting-field>
+            </div>
+        </div>
+    
+        <div [formGroup]="exportSettingForm" class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <div class="creditCardExpense">
+                    <app-clone-setting-field
+                        [label]="'Export Corporate Credit Card Expenses'"
+                        [form]="exportSettingForm"
+                        [formControllerName]="'creditCardExpense'"
+                        [inputType]="InputType.TOGGLE"
+                        [tooltipText]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to Xero'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+    
+            <div *ngIf="exportSettingForm.value?.creditCardExpense">
+                <div class="clone-setting--field">
+                    <app-clone-setting-field
+                        [iconSource]="'list'"
+                        [label]="'How should the expenses be exported?'"
+                        [options]="creditCardExportTypes"
+                        [placeholder]="'Choose the type of transaction in Xero to export your ' + brandingConfig.brandName +' expenses'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="false"
+                        [isDisabled]="true"
+                        [formControllerName]="'creditCardExportType'"
+                        [dropdownDisplayKey]="'label'"
+                        [tooltipText]="'Select expense export type'">
+                    </app-clone-setting-field>
+
+                    <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.creditCardExportType">
+                        <app-clone-setting-field
+                            [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                            [options]="bankAccounts"
+                            [placeholder]="'Select bank account'"
+                            [form]="exportSettingForm"
+                            [isFieldMandatory]="true"
+                            [formControllerName]="'bankAccount'"
+                            [dropdownDisplayKey]="'name'"
+                            [tooltipText]="'All the offset entry in the Journal will be posted to the selected Bank account'">
+                        </app-clone-setting-field>
+                    </div>
+                </div>
+
+                <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                    <app-clone-setting-field
+                        [iconSource]="'question-square-outline'"
+                        [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                        [options]="expenseStateOptions"
+                        [placeholder]="'Select CCC expense state'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'cccExpenseState'"
+                        [dropdownDisplayKey]="'label'"
+                        [tooltipText]="'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out'">
+                    </app-clone-setting-field>
+                </div>
+        
+                <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                    <app-clone-setting-field
+                        [iconSource]="'question-square-outline'"
+                        [label]="'How should the expenses be grouped?'"
+                        [options]="cccExpenseGroupByOptions"
+                        [placeholder]="'Select expense grouping'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [isDisabled]="true"
+                        [formControllerName]="'creditCardExportGroup'"
+                        [dropdownDisplayKey]="'label'"
+                        [tooltipText]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'">
+                    </app-clone-setting-field>
+                </div>
+        
+                <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                    <app-clone-setting-field
+                        [iconSource]="'calendar'"
+                        [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                        [options]="cccExpenseGroupingDateOptions"
+                        [placeholder]="'Select export date'"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'creditCardExportDate'"
+                        [dropdownDisplayKey]="'label'"
+                        [tooltipText]="'The selected date will reflect in the corporate card expenses exported to Xero.'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+        </div>
+    
+        <app-clone-setting-header [headerText]="'Import Settings'" [subHeaderText]="'In this section, you can configure how the dimensions you import from Xero should be mapped in ' + brandingConfig.brandName"></app-clone-setting-header>
+    
+        <div class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-tail-down'"
+                    [label]="'Import Charts of Accounts from Xero'"
+                    [form]="importSettingForm"
+                    [formControllerName]="'importCategories'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'Imported account will be available as Categories in ' + brandingConfig.brandName">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.importCategories">
+                    <app-clone-setting-field
+                        [label]="'Select the accounts from Xero to import as categories'"
+                        [options]="chartOfAccountTypesList"
+                        [placeholder]="'Select Chart of Accouts'"
+                        [form]="importSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'chartOfAccountTypes'"
+                        [disabledOption]="'Expense'"
+                        [inputType]="InputType.MULTI_SELECT"
+                        [tooltipText]="'By default expense will be selected. Open the dropdown to select more as per your requirements'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+
+            <div class="clone-setting--field" *ngIf="isCustomerPresent">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-tail-down'"
+                    [label]="brandingContent.xero.configuration.importSetting.importCustomersLabel"
+                    [form]="importSettingForm"
+                    [formControllerName]="'importCustomers'"
+                    [inputType]="InputType.TOGGLE"
+                    [isDisabled]="isProjectMapped"
+                    [tooltipText]="brandingContent.xero.configuration.importSetting.importCustomersSubLabel">
+                </app-clone-setting-field>
+            </div>
+
+            <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-tail-down'"
+                    [label]="brandingContent.xero.configuration.importSetting.importSuppliersAsMerchantsLabel"
+                    [form]="importSettingForm"
+                    [formControllerName]="'importSuppliersAsMerchants'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="brandingContent.xero.configuration.importSetting.importSuppliersAsMerchantsLabel">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="isTaxGroupSyncAllowed">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-tail-down'"
+                    [label]="'Import Tax from Xero'"
+                    [form]="importSettingForm"
+                    [formControllerName]="'taxCode'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'The imported Tax codes from Xero will be set as Tax group in ' + brandingConfig.brandName + '. This will be a selectable field while creating an expense.'">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field" *ngIf="importSettingForm.value.taxCode">
+                    <app-clone-setting-field *ngIf="importSettingForm.value.taxCode"
+                        [label]="'Select Default Tax Code'"
+                        [options]="taxCodes"
+                        [placeholder]="'Select tax code'"
+                        [form]="importSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'defaultTaxCode'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+    
+            <app-configuration-import-field
+                [form]="importSettingForm"
+                [appName]="appName"
+                [accountingFieldOptions]="xeroFields"
+                [fyleFieldOptions]="fyleFields"
+                [isDestinationFixedImport]="true"
+                [isCloneSettingView]="true"
+                (xeroProjectMapping)="updateCustomerImportAvailability($event)">
+            </app-configuration-import-field>
+        </div>
+    
+        <app-clone-setting-header [headerText]="'Advanced Settings'" [subHeaderText]="'In this section,  you can configure settings to automate and customize your expense exports'"></app-clone-setting-header>
+        <div class="clone-setting--field-section">
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'calendar'"
+                    [label]="'Schedule automatic export'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'exportSchedule'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Xero'">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field tw-flex" *ngIf="advancedSettingForm.value?.exportSchedule">
+                    <app-clone-setting-field class="tw-flex-auto"
+                        [label]="'Set up export frequency'"
+                        [isFieldMandatory]="true"
+                        [options]="scheduleIntervalHours"
+                        [form]="advancedSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'exportScheduleFrequency'"
+                        [dropdownDisplayKey]="'label'"
+                        [additionalClasses]="'dropdown-size-schedule'"
+                        [tooltipText]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Xero'">
+                    </app-clone-setting-field>
+                    <div class="tw-ml-16-px">
+                        <input type="text" class="tw-border-input-read-only-border !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
+                    </div>
+                </div>
+    
+                <div class="clone-setting--dependent-field tw-flex tw-justify-between" *ngIf="advancedSettingForm.value?.exportSchedule">
+                    <p class="tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px tw-flex tw-items-center">
+                        Send Error Notification to
+                        <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Select or add an email address to notify upon import failure or integration error.'" [tooltipPosition]="'top'"></app-svg-icon>
+                    </p>
+                    <app-email-multi-select-field
+                        [form]="advancedSettingForm"
+                        [appName]="appName"
+                        [label]="'Send Error Notification to'"
+                        [isFieldMandatory]="false"
+                        [mandatoryErrorListName]="'email for error notification'"
+                        [subLabel]="'Select or add an email address to notify upon import failure or integration error.'"
+                        [options]="adminEmails"
+                        [iconPath]="'list'"
+                        [placeholder]="'Select email address'"
+                        [formControllerName]="'email'"
+                        [isCloneSettingView]="true">
+                    </app-email-multi-select-field>
+                </div>
+            </div>
+    
+            <div class="clone-setting--field">
+                <app-clone-setting-field
+                    [iconSource]="'calendar'"
+                    [label]="'Post entries in the next open accounting period'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'changeAccountingPeriod'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'If the accounting period in Xero is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'">
+                </app-clone-setting-field>
+            </div>
+
+            <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object">
+                <app-clone-setting-field
+                    [iconSource]="'user-plus'"
+                    [label]="'Auto create Contacts'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'autoCreateVendors'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a Contact if a match for an employee in ' + brandingConfig.brandName + ' does not exist in Xero already.'">
+                </app-clone-setting-field>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object">
+                <app-clone-setting-field
+                    [iconSource]="'arrow-rotate'"
+                    [label]="'Auto Sync payment status for reimbursable expenses'"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'paymentSync'"
+                    [options]="paymentSyncOptions"
+                    [placeholder]="'Select how payments should be synced for reimbursable expenses'"
+                    [dropdownDisplayKey]="'label'"
+                    [tooltipText]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in Xero will be automatically be updated to Paid and vice versa.'">
+                </app-clone-setting-field>
+    
+                <div class="clone-setting--dependent-field" *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_xero'">
+                    <app-clone-setting-field
+                        [label]="'To which Payment account should the payment entries be posted?'"
+                        [options]="billPaymentAccounts"
+                        [placeholder]="'Select a Payment Account'"
+                        [form]="advancedSettingForm"
+                        [isFieldMandatory]="true"
+                        [formControllerName]="'billPaymentAccount'"
+                        [dropdownDisplayKey]="'name'"
+                        [tooltipText]="'Once the payment for the reimbursable expense is complete in ' + brandingConfig.brandName + ', the payment entries will be posted to the selected Payment account in Xero.'">
+                    </app-clone-setting-field>
+                </div>
+            </div>
+    
+            <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object">
+                <app-clone-setting-field
+                    [iconSource]="'user-plus'"
+                    [label]="brandingContent.xero.configuration.advancedSettings.autoCreateEmployeeVendor"
+                    [form]="advancedSettingForm"
+                    [formControllerName]="'autoCreateMerchantDestinationEntity'"
+                    [inputType]="InputType.TOGGLE"
+                    [tooltipText]="'While exporting corporate card expenses from ' + brandingConfig.brandName + ', the integration will auto-create a contact in Xero if a merchant added in ' + brandingConfig.brandName + ' does not exist in Xero.'">
+                </app-clone-setting-field>
+            </div>
+        </div>
+        <app-configuration-step-footer [showResetButton]="true" [showBackButton]="true" [ctaText] = "!isSaveInProgress ? (ConfigurationCtaText.SAVE_AND_CONTINUE) : ConfigurationCtaText.SAVING" (save)="save()" (resetCloneSetting)="resetCloneSetting()" (navigateToPreviousStep)="navigateToPreviousStep()" [isButtonDisabled]="!exportSettingForm.valid || !importSettingForm.valid || !advancedSettingForm.valid"></app-configuration-step-footer>
+        <app-configuration-confirmation-dialog
+            (warningAccepted)="acceptWarning($event)"
+            [isWarningVisible]="isWarningDialogVisible"
+            [event]="warningEvent"
+            [headerText]="warningHeaderText"
+            [contextText]="warningContextText"
+            [confirmBtnText]="primaryButtonText"
+            [showSecondaryCTA]="true">
+        </app-configuration-confirmation-dialog>
+
+        <app-configuration-custom-field-creation-dialog
+            [customFieldForm]="customFieldForm"
+            [showCustomFieldCreationDialog]="showCustomFieldDialog"
+            (saveCustomFieldFn)="saveFyleExpenseField()"
+            (closeModelFn)="closeModel()">
+        </app-configuration-custom-field-creation-dialog>
+
+        <app-preview-dialog *ngIf="isPreviewDialogVisible"
+            [isPreviewDialogVisible]="true"
+            [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
+            [header]="'Preview'">
+        </app-preview-dialog>
+
+    </div>
+</div>

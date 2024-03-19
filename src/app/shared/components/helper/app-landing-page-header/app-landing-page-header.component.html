@@ -52,6 +52,11 @@
                         (mouseover)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo-active.svg'"
                         (mouseout)="qboConnectButtonSource = 'assets/buttons/connect-to-qbo.svg'">
                 </div>
+                <div *ngIf="showXeroButton" class="tw-cursor-pointer">
+                    <img
+                        [src]="xeroConnectButtonSource"
+                        (click)="initiateOAuth()">
+                </div>
             </div>
         </div>
 </div>
