@@ -63,6 +63,7 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
   private searchQuerySubject = new Subject<string>();
 
+  hideCalendar: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -138,13 +139,16 @@ export class IntacctSkipExportLogComponent implements OnInit {
 
         this.getSkippedExpenses(paginator.limit, paginator.offset);
       } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
 
         this.isDateSelected = true;
-
+        setTimeout(() => {
+          this.hideCalendar = false;
+        }, 10);
         this.getSkippedExpenses(paginator.limit, paginator.offset);
     }
   });
