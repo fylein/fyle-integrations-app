@@ -140,24 +140,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
   }
 
-  private createReimbursableExpenseWatcher(): void {
-    this.exportSettingForm.controls.reimbursableExpense.valueChanges.subscribe((isReimbursableExpenseSelected) => {
-      if (isReimbursableExpenseSelected) {
-        this.exportSettingForm.controls.reimbursableExportType.setValidators(Validators.required);
-        this.exportSettingForm.controls.reimbursableExportGroup.setValidators(Validators.required);
-        this.exportSettingForm.controls.reimbursableExportDate.setValidators(Validators.required);
-        this.exportSettingForm.controls.expenseState.setValidators(Validators.required);
-      } else {
-        this.exportSettingForm.controls.reimbursableExportType.clearValidators();
-        this.exportSettingForm.controls.reimbursableExportGroup.clearValidators();
-        this.exportSettingForm.controls.reimbursableExportDate.clearValidators();
-        this.exportSettingForm.controls.expenseState.clearValidators();
-        this.exportSettingForm.controls.reimbursableExportType.setValue(null);
-      }
-    });
-    this.reimbursableExportTypeWatcher();
-  }
-
   private exportFieldsWatcher(): void {
     if (this.exportSettings?.configuration?.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || this.exportSettings?.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
       this.exportSettingForm.get('employeeFieldMapping')?.enable();
@@ -169,7 +151,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.cccExportGroup.setValue(this.expenseGroupByOptions[0].value);
       this.exportSettingForm.controls.cccExportGroup.disable();
     }
-    this.createReimbursableExpenseWatcher();
+    this.reimbursableExportTypeWatcher();
   }
 
   getEmployeeFieldMapping(employeeFieldMapping: FyleField | null, reimbursableExportType: string): string {
@@ -204,6 +186,12 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     }
   }
 
+  private setupCustomWatchers(): void {
+    this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: NetSuiteCorporateCreditCardExpensesObject) => {
+      this.showNameInJournalOption = selectedValue === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
+    });
+  }
+
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/netsuite/onboarding/connector`]);
   }
@@ -230,6 +218,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
 
       this.exportFieldsWatcher();
+      this.setupCustomWatchers();
       this.isLoading = false;
     });
   }
