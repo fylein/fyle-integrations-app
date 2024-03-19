@@ -256,8 +256,7 @@ export enum CCCExpenseState {
 
 export enum XeroCCCExpenseState {
   PAID = 'PAID',
-  APPROVED = 'APPROVED',
-  PAYMENT_PROCESSING = "PAYMENT_PROCESSING"
+  APPROVED = 'APPROVED'
 }
 
 export enum ExpenseGroupedBy {
