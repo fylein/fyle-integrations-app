@@ -11,6 +11,7 @@ import { XeroOnboardingAdvancedSettingsComponent } from './xero-onboarding-advan
 import { XeroOnboardingDoneComponent } from './xero-onboarding-done/xero-onboarding-done.component';
 import { XeroSharedModule } from '../xero-shared/xero-shared.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { XeroCloneSettingsComponent } from './xero-clone-settings/xero-clone-settings.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
     XeroOnboardingExportSettingsComponent,
     XeroOnboardingImportSettingsComponent,
     XeroOnboardingAdvancedSettingsComponent,
-    XeroOnboardingDoneComponent
+    XeroOnboardingDoneComponent,
+    XeroCloneSettingsComponent
   ],
   imports: [
     CommonModule,
