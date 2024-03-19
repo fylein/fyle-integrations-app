@@ -83,7 +83,7 @@
                 <app-configuration-select-field *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_xero'"
                     [form]="advancedSettingForm"
                     [destinationAttributes]="billPaymentAccounts"
-                    [optionLabel]="'name'"
+                    [optionLabel]="'value'"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'payment account'"
                     [label]="brandingContent.billPaymentAccountLabel"
