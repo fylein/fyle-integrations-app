@@ -53,6 +53,7 @@
             <div *ngIf="isRecordPresent" [formGroup]="exportLogForm" class="tw-flex tw-justify-start tw-items-center tw-rounded-4-px drop-down">
                 <app-export-log-filter *ngIf="totalCount > 0 || selectedDateFilter"
                     [exportLogForm]="exportLogForm"
+                    [hideCalendar]="hideCalendar"
                     [dateOptions]="dateOptions"
                     [isSimpleSearchRequired]="false">
                 </app-export-log-filter>

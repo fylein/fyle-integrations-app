@@ -53,6 +53,8 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   private org_id: string = this.userService.getUserProfile().org_id;
 
+  hideCalendar: boolean;
+
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
@@ -121,12 +123,18 @@ export class Sage300CompleteExportLogComponent implements OnInit {
         this.selectedDateFilter = null;
         this.getAccountingExports(paginator.limit, paginator.offset);
       } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
 
         this.trackDateFilter('existing', this.selectedDateFilter);
+
+        setTimeout(() => {
+          this.hideCalendar = false;
+        }, 10);
+
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });
