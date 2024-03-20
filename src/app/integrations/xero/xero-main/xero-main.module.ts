@@ -8,6 +8,9 @@ import { XeroMappingComponent } from './xero-mapping/xero-mapping.component';
 import { XeroExportLogComponent } from './xero-export-log/xero-export-log.component';
 import { XeroSharedModule } from '../xero-shared/xero-shared.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { XeroCompleteExportLogComponent } from './xero-export-log/xero-complete-export-log/xero-complete-export-log.component';
+import { XeroSkippedExportLogComponent } from './xero-export-log/xero-skipped-export-log/xero-skipped-export-log.component';
+import { XeroBaseMappingComponent } from './xero-mapping/xero-base-mapping/xero-base-mapping.component';
 
 
 @NgModule({
@@ -15,7 +18,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     XeroMainComponent,
     XeroDashboardComponent,
     XeroMappingComponent,
-    XeroExportLogComponent
+    XeroExportLogComponent,
+    XeroCompleteExportLogComponent,
+    XeroSkippedExportLogComponent,
+    XeroBaseMappingComponent
   ],
   imports: [
     CommonModule,

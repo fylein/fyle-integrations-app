@@ -4,6 +4,7 @@ import { XeroAdvancedSettingsComponent } from './xero-advanced-settings/xero-adv
 import { XeroExportSettingsComponent } from './xero-export-settings/xero-export-settings.component';
 import { XeroImportSettingsComponent } from './xero-import-settings/xero-import-settings.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    MultiSelectModule
   ],
   exports: [
     XeroExportSettingsComponent,

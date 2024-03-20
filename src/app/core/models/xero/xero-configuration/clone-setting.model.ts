@@ -19,17 +19,15 @@ export type XeroCloneSettingPost = {
 }
 
 export class XeroCloneSettingModel {
-    static constructPayload(XeroCloneSettingsForm: FormGroup, customMappingSettings: MappingSetting[]): XeroCloneSettingPost {
-        const exportSettingPayload = XeroExportSettingModel.constructPayload(XeroCloneSettingsForm);
-        const importSettingPayload = XeroImportSettingModel.constructPayload(XeroCloneSettingsForm, customMappingSettings);
-        const advancedSettingPayload = XeroAdvancedSettingModel.constructPayload(XeroCloneSettingsForm);
+    static constructPayload(exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup): XeroCloneSettingPost {
+        const exportSettingPayload = XeroExportSettingModel.constructPayload(exportSettingForm);
+        const importSettingPayload = XeroImportSettingModel.constructPayload(importSettingForm);
+        const advancedSettingPayload = XeroAdvancedSettingModel.constructPayload(advancedSettingForm);
 
-        const XeroCloneSettingPayload: XeroCloneSettingPost = {
+        return {
             export_settings: exportSettingPayload,
             import_settings: importSettingPayload,
             advanced_settings: advancedSettingPayload
         };
-
-        return XeroCloneSettingPayload;
     }
 }

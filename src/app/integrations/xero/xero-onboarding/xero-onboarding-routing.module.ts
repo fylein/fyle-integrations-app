@@ -9,6 +9,7 @@ import { XeroOnboardingLandingComponent } from './xero-onboarding-landing/xero-o
 import { XeroOnboardingComponent } from './xero-onboarding.component';
 import { XeroTokenGuard } from 'src/app/core/guard/xero-token.guard';
 import { TenantGuard } from 'src/app/core/guard/tenant.guard';
+import { XeroCloneSettingsComponent } from './xero-clone-settings/xero-clone-settings.component';
 
 const routes: Routes = [
   {
@@ -30,17 +31,22 @@ const routes: Routes = [
       {
         path: 'import_settings',
         component: XeroOnboardingImportSettingsComponent,
-        canActivate: [XeroTokenGuard, TenantGuard]
+        canActivate: [XeroTokenGuard]
       },
       {
         path: 'advanced_settings',
         component: XeroOnboardingAdvancedSettingsComponent,
-        canActivate: [XeroTokenGuard, TenantGuard]
+        canActivate: [XeroTokenGuard]
       },
       {
         path: 'done',
         component: XeroOnboardingDoneComponent,
-        canActivate: [XeroTokenGuard, TenantGuard]
+        canActivate: [XeroTokenGuard]
+      },
+      {
+        path: 'clone_settings',
+        component: XeroCloneSettingsComponent,
+        canActivate: [XeroTokenGuard]
       }
     ]
   }

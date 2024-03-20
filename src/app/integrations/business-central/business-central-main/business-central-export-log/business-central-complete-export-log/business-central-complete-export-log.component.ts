@@ -40,7 +40,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   exportLogForm: FormGroup;
 
-  isCalendarVisible: boolean;
+  hideCalendar: boolean;
 
   accountingExports: AccountingExportList [];
 
@@ -140,12 +140,17 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
         this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
       } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
         this.isDateSelected = true;
         this.trackDateFilter('existing', this.selectedDateFilter);
+
+        setTimeout(() => {
+          this.hideCalendar = false;
+        }, 10);
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });

@@ -6,6 +6,7 @@ export type DemoVideo = {
             QBO: string;
             BUSINESS_CENTRAL: string;
             TRAVELPERK: string;
+            XERO:string;
         }
     }
 };

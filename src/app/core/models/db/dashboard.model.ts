@@ -1,4 +1,4 @@
-import { AccountingErrorType, CCCExpenseState, CCCImportState, DefaultImportFields, ExpenseState, ExportErrorSourceType, FyleField, ReimbursableImportState } from "../enum/enum.model";
+import { AccountingErrorType, CCCExpenseState, CCCImportState, DefaultImportFields, ExpenseState, ExportErrorSourceType, FyleField, ReimbursableImportState, XeroCCCExpenseState } from "../enum/enum.model";
 import { AccountingGroupedErrors, Error } from "./error.model";
 
 export class DashboardModel {
@@ -26,8 +26,8 @@ export class DashboardModel {
 
     static getCCCExpenseImportStateMap() {
       return {
-        [CCCExpenseState.PAID]: CCCImportState.PAID,
-        [CCCExpenseState.APPROVED]: CCCImportState.APPROVED
+        [XeroCCCExpenseState.PAID]: CCCImportState.PAID,
+        [XeroCCCExpenseState.APPROVED]: CCCImportState.APPROVED
       };
     }
 }
