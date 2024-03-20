@@ -54,7 +54,6 @@ export class EventsService {
         if (message.data.redirectUri.includes('sage-intacct')) {
           this.sageIntacctLogin.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('quickbooks')) {
-          console.log(message)
           this.qboLogin.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('xero')) {
           this.xeroLogin.emit(message.data.redirectUri);
