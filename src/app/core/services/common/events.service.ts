@@ -51,12 +51,12 @@ export class EventsService {
   receiveEvent(): void {
     this.windowService.nativeWindow.addEventListener('message', (message) => {
       if (message.data && message.data.redirectUri && message.origin === environment.fyle_app_url) {
+        console.log(message)
         if (message.data.redirectUri.includes('sage-intacct')) {
           this.sageIntacctLogin.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('quickbooks')) {
           this.qboLogin.emit(message.data.redirectUri);
-        }else if (message.data.redirectUri.includes('xero')) {
-          console.log(message)
+        } else if (message.data.redirectUri.includes('xero')) {
           this.xeroLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
