@@ -17,6 +17,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { SkipExportService } from 'src/app/core/services/common/skip-export.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
 import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
@@ -89,7 +90,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   readonly brandingContentv1 = brandingContent;
 
   constructor(
-    private advancedSettingsService: QboAdvancedSettingsService,
+    private advancedSettingsService: NetsuiteAdvancedSettingsService,
     private configurationService: ConfigurationService,
     private helper: HelperService,
     private netsuiteHelperService: NetsuiteHelperService,
@@ -141,10 +142,9 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   save(): void {
     this.saveSkipExport();
     const advancedSettingPayload = NetsuiteAdvancedSettingModel.constructPayload(this.advancedSettingForm);
-    console.log('payefsd', advancedSettingPayload)
     this.isSaveInProgress = true;
 
-    this.advancedSettingsService.postAdvancedSettingsv1(advancedSettingPayload).subscribe(() => {
+    this.advancedSettingsService.postAdvancedSettings(advancedSettingPayload).subscribe(() => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Advanced settings saved successfully');
 
@@ -208,7 +208,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
-      this.advancedSettingsService.getAdvancedSettingsv1(),
+      this.advancedSettingsService.getAdvancedSettings(),
       this.skipExportService.getExpenseFilter(),
       this.skipExportService.getExpenseFields('v1'),
       this.mappingService.getGroupedDestinationAttributes(['LOCATION', 'DEPARTMENT', 'CLASS', 'VENDOR_PAYMENT_ACCOUNT'], 'v2', 'netsuite'),
