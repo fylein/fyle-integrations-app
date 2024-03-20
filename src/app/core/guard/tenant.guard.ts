@@ -36,10 +36,11 @@ export class TenantGuard implements CanActivate {
       ).pipe(
         map(response => !!response),
         catchError(error => {
-          if (error.status === 400) {
+
+          if (error.status === 404) {
             globalCacheBusterNotifier.next();
             this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Oops! You will need to select a tenant to proceed with the onboarding.');
-            return this.router.navigateByUrl('integrations/xero/onboarding/xero_connector');
+            return this.router.navigateByUrl('/integrations/xero/onboarding/landing');
           }
           return throwError(error);
         })
