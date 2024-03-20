@@ -55,7 +55,6 @@ export class MappingService {
   }
 
   getGroupedDestinationAttributes(attributeTypes: string[], version: 'v1' | 'v2', apiPath?: string): Observable<GroupedDestinationAttribute> {
-    console.log('attri', attributeTypes)
     return from(this.getDestinationAttributes(attributeTypes, version, apiPath).toPromise().then((response: any | undefined) => {
       return response?.reduce((groupedAttributes: any, attribute: any) => {
         const group: any = groupedAttributes[attribute.attribute_type] || [];

@@ -99,11 +99,10 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
   }
 
   static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[]): FormGroup {
-    
-    console.log('hyo', advancedSettings?.general_mappings.vendor_payment_account.id)
+
     return new FormGroup({
       paymentSync: new FormControl(advancedSettings?.configuration.sync_fyle_to_netsuite_payments ? NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE : advancedSettings?.configuration.sync_netsuite_to_fyle_payments ? NetsuitePaymentSyncDirection.NETSUITE_TO_FYLE : null),
-      paymentAccount:  new FormControl(advancedSettings?.general_mappings.vendor_payment_account?.id ? advancedSettings?.general_mappings.vendor_payment_account : null ),
+      paymentAccount: new FormControl(advancedSettings?.general_mappings.vendor_payment_account?.id ? advancedSettings?.general_mappings.vendor_payment_account : null ),
       netsuiteLocation: new FormControl(advancedSettings?.general_mappings.netsuite_location?.id ? advancedSettings?.general_mappings.netsuite_location : null),
       useEmployeeLocation: new FormControl(advancedSettings?.general_mappings.use_employee_location ? advancedSettings?.general_mappings.use_employee_location : false),
       netsuiteDepartment: new FormControl(advancedSettings?.general_mappings.netsuite_department?.id ? advancedSettings?.general_mappings.netsuite_department : null),
@@ -126,7 +125,6 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
   static constructPayload(advancedSettingsForm: FormGroup): NetsuiteAdvancedSettingPost {
     const emptyDestinationAttribute = {id: null, name: null};
 
-    console.log('advances', advancedSettingsForm)
     const advancedSettingPayload: NetsuiteAdvancedSettingPost = {
       configuration: {
         sync_fyle_to_netsuite_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE ? true : false,
@@ -145,7 +143,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
         netsuite_class_level: 'Bottom',
         use_employee_location: advancedSettingsForm.get('useEmployeeLocation')?.value,
         use_employee_class: advancedSettingsForm.get('useEmployeeClass')?.value,
-        use_employee_department:  advancedSettingsForm.get('useEmployeeDepartment')?.value,
+        use_employee_department: advancedSettingsForm.get('useEmployeeDepartment')?.value
       },
       workspace_schedules: {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,
