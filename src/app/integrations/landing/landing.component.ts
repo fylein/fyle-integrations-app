@@ -13,6 +13,7 @@ import { Token } from 'src/app/core/models/misc/token.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
+import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 
 @Component({
   selector: 'app-landing',
@@ -51,7 +52,7 @@ export class LandingComponent implements OnInit {
     [AccountingIntegrationApp.NETSUITE]: [environment.ns_callback_url, environment.ns_client_id],
     [AccountingIntegrationApp.QBO]: [`${environment.fyle_app_url}/quickbooks`, environment.qbo_client_id],
     [AccountingIntegrationApp.SAGE_INTACCT]: [`${environment.fyle_app_url}/sage-intacct`, environment.si_client_id],
-    [AccountingIntegrationApp.XERO]: [environment.xero_callback_url, environment.xero_client_id]
+    [AccountingIntegrationApp.XERO]: [`${environment.fyle_app_url}/xero`, environment.xero_client_id]
   };
 
   private readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
@@ -62,7 +63,8 @@ export class LandingComponent implements OnInit {
     [InAppIntegration.QBO]: '/integrations/qbo',
     [InAppIntegration.SAGE300]: '/integrations/sage300',
     [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central',
-    [InAppIntegration.NETSUITE]: '/integrations/netsuite'
+    [InAppIntegration.NETSUITE]: '/integrations/netsuite',
+    [InAppIntegration.XERO]: '/integrations/xero'
   };
 
   readonly brandingConfig = brandingConfig;
@@ -72,6 +74,7 @@ export class LandingComponent implements OnInit {
   constructor(
     private eventsService: EventsService,
     private qboAuthService: QboAuthService,
+    private xeroAuthService: XeroAuthService,
     private router: Router,
     private siAuthService: SiAuthService,
     private storageService: StorageService,
@@ -102,7 +105,14 @@ export class LandingComponent implements OnInit {
 
   private loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegration: InAppIntegration): void {
     const authCode = redirectUri.split('code=')[1].split('&')[0];
-    const login$ = inAppIntegration === InAppIntegration.INTACCT ? this.siAuthService.loginWithAuthCode(authCode) : this.qboAuthService.loginWithAuthCode(authCode);
+    let login$;
+    if (inAppIntegration === InAppIntegration.INTACCT) {
+      login$ = this.siAuthService.loginWithAuthCode(authCode);
+    } else if (inAppIntegration === InAppIntegration.QBO) {
+      login$ = this.qboAuthService.loginWithAuthCode(authCode);
+    } else {
+      login$ = this.xeroAuthService.login(authCode);
+    }
 
     login$.subscribe((token: Token) => {
       const user: MinimalUser = {
@@ -126,6 +136,10 @@ export class LandingComponent implements OnInit {
 
     this.eventsService.qboLogin.subscribe((redirectUri: string) => {
       this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.QBO);
+    });
+
+    this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.XERO);
     });
   }
 

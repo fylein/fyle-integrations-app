@@ -32,7 +32,8 @@ export enum InAppIntegration {
   INTACCT = 'Sage Intacct',
   SAGE300 = 'Sage 300 CRE',
   BUSINESS_CENTRAL = 'Dynamics 365 Business Central',
-  NETSUITE = 'NetSuite'
+  NETSUITE = 'NetSuite',
+  XERO = 'Xero'
 }
 
 export enum ToastSeverity {
@@ -171,6 +172,7 @@ export enum QBOOnboardingState {
 
 export enum XeroOnboardingState {
   CONNECTION = 'CONNECTION',
+  TENANT_MAPPING = "TENANT_MAPPING",
   EXPORT_SETTINGS = 'EXPORT_SETTINGS',
   IMPORT_SETTINGS = 'IMPORT_SETTINGS',
   ADVANCED_CONFIGURATION = 'ADVANCED_CONFIGURATION',
