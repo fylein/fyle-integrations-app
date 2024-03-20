@@ -157,7 +157,7 @@ export class XeroImportSettingsComponent implements OnInit {
   private createCOAWatcher(): void {
     this.importSettingsForm.controls.importCategories.valueChanges.subscribe((isImportCategoriesEnabled) => {
       if (!isImportCategoriesEnabled) {
-        this.importSettingsForm.controls.chartOfAccountTypes.setValue(['Expense']);
+        this.importSettingsForm.controls.chartOfAccountTypes.setValue(['EXPENSE']);
       }
     });
   }
