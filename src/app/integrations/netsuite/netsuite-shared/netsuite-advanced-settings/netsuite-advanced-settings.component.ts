@@ -7,7 +7,6 @@ import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterPayloa
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteAdvancedSettingGet, NetsuiteAdvancedSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
 import { NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
@@ -19,8 +18,6 @@ import { SkipExportService } from 'src/app/core/services/common/skip-export.serv
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
-import { QboAdvancedSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-advanced-settings.service';
-import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 
 @Component({
   selector: 'app-netsuite-advanced-settings',
@@ -36,7 +33,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   supportArticleLink: string = brandingKbArticles.onboardingArticles.NETSUITE.ADVANCED_SETTING;
 
-  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.QBO.SKIP_EXPORT;
+  skipExportRedirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.SKIP_EXPORT;
 
   isOnboarding: boolean;
 
