@@ -106,12 +106,12 @@ export class LandingComponent implements OnInit {
   private loginAndRedirectToInAppIntegration(redirectUri: string, inAppIntegration: InAppIntegration): void {
     const authCode = redirectUri.split('code=')[1].split('&')[0];
     let login$;
-    if (InAppIntegration.INTACCT) {
-      login$ = this.siAuthService.loginWithAuthCode(authCode) 
-    } else if (InAppIntegration.QBO) {
-      login$ = this.qboAuthService.loginWithAuthCode(authCode)
+    if (inAppIntegration === InAppIntegration.INTACCT) {
+      login$ = this.siAuthService.loginWithAuthCode(authCode);
+    } else if (inAppIntegration === InAppIntegration.QBO) {
+      login$ = this.qboAuthService.loginWithAuthCode(authCode);
     } else {
-      login$ = this.xeroAuthService.login(authCode)
+      login$ = this.xeroAuthService.login(authCode);
     }
 
     login$.subscribe((token: Token) => {
