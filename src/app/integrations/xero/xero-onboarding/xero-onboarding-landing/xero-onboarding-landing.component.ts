@@ -84,6 +84,7 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
   connectXero() {
     this.xeroConnectionInProgress = true;
     const url = `${environment.xero_authorize_uri}?client_id=${environment.xero_oauth_client_id}&scope=${environment.xero_scope}&response_type=code&redirect_uri=${environment.xero_oauth_redirect_uri}&state=xero_local_redirect`;
+    console.log(url)
     this.oauthCallbackSubscription = this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
       const code = callbackURL.split('code=')[1]?.split('&')[0];
       this.postXeroCredentials(code);
