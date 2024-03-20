@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -51,6 +52,18 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
+  showCustomFieldDialog: boolean;
+
+  isPreviewDialogVisible: boolean;
+
+  customField: ExpenseField;
+
+  customFieldType: string;
+
+  customFieldControl: AbstractControl;
+
+  customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
+
   importSettings: any;
 
   customFieldForm: FormGroup = this.formBuilder.group({
@@ -92,6 +105,71 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     });
   }
 
+
+  closeModel() {
+    this.customFieldForm.reset();
+    this.showCustomFieldDialog = false;
+  }
+
+  showPreviewDialog(visible: boolean) {
+    this.isPreviewDialogVisible = visible;
+  }
+
+  closeDialog() {
+    this.isPreviewDialogVisible = false;
+  }
+
+  saveFyleExpenseField(): void {
+    this.customField = {
+      attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
+      display_name: this.customFieldForm.value.attribute_type,
+      source_placeholder: this.customFieldForm.value.source_placeholder,
+      is_dependent: false
+    };
+
+    if (this.customFieldControl) {
+      this.fyleFields.pop();
+      this.fyleFields.push(this.customField);
+      this.fyleFields.push(this.customFieldOption[0]);
+      const expenseField = {
+        source_field: this.customField.attribute_type,
+        destination_field: this.customFieldControl.value.destination_field,
+        import_to_fyle: true,
+        is_custom: true,
+        source_placeholder: this.customField.source_placeholder
+      };
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0] as FormGroup).controls.import_to_fyle.disable();
+      this.customFieldForm.reset();
+      this.showCustomFieldDialog = false;
+    }
+  }
+
+  private initializeCustomFieldForm(shouldShowDialog: boolean) {
+    this.customFieldForm.reset();
+    this.showCustomFieldDialog = shouldShowDialog;
+  }
+
+  private setupFormWatchers(): void {
+    const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
+    expenseFieldArray.controls.forEach((control:any) => {
+      control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
+        if (value.source_field === 'custom_field') {
+          this.initializeCustomFieldForm(true);
+          this.customFieldType = '';
+          this.customFieldControl = control;
+          this.customFieldControl.patchValue({
+            source_field: '',
+            destination_field: control.value.destination_field,
+            import_to_fyle: control.value.import_to_fyle,
+            is_custom: control.value.is_custom,
+            source_placeholder: null
+          });
+        }
+      });
+    });
+  }
+
   navigateToPreviousStep(): void {
   this.router.navigate([`/integrations/netsuite/onboarding/export_settings`]);
   }
@@ -121,7 +199,11 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
       this.netsuiteFields = netsuiteFields;
       this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields);
+
       this.fyleFields = fyleFieldsResponse;
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
+      this.setupFormWatchers();
+      this.initializeCustomFieldForm(false);
       this.isLoading = false;
     });
   }
