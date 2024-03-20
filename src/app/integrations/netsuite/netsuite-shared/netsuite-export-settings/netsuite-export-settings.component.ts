@@ -6,8 +6,7 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, IntacctReimbursableExpensesObject, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingFormOption } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -187,18 +186,36 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     }
   }
 
-  private setupCustomWatchers(): void {
-    this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: NetSuiteCorporateCreditCardExpensesObject) => {
-      this.showNameInJournalOption = selectedValue === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
-    });
-  }
-
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/netsuite/onboarding/connector`]);
   }
 
   save(): void {
     this.constructPayloadAndSave({hasAccepted: true, event: ConfigurationWarningEvent.NETSUITE_EXPORT_SETTINGS});
+  }
+
+  private updateCCCExpenseGroupingDateOptions(selectedValue: NetSuiteCorporateCreditCardExpensesObject): void {
+    if (selectedValue === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
+      this.cccExpenseGroupingDateOptions = NetSuiteExportSettingModel.getAdditionalCreditCardExpenseGroupingDateOptions();
+      this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
+      this.exportSettingForm.controls.creditCardExportGroup.disable();
+    } else {
+      this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
+      this.helperService.clearValidatorAndResetValue(this.exportSettingForm, 'creditCardExportGroup');
+      this.helperService.enableFormField(this.exportSettingForm, 'creditCardExportGroup');
+    }
+  }
+
+  private setupCustomWatchers(): void {
+    if (this.exportSettingForm.value.creditCardExportType && (NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE === this.exportSettingForm.value.creditCardExportType)) {
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+    }
+
+    this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: NetSuiteCorporateCreditCardExpensesObject) => {
+      this.showNameInJournalOption = selectedValue === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
+
+      this.updateCCCExpenseGroupingDateOptions(selectedValue);
+    });
   }
 
   private getSettingsAndSetupForm(): void {
