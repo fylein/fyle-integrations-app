@@ -19,6 +19,8 @@ export class EventsService {
 
   @Output() qboLogin: EventEmitter<string> = new EventEmitter();
 
+  @Output() xeroLogin: EventEmitter<string> = new EventEmitter();
+
   history: string[] = [];
 
   constructor(
@@ -53,6 +55,8 @@ export class EventsService {
           this.sageIntacctLogin.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('quickbooks')) {
           this.qboLogin.emit(message.data.redirectUri);
+        }else if (message.data.redirectUri.includes('xero')) {
+          this.xeroLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }
