@@ -39,6 +39,7 @@ export class NetsuiteExportSettingsService {
             this.creditCardExportTypeChange.emit(selectedValue);
           }
 
+          console.log('form', form, formController);
           const isFieldMandatory = NetSuiteExportSettingModel.getMandatoryField(form, formController);
           if (isFieldMandatory) {
             this.mandatoryFormController.push(formController);

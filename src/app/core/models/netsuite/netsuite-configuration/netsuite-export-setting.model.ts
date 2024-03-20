@@ -263,6 +263,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           creditCardAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
           accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
           defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
+          nameInJournalEntry: new FormControl(exportSettings?.configuration.name_in_journal_entry ? exportSettings?.configuration.name_in_journal_entry : null),
           searchOption: new FormControl('')
         });
       }
@@ -287,8 +288,8 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value
           },
           configuration: {
-            reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,
-            corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value,
+            reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
+            corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value ? exportSettingsForm.get('creditCardExportType')?.value : null,
             employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value,
             auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value,
             name_in_journal_entry: nameInJournalEntry
