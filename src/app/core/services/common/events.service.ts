@@ -56,6 +56,7 @@ export class EventsService {
         } else if (message.data.redirectUri.includes('quickbooks')) {
           this.qboLogin.emit(message.data.redirectUri);
         }else if (message.data.redirectUri.includes('xero')) {
+          console.log(message)
           this.xeroLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
