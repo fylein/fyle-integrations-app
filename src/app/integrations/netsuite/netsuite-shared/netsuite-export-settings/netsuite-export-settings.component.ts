@@ -140,6 +140,14 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
   }
 
+  private cccExportTypeWatcher(): void {
+    this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe((isCCCExportTypeSelected) => {
+      if (isCCCExportTypeSelected === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+        this.exportSettingForm.controls.employeeFieldMapping.enable();
+      }
+    });
+  }
+
   private exportFieldsWatcher(): void {
     if (this.exportSettings?.configuration?.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || this.exportSettings?.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
       this.exportSettingForm.get('employeeFieldMapping')?.enable();
@@ -152,6 +160,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.cccExportGroup.disable();
     }
     this.reimbursableExportTypeWatcher();
+    this.cccExportTypeWatcher();
   }
 
   getEmployeeFieldMapping(employeeFieldMapping: FyleField | null, reimbursableExportType: string): string {
