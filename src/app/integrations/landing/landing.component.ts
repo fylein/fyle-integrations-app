@@ -51,7 +51,7 @@ export class LandingComponent implements OnInit {
     [AccountingIntegrationApp.NETSUITE]: [environment.ns_callback_url, environment.ns_client_id],
     [AccountingIntegrationApp.QBO]: [`${environment.fyle_app_url}/quickbooks`, environment.qbo_client_id],
     [AccountingIntegrationApp.SAGE_INTACCT]: [`${environment.fyle_app_url}/sage-intacct`, environment.si_client_id],
-    [AccountingIntegrationApp.XERO]: [environment.xero_callback_url, environment.xero_client_id]
+    [AccountingIntegrationApp.XERO]: [`${environment.fyle_app_url}/xero`, environment.xero_client_id]
   };
 
   private readonly inAppIntegrationUrlMap: InAppIntegrationUrlMap = {
@@ -62,7 +62,8 @@ export class LandingComponent implements OnInit {
     [InAppIntegration.QBO]: '/integrations/qbo',
     [InAppIntegration.SAGE300]: '/integrations/sage300',
     [InAppIntegration.BUSINESS_CENTRAL]: '/integrations/business_central',
-    [InAppIntegration.NETSUITE]: '/integrations/netsuite'
+    [InAppIntegration.NETSUITE]: '/integrations/netsuite',
+    [InAppIntegration.XERO]: '/integrations/xero'
   };
 
   readonly brandingConfig = brandingConfig;
