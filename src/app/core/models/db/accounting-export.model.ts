@@ -7,6 +7,7 @@ import { ExportLogService } from "../../services/common/export-log.service";
 import { DateFilter } from "../qbd/misc/date-filter.model";
 import { environment } from "src/environments/environment";
 import { ExpenseGroup } from "./expense-group.model";
+import { XeroWorkspace } from "../xero/db/xero-workspace.model";
 
 export interface AccountingExportCount {
     count: number;
@@ -57,6 +58,8 @@ export type AccountingExportGetParam = {
 }
 
 export class AccountingExportModel {
+  static xeroShortCode: string;
+
   static getDateOptionsV2(): DateFilter[] {
     const currentDateTime = new Date();
     const dateOptions: DateFilter[] = [
@@ -214,11 +217,42 @@ export class AccountingExportModel {
     return [`https://www-p02.intacct.com/ia/acct/ur.phtml?.r=${expenseGroup.response_logs?.url_id}`, expenseGroup.export_type];
   }
 
+  static constructXeroExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+    let exportRedirection = '';
+    let exportType = '';
+    let exportId = null;
+    let accountId = null;
+
+    const xeroUrl = 'https://go.xero.com';
+    if ('Invoices' in expenseGroup.response_logs && expenseGroup.response_logs.Invoices) {
+      exportType = 'Bill';
+      exportId = expenseGroup.response_logs.Invoices[0].InvoiceID;
+      if (AccountingExportModel.xeroShortCode) {
+        exportRedirection = `${xeroUrl}/organisationlogin/default.aspx?shortcode=${AccountingExportModel.xeroShortCode}&redirecturl=/AccountsPayable/Edit.aspx?InvoiceID=${exportId}`;
+      } else {
+        exportRedirection = `${xeroUrl}/AccountsPayable/View.aspx?invoiceID=${exportId}`;
+      }
+    } else if ('BankTransactions' in expenseGroup.response_logs && expenseGroup.response_logs.BankTransactions) {
+      exportType = 'Bank Transaction';
+      exportId = expenseGroup.response_logs.BankTransactions[0].BankTransactionID;
+      accountId = expenseGroup.response_logs.BankTransactions[0].BankAccount.AccountID;
+      if (AccountingExportModel.xeroShortCode) {
+        exportRedirection = `${xeroUrl}/organisationlogin/default.aspx?shortcode=${AccountingExportModel.xeroShortCode}&redirecturl=/Bank/ViewTransaction.aspx?bankTransactionID=${exportId}`;
+      } else {
+        exportRedirection = `${xeroUrl}/Bank/ViewTransaction.aspx?bankTransactionID=${exportId}&accountID=${accountId}`;
+      }
+    }
+
+    return [exportRedirection, exportType];
+  }
+
   static constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup): [string, string] {
     if (appName === AppName.QBO) {
       return this.constructQBOExportUrlAndType(expenseGroup);
     } else if (appName === AppName.INTACCT) {
       return this.constructIntacctExportUrlAndType(expenseGroup);
+    } else if (appName === AppName.XERO) {
+      return this.constructXeroExportUrlAndType(expenseGroup);
     }
 
     return ['', ''];
@@ -229,7 +263,6 @@ export class AccountingExportModel {
       const referenceNumber = this.getFyleReferenceNumber(referenceType, expenseGroup.expenses[0]);
 
       const [url, exportType] = this.constructExportUrlAndType(appName, expenseGroup);
-
       return {
         exportedAt: expenseGroup.exported_at,
         employee: [expenseGroup.expenses[0].employee_name, expenseGroup.description.employee_email],
@@ -240,6 +273,10 @@ export class AccountingExportModel {
         integrationUrl: url,
         expenses: expenseGroup.expenses
       };
+  }
+
+  static assignXeroShortCode(xeroShortCode: string){
+    this.xeroShortCode = xeroShortCode;
   }
 }
 
