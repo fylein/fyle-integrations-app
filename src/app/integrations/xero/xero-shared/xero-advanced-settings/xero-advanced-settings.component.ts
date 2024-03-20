@@ -59,7 +59,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.configuration.advancedSettings;
+  readonly brandingContent = brandingContent.xero.configuration.advancedSettings;
 
 
   constructor(

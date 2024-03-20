@@ -304,13 +304,13 @@ const content: ContentConfiguration = {
                     stepName: 'Advanced settings',
                     scheduleAutoExport: 'Schedule automatic export',
                     email: 'Send error notification to',
-                    autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
-                    defaultPaymentAccount: 'Select payment account',
-                    autoCreateEmployeeVendor: 'Auto-create ',
+                    paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
+                    autoCreateVendorsLabel: 'Auto create Contacts',
+                    autoCreateMerchantsAsVendorsLabel: 'Auto-create Merchants as Vendors',
+                    billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
+                    billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                    setDescriptionField: 'Set the description field in Xero',
-                    dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
+                    autoCreateEmployeeVendor: 'Auto-create '
                 }
             }
         },
@@ -550,13 +550,13 @@ const content: ContentConfiguration = {
                     stepName: 'Advanced settings',
                     scheduleAutoExport: 'Schedule automatic export',
                     email: 'Send error notification to',
-                    autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
-                    defaultPaymentAccount: 'Select payment account',
-                    autoCreateEmployeeVendor: 'Auto-create ',
+                    paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
+                    autoCreateVendorsLabel: 'Auto create contacts',
+                    autoCreateMerchantsAsVendorsLabel: 'Auto-create merchants as vendors',
+                    billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
+                    billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                    setDescriptionField: 'Set the description field in Xero',
-                    dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
+                    autoCreateEmployeeVendor: 'Auto-create '
                 }
             }
         },

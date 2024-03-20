@@ -5,7 +5,7 @@ import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArtic
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, ConfigurationWarningEvent, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
@@ -56,6 +56,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   xeroTokenExpired: boolean = false;
 
   isXeroConnected: boolean = false;
+
+  appName: string = AppName.XERO;
 
   private oauthCallbackSubscription: Subscription;
 

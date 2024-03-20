@@ -57,13 +57,13 @@ export type ContentConfiguration = {
                     stepName: string;
                     scheduleAutoExport: string;
                     email: string;
-                    autoSyncPayments: string;
-                    defaultPaymentAccount: string;
-                    autoCreateEmployeeVendor: string;
+                    paymentSyncLabel: string;
                     postEntriesCurrentPeriod: string;
-                    setDescriptionField: string;
-                    dfvLabel: string;
-                    dfvSubLabel: string;
+                    autoCreateMerchantsAsVendorsLabel: string;
+                    billPaymentAccountLabel: string;
+                    billPaymentAccountSubLabel: string;
+                    autoCreateVendorsLabel: string
+                    autoCreateEmployeeVendor: string
                 }
             },
         },

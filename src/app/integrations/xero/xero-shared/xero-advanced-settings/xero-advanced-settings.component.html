@@ -62,9 +62,9 @@
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-toggle-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
+                <app-configuration-toggle-field
                     [form]="advancedSettingForm"
-                    [iconPath]="'user-plus'"
+                    [iconPath]="'list'"
                     [label]="brandingContent.autoCreateVendorsLabel"
                     [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in Xero already.'"
                     [formControllerName]="'autoCreateVendors'">
