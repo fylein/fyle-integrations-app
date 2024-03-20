@@ -60,7 +60,7 @@
                 Token expired.
             </p>
             <p *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked && appName === AppName.XERO">
-                You will need to select a Location (Entity) to proceed with the onboarding.
+                You will need to select a Tenant to proceed with the onboarding.
             </p>
             <div *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" class="tw-h-60-px">
                 <span (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">
