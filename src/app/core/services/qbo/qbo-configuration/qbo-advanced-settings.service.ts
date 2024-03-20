@@ -4,6 +4,7 @@ import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { QBOAdvancedSettingGet, QBOAdvancedSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
+import { NetsuiteAdvancedSettingGet, NetsuiteAdvancedSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
 
 const advancedSettingsCache$ = new Subject<void>();
 
@@ -24,10 +25,19 @@ export class QboAdvancedSettingsService {
     return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, {});
   }
 
+  getAdvancedSettingsv1(): Observable<NetsuiteAdvancedSettingGet> {
+    return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, {});
+  }
+
   @CacheBuster({
     cacheBusterNotifier: advancedSettingsCache$
   })
   postAdvancedSettings(exportSettingsPayload: QBOAdvancedSettingPost): Observable<QBOAdvancedSettingGet> {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, exportSettingsPayload);
   }
+
+  postAdvancedSettingsv1(exportSettingsPayload: NetsuiteAdvancedSettingPost): Observable<NetsuiteAdvancedSettingGet> {
+    return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, exportSettingsPayload);
+  }
 }
+
