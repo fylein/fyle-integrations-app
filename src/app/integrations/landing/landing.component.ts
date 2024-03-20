@@ -128,6 +128,10 @@ export class LandingComponent implements OnInit {
     this.eventsService.qboLogin.subscribe((redirectUri: string) => {
       this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.QBO);
     });
+
+    this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.XERO);
+    });
   }
 
   ngOnInit(): void {
