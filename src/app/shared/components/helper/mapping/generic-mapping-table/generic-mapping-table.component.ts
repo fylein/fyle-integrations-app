@@ -173,6 +173,7 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   save(selectedRow: ExtendedGenericMapping, event: any): void {
+    console.log('de', selectedRow)
     if (selectedRow.employeemapping) {
       const employeeMapping = MappingClass.constructEmployeeMappingPayload(selectedRow, event, this.employeeFieldMapping, this.workspaceService.getWorkspaceId());
       this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
