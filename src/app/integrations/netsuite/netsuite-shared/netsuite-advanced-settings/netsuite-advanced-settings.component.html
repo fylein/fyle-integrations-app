@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header
-            [headerText]="brandingContent.stepName"
+            [headerText]="brandingContent.configuration.advancedSettings.stepName"
             [contentText]="'In this section, you can customize the integration based on your accounting requirements. '"
             [redirectLink]="supportArticleLink"
             [showSyncButton]="isOnboarding"
@@ -51,18 +51,18 @@
                         [form]="advancedSettingForm"
                         [options]="paymentSyncOptions"
                         [iconPath]="'arrow-rotate'"
-                        [label]="brandingContent.paymentSyncLabel"
+                        [label]="brandingContent.configuration.advancedSettings.paymentSyncLabel"
                         [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in NetSuite will be automatically be updated to Paid and vice versa.'"
                         [placeholder]="'Select how payments should be synced for reimbursable expenses'"
                         [formControllerName]="'paymentSync'">
                     </app-configuration-select-field>
 
-                    <app-configuration-select-field *ngIf="isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
+                    <app-configuration-select-field *ngIf="this.advancedSettingForm.controls.paymentSync.value === 'fyle_to_netsuite' && isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
                         [form]="advancedSettingForm"
                         [destinationAttributes]="paymentAccounts"
                         [optionLabel]="'name'"
                         [iconPath]="'arrow-rotate'"
-                        [label]="brandingContentv1.intacct.configuration.advancedSettings.defaultPaymentAccount"
+                        [label]="brandingContent.intacct.configuration.advancedSettings.defaultPaymentAccount"
                         [subLabel]="'Select a Payment Account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
                         [placeholder]="'Select Payment Account'"
                         [formControllerName]="'paymentAccount'">
@@ -88,7 +88,7 @@
                 <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
-                    [label]="brandingContent.autoCreateVendorsLabel"
+                    [label]="brandingContent.configuration.advancedSettings.autoCreateVendorsLabel"
                     [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in NetSuite already.'"
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
@@ -98,7 +98,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'Customization'"
-                    [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to NetSuite '+ brandingContent.customizationSubLabel">
+                    [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to NetSuite '+ brandingContent.configuration.advancedSettings.customizationSubLabel">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
@@ -106,7 +106,7 @@
                     [form]="advancedSettingForm"
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'Item level description'"
-                    [label]="brandingContent.memoStructureLabel"
+                    [label]="brandingContent.configuration.advancedSettings.memoStructureLabel"
                     [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in NetSuite and re-order them as per your requirement.'"
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"
@@ -142,14 +142,15 @@
             </div>
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="brandingContentv1.intacct.configuration.advancedSettings.dfvLabel"
-                    [subLabel]="brandingContentv1.intacct.configuration.advancedSettings.dfvSubLabel">
+                    [label]="brandingContent.intacct.configuration.advancedSettings.dfvLabel"
+                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.dfvSubLabel">
                 </app-configuration-step-sub-header>
+
                 <div class="tw-pt-28-px tw-pl-6 field-label">
-                    <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContentv1.intacct.configuration.advancedSettings.location}}</label></div>
+                    <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.location}}</label></div>
                     <div class="tw-pt-2">
                         <p-dropdown appendTo="body" [options]="netsuiteLocations" optionLabel="name" 
-                        formControlName="netsuiteLocation" placeholder="Select {{brandingContentv1.intacct.configuration.advancedSettings.location}}" [ngClass]="{'selectedItem': advancedSettingForm.controls.netsuiteLocation.value, 'filterDropdown': !advancedSettingForm.controls.netsuiteLocation.value, 'hideClearIcon': advancedSettingForm.controls['netsuiteLocation'].value}">
+                        formControlName="netsuiteLocation" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.location}}" [ngClass]="{'selectedItem': advancedSettingForm.controls.netsuiteLocation.value, 'filterDropdown': !advancedSettingForm.controls.netsuiteLocation.value, 'hideClearIcon': advancedSettingForm.controls['netsuiteLocation'].value}">
                             <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                                 <p>
                                     {{ item.name }}
@@ -163,12 +164,22 @@
                         </span>
                     </div>
                 </div>
-    
+
+
+                <app-configuration-select-field
+                    [form]="advancedSettingForm"
+                    [options]="netsuiteLocationLevels"
+                    [isDefaultFields]="true"
+                    [label]="'NetSuite Location Level'"
+                    [placeholder]="'Choose NetSuite Location Level'"
+                    [formControllerName]="'netsuiteLocationLevel'">
+                </app-configuration-select-field>
+
                 <div class="tw-pt-20-px tw-pl-6 field-label">
-                    <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContentv1.intacct.configuration.advancedSettings.department}}</label></div>
+                    <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.department}}</label></div>
                     <div class="tw-pt-2">
-                      <p-dropdown appendTo="body" [options]="netsuiteDepartment" optionLabel="name"
-                      formControlName="netsuiteDepartment" placeholder="Select {{brandingContentv1.intacct.configuration.advancedSettings.department}}" [ngClass]="{'selectedItem': advancedSettingForm.controls.netsuiteDepartment.value, 'filterDropdown': !advancedSettingForm.controls.netsuiteDepartment.value, 'hideClearIcon': advancedSettingForm.controls['netsuiteDepartment'].value}">
+                      <p-dropdown appendTo="body" [options]="netsuiteDepartments" optionLabel="name"
+                      formControlName="netsuiteDepartment" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.department}}" [ngClass]="{'selectedItem': advancedSettingForm.controls.netsuiteDepartment.value, 'filterDropdown': !advancedSettingForm.controls.netsuiteDepartment.value, 'hideClearIcon': advancedSettingForm.controls['netsuiteDepartment'].value}">
                             <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                                 <p>
                                     {{ item.name }}
@@ -183,11 +194,20 @@
                     </div>  
                 </div>
 
+                <app-configuration-select-field
+                    [form]="advancedSettingForm"
+                    [options]="netsuiteDepartmentLevels"
+                    [isDefaultFields]="true"
+                    [label]="'NetSuite Department Level'"
+                    [placeholder]="'Choose NetSuite Department Level'"
+                    [formControllerName]="'netsuiteDepartmentLevel'">
+                </app-configuration-select-field>
+
                 <div class="tw-pt-20-px tw-pl-6 field-label">
-                    <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContentv1.intacct.configuration.advancedSettings.class}}</label></div>
+                    <div><label class="tw-text-form-label-text-color tw-text-14-px">Default {{brandingContent.intacct.configuration.advancedSettings.class}}</label></div>
                     <div class="tw-pt-2">
-                      <p-dropdown appendTo="body" [options]="netsuiteDepartment" optionLabel="name"
-                      formControlName="netsuiteClass" placeholder="Select {{brandingContentv1.intacct.configuration.advancedSettings.class}}" [ngClass]="{'selectedItem': advancedSettingForm.controls.netsuiteDepartment.value, 'filterDropdown': !advancedSettingForm.controls.netsuiteDepartment.value, 'hideClearIcon': advancedSettingForm.controls['netsuiteDepartment'].value}">
+                      <p-dropdown appendTo="body" [options]="netsuiteClasses" optionLabel="name"
+                      formControlName="netsuiteClass" placeholder="Select {{brandingContent.intacct.configuration.advancedSettings.class}}" [ngClass]="{'selectedItem': advancedSettingForm.controls.netsuiteDepartment.value, 'filterDropdown': !advancedSettingForm.controls.netsuiteDepartment.value, 'hideClearIcon': advancedSettingForm.controls['netsuiteDepartment'].value}">
                             <ng-template class="tw-flex tw-justify-between tw-items-center" pTemplate="selectedItem" let-item>
                                 <p>
                                     {{ item.name }}
@@ -201,6 +221,15 @@
                         </span>
                     </div>  
                 </div> 
+
+                <app-configuration-select-field
+                    [form]="advancedSettingForm"
+                    [options]="netsuiteClassLevels"
+                    [isDefaultFields]="true"
+                    [label]="'NetSuite Class Level'"
+                    [placeholder]="'Choose NetSuite Class Level'"
+                    [formControllerName]="'netsuiteClassLevel'">
+                </app-configuration-select-field>
             </div>
         </div>
         <app-configuration-step-footer

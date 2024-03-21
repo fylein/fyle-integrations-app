@@ -395,6 +395,12 @@ export enum NetsuitePaymentSyncDirection {
   NETSUITE_TO_FYLE = 'netsuite_to_fyle'
 }
 
+export enum NetsuiteDefaultLevelOptions {
+  ALL = 'ALL',
+  TRANSACTION_LINE = 'TRANSACTION_LINE',
+  TRANSACTION_BODY = 'TRANSACTION_BODY'
+}
+
 export enum IntacctErrorType {
   EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
   CATEGORY_MAPPING = 'CATEGORY_MAPPING',
