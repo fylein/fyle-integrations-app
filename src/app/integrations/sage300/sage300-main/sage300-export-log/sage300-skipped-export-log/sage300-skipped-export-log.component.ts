@@ -12,6 +12,9 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { environment } from 'src/environments/environment';
 
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-sage300-skipped-export-log',
   templateUrl: './sage300-skipped-export-log.component.html',
@@ -41,6 +44,10 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   selectedDateFilter: SelectedDateFilter | null;
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
   hideCalendar: boolean;
 
   constructor(
@@ -50,12 +57,19 @@ export class Sage300SkippedExportLogComponent implements OnInit {
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
     private paginatorService: PaginatorService
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+      debounceTime(1000)
+    ).subscribe((query: string) => {
+      this.searchQuery = query;
+      this.offset = 0;
+      this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+      this.getSkippedExpenses(this.limit, this.offset);
+    });
+   }
 
   public handleSimpleSearch(query: string) {
-    this.filteredExpenses = this.expenses.filter((group: SkipExportList) => {
-      return SkippedAccountingExportModel.getfilteredSkippedAccountingExports(query, group);
-    });
+    this.searchQuerySubject.next(query);
   }
 
   getSkippedExpenses(limit: number, offset: number) {
@@ -66,10 +80,9 @@ export class Sage300SkippedExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, null).subscribe((skippedExpenses: SkipExportLogResponse) => {
-      if (!this.isDateSelected) {
+    return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
         this.totalCount = skippedExpenses.count;
-      }
+
 
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
         skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
@@ -108,6 +121,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
       if (!dateRange) {
         this.selectedDateFilter = null;
         this.getSkippedExpenses(paginator.limit, paginator.offset);
+        this.isDateSelected = false;
       } else if (dateRange.length && dateRange[1]) {
         this.hideCalendar = true;
         this.selectedDateFilter = {
@@ -115,6 +129,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
           endDate: dateRange[1]
         };
 
+        this.isDateSelected = true;
         this.trackDateFilter('existing', this.selectedDateFilter);
         setTimeout(() => {
           this.hideCalendar = false;

@@ -16,6 +16,9 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { TitleCasePipe } from '@angular/common';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-sage300-complete-export-log',
   templateUrl: './sage300-complete-export-log.component.html',
@@ -53,6 +56,10 @@ export class Sage300CompleteExportLogComponent implements OnInit {
 
   private org_id: string = this.userService.getUserProfile().org_id;
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
   hideCalendar: boolean;
 
   constructor(
@@ -62,16 +69,23 @@ export class Sage300CompleteExportLogComponent implements OnInit {
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+    debounceTime(1000)
+  ).subscribe((query: string) => {
+    this.searchQuery = query;
+    this.offset = 0;
+    this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+    this.getAccountingExports(this.limit, this.offset);
+  });
+}
 
   openExpenseinFyle(expense_id: string) {
     this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expense_id));
   }
 
   public handleSimpleSearch(query: string) {
-    this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
-      return AccountingExportModel.getfilteredAccountingExports(query, group);
-    });
+    this.searchQuerySubject.next(query);
   }
 
   pageSizeChanges(limit: number): void {
@@ -95,10 +109,9 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
-        if (!this.isDateSelected) {
-          this.totalCount = accountingExportResponse.count;
-        }
+    this.accountingExportService.getAccountingExports([AccountingExportType.DIRECT_COSTS, AccountingExportType.PURCHASE_INVOICE], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe(accountingExportResponse => {
+        this.totalCount = accountingExportResponse.count;
+
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
           AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
         );
@@ -121,6 +134,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
       if (!dateRange) {
         this.dateOptions = AccountingExportModel.getDateOptionsV2();
         this.selectedDateFilter = null;
+        this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
       } else if (dateRange.length && dateRange[1]) {
         this.hideCalendar = true;
@@ -128,6 +142,8 @@ export class Sage300CompleteExportLogComponent implements OnInit {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
+
+        this.isDateSelected = true;
 
         this.trackDateFilter('existing', this.selectedDateFilter);
 
