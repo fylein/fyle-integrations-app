@@ -19,7 +19,7 @@
         <h3 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyName" class="tw-text-18-px tw-text-text-primary tw-font-500 tw-pb-16-px tw-text-center ">
             {{ accountingCompanyName }}
         </h3>
-        <div *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyName" class="tw-flex tw-items-center tw-justify-center">
+        <div *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyName && !isDisconnectClicked" class="tw-flex tw-items-center tw-justify-center">
             <div>
                 <div class="tw-flex tw-items-center tw-justify-center">
                     <p-dropdown appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'" 
@@ -58,9 +58,17 @@
             <p *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-text-muted ">
                 Token expired.
             </p>
+            <p *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked">
+                You will need to select a Location (Entity) to proceed with the onboarding.
+            </p>
             <div *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" class="tw-h-60-px">
                 <span (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">
                     Re-Connect to {{ accountingAppTitle }}
+                </span>
+            </div>
+            <div *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked" class="tw-h-60-px">
+                <span (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">
+                    Connect to {{ accountingAppTitle }}
                 </span>
             </div>
             <div *ngIf="!accountingCompanyConnectionInProgress && showDisconnect && accountingCompanyName" class="tw-h-60-px">

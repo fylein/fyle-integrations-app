@@ -4,6 +4,7 @@ import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
 type XeroOnboardingStepperMap = {
     [XeroOnboardingState.CONNECTION]: number,
+    [XeroOnboardingState.TENANT_MAPPING]: number,
     [XeroOnboardingState.EXPORT_SETTINGS]: number,
     [XeroOnboardingState.IMPORT_SETTINGS]: number,
     [XeroOnboardingState.ADVANCED_CONFIGURATION]: number,
@@ -51,11 +52,12 @@ export class XeroOnboardingModel {
 
       private readonly onboardingStateStepMap: XeroOnboardingStepperMap = {
           [XeroOnboardingState.CONNECTION]: 1,
-          [XeroOnboardingState.EXPORT_SETTINGS]: 2,
-          [XeroOnboardingState.IMPORT_SETTINGS]: 3,
-          [XeroOnboardingState.ADVANCED_CONFIGURATION]: 4,
-          [XeroOnboardingState.COMPLETE]: 5,
-          [XeroOnboardingState.CLONE_SETTINGS]: 6
+          [XeroOnboardingState.TENANT_MAPPING]: 2,
+          [XeroOnboardingState.EXPORT_SETTINGS]: 3,
+          [XeroOnboardingState.IMPORT_SETTINGS]: 4,
+          [XeroOnboardingState.ADVANCED_CONFIGURATION]: 5,
+          [XeroOnboardingState.COMPLETE]: 6,
+          [XeroOnboardingState.CLONE_SETTINGS]: 7
         };
 
       getOnboardingSteps(currentStep: string, onboardingState: XeroOnboardingState): OnboardingStepper[] {
@@ -67,7 +69,7 @@ export class XeroOnboardingModel {
             }
           });
 
-          for (let index = this.onboardingStateStepMap[onboardingState] - 1; index > 0; index--) {
+          for (let index = this.onboardingStateStepMap[onboardingState] - 2; index > 0; index--) {
             this.onboardingSteps[index - 1].completed = true;
           }
 

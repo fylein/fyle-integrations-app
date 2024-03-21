@@ -27,6 +27,8 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   @Input() accountingCompanyList: DestinationAttribute[];
 
+  @Input() isDisconnectClicked: boolean = false;
+
   @Output() switchCompany = new EventEmitter();
 
   @Output() connectCompany = new EventEmitter();

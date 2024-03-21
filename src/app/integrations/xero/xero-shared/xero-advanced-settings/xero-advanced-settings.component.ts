@@ -113,7 +113,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.advancedSettings = response[0];
       this.billPaymentAccounts = response[1];
       this.workspaceGeneralSettings = response[2];
-      this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]) : response[3];
+      this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
 
       this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails);
 

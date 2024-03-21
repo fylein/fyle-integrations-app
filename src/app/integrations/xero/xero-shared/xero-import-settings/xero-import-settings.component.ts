@@ -109,7 +109,7 @@ export class XeroImportSettingsComponent implements OnInit {
   }
 
   navigateToPreviousStep(): void {
-    this.router.navigate([`/integrations/qbo/onboarding/export_settings`]);
+    this.router.navigate([`/integrations/xero/onboarding/export_settings`]);
   }
 
   saveFyleExpenseField(): void {

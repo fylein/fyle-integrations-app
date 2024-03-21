@@ -42,6 +42,7 @@ export class XeroComponent implements OnInit {
     if (pathName === '/integrations/xero') {
       const onboardingStateComponentMap = {
         [XeroOnboardingState.CONNECTION]: '/integrations/xero/onboarding/landing',
+        [XeroOnboardingState.TENANT_MAPPING]: '/integrations/xero/onboarding/connector',
         [XeroOnboardingState.EXPORT_SETTINGS]: '/integrations/xero/onboarding/export_settings',
         [XeroOnboardingState.IMPORT_SETTINGS]: '/integrations/xero/onboarding/import_settings',
         [XeroOnboardingState.ADVANCED_CONFIGURATION]: '/integrations/xero/onboarding/advanced_settings',

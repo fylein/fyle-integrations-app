@@ -86,6 +86,10 @@ export class XeroExportSettingsComponent implements OnInit {
     this.xeroHelperService.refreshXeroDimensions().subscribe();
   }
 
+  navigateToPreviousStep() {
+    this.router.navigate([`/integrations/xero/onboarding/connector`]);
+  }
+
   save() {
     if (this.exportSettingForm.valid) {
       this.constructPayloadAndSave({
