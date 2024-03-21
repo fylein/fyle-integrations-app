@@ -25,6 +25,7 @@ export type FeatureConfiguration = {
                 singleCreditLineJE: boolean;
                 emailNotification: boolean;
                 skipExport: boolean;
+                defaultFields: boolean;
             },
             exportLog: {
                 expenseType: boolean;

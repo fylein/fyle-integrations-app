@@ -140,7 +140,7 @@
                     </app-configuration-skip-export>
                 </div>
             </div>
-            <div class="tw-mb-16-px">
+            <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.defaultFields" class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="brandingContentv1.intacct.configuration.advancedSettings.dfvLabel"
                     [subLabel]="brandingContentv1.intacct.configuration.advancedSettings.dfvSubLabel">
