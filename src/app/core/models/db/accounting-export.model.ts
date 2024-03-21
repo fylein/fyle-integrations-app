@@ -54,7 +54,12 @@ export type AccountingExportGetParam = {
     limit: number,
     offset: number,
     exported_at__lte?: string,
-    exported_at__gte?: string
+    exported_at__gte?: string,
+    expenses__expense_number?: string;
+    expenses__employee_name?: string;
+    expenses__employee_email?: string;
+    expenses__claim_number?: string;
+
 }
 
 export class AccountingExportModel {
