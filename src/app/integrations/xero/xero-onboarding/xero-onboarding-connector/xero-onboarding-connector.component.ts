@@ -105,9 +105,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
         this.isContinueDisabled = false;
         this.isCloneSettingsDisabled = true;
       } else {
-        this.isContinueDisabled = false;
-        this.isCloneSettingsDisabled = true;
-        this.constructPayloadAndSave();
+        this.router.navigate(['/integrations/xero/onboarding/export_settings']);
       }
     });
   }
@@ -189,11 +187,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   private constructPayloadAndSave(): void {
     if (this.isContinueDisabled) {
       return;
-    } else if (this.isCloneSettingsDisabled && this.xeroCompanyName) {
-      this.router.navigate(['/integrations/xero/onboarding/export_settings']);
-      return;
-    }
-    if (this.xeroTenantselected && !this.xeroCompanyName) {
+    } else if (this.xeroTenantselected && !this.xeroCompanyName) {
       this.xeroConnectionInProgress = true;
       this.isContinueDisabled = true;
       const tenantMappingPayload: TenantMappingPost = TenantMappingModel.constructPayload(this.xeroTenantselected);
@@ -202,29 +196,24 @@ export class XeroOnboardingConnectorComponent implements OnInit {
           this.workspaceService.setOnboardingState(XeroOnboardingState.EXPORT_SETTINGS);
           this.xeroConnectionInProgress = false;
           this.xeroTokenExpired = false;
-          this.showOrHideDisconnectXero();
           this.isXeroConnected = true;
           this.xeroCompanyName = response.tenant_name;
-          this.router.navigate(['/integrations/xero/onboarding/export_settings']);
+          this.showOrHideDisconnectXero();
+          this.checkCloneSettingsAvailablity();
         });
       });
-    } else if (!this.isContinueDisabled && this.xeroCompanyName){
-      this.checkCloneSettingsAvailablity();
+    } else {
+      return;
     }
   }
 
   save(): void {
     if (this.isContinueDisabled) {
       return;
-    } else if (this.isCloneSettingsDisabled) {
-      this.constructPayloadAndSave();
-      return;
-    }
-
-    if (!brandingFeatureConfig.featureFlags.cloneSettings) {
-      this.constructPayloadAndSave();
+    } else if (this.xeroCompanyName) {
+      this.router.navigate(['/integrations/xero/onboarding/export_settings']);
     } else {
-      this.checkCloneSettingsAvailablity();
+      this.constructPayloadAndSave();
     }
   }
 
