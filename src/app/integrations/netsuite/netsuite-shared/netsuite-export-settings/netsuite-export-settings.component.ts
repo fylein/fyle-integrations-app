@@ -156,8 +156,8 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     }
 
     if (this.exportSettings?.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
-      this.exportSettingForm.controls.cccExportGroup.setValue(this.expenseGroupByOptions[0].value);
-      this.exportSettingForm.controls.cccExportGroup.disable();
+      this.exportSettingForm.controls.creditCardExportGroup.setValue(this.expenseGroupByOptions[0].value);
+      this.exportSettingForm.controls.creditCardExportGroup.disable();
     }
     this.reimbursableExportTypeWatcher();
     this.cccExportTypeWatcher();

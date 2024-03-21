@@ -25,7 +25,8 @@ const featureConfigs: FeatureConfiguration = {
             },
             importSettings: {
                 tax: true,
-                importVendorsAsMerchants: true
+                importVendorsAsMerchants: true,
+                importNetsuiteEmployees: true,
             },
             advancedSettings: {
                 autoCreateVendors: true,
@@ -59,7 +60,8 @@ const featureConfigs: FeatureConfiguration = {
             },
             importSettings: {
                 tax: false,
-                importVendorsAsMerchants: false
+                importVendorsAsMerchants: false,
+                importNetsuiteEmployees: false
             },
             advancedSettings: {
                 autoCreateVendors: false,

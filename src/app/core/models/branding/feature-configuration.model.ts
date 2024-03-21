@@ -17,6 +17,7 @@ export type FeatureConfiguration = {
             importSettings: {
                 tax: boolean;
                 importVendorsAsMerchants: boolean;
+                importNetsuiteEmployees: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;
