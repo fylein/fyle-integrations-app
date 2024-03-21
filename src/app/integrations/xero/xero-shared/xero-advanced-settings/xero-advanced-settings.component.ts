@@ -59,7 +59,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.configuration.advancedSettings;
+  readonly brandingContent = brandingContent.xero.configuration.advancedSettings;
 
 
   constructor(
@@ -115,7 +115,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
       this.workspaceGeneralSettings = response[2];
       this.adminEmails = this.advancedSettings.workspace_schedules?.additional_email_options ? this.advancedSettings.workspace_schedules?.additional_email_options.concat(response[3]).flat() : response[3];
 
-      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails);
+      this.advancedSettingForm = XeroAdvancedSettingModel.mapAPIResponseToFormGroup(this.advancedSettings, this.adminEmails, this.billPaymentAccounts);
 
       this.setupFormWatchers();
       this.isLoading = false;

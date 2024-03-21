@@ -76,7 +76,7 @@
                                 [form]="exportSettingForm"
                                 [isDisabled]="true"
                                 [label]="'How should the expenses be grouped?'"
-                                [subLabel]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'"
+                                [subLabel]="'Expense will be exported as single line items (Expense)'"
                                 [options]="reimbursableExpenseGroupByOptions"
                                 [iconPath]="'question-square-outline'"
                                 [placeholder]="'Select expense grouping'"
@@ -149,10 +149,10 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
+                            [subLabel]="'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
-                            [placeholder]="brandingContent.corporateCard.expenseState"
+                            [placeholder]="'Select expense state'"
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
                     </div>
@@ -162,7 +162,7 @@
                             [form]="exportSettingForm"
                             [isDisabled]="true"
                             [label]="'How should the expenses be grouped?'"
-                            [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
+                            [subLabel]="'Expense will be exported as grouped report with multiple line items (Expense Report)'"
                             [options]="cccExpenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"

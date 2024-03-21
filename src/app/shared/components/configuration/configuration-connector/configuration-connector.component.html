@@ -41,7 +41,8 @@
                     </p-dropdown>
                 </div>
                 <div class="tw-w-300-px tw-text-pretty tw-text-center tw-py-16-px">
-                    <span class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Please select a Location (Entity) from {{accountingAppTitle}} to proceed further.</span>
+                    <span *ngIf="appName !== AppName.XERO" class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Please select a Location (Entity) from {{accountingAppTitle}} to proceed further.</span>
+                    <span *ngIf="appName === AppName.XERO" class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Please select a Tenant from {{accountingAppTitle}} to proceed further.</span>
                 </div>
             </div>
         </div>
@@ -58,15 +59,15 @@
             <p *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-text-muted ">
                 Token expired.
             </p>
-            <p *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked">
-                You will need to select a Location (Entity) to proceed with the onboarding.
+            <p *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked && appName === AppName.XERO">
+                You will need to select a Tenant to proceed with the onboarding.
             </p>
             <div *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" class="tw-h-60-px">
                 <span (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">
                     Re-Connect to {{ accountingAppTitle }}
                 </span>
             </div>
-            <div *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked" class="tw-h-60-px">
+            <div *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked && appName === AppName.XERO" class="tw-h-60-px">
                 <span (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">
                     Connect to {{ accountingAppTitle }}
                 </span>

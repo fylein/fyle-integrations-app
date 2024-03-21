@@ -5,7 +5,7 @@ import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArtic
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { ConfigurationCta, ConfigurationWarningEvent, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
@@ -57,6 +57,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
 
   isXeroConnected: boolean = false;
 
+  appName: string = AppName.XERO;
+
   private oauthCallbackSubscription: Subscription;
 
   readonly fyleOrgName: string = this.userService.getUserProfile().org_name;
@@ -103,9 +105,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
         this.isContinueDisabled = false;
         this.isCloneSettingsDisabled = true;
       } else {
-        this.isContinueDisabled = false;
-        this.isCloneSettingsDisabled = true;
-        this.constructPayloadAndSave();
+        this.router.navigate(['/integrations/xero/onboarding/export_settings']);
       }
     });
   }
@@ -187,11 +187,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
   private constructPayloadAndSave(): void {
     if (this.isContinueDisabled) {
       return;
-    } else if (this.isCloneSettingsDisabled && this.xeroCompanyName) {
-      this.router.navigate(['/integrations/xero/onboarding/export_settings']);
-      return;
-    }
-    if (this.xeroTenantselected && !this.xeroCompanyName) {
+    } else if (this.xeroTenantselected && !this.xeroCompanyName) {
       this.xeroConnectionInProgress = true;
       this.isContinueDisabled = true;
       const tenantMappingPayload: TenantMappingPost = TenantMappingModel.constructPayload(this.xeroTenantselected);
@@ -200,29 +196,24 @@ export class XeroOnboardingConnectorComponent implements OnInit {
           this.workspaceService.setOnboardingState(XeroOnboardingState.EXPORT_SETTINGS);
           this.xeroConnectionInProgress = false;
           this.xeroTokenExpired = false;
-          this.showOrHideDisconnectXero();
           this.isXeroConnected = true;
           this.xeroCompanyName = response.tenant_name;
-          this.router.navigate(['/integrations/xero/onboarding/export_settings']);
+          this.showOrHideDisconnectXero();
+          this.checkCloneSettingsAvailablity();
         });
       });
-    } else if (!this.isContinueDisabled && this.xeroCompanyName){
-      this.checkCloneSettingsAvailablity();
+    } else {
+      return;
     }
   }
 
   save(): void {
     if (this.isContinueDisabled) {
       return;
-    } else if (this.isCloneSettingsDisabled) {
-      this.constructPayloadAndSave();
-      return;
-    }
-
-    if (!brandingFeatureConfig.featureFlags.cloneSettings) {
-      this.constructPayloadAndSave();
+    } else if (this.xeroCompanyName) {
+      this.router.navigate(['/integrations/xero/onboarding/export_settings']);
     } else {
-      this.checkCloneSettingsAvailablity();
+      this.constructPayloadAndSave();
     }
   }
 

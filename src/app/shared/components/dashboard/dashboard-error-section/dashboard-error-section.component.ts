@@ -45,6 +45,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() exportKey: string = 'expense_group';
 
+  @Input() isEmployeeMappingGeneric: boolean;
+
   filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];
@@ -112,7 +114,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   private setErrors(errorType: AccountingErrorType): void {
     this.errors[errorType][0].expense_attribute;
     const isCategoryMappingGeneric = FyleField.CATEGORY === (this.sourceField as unknown as FyleField) ? this.isCategoryMappingGeneric : false;
-    this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, isCategoryMappingGeneric);
+    this.filteredMappings = ErrorModel.getErroredMappings(this.errors, errorType, isCategoryMappingGeneric, this.isEmployeeMappingGeneric);
     setTimeout(() => {
       this.isLoading = false;
     }, 100);

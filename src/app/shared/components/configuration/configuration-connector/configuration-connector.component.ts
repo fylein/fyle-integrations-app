@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { AppName } from 'src/app/core/models/enum/enum.model';
 
 @Component({
   selector: 'app-configuration-connector',
@@ -29,9 +30,13 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   @Input() isDisconnectClicked: boolean = false;
 
+  @Input() appName: string;
+
   @Output() switchCompany = new EventEmitter();
 
   @Output() connectCompany = new EventEmitter();
+
+  AppName = AppName;
 
   readonly brandingConfig = brandingConfig;
 

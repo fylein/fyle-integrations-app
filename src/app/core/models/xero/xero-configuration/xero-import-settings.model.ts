@@ -1,6 +1,6 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { MappingSetting } from "../../db/mapping-setting.model";
 import { MappingDestinationField, MappingSourceField, XeroFyleField } from "../../enum/enum.model";
 import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
@@ -8,6 +8,7 @@ import { XeroWorkspaceGeneralSetting } from "../db/xero-workspace-general-settin
 import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
 import { brandingConfig } from "src/app/branding/branding-config";
+import { ExportSettingModel } from "../../common/export-settings.model";
 
 
 export type XeroImportSettingWorkspaceGeneralSetting = {
@@ -62,7 +63,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     return ['EXPENSE', 'ASSET', 'EQUITY', 'LIABILITY', 'REVENUE'];
   }
 
-  static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean): FormGroup {
+  static mapAPIResponseToFormGroup(importSettings: XeroImportSettingGet | null, xeroFields: IntegrationField[], isCustomerPresent:boolean, destinationAttribute: DestinationAttribute[]): FormGroup {
     let additionalOption: any[] = [];
     if (brandingConfig.brandId === 'co' && isCustomerPresent) {
       const additionalMappingSetting = {
@@ -75,6 +76,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
       additionalOption = [ImportSettingsModel.createFormGroup(additionalMappingSetting)];
     }
     const expenseFieldsArray = importSettings?.mapping_settings ? additionalOption.concat(this.constructFormArray(importSettings.mapping_settings, xeroFields)) : [];
+    const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
@@ -82,7 +84,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
       importCustomers: new FormControl(importSettings?.workspace_general_settings.import_customers ?? false),
       taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
       importSuppliersAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_suppliers_as_merchants ?? false),
-      defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
+      defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? findObjectByDestinationId(destinationAttribute, importSettings.general_mappings.default_tax_code.id) : null),
       searchOption: new FormControl('')
     });
   }
@@ -103,7 +105,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
         import_customers: importSettingsForm.get('importCustomers')?.value ? importSettingsForm.get('importCustomers')?.value : false
       },
       general_mappings: {
-        default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? importSettingsForm.get('defaultTaxCode')?.value : emptyDestinationAttribute
+        default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? ExportSettingModel.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value) : emptyDestinationAttribute
       },
       mapping_settings: mappingSettings
     };

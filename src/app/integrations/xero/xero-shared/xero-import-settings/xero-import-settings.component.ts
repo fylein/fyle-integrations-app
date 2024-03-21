@@ -157,7 +157,7 @@ export class XeroImportSettingsComponent implements OnInit {
   private createCOAWatcher(): void {
     this.importSettingsForm.controls.importCategories.valueChanges.subscribe((isImportCategoriesEnabled) => {
       if (!isImportCategoriesEnabled) {
-        this.importSettingsForm.controls.chartOfAccountTypes.setValue(['Expense']);
+        this.importSettingsForm.controls.chartOfAccountTypes.setValue(['EXPENSE']);
       }
     });
   }
@@ -257,7 +257,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
       this.xeroExpenseFields = this.xeroExpenseFields.filter((data) => data.attribute_type !== XeroFyleField.CUSTOMER);
 
-      this.importSettingsForm = XeroImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent);
+      this.importSettingsForm = XeroImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent, this.taxCodes);
 
       if (response[5] && response[5].country !== 'US') {
         this.isTaxGroupSyncAllowed = true;
