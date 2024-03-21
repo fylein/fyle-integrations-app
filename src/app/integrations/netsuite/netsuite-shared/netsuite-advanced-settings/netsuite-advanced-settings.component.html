@@ -140,7 +140,7 @@
                     </app-configuration-skip-export>
                 </div>
             </div>
-            <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.defaultFields" class="tw-mb-16-px">
+            <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="brandingContentv1.intacct.configuration.advancedSettings.dfvLabel"
                     [subLabel]="brandingContentv1.intacct.configuration.advancedSettings.dfvSubLabel">
@@ -157,7 +157,7 @@
                                 <app-svg-icon [svgSource]="'cross-medium'" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                                 </ng-template>
                         </p-dropdown>
-                        <span *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px">
+                        <span *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.defaultFields && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px">
                             <input formControlName="useEmployeeLocation" type="checkbox" />
                             <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in NetSuite</label>
                         </span>
@@ -176,7 +176,7 @@
                                 <app-svg-icon [svgSource]="'cross-medium'" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </ng-template>
                         </p-dropdown>
-                        <span *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px">
+                        <span *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.defaultFields && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px">
                             <input formControlName="useEmployeeDepartment" type="checkbox" />
                             <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in NetSuite</label>
                         </span>
@@ -195,7 +195,7 @@
                                 <app-svg-icon [svgSource]="'cross-medium'" [height]="'16px'" [width]="'16px'"></app-svg-icon>
                             </ng-template>
                         </p-dropdown>
-                        <span *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px">
+                        <span *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.defaultFields && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px">
                             <input formControlName="useEmployeeClass" type="checkbox" />
                             <label class="tw-pl-8-px" for="checkbox">Use Employee's class in NetSuite</label>
                         </span>
