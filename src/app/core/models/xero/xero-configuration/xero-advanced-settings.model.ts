@@ -63,10 +63,6 @@ export class XeroAdvancedSettingModel extends HelperUtility{
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: 'None',
-        value: 'None'
-      },
-      {
         label: 'Export Fyle ACH Payments to Xero',
         value: PaymentSyncDirection.FYLE_TO_XERO
       },
