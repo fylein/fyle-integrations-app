@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { EmailOption, SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
-import { NetsuitePaymentSyncDirection, QBOPaymentSyncDirection } from "../../enum/enum.model";
+import { NetsuiteDefaultLevelOptions, NetsuitePaymentSyncDirection, QBOPaymentSyncDirection } from "../../enum/enum.model";
 import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
 import { brandingConfig } from "src/app/branding/branding-config";
@@ -76,6 +76,23 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     ];
   }
 
+  static getDefaultLevelOptions(): SelectFormOption[] {
+    return [
+      {
+        label: 'All',
+        value: NetsuiteDefaultLevelOptions.ALL
+      },
+      {
+        label: 'Transaction Line',
+        value: NetsuiteDefaultLevelOptions.TRANSACTION_LINE
+      },
+      {
+        label: 'Transaction Body',
+        value: NetsuiteDefaultLevelOptions.TRANSACTION_BODY
+      }
+    ];
+  }
+
   static getValidators(): AdvancedSettingValidatorRule {
     return {
       paymentSync: 'billPaymentAccount',
@@ -105,9 +122,12 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
       paymentAccount: new FormControl(advancedSettings?.general_mappings.vendor_payment_account?.id ? advancedSettings?.general_mappings.vendor_payment_account : null ),
       netsuiteLocation: new FormControl(advancedSettings?.general_mappings.netsuite_location?.id ? advancedSettings?.general_mappings.netsuite_location : null),
       useEmployeeLocation: new FormControl(advancedSettings?.general_mappings.use_employee_location ? advancedSettings?.general_mappings.use_employee_location : false),
+      netsuiteLocationLevel: new FormControl(advancedSettings?.general_mappings.netsuite_location_level ? advancedSettings?.general_mappings.netsuite_location_level : null),
       netsuiteDepartment: new FormControl(advancedSettings?.general_mappings.netsuite_department?.id ? advancedSettings?.general_mappings.netsuite_department : null),
+      netsuiteDepartmentLevel: new FormControl(advancedSettings?.general_mappings.netsuite_department_level ? advancedSettings?.general_mappings.netsuite_department_level : null),
       useEmployeeDepartment: new FormControl(advancedSettings?.general_mappings.use_employee_department ? advancedSettings?.general_mappings.use_employee_department : false),
       netsuiteClass: new FormControl(advancedSettings?.general_mappings.netsuite_class?.id ? advancedSettings?.general_mappings.netsuite_class : null),
+      netsuiteClassLevel: new FormControl(advancedSettings?.general_mappings.netsuite_class_level ? advancedSettings?.general_mappings.netsuite_class_level : null),
       useEmployeeClass: new FormControl(advancedSettings?.general_mappings.use_employee_class ? advancedSettings?.general_mappings.use_employee_class : false),
       changeAccountingPeriod: new FormControl(advancedSettings?.configuration.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings?.configuration.auto_create_destination_entity),
@@ -136,11 +156,11 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
       general_mappings: {
         vendor_payment_account: advancedSettingsForm.get('paymentAccount')?.value ? advancedSettingsForm.get('paymentAccount')?.value : emptyDestinationAttribute,
         netsuite_location: advancedSettingsForm.get('netsuiteLocation')?.value ? advancedSettingsForm.get('netsuiteLocation')?.value : emptyDestinationAttribute,
-        netsuite_location_level: 'TOP',
-        netsuite_department: advancedSettingsForm.get('netsuiteDepartment')?.value ? advancedSettingsForm.get('netsuiteDepartment')?.value: emptyDestinationAttribute,
-        netsuite_department_level: 'Bottom',
-        netsuite_class: advancedSettingsForm.get('netsuiteClass')?.value ? advancedSettingsForm.get('netsuiteClass')?.value: emptyDestinationAttribute,
-        netsuite_class_level: 'Bottom',
+        netsuite_location_level: advancedSettingsForm.get('netsuiteLocationLevel')?.value ? advancedSettingsForm.get('netsuiteLocationLevel')?.value : '',
+        netsuite_department: advancedSettingsForm.get('netsuiteDepartment')?.value ? advancedSettingsForm.get('netsuiteDepartment')?.value : emptyDestinationAttribute,
+        netsuite_department_level: advancedSettingsForm.get('netsuiteDepartmentLevel')?.value ? advancedSettingsForm.get('netsuiteDepartmentLevel')?.value : '',
+        netsuite_class: advancedSettingsForm.get('netsuiteClass')?.value ? advancedSettingsForm.get('netsuiteClass')?.value : emptyDestinationAttribute,
+        netsuite_class_level: advancedSettingsForm.get('netsuiteClassLevel')?.value ? advancedSettingsForm.get('netsuiteClassLevel')?.value : '',
         use_employee_location: advancedSettingsForm.get('useEmployeeLocation')?.value,
         use_employee_class: advancedSettingsForm.get('useEmployeeClass')?.value,
         use_employee_department: advancedSettingsForm.get('useEmployeeDepartment')?.value

@@ -85,7 +85,7 @@ export class MappingService {
   }
 
   getFyleFields(version?: 'v1'): Observable<FyleField[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fyle_fields'}/`, {});
+    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/${version === 'v1' ? 'expense_fields' : 'fields'}/`, {});
   }
 
   postEmployeeMappings(employeeMapping: EmployeeMappingPost): Observable<EmployeeMapping> {
@@ -141,11 +141,14 @@ export class MappingService {
 
   getMappingStats(sourceType: string, destinationType: string, appName: AppName): Observable<MappingStats> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-
+    let appNameCaps = null;
+    if (appName === AppName.INTACCT || appName === AppName.XERO) {
+      appNameCaps = appName.toUpperCase();
+    }
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, {
       source_type: sourceType,
       destination_type: destinationType,
-      app_name: appName !== AppName.INTACCT ? appName : AppUrl.INTACCT.toUpperCase()
+      app_name: appNameCaps ? appNameCaps : appName
     });
   }
 

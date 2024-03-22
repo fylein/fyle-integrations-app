@@ -67,6 +67,8 @@ export class DashboardComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
+  hideCalendar: boolean;
+
   constructor(
     private iifLogsService: QbdIifLogsService,
     private formBuilder: FormBuilder,
@@ -74,14 +76,6 @@ export class DashboardComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService
   ) { }
-
-  dropDownWatcher() {
-    if (this.exportLogForm.controls.dateRange.value !== this.dateOptions[3].dateRange) {
-      this.isCalendarVisible = false;
-    } else {
-      this.isCalendarVisible = true;
-    }
-  }
 
   showCalendar(event: Event) {
     event.stopPropagation();
@@ -99,6 +93,9 @@ export class DashboardComponent implements OnInit {
 
   dateFilter(): void {
     this.isLoading = true;
+    setTimeout(() => {
+      this.hideCalendar = false;
+    }, 10);
     this.iifLogsService.getQbdAccountingExports(QBDAccountingExportsState.COMPLETE, this.limit, this.pageNo, this.selectedDateFilter, [QBDAccountingExportsType.EXPORT_BILLS, QBDAccountingExportsType.EXPORT_CREDIT_CARD_PURCHASES, QBDAccountingExportsType.EXPORT_JOURNALS]).subscribe((accountingExportsResult: QbdExportTriggerResponse) => {
       this.accountingExports = accountingExportsResult;
       this.totalCount = this.accountingExports.count;
@@ -216,6 +213,7 @@ export class DashboardComponent implements OnInit {
         this.selectedDateFilter = null;
         this.dateFilter();
       } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]

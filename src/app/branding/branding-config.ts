@@ -34,7 +34,8 @@ const featureConfigs: FeatureConfiguration = {
                 singleCreditLineJE: true,
                 emailNotification: true,
                 defaultFields: true,
-                skipExport: true
+                skipExport: true,
+                autoCreateContacts: true
             },
             exportLog: {
                 expenseType: true
@@ -70,7 +71,8 @@ const featureConfigs: FeatureConfiguration = {
                 singleCreditLineJE: false,
                 emailNotification: false,
                 defaultFields: false,
-                skipExport: false
+                skipExport: false,
+                autoCreateContacts: false
             },
             exportLog: {
                 expenseType: false
@@ -294,7 +296,8 @@ const content: ContentConfiguration = {
                         cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
                         creditCardExportTypeSubLabel: '',
                         expenseState: '',
-                        creditCardExpenseSubLabel: ''
+                        creditCardExpenseSubLabel: '',
+                        cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'
                     }
                 },
                 importSetting: {
@@ -316,13 +319,13 @@ const content: ContentConfiguration = {
                     stepName: 'Advanced settings',
                     scheduleAutoExport: 'Schedule automatic export',
                     email: 'Send error notification to',
-                    autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
-                    defaultPaymentAccount: 'Select payment account',
-                    autoCreateEmployeeVendor: 'Auto-create ',
+                    paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
+                    autoCreateVendorsLabel: 'Auto create Contacts',
+                    autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on Xero',
+                    billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
+                    billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                    setDescriptionField: 'Set the description field in Xero',
-                    dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
+                    autoCreateEmployeeVendor: 'Auto-create '
                 }
             }
         },
@@ -540,7 +543,8 @@ const content: ContentConfiguration = {
                         cccExpenseBankAccountSubLabel: '',
                         creditCardExportTypeSubLabel: '',
                         expenseState: '',
-                        creditCardExpenseSubLabel: ''
+                        creditCardExpenseSubLabel: '',
+                        cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (approved) or when the payment has been settled (closed).'
                     }
                 },
                 importSetting: {
@@ -562,13 +566,13 @@ const content: ContentConfiguration = {
                     stepName: 'Advanced settings',
                     scheduleAutoExport: 'Schedule automatic export',
                     email: 'Send error notification to',
-                    autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
-                    defaultPaymentAccount: 'Select payment account',
-                    autoCreateEmployeeVendor: 'Auto-create ',
+                    paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
+                    autoCreateVendorsLabel: 'Auto create contacts',
+                    autoCreateMerchantsAsVendorsLabel: 'Auto create ' + brandingConfig.brandName + ' merchants as contacts on Xero',
+                    billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
+                    billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                    setDescriptionField: 'Set the description field in Xero',
-                    dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Xero but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Xero.'
+                    autoCreateEmployeeVendor: 'Auto-create '
                 }
             }
         },

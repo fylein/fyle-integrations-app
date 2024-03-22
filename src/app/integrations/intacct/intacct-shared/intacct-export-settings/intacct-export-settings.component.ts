@@ -7,7 +7,7 @@ import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { CCCExpenseState, ConfigurationCta, IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { CCCExpenseState, ConfigurationCta, IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey, TrackingApp, EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel as IntacctExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -314,6 +314,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         }
 
         if (isCCCExportTypeSelected === IntacctCorporateCreditCardExpensesObject.EXPENSE_REPORT) {
+          this.exportSettingsForm.controls.employeeFieldMapping.setValue(EmployeeFieldMapping.EMPLOYEE);
           this.exportSettingsForm.controls.cccExpensePaymentType.setValidators(Validators.required);
         } else {
           this.exportSettingsForm.controls.cccExpensePaymentType.clearValidators();

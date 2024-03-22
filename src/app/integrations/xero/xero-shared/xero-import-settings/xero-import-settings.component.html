@@ -44,7 +44,7 @@
                       [appName]="appName"
                       [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
-                    <div class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-max-w-600-px tw-text-pretty tw-pb-24-px tw-pl-64-px tw-pr-12-px">
+                    <div class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4 tw-text-pretty tw-pb-24-px tw-pl-64-px tw-pr-12-px">
                         {{brandingContent.notes}}
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                         [label]="brandingContent.defaultTaxCodeLabel"
                         [subLabel]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'"
                         [destinationAttributes]="taxCodes"
-                        [optionLabel]="'name'"
+                        [optionLabel]="'value'"
                         [placeholder]="'Select tax code'"
                         [formControllerName]="'defaultTaxCode'">
                     </app-configuration-select-field>

@@ -60,9 +60,9 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   netsuiteLocations: DefaultDestinationAttribute[];
 
-  netsuiteDepartment: DefaultDestinationAttribute[];
+  netsuiteDepartments: DefaultDestinationAttribute[];
 
-  netsuiteClass: DefaultDestinationAttribute[];
+  netsuiteClasses: DefaultDestinationAttribute[];
 
   brandingConfig = brandingConfig;
 
@@ -76,15 +76,19 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   paymentSyncOptions: SelectFormOption[] = NetsuiteAdvancedSettingModel.getPaymentSyncOptions();
 
+  netsuiteLocationLevels:  SelectFormOption[]  = NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+
+  netsuiteDepartmentLevels:  SelectFormOption[]  =  NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+
+  netsuiteClassLevels:  SelectFormOption[]  = NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+
   paymentAccounts: DefaultDestinationAttribute[];
 
   ConfigurationCtaText = ConfigurationCta;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.configuration.advancedSettings;
-
-  readonly brandingContentv1 = brandingContent;
+  readonly brandingContent = brandingContent;
 
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
@@ -164,11 +168,11 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   }
 
   isAutoCreateVendorsFieldVisible(): boolean {
-    return this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR && this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE;
+    return this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE;
   }
 
-  isPaymentSyncFieldVisible(): boolean {
-    return this.workspaceGeneralSettings.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY;
+  isPaymentSyncFieldVisible(): boolean | null {
+    return this.workspaceGeneralSettings.reimbursable_expenses_object && this.workspaceGeneralSettings.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY;
   }
 
   private createMemoStructureWatcher(): void {
@@ -211,8 +215,8 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       this.mappingService.getGroupedDestinationAttributes(['LOCATION', 'DEPARTMENT', 'CLASS', 'VENDOR_PAYMENT_ACCOUNT'], 'v2', 'netsuite'),
       this.configurationService.getAdditionalEmails(),
       this.workspaceService.getConfiguration()
-    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, netsuiteAttributes, adminEmails, workspaceGeneralSettings]) => {
-      this.advancedSetting = sage300AdvancedSettingResponse;
+    ]).subscribe(([netsuiteAdvancedSetting, expenseFiltersGet, expenseFilterCondition, netsuiteAttributes, adminEmails, workspaceGeneralSettings]) => {
+      this.advancedSetting = netsuiteAdvancedSetting;
       this.expenseFilters = expenseFiltersGet;
       this.conditionFieldOptions = expenseFilterCondition;
 
@@ -227,9 +231,9 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
       this.netsuiteLocations = netsuiteAttributes.LOCATION.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
 
-      this.netsuiteDepartment = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.netsuiteDepartments = netsuiteAttributes.DEPARTMENT.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
 
-      this.netsuiteClass = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.netsuiteClasses = netsuiteAttributes.CLASS.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
 
       const isSkipExportEnabled = expenseFiltersGet.count > 0;
 

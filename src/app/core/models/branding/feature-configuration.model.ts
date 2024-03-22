@@ -26,6 +26,7 @@ export type FeatureConfiguration = {
                 emailNotification: boolean;
                 skipExport: boolean;
                 defaultFields: boolean;
+                autoCreateContacts: boolean;
             },
             exportLog: {
                 expenseType: boolean;

@@ -62,9 +62,9 @@
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-toggle-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
+                <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.reimbursable_expenses_object"
                     [form]="advancedSettingForm"
-                    [iconPath]="'user-plus'"
+                    [iconPath]="'list'"
                     [label]="brandingContent.autoCreateVendorsLabel"
                     [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in Xero already.'"
                     [formControllerName]="'autoCreateVendors'">
@@ -74,16 +74,17 @@
                     [form]="advancedSettingForm"
                     [options]="paymentSyncOptions"
                     [iconPath]="'arrow-rotate'"
+                    [showClearIcon]="true"
                     [label]="brandingContent.paymentSyncLabel"
                     [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in Xero will be automatically be updated to Paid and vice versa.'"
                     [placeholder]="'Select how payments should be synced for reimbursable expenses'"
                     [formControllerName]="'paymentSync'">
                 </app-configuration-select-field>
 
-                <app-configuration-select-field *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_xero'"
+                <app-configuration-select-field *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_xero' && workspaceGeneralSettings.reimbursable_expenses_object"
                     [form]="advancedSettingForm"
                     [destinationAttributes]="billPaymentAccounts"
-                    [optionLabel]="'name'"
+                    [optionLabel]="'value'"
                     [isFieldMandatory]="true"
                     [mandatoryErrorListName]="'payment account'"
                     [label]="brandingContent.billPaymentAccountLabel"
@@ -91,12 +92,11 @@
                     [placeholder]="'Select a Payment Account'"
                     [formControllerName]="'billPaymentAccount'">
                 </app-configuration-select-field>
-
-                <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object"
+                <app-configuration-toggle-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.autoCreateContacts && workspaceGeneralSettings.corporate_credit_card_expenses_object"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
-                    [subLabel]="brandingConfig.brandName + ' will auto-create a new vendor in Xero if a merchant added by an employee does not have a corresponding match in Xero.'"
+                    [subLabel]="'While exporting corporate card expenses from ' + brandingConfig.brandName + ', the integration will auto-create a contact in Xero if a merchant added in ' + brandingConfig.brandName + ' does not exist in Xero.'"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'">
                 </app-configuration-toggle-field>
             </div>
