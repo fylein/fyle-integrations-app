@@ -284,7 +284,8 @@ const content: ContentConfiguration = {
                         cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
                         creditCardExportTypeSubLabel: '',
                         expenseState: '',
-                        creditCardExpenseSubLabel: ''
+                        creditCardExpenseSubLabel: '',
+                        cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'
                     }
                 },
                 importSetting: {
@@ -530,7 +531,8 @@ const content: ContentConfiguration = {
                         cccExpenseBankAccountSubLabel: '',
                         creditCardExportTypeSubLabel: '',
                         expenseState: '',
-                        creditCardExpenseSubLabel: ''
+                        creditCardExpenseSubLabel: '',
+                        cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (approved) or when the payment has been settled (closed).'
                     }
                 },
                 importSetting: {

@@ -35,7 +35,8 @@ export type ContentConfiguration = {
                         cccExpenseBankAccountSubLabel: string;
                         creditCardExportTypeSubLabel: string;
                         expenseState: string;
-                        creditCardExpenseSubLabel: string
+                        creditCardExpenseSubLabel: string;
+                        cccExpenseStateSubLabel: string;
                     }
                 },
                 importSetting: {
