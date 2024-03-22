@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { brandingContent } from 'src/app/branding/branding-config';
 import { IntacctOnboardingModel } from 'src/app/core/models/intacct/intacct-configuration/intacct-onboarding.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-onboarding.model';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
