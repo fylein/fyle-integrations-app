@@ -92,8 +92,7 @@
                     [placeholder]="'Select a Payment Account'"
                     [formControllerName]="'billPaymentAccount'">
                 </app-configuration-select-field>
-
-                <app-configuration-toggle-field *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object"
+                <app-configuration-toggle-field *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.autoCreateContacts && workspaceGeneralSettings.corporate_credit_card_expenses_object"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
