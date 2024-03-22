@@ -73,6 +73,7 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
     const onboardingState: XeroOnboardingState = this.workspaceService.getOnboardingState();
     if (onboardingState !== XeroOnboardingState.COMPLETE) {
       this.xeroConnectorService.postXeroTenants().subscribe(() => {
+        this.workspaceService.setOnboardingState(XeroOnboardingState.TENANT_MAPPING);
         this.router.navigate(['integrations/xero/onboarding/connector']);
       });
     } else {

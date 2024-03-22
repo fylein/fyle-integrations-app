@@ -68,12 +68,12 @@ export class ErrorModel {
     });
   }
 
-  static getErroredMappings(errors: AccountingGroupedErrors, errorType: AccountingErrorType, isCategoryMappingGeneric?: boolean): ExtendedGenericMapping[] {
+  static getErroredMappings(errors: AccountingGroupedErrors, errorType: AccountingErrorType, isCategoryMappingGeneric?: boolean, isEmployeeMappingGeneric?: boolean): ExtendedGenericMapping[] {
     const filteredMappings: ExtendedGenericMapping[] = [];
 
     errors[errorType].forEach(element => {
       const filteredMapping: ExtendedGenericMapping = element.expense_attribute;
-      if (errorType === AccountingErrorType.ACCOUNTING_ERROR || isCategoryMappingGeneric) {
+      if (errorType === AccountingErrorType.ACCOUNTING_ERROR || isCategoryMappingGeneric || isEmployeeMappingGeneric) {
         filteredMapping.mapping = [];
       } else if (errorType === AccountingErrorType.EMPLOYEE_MAPPING) {
         filteredMapping.employeemapping = [];

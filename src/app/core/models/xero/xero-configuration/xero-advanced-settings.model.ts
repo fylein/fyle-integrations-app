@@ -1,9 +1,10 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { AdvancedSettingValidatorRule, AdvancedSettingsModel, EmailOption } from "../../common/advanced-settings.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { PaymentSyncDirection } from "../../enum/enum.model";
 import { HelperUtility } from "../../common/helper.model";
+import { ExportSettingModel } from "../../common/export-settings.model";
 
 
 export type XeroAdvancedSettingWorkspaceGeneralSetting = {
@@ -62,10 +63,6 @@ export class XeroAdvancedSettingModel extends HelperUtility{
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: 'None',
-        value: 'None'
-      },
-      {
         label: 'Export Fyle ACH Payments to Xero',
         value: PaymentSyncDirection.FYLE_TO_XERO
       },
@@ -98,16 +95,17 @@ export class XeroAdvancedSettingModel extends HelperUtility{
     });
   }
 
-  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[]): FormGroup {
+  static mapAPIResponseToFormGroup(advancedSettings: XeroAdvancedSettingGet, adminEmails: EmailOption[], destinationAttribute: DestinationAttribute[]): FormGroup {
     let paymentSync = '';
     if (advancedSettings.workspace_general_settings.sync_fyle_to_xero_payments) {
       paymentSync = PaymentSyncDirection.FYLE_TO_XERO;
     } else if (advancedSettings.workspace_general_settings.sync_xero_to_fyle_payments) {
       paymentSync = PaymentSyncDirection.XERO_TO_FYLE;
     }
+    const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
       paymentSync: new FormControl(paymentSync),
-      billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account.id ? advancedSettings.general_mappings.payment_account : null),
+      billPaymentAccount: new FormControl(advancedSettings.general_mappings.payment_account.id ? findObjectByDestinationId(destinationAttribute, advancedSettings.general_mappings.payment_account.id) : null),
       changeAccountingPeriod: new FormControl(advancedSettings.workspace_general_settings.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings.workspace_general_settings.auto_create_destination_entity),
       exportSchedule: new FormControl(advancedSettings.workspace_schedules?.enabled ? true : false),
@@ -131,7 +129,7 @@ export class XeroAdvancedSettingModel extends HelperUtility{
         auto_create_merchant_destination_entity: advancedSettingsForm.get('autoCreateMerchantDestinationEntity')?.value
       },
       general_mappings: {
-        payment_account: advancedSettingsForm.get('billPaymentAccount')?.value ? advancedSettingsForm.get('billPaymentAccount')?.value : emptyDestinationAttribute
+        payment_account: advancedSettingsForm.get('billPaymentAccount')?.value ? ExportSettingModel.formatGeneralMappingPayload(advancedSettingsForm.get('billPaymentAccount')?.value) : emptyDestinationAttribute
       },
       workspace_schedules: {
         enabled: advancedSettingsForm.get('exportSchedule')?.value ? true : false,

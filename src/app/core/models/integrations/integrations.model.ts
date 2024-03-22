@@ -29,7 +29,8 @@ export type InAppIntegrationUrlMap = {
     [InAppIntegration.QBO]: string,
     [InAppIntegration.SAGE300]: string,
     [InAppIntegration.BUSINESS_CENTRAL]: string,
-    [InAppIntegration.NETSUITE]: string
+    [InAppIntegration.NETSUITE]: string,
+    [InAppIntegration.XERO]: string
 }
 
 export type AppUrlMap = {

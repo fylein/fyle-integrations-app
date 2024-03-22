@@ -39,13 +39,20 @@ export class AccountingExportService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/accounting_exports/count/`, apiParams);
   }
 
-  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null): Observable<any> {
+  getAccountingExports(type: string[], status: string[], exportableAccountingExportIds: number[] | null, limit: number, offset: number, selectedDateFilter? : SelectedDateFilter | null, exportedAt?: string | null, searchQuery?: string | null): Observable<any> {
     const apiParams: AccountingExportGetParam = {
       type__in: type,
       status__in: status,
       limit: limit,
       offset: offset
     };
+
+    if (searchQuery){
+      apiParams.expenses__claim_number = searchQuery;
+      apiParams.expenses__employee_email = searchQuery;
+      apiParams.expenses__employee_name = searchQuery;
+      apiParams.expenses__expense_number = searchQuery;
+    }
 
     if (exportableAccountingExportIds?.length) {
       apiParams.id__in = exportableAccountingExportIds;
@@ -54,8 +61,8 @@ export class AccountingExportService {
     if (selectedDateFilter) {
       const exportedAtLte = selectedDateFilter.startDate.toLocaleDateString().split('/');
       const exportedAtGte = selectedDateFilter.endDate.toLocaleDateString().split('/');
-      apiParams.exported_at__lte = `${exportedAtLte[2]}-${exportedAtLte[1]}-${exportedAtLte[0]}T00:00:00`;
-      apiParams.exported_at__gte = `${exportedAtGte[2]}-${exportedAtGte[1]}-${exportedAtGte[0]}T23:59:59`;
+      apiParams.exported_at__gte = `${exportedAtLte[2]}-${exportedAtLte[1]}-${exportedAtLte[0]}T00:00:00`;
+      apiParams.exported_at__lte = `${exportedAtGte[2]}-${exportedAtGte[1]}-${exportedAtGte[0]}T23:59:59`;
     }
 
     if (exportedAt) {
