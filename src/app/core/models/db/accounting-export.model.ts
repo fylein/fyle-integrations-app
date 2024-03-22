@@ -229,7 +229,7 @@ export class AccountingExportModel {
     let accountId = null;
 
     const xeroUrl = 'https://go.xero.com';
-    if(expenseGroup.response_logs) {
+    if (expenseGroup.response_logs) {
       if ('Invoices' in expenseGroup.response_logs && expenseGroup.response_logs.Invoices) {
         exportType = 'Bill';
         exportId = expenseGroup.response_logs.Invoices[0].InvoiceID;
