@@ -305,5 +305,3 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         return exportSettingPayload;
       }
 }
-
-
