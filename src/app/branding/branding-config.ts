@@ -32,7 +32,8 @@ const featureConfigs: FeatureConfiguration = {
                 paymentsSync: true,
                 singleCreditLineJE: true,
                 emailNotification: true,
-                skipExport: true
+                skipExport: true,
+                autoCreateContacts: true
             },
             exportLog: {
                 expenseType: true
@@ -66,7 +67,8 @@ const featureConfigs: FeatureConfiguration = {
                 paymentsSync: false,
                 singleCreditLineJE: false,
                 emailNotification: false,
-                skipExport: false
+                skipExport: false,
+                autoCreateContacts: false
             },
             exportLog: {
                 expenseType: false
