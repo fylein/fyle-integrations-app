@@ -19,7 +19,7 @@ export type TenantMappingPost = {
 export class TenantMappingModel {
     static constructPayload(tenantMapping: DestinationAttribute): TenantMappingPost {
         return {
-            tenant_id: tenantMapping.id.toString(),
+            tenant_id: tenantMapping.destination_id.toString(),
             tenant_name: tenantMapping.value
         };
     }

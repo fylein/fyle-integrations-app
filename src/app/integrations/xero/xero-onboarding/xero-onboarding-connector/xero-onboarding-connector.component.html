@@ -23,6 +23,8 @@
                     [accountingCompanyConnectionInProgress]="xeroConnectionInProgress"
                     [accountingCompanyList]="tenantList"
                     [switchLinkText]="'Disconnect'"
+                    [isDisconnectClicked]="isDisconnectClicked"
+                    [appName]="appName"
                     (switchCompany)="disconnectXero()"
                     (connectCompany)="connectXero($event)">
                 </app-configuration-connector>

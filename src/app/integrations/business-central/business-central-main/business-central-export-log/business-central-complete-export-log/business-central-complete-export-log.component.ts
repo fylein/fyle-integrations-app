@@ -12,6 +12,9 @@ import { WindowService } from 'src/app/core/services/common/window.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 @Component({
   selector: 'app-business-central-complete-export-log',
   templateUrl: './business-central-complete-export-log.component.html',
@@ -37,7 +40,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   exportLogForm: FormGroup;
 
-  isCalendarVisible: boolean;
+  hideCalendar: boolean;
 
   accountingExports: AccountingExportList [];
 
@@ -49,6 +52,11 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
   private org_id: string = this.userService.getUserProfile().org_id;
 
+  searchQuery: string | null;
+
+  private searchQuerySubject = new Subject<string>();
+
+
   constructor(
     private formBuilder: FormBuilder,
     private trackingService: TrackingService,
@@ -56,16 +64,23 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
     private windowService: WindowService,
     private paginatorService: PaginatorService,
     private userService: UserService
-  ) { }
+  ) {
+    this.searchQuerySubject.pipe(
+    debounceTime(1000)
+  ).subscribe((query: string) => {
+    this.searchQuery = query;
+    this.offset = 0;
+    this.currentPage = Math.ceil(this.offset / this.limit) + 1;
+    this.getAccountingExports(this.limit, this.offset);
+  });
+}
 
   openExpenseinFyle(expenseId: string) {
     this.windowService.openInNewTab(AccountingExportModel.getFyleExpenseUrl(expenseId));
   }
 
   public handleSimpleSearch(query: string) {
-    this.filteredAccountingExports = this.accountingExports.filter((group: AccountingExportList) => {
-      return AccountingExportModel.getfilteredAccountingExports(query, group);
-    });
+    this.searchQuerySubject.next(query);
   }
 
   pageSizeChanges(limit: number): void {
@@ -89,10 +104,9 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
       this.paginatorService.storePageSize(PaginatorPage.EXPORT_LOG, limit);
     }
 
-    this.accountingExportService.getAccountingExports([BusinessCentralExportType.PURCHASE_INVOICE, BusinessCentralExportType.JOURNAL_ENTRY], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter).subscribe(accountingExportResponse => {
-        if (!this.isDateSelected) {
+    this.accountingExportService.getAccountingExports([BusinessCentralExportType.PURCHASE_INVOICE, BusinessCentralExportType.JOURNAL_ENTRY], [AccountingExportStatus.COMPLETE], null, limit, offset, this.selectedDateFilter, null, this.searchQuery).subscribe(accountingExportResponse => {
           this.totalCount = accountingExportResponse.count;
-        }
+
         const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
           AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
         );
@@ -123,14 +137,20 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
       if (!dateRange) {
         this.dateOptions = AccountingExportModel.getDateOptionsV2();
         this.selectedDateFilter = null;
+        this.isDateSelected = false;
         this.getAccountingExports(paginator.limit, paginator.offset);
       } else if (dateRange.length && dateRange[1]) {
+        this.hideCalendar = true;
         this.selectedDateFilter = {
           startDate: dateRange[0],
           endDate: dateRange[1]
         };
-
+        this.isDateSelected = true;
         this.trackDateFilter('existing', this.selectedDateFilter);
+
+        setTimeout(() => {
+          this.hideCalendar = false;
+        }, 10);
         this.getAccountingExports(paginator.limit, paginator.offset);
       }
     });

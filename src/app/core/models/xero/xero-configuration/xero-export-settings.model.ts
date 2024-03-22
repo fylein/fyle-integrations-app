@@ -1,9 +1,9 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { SelectFormOption } from "../../common/select-form-option.model";
-import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
+import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
-import { ExportModuleRule, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
 
 export type XeroExpenseGroupSettingPost = {
   ccc_expense_state: XeroCCCExpenseState;
@@ -188,7 +188,8 @@ export class XeroExportSettingModel {
     return [exportSettingValidatorRule, exportModuleRule];
   }
 
-  static mapAPIResponseToFormGroup(exportSettings: XeroExportSettingGet | null): FormGroup {
+  static mapAPIResponseToFormGroup(exportSettings: XeroExportSettingGet | null, destinationAttribute: DestinationAttribute[]): FormGroup {
+    const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
     return new FormGroup({
       expenseState: new FormControl(exportSettings?.expense_group_settings?.reimbursable_expense_state),
       reimbursableExpense: new FormControl(exportSettings?.workspace_general_settings?.reimbursable_expenses_object ? true : false),
@@ -200,7 +201,7 @@ export class XeroExportSettingModel {
       creditCardExportType: new FormControl(exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object ? exportSettings?.workspace_general_settings?.corporate_credit_card_expenses_object : XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION),
       creditCardExportGroup: new FormControl(ExpenseGroupingFieldOption.EXPENSE_ID),
       creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
-      bankAccount: new FormControl(exportSettings?.general_mappings?.bank_account?.id ? exportSettings.general_mappings.bank_account : null),
+      bankAccount: new FormControl(exportSettings?.general_mappings?.bank_account?.id ? findObjectByDestinationId(destinationAttribute, exportSettings.general_mappings.bank_account.id) : null),
       autoMapEmployees: new FormControl(exportSettings?.workspace_general_settings?.auto_map_employees),
       searchOption: new FormControl('')
     });
@@ -221,7 +222,7 @@ export class XeroExportSettingModel {
         auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value
       },
       general_mappings: {
-        bank_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute
+        bank_account: exportSettingsForm.get('bankAccount')?.value ? ExportSettingModel.formatGeneralMappingPayload(exportSettingsForm.get('bankAccount')?.value) : emptyDestinationAttribute
       }
     };
     return exportSettingPayload;
