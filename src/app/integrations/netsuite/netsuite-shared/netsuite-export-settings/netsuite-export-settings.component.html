@@ -41,6 +41,37 @@
                                 [showExportPreview]="true"
                                 [exportTypeIconPathArray]="previewImagePaths">
                             </app-configuration-select-field>
+
+
+                            <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
+                                <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [destinationAttributes]="bankAccounts"
+                                [optionLabel]="'name'"
+                                [iconPath]="'list'"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Employee Payables Account'"
+                                [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
+                                [subLabel]="'Post all your company corporate card transactions to a default Employee Payables Account.'"
+                                [placeholder]="brandingContent.corporateCard.defaultDebitCardAccountPlaceholder"
+                                [formControllerName]="'bankAccount'">
+                                </app-configuration-select-field>
+                            </div>
+    
+                            <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
+                                <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [destinationAttributes]="accountsPayables"
+                                [optionLabel]="'name'"
+                                [iconPath]="'list'"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Vendor Payables Account'"
+                                [label]="brandingContent.corporateCard.accountsPayableLabel"
+                                [subLabel]="'Post all your company corporate card transactions to a default Vendor Payables Account.'"
+                                [placeholder]="'Select Vendor Payable Account'"
+                                [formControllerName]="'accountsPayable'">
+                                </app-configuration-select-field>
+                            </div>
                         </div>
 
                         <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
@@ -134,6 +165,36 @@
                             [showExportPreview]="true"
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
+
+                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
+                            <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [destinationAttributes]="creditCardVendors"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Credit Card Vendor'"
+                            [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
+                            [subLabel]="'Post all your company corporate card transactions to a default Default Credit Card Vendor.'"
+                            [placeholder]="'Select default Credit Card Vendor'"
+                            [formControllerName]="'defaultCreditCardVendor'">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')">
+                            <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [destinationAttributes]="cccAccounts"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Credit Card Account'"
+                            [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
+                            [subLabel]="'Post all your company corporate card transactions to a default  Default Credit Card Account.'"
+                            [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
+                            [formControllerName]="'creditCardAccount'">
+                            </app-configuration-select-field>
+                        </div>
                     </div>
 
                     <div *ngIf="!exportSettingForm.value.reimbursableExportType && exportSettingForm.value.creditCardExportType === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY">
@@ -190,6 +251,8 @@
             (save)="save()"
             (navigateToPreviousStep)="navigateToPreviousStep()">
         </app-configuration-step-footer>
+
+        
         </form>
     </div>
 </div>

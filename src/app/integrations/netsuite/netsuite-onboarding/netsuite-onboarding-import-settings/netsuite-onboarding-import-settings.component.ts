@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
+import { NetsuiteOnboardingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-onboarding.model';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-netsuite-onboarding-import-settings',
@@ -7,7 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NetsuiteOnboardingImportSettingsComponent implements OnInit {
 
-  constructor() { }
+  onboardingSteps: OnboardingStepper[] = new NetsuiteOnboardingModel().getOnboardingSteps('Import Settings', this.workspaceService.getOnboardingState());
+
+  constructor(
+    private workspaceService: WorkspaceService
+  ) { }
 
   ngOnInit(): void {
   }

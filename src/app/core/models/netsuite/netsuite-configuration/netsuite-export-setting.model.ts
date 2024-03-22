@@ -6,7 +6,6 @@ import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expens
 import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
 import { brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingFormOption } from "../../intacct/intacct-configuration/export-settings.model";
-import { disable } from "@rxweb/reactive-form-validators";
 
 
 export type NetsuiteExportSettingWorkspaceGeneralSettingPost = {
@@ -201,6 +200,22 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         ];
       }
 
+      static getMandatoryField(form: FormGroup, controllerName: string): boolean {
+        switch (controllerName) {
+          case 'bankAccount':
+            return form.value.employeeFieldMapping === EmployeeFieldMapping.EMPLOYEE;
+          case 'accountsPayable':
+            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.value.employeeFieldMapping === EmployeeFieldMapping.VENDOR;
+          case 'creditCardAccount':
+            return form.controls.creditCardExportType && form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.BILL;
+          case 'defaultCreditCardVendor':
+            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE  || (form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.nameInJournalEntry.value === NameInJournalEntry.MERCHANT);
+
+          default:
+            return false;
+        }
+      }
+
       static getValidators(): [ExportSettingValidatorRule, ExportModuleRule[]] {
         const exportSettingValidatorRule: ExportSettingValidatorRule = {
           reimbursableExpense: ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'expenseState'],
@@ -211,13 +226,18 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           {
             formController: 'reimbursableExportType',
             requiredValue: {
-              [NetsuiteReimbursableExpensesObject.BILL]: ['accountsPayable']
+              [NetsuiteReimbursableExpensesObject.BILL]: ['accountsPayable'],
+              [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: ['accountsPayable', 'bankAccount'],
+              [NetsuiteReimbursableExpensesObject.EXPENSE_REPORT]: ['bankAccount']
             }
           },
           {
             formController: 'creditCardExportType',
             requiredValue: {
-              [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['defaultCreditCardVendor', 'accountsPayable']
+              [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor'],
+              [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['bankAccount', 'defaultCreditCardVendor'],
+              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor'],
+              [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['creditCardAccount']
             }
           }
         ];
@@ -239,9 +259,12 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           creditCardExportType: new FormControl(exportSettings?.configuration?.corporate_credit_card_expenses_object),
           creditCardExportGroup: new FormControl(this.getExportGroup(exportSettings?.expense_group_settings?.corporate_credit_card_expense_group_fields)),
           creditCardExportDate: new FormControl(exportSettings?.expense_group_settings?.ccc_export_date_type),
-          defaultCCCAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
+          bankAccount: new FormControl(exportSettings?.general_mappings?.reimbursable_account?.id ? exportSettings.general_mappings.reimbursable_account : null),
+          creditCardAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
           accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
-          defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null)
+          defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
+          nameInJournalEntry: new FormControl(exportSettings?.configuration.name_in_journal_entry ? exportSettings?.configuration.name_in_journal_entry : null),
+          searchOption: new FormControl('')
         });
       }
 
@@ -265,17 +288,17 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value
           },
           configuration: {
-            reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,
-            corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value,
+            reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value ? exportSettingsForm.get('reimbursableExportType')?.value : null,
+            corporate_credit_card_expenses_object: exportSettingsForm.get('creditCardExportType')?.value ? exportSettingsForm.get('creditCardExportType')?.value : null,
             employee_field_mapping: exportSettingsForm.get('employeeFieldMapping')?.value,
             auto_map_employees: exportSettingsForm.get('autoMapEmployees')?.value,
             name_in_journal_entry: nameInJournalEntry
           },
           general_mappings: {
-            reimbursable_account: exportSettingsForm.get('defaultCCCAccount')?.value ? exportSettingsForm.get('defaultCCCAccount')?.value : emptyDestinationAttribute,
-            default_ccc_account: exportSettingsForm.get('accountsPayable')?.value ? exportSettingsForm.get('accountsPayable')?.value : emptyDestinationAttribute,
-            accounts_payable: exportSettingsForm.get('defaultCreditCardVendor')?.value ? exportSettingsForm.get('defaultCreditCardVendor')?.value : emptyDestinationAttribute,
-            default_ccc_vendor: exportSettingsForm.get('defaultDebitCardAccount')?.value ? exportSettingsForm.get('defaultDebitCardAccount')?.value : emptyDestinationAttribute
+            reimbursable_account: exportSettingsForm.get('bankAccount')?.value ? exportSettingsForm.get('bankAccount')?.value : emptyDestinationAttribute,
+            default_ccc_account: exportSettingsForm.get('creditCardAccount')?.value ? exportSettingsForm.get('creditCardAccount')?.value : emptyDestinationAttribute,
+            accounts_payable: exportSettingsForm.get('accountsPayable')?.value ? exportSettingsForm.get('accountsPayable')?.value : emptyDestinationAttribute,
+            default_ccc_vendor: exportSettingsForm.get('defaultCreditCardVendor')?.value ? exportSettingsForm.get('defaultCreditCardVendor')?.value : emptyDestinationAttribute
           }
         };
 
