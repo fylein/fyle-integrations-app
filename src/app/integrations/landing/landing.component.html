@@ -75,13 +75,10 @@
                         </span>
                     </div> -->
                 </div>
-                <div *ngIf="!exposeC1Apps" class="landing--accounting-app" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
-                    <img src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
+                <div class="landing--accounting-app" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openAccountingIntegrationApp(AccountingIntegrationApp.XERO)">
+                    <img *ngIf="!exposeC1Apps" src="assets/logos/xero-logo.png" class="tw-mt-[-20px]" width="65px" height="60px" />
                     <span class="landing--accounting-app-name">
                         Xero
-                        <div class="landing--accounting-app-open">
-                            <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
-                        </div>
                     </span>
                 </div>
             </div>
