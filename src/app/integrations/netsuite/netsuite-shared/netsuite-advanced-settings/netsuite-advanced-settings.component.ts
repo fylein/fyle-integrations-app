@@ -76,11 +76,11 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   paymentSyncOptions: SelectFormOption[] = NetsuiteAdvancedSettingModel.getPaymentSyncOptions();
 
-  netsuiteLocationLevels:  SelectFormOption[]  = NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+  netsuiteLocationLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
 
-  netsuiteDepartmentLevels:  SelectFormOption[]  =  NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+  netsuiteDepartmentLevels:  DefaultDestinationAttribute[]  =  NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
 
-  netsuiteClassLevels:  SelectFormOption[]  = NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
+  netsuiteClassLevels:  DefaultDestinationAttribute[]  = NetsuiteAdvancedSettingModel.getDefaultLevelOptions();
 
   paymentAccounts: DefaultDestinationAttribute[];
 
