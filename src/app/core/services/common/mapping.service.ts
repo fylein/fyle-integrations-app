@@ -62,6 +62,7 @@ export class MappingService {
         groupedAttributes[attribute.attribute_type] = group;
         return groupedAttributes;
       }, {
+        VENDOR_PAYMENT_ACCOUNT: [],
         ACCOUNT: [],
         EXPENSE_TYPE: [],
         EXPENSE_PAYMENT_TYPE: [],

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { CacheBuster, Cacheable } from 'ts-cacheable';
 import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
-import { QBOAdvancedSettingGet, QBOAdvancedSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
+import { CacheBuster, Cacheable } from 'ts-cacheable';
+import { Observable, Subject } from 'rxjs';
+import { NetsuiteAdvancedSettingGet, NetsuiteAdvancedSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
 
 const advancedSettingsCache$ = new Subject<void>();
 
 @Injectable({
   providedIn: 'root'
 })
-export class  QboAdvancedSettingsService {
+export class NetsuiteAdvancedSettingsService {
 
   constructor(
     private apiService: ApiService,
@@ -20,15 +20,14 @@ export class  QboAdvancedSettingsService {
   @Cacheable({
     cacheBusterObserver: advancedSettingsCache$
   })
-  getAdvancedSettings(): Observable<QBOAdvancedSettingGet> {
+  getAdvancedSettings(): Observable<NetsuiteAdvancedSettingGet> {
     return this.apiService.get(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, {});
   }
 
   @CacheBuster({
     cacheBusterNotifier: advancedSettingsCache$
   })
-  postAdvancedSettings(exportSettingsPayload: QBOAdvancedSettingPost): Observable<QBOAdvancedSettingGet> {
+  postAdvancedSettings(exportSettingsPayload: NetsuiteAdvancedSettingPost): Observable<NetsuiteAdvancedSettingGet> {
     return this.apiService.put(`/v2/workspaces/${this.workspaceService.getWorkspaceId()}/advanced_configurations/`, exportSettingsPayload);
   }
 }
-

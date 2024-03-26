@@ -1,1 +1,235 @@
-<p>netsuite-advanced-settings works!</p>
+<div *ngIf="isLoading" class="tw-flex tw-justify-center tw-items-center tw-h-screen">
+    <app-loader></app-loader>
+</div>
+<div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
+    <div>
+        <app-configuration-step-header
+            [headerText]="brandingContent.configuration.advancedSettings.stepName"
+            [contentText]="'In this section, you can customize the integration based on your accounting requirements. '"
+            [redirectLink]="supportArticleLink"
+            [showSyncButton]="isOnboarding"
+            [appName]="appName"
+            (refreshDimension)="refreshDimensions()">
+        </app-configuration-step-header>
+    </div>
+    <form [formGroup]="advancedSettingForm">
+        <div class="tw-p-24-px">
+            <div class="tw-mb-16-px">
+                <app-configuration-step-sub-header
+                    [label]="'Automation'"
+                    [subLabel]="'You can automate the export and sync of your data in this section.'">
+                </app-configuration-step-sub-header>
+            </div>
+            <div class="tw-mb-16-px">
+                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
+                    <app-configuration-toggle-field
+                        [form]="advancedSettingForm"
+                        [label]="'Schedule automatic export'" 
+                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to NetSuite.'"
+                        [formControllerName]="'exportSchedule'"
+                        [iconPath]="'calendar'">
+                    </app-configuration-toggle-field>
+
+                    <div *ngIf="advancedSettingForm.value.exportSchedule">
+                        <app-configuration-schedule-export
+                            [form]="advancedSettingForm"
+                            [appName]="appName"
+                            [isFieldMandatory]="false"
+                            [mandatoryErrorListName]="'automatic export method'"
+                            [label]="'Set up export frequency'"
+                            [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to NetSuite.'"
+                            [options]="hours"
+                            [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
+                            [formControllerName]="'exportScheduleFrequency'"
+                            [adminEmails]="adminEmails">
+                        </app-configuration-schedule-export>
+                    </div>
+                </div>
+
+                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
+                    <app-configuration-select-field *ngIf="isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
+                        [form]="advancedSettingForm"
+                        [options]="paymentSyncOptions"
+                        [iconPath]="'arrow-rotate'"
+                        [label]="brandingContent.configuration.advancedSettings.paymentSyncLabel"
+                        [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in NetSuite will be automatically be updated to Paid and vice versa.'"
+                        [placeholder]="'Select how payments should be synced for reimbursable expenses'"
+                        [formControllerName]="'paymentSync'">
+                    </app-configuration-select-field>
+
+                    <app-configuration-select-field *ngIf="this.advancedSettingForm.controls.paymentSync.value === 'fyle_to_netsuite' && isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
+                        [form]="advancedSettingForm"
+                        [destinationAttributes]="paymentAccounts"
+                        [optionLabel]="'name'"
+                        [iconPath]="'arrow-rotate'"
+                        [label]="brandingContent.intacct.configuration.advancedSettings.defaultPaymentAccount"
+                        [subLabel]="'Select a Payment Account handling the payments for your employees within ' + brandingConfig.brandName + ' or outside ' + brandingConfig.brandName + '.'"
+                        [placeholder]="'Select Payment Account'"
+                        [formControllerName]="'paymentAccount'">
+                    </app-configuration-select-field>
+                </div>
+            </div>
+
+            <div class="tw-mb-16-px">
+                <app-configuration-step-sub-header
+                    [label]="'Other Preferences'"
+                    [subLabel]="'Based on your preference, you can choose whether you want to create any new records in NetSuite from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'">
+                </app-configuration-step-sub-header>
+            </div>
+            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
+                <app-configuration-toggle-field
+                    [form]="advancedSettingForm"
+                    [iconPath]="'calendar'"
+                    [label]="'Post entries in the next open accounting period'"
+                    [subLabel]="'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'"
+                    [formControllerName]="'changeAccountingPeriod'">
+                </app-configuration-toggle-field>
+
+                <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
+                    [form]="advancedSettingForm"
+                    [iconPath]="'user-plus'"
+                    [label]="brandingContent.configuration.advancedSettings.autoCreateVendorsLabel"
+                    [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in NetSuite already.'"
+                    [formControllerName]="'autoCreateVendors'">
+                </app-configuration-toggle-field>
+
+            </div>
+
+            <div class="tw-mb-16-px">
+                <app-configuration-step-sub-header
+                    [label]="'Customization'"
+                    [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to NetSuite '+ brandingContent.configuration.advancedSettings.customizationSubLabel">
+                </app-configuration-step-sub-header>
+            </div>
+            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
+                <app-configuration-multi-select
+                    [form]="advancedSettingForm"
+                    [isFieldMandatory]="false"
+                    [mandatoryErrorListName]="'Item level description'"
+                    [label]="brandingContent.configuration.advancedSettings.memoStructureLabel"
+                    [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in NetSuite and re-order them as per your requirement.'"
+                    [options]="defaultMemoOptions"
+                    [iconPath]="'list'"
+                    [placeholder]="'Set description'"
+                    [formControllerName]="'memoStructure'">
+                </app-configuration-multi-select>
+                <div class="preview-text">
+                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the Description Field</h4>
+                    <div class="preview-box">
+                        {{memoPreviewText}}
+                    </div>
+                </div>
+            </div>
+
+            <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px" *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.skipExport">
+                <app-configuration-toggle-field
+                    [form]="advancedSettingForm"
+                    [label]="'Skip export of specific expenses from ' + brandingConfig.brandName + ' to NetSuite'" 
+                    [subLabel]="'You could choose to skip expenses from ' + brandingConfig.brandName + ' to NetSuite by setting up a conditional rule. '"
+                    [formControllerName]="'skipExport'"
+                    [iconPath]="'list'"
+                    [redirectLink]="skipExportRedirectLink">
+                </app-configuration-toggle-field>
+                <div *ngIf="advancedSettingForm.value.skipExport">
+                    <app-configuration-skip-export
+                    [enableSkipExport]="advancedSettingForm.value.skipExport"
+                    [skipExportForm]="skipExportForm"
+                    [expenseFilter]="expenseFilters"
+                    [conditionFieldOptions]="conditionFieldOptions"
+                    (deleteSkipExportForm)="deleteExpenseFilter($event)">
+                    </app-configuration-skip-export>
+                </div>
+            </div>
+            <div class="tw-mb-16-px">
+                <app-configuration-step-sub-header
+                    [label]="brandingContent.intacct.configuration.advancedSettings.dfvLabel"
+                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.dfvSubLabel">
+                </app-configuration-step-sub-header>
+
+                <div class="tw-flex">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [isDefaultFields]="true"
+                        [destinationAttributes]="netsuiteLocations"
+                        [label]="'Default Location'"
+                        [placeholder]="'Choose Default NetSuite Location'"
+                        [formControllerName]="'netsuiteLocation'">
+                    </app-configuration-select-field>
+                
+                    <div *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+                        <input formControlName="useEmployeeLocation" type="checkbox" />
+                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in NetSuite</label>   
+                    </div>
+                </div>
+
+                <app-configuration-select-field
+                    [form]="advancedSettingForm"
+                    [destinationAttributes]="netsuiteLocationLevels"
+                    [isDefaultFields]="true"
+                    [label]="'NetSuite Location Level'"
+                    [placeholder]="'Choose NetSuite Location Level'"
+                    [formControllerName]="'netsuiteLocationLevel'">
+                </app-configuration-select-field>
+
+    
+                <div class="tw-flex">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [isDefaultFields]="true"
+                        [destinationAttributes]="netsuiteDepartments"
+                        [label]="'Default Departments'"
+                        [placeholder]="'Choose Default NetSuite Department'"
+                        [formControllerName]="'netsuiteDepartment'">
+                    </app-configuration-select-field>
+                
+                    <div *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+                        <input formControlName="useEmployeeDepartment" type="checkbox" />
+                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in NetSuite</label>   
+                    </div>
+                </div>
+
+                <app-configuration-select-field
+                    [form]="advancedSettingForm"
+                    [destinationAttributes]="netsuiteDepartmentLevels"
+                    [isDefaultFields]="true"
+                    [label]="'NetSuite Department Level'"
+                    [placeholder]="'Choose NetSuite Department Level'"
+                    [formControllerName]="'netsuiteDepartmentLevel'">
+                </app-configuration-select-field>
+
+
+                <div class="tw-flex">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [isDefaultFields]="true"
+                        [destinationAttributes]="netsuiteClasses"
+                        [label]="'Default Class'"
+                        [placeholder]="'Choose Default NetSuite Class'"
+                        [formControllerName]="'netsuiteClass'">
+                    </app-configuration-select-field>
+                
+                    <div *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+                        <input formControlName="useEmployeeClass" type="checkbox" />
+                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Class</label>   
+                    </div>
+                </div>
+
+                <app-configuration-select-field
+                    [form]="advancedSettingForm"
+                    [destinationAttributes]="netsuiteClassLevels"
+                    [isDefaultFields]="true"
+                    [label]="'NetSuite Class Level'"
+                    [placeholder]="'Choose NetSuite Class Level'"
+                    [formControllerName]="'netsuiteClassLevel'">
+                </app-configuration-select-field>
+            </div>
+        </div>
+        <app-configuration-step-footer
+            [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
+            [isButtonDisabled]="!advancedSettingForm.valid"
+            [showBackButton]="isOnboarding ? true : false"
+            (save)="save()"
+            (navigateToPreviousStep)="navigateToPreviousStep()">
+        </app-configuration-step-footer>
+    </form>
+</div>
