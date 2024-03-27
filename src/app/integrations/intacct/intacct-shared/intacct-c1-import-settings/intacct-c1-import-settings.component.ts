@@ -99,7 +99,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   refreshDimensions() {
     this.mappingService.refreshSageIntacctDimensions().subscribe();
     this.mappingService.refreshFyleDimensions().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct');
   }
 
   removeFilter(expenseField: AbstractControl) {

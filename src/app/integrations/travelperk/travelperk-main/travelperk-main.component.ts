@@ -40,7 +40,7 @@ export class TravelperkMainComponent implements OnInit {
   refreshDimentions():void {
     this.travelperkService.syncCategories().subscribe();
     this.travelperkService.syncPaymentProfile().subscribe;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from TravelPerk');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from TravelPerk');
   }
 
   private setupPage() {
