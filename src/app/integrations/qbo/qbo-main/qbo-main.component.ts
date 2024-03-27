@@ -40,7 +40,7 @@ export class QboMainComponent implements OnInit {
     this.qboHelperService.refreshQBODimensions().subscribe();
     this.qboHelperService.refreshFyleDimensions().subscribe();
     this.accountingExportService.importExpensesFromFyle('v1').subscribe();
-    this.toastServeice.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from QuickBooks Online')
+    this.toastServeice.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from QuickBooks Online');
   }
 
   private setupPage() {
