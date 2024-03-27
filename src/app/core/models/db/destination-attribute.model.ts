@@ -38,6 +38,7 @@ export type GroupedDestinationAttribute = {
   ACCOUNT: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
   EXPENSE_TYPE: Sage300DestinationAttributes[],
   EXPENSE_PAYMENT_TYPE: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
+  VENDOR_PAYMENT_ACCOUNT: DestinationAttribute[],
   VENDOR: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
   CHARGE_CARD_NUMBER: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
   TAX_DETAIL: Sage300DestinationAttributes[] | BusinessCentralDestinationAttributes[],
