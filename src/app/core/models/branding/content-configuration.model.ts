@@ -51,6 +51,7 @@ export type ContentConfiguration = {
                     taxCodeSubLabel: string;
                     defaultTaxCodeLabel: string;
                     importSuppliersAsMerchantsLabel: string;
+                    importSuppliersAsMerchantsSubLabel: string;
                     notes: string,
                     toggleToastMessage: string
                 },
@@ -244,6 +245,6 @@ export type ContentConfiguration = {
             customFieldPlaceholderName: string;
             customFieldType: string;
             customFieldCreateandSave: string;
-        }
+        },
     }
 }

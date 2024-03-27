@@ -101,13 +101,14 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-bg-bg-tertiary-lighter">
+                <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" class="tw-rounded-lg tw-border-separator tw-border tw-bg-configuration-bg">
                     <app-configuration-toggle-field
                         [form]="exportSettingForm"
                         [label]="brandingContent.headerText"
                         [subLabel]="brandingContent.contentText"
                         [formControllerName]="'creditCardExpense'"
-                        [isSectionHeader]="true">
+                        [isSectionHeader]="true"
+                        [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
                     </app-configuration-toggle-field>
                 </div>
 

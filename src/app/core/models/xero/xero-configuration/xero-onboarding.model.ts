@@ -73,10 +73,6 @@ export class XeroOnboardingModel {
             this.onboardingSteps[index - 1].completed = true;
           }
 
-          if (!brandingFeatureConfig.featureFlags.mapEmployees) {
-            this.onboardingSteps.splice(1, 1);
-          }
-
           return this.onboardingSteps;
       }
   }

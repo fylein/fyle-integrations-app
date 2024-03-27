@@ -49,11 +49,11 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants && workspaceGeneralSettings.corporate_credit_card_expenses_object">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="workspaceGeneralSettings.corporate_credit_card_expenses_object">
                     <app-configuration-toggle-field
                         [form]="importSettingsForm"
                         [label]="brandingContent.importSuppliersAsMerchantsLabel"
-                        [subLabel]="'The Suppliers in Xero will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [subLabel]="brandingContent.importSuppliersAsMerchantsSubLabel"
                         [formControllerName]="'importSuppliersAsMerchants'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
