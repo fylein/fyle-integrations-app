@@ -308,6 +308,7 @@ const content: ContentConfiguration = {
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
                     importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants',
+                    importSuppliersAsMerchantsSubLabel: 'The Suppliers in Xero will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.',
                     toggleToastMessage: 'You have already mapped a tracking category from Xero to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
                 },
@@ -555,6 +556,7 @@ const content: ContentConfiguration = {
                     taxCodeSubLabel: 'The imported tax codes from Xero will be set as tax group in ',
                     defaultTaxCodeLabel: 'Select default tax code',
                     importSuppliersAsMerchantsLabel: 'Import suppliers from Xero as merchants',
+                    importSuppliersAsMerchantsSubLabel: 'The suppliers in Xero will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName,
                     toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.'
                 },
