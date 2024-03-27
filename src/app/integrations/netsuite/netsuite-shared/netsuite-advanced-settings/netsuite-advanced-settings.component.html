@@ -155,7 +155,7 @@
                         [placeholder]="'Choose Default NetSuite Location'"
                         [formControllerName]="'netsuiteLocation'">
                     </app-configuration-select-field>
-                
+
                     <div *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in NetSuite</label>   
@@ -171,7 +171,6 @@
                     [formControllerName]="'netsuiteLocationLevel'">
                 </app-configuration-select-field>
 
-    
                 <div class="tw-flex">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
@@ -196,7 +195,6 @@
                     [placeholder]="'Choose NetSuite Department Level'"
                     [formControllerName]="'netsuiteDepartmentLevel'">
                 </app-configuration-select-field>
-
 
                 <div class="tw-flex">
                     <app-configuration-select-field

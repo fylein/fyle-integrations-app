@@ -4,7 +4,7 @@ import { SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject } from "../../enum/enum.model";
-import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { ExportSettingFormOption } from "../../intacct/intacct-configuration/export-settings.model";
 
 
@@ -276,6 +276,11 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           nameInJournalEntry = NameInJournalEntry.MERCHANT;
         } else {
           nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value;
+        }
+
+        if (brandingConfig.brandId === 'co') {
+          exportSettingsForm.controls.creditCardExpense.patchValue(true);
+          exportSettingsForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
         }
 
         const exportSettingPayload: NetSuiteExportSettingPost = {

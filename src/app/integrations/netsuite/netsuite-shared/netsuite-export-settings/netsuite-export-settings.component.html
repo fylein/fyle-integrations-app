@@ -268,7 +268,7 @@
 
 
 <ng-template #employeeFieldMapping>
-    <div [formGroup]="exportSettingForm">
+    <div *ngIf="brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses" [formGroup]="exportSettingForm">
         <app-configuration-select-field
             *ngIf="!exportSettingForm.controls.employeeFieldMapping.disabled"
             [form]="exportSettingForm"
