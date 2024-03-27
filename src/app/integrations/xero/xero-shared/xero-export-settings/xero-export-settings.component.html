@@ -107,7 +107,8 @@
                         [label]="brandingContent.headerText"
                         [subLabel]="brandingContent.contentText"
                         [formControllerName]="'creditCardExpense'"
-                        [isSectionHeader]="true">
+                        [isSectionHeader]="true"
+                        [hideToggle]="!brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses">
                     </app-configuration-toggle-field>
                 </div>
 

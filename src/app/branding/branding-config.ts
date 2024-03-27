@@ -533,7 +533,7 @@ const content: ContentConfiguration = {
                 },
                 exportSetting: {
                     stepName: 'Export settings',
-                    headerText: 'Export Corporate Card Expenses',
+                    headerText: 'Export corporate card expenses',
                     contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
                     corporateCard: {
                         cccExpenseBankAccountSubLabel: '',
