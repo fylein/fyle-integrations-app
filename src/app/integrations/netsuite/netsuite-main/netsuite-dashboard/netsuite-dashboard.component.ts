@@ -52,8 +52,6 @@ export class NetsuiteDashboardComponent implements OnInit {
 
   accountingExportType: NetsuiteTaskLogType[] = [NetsuiteTaskLogType.FETCHING_EXPENSES, NetsuiteTaskLogType.CREATING_BILL, NetsuiteTaskLogType.CREATING_EXPENSE_REPORT, NetsuiteTaskLogType.CREATING_CREDIT_CARD_CHARGE, NetsuiteTaskLogType.CREATING_CREDIT_CARD_REFUND, NetsuiteTaskLogType.CREATING_JOURNAL_ENTRY];
 
-  isImportItemsEnabled: boolean;
-
   reimbursableImportState: ReimbursableImportState | null;
 
   private readonly reimbursableExpenseImportStateMap = DashboardModel.getReimbursableExpenseImportStateMap();
@@ -122,12 +120,10 @@ export class NetsuiteDashboardComponent implements OnInit {
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
-      this.workspaceService.getWorkspaceGeneralSettings(),
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.netsuiteExportSettingsService.getExportSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0]);
-      this.isImportItemsEnabled = responses[3].import_items;
       if (responses[1]) {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
       }
@@ -141,10 +137,10 @@ export class NetsuiteDashboardComponent implements OnInit {
       const queuedTasks: NetsuiteTaskLog[] = responses[2].results.filter((task: NetsuiteTaskLog) => task.status === TaskLogState.ENQUEUED || task.status === TaskLogState.IN_PROGRESS);
       this.failedExpenseGroupCount = responses[2].results.filter((task: NetsuiteTaskLog) => task.status === TaskLogState.FAILED || task.status === TaskLogState.FATAL).length;
 
-      this.exportableAccountingExportIds = responses[4].exportable_expense_group_ids;
+      this.exportableAccountingExportIds = responses[3].exportable_expense_group_ids;
 
-      this.reimbursableImportState = responses[5].configuration.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[5].expense_group_settings.expense_state] : null;
-      this.cccImportState = responses[5].configuration.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[5].expense_group_settings.ccc_expense_state] : null;
+      this.reimbursableImportState = responses[4].configuration.reimbursable_expenses_object ? this.reimbursableExpenseImportStateMap[responses[4].expense_group_settings.expense_state] : null;
+      this.cccImportState = responses[4].configuration.corporate_credit_card_expenses_object ? this.cccExpenseImportStateMap[responses[4].expense_group_settings.ccc_expense_state] : null;
 
       if (queuedTasks.length) {
         this.isImportInProgress = false;
