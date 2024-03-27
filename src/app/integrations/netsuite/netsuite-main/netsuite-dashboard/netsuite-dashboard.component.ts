@@ -18,7 +18,7 @@ import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/ne
   styleUrls: ['./netsuite-dashboard.component.scss']
 })
 export class NetsuiteDashboardComponent implements OnInit {
-  
+
   isLoading: boolean = true;
 
   appName: AppName = AppName.NETSUITE;
