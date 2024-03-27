@@ -38,7 +38,7 @@ export class MainComponent implements OnInit {
     this.mappingsService.refreshSageIntacctDimensions().subscribe();
     this.mappingsService.refreshFyleDimensions().subscribe();
     this.dashboardService.syncExpensesFromFyle().subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Sage Intacct...');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Sage Intacct...');
   }
 
   private setupPage() {
