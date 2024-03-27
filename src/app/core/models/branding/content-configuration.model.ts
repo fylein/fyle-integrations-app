@@ -244,6 +244,6 @@ export type ContentConfiguration = {
             customFieldPlaceholderName: string;
             customFieldType: string;
             customFieldCreateandSave: string;
-        }
+        },
     }
 }
