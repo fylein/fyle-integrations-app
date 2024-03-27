@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // External Libraries
-import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { GlobalErrorHandler } from './app.error-handling';
 import { JwtInterceptor } from './core/interceptor/jwt.interceptor';
@@ -31,7 +30,6 @@ import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/
     ToastModule,
     SharedModule,
     RippleModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
     Sage300ConfigurationModule
   ],
   providers: [
