@@ -392,6 +392,17 @@ export enum QBOPaymentSyncDirection {
   QBO_TO_FYLE = 'qbo_to_fyle'
 }
 
+export enum NetsuitePaymentSyncDirection {
+  FYLE_TO_NETSUITE = 'fyle_to_netsuite',
+  NETSUITE_TO_FYLE = 'netsuite_to_fyle'
+}
+
+export enum NetsuiteDefaultLevelOptions {
+  ALL = 'ALL',
+  TRANSACTION_LINE = 'TRANSACTION_LINE',
+  TRANSACTION_BODY = 'TRANSACTION_BODY'
+}
+
 export enum IntacctErrorType {
   EMPLOYEE_MAPPING = 'EMPLOYEE_MAPPING',
   CATEGORY_MAPPING = 'CATEGORY_MAPPING',
