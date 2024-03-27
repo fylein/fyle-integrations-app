@@ -6,7 +6,7 @@ import { NetsuiteSkippedExportLogComponent } from './netsuite-skipped-export-log
 
 const routes: Routes = [
   {
-    path: 'export_log',
+    path: '',
     component: NetsuiteExportLogComponent,
     children: [
       {
