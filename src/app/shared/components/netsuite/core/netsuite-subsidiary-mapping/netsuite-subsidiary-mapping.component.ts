@@ -46,8 +46,6 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  isContinueDisabled: boolean = true;
-
   redirectLink: string = brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR;
 
   netsuiteSubsdiarySelected: NetsuiteDestinationAttribute;
@@ -72,7 +70,6 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   connectNetsuiteSubsdiary(companyDetails: NetsuiteDestinationAttribute): void {
     this.netsuiteSubsdiarySelected = companyDetails;
-    this.isContinueDisabled = false;
   }
 
   save() {
@@ -136,7 +133,6 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
       this.netsuiteSubsdiaryName = netsuiteSubsidiaryMappings.subsidiary_name;
       this.isLoading = false;
     }, () => {
-      this.isContinueDisabled = true;
       this.isLoading = false;
     });
   }

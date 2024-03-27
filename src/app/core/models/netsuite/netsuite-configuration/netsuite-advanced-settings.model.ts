@@ -76,19 +76,19 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
     ];
   }
 
-  static getDefaultLevelOptions(): SelectFormOption[] {
+  static getDefaultLevelOptions(): DefaultDestinationAttribute[] {
     return [
       {
-        label: 'All',
-        value: NetsuiteDefaultLevelOptions.ALL
+        name: 'All',
+        id: NetsuiteDefaultLevelOptions.ALL
       },
       {
-        label: 'Transaction Line',
-        value: NetsuiteDefaultLevelOptions.TRANSACTION_LINE
+        name: 'Transaction Line',
+        id: NetsuiteDefaultLevelOptions.TRANSACTION_LINE
       },
       {
-        label: 'Transaction Body',
-        value: NetsuiteDefaultLevelOptions.TRANSACTION_BODY
+        name: 'Transaction Body',
+        id: NetsuiteDefaultLevelOptions.TRANSACTION_BODY
       }
     ];
   }
@@ -156,11 +156,11 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
       general_mappings: {
         vendor_payment_account: advancedSettingsForm.get('paymentAccount')?.value ? advancedSettingsForm.get('paymentAccount')?.value : emptyDestinationAttribute,
         netsuite_location: advancedSettingsForm.get('netsuiteLocation')?.value ? advancedSettingsForm.get('netsuiteLocation')?.value : emptyDestinationAttribute,
-        netsuite_location_level: advancedSettingsForm.get('netsuiteLocationLevel')?.value ? advancedSettingsForm.get('netsuiteLocationLevel')?.value : '',
+        netsuite_location_level: advancedSettingsForm.get('netsuiteLocationLevel')?.value ? advancedSettingsForm.get('netsuiteLocationLevel')?.value.id : '',
         netsuite_department: advancedSettingsForm.get('netsuiteDepartment')?.value ? advancedSettingsForm.get('netsuiteDepartment')?.value : emptyDestinationAttribute,
-        netsuite_department_level: advancedSettingsForm.get('netsuiteDepartmentLevel')?.value ? advancedSettingsForm.get('netsuiteDepartmentLevel')?.value : '',
+        netsuite_department_level: advancedSettingsForm.get('netsuiteDepartmentLevel')?.value ? advancedSettingsForm.get('netsuiteDepartmentLevel')?.value.id : '',
         netsuite_class: advancedSettingsForm.get('netsuiteClass')?.value ? advancedSettingsForm.get('netsuiteClass')?.value : emptyDestinationAttribute,
-        netsuite_class_level: advancedSettingsForm.get('netsuiteClassLevel')?.value ? advancedSettingsForm.get('netsuiteClassLevel')?.value : '',
+        netsuite_class_level: advancedSettingsForm.get('netsuiteClassLevel')?.value ? advancedSettingsForm.get('netsuiteClassLevel')?.value.id : '',
         use_employee_location: advancedSettingsForm.get('useEmployeeLocation')?.value,
         use_employee_class: advancedSettingsForm.get('useEmployeeClass')?.value,
         use_employee_department: advancedSettingsForm.get('useEmployeeDepartment')?.value

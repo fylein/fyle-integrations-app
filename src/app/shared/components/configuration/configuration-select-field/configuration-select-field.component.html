@@ -139,8 +139,14 @@
                 <label>{{label}}</label>
             </div>
             <div class="tw-pt-2">
-                <p-dropdown appendTo="body" [options]="options"
-                    [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}">
+                <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="name"
+                [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}">
+                    <ng-template pTemplate="selectedItem" let-item>
+                        <p>
+                            {{ item.name }}
+                        </p>
+                        <app-svg-icon [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                    </ng-template>
                 </p-dropdown>
             </div>  
         </div>
