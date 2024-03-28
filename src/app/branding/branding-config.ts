@@ -35,7 +35,8 @@ const featureConfigs: FeatureConfiguration = {
                 emailNotification: true,
                 defaultFields: true,
                 skipExport: true,
-                autoCreateContacts: true
+                autoCreateContacts: true,
+                useEmployeeAttributes: true
             },
             exportLog: {
                 expenseType: true
@@ -72,7 +73,8 @@ const featureConfigs: FeatureConfiguration = {
                 emailNotification: false,
                 defaultFields: false,
                 skipExport: false,
-                autoCreateContacts: false
+                autoCreateContacts: false,
+                useEmployeeAttributes: false
             },
             exportLog: {
                 expenseType: false
