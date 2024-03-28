@@ -22,7 +22,7 @@
                 >
               </app-configuration-connector>
           </div>
-          <app-configuration-step-footer *ngIf="!netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!netsuiteSubsidiaryForm.valid"></app-configuration-step-footer>
+          <app-configuration-step-footer *ngIf="!netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!netsuiteSubsdiarySelected"></app-configuration-step-footer>
           <app-configuration-step-footer *ngIf="netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
       </div>
   </div>

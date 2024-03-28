@@ -140,6 +140,82 @@ export type ContentConfiguration = {
                     hintText: string;
                 }
             },
+        },
+        netsuite : {
+            landing: {
+                contentText: string;
+                guideHeaderText: string;
+            },
+            common: {
+                readMoreText: string;
+                exportLogTabName: string;
+                viewExpenseText: string;
+                corporateCard: string;
+                errors: string;
+                autoMap: string;
+                customField: string;
+                customFieldName: string;
+                customFieldPlaceholderName: string;
+                customFieldType: string;
+                customFieldCreateandSave: string;
+                subsidiary: string;
+                descriptionText: string;
+            },
+            configuration: {
+                connector: {
+                    stepName: string;
+                    subLabel: string;
+                },
+                exportSetting: {
+                    stepName: string;
+                    headerText: string;
+                    contentText: string;
+                    corporateCard: {
+                        bankAccount: string;
+                        bankAccountSublabel: string;
+                        bankAccountPlaceholder: string;
+                        vendorPayable: string;
+                        vendorPayableSublabel: string;
+                        vendorPayablePlaceholder: string;
+                        creditCardVendor: string;
+                        creditCardVendorSublabel: string;
+                        creditCardVendorPlaceholder: string;
+                        defaultCCCAccount: string;
+                        defaultCCCAccountPlaceholder: string;
+                        chargeCard: string;
+                        chargeCardPlaceholder: string;
+                        chargeCardSublabel: string;
+                        cccExpenseState: string;
+                        cccExportGroup: string;
+                        employeeFieldMapping: string;
+                        creditCard: string;
+                        creditCardSubLabel: string;
+                    }
+                },
+                advancedSettings: {
+                    stepName: string;
+                    scheduleAutoExport: string;
+                    email: string;
+                    autoSyncPayments: string;
+                    defaultPaymentAccount: string;
+                    autoCreateEmployeeVendor: string;
+                    postEntriesCurrentPeriod: string;
+                    setDescriptionField: string;
+                    dfvLabel: string;
+                    dfvSubLabel: string;
+                    location: string;
+                    department: string;
+                    project: string;
+                    class: string;
+                    item: string;
+                    customPreferencesLabel: string;
+                    customPreferencesSubLabel: string;
+                },
+                done: {
+                    ctaText: string;
+                    hintText: string;
+                }
+            },
         }
         configuration: {
             connector: {

@@ -27,6 +27,7 @@ export type FeatureConfiguration = {
                 skipExport: boolean;
                 defaultFields: boolean;
                 autoCreateContacts: boolean;
+                useEmployeeAttribute: boolean;
             },
             exportLog: {
                 expenseType: boolean;

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DefaultDestinationAttribute, DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
@@ -78,7 +78,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   appName: AppName = AppName.NETSUITE;
 
-  readonly brandingContent = brandingContent.configuration.exportSetting;
+  readonly brandingContent = brandingContent.netsuite.configuration.exportSetting;
 
   NetSuiteCorporateCreditCardExpensesObject = NetSuiteCorporateCreditCardExpensesObject;
 
@@ -159,6 +159,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.creditCardExportGroup.setValue(this.expenseGroupByOptions[0].value);
       this.exportSettingForm.controls.creditCardExportGroup.disable();
     }
+
     this.reimbursableExportTypeWatcher();
     this.cccExportTypeWatcher();
   }
@@ -246,6 +247,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.showNameInJournalOption = this.exportSettings.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
       this.exportSettingForm = NetSuiteExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
+
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
       }
@@ -266,10 +268,10 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         this.helperService.setOrClearValidators(this.exportSettings.configuration.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
-      this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
-
       this.exportFieldsWatcher();
       this.setupCustomWatchers();
+
+      this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
       this.isLoading = false;
     });
   }

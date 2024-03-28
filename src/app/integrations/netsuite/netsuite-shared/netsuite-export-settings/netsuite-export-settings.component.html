@@ -32,8 +32,7 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export module'"
                                 [label]="'How should the expenses be exported?'"
-                                [subLabel]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses'"
-                            [options]="reimbursableExportTypes"
+                                [options]="reimbursableExportTypes"
                                 [iconPath]="'list'"
                                 [placeholder]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses'"
                                 [formControllerName]="'reimbursableExportType'"
@@ -51,9 +50,9 @@
                                 [iconPath]="'list'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employee Payables Account'"
-                                [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
-                                [subLabel]="'Post all your company corporate card transactions to a default Employee Payables Account.'"
-                                [placeholder]="brandingContent.corporateCard.defaultDebitCardAccountPlaceholder"
+                                [label]="brandingContent.corporateCard.bankAccount"
+                                [subLabel]="brandingContent.corporateCard.bankAccountSublabel"
+                                [placeholder]="brandingContent.corporateCard.bankAccountPlaceholder"
                                 [formControllerName]="'bankAccount'">
                                 </app-configuration-select-field>
                             </div>
@@ -66,9 +65,9 @@
                                 [iconPath]="'list'"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Vendor Payables Account'"
-                                [label]="brandingContent.corporateCard.accountsPayableLabel"
-                                [subLabel]="'Post all your company corporate card transactions to a default Vendor Payables Account.'"
-                                [placeholder]="'Select Vendor Payable Account'"
+                                [label]="brandingContent.corporateCard.vendorPayable"
+                                [subLabel]="brandingContent.corporateCard.vendorPayableSublabel"
+                                [placeholder]="brandingContent.corporateCard.vendorPayablePlaceholder"
                                 [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
                             </div>
@@ -174,9 +173,9 @@
                             [iconPath]="'list'"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Credit Card Vendor'"
-                            [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
-                            [subLabel]="'Post all your company corporate card transactions to a default Default Credit Card Vendor.'"
-                            [placeholder]="'Select default Credit Card Vendor'"
+                            [label]="brandingContent.corporateCard.creditCardVendor"
+                            [subLabel]="brandingContent.corporateCard.creditCardVendorSublabel"
+                            [placeholder]="brandingContent.corporateCard.creditCardVendorPlaceholder"
                             [formControllerName]="'defaultCreditCardVendor'">
                             </app-configuration-select-field>
                         </div>
@@ -189,7 +188,7 @@
                             [iconPath]="'list'"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'Credit Card Account'"
-                            [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
+                            [label]="brandingContent.corporateCard.defaultCCCAccount"
                             [subLabel]="'Post all your company corporate card transactions to a default  Default Credit Card Account.'"
                             [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
                             [formControllerName]="'creditCardAccount'">
@@ -207,10 +206,10 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
                             [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
+                            [subLabel]="brandingContent.corporateCard.cccExpenseState"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
-                            [placeholder]="brandingContent.corporateCard.expenseState"
+                            [placeholder]="brandingContent.corporateCard.cccExpenseState"
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
                     </div>
@@ -221,7 +220,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be grouped'"
                             [label]="'How should the expenses be grouped?'"
-                            [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
+                            [subLabel]="brandingContent.corporateCard.cccExportGroup"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
@@ -234,7 +233,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | lowercase))  + ' date as'"
+                            [label]="'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | lowercase))  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to NetSuite.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"

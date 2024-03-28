@@ -203,9 +203,9 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       static getMandatoryField(form: FormGroup, controllerName: string): boolean {
         switch (controllerName) {
           case 'bankAccount':
-            return form.value.employeeFieldMapping === EmployeeFieldMapping.EMPLOYEE;
+            return form.controls.employeeFieldMapping.value === EmployeeFieldMapping.EMPLOYEE;
           case 'accountsPayable':
-            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.value.employeeFieldMapping === EmployeeFieldMapping.VENDOR;
+            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.employeeFieldMapping.value === EmployeeFieldMapping.VENDOR;
           case 'creditCardAccount':
             return form.controls.creditCardExportType && form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.BILL;
           case 'defaultCreditCardVendor':

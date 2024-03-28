@@ -35,7 +35,8 @@ const featureConfigs: FeatureConfiguration = {
                 emailNotification: true,
                 defaultFields: true,
                 skipExport: true,
-                autoCreateContacts: true
+                autoCreateContacts: true,
+                useEmployeeAttribute: true
             },
             exportLog: {
                 expenseType: true
@@ -72,7 +73,8 @@ const featureConfigs: FeatureConfiguration = {
                 emailNotification: false,
                 defaultFields: false,
                 skipExport: false,
-                autoCreateContacts: false
+                autoCreateContacts: false,
+                useEmployeeAttribute: false
             },
             exportLog: {
                 expenseType: false
@@ -329,6 +331,82 @@ const content: ContentConfiguration = {
                 }
             }
         },
+        netsuite: {
+            landing: {
+                contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
+                guideHeaderText: 'Guide to setup your Integrations'
+            },
+            common: {
+                readMoreText: 'Read More',
+                exportLogTabName: 'Export Log',
+                viewExpenseText: 'View Expense',
+                corporateCard: 'Corporate Card',
+                errors: 'Errors',
+                autoMap: 'Auto Map',
+                customField: 'Add new Custom Field',
+                customFieldName: 'Field Name',
+                customFieldPlaceholderName: 'Placeholder Name',
+                customFieldType: 'Field Type',
+                customFieldCreateandSave: 'Create and save',
+                subsidiary: 'Subsidiary',
+                descriptionText: 'of the Description Field'
+            },
+            configuration: {
+                connector: {
+                    stepName: 'Connect to NetSuite',
+                    subLabel: 'Expenses will be posted to the NetSuite Subsidiary selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Subsidiary.'
+                },
+                exportSetting: {
+                    stepName: 'Export Settings',
+                    headerText: '',
+                    contentText: 'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to NetSuite.',
+                    corporateCard: {
+                        bankAccount: 'Set the Employee Payale Account as?',
+                        bankAccountSublabel: 'Post all your company corporate card transactions to a default Employee Payables Account.',
+                        bankAccountPlaceholder: 'Select bank account for expenses imported from ' + brandingConfig.brandName,
+                        vendorPayable: 'To which Vendor Payable account should the ',
+                        vendorPayableSublabel: 'Post all your company corporate card transactions to a default Vendor Payables Account.',
+                        vendorPayablePlaceholder: 'Select accounts payable for expenses imported from ' + brandingConfig.brandName,
+                        creditCardVendor: 'Set the Default Credit Card Vendor as',
+                        creditCardVendorSublabel: 'Post all your company corporate card transactions to a default Default Credit Card Vendor.',
+                        creditCardVendorPlaceholder: 'Select default Credit Card Vendor',
+                        defaultCCCAccount: 'Set Default Credit Card Account as',
+                        defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
+                        chargeCard: 'Set the Default Charge Card',
+                        chargeCardPlaceholder: 'Select Corporate Charge Card',
+                        chargeCardSublabel: 'Expenses of Corporate Cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in NetSuite will be posted to the Card configured here. You can map your cards in the Mapping section after configuring the integration.',
+                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (Approved) or when the transactions has been settled (Closed)',
+                        cccExportGroup: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
+                        employeeFieldMapping: 'How are your Employees represented in NetSuite?',
+                        creditCard: 'To which General Ledger Account should the expenses be credited to?',
+                        creditCardSubLabel: 'The integration will credit the account selected here for Corporate Credit Card Expenses exported as Journal Entries.'
+                    }
+                },
+                advancedSettings: {
+                    stepName: 'Advanced Settings',
+                    scheduleAutoExport: 'Schedule Automatic Export',
+                    email: 'Send Error Notification to',
+                    autoSyncPayments: 'Auto-Sync Payment Status for Reimbursable Expenses',
+                    defaultPaymentAccount: 'Select Payment Account',
+                    autoCreateEmployeeVendor: 'Auto-Create ',
+                    postEntriesCurrentPeriod: 'Post Entries in the Current Accounting Period',
+                    setDescriptionField: 'Set the Description Field in NetSuite',
+                    dfvLabel: 'Default Field Values',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in NetSuite but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For Location and Department, you can opt to use the values from your employee records in NetSuite.',
+                    location: 'Location',
+                    department: 'Department',
+                    project: 'Project',
+                    class: 'Class',
+                    item: 'Item',
+                    customPreferencesLabel: 'Other Preferences',
+                    customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'
+                },
+                done: {
+                    ctaText: '',
+                    hintText: ''
+                }
+            }
+        },
         intacct: {
             landing: {
                 contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
@@ -573,6 +651,82 @@ const content: ContentConfiguration = {
                     billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     autoCreateEmployeeVendor: 'Auto-create '
+                }
+            }
+        },
+        netsuite: {
+            landing: {
+                contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
+                guideHeaderText: 'Guide to setup your Integrations'
+            },
+            common: {
+                readMoreText: 'Read More',
+                exportLogTabName: 'Export Log',
+                viewExpenseText: 'View Expense',
+                corporateCard: 'Corporate Card',
+                errors: 'Errors',
+                autoMap: 'Auto Map',
+                customField: 'Add new Custom Field',
+                customFieldName: 'Field Name',
+                customFieldPlaceholderName: 'Placeholder Name',
+                customFieldType: 'Field Type',
+                customFieldCreateandSave: 'Create and save',
+                subsidiary: 'Subsidiary',
+                descriptionText: 'of the Description Field'
+            },
+            configuration: {
+                connector: {
+                    stepName: 'Connect to NetSuite',
+                    subLabel: 'Expenses will be posted to the NetSuite Subsidiary selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Subsidiary.'
+                },
+                exportSetting: {
+                    stepName: 'Export Settings',
+                    headerText: '',
+                    contentText: 'Enable this to export Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>Corporate Credit Card</b> expenses will not be exported to NetSuite.',
+                    corporateCard: {
+                        bankAccount: 'Set the Employee Payale Account as?',
+                        bankAccountSublabel: 'Post all your company corporate card transactions to a default Employee Payables Account.',
+                        bankAccountPlaceholder: 'Select bank account for expenses imported from ' + brandingConfig.brandName,
+                        vendorPayable: 'To which Vendor Payable account should the ',
+                        vendorPayableSublabel: 'Post all your company corporate card transactions to a default Vendor Payables Account.',
+                        vendorPayablePlaceholder: 'Select accounts payable for expenses imported from ' + brandingConfig.brandName,
+                        creditCardVendor: 'Set the Default Credit Card Vendor as',
+                        creditCardVendorSublabel: 'Post all your company corporate card transactions to a default Default Credit Card Vendor.',
+                        creditCardVendorPlaceholder: 'Select default Credit Card Vendor',
+                        defaultCCCAccount: 'Set Default Credit Card Account as',
+                        defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
+                        chargeCard: 'Set the Default Charge Card',
+                        chargeCardPlaceholder: 'Select Corporate Charge Card',
+                        chargeCardSublabel: 'Expenses of Corporate Cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in NetSuite will be posted to the Card configured here. You can map your cards in the Mapping section after configuring the integration.',
+                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (Approved) or when the transactions has been settled (Closed)',
+                        cccExportGroup: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
+                        employeeFieldMapping: 'How are your Employees represented in NetSuite?',
+                        creditCard: 'To which General Ledger Account should the expenses be credited to?',
+                        creditCardSubLabel: ''
+                    }
+                },
+                advancedSettings: {
+                    stepName: 'Advanced Settings',
+                    scheduleAutoExport: 'Schedule Automatic Export',
+                    email: 'Send Error Notification to',
+                    autoSyncPayments: 'Auto-Sync Payment Status for Reimbursable Expenses',
+                    defaultPaymentAccount: 'Select Payment Account',
+                    autoCreateEmployeeVendor: 'Auto-Create ',
+                    postEntriesCurrentPeriod: 'Post Entries in the Current Accounting Period',
+                    setDescriptionField: 'Set the Description Field in NetSuite',
+                    dfvLabel: 'Default Field Values',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in NetSuite but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For Location and Department, you can opt to use the values from your employee records in NetSuite.',
+                    location: 'Location',
+                    department: 'Department',
+                    project: 'Project',
+                    class: 'Class',
+                    item: 'Item',
+                    customPreferencesLabel: 'Other Preferences',
+                    customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'
+                },
+                done: {
+                    ctaText: '',
+                    hintText: ''
                 }
             }
         },

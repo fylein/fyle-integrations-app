@@ -32,6 +32,7 @@ export class NetsuiteExportSettingsService {
   }
 
   setupDynamicValidators(form: FormGroup, values: ExportModuleRule, selectedValue: string): void {
+
     Object.entries(values.requiredValue).forEach(([key, value]) => {
       if (key === selectedValue) {
         value.forEach((formController: string) => {
