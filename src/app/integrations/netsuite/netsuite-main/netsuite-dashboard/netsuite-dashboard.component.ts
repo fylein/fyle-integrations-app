@@ -82,7 +82,7 @@ export class NetsuiteDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([TaskLogState.IN_PROGRESS, TaskLogState.ENQUEUED], exportableAccountingExportIds, this.accountingExportType))),
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, this.appName))),
       takeWhile((response: NetsuiteTaskResponse) =>
         response.results.filter(task =>
           (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
@@ -119,7 +119,7 @@ export class NetsuiteDashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
+      this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType, this.appName),
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.netsuiteExportSettingsService.getExportSettings()
     ]).subscribe((responses) => {
