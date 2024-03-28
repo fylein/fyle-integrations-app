@@ -26,6 +26,6 @@ export class BusinessCentralHelperService {
   importAttributes(isRefresh: boolean): void {
     this.workspaceService.importFyleAttributes(isRefresh).subscribe();
     this.mappingService.importBusinessCentralAttributes(isRefresh).subscribe();
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Refreshing data dimensions from Dynamics 365 Business Central');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from Dynamics 365 Business Central');
   }
 }
