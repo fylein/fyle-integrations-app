@@ -142,8 +142,8 @@
             </div>
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="brandingContent.intacct.configuration.advancedSettings.dfvLabel"
-                    [subLabel]="brandingContent.intacct.configuration.advancedSettings.dfvSubLabel">
+                    [label]="brandingContent.netsuite.configuration.advancedSettings.dfvLabel"
+                    [subLabel]="brandingContent.netsuite.configuration.advancedSettings.dfvSubLabel">
                 </app-configuration-step-sub-header>
 
                 <div class="tw-flex">
@@ -155,8 +155,8 @@
                         [placeholder]="'Choose Default NetSuite Location'"
                         [formControllerName]="'netsuiteLocation'">
                     </app-configuration-select-field>
-                
-                    <div *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+
+                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in NetSuite</label>   
                     </div>
@@ -171,7 +171,6 @@
                     [formControllerName]="'netsuiteLocationLevel'">
                 </app-configuration-select-field>
 
-    
                 <div class="tw-flex">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
@@ -182,7 +181,7 @@
                         [formControllerName]="'netsuiteDepartment'">
                     </app-configuration-select-field>
                 
-                    <div *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in NetSuite</label>   
                     </div>
@@ -197,7 +196,6 @@
                     [formControllerName]="'netsuiteDepartmentLevel'">
                 </app-configuration-select-field>
 
-
                 <div class="tw-flex">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
@@ -208,7 +206,7 @@
                         [formControllerName]="'netsuiteClass'">
                     </app-configuration-select-field>
                 
-                    <div *ngIf="workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
                         <input formControlName="useEmployeeClass" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Class</label>   
                     </div>

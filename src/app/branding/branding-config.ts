@@ -25,15 +25,18 @@ const featureConfigs: FeatureConfiguration = {
             },
             importSettings: {
                 tax: true,
-                importVendorsAsMerchants: true
+                importVendorsAsMerchants: true,
+                importNetsuiteEmployees: true
             },
             advancedSettings: {
                 autoCreateVendors: true,
                 paymentsSync: true,
                 singleCreditLineJE: true,
                 emailNotification: true,
+                defaultFields: true,
                 skipExport: true,
-                autoCreateContacts: true
+                autoCreateContacts: true,
+                useEmployeeAttributes: true
             },
             exportLog: {
                 expenseType: true
@@ -60,15 +63,18 @@ const featureConfigs: FeatureConfiguration = {
             },
             importSettings: {
                 tax: false,
-                importVendorsAsMerchants: false
+                importVendorsAsMerchants: false,
+                importNetsuiteEmployees: false
             },
             advancedSettings: {
                 autoCreateVendors: false,
                 paymentsSync: false,
                 singleCreditLineJE: false,
                 emailNotification: false,
+                defaultFields: false,
                 skipExport: false,
-                autoCreateContacts: false
+                autoCreateContacts: false,
+                useEmployeeAttributes: false
             },
             exportLog: {
                 expenseType: false
