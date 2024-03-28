@@ -3,7 +3,7 @@
         <app-landing-page-header [showXeroButton]="true" [logoWidth]="'65px'" [logoStyleClasses]="'tw-p-0'" [logoSectionStyleClasses]="''" [iconPath]="'assets/logos/xero-logo.png'" [appName]="'Xero'" [appDescription]="'Import data from Xero to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to Xero. '" [isLoading]="false" [isIntegrationSetupInProgress]="xeroConnectionInProgress" [isIntegrationConnected]="isIntegrationConnected" [redirectLink]="redirectLink" [buttonText]="'Connect'" [postConnectionRoute]="'xero/onboarding/connector'" (connectIntegration)="connectXero()"></app-landing-page-header>
     </div>
     <div>
-        <app-landing-page-body [headlineText]="'Guide to setup your Integrations'" [headerText]="'A quick guide to help you set up the integration quick and easy.'" [svgPath]="'assets/flow-charts/fyle-xero-data-flow.svg'" [appName]="appName"></app-landing-page-body>
+        <app-landing-page-body [headlineText]="'Guide to setup your Integrations'" [headerText]="'A quick guide to help you set up the integration quick and easy.'" [svgPath]="'assets/flow-charts/fyle-xero-data-flow.svg'" [appName]="appName" [embedImage]="'assets/co/coXeroLanding.svg'"></app-landing-page-body>
     </div>
 </div>
 
