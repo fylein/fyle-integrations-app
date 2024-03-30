@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { MappingSetting } from 'src/app/core/models/db/mapping-setting.model';
-import { AccountingDisplayName, AccountingField, AppName, FyleField, NetSuiteCorporateCreditCardExpensesObject, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AccountingDisplayName, AccountingField, AppName, FyleField, NetSuiteCorporateCreditCardExpensesObject, NetsuiteCategoryDestination, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteExportSettingWorkspaceGeneralSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -60,7 +60,7 @@ export class NetsuiteBaseMappingComponent implements OnInit {
     if (this.sourceField === FyleField.EMPLOYEE) {
       return workspaceGeneralSetting.employee_field_mapping;
     } else if (this.sourceField === FyleField.CATEGORY) {
-      return AccountingField.ACCOUNT;
+      return (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT) ? NetsuiteCategoryDestination.EXPENSE_CATEGORY : NetsuiteCategoryDestination.ACCOUNT;
     }
 
     return mappingSettings.find((setting) => setting.source_field === this.sourceField)?.destination_field || '';
