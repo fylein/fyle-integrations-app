@@ -11,6 +11,11 @@ export enum IntacctCategoryDestination {
   GL_ACCOUNT = 'GL_ACCOUNT'
 }
 
+export enum NetsuiteCategoryDestination {
+  EXPENSE_CATEGORY = 'EXPENSE_CATEGORY',
+  ACCOUNT = 'ACCOUNT'
+}
+
 export enum AutoMapEmployeeOptions {
   EMAIL = 'EMAIL',
   NAME = 'NAME',

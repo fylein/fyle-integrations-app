@@ -66,7 +66,7 @@ export class DashboardService {
 
     let url = '';
 
-    if (appName === AppName.INTACCT) {
+    if (appName === AppName.INTACCT || appName === AppName.NETSUITE) {
       url = `/workspaces/${this.workspaceId}/tasks/v2/all/`;
     } else {
       url = `/workspaces/${this.workspaceId}/tasks/all/`;
