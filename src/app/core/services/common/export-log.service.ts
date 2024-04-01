@@ -73,7 +73,7 @@ export class ExportLogService {
     }
 
     if (appName === AppName.NETSUITE) {
-      return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/v2`, params);
+      return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/v2/`, params);
     }
       return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
 
