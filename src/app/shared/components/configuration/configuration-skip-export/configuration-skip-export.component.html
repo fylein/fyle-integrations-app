@@ -134,7 +134,7 @@
         </div>
         <div class="tw-flex items-center tw-text-mandatory-field-color tw-pb-24-px" *ngIf="showAddButton">
           <app-svg-icon *ngIf="brandingFeatureConfig.illustrationsAllowed" [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" (iconClick)="updateAdditionalFilterVisibility(true)" [styleClasses]="'tw-pr-8-px'"></app-svg-icon>
-          <a class="btn-text-primary tw-py-10-px tw-inline-block" (click)="updateAdditionalFilterVisibility(true)">
+          <a class="btn-text-primary tw-inline-block" (click)="updateAdditionalFilterVisibility(true)">
             Add More Fields
           </a>
         </div>
