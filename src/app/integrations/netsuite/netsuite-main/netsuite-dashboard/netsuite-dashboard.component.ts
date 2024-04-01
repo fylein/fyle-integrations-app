@@ -5,7 +5,7 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { AccountingExportSummary, AccountingExportSummaryModel } from 'src/app/core/models/db/accounting-export-summary.model';
 import { DashboardModel, DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { AccountingGroupedErrorStat, AccountingGroupedErrors, Error } from 'src/app/core/models/db/error.model';
-import { AppName, ReimbursableImportState, CCCImportState, AccountingErrorType, AppUrl, NetsuiteTaskLogType, TaskLogState } from 'src/app/core/models/enum/enum.model';
+import { AppName, ReimbursableImportState, CCCImportState, AccountingErrorType, AppUrl, NetsuiteTaskLogType, TaskLogState, NetsuiteReimbursableExpensesObject, NetSuiteCorporateCreditCardExpensesObject, NetsuiteCategoryDestination } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteTaskLog, NetsuiteTaskResponse } from 'src/app/core/models/netsuite/db/netsuite-task-log.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
@@ -82,7 +82,7 @@ export class NetsuiteDashboardComponent implements OnInit {
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
     interval(3000).pipe(
-      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType))),
+      switchMap(() => from(this.dashboardService.getAllTasks([], exportableAccountingExportIds, this.accountingExportType, this.appName))),
       takeWhile((response: NetsuiteTaskResponse) =>
         response.results.filter(task =>
           (task.status === TaskLogState.IN_PROGRESS || task.status === TaskLogState.ENQUEUED)
@@ -119,7 +119,7 @@ export class NetsuiteDashboardComponent implements OnInit {
     forkJoin([
       this.getExportErrors$,
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
-      this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType),
+      this.dashboardService.getAllTasks([TaskLogState.ENQUEUED, TaskLogState.IN_PROGRESS, TaskLogState.FAILED], undefined, this.accountingExportType, this.appName),
       this.dashboardService.getExportableAccountingExportIds('v1'),
       this.netsuiteExportSettingsService.getExportSettings()
     ]).subscribe((responses) => {
@@ -129,7 +129,7 @@ export class NetsuiteDashboardComponent implements OnInit {
       }
       this.destinationFieldMap = {
         EMPLOYEE: responses[3].employee_field_mapping,
-        CATEGORY: 'ACCOUNT'
+        CATEGORY: (responses[3].reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || responses[3].corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT) ? NetsuiteCategoryDestination.EXPENSE_CATEGORY : NetsuiteCategoryDestination.ACCOUNT
       };
 
       this.isLoading = false;
