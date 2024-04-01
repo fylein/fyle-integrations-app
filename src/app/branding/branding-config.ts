@@ -25,15 +25,18 @@ const featureConfigs: FeatureConfiguration = {
             },
             importSettings: {
                 tax: true,
-                importVendorsAsMerchants: true
+                importVendorsAsMerchants: true,
+                importNetsuiteEmployees: true
             },
             advancedSettings: {
                 autoCreateVendors: true,
                 paymentsSync: true,
                 singleCreditLineJE: true,
                 emailNotification: true,
+                defaultFields: true,
                 skipExport: true,
-                autoCreateContacts: true
+                autoCreateContacts: true,
+                useEmployeeAttributes: true
             },
             exportLog: {
                 expenseType: true
@@ -60,15 +63,18 @@ const featureConfigs: FeatureConfiguration = {
             },
             importSettings: {
                 tax: false,
-                importVendorsAsMerchants: false
+                importVendorsAsMerchants: false,
+                importNetsuiteEmployees: false
             },
             advancedSettings: {
                 autoCreateVendors: false,
                 paymentsSync: false,
                 singleCreditLineJE: false,
                 emailNotification: false,
+                defaultFields: false,
                 skipExport: false,
-                autoCreateContacts: false
+                autoCreateContacts: false,
+                useEmployeeAttributes: false
             },
             exportLog: {
                 expenseType: false
@@ -308,6 +314,7 @@ const content: ContentConfiguration = {
                     taxCodeSubLabel: 'The imported Tax codes from Xero will be set as Tax group in ',
                     defaultTaxCodeLabel: 'Select Default Tax Code',
                     importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants',
+                    importSuppliersAsMerchantsSubLabel: 'The Suppliers in Xero will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.',
                     toggleToastMessage: 'You have already mapped a tracking category from Xero to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
                 },
@@ -533,10 +540,10 @@ const content: ContentConfiguration = {
                 },
                 exportSetting: {
                     stepName: 'Export settings',
-                    headerText: 'Export Corporate Card Expenses',
+                    headerText: 'Export corporate card expenses',
                     contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
                     corporateCard: {
-                        cccExpenseBankAccountSubLabel: '',
+                        cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
                         creditCardExportTypeSubLabel: '',
                         expenseState: '',
                         creditCardExpenseSubLabel: '',
@@ -555,6 +562,7 @@ const content: ContentConfiguration = {
                     taxCodeSubLabel: 'The imported tax codes from Xero will be set as tax group in ',
                     defaultTaxCodeLabel: 'Select default tax code',
                     importSuppliersAsMerchantsLabel: 'Import suppliers from Xero as merchants',
+                    importSuppliersAsMerchantsSubLabel: 'The suppliers in Xero will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName,
                     toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.'
                 },
