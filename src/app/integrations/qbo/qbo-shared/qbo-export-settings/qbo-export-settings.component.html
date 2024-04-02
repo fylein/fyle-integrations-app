@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="brandingContent.stepName"
-                [contentText]="'Configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Online.'"
+                [contentText]="brandingContent.contentText"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 (refreshDimensions)="refreshDimensions()">
@@ -150,7 +150,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in QuickBooks Online to export your expenses.'"
+                            [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
@@ -255,7 +255,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'how expenses to be grouped'"
                             [label]="'How should the expenses be grouped?'"
-                            [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
+                            [subLabel]="brandingContent.corporateCard.creditCardExportGroupSubLabel"
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"

@@ -241,6 +241,7 @@ export type ContentConfiguration = {
                     creditCardExportTypeSubLabel: string;
                     journalOptionLabel: string;
                     journalOptionSubLabel: string;
+                    creditCardExportGroupSubLabel: string;
                 }
             },
             importSetting: {

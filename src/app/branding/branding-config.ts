@@ -490,7 +490,7 @@ const content: ContentConfiguration = {
             exportSetting: {
                 stepName: 'Export Settings',
                 headerText: 'Export Corporate Card Expenses',
-                contentText: 'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online.',
+                contentText: 'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Online.',
                 corporateCard: {
                     expenseState: 'Select CCC expense state',
                     sectionLabel: '',
@@ -504,10 +504,11 @@ const content: ContentConfiguration = {
                     accountsPayableLabel: 'To which Accounts Payable account should the ',
                     accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.',
-                    creditCardExportTypeSubLabel: 'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report).',
+                    creditCardExportGroupSubLabel: 'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report).',
                     journalOptionLabel: 'Name in Journal Entry',
                     journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.',
-                    creditCardExpenseLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'
+                    creditCardExpenseLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
+                    creditCardExportTypeSubLabel: 'Choose the type of transaction in QuickBooks Online to export your ' + brandingConfig.brandName + ' expenses.'
                 }
             },
             importSetting: {
@@ -810,7 +811,7 @@ const content: ContentConfiguration = {
             exportSetting: {
                 stepName: 'Export settings',
                 headerText: 'Export corporate card expenses',
-                contentText: 'Enable this to export the non-reimbursable expenses from ' + brandingConfig.brandName + ' if not enabled, any <b>out-of-pocket</b> expenses will not be exported to QuickBooks Online.',
+                contentText: 'Configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Online',
                 corporateCard: {
                     expenseState: 'Select ccc expense state',
                     sectionLabel: '',
@@ -824,10 +825,11 @@ const content: ContentConfiguration = {
                     accountsPayableLabel: 'To which accounts payable account should the ',
                     accountsPayableSubLabel: ' to the selected accounts payable Account.',
                     creditCardExpenseSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
-                    creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
+                    creditCardExportGroupSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                     journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
-                    creditCardExpenseLabel: 'How should expenses be labeled  before exporting from expense management'
+                    creditCardExpenseLabel: 'How should expenses be labeled  before exporting from expense management',
+                    creditCardExportTypeSubLabel: 'Choose the type of QuickBooks Online transaction to export your expenses'
                 }
             },
             importSetting: {
