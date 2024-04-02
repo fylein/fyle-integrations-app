@@ -888,7 +888,7 @@ const content: ContentConfiguration = {
         },
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
-            guideHeaderText: 'Guide to setup your integrations'
+            guideHeaderText: 'How to setup your integrations'
         },
         common: {
             readMoreText: 'Read more',
