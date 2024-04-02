@@ -263,6 +263,77 @@ export const brandingDemoVideoLinks = demoVideoLinks[brandingConfig.brandId];
 
 const content: ContentConfiguration = {
     fyle: {
+        netsuite: {
+            landing: {
+                contentText: 'Import data from Netsuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Netsuite. ',
+                guideHeaderText: 'Guide to setup your integrations'
+            },
+            common: {
+                readMoreText: 'Read more',
+                exportLogTabName: 'Export log',
+                viewExpenseText: 'View expense',
+                corporateCard: 'Corporate card',
+                errors: 'errors',
+                autoMap: 'Auto map',
+                customField: 'Add new custom field',
+                customFieldName: 'Field name',
+                customFieldPlaceholderName: 'Placeholder name',
+                customFieldType: 'Field type',
+                customFieldCreateandSave: 'Create and save',
+                tenantMapping: 'Tenant Mapping',
+                descriptionText: 'of the description field'
+            },
+            configuration: {
+                connector: {
+                    configurationHeaderText: 'Connect to Netsuite Tenant',
+                    configurationSubHeaderText: 'Connect to the Netsuite Tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Netsuite Tenant cannot be changed once the configuration steps are complete.',
+                    stepName: 'Connect to Netsuite',
+                    subLabel: 'Expenses will be posted to the Netsuite Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
+                },
+                exportSetting: {
+                    stepName: 'Export settings',
+                    headerText: ' Export Corporate Card Expenses',
+                    contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Netsuite.',
+                    corporateCard: {
+                        cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Netsuite.',
+                        creditCardExportTypeSubLabel: '',
+                        expenseState: '',
+                        creditCardExpenseSubLabel: '',
+                        cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'
+                    }
+                },
+                importSetting: {
+                    stepName: 'Import Settings',
+                    headerText: '',
+                    contentText: '',
+                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                    importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
+                    importCustomersLabel: 'Import Customers from Netsuite',
+                    importCustomersSubLabel: 'The Customers in Netsuite will be imported as Projects in Fyle and will be a selectable field while creating an expense',
+                    taxCodeLabel: 'Import Tax from Netsuite',
+                    taxCodeSubLabel: 'The imported Tax codes from Netsuite will be set as Tax group in ',
+                    defaultTaxCodeLabel: 'Select Default Tax Code',
+                    importSuppliersAsMerchantsLabel: 'Import Suppliers from Netsuite as Merchants',
+                    importSuppliersAsMerchantsSubLabel: 'The Suppliers in Netsuite will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
+                    notes: 'NOTE: To export billable expenses from Fyle, import Customers from Netsuite as Projects in Fyle.',
+                    toggleToastMessage: 'You have already mapped a tracking category from Netsuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
+                },
+                advancedSettings: {
+                    stepName: 'Advanced settings',
+                    scheduleAutoExport: 'Schedule automatic export',
+                    email: 'Send error notification to',
+                    paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
+                    autoCreateVendorsLabel: 'Auto create Contacts',
+                    autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on Netsuite',
+                    billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
+                    billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
+                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                    autoCreateEmployeeVendor: 'Auto-create ',
+                    dfvSubLabel: '',
+                    dfvLabel: ''
+                }
+            }
+        },
         xero: {
             landing: {
                 contentText: 'Import data from Xero to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Xero. ',
@@ -511,6 +582,77 @@ const content: ContentConfiguration = {
         }
     },
     co: {
+        netsuite: {
+            landing: {
+                contentText: 'Import data from Netsuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Netsuite. ',
+                guideHeaderText: 'Guide to setup your integrations'
+            },
+            common: {
+                readMoreText: 'Read more',
+                exportLogTabName: 'Export log',
+                viewExpenseText: 'View expense',
+                corporateCard: 'Corporate card',
+                errors: 'errors',
+                autoMap: 'Auto map',
+                customField: 'Add new custom field',
+                customFieldName: 'Field name',
+                customFieldPlaceholderName: 'Placeholder name',
+                customFieldType: 'Field type',
+                customFieldCreateandSave: 'Create and save',
+                tenantMapping: 'Tenant Mapping',
+                descriptionText: 'of the description field'
+            },
+            configuration: {
+                connector: {
+                    configurationHeaderText: 'Connect to Netsuite subsidary',
+                    configurationSubHeaderText: 'Connect to the Netsuite subsidary from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Netsuite subsidary cannot be changed once the configuration steps are complete.',
+                    stepName: 'Connect to Netsuite',
+                    subLabel: 'Expenses will be posted to the Netsuite subsidary selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Netsuite subsidary.'
+                },
+                exportSetting: {
+                    stepName: 'Export settings',
+                    headerText: ' Export Corporate Card Expenses',
+                    contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Netsuite.',
+                    corporateCard: {
+                        cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Netsuite.',
+                        creditCardExportTypeSubLabel: '',
+                        expenseState: '',
+                        creditCardExpenseSubLabel: '',
+                        cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'
+                    }
+                },
+                importSetting: {
+                    stepName: 'Import Settings',
+                    headerText: '',
+                    contentText: '',
+                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                    importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
+                    importCustomersLabel: 'Import Customers from Netsuite',
+                    importCustomersSubLabel: 'The Customers in Netsuite will be imported as Projects in Fyle and will be a selectable field while creating an expense',
+                    taxCodeLabel: 'Import Tax from Netsuite',
+                    taxCodeSubLabel: 'The imported Tax codes from Netsuite will be set as Tax group in ',
+                    defaultTaxCodeLabel: 'Select Default Tax Code',
+                    importSuppliersAsMerchantsLabel: 'Import Suppliers from Netsuite as Merchants',
+                    importSuppliersAsMerchantsSubLabel: 'The Suppliers in Netsuite will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
+                    notes: 'NOTE: To export billable expenses from Fyle, import Customers from Netsuite as Projects in Fyle.',
+                    toggleToastMessage: 'You have already mapped a tracking category from Netsuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
+                },
+                advancedSettings: {
+                    stepName: 'Advanced settings',
+                    scheduleAutoExport: 'Schedule automatic export',
+                    email: 'Send error notification to',
+                    paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
+                    autoCreateVendorsLabel: 'Auto create Contacts',
+                    autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on Netsuite',
+                    billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
+                    billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
+                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                    autoCreateEmployeeVendor: 'Auto-create ',
+                    dfvSubLabel: '',
+                    dfvLabel: ''
+                }
+            }
+        },
         xero: {
             landing: {
                 contentText: 'Import data from Xero to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Xero. ',
