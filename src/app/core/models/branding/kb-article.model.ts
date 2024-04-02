@@ -33,6 +33,8 @@ export type KbArticle = {
                 ADVANCED_SETTING: string;
                 LANDING: string;
                 SKIP_EXPORT: string;
+                DEPENDANT_FIELD: string;
+                COMMITMENT_FIELD: string;
             },
             QBO: {
                 LANDING: string;
