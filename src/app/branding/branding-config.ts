@@ -163,7 +163,7 @@ const kbArticles: KbArticle = {
             BAMBOO_HR: `${brandingConfig.helpArticleDomain}/en/articles/6845034-fyle-bamboo-hr-integration`,
             QBD: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
             QBO: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
-            INTACCT: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
+            INTACCT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
             NETSUITE: `${brandingConfig.helpArticleDomain}/en/articles/4424242-fyle-netsuite-integration`,
             TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
             SAGE300: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
@@ -172,12 +172,12 @@ const kbArticles: KbArticle = {
         },
         onboardingArticles: {
             INTACCT: {
-                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
-                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_6492c5038d`,
-                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_3f6718633c`,
-                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration`,
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_38e0c9bea6`,
-                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_78e1747002`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_eebe5df4b7`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_b95656da22`,
+                SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
             },
             NETSUITE: {
                 CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
