@@ -26,11 +26,13 @@ export class MappingCardHeaderComponent implements OnInit {
 
   getSourceField(sourceField: string): string {
     const fieldName = new SnakeCaseToSpaceCasePipe().transform(sourceField).toLowerCase();
-    if (fieldName[fieldName.length-1] === 'y') {
-      return fieldName.slice(0, fieldName.length-1)+'ies';
-    }
+    if(brandingConfig.brandId === 'fyle') {
+      if (fieldName[fieldName.length-1] === 'y') {
+        return fieldName.slice(0, fieldName.length-1)+'ies';
+      }
       return fieldName+'s';
-
+    }
+    return fieldName;
   }
 
   triggerAutoMapEmployees() {
