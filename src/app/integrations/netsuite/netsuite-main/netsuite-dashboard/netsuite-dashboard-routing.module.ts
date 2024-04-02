@@ -4,7 +4,7 @@ import { NetsuiteDashboardComponent } from './netsuite-dashboard.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     component: NetsuiteDashboardComponent
   }
 ];

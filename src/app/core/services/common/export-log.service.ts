@@ -50,7 +50,7 @@ export class ExportLogService {
     return this.apiService.get(`/workspaces/${workspaceId}/fyle/expenses/`, params);
   }
 
-  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null): Observable<ExpenseGroupResponse> {
+  getExpenseGroups(state: TaskLogState, limit: number, offset: number, selectedDateFilter: SelectedDateFilter | null, exportedAt?: string | null, query?: string | null, appName?: string): Observable<ExpenseGroupResponse> {
     const params: ExpenseGroupParam = {
       limit,
       offset
@@ -72,6 +72,10 @@ export class ExportLogService {
         params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
     }
 
-    return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
+    if (appName === AppName.NETSUITE) {
+      return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/v2/`, params);
+    }
+      return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/`, params);
+
   }
 }

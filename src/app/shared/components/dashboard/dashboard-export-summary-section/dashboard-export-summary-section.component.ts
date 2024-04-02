@@ -60,7 +60,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   }
 
   private getExpenseGroups(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null): void {
-    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, null, lastExportedAt).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
       );
