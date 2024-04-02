@@ -103,7 +103,7 @@
                 <div class="tw-flex">
                     <label class="container tw-pl-24-px tw-text-14-px">Import Cost Code and Cost Type from {{appName}} as dependent fields
                         <a *ngIf="appName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
-                            (click)="windowService.openInNewTab(redirectLink)">
+                            (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
                             Read More
                             <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                 class="tw-text-link-primary tw-pl-2-px tw-w-fit">
@@ -143,7 +143,7 @@
                     <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px">
                         <label class="container tw-pl-24-px tw-text-14-px">Auto-Export Commitment based on the Cost Code and Cost Category.
                             <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
-                                (click)="windowService.openInNewTab(redirectLink)">
+                                (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
                                 Read More
                                 <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
                                     class="tw-text-link-primary tw-pl-2-px tw-w-fit">

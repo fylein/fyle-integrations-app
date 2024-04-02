@@ -94,6 +94,10 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   supportArticleLink: string = brandingKbArticles.onboardingArticles.SAGE300.IMPORT_SETTING;
 
+  dependantFieldSupportArticleLink: string = brandingKbArticles.onboardingArticles.SAGE300.DEPENDANT_FIELD;
+
+  commitmentFieldSupportArticleLink: string = brandingKbArticles.onboardingArticles.SAGE300.COMMITMENT_FIELD;
+
   isSaveInProgress: boolean;
 
   ConfigurationCtaText = ConfigurationCta;

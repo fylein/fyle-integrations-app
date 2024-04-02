@@ -40,6 +40,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() redirectLink: string;
 
+  @Input() commitmentFieldSupportArticleLink: string;
+
+  @Input() dependantFieldSupportArticleLink: string;
+
   @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;
