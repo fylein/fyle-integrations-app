@@ -25,12 +25,12 @@ export class MappingCardHeaderComponent implements OnInit {
   constructor() { }
 
   getSourceField(sourceField: string): string {
-    const fieldName = new SnakeCaseToSpaceCasePipe().transform(sourceField).toLowerCase()
-    if(fieldName[fieldName.length-1] === 'y') {
-      return fieldName.slice(0,fieldName.length-1)+'ies'
-    } else {
-      return fieldName+'s'
+    const fieldName = new SnakeCaseToSpaceCasePipe().transform(sourceField).toLowerCase();
+    if (fieldName[fieldName.length-1] === 'y') {
+      return fieldName.slice(0, fieldName.length-1)+'ies';
     }
+      return fieldName+'s';
+
   }
 
   triggerAutoMapEmployees() {
