@@ -237,6 +237,7 @@ export type ContentConfiguration = {
                     accountsPayableLabel: string;
                     accountsPayableSubLabel: string;
                     creditCardExpenseSubLabel: string;
+                    creditCardExpenseLabel: string;
                     creditCardExportTypeSubLabel: string;
                     journalOptionLabel: string;
                     journalOptionSubLabel: string;
