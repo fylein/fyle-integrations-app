@@ -63,12 +63,12 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   previewImagePaths =[
     {
-      'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/Reimbursable - Expense Report.jpg',
-      'DIRECT_COST': 'assets/illustrations/sageIntacct/Reimbursable Bill.jpg'
+      'PURCHASE_INVOICE': 'assets/illustrations/sage300/preview.png',
+      'DIRECT_COST': 'assets/illustrations/sage300/preview.png'
     },
     {
-      'PURCHASE_INVOICE': 'assets/illustrations/sageIntacct/CCC Expense Report.jpg',
-      'DIRECT_COST': 'assets/illustrations/sageIntacct/CCC Bill.jpg'
+      'PURCHASE_INVOICE': 'assets/illustrations/sage300/preview.png',
+      'DIRECT_COST': 'assets/illustrations/sage300/preview.png'
     }
   ];
 
