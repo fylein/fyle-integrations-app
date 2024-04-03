@@ -528,6 +528,7 @@ const content: ContentConfiguration = {
             },
             advancedSettings: {
                 stepName: 'Advanced Settings',
+                contentText: 'In this section, you can customize the integration based on your accounting requirements. ',
                 autoCreateVendorsLabel: 'Auto-Create Vendors',
                 paymentSyncLabel: 'Auto Sync payment status for reimbursable expenses',
                 customizationSubLabel: 'You can choose what data points need to be exported and what shouldn\'t be.',
@@ -536,7 +537,18 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.',
                 billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
-                memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online'
+                memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online',
+                automationSubLabel: 'You can automate the export and sync of your data in this section.',
+                scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from Capital One to QuickBooks Online.',
+                frequencySubLabel: 'Set a frequency based on how often you want your expenses in Capital One to be exported to QuickBooks Online.',
+                otherPreferencesLabel: 'Other Preferences',
+                otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from Capital One. (when there is no employee record found, or when the accounting period is closed)',
+                accountingPeriodLabel: 'Post entries in the next open accounting period',
+                accountingPeriodSubLabel: 'If the accounting period in QuickBooks Online is closed, the expenses from Capital One will be exported with a date stamp of the first day next open accounting period. ',
+                autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online. ',
+                customizeSectionSubLAbel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.',
+                memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement',
+                previewDescriptionFieldLabel: 'Preview of the Description Field'
             },
             done: {
                 ctaText: 'Launch Integration',
@@ -851,6 +863,7 @@ const content: ContentConfiguration = {
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
+                contentText: 'Customize the integration based on your accounting requirements. ',
                 autoCreateVendorsLabel: 'Auto-create vendors',
                 paymentSyncLabel: 'Auto sync payment status for reimbursable expenses',
                 customizationSubLabel: 'you can choose what data points need to be exported and what shouldn\'t be.',
@@ -859,7 +872,18 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
-                memoStructureLabel: 'Set the line item-level description field in QuickBooks Online'
+                memoStructureLabel: 'Set the line-item description field in QuickBooks Online',
+                automationSubLabel: 'Automate your export frequency and how often your data syncs with Quickbooks Online.',
+                scheduleSubLabel: 'Set a schedule to automatically export expenses to Quickbooks Online.',
+                frequencySubLabel: 'Set how often your expenses will be exported to Quickbooks Online.',
+                otherPreferencesLabel: 'Other preferences',
+                otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
+                accountingPeriodLabel: 'Post entries in the current open accounting period',
+                accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
+                autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match',
+                customizeSectionSubLAbel: 'Customize which data points to export to Quickbooks Online.',
+                memoStructureSubLabel: 'Choose the data points you\'d like to export to the description field in Quickbooks Online and order them based on your requirements. ',
+                previewDescriptionFieldLabel: 'Preview of the description field'
             },
             done: {
                 ctaText: 'Launch integration',
