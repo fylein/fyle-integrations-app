@@ -514,15 +514,17 @@ const content: ContentConfiguration = {
             importSetting: {
                 stepName: 'Import Settings',
                 headerText: '',
-                contentText: '',
-                importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                contentText: 'In this section, you can choose the fields required to be imported from QuickBooks Online to ' + brandingConfig.brandName + '. ',
+                importCategoriesLabel: 'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName,
                 importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
                 importItemsLabel: 'Import Products/Services from QuickBooks Online',
-                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as Categories in ',
+                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as Categories in ' + brandingConfig.brandName + '.',
                 taxCodeLabel: 'Import Tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported Tax codes from QuickBooks Online will be set as Tax group in ',
                 defaultTaxCodeLabel: 'Select Default Tax Code',
-                importVendorsAsMerchantsLabel: 'Import Vendors from QuickBooks Online'
+                importVendorsAsMerchantsLabel: 'Import Vendors from QuickBooks Online',
+                chartOfAccountTypes: 'Select the accounts from QuickBooks to import as categories in ' + brandingConfig.brandName,
+                chartOfAccountTypesSubLabel: 'By default expense will be selected. Open the dropdown to select more as per your requirements.'
             },
             advancedSettings: {
                 stepName: 'Advanced Settings',
@@ -835,15 +837,17 @@ const content: ContentConfiguration = {
             importSetting: {
                 stepName: 'Import settings',
                 headerText: '',
-                contentText: '',
-                importCategoriesLabel: 'Import the chart of accounts as categories in ',
-                importCategoriesSubLabel: 'Imported account will be available as categories in ' + brandingConfig.brandName + '.',
+                contentText: 'Select the field information to import from QuickBooks Online to expense management.',
+                importCategoriesLabel: 'Import the chart of accounts as categories',
+                importCategoriesSubLabel: 'Imported accounts will be available as categories in expense management.',
                 importItemsLabel: 'Import products/services from QuickBooks Online',
-                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in ',
+                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in expense management',
                 taxCodeLabel: 'Import tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported tax codes from QuickBooks Online will be set as tax group in ',
                 defaultTaxCodeLabel: 'Select default tax code',
-                importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online'
+                importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online',
+                chartOfAccountTypes: 'Select accounts from QuickBooks Online to import as categories.',
+                chartOfAccountTypesSubLabel: 'You can select multiple accounts based on your requirements. Expense is set as the default selection. '
             },
             advancedSettings: {
                 stepName: 'Advanced settings',

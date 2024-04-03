@@ -250,6 +250,8 @@ export type ContentConfiguration = {
                 contentText: string;
                 importCategoriesLabel: string;
                 importCategoriesSubLabel: string;
+                chartOfAccountTypes: string;
+                chartOfAccountTypesSubLabel: string;
                 importItemsLabel: string;
                 importItemsSubLabel: string;
                 taxCodeLabel: string;
