@@ -286,6 +286,7 @@ export type ContentConfiguration = {
             done: {
                 ctaText: string;
                 hintText: string;
+                doneHeaderText: string;
             }
         },
         dashboard: {

@@ -552,7 +552,8 @@ const content: ContentConfiguration = {
             },
             done: {
                 ctaText: 'Launch Integration',
-                hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.'
+                hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.',
+                doneHeaderText: 'Your integration setup is now complete.'
             }
         },
         dashboard: {
@@ -887,7 +888,8 @@ const content: ContentConfiguration = {
             },
             done: {
                 ctaText: 'Launch integration',
-                hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">configuration</b> section.'
+                hintText: 'you can change your settings anytime in the <b class="tw-font-bold">configuration</b> section.',
+                doneHeaderText: 'You\'ve successfully set up your integration.'
             }
         },
         dashboard: {
