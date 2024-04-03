@@ -143,9 +143,9 @@ export class MappingService {
     const workspaceId = this.workspaceService.getWorkspaceId();
     let appNameCaps = null;
     if (appName === AppName.INTACCT) {
-      appNameCaps = AppUrl.INTACCT.toUpperCase()
+      appNameCaps = AppUrl.INTACCT.toUpperCase();
     } else if (appName === AppName.XERO) {
-      appNameCaps = AppUrl.XERO.toUpperCase()
+      appNameCaps = AppUrl.XERO.toUpperCase();
     }
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, {
       source_type: sourceType,
