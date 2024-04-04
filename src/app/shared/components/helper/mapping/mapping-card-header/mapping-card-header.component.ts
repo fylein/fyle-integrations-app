@@ -24,15 +24,16 @@ export class MappingCardHeaderComponent implements OnInit {
 
   constructor() { }
 
-  getSourceField(sourceField: string): string {
-    const fieldName = new SnakeCaseToSpaceCasePipe().transform(sourceField).toLowerCase();
-    if (brandingConfig.brandId === 'fyle') {
-      if (fieldName[fieldName.length-1] === 'y') {
-        return fieldName.slice(0, fieldName.length-1)+'ies';
-      }
-      return fieldName+'s';
+  getSourceField(destinationField: string): string {
+    const lastChar = destinationField.slice(-1).toLowerCase();
+    const lastTwoChars = destinationField.slice(-2).toLowerCase();
+
+    if (lastChar === 'y') {
+        return destinationField.slice(0, -1) + 'ies';
+    } else if (['s', 'x', 'z'].includes(lastChar) || ['sh', 'ch'].includes(lastTwoChars)) {
+        return destinationField + 'es';
     }
-    return fieldName;
+    return destinationField + 's';
   }
 
   triggerAutoMapEmployees() {
