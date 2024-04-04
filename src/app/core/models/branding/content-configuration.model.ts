@@ -301,6 +301,8 @@ export type ContentConfiguration = {
             categoryMappingErrorText: string;
             qboErrorText: string;
             qboErrorDialogHeaderText: string;
+            exportLogHeader: string;
+            exportLogSubHeader: string;
         },
         exportLog: {
             tableHeaders: {

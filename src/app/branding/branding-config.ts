@@ -567,7 +567,9 @@ const content: ContentConfiguration = {
             employeeMappingErrorText: 'Employee Mapping Errors',
             categoryMappingErrorText: 'Category Mapping Errors',
             qboErrorText: 'Errors',
-            qboErrorDialogHeaderText: 'Error'
+            qboErrorDialogHeaderText: 'Error',
+            exportLogHeader: 'Failed',
+            exportLogSubHeader: 'These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again'
         },
         exportLog: {
             tableHeaders: {
@@ -894,7 +896,7 @@ const content: ContentConfiguration = {
         },
         dashboard: {
             exportHeaderFirstTimeZeroStateText: 'Sit back and relax',
-            exportHeaderZeroStateText: 'You are all caught up',
+            exportHeaderZeroStateText: 'You\’re all caught up',
             lastExportSuccessText: 'Successful expenses',
             lastExportFailedText: 'Failed expenses',
             lastExportedAtText: 'Last export at:',
@@ -903,7 +905,9 @@ const content: ContentConfiguration = {
             employeeMappingErrorText: 'Employee mapping errors',
             categoryMappingErrorText: 'Category mapping errors',
             qboErrorText: 'errors',
-            qboErrorDialogHeaderText: 'error'
+            qboErrorDialogHeaderText: 'error',
+            exportLogHeader: 'Failed to export?',
+            exportLogSubHeader: 'Resolve the errors from your dashboard and try exporting these expenses again.'
         },
         exportLog: {
             tableHeaders: {
