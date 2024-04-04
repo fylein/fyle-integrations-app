@@ -919,7 +919,7 @@ const content: ContentConfiguration = {
                 exportSkippedOn: 'Export skipped on'
             },
             searchPlaceholder: 'Search by employee or expense ID',
-            dateRangeLabel: 'Or, select date range'
+            dateRangeLabel: 'Select date range'
         },
         mapping: {
             filterPlaceholder: 'Select status'
