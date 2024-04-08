@@ -20,7 +20,7 @@
                     </h5>
                     <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="isExportInProgress">This may take a few minutes...</h5>
                     <h5 class="tw-text-14-px tw-font-400 tw-text-text-secondary tw-pt-8-px" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}" *ngIf="!isExportInProgress && !exportableAccountingExportIds.length && accountingExportSummary?.successful_accounting_export_count">
-                        There are no expenses to export right now. Once expenses are closed, they'll be available here for export.
+                        There are no expenses to export right now. Once expenses are {{ importStates }}, they'll be available here for export.
                     </h5>
                     <div *ngIf="!isExportInProgress && failedExpenseGroupCount !== null && failedExpenseGroupCount > 0" fxLayout="row" fxFlex="4" class="tw-text-14-px tw-font-500 tw-text-text-secondary tw-pt-8-px tw-flex" [ngClass]="{'tw-pl-0': !brandingFeatureConfig.illustrationsAllowed, 'tw-pl-34-px': brandingFeatureConfig.illustrationsAllowed}">
                         <h5>{{ exportableAccountingExportIds.length - failedExpenseGroupCount > 0 ? exportableAccountingExportIds.length - failedExpenseGroupCount : 0 }} new expense{{(exportableAccountingExportIds.length - failedExpenseGroupCount) > 1 ? 's' : ''}}, {{ failedExpenseGroupCount }} previously failed expense{{failedExpenseGroupCount > 1 ? 's' : ''}}.</h5>
