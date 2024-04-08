@@ -175,7 +175,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Card transaction post date',
+        label: 'Card Transaction Post Date',
         value: ExportDateType.POSTED_AT
       },
       {
