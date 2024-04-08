@@ -261,19 +261,32 @@ export type ContentConfiguration = {
             },
             advancedSettings: {
                 stepName: string;
+                contentText: string;
+                automationSubLabel: string;
+                scheduleSubLabel: string;
+                frequencySubLabel: string;
+                otherPreferencesLabel: string;
+                otherPreferencesSubLabel: string;
+                accountingPeriodLabel: string;
+                accountingPeriodSubLabel: string;
+                customizeSectionSubLAbel: string;
                 autoCreateVendorsLabel: string;
                 paymentSyncLabel: string;
                 customizationSubLabel: string;
                 autoCreateMerchantsAsVendorsLabel: string;
+                autoCreateMerchantsAsVendorsSubLabel: string;
                 singleCreditLineJELabel: string;
                 singleCreditLineJESubLabel: string;
                 billPaymentAccountLabel: string;
                 billPaymentAccountSubLabel: string;
                 memoStructureLabel: string;
+                memoStructureSubLabel: string;
+                previewDescriptionFieldLabel: string;
             },
             done: {
                 ctaText: string;
                 hintText: string;
+                doneHeaderText: string;
             }
         },
         dashboard: {
