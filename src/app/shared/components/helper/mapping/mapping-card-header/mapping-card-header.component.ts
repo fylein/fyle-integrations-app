@@ -25,6 +25,7 @@ export class MappingCardHeaderComponent implements OnInit {
   constructor() { }
 
   getSourceField(destinationField: string): string {
+    destinationField = new SnakeCaseToSpaceCasePipe().transform(destinationField).toLowerCase();
     const lastChar = destinationField.slice(-1).toLowerCase();
     const lastTwoChars = destinationField.slice(-2).toLowerCase();
 
