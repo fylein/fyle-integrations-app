@@ -253,6 +253,10 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   }
 
+  navigateToPreviousStep(): void {
+    this.router.navigate([`/integrations/intacct/onboarding/connector`]);
+  }
+
     private reimbursableExportTypeWatcher(): void {
       this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe((isreimbursableExportTypeSelected) => {
         if (isreimbursableExportTypeSelected === IntacctReimbursableExpensesObject.JOURNAL_ENTRY) {

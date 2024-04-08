@@ -95,7 +95,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
 
   private checkCloneSettingsAvailablity(): void {
     this.cloneSettingService.checkCloneSettingsExists().subscribe((response: CloneSettingExist) => {
-      if (response.is_available) {
+      if (response.is_available && brandingFeatureConfig.featureFlags.cloneSettings) {
         this.warningHeaderText = 'Your settings are pre-filled';
         this.warningContextText = `Your previous organization's settings <b>(${response.workspace_name})</b> have been copied over to the current organization
         <br><br>You can change the settings or reset the configuration to restart the process from the beginning<br>`;

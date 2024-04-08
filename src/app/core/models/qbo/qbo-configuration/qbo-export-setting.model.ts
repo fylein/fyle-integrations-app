@@ -76,11 +76,11 @@ export class QBOExportSettingModel extends ExportSettingModel {
         value: QBOCorporateCreditCardExpensesObject.BILL
       },
       {
-        label: 'Credit card purchase',
+        label: 'Credit Card Purchase',
         value: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
       },
       {
-        label: 'Journal entry',
+        label: 'Journal Entry',
         value: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY
       }
     ];
@@ -128,7 +128,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
         value: ExpenseGroupingFieldOption.EXPENSE_ID
       },
       {
-        label: 'Expense report',
+        label: 'Expense Report',
         value: ExpenseGroupingFieldOption.CLAIM_NUMBER
       }
     ];
@@ -150,23 +150,23 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Current date',
+        label: 'Current Date',
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Verification date',
+        label: 'Verification Date',
         value: ExportDateType.VERIFIED_AT
       },
       {
-        label: 'Spend date',
+        label: 'Spend Date',
         value: ExportDateType.SPENT_AT
       },
       {
-        label: 'Approval date',
+        label: 'Approval Date',
         value: ExportDateType.APPROVED_AT
       },
       {
-        label: 'Last Spend date',
+        label: 'Last Spend Date',
         value: ExportDateType.LAST_SPENT_AT
       }
     ];
@@ -175,11 +175,11 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getAdditionalCreditCardExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Card transaction post date',
+        label: 'Card Transaction Post Date',
         value: ExportDateType.POSTED_AT
       },
       {
-        label: 'Spend date',
+        label: 'Spend Date',
         value: ExportDateType.SPENT_AT
       }
     ];

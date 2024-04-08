@@ -1,7 +1,7 @@
 <div class="tw-flex tw-justify-around tw-items-center tw-h-240-px">
     <div class="tw-text-center tw-px-60-px tw-items-center">
         <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 tw-pb-18-px">
-            {{ (brandingConfig.brandId === 'co') ? brandingConfig.brandName : brandingConfig.brandName | uppercase }}
+            {{ (brandingConfig.brandId === 'co') ? (brandingConfig.brandName | sentenceCase) : brandingConfig.brandName | uppercase }}
 
         </h5>
         <h3 class="tw-text-18-px tw-text-text-primary tw-font-500 tw-pb-16-px">

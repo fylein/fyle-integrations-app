@@ -25,8 +25,11 @@
             <p class="landing--section-heading">
                 Accounting
             </p>
-            <p class="landing--section-caption">
+            <p class="landing--section-caption" *ngIf="brandingConfig.brandId !== 'co'">
                 If your company uses any of the accounting systems below, you can easily integrate your {{ brandingConfig.brandName }} account with it.
+            </p>
+            <p class="landing--section-caption" *ngIf="brandingConfig.brandId === 'co'">
+                Integrate your expense management account with any of these accounting systems.
             </p>
 
             <div class="tw-flex">
@@ -68,7 +71,7 @@
                             QuickBooks Online
                         </span>
                     </div>
-                    <div *ngIf="!isINCluster" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+                    <div *ngIf="!isINCluster && !exposeC1Apps" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
                         <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
                         <span class="landing--accounting-app-name">
                             Sage 300 CRE
