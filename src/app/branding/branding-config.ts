@@ -888,8 +888,8 @@ const content: ContentConfiguration = {
             },
             done: {
                 ctaText: 'Launch integration',
-                hintText: 'you can change your settings anytime in the <b class="tw-font-bold">configuration</b> section.',
-                doneHeaderText: 'You\'ve successfully set up your integration.'
+                hintText: 'You can change your integration settings anytime in the <b class="tw-font-bold">configuration</b> section.',
+                doneHeaderText: 'You\'ve successfully set up your integration'
             }
         },
         dashboard: {
