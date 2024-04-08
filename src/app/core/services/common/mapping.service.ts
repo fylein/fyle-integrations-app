@@ -142,8 +142,10 @@ export class MappingService {
   getMappingStats(sourceType: string, destinationType: string, appName: AppName): Observable<MappingStats> {
     const workspaceId = this.workspaceService.getWorkspaceId();
     let appNameCaps = null;
-    if (appName === AppName.INTACCT || appName === AppName.XERO) {
-      appNameCaps = appName.toUpperCase();
+    if (appName === AppName.INTACCT) {
+      appNameCaps = AppUrl.INTACCT.toUpperCase();
+    } else if (appName === AppName.XERO) {
+      appNameCaps = AppUrl.XERO.toUpperCase();
     }
     return this.apiService.get(`/workspaces/${workspaceId}/mappings/stats/`, {
       source_type: sourceType,
