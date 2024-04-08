@@ -25,8 +25,11 @@
             <p class="landing--section-heading">
                 Accounting
             </p>
-            <p class="landing--section-caption">
+            <p class="landing--section-caption" *ngIf="brandingConfig.brandId !== 'co'">
                 If your company uses any of the accounting systems below, you can easily integrate your {{ brandingConfig.brandName }} account with it.
+            </p>
+            <p class="landing--section-caption" *ngIf="brandingConfig.brandId === 'co'">
+                Integrate your expense management account with any of these accounting systems.
             </p>
 
             <div class="tw-flex">
