@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header
             [headerText]="brandingContent.stepName"
-            [contentText]="'In this section, you can customize the integration based on your accounting requirements. '"
+            [contentText]="brandingContent.contentText"
             [redirectLink]="supportArticleLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -17,7 +17,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'Automation'"
-                    [subLabel]="'You can automate the export and sync of your data in this section.'">
+                    [subLabel]="brandingContent.automationSubLabel">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-mb-16-px">
@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'Schedule automatic export'" 
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to QuickBooks Online.'"
+                        [subLabel]="brandingContent.scheduleSubLabel"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -37,7 +37,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'automatic export method'"
                             [label]="'Set up export frequency'"
-                            [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to QuickBooks Online.'"
+                            [subLabel]="brandingContent.frequencySubLabel"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                             [formControllerName]="'exportScheduleFrequency'"
@@ -49,16 +49,16 @@
 
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="'Other Preferences'"
-                    [subLabel]="'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'">
+                    [label]="brandingContent.otherPreferencesLabel"
+                    [subLabel]="brandingContent.otherPreferencesSubLabel">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [iconPath]="'calendar'"
-                    [label]="'Post entries in the next open accounting period'"
-                    [subLabel]="'If the accounting period in QuickBooks Online is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'"
+                    [label]="brandingContent.accountingPeriodLabel"
+                    [subLabel]="brandingContent.accountingPeriodSubLabel"
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
@@ -104,7 +104,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
                     [label]="brandingContent.autoCreateMerchantsAsVendorsLabel"
-                    [subLabel]="brandingConfig.brandName + ' will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online.'"
+                    [subLabel]="brandingContent.autoCreateMerchantsAsVendorsSubLabel"
                     [formControllerName]="'autoCreateMerchantsAsVendors'">
                 </app-configuration-toggle-field>
             </div>
@@ -112,7 +112,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'Customization'"
-                    [subLabel]="'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online '+ brandingContent.customizationSubLabel">
+                    [subLabel]="brandingContent.customizeSectionSubLAbel">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
@@ -121,14 +121,14 @@
                     [isFieldMandatory]="false"
                     [mandatoryErrorListName]="'Item level description'"
                     [label]="brandingContent.memoStructureLabel"
-                    [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'"
+                    [subLabel]="brandingContent.memoStructureSubLabel"
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"
                     [placeholder]="'Set description'"
                     [formControllerName]="'memoStructure'">
                 </app-configuration-multi-select>
                 <div class="preview-text">
-                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the Description Field</h4>
+                    <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{brandingContent.previewDescriptionFieldLabel}}</h4>
                     <div class="preview-box">
                         {{memoPreviewText}}
                     </div>

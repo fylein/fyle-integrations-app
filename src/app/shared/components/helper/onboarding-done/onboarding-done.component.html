@@ -11,9 +11,12 @@
           Congratulations!
         </span>
         <span>
-          Your integration setup is now complete.
+          {{brandingContent.doneHeaderText}}
         </span>
       </h2>
+      <div *ngIf="brandingConfig.brandId === 'co'" class="tw-py-10-px">
+        <h5 class="tw-text-text-muted tw-text-center tw-text-14-px tw-font-400" [innerHTML]="brandingContent.hintText"></h5>
+      </div>
     </div>
     <div class="tw-flex tw-justify-center tw-py-20-px">
       <div>
@@ -22,7 +25,7 @@
         </button>
       </div>
     </div>
-    <div class="tw-py-20-px">
+    <div *ngIf="brandingConfig.brandId !== 'co'" class="tw-py-20-px">
       <h5 class="tw-text-text-muted tw-text-center tw-text-14-px tw-font-400" [innerHTML]="brandingContent.hintText"></h5>
     </div>
   </div>

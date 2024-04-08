@@ -514,18 +514,21 @@ const content: ContentConfiguration = {
             importSetting: {
                 stepName: 'Import Settings',
                 headerText: '',
-                contentText: '',
-                importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                contentText: 'In this section, you can choose the fields required to be imported from QuickBooks Online to ' + brandingConfig.brandName + '. ',
+                importCategoriesLabel: 'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName,
                 importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
                 importItemsLabel: 'Import Products/Services from QuickBooks Online',
-                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as Categories in ',
+                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as Categories in ' + brandingConfig.brandName + '.',
                 taxCodeLabel: 'Import Tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported Tax codes from QuickBooks Online will be set as Tax group in ',
                 defaultTaxCodeLabel: 'Select Default Tax Code',
-                importVendorsAsMerchantsLabel: 'Import Vendors from QuickBooks Online'
+                importVendorsAsMerchantsLabel: 'Import Vendors from QuickBooks Online',
+                chartOfAccountTypes: 'Select the accounts from QuickBooks to import as categories in ' + brandingConfig.brandName,
+                chartOfAccountTypesSubLabel: 'By default expense will be selected. Open the dropdown to select more as per your requirements.'
             },
             advancedSettings: {
                 stepName: 'Advanced Settings',
+                contentText: 'In this section, you can customize the integration based on your accounting requirements. ',
                 autoCreateVendorsLabel: 'Auto-Create Vendors',
                 paymentSyncLabel: 'Auto Sync payment status for reimbursable expenses',
                 customizationSubLabel: 'You can choose what data points need to be exported and what shouldn\'t be.',
@@ -534,11 +537,23 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all Credits in a Journal to create a single entry.',
                 billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
-                memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online'
+                memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online',
+                automationSubLabel: 'You can automate the export and sync of your data in this section.',
+                scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from Capital One to QuickBooks Online.',
+                frequencySubLabel: 'Set a frequency based on how often you want your expenses in Capital One to be exported to QuickBooks Online.',
+                otherPreferencesLabel: 'Other Preferences',
+                otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from Capital One. (when there is no employee record found, or when the accounting period is closed)',
+                accountingPeriodLabel: 'Post entries in the next open accounting period',
+                accountingPeriodSubLabel: 'If the accounting period in QuickBooks Online is closed, the expenses from Capital One will be exported with a date stamp of the first day next open accounting period. ',
+                autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online. ',
+                customizeSectionSubLAbel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.',
+                memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement',
+                previewDescriptionFieldLabel: 'Preview of the Description Field'
             },
             done: {
                 ctaText: 'Launch Integration',
-                hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.'
+                hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">Configuration</b> section.',
+                doneHeaderText: 'Your integration setup is now complete.'
             }
         },
         dashboard: {
@@ -835,18 +850,21 @@ const content: ContentConfiguration = {
             importSetting: {
                 stepName: 'Import settings',
                 headerText: '',
-                contentText: '',
-                importCategoriesLabel: 'Import the chart of accounts as categories in ',
-                importCategoriesSubLabel: 'Imported account will be available as categories in ' + brandingConfig.brandName + '.',
+                contentText: 'Select the field information to import from QuickBooks Online to expense management.',
+                importCategoriesLabel: 'Import the chart of accounts as categories',
+                importCategoriesSubLabel: 'Imported accounts will be available as categories in expense management.',
                 importItemsLabel: 'Import products/services from QuickBooks Online',
-                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in ',
+                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in expense management',
                 taxCodeLabel: 'Import tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported tax codes from QuickBooks Online will be set as tax group in ',
                 defaultTaxCodeLabel: 'Select default tax code',
-                importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online'
+                importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online',
+                chartOfAccountTypes: 'Select accounts from QuickBooks Online to import as categories.',
+                chartOfAccountTypesSubLabel: 'You can select multiple accounts based on your requirements. Expense is set as the default selection. '
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
+                contentText: 'Customize the integration based on your accounting requirements. ',
                 autoCreateVendorsLabel: 'Auto-create vendors',
                 paymentSyncLabel: 'Auto sync payment status for reimbursable expenses',
                 customizationSubLabel: 'you can choose what data points need to be exported and what shouldn\'t be.',
@@ -855,11 +873,23 @@ const content: ContentConfiguration = {
                 singleCreditLineJESubLabel: 'Merge all credits in a journal to create a single entry.',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
-                memoStructureLabel: 'Set the line item-level description field in QuickBooks Online'
+                memoStructureLabel: 'Set the line-item description field in QuickBooks Online',
+                automationSubLabel: 'Automate your export frequency and how often your data syncs with Quickbooks Online.',
+                scheduleSubLabel: 'Set a schedule to automatically export expenses to Quickbooks Online.',
+                frequencySubLabel: 'Set how often your expenses will be exported to Quickbooks Online.',
+                otherPreferencesLabel: 'Other preferences',
+                otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
+                accountingPeriodLabel: 'Post entries in the current open accounting period',
+                accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
+                autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match',
+                customizeSectionSubLAbel: 'Customize which data points to export to Quickbooks Online.',
+                memoStructureSubLabel: 'Choose the data points you\'d like to export to the description field in Quickbooks Online and order them based on your requirements. ',
+                previewDescriptionFieldLabel: 'Preview of the description field'
             },
             done: {
                 ctaText: 'Launch integration',
-                hintText: 'After launching the integration, you can change your settings at any point of time under the <b class="tw-font-bold">configuration</b> section.'
+                hintText: 'You can change your integration settings anytime in the <b class="tw-font-bold">configuration</b> section.',
+                doneHeaderText: 'You\'ve successfully set up your integration'
             }
         },
         dashboard: {
