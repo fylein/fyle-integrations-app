@@ -27,7 +27,7 @@
         </button>
         <div *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed" tooltipPosition="bottom" [pTooltip]="'If you are unable to find a required value, click the sync button to instantly retrieve the latest values from ' + appName">
           <span (click)="refreshDimensions()" class="p-button primary-outline tw-mr-12-px">
-            Sync
+            Refresh data
         </span>
         </div>
 
