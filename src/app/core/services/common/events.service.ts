@@ -56,9 +56,7 @@ export class EventsService {
         } else if (message.data.redirectUri.includes('quickbooks')) {
           this.qboLogin.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('xero')) {
-          // TODO: remove comment when exposing xero inside iframe
-          // This.xeroLogin.emit(message.data.redirectUri);
-          this.windowService.openInNewTab(message.data.redirectUri);
+          this.xeroLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }
