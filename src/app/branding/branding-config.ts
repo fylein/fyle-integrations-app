@@ -21,7 +21,7 @@ const featureConfigs: FeatureConfiguration = {
             exportSettings: {
                 reimbursableExpenses: true,
                 nameInJournalEntry: true,
-                useMerchantInJournalLine: false
+                useMerchantInJournalLine: true
             },
             importSettings: {
                 tax: true,
@@ -891,8 +891,8 @@ const content: ContentConfiguration = {
             filterPlaceholder: 'Select status'
         },
         landing: {
-            contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
-            guideHeaderText: 'How to setup your integrations'
+            contentText: 'Import GL accounts and projects from QuickBooks Online and export expenses from your expense management account.',
+            guideHeaderText: 'How to setup your integration'
         },
         common: {
             readMoreText: 'Read more',

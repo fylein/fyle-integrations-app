@@ -122,6 +122,10 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
     private mappingService: SiMappingsService
   ) { }
 
+  navigateToPreviousStep(): void {
+    this.router.navigate([`/integrations/intacct/onboarding/import_settings`]);
+  }
+
   refreshDimensions(isRefresh: boolean) {
     this.mappingService.refreshSageIntacctDimensions().subscribe();
     this.mappingService.refreshFyleDimensions().subscribe();
