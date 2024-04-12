@@ -191,6 +191,7 @@ export type ContentConfiguration = {
                 },
                 advancedSettings: {
                     stepName: string;
+                    contentText: string;
                     scheduleAutoExport: string;
                     email: string;
                     autoSyncPayments: string;
@@ -207,6 +208,10 @@ export type ContentConfiguration = {
                     item: string;
                     customPreferencesLabel: string;
                     customPreferencesSubLabel: string;
+                    automationSubLabel: string;
+                    scheduleSubLabel: string;
+                    accountingPeriodSubLabel: string;
+                    memoStructureSubLabel: string;
                 },
                 done: {
                     ctaText: string;
