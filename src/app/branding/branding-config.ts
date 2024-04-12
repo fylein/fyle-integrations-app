@@ -478,7 +478,7 @@ const content: ContentConfiguration = {
                     automationSubLabel: 'You can automate the export and sync of your data in this section.',
                     scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Sage Intacct.',
                     accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.',
-                    memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.',
+                    memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.'
                 },
                 done: {
                     ctaText: '',
@@ -822,7 +822,7 @@ const content: ContentConfiguration = {
                     automationSubLabel: 'Automate your export frequency and how often your data syncs with Sage Intacct.',
                     scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Sage Intacct.',
                     accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
-                    memoStructureSubLabel: 'Choose the data points you\'d like to export to the description field in Sage Intacct and order them based on your requirements. ',
+                    memoStructureSubLabel: 'Choose the data points you\'d like to export to the description field in Sage Intacct and order them based on your requirements. '
                 },
                 done: {
                     ctaText: '',
