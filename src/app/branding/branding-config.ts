@@ -178,7 +178,7 @@ const kbArticles: KbArticle = {
                 EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_eebe5df4b7`,
                 ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
                 LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_b95656da22`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9081356-generate-credentials-to-connect-with-sage-intacct`,
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
             },
             NETSUITE: {
@@ -434,7 +434,8 @@ const content: ContentConfiguration = {
             configuration: {
                 connector: {
                     stepName: 'Connect to Sage Intacct',
-                    subLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.'
+                    locationSubLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.',
+                    subLabel: 'To connect your ' + brandingConfig.brandName + ' and Sage Intacct accounts, follow the detailed instructions provided in the article to generate the credentials and establish a secure connection.'
                 },
                 exportSetting: {
                     stepName: 'Export Settings',
@@ -772,7 +773,8 @@ const content: ContentConfiguration = {
             configuration: {
                 connector: {
                     stepName: 'Connect to Sage Intacct',
-                    subLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or location entity.'
+                    subLabel: 'Provide your credentials to establish a secure connection between your expense management and Sage Intacct account. ',
+                    locationSubLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. You can\'t change the location entity once they\'re configured.'
                 },
                 exportSetting: {
                     stepName: 'Export settings',

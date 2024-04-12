@@ -168,6 +168,7 @@ export type ContentConfiguration = {
                 connector: {
                     stepName: string;
                     subLabel: string;
+                    locationSubLabel: string
                 },
                 exportSetting: {
                     stepName: string;
