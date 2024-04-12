@@ -17,14 +17,14 @@
                 <div *ngIf="errors?.EMPLOYEE_MAPPING?.length || groupedErrorStat.EMPLOYEE_MAPPING" class="tw-pl-24-px tw-pr-24-px tw-mt-24-px">
                     <div class="container">
                         <div class="inside-container">
-                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{brandingContent.employeeMappingErrorText}}</h4>
+                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{brandingConfig.brandId === 'co' ? (brandingContent.employeeMappingErrorText | sentenceCase) : brandingContent.employeeMappingErrorText}}</h4>
                             <h5 *ngIf="groupedErrorStat.EMPLOYEE_MAPPING" class="tw-text-text-muted tw-text-12-px">{{ groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount }}/{{ groupedErrorStat.EMPLOYEE_MAPPING.totalCount }} {{groupedErrorStat.EMPLOYEE_MAPPING.totalCount > 1 ? 'errors' : 'error'}} resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4">
                                     <p>Map employees in {{brandingConfig.brandName}} to their corresponding records in {{appName}}.</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.EMPLOYEE_MAPPING || (groupedErrorStat.EMPLOYEE_MAPPING && groupedErrorStat.EMPLOYEE_MAPPING.resolvedCount !== groupedErrorStat.EMPLOYEE_MAPPING.totalCount)">
-                                    <button type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 primary-outline tw-rounded-4-px p-button">
+                                    <button type="button" (click)="showMappingResolve(ErrorType.EMPLOYEE_MAPPING, errors.EMPLOYEE_MAPPING, ExportErrorSourceType.EMPLOYEE)" class="p-button secondary-sm" [ngClass]="{'outline-sm':brandingConfig.brandId==='co'}">
                                         Resolve
                                     </button>
                                 </div>
@@ -42,13 +42,13 @@
                 <div *ngIf="errors?.CATEGORY_MAPPING?.length || (groupedErrorStat && groupedErrorStat.CATEGORY_MAPPING)" class="tw-pl-24-px tw-pr-24-px tw-pt-16-px">
                     <div class="container">
                         <div class="inside-container">
-                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{brandingContent.categoryMappingErrorText}}</h4>
+                            <h4 class="tw-text-14-px !tw-font-500 tw-text-text-secondary">{{brandingConfig.brandId === 'co' ? (brandingContent.categoryMappingErrorText | sentenceCase) : brandingContent.categoryMappingErrorText}}</h4>
                             <h5 *ngIf="groupedErrorStat.CATEGORY_MAPPING" class="tw-pt-4-px tw-text-text-muted tw-text-12-px">{{ groupedErrorStat.CATEGORY_MAPPING.resolvedCount }}/{{ groupedErrorStat.CATEGORY_MAPPING.totalCount }} {{groupedErrorStat.CATEGORY_MAPPING.totalCount > 1 ? 'errors' : 'error'}} resolved</h5>
                             <div class="flex-wrapper">
                                 <h5 class="!tw-text-text-muted tw-text-14-px tw-pt-10-px !tw-font-400 !tw-leading-4"><p>Map category in {{brandingConfig.brandName}} to their corresponding records in {{appName}}.</p>
                                 </h5>
                                 <div *ngIf="!groupedErrorStat.CATEGORY_MAPPING || (groupedErrorStat.CATEGORY_MAPPING && groupedErrorStat.CATEGORY_MAPPING.resolvedCount !== groupedErrorStat.CATEGORY_MAPPING.totalCount)">
-                                    <button type="button" (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 primary-outline tw-rounded-4-px p-button">
+                                    <button type="button" (click)="showMappingResolve(ErrorType.CATEGORY_MAPPING, errors.CATEGORY_MAPPING, ExportErrorSourceType.CATEGORY)" class="p-button secondary-sm" [ngClass]="{'outline-sm':brandingConfig.brandId==='co'}">
                                         Resolve
                                     </button>
                                 </div>
@@ -80,7 +80,7 @@
                                 <h5 class="!tw-text-text-muted tw-text-12-px tw-pt-10-px !tw-font-400 !tw-leading-4 tw-w-600-px"><p>{{ error.error_detail }}</p>
                                 </h5>
                                 <div>
-                                    <button type="button" (click)="showErrorDialog(error)" class="export-btn tw-float-right tw-flex tw-justify-end tw-items-center tw-text-white tw-text-500 primary-outline tw-rounded-4-px p-button">
+                                    <button type="button" (click)="showErrorDialog(error)" class="p-button secondary-sm" [ngClass]="{'outline-sm':brandingConfig.brandId==='co'}">
                                         {{brandingContentCommon.viewExpenseText}}
                                     </button>
                                 </div>
