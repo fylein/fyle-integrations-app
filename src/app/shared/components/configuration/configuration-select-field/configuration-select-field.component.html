@@ -69,7 +69,7 @@
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="tw-text-link-primary !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">Preview</a>
                         <span *ngIf="brandingConfig.brandId !== 'co'"> how it looks on {{appName}}</span>
-                        <span *ngIf="brandingConfig.brandId === 'co'"> on {{appName}}</span>
+                        <span *ngIf="brandingConfig.brandId === 'co'"> in {{appName}}</span>
                     </div>
                     <div *ngIf="!showExportPreview && isDisabled" class="sub-text tw-text-pretty">
                         <span>Auto-selected based on your export module</span>

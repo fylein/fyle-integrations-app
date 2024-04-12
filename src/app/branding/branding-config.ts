@@ -881,7 +881,7 @@ const content: ContentConfiguration = {
                 frequencySubLabel: 'Set how often your expenses will be exported to Quickbooks Online.',
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
-                accountingPeriodLabel: 'Post entries in the current open accounting period.',
+                accountingPeriodLabel: 'Post entries for the first day of the current open accounting period.',
                 accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
                 autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match.',
                 customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
