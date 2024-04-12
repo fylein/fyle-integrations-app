@@ -747,8 +747,8 @@ const content: ContentConfiguration = {
         },
         intacct: {
             landing: {
-                contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
-                guideHeaderText: 'Guide to setup your integrations'
+                contentText: 'Import GL accounts and projects from Sage Intacct and export expenses from your expense management account.',
+                guideHeaderText: 'How to setup your integration'
             },
             common: {
                 readMoreText: 'Read more',
