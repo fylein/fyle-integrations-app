@@ -567,7 +567,9 @@ const content: ContentConfiguration = {
             employeeMappingErrorText: 'Employee Mapping Errors',
             categoryMappingErrorText: 'Category Mapping Errors',
             qboErrorText: 'Errors',
-            qboErrorDialogHeaderText: 'Error'
+            qboErrorDialogHeaderText: 'Error',
+            exportLogHeader: 'Failed',
+            exportLogSubHeader: 'These expenses have failed to export due to some errors. Resolve the errors on your dashboard to and try to re-export them again'
         },
         exportLog: {
             tableHeaders: {
@@ -826,7 +828,7 @@ const content: ContentConfiguration = {
             exportSetting: {
                 stepName: 'Export settings',
                 headerText: 'Export corporate card expenses',
-                contentText: 'Configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to QuickBooks Online',
+                contentText: 'Configure how and when expenses from expense management are exported to QuickBooks Online.',
                 corporateCard: {
                     expenseState: 'Select ccc expense state',
                     sectionLabel: '',
@@ -843,24 +845,24 @@ const content: ContentConfiguration = {
                     creditCardExportGroupSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                     journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
-                    creditCardExpenseLabel: 'How should expenses be labeled  before exporting from expense management',
-                    creditCardExportTypeSubLabel: 'Choose the type of QuickBooks Online transaction to export your expenses'
+                    creditCardExpenseLabel: 'How should expenses be labeled  before exporting from expense management?',
+                    creditCardExportTypeSubLabel: 'Choose which transactions are exported to QuickBooks Online.'
                 }
             },
             importSetting: {
                 stepName: 'Import settings',
                 headerText: '',
-                contentText: 'Select the field information to import from QuickBooks Online to expense management.',
+                contentText: 'Choose the required import fields from QuickBooks Online to expense management.',
                 importCategoriesLabel: 'Import the chart of accounts as categories',
                 importCategoriesSubLabel: 'Imported accounts will be available as categories in expense management.',
                 importItemsLabel: 'Import products/services from QuickBooks Online',
-                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in expense management',
+                importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in expense management.',
                 taxCodeLabel: 'Import tax from QuickBooks Online',
                 taxCodeSubLabel: 'The imported tax codes from QuickBooks Online will be set as tax group in ',
                 defaultTaxCodeLabel: 'Select default tax code',
                 importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online',
                 chartOfAccountTypes: 'Select accounts from QuickBooks Online to import as categories.',
-                chartOfAccountTypesSubLabel: 'You can select multiple accounts based on your requirements. Expense is set as the default selection. '
+                chartOfAccountTypesSubLabel: 'By default, expense will be selected. To select another option, open the the dropdown.'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -874,16 +876,16 @@ const content: ContentConfiguration = {
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
                 memoStructureLabel: 'Set the line-item description field in QuickBooks Online',
-                automationSubLabel: 'Automate your export frequency and how often your data syncs with Quickbooks Online.',
-                scheduleSubLabel: 'Set a schedule to automatically export expenses to Quickbooks Online.',
+                automationSubLabel: 'Automate exports and data syncs.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to QuickBooks Online.',
                 frequencySubLabel: 'Set how often your expenses will be exported to Quickbooks Online.',
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
-                accountingPeriodLabel: 'Post entries in the current open accounting period',
+                accountingPeriodLabel: 'Post entries for the first day of the current open accounting period.',
                 accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
-                autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match',
-                customizeSectionSubLAbel: 'Customize which data points to export to Quickbooks Online.',
-                memoStructureSubLabel: 'Choose the data points you\'d like to export to the description field in Quickbooks Online and order them based on your requirements. ',
+                autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match.',
+                customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
+                memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them.',
                 previewDescriptionFieldLabel: 'Preview of the description field'
             },
             done: {
@@ -893,8 +895,8 @@ const content: ContentConfiguration = {
             }
         },
         dashboard: {
-            exportHeaderFirstTimeZeroStateText: 'Sit back and relax',
-            exportHeaderZeroStateText: 'You are all caught up',
+            exportHeaderFirstTimeZeroStateText: 'There\'s currently no new expenses to report',
+            exportHeaderZeroStateText: 'You\’re all caught up',
             lastExportSuccessText: 'Successful expenses',
             lastExportFailedText: 'Failed expenses',
             lastExportedAtText: 'Last export at:',
@@ -903,7 +905,9 @@ const content: ContentConfiguration = {
             employeeMappingErrorText: 'Employee mapping errors',
             categoryMappingErrorText: 'Category mapping errors',
             qboErrorText: 'errors',
-            qboErrorDialogHeaderText: 'error'
+            qboErrorDialogHeaderText: 'error',
+            exportLogHeader: 'Failed to export?',
+            exportLogSubHeader: 'Resolve the errors from your dashboard and try exporting these expenses again.'
         },
         exportLog: {
             tableHeaders: {
@@ -915,7 +919,7 @@ const content: ContentConfiguration = {
                 exportSkippedOn: 'Export skipped on'
             },
             searchPlaceholder: 'Search by employee or expense ID',
-            dateRangeLabel: 'Or, select date range'
+            dateRangeLabel: 'Select date range'
         },
         mapping: {
             filterPlaceholder: 'Select status'

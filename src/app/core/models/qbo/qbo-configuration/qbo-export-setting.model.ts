@@ -76,11 +76,11 @@ export class QBOExportSettingModel extends ExportSettingModel {
         value: QBOCorporateCreditCardExpensesObject.BILL
       },
       {
-        label: 'Credit Card Purchase',
+        label: 'Credit card purchase',
         value: QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE
       },
       {
-        label: 'Journal Entry',
+        label: 'Journal entry',
         value: QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY
       }
     ];
@@ -128,7 +128,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
         value: ExpenseGroupingFieldOption.EXPENSE_ID
       },
       {
-        label: 'Expense Report',
+        label: 'Expense report',
         value: ExpenseGroupingFieldOption.CLAIM_NUMBER
       }
     ];
@@ -150,23 +150,23 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Current Date',
+        label: 'Current date',
         value: ExportDateType.CURRENT_DATE
       },
       {
-        label: 'Verification Date',
+        label: 'Verification date',
         value: ExportDateType.VERIFIED_AT
       },
       {
-        label: 'Spend Date',
+        label: 'Spend date',
         value: ExportDateType.SPENT_AT
       },
       {
-        label: 'Approval Date',
+        label: 'Approval date',
         value: ExportDateType.APPROVED_AT
       },
       {
-        label: 'Last Spend Date',
+        label: 'Last Spend date',
         value: ExportDateType.LAST_SPENT_AT
       }
     ];
@@ -179,7 +179,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
         value: ExportDateType.POSTED_AT
       },
       {
-        label: 'Spend Date',
+        label: 'Spend date',
         value: ExportDateType.SPENT_AT
       }
     ];
