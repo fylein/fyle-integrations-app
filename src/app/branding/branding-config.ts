@@ -787,9 +787,9 @@ const content: ContentConfiguration = {
                         creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                         chargeCard: 'Set the default charge card',
                         chargeCardPlaceholder: 'Select a charge card',
-                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
-                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
-                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
+                        chargeCardSublabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective in Sage Intacct will post to this card. You can still map cards after configuring the integration.',
+                        cccExpenseState: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
+                        cccExportGroup: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                         employeeFieldMapping: 'How are your employees represented in Sage Intacct?',
                         creditCard: 'To which general ledger account should the expenses be credited to?',
                         creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
