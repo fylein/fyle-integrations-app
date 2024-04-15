@@ -324,7 +324,7 @@
                     [form]="advancedSettingForm"
                     [formControllerName]="'changeAccountingPeriod'"
                     [inputType]="InputType.TOGGLE"
-                    [tooltipText]="'If the accounting period in Xero is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'">
+                    [tooltipText]="'If there are expenses for which the accounting period is closed in Xero, you can export those to the current month by enabling this option.'">
                 </app-clone-setting-field>
             </div>
 
