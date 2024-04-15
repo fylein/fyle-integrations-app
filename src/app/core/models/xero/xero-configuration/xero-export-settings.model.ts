@@ -105,7 +105,7 @@ export class XeroExportSettingModel {
   static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
      return [
       {
-        label: 'Current Date',
+        label: 'Export Date',
         value: ExportDateType.CURRENT_DATE
       },
       {

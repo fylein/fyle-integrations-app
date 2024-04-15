@@ -150,7 +150,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Current date',
+        label: 'Export Date',
         value: ExportDateType.CURRENT_DATE
       },
       {

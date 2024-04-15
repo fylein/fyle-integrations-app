@@ -165,7 +165,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
         return [
           {
-            label: 'Current Date',
+            label: 'Export Date',
             value: ExportDateType.CURRENT_DATE
           },
           {

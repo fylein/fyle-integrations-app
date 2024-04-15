@@ -57,7 +57,7 @@ export class BusinessCentralExportSettingModel {
           value: ExportDateType.POSTED_AT
         },
         {
-          label: 'Current Date',
+          label: 'Export Date',
           value: ExportDateType.CURRENT_DATE
         },
         {
@@ -74,7 +74,7 @@ export class BusinessCentralExportSettingModel {
     static getReimbursableExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
       return [
         {
-          label: 'Current Date',
+          label: 'Export Date',
           value: ExportDateType.CURRENT_DATE
         },
         {

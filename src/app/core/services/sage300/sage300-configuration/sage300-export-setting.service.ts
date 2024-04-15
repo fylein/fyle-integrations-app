@@ -75,7 +75,7 @@ export class Sage300ExportSettingService {
   getReimbursableExpenseGroupingDateOptions(): Sage300ExportSettingFormOption[] {
     return [
       {
-        label: 'Current Date',
+        label: 'Export Date',
         value: Sage300ExpenseDate.CURRENT_DATE
       },
       {
