@@ -324,6 +324,9 @@ export type ContentConfiguration = {
         },
         mapping: {
             filterPlaceholder: string;
+            employeeMappingToastText: string;
+            categoryMappingToastText: string;
+            mappingToastText: string;
         },
         landing: {
             contentText: string;

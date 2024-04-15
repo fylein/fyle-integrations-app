@@ -590,7 +590,10 @@ const content: ContentConfiguration = {
             dateRangeLabel: 'Or, Select Date range'
         },
         mapping: {
-            filterPlaceholder: 'Select Status'
+            filterPlaceholder: 'Select Status',
+            employeeMappingToastText: 'Employee Mapping saved successfully',
+            categoryMappingToastText: 'Category Mapping saved successfully',
+            mappingToastText: 'Mapping saved successfully'
         },
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
@@ -934,7 +937,10 @@ const content: ContentConfiguration = {
             dateRangeLabel: 'Select date range'
         },
         mapping: {
-            filterPlaceholder: 'Select status'
+            filterPlaceholder: 'Select status',
+            employeeMappingToastText: 'Employee mapping saved successfully',
+            categoryMappingToastText: 'Category mapping saved successfully',
+            mappingToastText: 'Mapping saved successfully'
         },
         landing: {
             contentText: 'Import GL accounts and projects from QuickBooks Online and export expenses from your expense management account.',
