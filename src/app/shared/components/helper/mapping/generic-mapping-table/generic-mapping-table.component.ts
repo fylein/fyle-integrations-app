@@ -58,7 +58,7 @@ export class GenericMappingTableComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly brandingContent = brandingContent.mapping
+  readonly brandingContent = brandingContent.mapping;
 
   optionSearchUpdate = new Subject<{searchTerm: string}>();
 
