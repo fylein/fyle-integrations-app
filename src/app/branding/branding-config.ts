@@ -688,7 +688,7 @@ const content: ContentConfiguration = {
         xero: {
             landing: {
                 contentText: 'Import data from Xero to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Xero. ',
-                guideHeaderText: 'Guide to setup your integrations'
+                guideHeaderText: 'How to setup your integration'
             },
             common: {
                 readMoreText: 'Read more',
