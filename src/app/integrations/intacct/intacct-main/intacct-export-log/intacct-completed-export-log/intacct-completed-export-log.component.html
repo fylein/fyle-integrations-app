@@ -30,8 +30,8 @@
         </div>
 
         <app-zero-state-with-illustration *ngIf="(isDateSelected || searchQuery) && totalCount === 0 && !isLoading"
-            [mainText]="brandingConfig.brandId === 'fyle' ? 'Sorry, no results found!': 'Sorry, no results found'"
-            [subText]="'We could not find what you were looking for. Kindly check the keywords again.'">
+            [mainText]="brandingConfig.brandId === 'fyle' ? 'Sorry, no results found!': 'No results found.'"
+            [subText]="brandingConfig.brandId === 'fyle' ? 'We could not find what you were looking for. Kindly check the keywords again.' : 'Review your keywords and try again. '">
         </app-zero-state-with-illustration>
     </div>
 
