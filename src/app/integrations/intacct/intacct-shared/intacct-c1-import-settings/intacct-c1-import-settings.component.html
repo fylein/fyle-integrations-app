@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
     <app-configuration-step-header [headerText]="'Import settings'"
-            [contentText]="'In this section, you can choose the fields required to be imported from Sage Intacct to ' + brandingConfig.brandName + '. '"
+            [contentText]="'Select the field information to import from Sage Intacct to ' + brandingConfig.brandName + '. '"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>

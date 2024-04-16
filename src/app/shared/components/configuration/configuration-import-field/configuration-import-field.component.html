@@ -59,13 +59,13 @@
                         optionLabel="display_name" optionValue="attribute_type" [disabled]="isDestinationFixedImport" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">
                         <ng-template let-option pTemplate="item">
                             <div>
-                                {{ option.display_name | snakeCaseToSpaceCase | titlecase }}
+                                {{ brandingConfig.brandId === 'co' ? (option.display_name | snakeCaseToSpaceCase | sentenceCase) : option.display_name | snakeCaseToSpaceCase | titlecase }}
                             </div>
                         </ng-template>
                         <ng-template pTemplate="selectedItem" let-item>
                             <div class="tw-flex tw-justify-between tw-items-center">
                                 <span>
-                                    {{ item.display_name | snakeCaseToSpaceCase | titlecase }}
+                                    {{ brandingConfig.brandId === 'co' ? (item.display_name | snakeCaseToSpaceCase | sentenceCase) : item.display_name | snakeCaseToSpaceCase | titlecase }}
                                 </span>
                             </div>
                         </ng-template>
@@ -85,12 +85,12 @@
                                 <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && option.attribute_type === 'custom_field'" class="tw-ml-0 tw-mr-6-px ">
                                     <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" ></app-svg-icon>
                                 </div>
-                                {{ option.display_name }}
+                                {{ brandingConfig.brandId === 'co' ? (option.display_name | sentenceCase) : option.display_name }}
                             </div>
                             </ng-template>
                             <ng-template pTemplate="selectedItem" let-item class="tw-flex tw-justify-between tw-items-center">
                                 <p>
-                                    {{ item.display_name }}
+                                    {{ brandingConfig.brandId === 'co' ? (item.display_name | sentenceCase) : item.display_name }}
                                 </p>
                                 <app-svg-icon *ngIf="(expenseField.value.source_field !== 'CATEGORY') && (appName === AppName.XERO ? expenseField.value.destination_field !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
