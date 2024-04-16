@@ -212,6 +212,7 @@ export type ContentConfiguration = {
                     scheduleSubLabel: string;
                     accountingPeriodSubLabel: string;
                     memoStructureSubLabel: string;
+                    customizeSectionSubLabel: string;
                 },
                 done: {
                     ctaText: string;

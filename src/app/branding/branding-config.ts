@@ -478,7 +478,8 @@ const content: ContentConfiguration = {
                     automationSubLabel: 'You can automate the export and sync of your data in this section.',
                     scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Sage Intacct.',
                     accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.',
-                    memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.'
+                    memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.',
+                    customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Sage Intacct You can choose what data points need to be exported and what shouldn\'t be.'
                 },
                 done: {
                     ctaText: '',
@@ -795,7 +796,7 @@ const content: ContentConfiguration = {
                         creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                         chargeCard: 'Set the default charge card',
                         chargeCardPlaceholder: 'Select a charge card',
-                        chargeCardSublabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective in Sage Intacct will post to this card. You can still map cards after configuring the integration.',
+                        chargeCardSublabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective cards in Sage Intacct will post to this card. You can still map cards after configuring the integration.',
                         cccExpenseState: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
                         cccExportGroup: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                         employeeFieldMapping: 'How are your employees represented in Sage Intacct?',
@@ -813,7 +814,7 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current open accounting period',
                     setDescriptionField: 'Set the line-item description field in Sage Intacct',
                     dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can use the values from your employee records in Sage Intacct.',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.',
                     location: 'location',
                     department: 'department',
                     project: 'project',
@@ -825,7 +826,8 @@ const content: ContentConfiguration = {
                     automationSubLabel: 'Automate your export frequency and how often your data syncs with Sage Intacct.',
                     scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Sage Intacct.',
                     accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
-                    memoStructureSubLabel: 'Choose the data points you\'d like to export to the description field in Sage Intacct and order them based on your requirements. '
+                    memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in Sage Intacct.',
+                    customizeSectionSubLabel: 'Customize the data that you\'d like to export from expense management to Sage Intacct by choosing which data points need to be exported.'
                 },
                 done: {
                     ctaText: '',
@@ -938,9 +940,9 @@ const content: ContentConfiguration = {
         },
         mapping: {
             filterPlaceholder: 'Select status',
-            employeeMappingToastText: 'Employee mapping saved successfully',
-            categoryMappingToastText: 'Category mapping saved successfully',
-            mappingToastText: 'Mapping saved successfully'
+            employeeMappingToastText: 'Employee mapping saved successfully.',
+            categoryMappingToastText: 'Category mapping saved successfully.',
+            mappingToastText: 'Mapping saved successfully.'
         },
         landing: {
             contentText: 'Import GL accounts and projects from QuickBooks Online and export expenses from your expense management account.',
