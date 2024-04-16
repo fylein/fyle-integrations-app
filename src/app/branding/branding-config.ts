@@ -435,7 +435,7 @@ const content: ContentConfiguration = {
                 connector: {
                     stepName: 'Connect to Sage Intacct',
                     locationSubLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.',
-                    subLabel: 'To connect your ' + brandingConfig.brandName + ' and Sage Intacct accounts, follow the detailed instructions provided in the article to generate the credentials and establish a secure connection.'
+                    subLabel: 'To connect your ' + brandingConfig.brandName + ' and Sage Intacct account, follow the detailed instructions provided in the article to generate the credentials and establish a secure connection.'
                 },
                 exportSetting: {
                     stepName: 'Export Settings',
@@ -861,7 +861,7 @@ const content: ContentConfiguration = {
                     journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
                     creditCardExpenseLabel: 'How should expenses be labeled  before exporting from expense management?',
-                    creditCardExportTypeSubLabel: 'Choose which transactions are exported to QuickBooks Online.'
+                    creditCardExportTypeSubLabel: 'Choose how transactions are exported to QuickBooks Online.'
                 }
             },
             importSetting: {
@@ -877,7 +877,7 @@ const content: ContentConfiguration = {
                 defaultTaxCodeLabel: 'Select default tax code',
                 importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online',
                 chartOfAccountTypes: 'Select accounts from QuickBooks Online to import as categories.',
-                chartOfAccountTypesSubLabel: 'By default, expense will be selected. To select another option, open the the dropdown.'
+                chartOfAccountTypesSubLabel: 'By default, expense will be selected. To select another option, open the dropdown.'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
