@@ -168,6 +168,7 @@ export type ContentConfiguration = {
                 connector: {
                     stepName: string;
                     subLabel: string;
+                    locationSubLabel: string
                 },
                 exportSetting: {
                     stepName: string;
@@ -190,6 +191,7 @@ export type ContentConfiguration = {
                 },
                 advancedSettings: {
                     stepName: string;
+                    contentText: string;
                     scheduleAutoExport: string;
                     email: string;
                     autoSyncPayments: string;
@@ -206,6 +208,10 @@ export type ContentConfiguration = {
                     item: string;
                     customPreferencesLabel: string;
                     customPreferencesSubLabel: string;
+                    automationSubLabel: string;
+                    scheduleSubLabel: string;
+                    accountingPeriodSubLabel: string;
+                    memoStructureSubLabel: string;
                 },
                 done: {
                     ctaText: string;
@@ -318,6 +324,9 @@ export type ContentConfiguration = {
         },
         mapping: {
             filterPlaceholder: string;
+            employeeMappingToastText: string;
+            categoryMappingToastText: string;
+            mappingToastText: string;
         },
         landing: {
             contentText: string;

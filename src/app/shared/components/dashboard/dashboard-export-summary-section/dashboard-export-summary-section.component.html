@@ -19,7 +19,7 @@
                             <span class="tw-w-260-px tw-text-right">
                                 <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{brandingContent.lastExportedAtText}} </span>
                                 <span class="tw-text-14-px tw-font-500 tw-text-text-secondary">{{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'h:mm a,') : 'None' }}
-                                {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'dd MMM yyyy') : '' }}</span>
+                                {{ accountingExportSummary ? (accountingExportSummary.last_exported_at | date: 'MMM dd yyyy') : '' }}</span>
                             </span>                
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             <span class="tw-w-260-px tw-text-right" *ngIf="accountingExportSummary?.next_export_at">
                                 <span class="tw-text-14-px tw-text-text-muted tw-font-400">{{brandingContent.nextExportAtText}} </span>
                                 <span class="tw-text-14-px tw-font-500 tw-text-text-secondary">{{ accountingExportSummary?.next_export_at ? (accountingExportSummary?.next_export_at | date: 'h:mm a,') : 'None' }}
-                                {{ accountingExportSummary ? (accountingExportSummary.next_export_at | date: 'dd MMM yyyy') : '' }}</span>
+                                {{ accountingExportSummary ? (accountingExportSummary.next_export_at | date: 'MMM dd yyyy') : '' }}</span>
                             </span> 
                         </div>
                     </div>
