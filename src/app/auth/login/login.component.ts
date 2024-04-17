@@ -51,6 +51,7 @@ export class LoginComponent implements OnInit {
     this.helperService.setBaseApiURL(AppUrl.INTEGRATION);
     this.authService.getClusterDomainByCode(code).subscribe((clusterDomainWithToken: ClusterDomainWithToken) => {
       this.storageService.set('cluster-domain', clusterDomainWithToken.cluster_domain);
+      this.helperService.setBaseApiURL(AppUrl.INTEGRATION);
       this.authService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe(response => {
         const user: MinimalUser = {
           'email': response.user.email,
