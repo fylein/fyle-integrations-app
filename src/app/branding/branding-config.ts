@@ -708,7 +708,7 @@ const content: ContentConfiguration = {
             configuration: {
                 connector: {
                     configurationHeaderText: 'Connect to Xero tenant',
-                    configurationSubHeaderText: 'Connect to the Xero tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Xero tenant cannot be changed once the configuration steps are complete.',
+                    configurationSubHeaderText: 'Connect to Xero tenant to import and export data. The connection cannot be changed once the setup is complete.',
                     stepName: 'Connect to Xero',
                     subLabel: 'Expenses will be posted to the Xero tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or tenant mapping.'
                 },
