@@ -676,7 +676,7 @@ const content: ContentConfiguration = {
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
                     dfvLabel: '',
-                    changeAccountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in NetSuite, you can export those to the current month by enabling this option.',
+                    changeAccountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in NetSuite, you can export those to the current month by enabling this option.'
                 }
             }
         },
