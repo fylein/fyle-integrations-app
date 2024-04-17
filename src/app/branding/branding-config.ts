@@ -602,7 +602,8 @@ const content: ContentConfiguration = {
             customFieldName: 'Field Name',
             customFieldPlaceholderName: 'Placeholder Name',
             customFieldType: 'Field Type',
-            customFieldCreateandSave: 'Create and save'
+            customFieldCreateandSave: 'Create and save',
+            currentDate: 'Export Date'
         }
     },
     co: {
@@ -941,7 +942,8 @@ const content: ContentConfiguration = {
             customFieldName: 'Field name',
             customFieldPlaceholderName: 'Placeholder name',
             customFieldType: 'Field type',
-            customFieldCreateandSave: 'Create and save'
+            customFieldCreateandSave: 'Create and save',
+            currentDate: 'Current Date'
         }
     }
 };
