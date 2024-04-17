@@ -235,6 +235,7 @@ export type ContentConfiguration = {
                     defaultDebitCardAccountLabel: string;
                     defaultDebitCardAccountPlaceholder: string;
                     defaultCCCVendorLabel: string;
+                    defaultCCCVendorSubLabel: string;
                     accountsPayableLabel: string;
                     accountsPayableSubLabel: string;
                     creditCardExpenseSubLabel: string;
