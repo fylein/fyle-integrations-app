@@ -99,6 +99,8 @@ export type ContentConfiguration = {
                     configurationSubHeaderText: string;
                 },
                 exportSetting: {
+cccExpenseStateLabel: string;
+stepSubLable: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
