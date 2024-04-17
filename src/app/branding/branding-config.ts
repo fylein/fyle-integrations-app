@@ -733,7 +733,7 @@ const content: ContentConfiguration = {
                 importSetting: {
                     stepName: 'Import Settings',
                     headerText: '',
-                    contentText: 'Select the field information to import from Xero to expense management.',
+                    contentText: 'Choose the required import fields from Xero to expense management.',
                     importCategoriesLabel: ' Import the chart of accounts as categories.',
                     importCategoriesSubLabel: 'Imported accounts will be available as categories in ' + brandingConfig.brandName + '.',
                     importCustomersLabel: 'Import customers from Xero',
@@ -746,7 +746,7 @@ const content: ContentConfiguration = {
                     notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName,
                     toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in ' + brandingConfig.brandName + '. Change the configured mapping to a new field to be able to import customers in the project field.',
                     chartOfAccountsLabel: 'Select accounts from Xero to import as categories.',
-                    chartOfAccountsSubLabel: 'You can select multiple accounts based on your requirements. Expense is set as the default selection. '
+                    chartOfAccountsSubLabel: 'By default, expense will be selected. To select another option, open the dropdown. '
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
