@@ -5,7 +5,7 @@
     <div>
     <app-configuration-step-header 
     [headerText]="brandingContent.intacct.configuration.exportSetting.stepName"
-    [contentText]="'In this section, you can configure how and when expenses from ' + brandingConfig.brandName + ' should be exported to Sage Intacct.'"
+    [contentText]="'Configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Sage Intacct.'"
     [redirectLink]="redirectLink"
     [showSyncButton]="isOnboarding"
     [appName]="appName"
@@ -230,7 +230,7 @@
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
-                        [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                        [label]="'How should expenses be labeled  before exporting from ' + brandingConfig.brandName + '?'"
                         [subLabel]="brandingContent.intacct.configuration.exportSetting.corporateCard.cccExpenseState"
                         [options]="cccExpenseStateOptions"
                         [iconPath]="'question-square-outline'"

@@ -6,7 +6,7 @@
   <div class="configuration--step-header configuration--step-header-styles">
     <app-configuration-step-header
       [headerText]="'Connect to Sage Intacct'"
-      [contentText]="brandingContent.intacct.configuration.connector.subLabel"
+      [contentText]="brandingContent.intacct.configuration.connector.locationSubLabel"
       [redirectLink]="redirectLink">
     </app-configuration-step-header>
   </div>
@@ -14,7 +14,7 @@
     <div class="tw-flex tw-justify-around tw-items-center tw-h-240-px">
       <div class="tw-w-40-vw tw-h-240-px tw-flex tw-flex-col tw-items-center tw-justify-center">
         <h5 class="tw-text-14-px tw-text-text-tertiary tw-font-500 align-center tw-cursor-default">
-          {{(brandingConfig.brandId==='fyle' ? (brandingConfig.brandName | uppercase) : brandingConfig.brandName)}}
+          {{(brandingConfig.brandId==='fyle' ? (brandingConfig.brandName | uppercase) : brandingConfig.brandName | sentenceCase)}}
         </h5>
         <h3 [pTooltip]="fyleOrgName" [tooltipDisabled]="fyleOrgName.length < 26" tooltipPosition="left" tooltipStyleClass="left" class="tw-text-18-px tw-pt-18-px tw-whitespace-nowrap tw-cursor-default">
           {{ fyleOrgName | trimCharacter: 26 }}
@@ -41,11 +41,11 @@
             </h3>
 
             <div *ngIf="!locationEntity" class="tw-text-14-px tw-pl-24-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              Please select a {{brandingContent.intacct.common.locationEntity}} from Sage Intacct to proceed further.
+              Select a {{brandingContent.intacct.common.locationEntity}} from Sage Intacct to continue.
             </div>
 
             <div *ngIf="isRefreshDimensionInProgress" class="tw-text-14-px tw-pt-16-px tw-w-300-px tw-text-text-muted tw-text-center">
-              Please hold on; we are fetching data from your Sage Intacct account, which may take a few seconds.
+              Fetching data from your Sage Intacct account…
               <app-loader *ngIf="!brandingFeatureConfig.isIconsInsideButtonAllowed" [styleClass]="'spinner-16 tw-top-2-px'"></app-loader>
             </div>
         </form>

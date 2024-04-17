@@ -178,7 +178,7 @@ const kbArticles: KbArticle = {
                 EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_eebe5df4b7`,
                 ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_498f2acc61`,
                 LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration#h_b95656da22`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9081356-generate-credentials-to-connect-with-sage-intacct`,
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
             },
             NETSUITE: {
@@ -435,7 +435,8 @@ const content: ContentConfiguration = {
             configuration: {
                 connector: {
                     stepName: 'Connect to Sage Intacct',
-                    subLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.'
+                    locationSubLabel: 'Expenses will be posted to the Sage Intacct Location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' Organization or Location Entity.',
+                    subLabel: 'To connect your ' + brandingConfig.brandName + ' and Sage Intacct account, follow the detailed instructions provided in the article to generate the credentials and establish a secure connection.'
                 },
                 exportSetting: {
                     stepName: 'Export Settings',
@@ -458,6 +459,7 @@ const content: ContentConfiguration = {
                 },
                 advancedSettings: {
                     stepName: 'Advanced Settings',
+                    contentText: 'In this section, you can customize the integration based on your accounting requirements.',
                     scheduleAutoExport: 'Schedule Automatic Export',
                     email: 'Send Error Notification to',
                     autoSyncPayments: 'Auto-Sync Payment Status for Reimbursable Expenses',
@@ -473,7 +475,12 @@ const content: ContentConfiguration = {
                     class: 'Class',
                     item: 'Item',
                     customPreferencesLabel: 'Other Preferences',
-                    customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'
+                    customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)',
+                    automationSubLabel: 'You can automate the export and sync of your data in this section.',
+                    scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Sage Intacct.',
+                    accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.',
+                    memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.',
+                    customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Sage Intacct You can choose what data points need to be exported and what shouldn\'t be.'
                 },
                 done: {
                     ctaText: '',
@@ -586,7 +593,10 @@ const content: ContentConfiguration = {
             dateRangeLabel: 'Or, Select Date range'
         },
         mapping: {
-            filterPlaceholder: 'Select Status'
+            filterPlaceholder: 'Select Status',
+            employeeMappingToastText: 'Employee Mapping saved successfully',
+            categoryMappingToastText: 'Category Mapping saved successfully',
+            mappingToastText: 'Mapping saved successfully'
         },
         landing: {
             contentText: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
@@ -751,8 +761,8 @@ const content: ContentConfiguration = {
         },
         intacct: {
             landing: {
-                contentText: 'Import data from Sage Intacct to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Sage Intacct. ',
-                guideHeaderText: 'Guide to setup your integrations'
+                contentText: 'Import GL accounts and projects from Sage Intacct and export expenses from your expense management account.',
+                guideHeaderText: 'How to setup your integration'
             },
             common: {
                 readMoreText: 'Read more',
@@ -776,7 +786,8 @@ const content: ContentConfiguration = {
             configuration: {
                 connector: {
                     stepName: 'Connect to Sage Intacct',
-                    subLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or location entity.'
+                    subLabel: 'Provide your credentials to establish a secure connection between your expense management and Sage Intacct account. ',
+                    locationSubLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. You can\'t change the location entity once they\'re configured.'
                 },
                 exportSetting: {
                     stepName: 'Export settings',
@@ -789,9 +800,9 @@ const content: ContentConfiguration = {
                         creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                         chargeCard: 'Set the default charge card',
                         chargeCardPlaceholder: 'Select a charge card',
-                        chargeCardSublabel: 'Expenses of corporate cards in ' + brandingConfig.brandName + ' that are not mapped to their respective cards in Sage Intacct will be posted to the card configured here. You can map your cards in the mapping section after configuring the integration.',
-                        cccExpenseState: 'You can export expenses either when they are awaiting closure after approval (approved) or when the transactions has been settled (closed).',
-                        cccExportGroup: 'Expenses can either be exported as single line items (expense) or as a grouped report with multiple line items (report).',
+                        chargeCardSublabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective cards in Sage Intacct will post to this card. You can still map cards after configuring the integration.',
+                        cccExpenseState: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
+                        cccExportGroup: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                         employeeFieldMapping: 'How are your employees represented in Sage Intacct?',
                         creditCard: 'To which general ledger account should the expenses be credited to?',
                         creditCardSubLabel: 'The integration will credit the account selected here for corporate credit card expenses exported as journal entries.'
@@ -804,17 +815,23 @@ const content: ContentConfiguration = {
                     autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
                     defaultPaymentAccount: 'Select payment account',
                     autoCreateEmployeeVendor: 'Auto-create ',
-                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                    setDescriptionField: 'Set the description field in Sage Intacct',
+                    postEntriesCurrentPeriod: 'Post entries in the current open accounting period',
+                    setDescriptionField: 'Set the line-item description field in Sage Intacct',
                     dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can opt to use the values from your employee records in Sage Intacct.',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.',
                     location: 'location',
                     department: 'department',
                     project: 'project',
                     class: 'class',
                     item: 'item',
                     customPreferencesLabel: 'Custom preferences',
-                    customPreferencesSubLabel: 'In this section, you have the flexibility to tailor the data export process to Sage Intacct according to your specific needs and preferences.'
+                    customPreferencesSubLabel: 'Customize your data export process based on your business\'s needs and preferences. ',
+                    contentText: 'Customize the integration based on your accounting requirements.',
+                    automationSubLabel: 'Automate your export frequency and how often your data syncs with Sage Intacct.',
+                    scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Sage Intacct.',
+                    accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
+                    memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in Sage Intacct.',
+                    customizeSectionSubLabel: 'Customize the data that you\'d like to export from expense management to Sage Intacct by choosing which data points need to be exported.'
                 },
                 done: {
                     ctaText: '',
@@ -851,7 +868,7 @@ const content: ContentConfiguration = {
                     journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
                     creditCardExpenseLabel: 'How should expenses be labeled  before exporting from expense management?',
-                    creditCardExportTypeSubLabel: 'Choose which transactions are exported to QuickBooks Online.'
+                    creditCardExportTypeSubLabel: 'Choose how transactions are exported to QuickBooks Online.'
                 }
             },
             importSetting: {
@@ -867,7 +884,7 @@ const content: ContentConfiguration = {
                 defaultTaxCodeLabel: 'Select default tax code',
                 importVendorsAsMerchantsLabel: 'Import vendors from QuickBooks Online',
                 chartOfAccountTypes: 'Select accounts from QuickBooks Online to import as categories.',
-                chartOfAccountTypesSubLabel: 'By default, expense will be selected. To select another option, open the the dropdown.'
+                chartOfAccountTypesSubLabel: 'By default, expense will be selected. To select another option, open the dropdown.'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -927,7 +944,10 @@ const content: ContentConfiguration = {
             dateRangeLabel: 'Select date range'
         },
         mapping: {
-            filterPlaceholder: 'Select status'
+            filterPlaceholder: 'Select status',
+            employeeMappingToastText: 'Employee mapping saved successfully.',
+            categoryMappingToastText: 'Category mapping saved successfully.',
+            mappingToastText: 'Mapping saved successfully.'
         },
         landing: {
             contentText: 'Import GL accounts and projects from QuickBooks Online and export expenses from your expense management account.',
