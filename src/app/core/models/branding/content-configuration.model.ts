@@ -113,6 +113,8 @@ stepSubLable: string;
                     }
                 },
                 importSetting: {
+                    chartOfAccountsSubLabel: string;
+                    chartOfAccountsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;

@@ -382,8 +382,8 @@ const content: ContentConfiguration = {
                 importSetting: {
                     stepName: 'Import Settings',
                     headerText: '',
-                    contentText: '',
-                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                    contentText: 'In this section, you can choose the fields required to be imported from Xero to Fyle',
+                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName + '.',
                     importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
                     importCustomersLabel: 'Import Customers from Xero',
                     importCustomersSubLabel: 'The Customers in Xero will be imported as Projects in Fyle and will be a selectable field while creating an expense',
@@ -393,7 +393,9 @@ const content: ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants',
                     importSuppliersAsMerchantsSubLabel: 'The Suppliers in Xero will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.',
-                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
+                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the Project field in ' + brandingConfig.brandName + '. Change the configured mapping to a new field to be able to import Customers in the Project field.',
+                    chartOfAccountsLabel: 'Select the accounts from Xero to import as categories in' + brandingConfig.brandName,
+                    chartOfAccountsSubLabel: 'By default expense will be selected. Open the dropdown to select more as per your requirements.'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
@@ -731,9 +733,9 @@ const content: ContentConfiguration = {
                 importSetting: {
                     stepName: 'Import Settings',
                     headerText: '',
-                    contentText: '',
-                    importCategoriesLabel: 'Import the chart of accounts as categories in ',
-                    importCategoriesSubLabel: 'Imported account will be available as categories in ' + brandingConfig.brandName + '.',
+                    contentText: 'Select the field information to import from Xero to expense management.',
+                    importCategoriesLabel: ' Import the chart of accounts as categories.',
+                    importCategoriesSubLabel: 'Imported accounts will be available as categories in ' + brandingConfig.brandName + '.',
                     importCustomersLabel: 'Import customers from Xero',
                     importCustomersSubLabel: 'The customers in Xero will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
                     taxCodeLabel: 'Import tax from Xero',
@@ -742,7 +744,9 @@ const content: ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: 'Import suppliers from Xero as merchants',
                     importSuppliersAsMerchantsSubLabel: 'The suppliers in Xero will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName,
-                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.'
+                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in ' + brandingConfig.brandName + '. Change the configured mapping to a new field to be able to import customers in the project field.',
+                    chartOfAccountsLabel: 'Select accounts from Xero to import as categories.',
+                    chartOfAccountsSubLabel: 'You can select multiple accounts based on your requirements. Expense is set as the default selection. '
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
