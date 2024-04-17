@@ -2,6 +2,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AutoMapEmployeeOptions, BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField, NameInJEField } from "../../enum/enum.model";
 import { BusinessCentralDestinationAttributes } from "../db/business-central-destination-attribute.model";
 import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
+import { brandingContent } from "src/app/branding/branding-config";
 
 export type BusinessCentralExportSetting = {
     reimbursable_expenses_export_type: BusinessCentralExportType,
@@ -57,7 +58,7 @@ export class BusinessCentralExportSettingModel {
           value: ExportDateType.POSTED_AT
         },
         {
-          label: 'Current Date',
+          label: brandingContent.common.currentDate,
           value: ExportDateType.CURRENT_DATE
         },
         {
@@ -74,7 +75,7 @@ export class BusinessCentralExportSettingModel {
     static getReimbursableExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
       return [
         {
-          label: 'Current Date',
+          label: brandingContent.common.currentDate,
           value: ExportDateType.CURRENT_DATE
         },
         {

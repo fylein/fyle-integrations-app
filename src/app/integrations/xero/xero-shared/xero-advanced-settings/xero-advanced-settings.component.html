@@ -57,8 +57,8 @@
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [iconPath]="'calendar'"
-                    [label]="'Post entries in the next open accounting period'"
-                    [subLabel]="'If the accounting period in Xero is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'"
+                    [label]="brandingContent.postEntriesCurrentPeriod"
+                    [subLabel]="'If there are expenses for which the accounting period is closed in Xero, you can export those to the current month by enabling this option.'"
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 

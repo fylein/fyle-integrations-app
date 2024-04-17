@@ -68,6 +68,7 @@ export type ContentConfiguration = {
                     autoCreateEmployeeVendor: string;
                     dfvSubLabel: string;
                     dfvLabel: string;
+                    changeAccountingPeriodSubLabel: string;
                 }
             },
         },
@@ -241,6 +242,7 @@ export type ContentConfiguration = {
                     defaultDebitCardAccountLabel: string;
                     defaultDebitCardAccountPlaceholder: string;
                     defaultCCCVendorLabel: string;
+                    defaultCCCVendorSubLabel: string;
                     accountsPayableLabel: string;
                     accountsPayableSubLabel: string;
                     creditCardExpenseSubLabel: string;
@@ -345,6 +347,7 @@ export type ContentConfiguration = {
             customFieldPlaceholderName: string;
             customFieldType: string;
             customFieldCreateandSave: string;
+            currentDate: string;
         },
     }
 }

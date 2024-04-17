@@ -331,10 +331,11 @@ const content: ContentConfiguration = {
                     autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on Netsuite',
                     billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                     billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
-                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                    postEntriesCurrentPeriod: 'Post entries in the next open accounting period',
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
-                    dfvLabel: ''
+                    dfvLabel: '',
+                    changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'
                 }
             }
         },
@@ -507,7 +508,8 @@ const content: ContentConfiguration = {
                     defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
                     defaultDebitCardAccountLabel: 'Set Default Debit Card Account as',
                     defaultDebitCardAccountPlaceholder: 'Select Default Debit Card Account',
-                    defaultCCCVendorLabel: 'Set Default corporate Card Vendor as',
+                    defaultCCCVendorLabel: 'Set Default Corporate Card Vendor as',
+                    defaultCCCVendorSubLabel: 'This selected vendor will be applied on all Corporate Card Transactions exported to QuickBooks Online.',
                     accountsPayableLabel: 'To which Accounts Payable account should the ',
                     accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.',
@@ -550,8 +552,8 @@ const content: ContentConfiguration = {
                 frequencySubLabel: 'Set a frequency based on how often you want your expenses in Capital One to be exported to QuickBooks Online.',
                 otherPreferencesLabel: 'Other Preferences',
                 otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from Capital One. (when there is no employee record found, or when the accounting period is closed)',
-                accountingPeriodLabel: 'Post entries in the next open accounting period',
-                accountingPeriodSubLabel: 'If the accounting period in QuickBooks Online is closed, the expenses from Capital One will be exported with a date stamp of the first day next open accounting period. ',
+                accountingPeriodLabel: 'Post entries in the current accounting period',
+                accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in QuickBooks Online, you can export those to the current month by enabling this option.',
                 autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online. ',
                 customizeSectionSubLAbel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.',
                 memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement',
@@ -611,7 +613,8 @@ const content: ContentConfiguration = {
             customFieldName: 'Field Name',
             customFieldPlaceholderName: 'Placeholder Name',
             customFieldType: 'Field Type',
-            customFieldCreateandSave: 'Create and save'
+            customFieldCreateandSave: 'Create and save',
+            currentDate: 'Export Date'
         }
     },
     co: {
@@ -682,7 +685,8 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
-                    dfvLabel: ''
+                    dfvLabel: '',
+                    changeAccountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in NetSuite, you can export those to the current month by enabling this option.'
                 }
             }
         },
@@ -856,6 +860,7 @@ const content: ContentConfiguration = {
                     defaultDebitCardAccountLabel: 'Set default debit card account as',
                     defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
+                    defaultCCCVendorSubLabel: 'The default vendor will apply to all corporate card transactions upon export.',
                     accountsPayableLabel: 'To which accounts payable account should the ',
                     accountsPayableSubLabel: ' to the selected accounts payable Account.',
                     creditCardExpenseSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
@@ -899,7 +904,7 @@ const content: ContentConfiguration = {
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
                 accountingPeriodLabel: 'Post entries for the first day of the current open accounting period.',
-                accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
+                accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
                 autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match.',
                 customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them.',
@@ -959,7 +964,8 @@ const content: ContentConfiguration = {
             customFieldName: 'Field name',
             customFieldPlaceholderName: 'Placeholder name',
             customFieldType: 'Field type',
-            customFieldCreateandSave: 'Create and save'
+            customFieldCreateandSave: 'Create and save',
+            currentDate: 'Current date'
         }
     }
 };

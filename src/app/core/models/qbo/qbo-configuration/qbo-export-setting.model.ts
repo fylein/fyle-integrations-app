@@ -4,7 +4,7 @@ import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expens
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
-import { brandingConfig, brandingFeatureConfig } from "src/app/branding/branding-config";
+import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 
 export type QBOExportSettingWorkspaceGeneralSettingPost = {
   reimbursable_expenses_object: QBOReimbursableExpensesObject | null,
@@ -150,7 +150,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
   static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Current date',
+        label: brandingContent.common.currentDate,
         value: ExportDateType.CURRENT_DATE
       },
       {
