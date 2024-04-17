@@ -335,7 +335,7 @@ const content: ContentConfiguration = {
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
                     dfvLabel: '',
-                    changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.',
+                    changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'
                 }
             }
         },
@@ -502,7 +502,7 @@ const content: ContentConfiguration = {
                     defaultDebitCardAccountLabel: 'Set Default Debit Card Account as',
                     defaultDebitCardAccountPlaceholder: 'Select Default Debit Card Account',
                     defaultCCCVendorLabel: 'Set Default Corporate Card Vendor as',
-                    defaultCCCVendorSubLabel: 'The default vendor will apply to all corporate card transactions upon export.',
+                    defaultCCCVendorSubLabel: 'This selected vendor will be applied on all Corporate Card Transactions exported to QuickBooks Online.',
                     accountsPayableLabel: 'To which Accounts Payable account should the ',
                     accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.',
@@ -843,7 +843,7 @@ const content: ContentConfiguration = {
                     defaultDebitCardAccountLabel: 'Set default debit card account as',
                     defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
-                    defaultCCCVendorSubLabel: 'This selected vendor will be applied on all Corporate Card Transactions exported to QuickBooks Online.',
+                    defaultCCCVendorSubLabel: 'The default vendor will apply to all corporate card transactions upon export.',
                     accountsPayableLabel: 'To which accounts payable account should the ',
                     accountsPayableSubLabel: ' to the selected accounts payable Account.',
                     creditCardExpenseSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
@@ -887,7 +887,7 @@ const content: ContentConfiguration = {
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
                 accountingPeriodLabel: 'Post entries for the first day of the current open accounting period.',
-                accountingPeriodSubLabel: 'f the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
+                accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
                 autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match.',
                 customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them.',
@@ -945,7 +945,7 @@ const content: ContentConfiguration = {
             customFieldPlaceholderName: 'Placeholder name',
             customFieldType: 'Field type',
             customFieldCreateandSave: 'Create and save',
-            currentDate: 'Current Date'
+            currentDate: 'Current date'
         }
     }
 };
