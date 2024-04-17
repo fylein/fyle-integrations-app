@@ -334,7 +334,8 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
-                    dfvLabel: ''
+                    dfvLabel: '',
+                    changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.',
                 }
             }
         },
@@ -672,7 +673,8 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
-                    dfvLabel: ''
+                    dfvLabel: '',
+                    changeAccountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in NetSuite, you can export those to the current month by enabling this option.',
                 }
             }
         },
@@ -882,7 +884,7 @@ const content: ContentConfiguration = {
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
                 accountingPeriodLabel: 'Post entries for the first day of the current open accounting period.',
-                accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed, you can export those to the current month by enabling this option.',
+                accountingPeriodSubLabel: 'f the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
                 autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match.',
                 customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them.',

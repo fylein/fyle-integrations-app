@@ -68,6 +68,7 @@ export type ContentConfiguration = {
                     autoCreateEmployeeVendor: string;
                     dfvSubLabel: string;
                     dfvLabel: string;
+                    changeAccountingPeriodSubLabel: string;
                 }
             },
         },
