@@ -331,7 +331,7 @@ const content: ContentConfiguration = {
                     autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on Netsuite',
                     billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                     billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
-                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                    postEntriesCurrentPeriod: 'Post entries in the next open accounting period',
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
                     dfvLabel: '',

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { AdvancedSettingsModel, EmailOption } from 'src/app/core/models/common/advanced-settings.model';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
@@ -159,6 +159,8 @@ export class QboCloneSettingsComponent implements OnInit {
   });
 
   readonly AppName = AppName;
+
+  readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
 
   constructor(
     private cloneSettingService: CloneSettingService,
