@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="brandingContent.stepName"
-                [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Xero.'"
+                [contentText]="brandingContent.stepSubLabel"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 (refreshDimension)="refreshDimensions($event)">
@@ -149,7 +149,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                            [label]="brandingContent.cccExpenseStateLabel"
                             [subLabel]="brandingContent.corporateCard.cccExpenseStateSubLabel"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
