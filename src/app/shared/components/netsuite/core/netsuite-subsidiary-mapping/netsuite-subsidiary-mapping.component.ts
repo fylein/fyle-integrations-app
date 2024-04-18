@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
 import { NetsuiteSubsidiaryMappingModel, SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
@@ -24,7 +24,7 @@ import { NetsuiteWorkspaceService } from 'src/app/core/services/netsuite/netsuit
 
 export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
-  netsuiteSubsidiaryForm: FormGroup;
+  isContinueDisabled: boolean = true;
 
   netsuiteSubsidiaryOptions: NetsuiteDestinationAttribute[];
 
@@ -52,6 +52,8 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   fyleOrgName: string = this.userService.getUserProfile().org_name;
 
+  appName = AppName.NETSUITE;
+
   readonly brandingConfig = brandingConfig;
 
   constructor(
@@ -70,6 +72,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   connectNetsuiteSubsdiary(companyDetails: NetsuiteDestinationAttribute): void {
     this.netsuiteSubsdiarySelected = companyDetails;
+    this.isContinueDisabled = false;
   }
 
   save() {
@@ -131,6 +134,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.connectorService.getSubsidiaryMapping().subscribe(netsuiteSubsidiaryMappings => {
       this.netsuiteSubsidiary = netsuiteSubsidiaryMappings;
       this.netsuiteSubsdiaryName = netsuiteSubsidiaryMappings.subsidiary_name;
+      this.isContinueDisabled = false;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;

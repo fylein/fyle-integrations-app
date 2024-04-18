@@ -12,9 +12,9 @@ export const c1Contents = {
         configuration: {
             connector: {
                 configurationHeaderText: 'Connect to Netsuite subsidary',
-                configurationSubHeaderText: 'Connect to the Netsuite subsidary from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Netsuite subsidary cannot be changed once the configuration steps are complete.',
+                configurationSubHeaderText: 'Expenses will be posted to the Netsuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
                 stepName: 'Connect to Netsuite',
-                subLabel: 'Expenses will be posted to the Netsuite subsidary selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Netsuite subsidary.'
+                subLabel: 'Provide your credentials to establish a secure connection between your expense management and Netsuite account'
             },
             exportSetting: {
                 stepName: 'Export settings',
