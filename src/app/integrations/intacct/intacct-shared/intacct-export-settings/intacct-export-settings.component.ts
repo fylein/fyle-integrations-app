@@ -111,7 +111,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       value: ExportDateType.SPENT_AT
     },
     {
-      label: 'Current Date',
+      label: brandingContent.common.currentDate,
       value: ExportDateType.CURRENT_DATE
     },
     {
@@ -371,7 +371,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       if (cccExportGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER || cccExportGroup === ExpenseGroupingFieldOption.REPORT_ID) {
         options.push(
           {
-            label: 'Current Date',
+            label: brandingContent.common.currentDate,
             value: ExportDateType.CURRENT_DATE
           },
           {
@@ -386,7 +386,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       } else {
         options.push(
           {
-            label: 'Current Date',
+            label: brandingContent.common.currentDate,
             value: ExportDateType.CURRENT_DATE
           },
           {

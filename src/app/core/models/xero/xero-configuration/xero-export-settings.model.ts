@@ -4,6 +4,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/dest
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { AutoMapEmployeeOptions, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, XeroCCCExpenseState, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from "../../enum/enum.model";
 import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from "../../common/export-settings.model";
+import { brandingContent } from "src/app/branding/branding-config";
 
 export type XeroExpenseGroupSettingPost = {
   ccc_expense_state: XeroCCCExpenseState;
@@ -105,7 +106,7 @@ export class XeroExportSettingModel {
   static getReimbursableExpenseGroupingDateOptions(): SelectFormOption[] {
      return [
       {
-        label: 'Current Date',
+        label: brandingContent.common.currentDate,
         value: ExportDateType.CURRENT_DATE
       },
       {

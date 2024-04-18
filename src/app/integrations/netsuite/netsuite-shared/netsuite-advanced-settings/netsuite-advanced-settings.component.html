@@ -80,8 +80,8 @@
                 <app-configuration-toggle-field
                     [form]="advancedSettingForm"
                     [iconPath]="'calendar'"
-                    [label]="'Post entries in the next open accounting period'"
-                    [subLabel]="'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'"
+                    [label]="brandingContent.netsuite.configuration.advancedSettings.postEntriesCurrentPeriod"
+                    [subLabel]="brandingContent.netsuite.configuration.advancedSettings.changeAccountingPeriodSubLabel"
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 

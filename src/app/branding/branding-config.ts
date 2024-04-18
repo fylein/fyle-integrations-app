@@ -331,10 +331,11 @@ const content: ContentConfiguration = {
                     autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on Netsuite',
                     billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                     billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
-                    postEntriesCurrentPeriod: 'Post entries in the current accounting period',
+                    postEntriesCurrentPeriod: 'Post entries in the next open accounting period',
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
-                    dfvLabel: ''
+                    dfvLabel: '',
+                    changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'
                 }
             }
         },
@@ -490,7 +491,8 @@ const content: ContentConfiguration = {
                     automationSubLabel: 'You can automate the export and sync of your data in this section.',
                     scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Sage Intacct.',
                     accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.',
-                    memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.'
+                    memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.',
+                    customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Sage Intacct You can choose what data points need to be exported and what shouldn\'t be.'
                 },
                 done: {
                     ctaText: '',
@@ -518,7 +520,8 @@ const content: ContentConfiguration = {
                     defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
                     defaultDebitCardAccountLabel: 'Set Default Debit Card Account as',
                     defaultDebitCardAccountPlaceholder: 'Select Default Debit Card Account',
-                    defaultCCCVendorLabel: 'Set Default corporate Card Vendor as',
+                    defaultCCCVendorLabel: 'Set Default Corporate Card Vendor as',
+                    defaultCCCVendorSubLabel: 'This selected vendor will be applied on all Corporate Card Transactions exported to QuickBooks Online.',
                     accountsPayableLabel: 'To which Accounts Payable account should the ',
                     accountsPayableSubLabel: ' to the selected Accounts Payable Account.',
                     creditCardExpenseSubLabel: 'You could choose to export CCC expenses when they have been approved and are awaiting payment clearance, OR simply when they have been paid out.',
@@ -622,7 +625,8 @@ const content: ContentConfiguration = {
             customFieldName: 'Field Name',
             customFieldPlaceholderName: 'Placeholder Name',
             customFieldType: 'Field Type',
-            customFieldCreateandSave: 'Create and save'
+            customFieldCreateandSave: 'Create and save',
+            currentDate: 'Export Date'
         }
     },
     co: {
@@ -693,7 +697,8 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                     autoCreateEmployeeVendor: 'Auto-create ',
                     dfvSubLabel: '',
-                    dfvLabel: ''
+                    dfvLabel: '',
+                    changeAccountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in NetSuite, you can export those to the current month by enabling this option.'
                 }
             }
         },
@@ -819,7 +824,7 @@ const content: ContentConfiguration = {
                         creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                         chargeCard: 'Set the default charge card',
                         chargeCardPlaceholder: 'Select a charge card',
-                        chargeCardSublabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective in Sage Intacct will post to this card. You can still map cards after configuring the integration.',
+                        chargeCardSublabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective cards in Sage Intacct will post to this card. You can still map cards after configuring the integration.',
                         cccExpenseState: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
                         cccExportGroup: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                         employeeFieldMapping: 'How are your employees represented in Sage Intacct?',
@@ -837,7 +842,7 @@ const content: ContentConfiguration = {
                     postEntriesCurrentPeriod: 'Post entries in the current open accounting period',
                     setDescriptionField: 'Set the line-item description field in Sage Intacct',
                     dfvLabel: 'Default field values',
-                    dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For location and department, you can use the values from your employee records in Sage Intacct.',
+                    dfvSubLabel: 'If you\'ve made a field mandatory in Sage Intacct but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.',
                     location: 'location',
                     department: 'department',
                     project: 'project',
@@ -849,7 +854,8 @@ const content: ContentConfiguration = {
                     automationSubLabel: 'Automate your export frequency and how often your data syncs with Sage Intacct.',
                     scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Sage Intacct.',
                     accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
-                    memoStructureSubLabel: 'Choose the data points you\'d like to export to the description field in Sage Intacct and order them based on your requirements. '
+                    memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in Sage Intacct.',
+                    customizeSectionSubLabel: 'Customize the data that you\'d like to export from expense management to Sage Intacct by choosing which data points need to be exported.'
                 },
                 done: {
                     ctaText: '',
@@ -878,6 +884,7 @@ const content: ContentConfiguration = {
                     defaultDebitCardAccountLabel: 'Set default debit card account as',
                     defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
+                    defaultCCCVendorSubLabel: 'The default vendor will apply to all corporate card transactions upon export.',
                     accountsPayableLabel: 'To which accounts payable account should the ',
                     accountsPayableSubLabel: ' to the selected accounts payable Account.',
                     creditCardExpenseSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
@@ -921,7 +928,7 @@ const content: ContentConfiguration = {
                 otherPreferencesLabel: 'Other preferences',
                 otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
                 accountingPeriodLabel: 'Post entries for the first day of the current open accounting period.',
-                accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
+                accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
                 autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match.',
                 customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them.',
@@ -962,9 +969,9 @@ const content: ContentConfiguration = {
         },
         mapping: {
             filterPlaceholder: 'Select status',
-            employeeMappingToastText: 'Employee mapping saved successfully',
-            categoryMappingToastText: 'Category mapping saved successfully',
-            mappingToastText: 'Mapping saved successfully'
+            employeeMappingToastText: 'Employee mapping saved successfully.',
+            categoryMappingToastText: 'Category mapping saved successfully.',
+            mappingToastText: 'Mapping saved successfully.'
         },
         landing: {
             contentText: 'Import GL accounts and projects from QuickBooks Online and export expenses from your expense management account.',
@@ -981,7 +988,8 @@ const content: ContentConfiguration = {
             customFieldName: 'Field name',
             customFieldPlaceholderName: 'Placeholder name',
             customFieldType: 'Field type',
-            customFieldCreateandSave: 'Create and save'
+            customFieldCreateandSave: 'Create and save',
+            currentDate: 'Current date'
         }
     }
 };

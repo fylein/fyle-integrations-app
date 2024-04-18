@@ -35,7 +35,7 @@ export type QBDAdvancedSettingsGet = {
 
 function getFrequencyTime(advancedSettingForm: FormGroup) {
     if (advancedSettingForm.get('frequency')?.value){
-        const currentDate = `${advancedSettingForm.controls.timeOfDay.value} ${advancedSettingForm.controls.meridiem.value}`; // Create a new Date object with the current date and time in IST
+        const currentDate = `${advancedSettingForm.controls.timeOfDay.value} ${advancedSettingForm.controls.meridiem.value}`; // Create a new Date object with the Export Date and time in IST
         const date = new Date(`01/01/2000 ${currentDate}`);
 
         const hours = date.getUTCHours();
