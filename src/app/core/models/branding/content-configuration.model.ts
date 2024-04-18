@@ -5,21 +5,6 @@ export type ContentConfiguration = {
                 contentText: string;
                 guideHeaderText: string;
             },
-            common: {
-                readMoreText: string;
-                exportLogTabName: string;
-                viewExpenseText: string;
-                corporateCard: string;
-                errors: string;
-                autoMap: string;
-                customField: string;
-                customFieldName: string;
-                customFieldPlaceholderName: string;
-                customFieldType: string;
-                customFieldCreateandSave: string;
-                tenantMapping: string;
-                descriptionText: string;
-            },
             configuration: {
                 connector: {
                     stepName: string;
@@ -76,21 +61,6 @@ export type ContentConfiguration = {
             landing: {
                 contentText: string;
                 guideHeaderText: string;
-            },
-            common: {
-                readMoreText: string;
-                exportLogTabName: string;
-                viewExpenseText: string;
-                corporateCard: string;
-                errors: string;
-                autoMap: string;
-                customField: string;
-                customFieldName: string;
-                customFieldPlaceholderName: string;
-                customFieldType: string;
-                customFieldCreateandSave: string;
-                tenantMapping: string;
-                descriptionText: string;
             },
             configuration: {
                 connector: {
