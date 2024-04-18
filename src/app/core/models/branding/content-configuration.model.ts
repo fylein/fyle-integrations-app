@@ -99,8 +99,8 @@ export type ContentConfiguration = {
                     configurationSubHeaderText: string;
                 },
                 exportSetting: {
-cccExpenseStateLabel: string;
-stepSubLable: string;
+                    cccExpenseStateLabel: string;
+                    stepSubLable: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
@@ -113,6 +113,8 @@ stepSubLable: string;
                     }
                 },
                 importSetting: {
+                    chartOfAccountsSubLabel: string;
+                    chartOfAccountsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
@@ -129,6 +131,7 @@ stepSubLable: string;
                     toggleToastMessage: string
                 },
                 advancedSettings: {
+                    contentText: string;
                     stepName: string;
                     scheduleAutoExport: string;
                     email: string;
@@ -137,8 +140,15 @@ stepSubLable: string;
                     autoCreateMerchantsAsVendorsLabel: string;
                     billPaymentAccountLabel: string;
                     billPaymentAccountSubLabel: string;
-                    autoCreateVendorsLabel: string
-                    autoCreateEmployeeVendor: string
+                    autoCreateVendorsLabel: string;
+                    autoCreateEmployeeVendor: string;
+                    customPreferencesLabel: string;
+                    customPreferencesSubLabel: string;
+                    automationSubLabel: string;
+                    scheduleSubLabel: string;
+                    accountingPeriodSubLabel: string;
+                    autoCreateVendorsSubLabel: string;
+                    frequencySubLabel: string;
                 }
             },
         },
