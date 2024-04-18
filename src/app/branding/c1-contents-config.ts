@@ -7,7 +7,7 @@ export const c1Contents = {
     netsuite: {
         landing: {
             contentText: 'Import data from Netsuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Netsuite. ',
-            guideHeaderText: 'Guide to setup your integrations'
+            guideHeaderText: 'How to setup your integration'
         },
         configuration: {
             connector: {
