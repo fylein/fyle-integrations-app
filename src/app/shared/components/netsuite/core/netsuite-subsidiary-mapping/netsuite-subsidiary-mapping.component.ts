@@ -9,11 +9,11 @@ import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/nets
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
-import { NetsuiteWorkspaceService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-workspace.service';
 
 @Component({
   selector: 'app-netsuite-subsidiary-mapping',
@@ -64,7 +64,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     private userService: UserService,
     private storageService: StorageService,
     private router: Router,
-    private workspaceService: NetsuiteWorkspaceService,
+    private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService
   ) { }
@@ -100,12 +100,12 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   }
 
   private setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
-    if (this.workspaceService.getNetsuiteOnboardingState() === NetsuiteOnboardingState.CONNECTION) {
+    if (this.workspaceService.getOnboardingState() === NetsuiteOnboardingState.CONNECTION) {
       this.trackingService.integrationsOnboardingCompletion(TrackingApp.NETSUITE, NetsuiteOnboardingState.CONNECTION, 2, netsuiteSubsidiaryMappingPayload);
     }
 
     if (this.isOnboarding) {
-      this.workspaceService.setNetsuiteOnboardingState(NetsuiteOnboardingState.EXPORT_SETTINGS);
+      this.workspaceService.setOnboardingState(NetsuiteOnboardingState.EXPORT_SETTINGS);
       this.router.navigate(['/integrations/netsuite/onboarding/export_settings']);
     }
     this.isLoading = false;
