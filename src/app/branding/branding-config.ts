@@ -375,13 +375,15 @@ const content: ContentConfiguration = {
                         expenseState: '',
                         creditCardExpenseSubLabel: '',
                         cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'
-                    }
+                    },
+                    cccExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
+                    stepSubLabel: 'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Xero.'
                 },
                 importSetting: {
                     stepName: 'Import Settings',
                     headerText: '',
-                    contentText: '',
-                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
+                    contentText: 'In this section, you can choose the fields required to be imported from Xero to Fyle',
+                    importCategoriesLabel: 'Import the Chart of Accounts as Categories in ' + brandingConfig.brandName + '.',
                     importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
                     importCustomersLabel: 'Import Customers from Xero',
                     importCustomersSubLabel: 'The Customers in Xero will be imported as Projects in Fyle and will be a selectable field while creating an expense',
@@ -391,7 +393,9 @@ const content: ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: 'Import Suppliers from Xero as Merchants',
                     importSuppliersAsMerchantsSubLabel: 'The Suppliers in Xero will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from Fyle, import Customers from Xero as Projects in Fyle.',
-                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
+                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the Project field in ' + brandingConfig.brandName + '. Change the configured mapping to a new field to be able to import Customers in the Project field.',
+                    chartOfAccountsLabel: 'Select the accounts from Xero to import as categories in' + brandingConfig.brandName,
+                    chartOfAccountsSubLabel: 'By default expense will be selected. Open the dropdown to select more as per your requirements.'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
@@ -403,7 +407,15 @@ const content: ContentConfiguration = {
                     billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                     billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                    autoCreateEmployeeVendor: 'Auto-create '
+                    autoCreateEmployeeVendor: 'Auto-create ',
+                    contentText: 'In this section, you can customize the integration based on your accounting requirements. ',
+                    frequencySubLabel: 'Set a frequency based on how often you want your expenses in Fyle to be exported to Xero.',
+                    customPreferencesLabel: 'Other Preferences',
+                    customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in Xero from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)',
+                    automationSubLabel: 'You can automate the export and sync of your data in this section.',
+                    scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Xero.',
+                    accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Xero, you can export those to the current month by enabling this option.',
+                    autoCreateVendorsSubLabel: 'While exporting reimbursable expenses from expense management, the integration will automatically create a vendor if a match does not exist in Xero already'
                 }
             }
         },
@@ -545,12 +557,12 @@ const content: ContentConfiguration = {
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
                 memoStructureLabel: 'Set the line item-level Description Field in QuickBooks Online',
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
-                scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from Capital One to QuickBooks Online.',
-                frequencySubLabel: 'Set a frequency based on how often you want your expenses in Capital One to be exported to QuickBooks Online.',
+                scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from Fyle to QuickBooks Online.',
+                frequencySubLabel: 'Set a frequency based on how often you want your expenses in Fyle to be exported to QuickBooks Online.',
                 otherPreferencesLabel: 'Other Preferences',
-                otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from Capital One. (when there is no employee record found, or when the accounting period is closed)',
+                otherPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in QuickBooks Online from Fyle. (when there is no employee record found, or when the accounting period is closed)',
                 accountingPeriodLabel: 'Post entries in the next open accounting period',
-                accountingPeriodSubLabel: 'If the accounting period in QuickBooks Online is closed, the expenses from Capital One will be exported with a date stamp of the first day next open accounting period. ',
+                accountingPeriodSubLabel: 'If the accounting period in QuickBooks Online is closed, the expenses from Fyle will be exported with a date stamp of the first day next open accounting period. ',
                 autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online. ',
                 customizeSectionSubLAbel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.',
                 memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement',
@@ -708,7 +720,7 @@ const content: ContentConfiguration = {
             configuration: {
                 connector: {
                     configurationHeaderText: 'Connect to Xero tenant',
-                    configurationSubHeaderText: 'Connect to the Xero tenant from which you would like to import and export data. The ' + brandingConfig.brandName + ' org and Xero tenant cannot be changed once the configuration steps are complete.',
+                    configurationSubHeaderText: 'Connect to Xero tenant to import and export data. The connection cannot be changed once the setup is complete.',
                     stepName: 'Connect to Xero',
                     subLabel: 'Expenses will be posted to the Xero tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or tenant mapping.'
                 },
@@ -721,15 +733,17 @@ const content: ContentConfiguration = {
                         creditCardExportTypeSubLabel: '',
                         expenseState: '',
                         creditCardExpenseSubLabel: '',
-                        cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (approved) or when the payment has been settled (closed).'
-                    }
+                        cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. '
+                    },
+                    stepSubLabel: 'Configure how and when expenses from expense management can be exported to Xero.',
+                    cccExpenseStateLabel: 'How should expenses be labeled before exporting from expense management?'
                 },
                 importSetting: {
                     stepName: 'Import Settings',
                     headerText: '',
-                    contentText: '',
-                    importCategoriesLabel: 'Import the chart of accounts as categories in ',
-                    importCategoriesSubLabel: 'Imported account will be available as categories in ' + brandingConfig.brandName + '.',
+                    contentText: 'Choose the required import fields from Xero to expense management.',
+                    importCategoriesLabel: 'Import the chart of accounts as categories.',
+                    importCategoriesSubLabel: 'Imported accounts will be available as categories in ' + brandingConfig.brandName + '.',
                     importCustomersLabel: 'Import customers from Xero',
                     importCustomersSubLabel: 'The customers in Xero will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
                     taxCodeLabel: 'Import tax from Xero',
@@ -738,7 +752,9 @@ const content: ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: 'Import suppliers from Xero as merchants',
                     importSuppliersAsMerchantsSubLabel: 'The suppliers in Xero will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from Xero as projects in ' + brandingConfig.brandName,
-                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.'
+                    toggleToastMessage: 'You have already mapped a tracking category from Xero to the project field in ' + brandingConfig.brandName + '. Change the configured mapping to a new field to be able to import customers in the project field.',
+                    chartOfAccountsLabel: 'Select accounts from Xero to import as categories.',
+                    chartOfAccountsSubLabel: 'By default, expense will be selected. To select another option, open the dropdown. '
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
@@ -750,7 +766,15 @@ const content: ContentConfiguration = {
                     billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                     billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
                     postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                    autoCreateEmployeeVendor: 'Auto-create '
+                    autoCreateEmployeeVendor: 'Auto-create ',
+                    frequencySubLabel: 'Set how often your expenses will be exported to Xero.',
+                    contentText: 'Customize the integration based on your accounting requirements.',
+                    automationSubLabel: 'Automate your export frequency and how often your data syncs with Xero.',
+                    scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Xero.',
+                    accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
+                    autoCreateVendorsSubLabel: 'Automatically create a new contact in Xero if an added merchant doesn\'t have a corresponding match.',
+                    customPreferencesLabel: 'Other preferences',
+                    customPreferencesSubLabel: ' Create new records in Xero if no contacts found or the accounting period is closed.'
                 }
             }
         },

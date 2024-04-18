@@ -80,7 +80,7 @@ export class XeroImportSettingModel extends ImportSettingsModel {
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
-      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts : ['EXPENSE']),
+      chartOfAccountTypes: new FormControl(importSettings?.workspace_general_settings.charts_of_accounts ? importSettings.workspace_general_settings.charts_of_accounts.map((account) => account.toUpperCase()) : ['EXPENSE']),
       importCustomers: new FormControl(importSettings?.workspace_general_settings.import_customers ?? false),
       taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
       importSuppliersAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_suppliers_as_merchants ?? false),
