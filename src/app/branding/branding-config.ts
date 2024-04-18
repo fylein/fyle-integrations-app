@@ -742,7 +742,7 @@ const content: ContentConfiguration = {
                     stepName: 'Import Settings',
                     headerText: '',
                     contentText: 'Choose the required import fields from Xero to expense management.',
-                    importCategoriesLabel: ' Import the chart of accounts as categories.',
+                    importCategoriesLabel: 'Import the chart of accounts as categories.',
                     importCategoriesSubLabel: 'Imported accounts will be available as categories in ' + brandingConfig.brandName + '.',
                     importCustomersLabel: 'Import customers from Xero',
                     importCustomersSubLabel: 'The customers in Xero will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
