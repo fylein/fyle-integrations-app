@@ -100,7 +100,7 @@ export type ContentConfiguration = {
                 },
                 exportSetting: {
                     cccExpenseStateLabel: string;
-                    stepSubLable: string;
+                    stepSubLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;

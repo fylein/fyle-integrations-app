@@ -377,7 +377,7 @@ const content: ContentConfiguration = {
                         cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'
                     },
                     cccExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
-                    stepSubLable: 'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Xero.'
+                    stepSubLabel: 'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Xero.'
                 },
                 importSetting: {
                     stepName: 'Import Settings',
@@ -735,7 +735,7 @@ const content: ContentConfiguration = {
                         creditCardExpenseSubLabel: '',
                         cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. '
                     },
-                    stepSubLable: 'Configure how and when expenses from expense management can be exported to Xero.',
+                    stepSubLabel: 'Configure how and when expenses from expense management can be exported to Xero.',
                     cccExpenseStateLabel: 'How should expenses be labeled before exporting from expense management?'
                 },
                 importSetting: {
