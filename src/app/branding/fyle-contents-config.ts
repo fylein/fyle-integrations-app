@@ -21,11 +21,22 @@ export const fyleContents = {
                 headerText: ' Export Corporate Card Expenses',
                 contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Netsuite.',
                 corporateCard: {
+                    creditCardExpenseLabel: 'How should the expenses be exported?',
                     cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Netsuite.',
-                    creditCardExportTypeSubLabel: '',
+                    creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
                     expenseState: '',
-                    creditCardExpenseSubLabel: '',
-                    cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'
+                    creditCardExpenseStateSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
+                    creditCardExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
+                    creditCardExpenseSubLabel: 'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses.',
+                    cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).',
+                    defaultCCCAccountLabel: 'Set Default Credit Card Account as',
+                    defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
+                    defaultDebitCardAccountLabel: 'Set Default Debit Card Account as',
+                    defaultDebitCardAccountPlaceholder: 'Select Default Debit Card Account',
+                    defaultCCCVendorLabel: 'Set Default Corporate Card Vendor as',
+                    accountsPayableLabel: 'To which Accounts Payable account should the ',
+                    journalOptionLabel: 'Name in Journal Entry',
+                    journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
                 }
             },
             importSetting: {
