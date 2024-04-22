@@ -157,7 +157,7 @@ export class XeroExportSettingModel {
   static getCCCExpenseStateOptions(): SelectFormOption[] {
     return [
       {
-        label: 'Payment Processing',
+        label: 'Approved',
         value: XeroCCCExpenseState.APPROVED
       },
       {
