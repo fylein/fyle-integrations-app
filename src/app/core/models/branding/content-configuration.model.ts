@@ -36,6 +36,7 @@ export type ContentConfiguration = {
                     }
                 },
                 importSetting: {
+                    importVendorsAsMerchantsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
@@ -49,7 +50,9 @@ export type ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: string;
                     importSuppliersAsMerchantsSubLabel: string;
                     notes: string,
-                    toggleToastMessage: string
+                    toggleToastMessage: string;
+                    importNetsuiteEmployeesLabel: string;
+                    importNetsuiteEmployeesSubLabel: string;
                 },
                 advancedSettings: {
                     stepName: string;

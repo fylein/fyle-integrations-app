@@ -6,28 +6,28 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const c1Contents = {
     netsuite: {
         landing: {
-            contentText: 'Import data from Netsuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Netsuite. ',
+            contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
             connector: {
-                configurationHeaderText: 'Connect to Netsuite subsidary',
-                configurationSubHeaderText: 'Expenses will be posted to the Netsuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
-                stepName: 'Connect to Netsuite',
-                subLabel: 'Provide your credentials to establish a secure connection between your expense management and Netsuite account'
+                configurationHeaderText: 'Connect to NetSuite subsidary',
+                configurationSubHeaderText: 'Expenses will be posted to the NetSuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
+                stepName: 'Connect to NetSuite',
+                subLabel: 'Provide your credentials to establish a secure connection between your expense management and NetSuite account'
             },
             exportSetting: {
                 stepName: 'Export settings',
                 headerText: ' Export Corporate Card Expenses',
-                contentText: 'Configure how and when expenses from expense management can be exported to Netsuite.',
+                contentText: 'Configure how and when expenses from expense management can be exported to NetSuite.',
                 corporateCard: {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
-                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Netsuite.',
+                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
                     creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                     expenseState: '',
                     creditCardExpenseSubLabel: 'Choose the type of NetSuite transaction to export your expenses.',
                     cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).',
-                    creditCardExpenseStateLabel: 'How should expenses be labeled  before exporting from expense management',
+                    creditCardExpenseStateLabel: 'How should expenses be labeled  before exporting from expense management?',
                     creditCardExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
                     defaultCCCAccountLabel: 'Set Default Credit Card Account as',
                     defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
@@ -42,18 +42,21 @@ export const c1Contents = {
             importSetting: {
                 stepName: 'Import Settings',
                 headerText: '',
-                contentText: '',
-                importCategoriesLabel: 'Import the Chart of Accounts as Categories in ',
-                importCategoriesSubLabel: 'Imported account will be available as Categories in ' + brandingConfig.brandName + '.',
-                importCustomersLabel: 'Import Customers from Netsuite',
-                importCustomersSubLabel: 'The Customers in Netsuite will be imported as Projects in Fyle and will be a selectable field while creating an expense',
-                taxCodeLabel: 'Import Tax from Netsuite',
-                taxCodeSubLabel: 'The imported Tax codes from Netsuite will be set as Tax group in ',
+                contentText: 'Choose the required import fields from NetSuite to expense management.',
+                importCategoriesLabel: 'Import the chart of accounts as categories',
+                importCategoriesSubLabel: 'Imported accounts will be available as categories in expense management.',
+                importCustomersLabel: 'Import Customers from NetSuite',
+                importCustomersSubLabel: 'The Customers in NetSuite will be imported as Projects in Fyle and will be a selectable field while creating an expense',
+                taxCodeLabel: 'Import Tax from NetSuite',
+                taxCodeSubLabel: 'The imported Tax codes from NetSuite will be set as Tax group in ',
                 defaultTaxCodeLabel: 'Select Default Tax Code',
-                importSuppliersAsMerchantsLabel: 'Import Suppliers from Netsuite as Merchants',
-                importSuppliersAsMerchantsSubLabel: 'The Suppliers in Netsuite will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
-                notes: 'NOTE: To export billable expenses from Fyle, import Customers from Netsuite as Projects in Fyle.',
-                toggleToastMessage: 'You have already mapped a tracking category from Netsuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
+                importSuppliersAsMerchantsLabel: 'Import Suppliers from NetSuite as Merchants',
+                importSuppliersAsMerchantsSubLabel: 'The Suppliers in NetSuite will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
+                notes: 'NOTE: To export billable expenses from Fyle, import Customers from NetSuite as Projects in Fyle.',
+                toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.',
+                importVendorsAsMerchantsLabel: 'Import Vendors from NetSuite',
+                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in' + brandingConfig.brandName,
+                importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in expense management.'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -61,7 +64,7 @@ export const c1Contents = {
                 email: 'Send error notification to',
                 paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
                 autoCreateVendorsLabel: 'Auto create Contacts',
-                autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on Netsuite',
+                autoCreateMerchantsAsVendorsLabel: 'Auto Create ' + brandingConfig.brandName + ' Merchants as Contacts on NetSuite',
                 billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
                 postEntriesCurrentPeriod: 'Post entries in the current accounting period',
