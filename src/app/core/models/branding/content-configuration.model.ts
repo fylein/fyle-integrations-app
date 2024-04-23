@@ -53,7 +53,8 @@ export type ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: string;
                     importSuppliersAsMerchantsSubLabel: string;
                     notes: string,
-                    toggleToastMessage: string
+                    toggleToastMessage: string,
+                    importVendorsAsMerchantsLabel: string
                 },
                 advancedSettings: {
                     stepName: string;

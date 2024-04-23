@@ -371,6 +371,11 @@ export enum XeroFyleField {
   BANK_ACCOUNT = 'BANK_ACCOUNT'
 }
 
+export enum NetsuiteFyleField {
+  PROJECT = 'PROJECT',
+  TAX_CODE = 'TAX_CODE'
+}
+
 export enum QBDAccountingExportsState {
   COMPLETE = 'COMPLETE',
   ENQUEUED = 'ENQUEUED',

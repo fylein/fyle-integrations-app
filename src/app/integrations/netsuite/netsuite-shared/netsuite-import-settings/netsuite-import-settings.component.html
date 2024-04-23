@@ -52,6 +52,18 @@
                       [formControllerName]="'taxCode'"
                       [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
+
+                    <app-configuration-select-field *ngIf="importSettingForm.value.taxCode"
+                        [form]="importSettingForm"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'tax code'"
+                        [label]="brandingContent.defaultTaxCodeLabel"
+                        [subLabel]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'"
+                        [destinationAttributes]="taxCodes"
+                        [optionLabel]="'value'"
+                        [placeholder]="'Select tax code'"
+                        [formControllerName]="'defaultTaxCode'">
+                    </app-configuration-select-field>
                   </div>
 
                   <div>

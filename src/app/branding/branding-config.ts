@@ -320,7 +320,8 @@ const content: ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: 'Import Suppliers from Netsuite as Merchants',
                     importSuppliersAsMerchantsSubLabel: 'The Suppliers in Netsuite will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from Fyle, import Customers from Netsuite as Projects in Fyle.',
-                    toggleToastMessage: 'You have already mapped a tracking category from Netsuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
+                    toggleToastMessage: 'You have already mapped a tracking category from Netsuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.',
+                    importVendorsAsMerchantsLabel: 'Import Vendors from Netsuite'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
@@ -671,7 +672,8 @@ const content: ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: 'Import Suppliers from Netsuite as Merchants',
                     importSuppliersAsMerchantsSubLabel: 'The Suppliers in Netsuite will be imported as Merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.',
                     notes: 'NOTE: To export billable expenses from Fyle, import Customers from Netsuite as Projects in Fyle.',
-                    toggleToastMessage: 'You have already mapped a tracking category from Netsuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.'
+                    toggleToastMessage: 'You have already mapped a tracking category from Netsuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.',
+                    importVendorsAsMerchantsLabel: 'Import vendors from Netsuite'
                 },
                 advancedSettings: {
                     stepName: 'Advanced settings',
