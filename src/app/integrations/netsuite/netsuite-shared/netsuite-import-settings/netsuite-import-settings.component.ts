@@ -74,7 +74,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.configuration.importSetting;
+  readonly brandingContent = brandingContent.netsuite.configuration.importSetting;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -186,7 +186,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.netsuiteConnectorService.getSubsidiaryMapping(),
       this.importSettingService.getNetsuiteFields(),
       this.netsuiteExportSettingService.getExportSettings(),
-      this.mappingService.getDestinationAttributes(NetsuiteFyleField.TAX_CODE, 'v1', 'netsuite')
+      this.mappingService.getDestinationAttributes(NetsuiteFyleField.TAX_CODE, 'v2')
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, exportSetting, destinationAttribute]) => {
       this.importSettings = importSettingsResponse;
 
