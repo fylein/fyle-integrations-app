@@ -15,6 +15,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-intacct-export-settings',
@@ -105,7 +106,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   ];
 
-  reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = [
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [
     {
       label: 'Spend Date',
       value: ExportDateType.SPENT_AT
@@ -128,7 +129,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   ];
 
-  cccExpenseGroupingDateOptions: ExportSettingFormOption[];
+  cccExpenseGroupingDateOptions: SelectFormOption[];
 
   creditCardExportTypes: ExportSettingFormOption[] = ExportSettingModel.constructCCCOptions(brandingConfig.brandId);
 
@@ -532,6 +533,24 @@ export class IntacctExportSettingsComponent implements OnInit {
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.CHARGE_CARD, this.exportSettings.general_mappings?.default_credit_card);
   }
 
+  private setupCustomWatchers(): void {
+    if (brandingConfig.brandId==='fyle') {
+      if (this.exportSettingsForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
+      } else if (this.exportSettingsForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
+      }
+
+      if (this.exportSettingsForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
+      } else if (this.exportSettingsForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
+      }
+
+    }
+
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     this.exportSettingService.getExportSettings().subscribe((exportSettings) => {
@@ -541,6 +560,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
       this.setUpExpenseStates();
       this.setupCCCExpenseGroupingDateOptions();
+      this.setupCustomWatchers();
       this.initializeExportSettingsFormWithData();
       this.isLoading = false;
     });
