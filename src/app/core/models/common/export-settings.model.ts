@@ -1,5 +1,6 @@
 import { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
-import { ExpenseGroupingFieldOption, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from "../enum/enum.model";
+import { ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctReimbursableExpensesObject } from "../enum/enum.model";
+import { SelectFormOption } from "./select-form-option.model";
 
 export type ExportSettingValidatorRule = {
     reimbursableExpense: string[];
@@ -65,5 +66,11 @@ export class ExportSettingModel {
                 }
               ];
 
+    }
+
+    static filterDateOptions(exportDateType: ExportDateType, dateOptions: SelectFormOption[]){
+      const dateOptionToRemove = exportDateType;
+      const filteredOptions = dateOptions.filter(option => option.value !== dateOptionToRemove);
+      return dateOptions;
     }
 }

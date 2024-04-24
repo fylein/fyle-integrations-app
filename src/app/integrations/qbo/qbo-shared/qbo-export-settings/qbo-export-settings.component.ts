@@ -3,6 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -252,14 +253,9 @@ export class QboExportSettingsComponent implements OnInit {
 
     if (brandingConfig.brandId==='fyle') {
       if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
-        const dateOptionToRemove = ExportDateType.LAST_SPENT_AT;
-        const filteredOptions = this.reimbursableExpenseGroupingDateOptions.filter(option => option.value !== dateOptionToRemove);
-        this.reimbursableExpenseGroupingDateOptions = filteredOptions;
-      }
-      else if(this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
-        const dateOptionToRemove = ExportDateType.SPENT_AT;
-        const filteredOptions = this.reimbursableExpenseGroupingDateOptions.filter(option => option.value !== dateOptionToRemove);
-        this.reimbursableExpenseGroupingDateOptions = filteredOptions;
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT,this.reimbursableExpenseGroupingDateOptions);
+      } else if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT,this.reimbursableExpenseGroupingDateOptions);
       }
     }
 
