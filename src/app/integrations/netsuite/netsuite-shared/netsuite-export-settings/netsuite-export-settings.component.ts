@@ -233,6 +233,12 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       } else if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT,this.reimbursableExpenseGroupingDateOptions);
       }
+
+      if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT,this.cccExpenseGroupingDateOptions);
+      } else if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT,this.cccExpenseGroupingDateOptions);
+      }
     }
   }
 
