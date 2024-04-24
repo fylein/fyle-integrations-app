@@ -4,9 +4,10 @@ import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -225,6 +226,14 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
       this.updateCCCExpenseGroupingDateOptions(selectedValue);
     });
+
+    if (brandingConfig.brandId==='fyle') {
+      if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT,this.reimbursableExpenseGroupingDateOptions);
+      } else if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT,this.reimbursableExpenseGroupingDateOptions);
+      }
+    }
   }
 
   private getSettingsAndSetupForm(): void {
