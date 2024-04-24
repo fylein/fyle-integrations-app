@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
-import { ExportModuleRule, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
-import { AppName,  AutoMapEmployeeOptions, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, ExportDateType, FyleField, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
+import { AppName,  AutoMapEmployeeOptions, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, ExpenseGroupingFieldOption, ExportDateType, FyleField, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -15,6 +15,7 @@ import { destinationAttributes, exportSettingsResponse } from '../business-centr
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-business-central-export-settings',
@@ -57,11 +58,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  expenseGroupByOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getExpenseGroupByOptions();
+  expenseGroupByOptions: SelectFormOption[] = BusinessCentralExportSettingModel.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = BusinessCentralExportSettingModel.getReimbursableExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
 
   reimbursableExpensesExportTypeOptions: BusinessCentralExportSettingFormOption[] = BusinessCentralExportSettingModel.getReimbursableExpensesExportTypeOptions();
 
@@ -143,6 +144,24 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     this.businessCentralHelperService.importAttributes(isRefresh);
   }
 
+  private setupCustomWatchers(): void {
+    if (brandingConfig.brandId==='fyle') {
+      if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
+      } else if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
+      }
+
+      if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
+      } else if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
+      }
+
+    }
+
+  }
+
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
@@ -174,6 +193,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
+      this.setupCustomWatchers();
       this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
       this.bankOptions = destinationAttributes.ACCOUNT;
       this.vendorOptions = destinationAttributes.VENDOR;
