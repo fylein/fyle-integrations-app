@@ -5,7 +5,7 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -249,6 +249,20 @@ export class QboExportSettingsComponent implements OnInit {
 
       this.updateCCCExpenseGroupingDateOptions(selectedValue);
     });
+
+    if (brandingConfig.brandId==='fyle') {
+      if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
+        const dateOptionToRemove = ExportDateType.LAST_SPENT_AT;
+        const filteredOptions = this.reimbursableExpenseGroupingDateOptions.filter(option => option.value !== dateOptionToRemove);
+        this.reimbursableExpenseGroupingDateOptions = filteredOptions;
+      }
+      else if(this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        const dateOptionToRemove = ExportDateType.SPENT_AT;
+        const filteredOptions = this.reimbursableExpenseGroupingDateOptions.filter(option => option.value !== dateOptionToRemove);
+        this.reimbursableExpenseGroupingDateOptions = filteredOptions;
+      }
+    }
+
   }
 
   private getSettingsAndSetupForm(): void {
