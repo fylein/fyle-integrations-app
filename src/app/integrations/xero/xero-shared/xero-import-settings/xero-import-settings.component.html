@@ -4,7 +4,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header [headerText]="brandingContent.stepName"
-            [contentText]="'In this section, you can choose the fields required to be imported from Xero to ' + brandingConfig.brandName + '. '"
+            [contentText]="brandingContent.contentText"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -15,7 +15,7 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingsForm"
-                        [label]="brandingContent.importCategoriesLabel + brandingConfig.brandName"
+                        [label]="brandingContent.importCategoriesLabel"
                         [subLabel]="brandingContent.importCategoriesSubLabel"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
@@ -27,9 +27,9 @@
                             [form]="importSettingsForm"
                             [options]="chartOfAccountTypesList"
                             [formControllerName]="'chartOfAccountTypes'"
-                            [label]="'Select the accounts from Xero to import as categories in' + brandingConfig.brandName"
+                            [label]="brandingContent.chartOfAccountsLabel"
                             [placeholder]="'Select Chart of Accouts'"
-                            [subLabel]="'By default expense will be selected. Open the dropdown to select more as per your requirements.'">
+                            [subLabel]="brandingContent.chartOfAccountsSubLabel">
                         </app-configuration-multi-select>
                     </div>
                 </div>

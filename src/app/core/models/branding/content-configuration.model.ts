@@ -5,21 +5,6 @@ export type ContentConfiguration = {
                 contentText: string;
                 guideHeaderText: string;
             },
-            common: {
-                readMoreText: string;
-                exportLogTabName: string;
-                viewExpenseText: string;
-                corporateCard: string;
-                errors: string;
-                autoMap: string;
-                customField: string;
-                customFieldName: string;
-                customFieldPlaceholderName: string;
-                customFieldType: string;
-                customFieldCreateandSave: string;
-                tenantMapping: string;
-                descriptionText: string;
-            },
             configuration: {
                 connector: {
                     stepName: string;
@@ -32,14 +17,26 @@ export type ContentConfiguration = {
                     headerText: string;
                     contentText: string;
                     corporateCard: {
+                        creditCardExpenseLabel: string;
                         cccExpenseBankAccountSubLabel: string;
                         creditCardExportTypeSubLabel: string;
                         expenseState: string;
                         creditCardExpenseSubLabel: string;
                         cccExpenseStateSubLabel: string;
+                        creditCardExpenseStateSubLabel: string;
+                        creditCardExpenseStateLabel: string;
+                        defaultCCCVendorLabel: string;
+                        defaultCCCAccountLabel: string;
+                        defaultCCCAccountPlaceholder: string;
+                        journalOptionLabel: string;
+                        journalOptionSubLabel: string;
+                        defaultDebitCardAccountLabel: string;
+                        defaultDebitCardAccountPlaceholder: string;
+                        accountsPayableLabel: string
                     }
                 },
                 importSetting: {
+                    importVendorsAsMerchantsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
@@ -53,11 +50,21 @@ export type ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: string;
                     importSuppliersAsMerchantsSubLabel: string;
                     notes: string,
+                    importNetsuiteEmployeesLabel: string;
+                    importNetsuiteEmployeesSubLabel: string;
                     toggleToastMessage: string,
-                    importVendorsAsMerchantsLabel: string
                 },
                 advancedSettings: {
+                    memoStructureSubLabel: string;
+                    preferenceLabel: string;
+                    preferenceSubLabel: string;
+                    frequencySubLabel: string;
+                    automationSubLabel: string;
+                    customizationSubLabel: string;
+                    defaultPaymentAccount: string;
+                    memoStructureLabel: string;
                     stepName: string;
+                    contentText: string;
                     scheduleAutoExport: string;
                     email: string;
                     paymentSyncLabel: string;
@@ -70,6 +77,8 @@ export type ContentConfiguration = {
                     dfvSubLabel: string;
                     dfvLabel: string;
                     changeAccountingPeriodSubLabel: string;
+                    scheduleSubLabel: string;
+                    previewDescriptionFieldLabel: string;
                 }
             },
         },
@@ -77,21 +86,6 @@ export type ContentConfiguration = {
             landing: {
                 contentText: string;
                 guideHeaderText: string;
-            },
-            common: {
-                readMoreText: string;
-                exportLogTabName: string;
-                viewExpenseText: string;
-                corporateCard: string;
-                errors: string;
-                autoMap: string;
-                customField: string;
-                customFieldName: string;
-                customFieldPlaceholderName: string;
-                customFieldType: string;
-                customFieldCreateandSave: string;
-                tenantMapping: string;
-                descriptionText: string;
             },
             configuration: {
                 connector: {
@@ -101,6 +95,8 @@ export type ContentConfiguration = {
                     configurationSubHeaderText: string;
                 },
                 exportSetting: {
+                    cccExpenseStateLabel: string;
+                    stepSubLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
@@ -113,6 +109,8 @@ export type ContentConfiguration = {
                     }
                 },
                 importSetting: {
+                    chartOfAccountsSubLabel: string;
+                    chartOfAccountsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
@@ -129,6 +127,7 @@ export type ContentConfiguration = {
                     toggleToastMessage: string
                 },
                 advancedSettings: {
+                    contentText: string;
                     stepName: string;
                     scheduleAutoExport: string;
                     email: string;
@@ -137,8 +136,15 @@ export type ContentConfiguration = {
                     autoCreateMerchantsAsVendorsLabel: string;
                     billPaymentAccountLabel: string;
                     billPaymentAccountSubLabel: string;
-                    autoCreateVendorsLabel: string
-                    autoCreateEmployeeVendor: string
+                    autoCreateVendorsLabel: string;
+                    autoCreateEmployeeVendor: string;
+                    customPreferencesLabel: string;
+                    customPreferencesSubLabel: string;
+                    automationSubLabel: string;
+                    scheduleSubLabel: string;
+                    accountingPeriodSubLabel: string;
+                    autoCreateVendorsSubLabel: string;
+                    frequencySubLabel: string;
                 }
             },
         },
@@ -192,6 +198,7 @@ export type ContentConfiguration = {
                     }
                 },
                 advancedSettings: {
+                    frequencySubLabel: string;
                     stepName: string;
                     contentText: string;
                     scheduleAutoExport: string;
