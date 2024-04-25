@@ -55,7 +55,16 @@ export type ContentConfiguration = {
                     importNetsuiteEmployeesSubLabel: string;
                 },
                 advancedSettings: {
+                    memoStructureSubLabel: string;
+                    preferenceLabel: string;
+                    preferenceSubLabel: string;
+                    frequencySubLabel: string;
+                    automationSubLabel: string;
+                    customizationSubLabel: string;
+                    defaultPaymentAccount: string;
+                    memoStructureLabel: string;
                     stepName: string;
+                    contentText: string;
                     scheduleAutoExport: string;
                     email: string;
                     paymentSyncLabel: string;
@@ -68,6 +77,8 @@ export type ContentConfiguration = {
                     dfvSubLabel: string;
                     dfvLabel: string;
                     changeAccountingPeriodSubLabel: string;
+                    scheduleSubLabel: string;
+                    previewDescriptionFieldLabel: string;
                 }
             },
         },

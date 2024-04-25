@@ -60,6 +60,7 @@ export const c1Contents = {
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
+                contentText: 'Customize the integration based on your accounting requirements.',
                 scheduleAutoExport: 'Schedule automatic export',
                 email: 'Send error notification to',
                 paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
@@ -69,9 +70,19 @@ export const c1Contents = {
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
                 postEntriesCurrentPeriod: 'Post entries in the current accounting period',
                 autoCreateEmployeeVendor: 'Auto-create ',
-                dfvSubLabel: '',
-                dfvLabel: '',
-                changeAccountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in NetSuite, you can export those to the current month by enabling this option.'
+                dfvSubLabel: 'If you\'ve made a field mandatory in NetSuite but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.',
+                dfvLabel: 'Default field values',
+                changeAccountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
+                defaultPaymentAccount: 'Select payment account',
+                memoStructureLabel: 'Set the line-item description field in NetSuite',
+                memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in NetSuite. ',
+                customizationSubLabel: 'Customize the data that you\'d like to export from expense management to NetSuite by choosing which data points need to be exported.',
+                automationSubLabel: 'Automate exports and data syncs.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to NetSuite.',
+                frequencySubLabel: 'Set how often your expenses will be exported to NetSuite.',
+                preferenceLabel: 'Other preferences',
+                preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
+                previewDescriptionFieldLabel: 'Preview of the description field'
             }
         }
     },
@@ -132,8 +143,8 @@ export const c1Contents = {
                 autoCreateEmployeeVendor: 'Auto-create ',
                 frequencySubLabel: 'Set how often your expenses will be exported to Xero.',
                 contentText: 'Customize the integration based on your accounting requirements.',
-                automationSubLabel: 'Automate your export frequency and how often your data syncs with Xero.',
-                scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Xero.',
+                automationSubLabel: 'Automate exports and data syncs.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to Xero.',
                 accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
                 autoCreateVendorsSubLabel: 'Automatically create a new contact in Xero if an added merchant doesn\'t have a corresponding match.',
                 customPreferencesLabel: 'Other preferences',
@@ -209,8 +220,8 @@ export const c1Contents = {
                 customPreferencesLabel: 'Custom preferences',
                 customPreferencesSubLabel: 'Customize your data export process based on your business\'s needs and preferences. ',
                 contentText: 'Customize the integration based on your accounting requirements.',
-                automationSubLabel: 'Automate your export frequency and how often your data syncs with Sage Intacct.',
-                scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Sage Intacct.',
+                automationSubLabel: 'Automate exports and data syncs.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to Sage Intacct.',
                 accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in Sage Intacct.',
                 customizeSectionSubLabel: 'Customize the data that you\'d like to export from expense management to Sage Intacct by choosing which data points need to be exported.'

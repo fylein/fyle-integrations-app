@@ -60,6 +60,7 @@ export const fyleContents = {
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
+                contentText: 'In this section, you can customize the integration based on your accounting requirements. ',
                 scheduleAutoExport: 'Schedule automatic export',
                 email: 'Send error notification to',
                 paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
@@ -69,9 +70,19 @@ export const fyleContents = {
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
                 postEntriesCurrentPeriod: 'Post entries in the next open accounting period',
                 autoCreateEmployeeVendor: 'Auto-create ',
-                dfvSubLabel: '',
-                dfvLabel: '',
-                changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.'
+                dfvSubLabel: 'If you\'ve made a field mandatory in NetSuite but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses. For Location and Department, you can opt to use the values from your employee records in NetSuite.',
+                dfvLabel: 'Default Field Values',
+                changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.',
+                defaultPaymentAccount: 'Select Payment Account',
+                memoStructureLabel: 'Set the line item-level description field in NetSuite',
+                memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in NetSuite and re-order them as per your requirement.',
+                customizationSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to NetSuite, You can choose what data points need to be exported and what shouldn\'t be.',
+                automationSubLabel: 'You can automate the export and sync of your data in this section.',
+                scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to NetSuite.',
+                frequencySubLabel: 'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to NetSuite.',
+                preferenceLabel: 'Other Preferences',
+                preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from expense management. (when there is no employee record found, or when the accounting period is closed).',
+                previewDescriptionFieldLabel: 'Preview of the Description Field'
             }
         }
     },

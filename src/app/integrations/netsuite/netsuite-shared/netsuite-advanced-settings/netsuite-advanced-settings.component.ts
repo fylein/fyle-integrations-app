@@ -88,7 +88,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent;
+  readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
 
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
