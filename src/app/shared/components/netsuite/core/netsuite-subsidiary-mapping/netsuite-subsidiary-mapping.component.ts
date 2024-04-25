@@ -2,18 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
 import { NetsuiteSubsidiaryMappingModel, SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
-import { NetsuiteWorkspaceService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-workspace.service';
 
 @Component({
   selector: 'app-netsuite-subsidiary-mapping',
@@ -24,7 +24,7 @@ import { NetsuiteWorkspaceService } from 'src/app/core/services/netsuite/netsuit
 
 export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
-  netsuiteSubsidiaryForm: FormGroup;
+  isContinueDisabled: boolean = true;
 
   netsuiteSubsidiaryOptions: NetsuiteDestinationAttribute[];
 
@@ -52,6 +52,8 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   fyleOrgName: string = this.userService.getUserProfile().org_name;
 
+  appName = AppName.NETSUITE;
+
   readonly brandingConfig = brandingConfig;
 
   constructor(
@@ -62,7 +64,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     private userService: UserService,
     private storageService: StorageService,
     private router: Router,
-    private workspaceService: NetsuiteWorkspaceService,
+    private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService
   ) { }
@@ -70,6 +72,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   connectNetsuiteSubsdiary(companyDetails: NetsuiteDestinationAttribute): void {
     this.netsuiteSubsdiarySelected = companyDetails;
+    this.isContinueDisabled = false;
   }
 
   save() {
@@ -97,12 +100,12 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   }
 
   private setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
-    if (this.workspaceService.getNetsuiteOnboardingState() === NetsuiteOnboardingState.CONNECTION) {
+    if (this.workspaceService.getOnboardingState() === NetsuiteOnboardingState.CONNECTION) {
       this.trackingService.integrationsOnboardingCompletion(TrackingApp.NETSUITE, NetsuiteOnboardingState.CONNECTION, 2, netsuiteSubsidiaryMappingPayload);
     }
 
     if (this.isOnboarding) {
-      this.workspaceService.setNetsuiteOnboardingState(NetsuiteOnboardingState.EXPORT_SETTINGS);
+      this.workspaceService.setOnboardingState(NetsuiteOnboardingState.EXPORT_SETTINGS);
       this.router.navigate(['/integrations/netsuite/onboarding/export_settings']);
     }
     this.isLoading = false;
@@ -131,6 +134,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     this.connectorService.getSubsidiaryMapping().subscribe(netsuiteSubsidiaryMappings => {
       this.netsuiteSubsidiary = netsuiteSubsidiaryMappings;
       this.netsuiteSubsdiaryName = netsuiteSubsidiaryMappings.subsidiary_name;
+      this.isContinueDisabled = false;
       this.isLoading = false;
     }, () => {
       this.isLoading = false;

@@ -13,16 +13,15 @@
           </div>
           <div class="tw-px-24-px tw-pb-24-px">
               <app-configuration-connector
-                  [accountingAppTitle]="'NETSUITE'"
+                  [accountingAppTitle]="appName"
                   [accountingCompanyName]="netsuiteSubsdiaryName"
                   [accountingCompanyList] = "netsuiteSubsidiaryOptions"
                   [fyleOrgName]="fyleOrgName"
                   [accountingCompanyConnectionInProgress]="saveInProgress"
-                  (connectCompany)="connectNetsuiteSubsdiary($event)"
-                >
+                  (connectCompany)="connectNetsuiteSubsdiary($event)">
               </app-configuration-connector>
           </div>
-          <app-configuration-step-footer *ngIf="!netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="!netsuiteSubsidiaryForm.valid"></app-configuration-step-footer>
+          <app-configuration-step-footer *ngIf="!netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.SAVE_AND_CONTINUE" (save)="save()" [isButtonDisabled]="isContinueDisabled"></app-configuration-step-footer>
           <app-configuration-step-footer *ngIf="netsuiteSubsidiary" [ctaText]="saveInProgress ? ConfigurationCtaText.SYNCING : ConfigurationCtaText.CONTINUE" (save)="navigateToExportSetting()" [isButtonDisabled]="saveInProgress"></app-configuration-step-footer>
       </div>
   </div>

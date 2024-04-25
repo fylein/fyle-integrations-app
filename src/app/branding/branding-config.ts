@@ -246,7 +246,8 @@ const demoVideoLinks: DemoVideo = {
             // TODO: Update link for MS Dynamics
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            XERO: 'https://www.youtube.com/embed/IplJd7tGWBk'
+            XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
+            NETSUITE: 'https://www.youtube.com/embed/IplJd7tGWBk'
         }
     },
     co: {
@@ -258,7 +259,8 @@ const demoVideoLinks: DemoVideo = {
             // TODO: Update link for MS Dynamics
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            XERO: 'https://www.youtube.com/embed/IplJd7tGWBk'
+            XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
+            NETSUITE: 'https://www.youtube.com/embed/IplJd7tGWBk'
         }
     }
 };

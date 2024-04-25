@@ -17,14 +17,26 @@ export type ContentConfiguration = {
                     headerText: string;
                     contentText: string;
                     corporateCard: {
+                        creditCardExpenseLabel: string;
                         cccExpenseBankAccountSubLabel: string;
                         creditCardExportTypeSubLabel: string;
                         expenseState: string;
                         creditCardExpenseSubLabel: string;
                         cccExpenseStateSubLabel: string;
+                        creditCardExpenseStateSubLabel: string;
+                        creditCardExpenseStateLabel: string;
+                        defaultCCCVendorLabel: string;
+                        defaultCCCAccountLabel: string;
+                        defaultCCCAccountPlaceholder: string;
+                        journalOptionLabel: string;
+                        journalOptionSubLabel: string;
+                        defaultDebitCardAccountLabel: string;
+                        defaultDebitCardAccountPlaceholder: string;
+                        accountsPayableLabel: string
                     }
                 },
                 importSetting: {
+                    importVendorsAsMerchantsLabel: string;
                     stepName: string;
                     headerText: string;
                     contentText: string;
@@ -38,10 +50,21 @@ export type ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: string;
                     importSuppliersAsMerchantsSubLabel: string;
                     notes: string,
-                    toggleToastMessage: string
+                    toggleToastMessage: string;
+                    importNetsuiteEmployeesLabel: string;
+                    importNetsuiteEmployeesSubLabel: string;
                 },
                 advancedSettings: {
+                    memoStructureSubLabel: string;
+                    preferenceLabel: string;
+                    preferenceSubLabel: string;
+                    frequencySubLabel: string;
+                    automationSubLabel: string;
+                    customizationSubLabel: string;
+                    defaultPaymentAccount: string;
+                    memoStructureLabel: string;
                     stepName: string;
+                    contentText: string;
                     scheduleAutoExport: string;
                     email: string;
                     paymentSyncLabel: string;
@@ -54,6 +77,8 @@ export type ContentConfiguration = {
                     dfvSubLabel: string;
                     dfvLabel: string;
                     changeAccountingPeriodSubLabel: string;
+                    scheduleSubLabel: string;
+                    previewDescriptionFieldLabel: string;
                 }
             },
         },
