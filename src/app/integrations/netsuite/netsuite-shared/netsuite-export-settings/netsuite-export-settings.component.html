@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="brandingContent.stepName"
-                [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to NetSuite.'"
+                [contentText]="brandingContent.contentText"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 (refreshDimensions)="refreshDimensions()">
@@ -33,7 +33,7 @@
                                 [mandatoryErrorListName]="'export module'"
                                 [label]="'How should the expenses be exported?'"
                                 [subLabel]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses'"
-                            [options]="reimbursableExportTypes"
+                                [options]="reimbursableExportTypes"
                                 [iconPath]="'list'"
                                 [placeholder]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses'"
                                 [formControllerName]="'reimbursableExportType'"
@@ -155,8 +155,8 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
-                            [label]="'How should the expenses be exported?'"
-                            [subLabel]="'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses.'"
+                            [label]="brandingContent.corporateCard.creditCardExpenseLabel"
+                            [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
@@ -195,6 +195,20 @@
                             [formControllerName]="'creditCardAccount'">
                             </app-configuration-select-field>
                         </div>
+
+                        <div *ngIf="exportSettingForm.value.creditCardExportType === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="false"
+                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
+                                [label]="brandingContent.corporateCard.journalOptionLabel"
+                                [subLabel]="brandingContent.corporateCard.journalOptionSubLabel"
+                                [options]="nameInJournalOptions"
+                                [iconPath]="'list'"
+                                [placeholder]="'Select a name'"
+                                [formControllerName]="'nameInJournalEntry'">
+                            </app-configuration-select-field>
+                        </div>
                     </div>
 
                     <div *ngIf="!exportSettingForm.value.reimbursableExportType && exportSettingForm.value.creditCardExportType === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY">
@@ -206,8 +220,8 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
-                            [subLabel]="brandingContent.corporateCard.creditCardExpenseSubLabel"
+                            [label]="brandingContent.corporateCard.creditCardExpenseStateLabel"
+                            [subLabel]="brandingContent.corporateCard.creditCardExpenseStateSubLabel"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
                             [placeholder]="brandingContent.corporateCard.expenseState"
@@ -294,7 +308,7 @@
                 </div>
                 <div class="tw-h-40-px tw-w-300-px tw-bg-disabled-bg-color tw-border radius">
                     <div class="tw-text-14-px tw-text-slightly-normal-text-color tw-my-10-px tw-mx-14-px">{{getEmployeeFieldMapping(exportSettingForm.value.employeeFieldMapping, exportSettingForm.value.reimbursableExportType)}}</div>
-                    <span class="tw-text-text-muted tw-pt-3-px tw-text-12-px tw-text-sub-text-color">Auto-selected based on your export module</span>
+                    <span class="tw-text-text-muted tw-pt-3-px tw-text-12-px">Auto-selected based on your export module</span>
                 </div>
             </div>
         </div>

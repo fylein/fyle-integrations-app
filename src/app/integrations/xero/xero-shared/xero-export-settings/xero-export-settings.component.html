@@ -6,7 +6,7 @@
         <div>
             <app-configuration-step-header
                 [headerText]="brandingContent.stepName"
-                [contentText]="'In this section, you will configure how and when expenses from ' + brandingConfig.brandName + ' can be exported to Xero.'"
+                [contentText]="brandingContent.stepSubLabel"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
                 (refreshDimension)="refreshDimensions($event)">
@@ -119,11 +119,14 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
+                            [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
                             [formControllerName]="'creditCardExportType'"
                             [appName]="appName"
+                            [showExportPreview]="true"
+                            [exportTypeIconPathArray]="previewImagePaths"
                             [isDisabled]="true">
                         </app-configuration-select-field>
                     </div>
@@ -149,7 +152,7 @@
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'expense state'"
-                            [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
+                            [label]="brandingContent.cccExpenseStateLabel"
                             [subLabel]="brandingContent.corporateCard.cccExpenseStateSubLabel"
                             [options]="cccExpenseStateOptions"
                             [iconPath]="'list'"
@@ -163,7 +166,7 @@
                             [form]="exportSettingForm"
                             [isDisabled]="true"
                             [label]="'How should the expenses be grouped?'"
-                            [subLabel]="'Expense will be exported as grouped report with multiple line items (Expense Report)'"
+                            [subLabel]="'Expenses can be exported as single line items.'"
                             [options]="cccExpenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
