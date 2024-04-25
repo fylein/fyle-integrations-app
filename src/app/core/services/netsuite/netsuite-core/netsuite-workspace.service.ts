@@ -26,13 +26,4 @@ export class NetsuiteWorkspaceService {
   syncNetsuiteDimensions() {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/netsuite/sync_dimensions/`, {});
   }
-
-  setNetsuiteOnboardingState(onboardingState: NetsuiteOnboardingState): void {
-    return this.storageService.set('onboarding-state', onboardingState);
-  }
-
-  getNetsuiteOnboardingState(): NetsuiteOnboardingState {
-    const onboardingState = this.storageService.get('onboarding-state');
-    return onboardingState ? onboardingState : NetsuiteOnboardingState.CONNECTION;
-  }
 }

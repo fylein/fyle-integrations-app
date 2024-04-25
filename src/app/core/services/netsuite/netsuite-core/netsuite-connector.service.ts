@@ -50,8 +50,6 @@ export class NetsuiteConnectorService {
 
   getSubsidiaryMapping(): Observable<SubsidiaryMapping> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    return this.apiService.get(
-      `/workspaces/${workspaceId}/mappings/subsidiaries/`, {}
-    );
+    return this.apiService.get(`/workspaces/${workspaceId}/mappings/subsidiaries/`, {});
   }
 }

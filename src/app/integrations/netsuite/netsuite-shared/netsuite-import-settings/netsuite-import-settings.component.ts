@@ -74,7 +74,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
-  readonly brandingContent = brandingContent.configuration.importSetting;
+  readonly brandingContent = brandingContent.netsuite.configuration.importSetting;
 
   constructor(
     private formBuilder: FormBuilder,
