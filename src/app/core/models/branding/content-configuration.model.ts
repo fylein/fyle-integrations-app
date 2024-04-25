@@ -198,6 +198,7 @@ export type ContentConfiguration = {
                     }
                 },
                 advancedSettings: {
+                    frequencySubLabel: string;
                     stepName: string;
                     contentText: string;
                     scheduleAutoExport: string;

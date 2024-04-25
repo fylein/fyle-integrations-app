@@ -218,6 +218,7 @@ export const fyleContents = {
                 project: 'Project',
                 class: 'Class',
                 item: 'Item',
+                frequencySubLabel: 'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Sage Intacct.',
                 customPreferencesLabel: 'Other Preferences',
                 customPreferencesSubLabel: 'Based on your preference, you can choose whether you want to create any new records in Sage Intacct from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)',
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
