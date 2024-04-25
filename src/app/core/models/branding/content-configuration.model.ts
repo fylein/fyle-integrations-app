@@ -50,9 +50,9 @@ export type ContentConfiguration = {
                     importSuppliersAsMerchantsLabel: string;
                     importSuppliersAsMerchantsSubLabel: string;
                     notes: string,
-                    toggleToastMessage: string;
                     importNetsuiteEmployeesLabel: string;
                     importNetsuiteEmployeesSubLabel: string;
+                    toggleToastMessage: string,
                 },
                 advancedSettings: {
                     memoStructureSubLabel: string;

@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
-import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, NetsuiteFyleField, NetsuiteOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteImportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -38,7 +38,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   isTaxGroupSyncAllowed: boolean;
 
-  taxCodes: DefaultDestinationAttribute[];
+  taxCodes: DestinationAttribute[];
 
   isImportMerchantsAllowed: boolean;
 
@@ -185,8 +185,9 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.mappingService.getFyleFields(),
       this.netsuiteConnectorService.getSubsidiaryMapping(),
       this.importSettingService.getNetsuiteFields(),
-      this.netsuiteExportSettingService.getExportSettings()
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, exportSetting]) => {
+      this.netsuiteExportSettingService.getExportSettings(),
+      this.mappingService.getDestinationAttributes(NetsuiteFyleField.TAX_CODE, 'v2')
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, exportSetting, destinationAttribute]) => {
       this.importSettings = importSettingsResponse;
 
       if (subsidiaryMapping && subsidiaryMapping.country_name !== 'US') {
@@ -198,8 +199,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       }
 
       this.netsuiteFields = netsuiteFields;
-      this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields);
-
+      this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
+      this.taxCodes = destinationAttribute;
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();

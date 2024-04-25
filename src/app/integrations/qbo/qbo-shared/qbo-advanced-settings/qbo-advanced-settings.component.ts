@@ -206,14 +206,14 @@ export class QboAdvancedSettingsComponent implements OnInit {
     forkJoin([
       this.advancedSettingsService.getAdvancedSettings(),
       this.skipExportService.getExpenseFilter(),
-      // This.skipExportService.getExpenseFields('v1'),
+      this.skipExportService.getExpenseFields('v1'),
       this.mappingService.getGroupedDestinationAttributes(['BANK_ACCOUNT'], 'v1', 'qbo'),
       this.configurationService.getAdditionalEmails(),
       this.workspaceService.getWorkspaceGeneralSettings()
-    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, billPaymentAccounts, adminEmails, workspaceGeneralSettings]) => {
+    ]).subscribe(([sage300AdvancedSettingResponse, expenseFiltersGet, expenseFilterCondition, billPaymentAccounts, adminEmails, workspaceGeneralSettings]) => {
       this.advancedSetting = sage300AdvancedSettingResponse;
       this.expenseFilters = expenseFiltersGet;
-      this.conditionFieldOptions = [];
+      this.conditionFieldOptions = expenseFilterCondition;
 
       this.adminEmails = adminEmails;
       if (this.advancedSetting.workspace_schedules?.additional_email_options && this.advancedSetting.workspace_schedules?.additional_email_options.length > 0) {
