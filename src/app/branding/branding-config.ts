@@ -249,10 +249,10 @@ const demoVideoLinks: DemoVideo = {
     },
     co: {
         onboarding: {
-            INTACCT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            INTACCT: 'https://www.youtube.com/embed/EQ8hRadkOic',
             // TODO: Update link for Sage 300
             SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
+            QBO: 'https://www.youtube.com/embed/TcL8ketSvbM',
             // TODO: Update link for MS Dynamics
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
