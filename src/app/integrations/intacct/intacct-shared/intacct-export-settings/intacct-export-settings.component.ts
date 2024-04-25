@@ -537,7 +537,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     if (brandingConfig.brandId==='fyle') {
       if (this.exportSettingsForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
-      } else if (this.exportSettingsForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+      } else if (this.exportSettingsForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingsForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
       }
 

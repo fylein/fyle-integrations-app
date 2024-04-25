@@ -93,7 +93,7 @@ export class XeroExportSettingsComponent implements OnInit {
 
   private setupCustomWatchers(): void {
     if (brandingConfig.brandId==='fyle') {
-      if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+      if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
       }
 

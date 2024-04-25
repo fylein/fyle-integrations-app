@@ -107,7 +107,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     if (brandingConfig.brandId==='fyle') {
       if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
         this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
-      } else if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+      } else if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
         this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
       }
 
