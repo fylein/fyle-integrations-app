@@ -543,7 +543,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
       if (this.exportSettingsForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
         this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
-      } else if (this.exportSettingsForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+      } else if (this.exportSettingsForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingsForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
         this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
       }
 

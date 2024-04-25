@@ -113,7 +113,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
       if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
         this.cccExpenseGroupingDateOptions = CommonExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
-      } else if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+      } else if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
         this.cccExpenseGroupingDateOptions = CommonExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
       }
 

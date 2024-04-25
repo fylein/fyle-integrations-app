@@ -97,7 +97,7 @@ export class XeroExportSettingsComponent implements OnInit {
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
       }
 
-      if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+      if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
         this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
       }
 
@@ -153,6 +153,8 @@ export class XeroExportSettingsComponent implements OnInit {
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
       this.helperService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+
+      this.setupCustomWatchers();
 
       this.isLoading = false;
 
