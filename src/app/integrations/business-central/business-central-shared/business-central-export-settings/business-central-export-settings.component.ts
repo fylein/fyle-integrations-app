@@ -133,7 +133,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     }
   }
 
-  getExportDate(options: BusinessCentralExportSettingFormOption[], formControllerName: string): BusinessCentralExportSettingFormOption[]{
+  getExportDate(options: SelectFormOption[], formControllerName: string): SelectFormOption[]{
     if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
       return options.filter(option => option.value !== ExportDateType.LAST_SPENT_AT);
     }

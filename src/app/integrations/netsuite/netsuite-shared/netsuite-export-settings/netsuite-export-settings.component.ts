@@ -217,6 +217,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
+    console.log('abcd');
     if (this.exportSettingForm.value.creditCardExportType && (NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE === this.exportSettingForm.value.creditCardExportType)) {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     }
@@ -227,19 +228,35 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.updateCCCExpenseGroupingDateOptions(selectedValue);
     });
 
-    if (brandingConfig.brandId==='fyle') {
-      if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
-        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
-      } else if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
-        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
-      }
+    this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe(reimbursableExportType => {
+      this.exportSettingForm.controls.reimbursableExportGroup.reset();
+      this.exportSettingForm.controls.reimbursableExportDate.reset();
+      this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
+        if (brandingConfig.brandId==='fyle') { 
+          if (reimbursableExportGroup===ExpenseGroupingFieldOption.EXPENSE_ID) {
+            this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
+          } else if (reimbursableExportGroup===ExpenseGroupingFieldOption.CLAIM_NUMBER || reimbursableExportGroup===ExpenseGroupingFieldOption.REPORT_ID) {
+            this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
+          }
+        }
+      });
+    });
 
-      if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
-      } else if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
-      }
-    }
+    this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
+      this.exportSettingForm.controls.creditCardExportGroup.reset();
+      this.exportSettingForm.controls.creditCardExportDate.reset();
+      this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
+        if (brandingConfig.brandId==='fyle') { 
+          if (creditCardExportGroup===ExpenseGroupingFieldOption.EXPENSE_ID) {
+            this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
+          } else if (creditCardExportGroup===ExpenseGroupingFieldOption.CLAIM_NUMBER || creditCardExportGroup===ExpenseGroupingFieldOption.REPORT_ID) {
+            this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
+          }
+        }
+      });
+    });
+
+
   }
 
   private getSettingsAndSetupForm(): void {

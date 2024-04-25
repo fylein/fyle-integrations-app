@@ -160,7 +160,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     }
   }
 
-  getExportDate(options: Sage300ExportSettingFormOption[], formControllerName: string): Sage300ExportSettingFormOption[]{
+  getExportDate(options: SelectFormOption[], formControllerName: string): SelectFormOption[]{
     if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
       return options.filter(option => option.value !== Sage300ExpenseDate.LAST_SPENT_AT);
     }

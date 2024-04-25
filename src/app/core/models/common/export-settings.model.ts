@@ -71,6 +71,10 @@ export class ExportSettingModel {
     static filterDateOptions(exportDateType: ExportDateType, dateOptions: SelectFormOption[]){
       const dateOptionToRemove = exportDateType;
       const filteredOptions = dateOptions.filter(option => option.value !== dateOptionToRemove);
-      return dateOptions;
+      return filteredOptions;
+    }
+
+    static constructGroupingDateOptions() {
+
     }
 }
