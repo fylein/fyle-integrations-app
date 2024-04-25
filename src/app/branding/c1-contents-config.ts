@@ -78,8 +78,8 @@ export const c1Contents = {
                 headerText: 'Export corporate card expenses',
                 contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
                 corporateCard: {
-                    cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to Xero.',
-                    creditCardExportTypeSubLabel: '',
+                    cccExpenseBankAccountSubLabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective bank accounts in Xero will post to this bank account.',
+                    creditCardExportTypeSubLabel: 'Choose how transactions are exported to Xero.',
                     expenseState: '',
                     creditCardExpenseSubLabel: '',
                     cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. '
@@ -118,12 +118,12 @@ export const c1Contents = {
                 autoCreateEmployeeVendor: 'Auto-create ',
                 frequencySubLabel: 'Set how often your expenses will be exported to Xero.',
                 contentText: 'Customize the integration based on your accounting requirements.',
-                automationSubLabel: 'Automate your export frequency and how often your data syncs with Xero.',
-                scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Xero.',
+                automationSubLabel: 'Automate exports and data syncs.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to Xero.',
                 accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
                 autoCreateVendorsSubLabel: 'Automatically create a new contact in Xero if an added merchant doesn\'t have a corresponding match.',
                 customPreferencesLabel: 'Other preferences',
-                customPreferencesSubLabel: ' Create new records in Xero if no contacts found or the accounting period is closed.'
+                customPreferencesSubLabel: 'Create new records in Xero if no contacts found or the accounting period is closed.'
             }
         }
     },
@@ -195,8 +195,9 @@ export const c1Contents = {
                 customPreferencesLabel: 'Custom preferences',
                 customPreferencesSubLabel: 'Customize your data export process based on your business\'s needs and preferences. ',
                 contentText: 'Customize the integration based on your accounting requirements.',
-                automationSubLabel: 'Automate your export frequency and how often your data syncs with Sage Intacct.',
-                scheduleSubLabel: 'Set a schedule to automatically export expenses from expense management to Sage Intacct.',
+                automationSubLabel: 'Automate exports and data syncs.',
+                frequencySubLabel: 'Set how often your expenses will be exported to Sage Intacct.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to Sage Intacct.',
                 accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in Sage Intacct.',
                 customizeSectionSubLabel: 'Customize the data that you\'d like to export from expense management to Sage Intacct by choosing which data points need to be exported.'
@@ -217,7 +218,7 @@ export const c1Contents = {
         exportSetting: {
             stepName: 'Export settings',
             headerText: 'Export corporate card expenses',
-            contentText: 'Configure how and when expenses from expense management are exported to QuickBooks Online.',
+            contentText: 'Configure how and when expenses from expense management can be exported to QuickBooks Online.',
             corporateCard: {
                 expenseState: 'Select ccc expense state',
                 sectionLabel: '',
@@ -271,11 +272,11 @@ export const c1Contents = {
             frequencySubLabel: 'Set how often your expenses will be exported to Quickbooks Online.',
             otherPreferencesLabel: 'Other preferences',
             otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
-            accountingPeriodLabel: 'Post entries for the first day of the current open accounting period.',
+            accountingPeriodLabel: 'Post entries in the current open accounting period.',
             accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
             autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match.',
             customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
-            memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them.',
+            memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.',
             previewDescriptionFieldLabel: 'Preview of the description field'
         },
         done: {
