@@ -78,7 +78,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   appName: AppName = AppName.NETSUITE;
 
-  readonly brandingContent = brandingContent.configuration.exportSetting;
+  readonly brandingContent = brandingContent.netsuite.configuration.exportSetting;
 
   NetSuiteCorporateCreditCardExpensesObject = NetSuiteCorporateCreditCardExpensesObject;
 
