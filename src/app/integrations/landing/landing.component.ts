@@ -14,6 +14,7 @@ import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
+import { ExposeAppInLangingPage } from 'src/app/branding/expose-app-config';
 
 @Component({
   selector: 'app-landing',
@@ -69,7 +70,7 @@ export class LandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly isINCluster = this.storageService.get('cluster-domain').includes('in1');
+  readonly exposeApps = ExposeAppInLangingPage[brandingConfig.brandId][environment.env_id];
 
   constructor(
     private eventsService: EventsService,
