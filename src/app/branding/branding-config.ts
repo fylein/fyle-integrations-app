@@ -241,7 +241,7 @@ const demoVideoLinks: DemoVideo = {
         onboarding: {
             INTACCT: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             // TODO: Update link for Sage 300
-            SAGE300: 'https://www.youtube.com/embed/2oYdc8KcQnk',
+            SAGE300: 'https://www.youtube.com/embed/KTJ6IF271bc',
             QBO: 'https://www.youtube.com/embed/b63lS2DG5j4',
             // TODO: Update link for MS Dynamics
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
