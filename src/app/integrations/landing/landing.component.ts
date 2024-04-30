@@ -72,6 +72,8 @@ export class LandingComponent implements OnInit {
 
   readonly exposeApps = exposeAppConfig[brandingConfig.brandId][brandingConfig.env_id];
 
+  readonly hideToCo = !(this.storageService.get('cluster-domain').includes('.fylehq.com') || this.storageService.get('cluster-domain').includes('.fyle.tech') || this.storageService.get('cluster-domain').includes('-qa.'));
+
   constructor(
     private eventsService: EventsService,
     private qboAuthService: QboAuthService,
