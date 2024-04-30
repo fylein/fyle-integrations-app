@@ -178,6 +178,21 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     this.helperService.refreshNetsuiteDimensions().subscribe();
   }
 
+  getCategoryLabel(): string {
+    if (this.importSettings.configuration.import_netsuite_employee) {
+      return 'Import the Expense Categories';
+    }
+    return 'Import the Accounts';
+  }
+
+  getCategorySubLabel(): string {
+    if (this.importSettings.configuration.import_netsuite_employee) {
+      return 'Imported expense categories';
+    }
+    return 'Imported accounts';
+  }
+
+
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     forkJoin([
@@ -189,8 +204,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.mappingService.getDestinationAttributes(NetsuiteFyleField.TAX_CODE, 'v2')
     ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, exportSetting, destinationAttribute]) => {
       this.importSettings = importSettingsResponse;
-
-      if (subsidiaryMapping && subsidiaryMapping.country_name !== 'US') {
+      if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
         this.isTaxGroupSyncAllowed = true;
       }
 

@@ -89,12 +89,11 @@ export class ImportSettingsModel {
       }
     });
 
+
     accountingAppFields.forEach((accountingAppField) => {
-      if (expenseFieldFormArray.length < 3) {
-        const fieldData = unmappedFieldMap.get(accountingAppField.attribute_type);
-        if (fieldData) {
-          expenseFieldFormArray.push(this.createFormGroup(fieldData));
-        }
+      const fieldData = unmappedFieldMap.get(accountingAppField.attribute_type);
+      if (fieldData) {
+        expenseFieldFormArray.push(this.createFormGroup(fieldData));
       }
     });
 
