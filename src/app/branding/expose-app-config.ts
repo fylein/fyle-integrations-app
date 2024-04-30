@@ -1,6 +1,6 @@
 import { AllowedAppsConfiguration } from "../core/models/branding/expose-app-configuration.model";
 
-export const ExposeAppInLangingPage: AllowedAppsConfiguration = {
+export const exposeAppConfig: AllowedAppsConfiguration = {
     fyle: {
         'staging-1-in': {
             INTACCT: true,
@@ -15,16 +15,16 @@ export const ExposeAppInLangingPage: AllowedAppsConfiguration = {
         },
         'production-1-in': {
             INTACCT: true,
-            SAGE300: true,
+            SAGE300: false,
             QBO: true,
-            BUSINESS_CENTRAL: true,
+            BUSINESS_CENTRAL: false,
             TRAVELPERK: true,
             XERO: true,
             NETSUITE: true,
             QBD: true,
             BAMBOO: true
         },
-        'production-2-in': {
+        'production-1-us': {
             INTACCT: true,
             SAGE300: true,
             QBO: true,
@@ -37,7 +37,7 @@ export const ExposeAppInLangingPage: AllowedAppsConfiguration = {
         }
     },
     co: {
-        'c1-qa-1-us': {
+        'c1-qa': {
             INTACCT: true,
             SAGE300: false,
             QBO: true,
@@ -54,7 +54,7 @@ export const ExposeAppInLangingPage: AllowedAppsConfiguration = {
             QBO: true,
             BUSINESS_CENTRAL: false,
             TRAVELPERK: false,
-            XERO: true,
+            XERO: false,
             NETSUITE: false,
             QBD: false,
             BAMBOO: false
