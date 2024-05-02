@@ -146,7 +146,7 @@
                     [subLabel]="brandingContent.dfvSubLabel">
                 </app-configuration-step-sub-header>
 
-                <div class="tw-flex tw-items-center">
+                <div class="tw-flex tw-items-center tw-p-24-px ">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
@@ -163,17 +163,19 @@
                     </div>
                 </div>
 
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [destinationAttributes]="netsuiteLocationLevels"
-                    [isDefaultFields]="true"
-                    [label]="'NetSuite Location Level'"
-                    [placeholder]="'Choose NetSuite Location Level'"
-                    [showClearIcon]="true"
-                    [formControllerName]="'netsuiteLocationLevel'">
-                </app-configuration-select-field>
+                <div class="tw-pl-24-px">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [destinationAttributes]="netsuiteLocationLevels"
+                        [isDefaultFields]="true"
+                        [label]="'NetSuite Location Level'"
+                        [placeholder]="'Choose NetSuite Location Level'"
+                        [showClearIcon]="true"
+                        [formControllerName]="'netsuiteLocationLevel'">
+                    </app-configuration-select-field>
+                </div>
 
-                <div class="tw-flex tw-items-center">
+                <div class="tw-flex tw-items-center tw-p-24-px">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
@@ -190,17 +192,19 @@
                     </div>
                 </div>
 
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [destinationAttributes]="netsuiteDepartmentLevels"
-                    [isDefaultFields]="true"
-                    [label]="'NetSuite Department Level'"
-                    [placeholder]="'Choose NetSuite Department Level'"
-                    [showClearIcon]="true"
-                    [formControllerName]="'netsuiteDepartmentLevel'">
-                </app-configuration-select-field>
+                <div class="tw-pl-24-px">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [destinationAttributes]="netsuiteDepartmentLevels"
+                        [isDefaultFields]="true"
+                        [label]="'NetSuite Department Level'"
+                        [placeholder]="'Choose NetSuite Department Level'"
+                        [showClearIcon]="true"
+                        [formControllerName]="'netsuiteDepartmentLevel'">
+                    </app-configuration-select-field>
+                </div>
 
-                <div class="tw-flex tw-items-center">
+                <div class="tw-flex tw-items-center tw-p-24-px ">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
@@ -211,21 +215,23 @@
                         [formControllerName]="'netsuiteClass'">
                     </app-configuration-select-field>
                 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes || workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeClass" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Class</label>   
                     </div>
                 </div>
 
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [destinationAttributes]="netsuiteClassLevels"
-                    [isDefaultFields]="true"
-                    [label]="'NetSuite Class Level'"
-                    [placeholder]="'Choose NetSuite Class Level'"
-                    [showClearIcon]="true"
-                    [formControllerName]="'netsuiteClassLevel'">
-                </app-configuration-select-field>
+                <div class="tw-pl-24-px">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [destinationAttributes]="netsuiteClassLevels"
+                        [isDefaultFields]="true"
+                        [label]="'NetSuite Class Level'"
+                        [placeholder]="'Choose NetSuite Class Level'"
+                        [showClearIcon]="true"
+                        [formControllerName]="'netsuiteClassLevel'">
+                    </app-configuration-select-field>
+                </div>
             </div>
         </div>
         <app-configuration-step-footer
