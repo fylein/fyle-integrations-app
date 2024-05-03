@@ -116,5 +116,12 @@
 </div>
 
 <div *ngIf="isCustomeSegmentTrigged">
-    <app-netsuite-custome-segment-dialog></app-netsuite-custome-segment-dialog>
+    <app-netsuite-custome-segment-dialog
+        [form]="customeSegmentForm"
+        [isCustomeSegmentDialogVisible]="true"
+        [options]="customrSegmentOptions"
+        [isLoading]="isCustomeSegmentIsSaving"
+        (closeDialog)="closeCustomeSegment()"
+        (saveClick)="saveCustomeSegment()">
+    </app-netsuite-custome-segment-dialog>
 </div>

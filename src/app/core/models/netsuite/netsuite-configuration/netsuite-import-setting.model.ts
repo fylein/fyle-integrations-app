@@ -62,11 +62,12 @@ export class NetsuiteImportSettingModel extends ImportSettingsModel {
     ];
   }
 
-  static constructCustomSegmentPayload(customeSegmentForm: FormGroup): CustomSegment {
+  static constructCustomSegmentPayload(customeSegmentForm: FormGroup, workspaceId: number): CustomSegment {
     return {
       segment_type: customeSegmentForm.get('custom_field_type')?.value,
       script_id: customeSegmentForm.get('script_id')?.value,
-      internal_id: customeSegmentForm.get('internal_id')?.value
+      internal_id: customeSegmentForm.get('internal_id')?.value,
+      workspace: workspaceId
     };
   }
 

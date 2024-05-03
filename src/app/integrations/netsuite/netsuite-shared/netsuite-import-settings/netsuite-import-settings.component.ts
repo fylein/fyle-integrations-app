@@ -107,6 +107,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   closeCustomeSegment() {
     this.isCustomeSegmentTrigged = false;
+    this.customeSegmentForm.reset();
   }
 
   save() {
@@ -201,7 +202,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   saveCustomeSegment() {
     this.isCustomeSegmentIsSaving = true;
-    const customeSegmentPayload = NetsuiteImportSettingModel.constructCustomSegmentPayload(this.customFieldForm);
+    const customeSegmentPayload = NetsuiteImportSettingModel.constructCustomSegmentPayload(this.customeSegmentForm, this.importSettings.workspace_id);
 
     this.importSettingService.postNetsuiteCustomSegments(customeSegmentPayload).subscribe(() => {
       this.importSettingService.getNetsuiteFields().subscribe((netsuiteFields: IntegrationField[]) => {
@@ -209,12 +210,13 @@ export class NetsuiteImportSettingsComponent implements OnInit {
         this.isCustomeSegmentIsSaving = false;
         this.netsuiteFields = netsuiteFields;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Custom field added successfully');
-
+        this.customeSegmentForm.reset();
       });
     }, () => {
       this.isCustomeSegmentTrigged = false;
       this.isCustomeSegmentIsSaving = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to add Custom Field');
+      this.customeSegmentForm.reset();
     });
   }
 
