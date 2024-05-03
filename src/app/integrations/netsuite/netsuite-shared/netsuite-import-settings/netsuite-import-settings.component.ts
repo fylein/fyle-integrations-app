@@ -72,9 +72,19 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     source_placeholder: ['', Validators.required]
   });
 
+  customeSegmentForm: FormGroup = this.formBuilder.group({
+    script_id: ['', Validators.required],
+    internal_id: ['', Validators.required],
+    custom_field_type: ['', Validators.required]
+  });
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.netsuite.configuration.importSetting;
+
+  isCustomeSegmentTrigged: boolean = false;
+
+  isCustomeSegmentIsSaving: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,6 +97,14 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private workspaceService: WorkspaceService,
     private router: Router
   ) { }
+
+  addCustomeSegment() {
+    this.isCustomeSegmentTrigged = true;
+  }
+
+  closeCustomeSegment() {
+    this.isCustomeSegmentTrigged = false;
+  }
 
   save() {
     this.isSaveInProgress = true;
@@ -176,6 +194,25 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   refreshDimensions() {
     this.helperService.refreshNetsuiteDimensions().subscribe();
+  }
+
+  saveCustomeSegment() {
+    this.isCustomeSegmentIsSaving = true;
+    const customeSegmentPayload = NetsuiteImportSettingModel.constructCustomSegmentPayload(this.customFieldForm);
+
+    this.importSettingService.postNetsuiteCustomSegments(customeSegmentPayload).subscribe(() => {
+      this.importSettingService.getNetsuiteFields().subscribe((netsuiteFields: IntegrationField[]) => {
+        this.isCustomeSegmentTrigged = false;
+        this.isCustomeSegmentIsSaving = false;
+        this.netsuiteFields = netsuiteFields;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Custom field added successfully');
+
+      });
+    }, () => {
+      this.isCustomeSegmentTrigged = false;
+      this.isCustomeSegmentIsSaving = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to add Custom Field');
+    });
   }
 
   private setupPage(): void {

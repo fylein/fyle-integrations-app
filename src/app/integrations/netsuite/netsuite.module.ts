@@ -11,8 +11,7 @@ import { NetsuiteCustomeSegmentDialogComponent } from './netsuite-shared/netsuit
 @NgModule({
   declarations: [
     NetsuiteComponent,
-    NetsuiteConnectorComponent,
-    NetsuiteCustomeSegmentDialogComponent
+    NetsuiteConnectorComponent
   ],
   imports: [
     CommonModule,

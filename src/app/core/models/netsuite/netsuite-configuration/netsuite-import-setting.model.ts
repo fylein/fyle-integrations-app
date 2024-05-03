@@ -30,7 +30,26 @@ export type NetsuiteImportSettingConfiguration = {
     workspace_id: number
   }
 
+  export type CustomSegment = {
+    id?: number;
+    name?: string;
+    segment_type: string;
+    script_id: string;
+    internal_id: string;
+    created_at?: Date;
+    updated_at?: Date;
+    workspace?: number;
+  };
+
 export class NetsuiteImportSettingModel extends ImportSettingsModel {
+  static constructCustomSegmentPayload(customeSegmentForm: FormGroup): CustomSegment {
+    return {
+      segment_type: customeSegmentForm.get('custom_field_type')?.value,
+      script_id: customeSegmentForm.get('script_id')?.value,
+      internal_id: customeSegmentForm.get('internal_id')?.value
+    };
+  }
+
     static mapAPIResponseToFormGroup(importSettings: NetsuiteImportSettingGet | null, netsuiteFields: IntegrationField[], destinationAttribute: DestinationAttribute[]): FormGroup {
       const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, netsuiteFields) : [];
       const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;

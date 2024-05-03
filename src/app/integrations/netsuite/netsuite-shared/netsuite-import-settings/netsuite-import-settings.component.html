@@ -75,6 +75,18 @@
                         [isDestinationFixedImport]="true">
                     </app-configuration-import-field>
                 </div>
+
+                <div class="tw-mt-24-px">
+                    <div class="tw-flex tw-items-center" (click)="addCustomeSegment()">
+                        <div class="tw-mr-14-px">
+                            <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'"></app-svg-icon>
+                        </div>
+                        <div class="tw-cursor-pointer tw-text-mandatory-field-color">
+                            Add Custom Lists/Records/Segments
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <app-configuration-step-footer
                 [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
@@ -101,4 +113,8 @@
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
         [header]="'Preview'">
     </app-preview-dialog>
+</div>
+
+<div *ngIf="isCustomeSegmentTrigged">
+    <app-netsuite-custome-segment-dialog></app-netsuite-custome-segment-dialog>
 </div>
