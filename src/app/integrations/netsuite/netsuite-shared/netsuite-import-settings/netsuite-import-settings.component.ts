@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, NetsuiteFyleField, NetsuiteOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -65,6 +66,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
   customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
 
   importSettings: any;
+
+  customrSegmentOptions: SelectFormOption[] = NetsuiteImportSettingModel.getCustomeSegmentOptions();
 
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],

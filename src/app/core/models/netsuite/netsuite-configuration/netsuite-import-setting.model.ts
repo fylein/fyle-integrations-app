@@ -5,6 +5,8 @@ import { IntegrationField } from "../../db/mapping.model";
 import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
 import { DestinationAttribute } from "../../db/destination-attribute.model";
 import { NetSuiteExportSettingModel } from "./netsuite-export-setting.model";
+import { SelectFormOption } from "../../common/select-form-option.model";
+import { NetsuiteCustomeSegmentOption } from "../../enum/enum.model";
 
 
 export type NetsuiteImportSettingConfiguration = {
@@ -42,6 +44,24 @@ export type NetsuiteImportSettingConfiguration = {
   };
 
 export class NetsuiteImportSettingModel extends ImportSettingsModel {
+
+  static getCustomeSegmentOptions(): SelectFormOption[] {
+    return [
+      {
+        label: 'Custom List',
+        value: NetsuiteCustomeSegmentOption.CUSTOM_LIST
+      },
+      {
+        label: 'Custom Record',
+        value: NetsuiteCustomeSegmentOption.CUSTOM_RECORD
+      },
+      {
+        label: 'Custom Segment',
+        value: NetsuiteCustomeSegmentOption.CUSTOM_SEGMENT
+      }
+    ];
+  }
+
   static constructCustomSegmentPayload(customeSegmentForm: FormGroup): CustomSegment {
     return {
       segment_type: customeSegmentForm.get('custom_field_type')?.value,
