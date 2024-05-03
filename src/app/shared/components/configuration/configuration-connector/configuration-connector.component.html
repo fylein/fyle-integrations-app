@@ -42,18 +42,20 @@
                 </div>
                 <div class="tw-w-300-px tw-text-pretty tw-text-center tw-py-16-px">
                     <span *ngIf="appName !== AppName.XERO" class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Please select a Location (Entity) from {{accountingAppTitle}} to proceed further.</span>
-                    <span *ngIf="appName === AppName.XERO" class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">select a Tenant from {{accountingAppTitle}} to continue</span>
+                    <span *ngIf="appName === AppName.XERO" class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Select a {{brandingConfig.brandId === 'co' ? 'tenant' : 'Tenant'}} from {{accountingAppTitle}} to continue</span>
                 </div>
             </div>
         </div>
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px tw-text-center">
+            <p class="tw-text-14-px tw-pb-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingConfig.brandId === 'co'">
+                Fetching data from your {{appName}} account…</p> 
             <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
         </div>
         <div class="tw-text-14-px tw-font-500 tw-text-center">
             <p *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && showDisconnect && accountingCompanyName" class="tw-text-text-muted">
                 Not the company you want to connect?
             </p>
-            <p *ngIf="accountingCompanyConnectionInProgress" class="tw-text-text-muted tw-max-w-300-px tw-text-pretty">
+            <p *ngIf="accountingCompanyConnectionInProgress && brandingConfig.brandId !== 'co'" class="tw-text-text-muted tw-max-w-300-px tw-text-pretty">
                 Please hold on; we are fetching data from your {{ accountingAppTitle }} account, which may take a few seconds.
             </p>
             <p *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-text-muted ">
