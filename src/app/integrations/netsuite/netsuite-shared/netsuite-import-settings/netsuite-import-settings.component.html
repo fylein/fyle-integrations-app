@@ -17,7 +17,7 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="(brandingConfig.brandId === 'co' ? (getCategoryLabel() | sentenceCase) : getCategoryLabel()) + brandingContent.importCategoriesLabel"
+                        [label]="getCategoryLabel() + brandingContent.importCategoriesLabel"
                         [subLabel]="getCategorySubLabel() + brandingContent.importCategoriesSubLabel"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"

@@ -4,11 +4,10 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
-import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, NetsuiteFyleField, NetsuiteOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
-import { NetsuiteImportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
+import { NetsuiteImportSettingGet, NetsuiteImportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -64,7 +63,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   customFieldOption: ExpenseField[] = ImportSettingsModel.getCustomFieldOption();
 
-  importSettings: any;
+  importSettings: NetsuiteImportSettingGet | null;
 
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],
@@ -179,14 +178,14 @@ export class NetsuiteImportSettingsComponent implements OnInit {
   }
 
   getCategoryLabel(): string {
-    if (this.importSettings.configuration.import_netsuite_employee) {
-      return 'Import the Expense Categories';
+    if (this.importSettings?.configuration?.import_netsuite_employees) {
+      return brandingConfig.brandId !== 'co' ? 'Import the Expense Categories' : 'Import the expense categories';
     }
-    return 'Import the Accounts';
+    return  brandingConfig.brandId !== 'co' ? 'Import the Accounts' : 'Import the accounts';
   }
 
   getCategorySubLabel(): string {
-    if (this.importSettings.configuration.import_netsuite_employee) {
+    if (this.importSettings?.configuration?.import_netsuite_employees) {
       return 'Imported expense categories';
     }
     return 'Imported accounts';

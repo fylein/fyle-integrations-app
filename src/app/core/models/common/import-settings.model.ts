@@ -56,7 +56,7 @@ export class ImportSettingsModel {
     });
   }
 
-  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] | [], accountingAppFields: IntegrationField[]): FormGroup[] {
+  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] | [], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();
@@ -89,13 +89,14 @@ export class ImportSettingsModel {
       }
     });
 
-
-    accountingAppFields.forEach((accountingAppField) => {
-      const fieldData = unmappedFieldMap.get(accountingAppField.attribute_type);
-      if (fieldData) {
-        expenseFieldFormArray.push(this.createFormGroup(fieldData));
-      }
-    });
+    if (expenseFieldFormArray.length < 3 || isDestinationFixedImport) {
+      accountingAppFields.forEach((accountingAppField) => {
+        const fieldData = unmappedFieldMap.get(accountingAppField.attribute_type);
+        if (fieldData) {
+          expenseFieldFormArray.push(this.createFormGroup(fieldData));
+        }
+      });
+    }
 
     return expenseFieldFormArray;
   }
