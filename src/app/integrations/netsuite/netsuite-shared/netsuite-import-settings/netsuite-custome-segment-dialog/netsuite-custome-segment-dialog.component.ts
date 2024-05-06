@@ -26,11 +26,11 @@ export class NetsuiteCustomeSegmentDialogComponent implements OnInit {
 
   @Output() closeDialog = new EventEmitter();
 
-  isCustomeTypeSection: boolean = true;
+  isCustomTypeSelectionActive: boolean = true;
 
-  isInternelIdSection: boolean = false;
+  isInternalIDSelectionActive: boolean = false;
 
-  isTransactionLineSection: boolean = false;
+  isTransactionLineSectionActive: boolean = false;
 
   stepNumber: number = 1;
 
@@ -46,16 +46,16 @@ export class NetsuiteCustomeSegmentDialogComponent implements OnInit {
     this.closeDialog.emit();
   }
 
-  nextStep(stepNumber: number) {
+  proceedToNextStep(stepNumber: number) {
     if (stepNumber === 1) {
-      this.isCustomeTypeSection = false;
-      this.isInternelIdSection = true;
-      this.isTransactionLineSection = false;
+      this.isCustomTypeSelectionActive = false;
+      this.isInternalIDSelectionActive = true;
+      this.isTransactionLineSectionActive = false;
       this.stepNumber = 2;
     } else {
-      this.isCustomeTypeSection = false;
-      this.isInternelIdSection = false;
-      this.isTransactionLineSection = true;
+      this.isCustomTypeSelectionActive = false;
+      this.isInternalIDSelectionActive = false;
+      this.isTransactionLineSectionActive = true;
       this.stepNumber = 3;
     }
   }
@@ -65,6 +65,10 @@ export class NetsuiteCustomeSegmentDialogComponent implements OnInit {
       return this.form.controls.custom_field_type.invalid;
     }
     return this.form.controls.internal_id.invalid;
+  }
+
+  getCustomeSegmentTypeLabel(): string {
+    return brandingConfig.brandId === 'co' ? 'Choose custom field type' : 'Choose Custom Field Type';
   }
 
   getInternalIDLabel(): string {
@@ -78,14 +82,13 @@ export class NetsuiteCustomeSegmentDialogComponent implements OnInit {
     return this.brandConfig.brandId === 'co' ? new SnakeCaseToSpaceCasePipe().transform('Enter Transaction Line Field ID') : 'Enter Transaction Line Field ID';
   }
 
-  getcustomeSegmentImage(): string {
+  getCustomSegmentImage(): string {
     if (this.form.controls.custom_field_type.value === NetsuiteCustomeSegmentOption.CUSTOM_LIST) {
-      return 'assets/illustrations/netsuite/Custom List.png';
+      return 'assets/illustrations/netsuite/png/custom-list.png';
     } else if (this.form.controls.custom_field_type.value === NetsuiteCustomeSegmentOption.CUSTOM_RECORD) {
-      return 'assets/illustrations/netsuite/Custom Record.png';
+      return 'assets/illustrations/netsuite/png/custom-record.png';
     }
-      return 'assets/illustrations/netsuite/Custom Segment.png';
-
+    return 'assets/illustrations/netsuite/png/custom-segment.png';
   }
 
   ngOnInit(): void {

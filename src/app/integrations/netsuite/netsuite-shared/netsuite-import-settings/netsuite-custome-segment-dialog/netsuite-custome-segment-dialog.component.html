@@ -11,10 +11,10 @@
                     </div>
                 </ng-template>
                 <div class="tw-p-24-px tw-border-t tw-border-t-border-tertiary">
-                    <div *ngIf="isCustomeTypeSection">
+                    <div *ngIf="isCustomTypeSelectionActive">
                         <div class="tw-mb-14-px">
                             <div class="tw-mb-10-px">
-                                <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400">Choose Custom Field Type</label>
+                                <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400">{{getCustomeSegmentTypeLabel()}}</label>
                             </div>
                             <div>
                                 <p-dropdown appendTo="body" [options]="options"
@@ -43,11 +43,11 @@
                                 [infoText]="'Follow the steps as shown below to access the necessary details on your Netsuite account.'">
                             </app-configuration-info-label>
                             <video controls="controls" width="800" height="600" name="sample video" class="tw-mt-16-px" loop autoplay>
-                                <source src="assets/illustrations/netsuite/Custom Field Type.mov">
+                                <source src="assets/illustrations/netsuite/custom-field-type.mov">
                             </video>
                         </div>
                     </div>
-                    <div *ngIf="isInternelIdSection">
+                    <div *ngIf="isInternalIDSelectionActive">
                         <div class="tw-mb-14-px">
                             <div class="tw-mb-10-px">
                                 <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400">{{getInternalIDLabel()}}</label>
@@ -61,10 +61,10 @@
                             <app-configuration-info-label
                                 [infoText]="'Follow the steps as shown below to access the necessary details on your Netsuite account.'">
                             </app-configuration-info-label>
-                            <img class="tw-mt-16-px" width="800" height="600" [src]="getcustomeSegmentImage()" alt="">
+                            <img class="tw-mt-16-px" width="800" height="600" [src]="getCustomSegmentImage()" alt="">
                         </div>
                     </div>
-                    <div *ngIf="isTransactionLineSection">
+                    <div *ngIf="isTransactionLineSectionActive">
                         <div class="tw-mb-14-px">
                             <div class="tw-mb-10-px">
                                 <app-mandatory-field></app-mandatory-field><label for="" class="tw-text-14-px tw-text-form-label-text-color tw-font-400">{{getTransactionIdLabel()}}</label>
@@ -78,7 +78,7 @@
                             <app-configuration-info-label
                                 [infoText]="'Follow the steps as shown below to access the necessary details on your Netsuite account.'">
                             </app-configuration-info-label>
-                            <img width="800" height="600" class="tw-mt-16-px" src="assets/illustrations/netsuite/Field Line Item.png" alt="">
+                            <img width="800" height="600" class="tw-mt-16-px" src="assets/illustrations/netsuite/png/field-line-item.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                                 Cancel
                             </button>
                         </div>
-                        <button *ngIf="stepNumber < 3" type="button" pButton [disabled]="isDisabled()" (click)="nextStep(stepNumber)">
+                        <button *ngIf="stepNumber < 3" type="button" pButton [disabled]="isDisabled()" (click)="proceedToNextStep(stepNumber)">
                             Next
                         </button>
                         <button *ngIf="stepNumber === 3" type="button" pButton [disabled]="form.invalid" (click)="save()">
