@@ -43,7 +43,7 @@
                                 [infoText]="'Follow the steps as shown below to access the necessary details on your Netsuite account.'">
                             </app-configuration-info-label>
                             <video controls="controls" width="800" height="600" name="sample video" class="tw-mt-16-px" loop autoplay>
-                                <source src="assets/illustrations/netsuite/custom-field-type.mov">
+                                <source [src]="setImagesForCustomSegment()">
                             </video>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                             <app-configuration-info-label
                                 [infoText]="'Follow the steps as shown below to access the necessary details on your Netsuite account.'">
                             </app-configuration-info-label>
-                            <img class="tw-mt-16-px" width="800" height="600" [src]="getCustomSegmentImage()" alt="">
+                            <img class="tw-mt-16-px" width="800" height="600" [src]="setImagesForCustomSegment()" alt="">
                         </div>
                     </div>
                     <div *ngIf="isTransactionLineSectionActive">
@@ -78,7 +78,7 @@
                             <app-configuration-info-label
                                 [infoText]="'Follow the steps as shown below to access the necessary details on your Netsuite account.'">
                             </app-configuration-info-label>
-                            <img width="800" height="600" class="tw-mt-16-px" src="assets/illustrations/netsuite/png/field-line-item.png" alt="">
+                            <img width="800" height="600" class="tw-mt-16-px" [src]="setImagesForCustomSegment()" alt="">
                         </div>
                     </div>
                 </div>

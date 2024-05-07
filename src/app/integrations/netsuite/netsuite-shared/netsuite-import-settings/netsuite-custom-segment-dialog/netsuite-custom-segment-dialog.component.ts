@@ -85,6 +85,15 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
     return this.brandingConfig.brandId === 'co' ? new SnakeCaseToSpaceCasePipe().transform('Enter Transaction Line Field ID') : 'Enter Transaction Line Field ID';
   }
 
+  setImagesForCustomSegment(): string {
+    if (this.stepNumber === 1) {
+      return 'assets/illustrations/netsuite/custom-field-type.mov';
+    } else if (this.stepNumber === 2) {
+      return this.getCustomSegmentImage();
+    }
+    return 'assets/illustrations/netsuite/png/field-line-item.png';
+  }
+
   getCustomSegmentImage(): string {
     if (this.form.controls.customFieldType.value === NetsuiteCustomSegmentOption.CUSTOM_LIST) {
       return 'assets/illustrations/netsuite/png/custom-list.png';
