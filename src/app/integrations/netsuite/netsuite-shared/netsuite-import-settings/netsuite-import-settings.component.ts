@@ -67,7 +67,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   importSettings: any;
 
-  customrSegmentOptions: SelectFormOption[] = NetsuiteImportSettingModel.getCustomeSegmentOptions();
+  customrSegmentOptions: SelectFormOption[] = NetsuiteImportSettingModel.getCustomSegmentOptions();
 
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],
@@ -75,19 +75,19 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     source_placeholder: ['', Validators.required]
   });
 
-  customeSegmentForm: FormGroup = this.formBuilder.group({
-    script_id: ['', Validators.required],
-    internal_id: ['', Validators.required],
-    custom_field_type: ['', Validators.required]
+  customSegmentForm: FormGroup = this.formBuilder.group({
+    scriptId: ['', Validators.required],
+    internalId: ['', Validators.required],
+    customFieldType: ['', Validators.required]
   });
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.netsuite.configuration.importSetting;
 
-  isCustomeSegmentTrigged: boolean = false;
+  isCustomSegmentTrigged: boolean = false;
 
-  isCustomeSegmentIsSaving: boolean = false;
+  isCustomSegmentSaveInProgress: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -101,13 +101,13 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private router: Router
   ) { }
 
-  addCustomeSegment() {
-    this.isCustomeSegmentTrigged = true;
+  addCustomSegment() {
+    this.isCustomSegmentTrigged = true;
   }
 
-  closeCustomeSegment() {
-    this.isCustomeSegmentTrigged = false;
-    this.customeSegmentForm.reset();
+  closeCustomSegment() {
+    this.isCustomSegmentTrigged = false;
+    this.customSegmentForm.reset();
   }
 
   save() {
@@ -200,23 +200,24 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     this.helperService.refreshNetsuiteDimensions().subscribe();
   }
 
-  saveCustomeSegment() {
-    this.isCustomeSegmentIsSaving = true;
-    const customeSegmentPayload = NetsuiteImportSettingModel.constructCustomSegmentPayload(this.customeSegmentForm, this.importSettings.workspace_id);
+  saveCustomSegment() {
+    this.isCustomSegmentSaveInProgress = true;
+    const customSegmentPayload = NetsuiteImportSettingModel.constructCustomSegmentPayload(this.customSegmentForm, this.importSettings.workspace_id);
 
-    this.importSettingService.postNetsuiteCustomSegments(customeSegmentPayload).subscribe(() => {
+    this.importSettingService.postNetsuiteCustomSegments(customSegmentPayload).subscribe(() => {
       this.importSettingService.getNetsuiteFields().subscribe((netsuiteFields: IntegrationField[]) => {
-        this.isCustomeSegmentTrigged = false;
-        this.isCustomeSegmentIsSaving = false;
+        this.isCustomSegmentTrigged = false;
+        this.isCustomSegmentSaveInProgress = false;
         this.netsuiteFields = netsuiteFields;
+        this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, netsuiteFields, this.taxCodes);
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Custom field added successfully');
-        this.customeSegmentForm.reset();
+        this.customSegmentForm.reset();
       });
     }, () => {
-      this.isCustomeSegmentTrigged = false;
-      this.isCustomeSegmentIsSaving = false;
-      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to add Custom Field');
-      this.customeSegmentForm.reset();
+      this.isCustomSegmentTrigged = false;
+      this.isCustomSegmentSaveInProgress = false;
+      this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Failed to add custom field');
+      this.customSegmentForm.reset();
     });
   }
 

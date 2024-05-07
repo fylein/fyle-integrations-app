@@ -53,6 +53,7 @@ export type ContentConfiguration = {
                     importNetsuiteEmployeesLabel: string;
                     importNetsuiteEmployeesSubLabel: string;
                     toggleToastMessage: string,
+                    customSegmentHeader: string;
                 },
                 advancedSettings: {
                     memoStructureSubLabel: string;

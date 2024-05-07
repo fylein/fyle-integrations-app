@@ -77,12 +77,12 @@
                 </div>
 
                 <div class="tw-mt-24-px">
-                    <div class="tw-flex tw-items-center" (click)="addCustomeSegment()">
+                    <div class="tw-flex tw-items-center" (click)="addCustomSegment()">
                         <div class="tw-mr-14-px">
                             <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'"></app-svg-icon>
                         </div>
-                        <div class="tw-cursor-pointer tw-text-mandatory-field-color">
-                            Add Custom Lists/Records/Segments
+                        <div class="tw-cursor-pointer tw-text-mandatory-field-color tw-font-500 tw-text-14-px">
+                            {{brandingContent.customSegmentHeader}}
                         </div>
                     </div>
                 </div>
@@ -115,13 +115,13 @@
     </app-preview-dialog>
 </div>
 
-<div *ngIf="isCustomeSegmentTrigged">
-    <app-netsuite-custome-segment-dialog
-        [form]="customeSegmentForm"
-        [isCustomeSegmentDialogVisible]="true"
+<div *ngIf="isCustomSegmentTrigged">
+    <app-netsuite-custom-segment-dialog
+        [form]="customSegmentForm"
+        [isCustomSegmentDialogVisible]="true"
         [options]="customrSegmentOptions"
-        [isLoading]="isCustomeSegmentIsSaving"
-        (closeDialog)="closeCustomeSegment()"
-        (saveClick)="saveCustomeSegment()">
-    </app-netsuite-custome-segment-dialog>
+        [isLoading]="isCustomSegmentSaveInProgress"
+        (closeDialog)="closeCustomSegment()"
+        (saveClick)="saveCustomSegment()">
+    </app-netsuite-custom-segment-dialog>
 </div>

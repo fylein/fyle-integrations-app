@@ -1,24 +1,25 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { brandingContent } from 'src/app/branding/branding-config';
 import { brandingConfig } from 'src/app/branding/c1-contents-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { NetsuiteCustomeSegmentOption } from 'src/app/core/models/enum/enum.model';
+import { NetsuiteCustomSegmentOption } from 'src/app/core/models/enum/enum.model';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 
 @Component({
-  selector: 'app-netsuite-custome-segment-dialog',
-  templateUrl: './netsuite-custome-segment-dialog.component.html',
-  styleUrls: ['./netsuite-custome-segment-dialog.component.scss']
+  selector: 'app-netsuite-custom-segment-dialog',
+  templateUrl: './netsuite-custom-segment-dialog.component.html',
+  styleUrls: ['./netsuite-custom-segment-dialog.component.scss']
 })
-export class NetsuiteCustomeSegmentDialogComponent implements OnInit {
+export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   @Input() form: FormGroup;
 
   @Input() isLoading: boolean;
 
-  @Input() isCustomeSegmentDialogVisible: boolean;
+  @Input() isCustomSegmentDialogVisible: boolean;
 
   @Input() options: SelectFormOption[];
 
@@ -34,7 +35,9 @@ export class NetsuiteCustomeSegmentDialogComponent implements OnInit {
 
   stepNumber: number = 1;
 
-  readonly brandConfig = brandingConfig;
+  readonly brandingContent = brandingContent.netsuite.configuration.importSetting;
+
+  readonly brandingConfig = brandingConfig;
 
   constructor() { }
 
@@ -62,30 +65,30 @@ export class NetsuiteCustomeSegmentDialogComponent implements OnInit {
 
   isDisabled(): boolean {
     if (this.stepNumber === 1) {
-      return this.form.controls.custom_field_type.invalid;
+      return this.form.controls.customFieldType.invalid;
     }
-    return this.form.controls.internal_id.invalid;
+    return this.form.controls.internalId.invalid;
   }
 
-  getCustomeSegmentTypeLabel(): string {
+  getCustomSegmentTypeLabel(): string {
     return brandingConfig.brandId === 'co' ? 'Choose custom field type' : 'Choose Custom Field Type';
   }
 
   getInternalIDLabel(): string {
     if (brandingConfig.brandId === 'co') {
-      return 'Enter ' + new SentenceCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.form.controls.custom_field_type.value)) + ' internal ID';
+      return 'Enter ' + new SentenceCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.form.controls.customFieldType.value)) + ' internal ID';
     }
-    return 'Enter ' + new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.form.controls.custom_field_type.value)) + ' Internal ID';
+    return 'Enter ' + new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.form.controls.customFieldType.value)) + ' Internal ID';
   }
 
   getTransactionIdLabel(): string {
-    return this.brandConfig.brandId === 'co' ? new SnakeCaseToSpaceCasePipe().transform('Enter Transaction Line Field ID') : 'Enter Transaction Line Field ID';
+    return this.brandingConfig.brandId === 'co' ? new SnakeCaseToSpaceCasePipe().transform('Enter Transaction Line Field ID') : 'Enter Transaction Line Field ID';
   }
 
   getCustomSegmentImage(): string {
-    if (this.form.controls.custom_field_type.value === NetsuiteCustomeSegmentOption.CUSTOM_LIST) {
+    if (this.form.controls.customFieldType.value === NetsuiteCustomSegmentOption.CUSTOM_LIST) {
       return 'assets/illustrations/netsuite/png/custom-list.png';
-    } else if (this.form.controls.custom_field_type.value === NetsuiteCustomeSegmentOption.CUSTOM_RECORD) {
+    } else if (this.form.controls.customFieldType.value === NetsuiteCustomSegmentOption.CUSTOM_RECORD) {
       return 'assets/illustrations/netsuite/png/custom-record.png';
     }
     return 'assets/illustrations/netsuite/png/custom-segment.png';

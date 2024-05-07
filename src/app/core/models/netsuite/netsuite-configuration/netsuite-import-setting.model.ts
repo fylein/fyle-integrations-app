@@ -6,7 +6,7 @@ import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration
 import { DestinationAttribute } from "../../db/destination-attribute.model";
 import { NetSuiteExportSettingModel } from "./netsuite-export-setting.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
-import { NetsuiteCustomeSegmentOption } from "../../enum/enum.model";
+import { NetsuiteCustomSegmentOption } from "../../enum/enum.model";
 
 
 export type NetsuiteImportSettingConfiguration = {
@@ -45,28 +45,28 @@ export type NetsuiteImportSettingConfiguration = {
 
 export class NetsuiteImportSettingModel extends ImportSettingsModel {
 
-  static getCustomeSegmentOptions(): SelectFormOption[] {
+  static getCustomSegmentOptions(): SelectFormOption[] {
     return [
       {
         label: 'Custom List',
-        value: NetsuiteCustomeSegmentOption.CUSTOM_LIST
+        value: NetsuiteCustomSegmentOption.CUSTOM_LIST
       },
       {
         label: 'Custom Record',
-        value: NetsuiteCustomeSegmentOption.CUSTOM_RECORD
+        value: NetsuiteCustomSegmentOption.CUSTOM_RECORD
       },
       {
         label: 'Custom Segment',
-        value: NetsuiteCustomeSegmentOption.CUSTOM_SEGMENT
+        value: NetsuiteCustomSegmentOption.CUSTOM_SEGMENT
       }
     ];
   }
 
-  static constructCustomSegmentPayload(customeSegmentForm: FormGroup, workspaceId: number): CustomSegment {
+  static constructCustomSegmentPayload(customSegmentForm: FormGroup, workspaceId: number): CustomSegment {
     return {
-      segment_type: customeSegmentForm.get('custom_field_type')?.value,
-      script_id: customeSegmentForm.get('script_id')?.value,
-      internal_id: customeSegmentForm.get('internal_id')?.value,
+      segment_type: customSegmentForm.get('customFieldType')?.value,
+      script_id: customSegmentForm.get('scriptId')?.value,
+      internal_id: customSegmentForm.get('internalId')?.value,
       workspace: workspaceId
     };
   }
