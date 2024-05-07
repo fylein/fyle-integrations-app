@@ -6,7 +6,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const c1Contents = {
     netsuite: {
         landing: {
-            contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
+            contentText: 'Import GL accounts and projects from NetSuite and export expenses from your ' + brandingConfig.brandName + ' account.',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
@@ -88,7 +88,7 @@ export const c1Contents = {
     },
     xero: {
         landing: {
-            contentText: 'Import data from Xero to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Xero. ',
+            contentText: 'Import GL accounts and projects from Xero and export expenses from your ' + brandingConfig.brandName + ' account.',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
