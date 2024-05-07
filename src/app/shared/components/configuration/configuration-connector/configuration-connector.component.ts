@@ -32,6 +32,10 @@ export class ConfigurationConnectorComponent implements OnInit {
 
   @Input() appName: string;
 
+  @Input() subLabel: string;
+
+  @Input() placeholder: string;
+
   @Output() switchCompany = new EventEmitter();
 
   @Output() connectCompany = new EventEmitter();
