@@ -201,7 +201,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   saveCustomSegment() {
     this.isCustomSegmentSaveInProgress = true;
-    const customSegmentPayload = NetsuiteImportSettingModel.constructCustomSegmentPayload(this.customSegmentForm, this.importSettings.workspace_id);
+    const customSegmentPayload = NetsuiteImportSettingModel.constructCustomSegmentPayload(this.customSegmentForm, +this.workspaceService.getWorkspaceId());
 
     this.importSettingService.postNetsuiteCustomSegments(customSegmentPayload).subscribe(() => {
       this.importSettingService.getNetsuiteFields().subscribe((netsuiteFields: IntegrationField[]) => {
