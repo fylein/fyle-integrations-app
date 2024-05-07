@@ -24,7 +24,7 @@
                 <div class="tw-flex tw-items-center tw-justify-center">
                     <p-dropdown appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'" 
                         [(ngModel)]="companyName" (onChange)="connect()"
-                        placeholder="Select Entity">
+                        [placeholder]="placeholder">
                         <ng-template let-option pTemplate="item">
                             <div
                                 [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}">
@@ -41,8 +41,7 @@
                     </p-dropdown>
                 </div>
                 <div class="tw-w-300-px tw-text-pretty tw-text-center tw-py-16-px">
-                    <span *ngIf="appName !== AppName.XERO" class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Please select a Location (Entity) from {{accountingAppTitle}} to proceed further.</span>
-                    <span *ngIf="appName === AppName.XERO" class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">Select a {{brandingConfig.brandId === 'co' ? 'tenant' : 'Tenant'}} from {{accountingAppTitle}} to continue</span>
+                    <span class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">{{subLabel}}</span>
                 </div>
             </div>
         </div>
@@ -60,9 +59,6 @@
             </p>
             <p *ngIf="accountingCompanyTokenExpired && !accountingCompanyConnectionInProgress" class="tw-text-text-muted ">
                 Token expired.
-            </p>
-            <p *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyTokenExpired && !accountingCompanyName && isDisconnectClicked && appName === AppName.XERO">
-                You will need to select a Tenant to proceed with the onboarding.
             </p>
             <div *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyTokenExpired" class="tw-h-60-px">
                 <span (click)="connect()" class="tw-inline-block btn-text-primary tw-pt-10-px ">

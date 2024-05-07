@@ -116,18 +116,19 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
   }
 
   static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[]): FormGroup {
-
+    const level: DefaultDestinationAttribute[] = this.getDefaultLevelOptions();
+    const findObjectByDestinationId = (id: string) => level?.find(item => item.id === id) || null;
     return new FormGroup({
       paymentSync: new FormControl(advancedSettings?.configuration.sync_fyle_to_netsuite_payments ? NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE : advancedSettings?.configuration.sync_netsuite_to_fyle_payments ? NetsuitePaymentSyncDirection.NETSUITE_TO_FYLE : null),
       paymentAccount: new FormControl(advancedSettings?.general_mappings.vendor_payment_account?.id ? advancedSettings?.general_mappings.vendor_payment_account : null ),
       netsuiteLocation: new FormControl(advancedSettings?.general_mappings.netsuite_location?.id ? advancedSettings?.general_mappings.netsuite_location : null),
       useEmployeeLocation: new FormControl(advancedSettings?.general_mappings.use_employee_location ? advancedSettings?.general_mappings.use_employee_location : false),
-      netsuiteLocationLevel: new FormControl(advancedSettings?.general_mappings.netsuite_location_level ? advancedSettings?.general_mappings.netsuite_location_level : null),
+      netsuiteLocationLevel: new FormControl(advancedSettings?.general_mappings.netsuite_location_level ? findObjectByDestinationId(advancedSettings?.general_mappings.netsuite_location_level) : null),
       netsuiteDepartment: new FormControl(advancedSettings?.general_mappings.netsuite_department?.id ? advancedSettings?.general_mappings.netsuite_department : null),
-      netsuiteDepartmentLevel: new FormControl(advancedSettings?.general_mappings.netsuite_department_level ? advancedSettings?.general_mappings.netsuite_department_level : null),
+      netsuiteDepartmentLevel: new FormControl(advancedSettings?.general_mappings.netsuite_department_level ? findObjectByDestinationId(advancedSettings?.general_mappings.netsuite_department_level) : null),
       useEmployeeDepartment: new FormControl(advancedSettings?.general_mappings.use_employee_department ? advancedSettings?.general_mappings.use_employee_department : false),
       netsuiteClass: new FormControl(advancedSettings?.general_mappings.netsuite_class?.id ? advancedSettings?.general_mappings.netsuite_class : null),
-      netsuiteClassLevel: new FormControl(advancedSettings?.general_mappings.netsuite_class_level ? advancedSettings?.general_mappings.netsuite_class_level : null),
+      netsuiteClassLevel: new FormControl(advancedSettings?.general_mappings.netsuite_class_level ? findObjectByDestinationId(advancedSettings?.general_mappings.netsuite_class_level) : null),
       useEmployeeClass: new FormControl(advancedSettings?.general_mappings.use_employee_class ? advancedSettings?.general_mappings.use_employee_class : false),
       changeAccountingPeriod: new FormControl(advancedSettings?.configuration.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings?.configuration.auto_create_destination_entity),

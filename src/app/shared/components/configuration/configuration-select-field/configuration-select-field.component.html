@@ -1,5 +1,5 @@
-<div [formGroup]="form" class="tw-p-24-px">
-    <div *ngIf="!isDefaultFields" class="tw-flex tw-flex-row tw-justify-between tw-items-center">
+<div [formGroup]="form" >
+    <div *ngIf="!isDefaultFields" class="tw-flex tw-flex-row tw-justify-between tw-items-center tw-p-24-px">
         <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
             <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
                 <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
@@ -139,14 +139,14 @@
             <div>
                 <label>{{label}}</label>
             </div>
-            <div class="tw-pt-2">
+            <div class="tw-pt-2 defaultFields">
                 <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="name"
                 [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}">
                     <ng-template pTemplate="selectedItem" let-item>
                         <p>
                             {{ item.name }}
                         </p>
-                        <app-svg-icon [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                        <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                     </ng-template>
                 </p-dropdown>
             </div>  
