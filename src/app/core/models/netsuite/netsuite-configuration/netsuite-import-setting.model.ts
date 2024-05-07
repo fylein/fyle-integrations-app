@@ -2,8 +2,7 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
 import { MappingSetting } from "../../db/mapping-setting.model";
 import { IntegrationField } from "../../db/mapping.model";
-import { ImportSettingGeneralMapping } from "../../intacct/intacct-configuration/import-settings.model";
-import { DestinationAttribute } from "../../db/destination-attribute.model";
+import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { NetSuiteExportSettingModel } from "./netsuite-export-setting.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { NetsuiteCustomSegmentOption } from "../../enum/enum.model";
@@ -18,16 +17,20 @@ export type NetsuiteImportSettingConfiguration = {
     auto_create_merchants: boolean
   }
 
+  export type NetsuiteImportSettingGeneralMapping = {
+    default_tax_code: DefaultDestinationAttribute
+  }
+
   export type NetsuiteImportSettingPost = {
     configuration: NetsuiteImportSettingConfiguration,
-    general_mappings: ImportSettingGeneralMapping,
+    general_mappings: NetsuiteImportSettingGeneralMapping,
     mapping_settings: ImportSettingMappingRow[] | []
   }
 
 
   export type NetsuiteImportSettingGet = {
     configuration: NetsuiteImportSettingConfiguration,
-    general_mappings: ImportSettingGeneralMapping,
+    general_mappings: NetsuiteImportSettingGeneralMapping,
     mapping_settings: MappingSetting[],
     workspace_id: number
   }

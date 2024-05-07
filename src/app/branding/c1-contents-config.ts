@@ -6,7 +6,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const c1Contents = {
     netsuite: {
         landing: {
-            contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
+            contentText: 'Import GL accounts and projects from NetSuite and export expenses from your ' + brandingConfig.brandName + ' account.',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
@@ -43,8 +43,8 @@ export const c1Contents = {
                 stepName: 'Import Settings',
                 headerText: '',
                 contentText: 'Choose the required import fields from NetSuite to expense management.',
-                importCategoriesLabel: 'Import the chart of accounts as categories',
-                importCategoriesSubLabel: 'Imported accounts will be available as categories in expense management.',
+                importCategoriesLabel: ' as categories',
+                importCategoriesSubLabel: ' will be available as categories in expense management.',
                 importCustomersLabel: 'Import customers from NetSuite',
                 importCustomersSubLabel: 'The customers in NetSuite will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
                 taxCodeLabel: 'Import tax from NetSuite',
@@ -65,7 +65,7 @@ export const c1Contents = {
                 scheduleAutoExport: 'Schedule automatic export',
                 email: 'Send error notification to',
                 paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
-                autoCreateVendorsLabel: 'Auto create vendor',
+                autoCreateVendorsLabel: 'Auto create ',
                 autoCreateMerchantsAsVendorsLabel: 'Auto create ' + brandingConfig.brandName + ' merchants as vendors on NetSuite',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
@@ -74,7 +74,7 @@ export const c1Contents = {
                 dfvSubLabel: 'If you\'ve made a field mandatory in NetSuite but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.',
                 dfvLabel: 'Default field values',
                 changeAccountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
-                defaultPaymentAccount: 'Select payment account',
+                defaultPaymentAccount: 'Select payment bank account',
                 memoStructureLabel: 'Set the line-item description field in NetSuite',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in NetSuite. ',
                 customizationSubLabel: 'Customize the data that you\'d like to export from expense management to NetSuite by choosing which data points need to be exported.',
@@ -89,7 +89,7 @@ export const c1Contents = {
     },
     xero: {
         landing: {
-            contentText: 'Import data from Xero to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Xero. ',
+            contentText: 'Import GL accounts and projects from Xero and export expenses from your ' + brandingConfig.brandName + ' account.',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
