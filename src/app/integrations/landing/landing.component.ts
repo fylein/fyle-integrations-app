@@ -71,6 +71,8 @@ export class LandingComponent implements OnInit {
 
   readonly isINCluster = this.storageService.get('cluster-domain').includes('in1');
 
+  readonly hideToCo = !(this.storageService.get('cluster-domain').includes('.fylehq.com') || this.storageService.get('cluster-domain').includes('.fyle.tech') || this.storageService.get('cluster-domain').includes('-qa.'));
+
   constructor(
     private eventsService: EventsService,
     private qboAuthService: QboAuthService,
