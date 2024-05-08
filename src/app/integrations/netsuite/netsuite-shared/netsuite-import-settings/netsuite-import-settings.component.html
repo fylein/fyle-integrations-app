@@ -5,7 +5,7 @@
 <div *ngIf="!isLoading" class="configuration--contents tw-border-border-tertiary tw-mt-6" [ngClass]="{'tw-mx-120-px tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-mx-60-px tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
     <div>
         <app-configuration-step-header [headerText]="brandingContent.stepName"
-            [contentText]="'In this section, you can choose the fields required to be imported from NetSuite to ' + brandingConfig.brandName + '. '"
+            [contentText]="brandingContent.contentText"
             [redirectLink]="supportArticleLink" [showSyncButton]="isOnboarding" [appName]="appName"
             (refreshDimension)="refreshDimensions()">
         </app-configuration-step-header>
@@ -17,8 +17,8 @@
                 <div class="tw-rounded-lg tw-border-border-tertiary tw-border">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="brandingContent.importCategoriesLabel + brandingConfig.brandName"
-                        [subLabel]="brandingContent.importCategoriesSubLabel"
+                        [label]="getCategoryLabel() + brandingContent.importCategoriesLabel"
+                        [subLabel]="getCategorySubLabel() + brandingContent.importCategoriesSubLabel"
                         [formControllerName]="'importCategories'"
                         [isSectionHeader]="false"
                         [iconPath]="'arrow-tail-down'">
@@ -37,8 +37,8 @@
                   <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportEmployeeAllowed">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
-                        [label]="'Import Netsuite Employee as Employee in '  + brandingConfig.brandName"
-                        [subLabel]="'Import Netsuite Employee as Employee in '  + brandingConfig.brandName"
+                        [label]="brandingContent.importNetsuiteEmployeesLabel"
+                        [subLabel]="brandingContent.importNetsuiteEmployeesSubLabel"
                         [formControllerName]="'importNetsuiteEmployees'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>

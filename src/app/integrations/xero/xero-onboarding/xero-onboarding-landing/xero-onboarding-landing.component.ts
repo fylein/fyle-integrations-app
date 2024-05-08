@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 import { AppName, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { XeroCredentials } from 'src/app/core/models/xero/db/xero-credential.model';
@@ -34,6 +34,8 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
   private oauthCallbackSubscription: Subscription;
 
   readonly brandingConfig = brandingConfig;
+
+  readonly brandingContent = brandingContent.xero.landing;
 
   constructor(
     private helperService: HelperService,

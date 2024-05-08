@@ -36,7 +36,7 @@
                                 [isFieldMandatory]="false"
                                 [mandatoryErrorListName]="'automatic export method'"
                                 [label]="'Set up export frequency'"
-                                [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Sage Intacct.'"
+                                [subLabel]="brandingContent.intacct.configuration.advancedSettings.frequencySubLabel"
                                 [options]="hours"
                                 [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                                 [formControllerName]="'exportScheduleFrequency'"

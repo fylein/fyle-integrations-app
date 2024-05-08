@@ -5,7 +5,7 @@
     <div>
         <app-configuration-step-header
             [headerText]="brandingContent.stepName"
-            [contentText]="'In this section, you can customize the integration based on your accounting requirements. '"
+            [contentText]="brandingContent.contentText"
             [redirectLink]="supportArticleLink"
             [showSyncButton]="isOnboarding"
             [appName]="appName"
@@ -17,7 +17,7 @@
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
                     [label]="'Automation'"
-                    [subLabel]="'You can automate the export and sync of your data in this section.'">
+                    [subLabel]="brandingContent.automationSubLabel">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-mb-16-px">
@@ -25,7 +25,7 @@
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [label]="'Schedule automatic export'" 
-                        [subLabel]="'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Xero.'"
+                        [subLabel]="brandingContent.scheduleSubLabel"
                         [formControllerName]="'exportSchedule'"
                         [iconPath]="'calendar'">
                     </app-configuration-toggle-field>
@@ -37,7 +37,7 @@
                             [isFieldMandatory]="false"
                             [mandatoryErrorListName]="'automatic export method'"
                             [label]="'Set up export frequency'"
-                            [subLabel]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Xero.'"
+                            [subLabel]="brandingContent.frequencySubLabel"
                             [options]="hours"
                             [isEmailPresent]="brandingFeatureConfig.featureFlags.advancedSettings.emailNotification ? true: false"
                             [formControllerName]="'exportScheduleFrequency'"
@@ -49,8 +49,8 @@
 
             <div class="tw-mb-16-px">
                 <app-configuration-step-sub-header
-                    [label]="'Other Preferences'"
-                    [subLabel]="'Based on your preference, you can choose whether you want to create any new records in Xero from ' + brandingConfig.brandName + '. (when there is no employee record found, or when the accounting period is closed)'">
+                    [label]="brandingContent.customPreferencesLabel"
+                    [subLabel]="brandingContent.customPreferencesSubLabel">
                 </app-configuration-step-sub-header>
             </div>
             <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
@@ -58,7 +58,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'calendar'"
                     [label]="brandingContent.postEntriesCurrentPeriod"
-                    [subLabel]="'If there are expenses for which the accounting period is closed in Xero, you can export those to the current month by enabling this option.'"
+                    [subLabel]="brandingContent.accountingPeriodSubLabel"
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
@@ -66,7 +66,7 @@
                     [form]="advancedSettingForm"
                     [iconPath]="'list'"
                     [label]="brandingContent.autoCreateVendorsLabel"
-                    [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in Xero already.'"
+                    [subLabel]="brandingContent.autoCreateVendorsSubLabel"
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
 
