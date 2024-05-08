@@ -31,10 +31,10 @@ export const fyleContents = {
                     cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).',
                     defaultCCCAccountLabel: 'Set Default Credit Card Account as',
                     defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
-                    defaultDebitCardAccountLabel: 'Set Default Debit Card Account as',
+                    defaultDebitCardAccountLabel: 'Set Employee Payables Account as',
                     defaultDebitCardAccountPlaceholder: 'Select Default Debit Card Account',
                     defaultCCCVendorLabel: 'Set Default Corporate Card Vendor as',
-                    accountsPayableLabel: 'To which Accounts Payable account should the ',
+                    accountsPayableLabel: 'Set Vendor Payables Account as',
                     journalOptionLabel: 'Name in Journal Entry',
                     journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
                 }

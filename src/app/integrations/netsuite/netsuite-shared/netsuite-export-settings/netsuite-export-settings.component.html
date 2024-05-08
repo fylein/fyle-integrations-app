@@ -196,16 +196,16 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="exportSettingForm.value.creditCardExportType === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY">
+                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
-                                [isFieldMandatory]="false"
+                                [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Name in which Journal Entry should export'"
                                 [label]="brandingContent.corporateCard.journalOptionLabel"
                                 [subLabel]="brandingContent.corporateCard.journalOptionSubLabel"
                                 [options]="nameInJournalOptions"
                                 [iconPath]="'list'"
-                                [placeholder]="'Select a name'"
+                                [placeholder]="'Select a name in journal entry'"
                                 [formControllerName]="'nameInJournalEntry'">
                             </app-configuration-select-field>
                         </div>

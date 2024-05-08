@@ -201,16 +201,20 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       }
 
       static getMandatoryField(form: FormGroup, controllerName: string): boolean {
+        console.log(form.controls.nameInJournalEntry.value, form)
         switch (controllerName) {
           case 'bankAccount':
-            return form.value.employeeFieldMapping === EmployeeFieldMapping.EMPLOYEE;
+            return form.controls.employeeFieldMapping.value === EmployeeFieldMapping.EMPLOYEE;
           case 'accountsPayable':
-            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.value.employeeFieldMapping === EmployeeFieldMapping.VENDOR;
+            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.employeeFieldMapping.value === EmployeeFieldMapping.VENDOR;
           case 'creditCardAccount':
+            console.log(form.controls.creditCardExportType.value)
             return form.controls.creditCardExportType && form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.BILL;
           case 'defaultCreditCardVendor':
+            console.log(form.controls.creditCardExportType.value, form.controls.creditCardExportType.value, form.controls.creditCardExportType.value, form.controls.nameInJournalEntry.value)
             return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE  || (form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.nameInJournalEntry.value === NameInJournalEntry.MERCHANT);
-
+          case 'nameInJournalEntry':
+            return form.controls.creditCardExportType && form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
           default:
             return false;
         }
@@ -227,7 +231,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             formController: 'reimbursableExportType',
             requiredValue: {
               [NetsuiteReimbursableExpensesObject.BILL]: ['accountsPayable'],
-              [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: ['accountsPayable', 'bankAccount'],
+              [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: [],
               [NetsuiteReimbursableExpensesObject.EXPENSE_REPORT]: ['bankAccount']
             }
           },
@@ -236,7 +240,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             requiredValue: {
               [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor'],
               [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['bankAccount', 'defaultCreditCardVendor'],
-              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalOptions'],
+              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalEntry'],
               [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['creditCardAccount']
             }
           }
@@ -263,7 +267,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           creditCardAccount: new FormControl(exportSettings?.general_mappings?.default_ccc_account?.id ? exportSettings.general_mappings.default_ccc_account : null),
           accountsPayable: new FormControl(exportSettings?.general_mappings?.accounts_payable?.id ? exportSettings.general_mappings.accounts_payable : null),
           defaultCreditCardVendor: new FormControl(exportSettings?.general_mappings?.default_ccc_vendor?.id ? exportSettings.general_mappings.default_ccc_vendor : null),
-          nameInJournalEntry: new FormControl(exportSettings?.configuration?.name_in_journal_entry ? exportSettings?.configuration.name_in_journal_entry : this.getNameInJournalOptions()[0].value),
+          nameInJournalEntry: new FormControl(exportSettings?.configuration?.name_in_journal_entry ? exportSettings?.configuration.name_in_journal_entry : null),
           searchOption: new FormControl('')
         });
       }

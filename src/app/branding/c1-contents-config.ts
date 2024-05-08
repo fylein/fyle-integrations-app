@@ -31,10 +31,10 @@ export const c1Contents = {
                     creditCardExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
                     defaultCCCAccountLabel: 'Set default credit card account as',
                     defaultCCCAccountPlaceholder: 'Select default credit card account',
-                    defaultDebitCardAccountLabel: 'Set default debit card account as',
+                    defaultDebitCardAccountLabel: 'Set employee payables account as',
                     defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
-                    accountsPayableLabel: 'To which accounts payable account should the ',
+                    accountsPayableLabel: 'Set vendor payables account as',
                     journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
                 }
