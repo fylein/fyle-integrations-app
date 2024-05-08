@@ -232,7 +232,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.reimbursableExportGroup.reset();
       this.exportSettingForm.controls.reimbursableExportDate.reset();
       this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
-        if (brandingConfig.brandId==='fyle') { 
+        if (brandingConfig.brandId==='fyle') {
           if (reimbursableExportGroup===ExpenseGroupingFieldOption.EXPENSE_ID) {
             this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
           } else if (reimbursableExportGroup===ExpenseGroupingFieldOption.CLAIM_NUMBER || reimbursableExportGroup===ExpenseGroupingFieldOption.REPORT_ID) {
@@ -246,7 +246,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.creditCardExportGroup.reset();
       this.exportSettingForm.controls.creditCardExportDate.reset();
       this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
-        if (brandingConfig.brandId==='fyle') { 
+        if (brandingConfig.brandId==='fyle') {
           if (creditCardExportGroup===ExpenseGroupingFieldOption.EXPENSE_ID) {
             this.cccExpenseGroupingDateOptions = ExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
           } else if (creditCardExportGroup===ExpenseGroupingFieldOption.CLAIM_NUMBER || creditCardExportGroup===ExpenseGroupingFieldOption.REPORT_ID) {
