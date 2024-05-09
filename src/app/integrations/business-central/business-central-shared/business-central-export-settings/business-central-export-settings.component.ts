@@ -198,7 +198,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
-      this.setupCustomWatchers();
       this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
       this.bankOptions = destinationAttributes.ACCOUNT;
       this.vendorOptions = destinationAttributes.VENDOR;
@@ -208,6 +207,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.setupPage();
+    this.setupCustomWatchers();
   }
 
   navigateBack(): void {
