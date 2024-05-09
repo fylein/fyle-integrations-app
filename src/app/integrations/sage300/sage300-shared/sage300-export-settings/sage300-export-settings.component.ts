@@ -107,23 +107,25 @@ export class Sage300ExportSettingsComponent implements OnInit {
     this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
       this.exportSettingForm.controls.reimbursableExportGroup.reset();
       this.exportSettingForm.controls.reimbursableExportDate.reset();
-      this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
+    });
+
+    this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
         this.reimbursableExpenseGroupingDateOptions = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
         this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
       }
-      });
     });
 
     this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.exportSettingForm.controls.creditCardExportGroup.reset();
-      this.exportSettingForm.controls.creditCardExportDate.reset();
-      this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
+      this.exportSettingForm.controls.cccExportGroup.reset();
+      this.exportSettingForm.controls.cccExportDate.reset();
+    });
+
+    this.exportSettingForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
         this.cccExpenseGroupingDateOptions = this.exportSettingService.getCCCExpenseGroupingDateOptions();
-        this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+        this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
       }
-      });
     });
 
   }
