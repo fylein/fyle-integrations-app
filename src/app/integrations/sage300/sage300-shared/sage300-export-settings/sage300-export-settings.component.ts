@@ -104,7 +104,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    this.exportSettingForm?.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
+    this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
       this.exportSettingForm.controls.reimbursableExportGroup.reset();
       this.exportSettingForm.controls.reimbursableExportDate.reset();
       this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
@@ -115,7 +115,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
       });
     });
 
-    this.exportSettingForm?.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
+    this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
       this.exportSettingForm.controls.creditCardExportGroup.reset();
       this.exportSettingForm.controls.creditCardExportDate.reset();
       this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
