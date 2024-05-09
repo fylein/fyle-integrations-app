@@ -68,6 +68,13 @@ export class XeroExportSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
+  previewImagePaths =[
+    {},
+    {
+      'BANK TRANSACTION': 'assets/illustrations/xero/bank-transaction.png'
+    }
+  ];
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.xero.configuration.exportSetting;

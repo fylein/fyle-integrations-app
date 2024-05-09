@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
 
 
 @Component({
@@ -11,9 +11,11 @@ export class NetsuiteOnboardingLandingComponent implements OnInit {
 
   brandingConfig = brandingConfig;
 
-  redirectLink = brandingKbArticles.onboardingArticles.QBO.CONNECTOR;
+  redirectLink = brandingKbArticles.onboardingArticles.NETSUITE.CONNECTOR;
 
-  embedVideoLink = brandingDemoVideoLinks.onboarding.QBO;
+  embedVideoLink = brandingDemoVideoLinks.onboarding.NETSUITE;
+
+  brandingContent = brandingContent.netsuite.landing;
 
   constructor() { }
 

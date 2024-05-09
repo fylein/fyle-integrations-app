@@ -7,6 +7,7 @@ export type DemoVideo = {
             BUSINESS_CENTRAL: string;
             TRAVELPERK: string;
             XERO:string;
+            NETSUITE: string;
         }
     }
 };
