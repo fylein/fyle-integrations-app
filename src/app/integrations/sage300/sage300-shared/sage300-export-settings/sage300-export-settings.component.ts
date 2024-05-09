@@ -104,20 +104,25 @@ export class Sage300ExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    if (brandingConfig.brandId==='fyle') {
-      if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
-        this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
-      } else if (this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingForm.controls.reimbursableExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
-        this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.reimbursableExpenseGroupingDateOptions);
+    this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe(reimbursableExportType => {
+      this.exportSettingForm.controls.reimbursableExportGroup.reset();
+      this.exportSettingForm.controls.reimbursableExportDate.reset();
+      this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
       }
+      });
+    });
 
-      if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.EXPENSE_ID) {
-        this.cccExpenseGroupingDateOptions = CommonExportSettingModel.filterDateOptions(ExportDateType.LAST_SPENT_AT, this.cccExpenseGroupingDateOptions);
-      } else if (this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.CLAIM_NUMBER || this.exportSettingForm.controls.creditCardExportGroup.value===ExpenseGroupingFieldOption.REPORT_ID) {
-        this.cccExpenseGroupingDateOptions = CommonExportSettingModel.filterDateOptions(ExportDateType.SPENT_AT, this.cccExpenseGroupingDateOptions);
+    this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
+      this.exportSettingForm.controls.creditCardExportGroup.reset();
+      this.exportSettingForm.controls.creditCardExportDate.reset();
+      this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
       }
-
-    }
+      });
+    });
 
   }
 
