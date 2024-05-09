@@ -246,8 +246,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       }
       });
     });
-
-
   }
 
   private getSettingsAndSetupForm(): void {
