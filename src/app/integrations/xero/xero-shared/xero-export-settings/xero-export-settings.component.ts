@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroOnboardingState, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroOnboardingState, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { XeroExportSettingGet, XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -97,6 +98,28 @@ export class XeroExportSettingsComponent implements OnInit {
     this.router.navigate([`/integrations/xero/onboarding/connector`]);
   }
 
+  private setupCustomWatchers(): void {
+    this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe(reimbursableExportType => {
+      this.exportSettingForm.controls.reimbursableExportGroup.reset();
+      this.exportSettingForm.controls.reimbursableExportDate.reset();
+      this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      }
+      });
+    });
+
+    this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
+      this.exportSettingForm.controls.creditCardExportGroup.reset();
+      this.exportSettingForm.controls.creditCardExportDate.reset();
+      this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+      }
+      });
+    });
+  }
+
   save() {
     if (this.exportSettingForm.valid) {
       this.constructPayloadAndSave({
@@ -145,6 +168,8 @@ export class XeroExportSettingsComponent implements OnInit {
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
       this.helperService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+
+      this.setupCustomWatchers();
 
       this.isLoading = false;
 

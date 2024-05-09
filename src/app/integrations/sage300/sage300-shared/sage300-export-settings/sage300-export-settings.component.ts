@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300ExpenseDate, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ExpenseGroupedBy, ExpenseGroupingFieldOption, ExportDateType, FyleField, Page, Sage300ExpenseDate, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
 import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
+import { ExportSettingModel as CommonExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -13,6 +14,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-sage300-export-settings',
@@ -39,11 +41,11 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   ConfigurationCtaText = ConfigurationCta;
 
-  expenseGroupByOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpenseGroupByOptions();
+  expenseGroupByOptions: SelectFormOption[] = this.exportSettingService.getExpenseGroupByOptions();
 
-  reimbursableExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = this.exportSettingService.getReimbursableExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getCCCExpenseGroupingDateOptions();
+  cccExpenseGroupingDateOptions: SelectFormOption[] = this.exportSettingService.getCCCExpenseGroupingDateOptions();
 
   expensesExportTypeOptions: Sage300ExportSettingFormOption[] = this.exportSettingService.getExpensesExportTypeOptions();
 
@@ -101,6 +103,29 @@ export class Sage300ExportSettingsComponent implements OnInit {
     this.sage300HelperService.importAttributes(isRefresh);
   }
 
+  private setupCustomWatchers(): void {
+    this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe(reimbursableExportType => {
+      this.exportSettingForm.controls.reimbursableExportGroup.reset();
+      this.exportSettingForm.controls.reimbursableExportDate.reset();
+      this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.reimbursableExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      }
+      });
+    });
+
+    this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
+      this.exportSettingForm.controls.creditCardExportGroup.reset();
+      this.exportSettingForm.controls.creditCardExportDate.reset();
+      this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.cccExpenseGroupingDateOptions = CommonExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+      }
+      });
+    });
+
+  }
+
   private constructPayloadAndSave(): void {
     this.isSaveInProgress = true;
     const exportSettingPayload = ExportSettingModel.createExportSettingPayload(this.exportSettingForm);
@@ -140,7 +165,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     }
   }
 
-  getExportDate(options: Sage300ExportSettingFormOption[], formControllerName: string): Sage300ExportSettingFormOption[]{
+  getExportDate(options: SelectFormOption[], formControllerName: string): SelectFormOption[]{
     if (this.exportSettingForm.controls[formControllerName].value === ExpenseGroupedBy.EXPENSE) {
       return options.filter(option => option.value !== Sage300ExpenseDate.LAST_SPENT_AT);
     }
@@ -182,6 +207,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+      this.setupCustomWatchers();
       this.isLoading = false;
     });
   }
