@@ -106,30 +106,9 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   ];
 
-  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = [
-    {
-      label: 'Spend Date',
-      value: ExportDateType.SPENT_AT
-    },
-    {
-      label: brandingContent.common.currentDate,
-      value: ExportDateType.CURRENT_DATE
-    },
-    {
-      label: 'Verification Date',
-      value: ExportDateType.VERIFIED_DATE
-    },
-    {
-      label: 'Approval Date',
-      value: ExportDateType.APPROVAL_DATE
-    },
-    {
-      label: 'Last Spend Date',
-      value: ExportDateType.LAST_SPENT_AT
-    }
-  ];
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = IntacctExportSettingModel.getExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: SelectFormOption[];
+  cccExpenseGroupingDateOptions: SelectFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();;
 
   creditCardExportTypes: ExportSettingFormOption[] = ExportSettingModel.constructCCCOptions(brandingConfig.brandId);
 
@@ -507,6 +486,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
       this.exportFieldsWatcher();
       this.optionSearchWatcher();
+      this.setupCustomWatchers();
     }
 
   private addMissingOption(key: IntacctExportSettingDestinationOptionKey, defaultDestinationAttribute: DefaultDestinationAttribute): void {
@@ -534,21 +514,23 @@ export class IntacctExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    this.exportSettingsForm?.controls.reimbursableExportType.valueChanges.subscribe(reimbursableExportType => {
+    this.exportSettingsForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
       this.exportSettingsForm.controls.reimbursableExportGroup.reset();
       this.exportSettingsForm.controls.reimbursableExportDate.reset();
       this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
+        this.reimbursableExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
       }
       });
     });
 
-    this.exportSettingsForm?.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
+    this.exportSettingsForm?.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
       this.exportSettingsForm.controls.creditCardExportGroup.reset();
       this.exportSettingsForm.controls.creditCardExportDate.reset();
       this.exportSettingsForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
+        this.cccExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
       }
       });
@@ -669,7 +651,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.destinationOptions.VENDOR = response[2].results;
       this.destinationOptions.CHARGE_CARD = response[3].results;
       this.getSettingsAndSetupForm();
-      this.setupCustomWatchers();
+      
     });
   }
 
