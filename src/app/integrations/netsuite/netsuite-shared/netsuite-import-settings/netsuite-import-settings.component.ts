@@ -268,7 +268,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
       if (!((!workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) ||
       (!workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) ||
-      ((workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object) && (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY)))) {
+      ((workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object) && (workspaceGeneralSetting.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY)))) {
         this.isImportProjectsAllowed = false;
         this.netsuiteFields = netsuiteFields.filter((filed) => filed.attribute_type !== NetsuiteFyleField.PROJECT);
       } else {
