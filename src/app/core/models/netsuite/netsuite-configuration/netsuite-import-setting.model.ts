@@ -13,7 +13,6 @@ export type NetsuiteImportSettingConfiguration = {
     import_vendors_as_merchants: boolean,
     import_tax_items: boolean,
     import_items: boolean,
-    import_projects: boolean;
     import_netsuite_employees: boolean
   }
 
@@ -81,7 +80,6 @@ export class NetsuiteImportSettingModel extends ImportSettingsModel {
           importCategories: new FormControl(importSettings?.configuration.import_categories ?? false),
           expenseFields: new FormArray(expenseFieldsArray),
           importItems: new FormControl(importSettings?.configuration.import_items ?? false),
-          importProjects: new FormControl(importSettings?.configuration.import_projects ?? false),
           taxCode: new FormControl(importSettings?.configuration.import_tax_items ?? false),
           importVendorsAsMerchants: new FormControl(importSettings?.configuration.import_vendors_as_merchants ?? false),
           importNetsuiteEmployees: new FormControl(importSettings?.configuration.import_netsuite_employees ?? false),
@@ -99,7 +97,6 @@ export class NetsuiteImportSettingModel extends ImportSettingsModel {
           configuration: {
             import_categories: importSettingsForm.get('importCategories')?.value,
             import_tax_items: importSettingsForm.get('taxCode')?.value,
-            import_projects: importSettingsForm.get('importProjects')?.value,
             import_items: importSettingsForm.get('importItems')?.value ? importSettingsForm.get('importItems')?.value : false,
             import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value,
             import_netsuite_employees: importSettingsForm.get('importNetsuiteEmployees')?.value
