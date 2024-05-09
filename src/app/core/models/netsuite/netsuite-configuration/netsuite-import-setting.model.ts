@@ -14,8 +14,7 @@ export type NetsuiteImportSettingConfiguration = {
     import_tax_items: boolean,
     import_items: boolean,
     import_projects: boolean;
-    import_netsuite_employees: boolean,
-    auto_create_merchants: boolean
+    import_netsuite_employees: boolean
   }
 
   export type NetsuiteImportSettingGeneralMapping = {
@@ -103,8 +102,7 @@ export class NetsuiteImportSettingModel extends ImportSettingsModel {
             import_projects: importSettingsForm.get('importProjects')?.value,
             import_items: importSettingsForm.get('importItems')?.value ? importSettingsForm.get('importItems')?.value : false,
             import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value,
-            import_netsuite_employees: importSettingsForm.get('importNetsuiteEmployees')?.value,
-            auto_create_merchants: importSettingsForm.get('autoCreateMerchants')?.value ? importSettingsForm.get('autoCreateMerchants')?.value : false
+            import_netsuite_employees: importSettingsForm.get('importNetsuiteEmployees')?.value
           },
           general_mappings: {
             default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? NetSuiteExportSettingModel.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value) : emptyDestinationAttribute

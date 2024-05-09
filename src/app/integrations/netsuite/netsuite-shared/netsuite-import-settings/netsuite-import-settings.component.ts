@@ -255,10 +255,11 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
         this.isTaxGroupSyncAllowed = true;
       }
-      if (workspaceGeneralSetting.configuration.employee_field_mapping === 'EMPLOYEE'){
+      if (workspaceGeneralSetting.employee_field_mapping
+        === 'EMPLOYEE'){
         this.isImportEmployeeAllowed = true;
       }
-      if (workspaceGeneralSetting.configuration.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object || workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object === 'BILL')) {
+      if (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.corporate_credit_card_expenses_object || workspaceGeneralSetting.corporate_credit_card_expenses_object === 'BILL')) {
         this.isImportItemsAllowed = true;
       }
       if ((!workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) ||
@@ -266,7 +267,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
         ((workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object) && (workspaceGeneralSetting.configuration.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY))) {
         this.isImportProjectsAllowed = true;
       }
-      if (!workspaceGeneralSetting.configuration.auto_create_merchants) {
+      if (!workspaceGeneralSetting.auto_create_merchants) {
         this.isImportMerchantsAllowed = true;
       }
 
