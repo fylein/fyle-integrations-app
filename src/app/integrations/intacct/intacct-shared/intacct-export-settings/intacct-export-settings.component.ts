@@ -524,7 +524,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         this.reimbursableExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
       }
-      });
+    });
 
     this.exportSettingsForm?.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
       this.exportSettingsForm.controls.cccExportGroup.reset();
@@ -536,7 +536,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         this.cccExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
       }
-      });
+    });
   }
 
   private getSettingsAndSetupForm(): void {
