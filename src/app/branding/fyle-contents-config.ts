@@ -55,7 +55,7 @@ export const fyleContents = {
                 notes: 'NOTE: To export billable expenses from Fyle, import Customers from NetSuite as Projects in Fyle.',
                 toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.',
                 importVendorsAsMerchantsLabel: 'Import Vendors from NetSuite',
-                importNetsuiteEmployeesLabel: 'Import Netsuite Employee as Employee in' + brandingConfig.brandName,
+                importNetsuiteEmployeesLabel: 'Import Netsuite Employee as Employee in ' + brandingConfig.brandName,
                 importNetsuiteEmployeesSubLabel: 'Imported NetSuite Employee will be available as Employee in ' + brandingConfig.brandName+ '.',
                 customSegmentHeader: 'Add Custom Segment/List/Record',
                 importProjectsLabel: 'Import Projects from NetSuite',

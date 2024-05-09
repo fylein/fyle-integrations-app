@@ -55,7 +55,7 @@ export const c1Contents = {
                 notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from NetSuite as projects in ' + brandingConfig.brandName + '.',
                 toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.',
                 importVendorsAsMerchantsLabel: 'Import vendors from NetSuite',
-                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in' + brandingConfig.brandName,
+                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in ' + brandingConfig.brandName,
                 importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in expense management.',
                 customSegmentHeader: 'Add custom segment/list/record',
                 importProjectsLabel: 'Import projects from NetSuite',

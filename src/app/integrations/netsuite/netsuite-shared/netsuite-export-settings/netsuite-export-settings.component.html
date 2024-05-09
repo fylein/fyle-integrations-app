@@ -52,8 +52,8 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employee Payables Account'"
                                 [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
-                                [subLabel]="'Post all your company corporate card transactions to a default Employee Payables Account.'"
-                                [placeholder]="brandingContent.corporateCard.defaultDebitCardAccountPlaceholder"
+                                [subLabel]="'Post all your company corporate card transactions to a default employee payables account.'"
+                                [placeholder]="'select a employee payables account'"
                                 [formControllerName]="'bankAccount'">
                                 </app-configuration-select-field>
                             </div>
@@ -67,8 +67,8 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Vendor Payables Account'"
                                 [label]="brandingContent.corporateCard.accountsPayableLabel"
-                                [subLabel]="'Post all your company corporate card transactions to a default Vendor Payables Account.'"
-                                [placeholder]="'Select Vendor Payable Account'"
+                                [subLabel]="'Post all your company corporate card transactions to a default vendor payables account.'"
+                                [placeholder]="'Select vendor payable account'"
                                 [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
                             </div>
@@ -166,6 +166,20 @@
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
 
+                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')">
+                            <app-configuration-select-field
+                                [form]="exportSettingForm"
+                                [isFieldMandatory]="true"
+                                [mandatoryErrorListName]="'Name in which journal entry should export'"
+                                [label]="brandingContent.corporateCard.journalOptionLabel"
+                                [subLabel]="brandingContent.corporateCard.journalOptionSubLabel"
+                                [options]="nameInJournalOptions"
+                                [iconPath]="'list'"
+                                [placeholder]="'Select a name in journal entry'"
+                                [formControllerName]="'nameInJournalEntry'">
+                            </app-configuration-select-field>
+                        </div>
+
                         <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
@@ -173,10 +187,10 @@
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Credit Card Vendor'"
+                            [mandatoryErrorListName]="'credit card vendor'"
                             [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
-                            [subLabel]="'Post all your company corporate card transactions to a default Default Credit Card Vendor.'"
-                            [placeholder]="'Select default Credit Card Vendor'"
+                            [subLabel]="'Post all your company corporate card transactions to a default default credit card vendor.'"
+                            [placeholder]="'Select default credit card vendor'"
                             [formControllerName]="'defaultCreditCardVendor'">
                             </app-configuration-select-field>
                         </div>
@@ -188,27 +202,14 @@
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
                             [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'Credit Card Account'"
+                            [mandatoryErrorListName]="'credit card account'"
                             [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
-                            [subLabel]="'Post all your company corporate card transactions to a default  Default Credit Card Account.'"
+                            [subLabel]="'Post all your company corporate card transactions to a default  default credit card account.'"
                             [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
                             [formControllerName]="'creditCardAccount'">
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')">
-                            <app-configuration-select-field
-                                [form]="exportSettingForm"
-                                [isFieldMandatory]="true"
-                                [mandatoryErrorListName]="'Name in which Journal Entry should export'"
-                                [label]="brandingContent.corporateCard.journalOptionLabel"
-                                [subLabel]="brandingContent.corporateCard.journalOptionSubLabel"
-                                [options]="nameInJournalOptions"
-                                [iconPath]="'list'"
-                                [placeholder]="'Select a name in journal entry'"
-                                [formControllerName]="'nameInJournalEntry'">
-                            </app-configuration-select-field>
-                        </div>
                     </div>
 
                     <div *ngIf="!exportSettingForm.value.reimbursableExportType && exportSettingForm.value.creditCardExportType === NetSuiteReimbursableExpensesObject.JOURNAL_ENTRY">

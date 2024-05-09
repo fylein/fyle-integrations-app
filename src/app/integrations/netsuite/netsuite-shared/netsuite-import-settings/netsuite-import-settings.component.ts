@@ -213,8 +213,12 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.importSettingService.getNetsuiteFields().subscribe((netsuiteFields: IntegrationField[]) => {
         this.isCustomSegmentTrigged = false;
         this.isCustomSegmentSaveInProgress = false;
-        this.netsuiteFields = netsuiteFields;
-        this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, netsuiteFields, this.taxCodes);
+        if (this.isImportProjectsAllowed) {
+          this.netsuiteFields = netsuiteFields;
+        } else {
+          this.netsuiteFields = netsuiteFields.filter((filed) => filed.attribute_type !== NetsuiteFyleField.PROJECT);
+        }
+        this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Custom field added successfully');
         this.customSegmentForm.reset();
       });
@@ -255,23 +259,27 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
         this.isTaxGroupSyncAllowed = true;
       }
-      if (workspaceGeneralSetting.employee_field_mapping
-        === 'EMPLOYEE'){
+      if (workspaceGeneralSetting.employee_field_mapping === 'EMPLOYEE'){
         this.isImportEmployeeAllowed = true;
       }
       if (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.corporate_credit_card_expenses_object || workspaceGeneralSetting.corporate_credit_card_expenses_object === 'BILL')) {
         this.isImportItemsAllowed = true;
       }
-      if ((!workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) ||
-        (!workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) ||
-        ((workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object) && (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY))) {
+
+      if (!((!workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) ||
+      (!workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) ||
+      ((workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object) && (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY)))) {
+        this.isImportProjectsAllowed = false;
+        this.netsuiteFields = netsuiteFields.filter((filed) => filed.attribute_type !== NetsuiteFyleField.PROJECT);
+      } else {
         this.isImportProjectsAllowed = true;
+        this.netsuiteFields = netsuiteFields;
       }
+
       if (!workspaceGeneralSetting.auto_create_merchants) {
         this.isImportMerchantsAllowed = true;
       }
 
-      this.netsuiteFields = netsuiteFields;
       this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
       this.taxCodes = destinationAttribute;
       this.fyleFields = fyleFieldsResponse;

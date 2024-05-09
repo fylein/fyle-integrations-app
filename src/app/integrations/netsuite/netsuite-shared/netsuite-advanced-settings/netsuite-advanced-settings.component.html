@@ -85,7 +85,7 @@
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
-                <div class="autoCreateVendor" *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors">
+                <div class="autoCreateVendor" *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" [ngClass]="{'tw-mb-24-px' : !isAutoCreateMerchantsFieldVisible()}">
                     <app-configuration-toggle-field
                         [form]="advancedSettingForm"
                         [iconPath]="'user-plus'"

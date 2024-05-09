@@ -211,6 +211,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           case 'defaultCreditCardVendor':
             return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE  || (form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.nameInJournalEntry.value === NameInJournalEntry.MERCHANT);
           case 'nameInJournalEntry':
+            form.controls.nameInJournalEntry.patchValue(NameInJournalEntry.EMPLOYEE);
             return form.controls.creditCardExportType && form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
           default:
             return false;
@@ -271,13 +272,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
 
       static constructPayload(exportSettingsForm: FormGroup): NetSuiteExportSettingPost {
         const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
-        let nameInJournalEntry = NameInJournalEntry.EMPLOYEE;
-
-        if (!brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
-          nameInJournalEntry = NameInJournalEntry.MERCHANT;
-        } else {
-          nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value;
-        }
+        const nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE;
 
         if (brandingConfig.brandId === 'co') {
           exportSettingsForm.controls.creditCardExpense.patchValue(true);
