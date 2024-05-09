@@ -161,7 +161,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.creditCardExportDate.reset();
       this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
-        this.cccExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions()
+        this.cccExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getCCCExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
       }
       });

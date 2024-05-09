@@ -108,7 +108,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
   reimbursableExpenseGroupingDateOptions: SelectFormOption[] = IntacctExportSettingModel.getExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: SelectFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();;
+  cccExpenseGroupingDateOptions: SelectFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();
 
   creditCardExportTypes: ExportSettingFormOption[] = ExportSettingModel.constructCCCOptions(brandingConfig.brandId);
 
@@ -651,7 +651,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.destinationOptions.VENDOR = response[2].results;
       this.destinationOptions.CHARGE_CARD = response[3].results;
       this.getSettingsAndSetupForm();
-      
+
     });
   }
 
