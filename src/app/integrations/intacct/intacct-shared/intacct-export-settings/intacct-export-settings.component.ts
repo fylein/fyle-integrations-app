@@ -517,24 +517,26 @@ export class IntacctExportSettingsComponent implements OnInit {
     this.exportSettingsForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
       this.exportSettingsForm.controls.reimbursableExportGroup.reset();
       this.exportSettingsForm.controls.reimbursableExportDate.reset();
-      this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
+    });
+
+    this.exportSettingsForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
         this.reimbursableExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
       }
       });
-    });
 
     this.exportSettingsForm?.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.exportSettingsForm.controls.creditCardExportGroup.reset();
-      this.exportSettingsForm.controls.creditCardExportDate.reset();
-      this.exportSettingsForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
+      this.exportSettingsForm.controls.cccExportGroup.reset();
+      this.exportSettingsForm.controls.cccExportDate.reset();
+    });
+
+    this.exportSettingsForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
         this.cccExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
       }
       });
-    });
   }
 
   private getSettingsAndSetupForm(): void {
