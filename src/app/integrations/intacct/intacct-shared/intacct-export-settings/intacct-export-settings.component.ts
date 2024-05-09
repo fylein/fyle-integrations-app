@@ -534,7 +534,7 @@ export class IntacctExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    this.exportSettingsForm.controls.reimbursableExportType.valueChanges.subscribe(reimbursableExportType => {
+    this.exportSettingsForm?.controls.reimbursableExportType.valueChanges.subscribe(reimbursableExportType => {
       this.exportSettingsForm.controls.reimbursableExportGroup.reset();
       this.exportSettingsForm.controls.reimbursableExportDate.reset();
       this.exportSettingsForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
@@ -544,7 +544,7 @@ export class IntacctExportSettingsComponent implements OnInit {
       });
     });
 
-    this.exportSettingsForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
+    this.exportSettingsForm?.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
       this.exportSettingsForm.controls.creditCardExportGroup.reset();
       this.exportSettingsForm.controls.creditCardExportDate.reset();
       this.exportSettingsForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
@@ -564,7 +564,6 @@ export class IntacctExportSettingsComponent implements OnInit {
 
       this.setUpExpenseStates();
       this.setupCCCExpenseGroupingDateOptions();
-      this.setupCustomWatchers();
       this.initializeExportSettingsFormWithData();
       this.isLoading = false;
     });
@@ -669,8 +668,8 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => !attr.detail.is_reimbursable);
       this.destinationOptions.VENDOR = response[2].results;
       this.destinationOptions.CHARGE_CARD = response[3].results;
-
       this.getSettingsAndSetupForm();
+      this.setupCustomWatchers();
     });
   }
 
