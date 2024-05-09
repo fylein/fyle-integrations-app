@@ -57,7 +57,9 @@ export const fyleContents = {
                 importVendorsAsMerchantsLabel: 'Import Vendors from NetSuite',
                 importNetsuiteEmployeesLabel: 'Import Netsuite Employee as Employee in' + brandingConfig.brandName,
                 importNetsuiteEmployeesSubLabel: 'Imported NetSuite Employee will be available as Employee in ' + brandingConfig.brandName+ '.',
-                customSegmentHeader: 'Add Custom Segment/List/Record'
+                customSegmentHeader: 'Add Custom Segment/List/Record',
+                importProjectsLabel: 'Import Projects from NetSuite',
+                importItemsLabel: 'Import Items from NetSuite'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -83,7 +85,8 @@ export const fyleContents = {
                 frequencySubLabel: 'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to NetSuite.',
                 preferenceLabel: 'Other Preferences',
                 preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from expense management. (when there is no employee record found, or when the accounting period is closed).',
-                previewDescriptionFieldLabel: 'Preview of the Description Field'
+                previewDescriptionFieldLabel: 'Preview of the Description Field',
+                autoCreateMerchantsLabel: 'Auto Create Merchant on NetSuite for Credit Card Charge'
             }
         }
     },

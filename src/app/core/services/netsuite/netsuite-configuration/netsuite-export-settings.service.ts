@@ -34,9 +34,7 @@ export class NetsuiteExportSettingsService {
   setupDynamicValidators(form: FormGroup, values: ExportModuleRule, selectedValue: string): void {
     Object.entries(values.requiredValue).forEach(([key, value]) => {
       if (key === selectedValue) {
-        console.log(key, value)
         value.forEach((formController: string) => {
-          console.log(formController)
           if (values.formController === 'creditCardExportType') {
             this.creditCardExportTypeChange.emit(selectedValue);
           }
@@ -61,9 +59,7 @@ export class NetsuiteExportSettingsService {
 
   setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
     Object.values(exportTypeValidatorRule).forEach((values) => {
-      console.log(values)
       form.controls[values.formController].valueChanges.subscribe((selectedValue) => {
-        console.log(values.formController)
         this.mandatoryFormController = [];
         this.setupDynamicValidators(form, values, selectedValue);
       });

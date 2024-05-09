@@ -85,12 +85,22 @@
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
+                <div class="autoCreateVendor" *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors">
+                    <app-configuration-toggle-field
+                        [form]="advancedSettingForm"
+                        [iconPath]="'user-plus'"
+                        [label]="brandingContent.autoCreateVendorsLabel + getCreateVendorLabel() "
+                        [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a ' + getCreateVendorLabel().toLowerCase() + ' if a match does not exist in NetSuite already.'"
+                        [formControllerName]="'autoCreateVendors'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
-                    [label]="brandingContent.autoCreateVendorsLabel + getCreateVendorLabel() "
-                    [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in NetSuite already.'"
-                    [formControllerName]="'autoCreateVendors'">
+                    [label]="brandingContent.autoCreateMerchantsLabel"
+                    [subLabel]="'While exporting credit card charge expenses from ' + brandingConfig.brandName + ', the integration will automatically create a merchant if a match does not exist in NetSuite already.'"
+                    [formControllerName]="'autoCreateMerchants'">
                 </app-configuration-toggle-field>
 
             </div>

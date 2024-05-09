@@ -24,17 +24,8 @@
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                 </div>
-                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
-                    <app-configuration-toggle-field
-                        [form]="importSettingForm"
-                        [label]="brandingContent.importVendorsAsMerchantsLabel"
-                        [subLabel]="'Vendors from NetSuite will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
-                        [formControllerName]="'importVendorsAsMerchants'"
-                        [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-                  </div>
 
-                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportEmployeeAllowed">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportEmployeeAllowed">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="brandingContent.importNetsuiteEmployeesLabel"
@@ -42,7 +33,37 @@
                         [formControllerName]="'importNetsuiteEmployees'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
-                  </div>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="brandingContent.importVendorsAsMerchantsLabel"
+                        [subLabel]="'Vendors from NetSuite will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [formControllerName]="'importVendorsAsMerchants'"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportItemsAllowed && brandingFeatureConfig.featureFlags.importSettings.importItems">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="brandingContent.importItemsLabel"
+                        [subLabel]="'Items from NetSuite will be imported as categories in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [formControllerName]="'importitems'"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportProjectsAllowed && brandingFeatureConfig.featureFlags.importSettings.importProjects">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="brandingContent.importProjectsLabel"
+                        [subLabel]="'Projects from NetSuite will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [formControllerName]="'importProjects'"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
 
                   <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
                     <app-configuration-toggle-field

@@ -134,6 +134,10 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         this.exportSettingForm.controls.employeeFieldMapping.disable();
       }
     });
+    this.exportSettingForm.controls.employeeFieldMapping.valueChanges.subscribe((isemployeeFieldMappingSelected) => {
+      const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
+      this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+    });
   }
 
   private cccExportTypeWatcher(): void {
@@ -141,12 +145,12 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       if (isCCCExportTypeSelected === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
         this.exportSettingForm.controls.employeeFieldMapping.enable();
       }
-      this.exportSettingForm.controls.nameInJournalEntry.valueChanges.subscribe((isNameInJournalEntrySelected) => {
-        if (isNameInJournalEntrySelected === NameInJournalEntry.MERCHANT) {
-          const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
-          this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], 'nameInJournalEntry');
-        }
-      })
+    });
+    this.exportSettingForm.controls.nameInJournalEntry.valueChanges.subscribe((isNameInJournalEntrySelected) => {
+      if (isNameInJournalEntrySelected === NameInJournalEntry.MERCHANT) {
+        const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
+        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+      }
     });
   }
 

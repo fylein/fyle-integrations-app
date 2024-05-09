@@ -110,7 +110,6 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.EMPLOYEE.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.EMPLOYEE);
   }
 
-
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/netsuite/onboarding/import_settings`]);
   }
@@ -177,6 +176,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   isAutoCreateVendorsFieldVisible(): boolean {
     return this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE;
+  }
+
+  isAutoCreateMerchantsFieldVisible(): boolean {
+    return this.workspaceGeneralSettings.corporate_credit_card_expenses_object && !this.workspaceGeneralSettings.import_vendors_as_merchants ? true : false;
   }
 
   isPaymentSyncFieldVisible(): boolean | null {

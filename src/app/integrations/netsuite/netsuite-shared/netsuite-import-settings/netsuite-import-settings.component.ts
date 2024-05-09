@@ -7,11 +7,12 @@ import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/im
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, ConfigurationCta, NetsuiteFyleField, NetsuiteOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, NetSuiteCorporateCreditCardExpensesObject, NetsuiteFyleField, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteImportSettingGet, NetsuiteImportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
 import { NetsuiteExportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-export-settings.service';
 import { NetsuiteImportSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-import-settings.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
@@ -68,6 +69,10 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   customrSegmentOptions: SelectFormOption[] = NetsuiteImportSettingModel.getCustomSegmentOptions();
 
+  isImportItemsAllowed: boolean;
+
+  isImportProjectsAllowed: boolean;
+
   customFieldForm: FormGroup = this.formBuilder.group({
     attribute_type: ['', Validators.required],
     display_name: [''],
@@ -97,7 +102,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private netsuiteExportSettingService: NetsuiteExportSettingsService,
     private netsuiteConnectorService: NetsuiteConnectorService,
     private workspaceService: WorkspaceService,
-    private router: Router
+    private router: Router,
+    private netsuiteAdvancedSettingService: NetsuiteAdvancedSettingsService
   ) { }
 
   addCustomSegment() {
@@ -242,16 +248,26 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.mappingService.getFyleFields(),
       this.netsuiteConnectorService.getSubsidiaryMapping(),
       this.importSettingService.getNetsuiteFields(),
-      this.netsuiteExportSettingService.getExportSettings(),
+      this.workspaceService.getConfiguration(),
       this.mappingService.getDestinationAttributes(NetsuiteFyleField.TAX_CODE, 'v2')
-    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, exportSetting, destinationAttribute]) => {
+    ]).subscribe(([importSettingsResponse, fyleFieldsResponse, subsidiaryMapping, netsuiteFields, workspaceGeneralSetting, destinationAttribute]) => {
       this.importSettings = importSettingsResponse;
       if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
         this.isTaxGroupSyncAllowed = true;
       }
-
-      if (exportSetting.configuration.employee_field_mapping === 'EMPLOYEE'){
+      if (workspaceGeneralSetting.configuration.employee_field_mapping === 'EMPLOYEE'){
         this.isImportEmployeeAllowed = true;
+      }
+      if (workspaceGeneralSetting.configuration.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object || workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object === 'BILL')) {
+        this.isImportItemsAllowed = true;
+      }
+      if ((!workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) ||
+        (!workspaceGeneralSetting.configuration.reimbursable_expenses_object && workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object && workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) ||
+        ((workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object) && (workspaceGeneralSetting.configuration.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY))) {
+        this.isImportProjectsAllowed = true;
+      }
+      if (!workspaceGeneralSetting.configuration.auto_create_merchants) {
+        this.isImportMerchantsAllowed = true;
       }
 
       this.netsuiteFields = netsuiteFields;

@@ -57,7 +57,9 @@ export const c1Contents = {
                 importVendorsAsMerchantsLabel: 'Import vendors from NetSuite',
                 importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in' + brandingConfig.brandName,
                 importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in expense management.',
-                customSegmentHeader: 'Add custom segment/list/record'
+                customSegmentHeader: 'Add custom segment/list/record',
+                importProjectsLabel: 'Import projects from NetSuite',
+                importItemsLabel: 'Import items from NetSuite'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -83,7 +85,8 @@ export const c1Contents = {
                 frequencySubLabel: 'Set how often your expenses will be exported to NetSuite.',
                 preferenceLabel: 'Other preferences',
                 preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
-                previewDescriptionFieldLabel: 'Preview of the description field'
+                previewDescriptionFieldLabel: 'Preview of the description field',
+                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge'
             }
         }
     },
