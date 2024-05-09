@@ -125,7 +125,7 @@
                             [formControllerName]="'reimbursableExpenseState'">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.value.reimbursableExportType && exportSettingForm.value.reimbursableExportGroup" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -247,7 +247,7 @@
                             [formControllerName]="'cccExpenseState'">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.value.cccExportType && exportSettingForm.value.cccExportGroup" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"

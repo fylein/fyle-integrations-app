@@ -99,25 +99,11 @@ export class XeroExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
-      this.exportSettingForm.controls.reimbursableExportGroup.reset();
-      this.exportSettingForm.controls.reimbursableExportDate.reset();
-      this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
-      if (brandingConfig.brandId==='fyle') {
-        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
-      }
-      });
-    });
-
-    this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.exportSettingForm.controls.creditCardExportGroup.reset();
-      this.exportSettingForm.controls.creditCardExportDate.reset();
-      this.exportSettingForm.controls.creditCardExportGroup.valueChanges.subscribe((creditCardExportGroup) => {
-      if (brandingConfig.brandId==='fyle') {
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
-      }
-      });
-    });
+    // Removing not relevant date options
+    if (brandingConfig.brandId==='fyle') {
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.CLAIM_NUMBER, this.reimbursableExpenseGroupingDateOptions);
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.EXPENSE_ID, this.cccExpenseGroupingDateOptions);
+    }
   }
 
   save() {
