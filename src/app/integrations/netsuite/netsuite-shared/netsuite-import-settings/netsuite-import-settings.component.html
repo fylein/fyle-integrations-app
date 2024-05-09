@@ -55,7 +55,7 @@
                     </app-configuration-toggle-field>
                 </div>
 
-                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportProjectsAllowed && brandingFeatureConfig.featureFlags.importSettings.importProjects">
+                <!-- <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportProjectsAllowed && brandingFeatureConfig.featureFlags.importSettings.importProjects">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="brandingContent.importProjectsLabel"
@@ -63,7 +63,7 @@
                         [formControllerName]="'importProjects'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
-                </div>
+                </div> -->
 
                   <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
                     <app-configuration-toggle-field

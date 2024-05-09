@@ -262,9 +262,9 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       if (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.corporate_credit_card_expenses_object || workspaceGeneralSetting.corporate_credit_card_expenses_object === 'BILL')) {
         this.isImportItemsAllowed = true;
       }
-      if ((!workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) ||
-        (!workspaceGeneralSetting.configuration.reimbursable_expenses_object && workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object && workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) ||
-        ((workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object && workspaceGeneralSetting.configuration.reimbursable_expenses_object) && (workspaceGeneralSetting.configuration.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.configuration.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY))) {
+      if ((!workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) ||
+        (!workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) ||
+        ((workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object) && (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY))) {
         this.isImportProjectsAllowed = true;
       }
       if (!workspaceGeneralSetting.auto_create_merchants) {
