@@ -43,7 +43,7 @@
                             </app-configuration-select-field>
 
 
-                            <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
+                            <div *ngIf="exportSettingForm.value.reimbursableExportType && helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
                                 <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [destinationAttributes]="bankAccounts"
@@ -58,7 +58,7 @@
                                 </app-configuration-select-field>
                             </div>
     
-                            <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
+                            <div *ngIf="exportSettingForm.value.reimbursableExportType && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
                                 <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [destinationAttributes]="accountsPayables"
@@ -131,6 +131,7 @@
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to NetSuite.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
                                 [iconPath]="'calendar'"
+                                [placeholder]="'Select the date of the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase)"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
                         </div>

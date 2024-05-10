@@ -211,7 +211,6 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           case 'defaultCreditCardVendor':
             return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE  || (form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.nameInJournalEntry.value === NameInJournalEntry.MERCHANT);
           case 'nameInJournalEntry':
-            form.controls.nameInJournalEntry.patchValue(NameInJournalEntry.EMPLOYEE);
             return form.controls.creditCardExportType && form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
           default:
             return false;
