@@ -323,14 +323,12 @@ export class QboExportSettingsComponent implements OnInit {
         this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
-      console.log(this.exportSettingForm.value.creditCardExportGroup, this.exportSettingForm.value.creditCardExportDate);
-
       this.setupCustomWatchers();
-      console.log(this.exportSettingForm.value.creditCardExportGroup, this.exportSettingForm.value.creditCardExportDate);
+
       this.setupCustomDateOptionWatchers();
 
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
-      
+
       this.isLoading = false;
     });
   }
