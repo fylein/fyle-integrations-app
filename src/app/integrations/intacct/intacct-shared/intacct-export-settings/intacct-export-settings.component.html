@@ -111,7 +111,7 @@
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'reimbursableExportGroup'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.reimbursableExportType && exportSettingsForm.value.reimbursableExportGroup" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
@@ -249,7 +249,7 @@
                         [placeholder]="'Select expense grouping'"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingsForm.value.cccExportType && exportSettingsForm.value.cccExportGroup" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
