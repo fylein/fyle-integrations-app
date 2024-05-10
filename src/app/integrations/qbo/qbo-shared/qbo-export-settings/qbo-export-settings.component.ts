@@ -268,9 +268,7 @@ export class QboExportSettingsComponent implements OnInit {
     this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
       this.exportSettingForm.controls.creditCardExportGroup.reset();
       this.exportSettingForm.controls.creditCardExportDate.reset();
-      if (creditCardExportType && (creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE)) {
-        this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
-      }
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     });
 
     if (this.exportSettingForm.value.creditCardExportType && (this.exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE)) {
