@@ -254,7 +254,6 @@ export class QboExportSettingsComponent implements OnInit {
 
   private setupCustomDateOptionWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
-      this.exportSettingForm.controls.reimbursableExportGroup.reset();
       this.exportSettingForm.controls.reimbursableExportDate.reset();
     });
 

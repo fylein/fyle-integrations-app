@@ -231,7 +231,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   private setupCustomDateOptionWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
-      this.exportSettingForm.controls.reimbursableExportGroup.reset();
       this.exportSettingForm.controls.reimbursableExportDate.reset();
     });
 
@@ -243,7 +242,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
 
     this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.exportSettingForm.controls.creditCardExportGroup.reset();
       this.exportSettingForm.controls.creditCardExportDate.reset();
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     });
