@@ -210,7 +210,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
       this.exportSettingForm.controls.creditCardExportGroup.disable();
     } else {
-      
+
       this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(this.exportSettingForm.value.creditCardExportGroup, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
       this.helperService.clearValidatorAndResetValue(this.exportSettingForm, 'creditCardExportGroup');
       this.helperService.enableFormField(this.exportSettingForm, 'creditCardExportGroup');
