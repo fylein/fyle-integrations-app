@@ -241,7 +241,7 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.value.creditCardExportType) {
+    if (this.exportSettingForm.value.creditCardExportType && [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(this.exportSettingForm.value.creditCardExportType)) {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     }
 
@@ -323,12 +323,14 @@ export class QboExportSettingsComponent implements OnInit {
         this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
-      this.setupCustomWatchers();
+      console.log(this.exportSettingForm.value.creditCardExportGroup, this.exportSettingForm.value.creditCardExportDate);
 
+      this.setupCustomWatchers();
+      console.log(this.exportSettingForm.value.creditCardExportGroup, this.exportSettingForm.value.creditCardExportDate);
       this.setupCustomDateOptionWatchers();
 
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
-
+      
       this.isLoading = false;
     });
   }
