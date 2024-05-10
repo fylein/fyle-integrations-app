@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroOnboardingState, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroOnboardingState, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { XeroExportSettingGet, XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -97,6 +98,14 @@ export class XeroExportSettingsComponent implements OnInit {
     this.router.navigate([`/integrations/xero/onboarding/connector`]);
   }
 
+  private setupCustomWatchers(): void {
+    // Removing not relevant date options
+    if (brandingConfig.brandId==='fyle') {
+      this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.CLAIM_NUMBER, this.reimbursableExpenseGroupingDateOptions);
+      this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(ExpenseGroupingFieldOption.EXPENSE_ID, this.cccExpenseGroupingDateOptions);
+    }
+  }
+
   save() {
     if (this.exportSettingForm.valid) {
       this.constructPayloadAndSave({
@@ -145,6 +154,8 @@ export class XeroExportSettingsComponent implements OnInit {
       this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
       this.helperService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+
+      this.setupCustomWatchers();
 
       this.isLoading = false;
 

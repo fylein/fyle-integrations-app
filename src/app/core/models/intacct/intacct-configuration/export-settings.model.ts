@@ -2,6 +2,8 @@ import { AbstractControl, FormGroup } from "@angular/forms";
 import { IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption, IntacctExportSettingDestinationOptionKey } from "../../enum/enum.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { IntacctDestinationAttribute } from "../db/destination-attribute.model";
+import { SelectFormOption } from "../../common/select-form-option.model";
+import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 
 export type ExportSettingFormOption = {
     label: string,
@@ -94,4 +96,29 @@ export type ExportSettingOptionSearch = {
         };
         return exportSettingPayload;
     }
+
+    static getExpenseGroupingDateOptions(): SelectFormOption[] {
+        return [
+          {
+            label: brandingContent.common.currentDate,
+            value: ExportDateType.CURRENT_DATE
+          },
+          {
+            label: 'Verification date',
+            value: ExportDateType.VERIFIED_DATE
+          },
+          {
+            label: 'Spend date',
+            value: ExportDateType.SPENT_AT
+          },
+          {
+            label: 'Approval date',
+            value: ExportDateType.APPROVAL_DATE
+          },
+          {
+            label: 'Last Spend date',
+            value: ExportDateType.LAST_SPENT_AT
+          }
+        ];
+      }
 }
