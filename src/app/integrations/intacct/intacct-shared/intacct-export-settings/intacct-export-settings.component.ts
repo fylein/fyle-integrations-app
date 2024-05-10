@@ -15,6 +15,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { SiWorkspaceService } from 'src/app/core/services/si/si-core/si-workspace.service';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 
 @Component({
   selector: 'app-intacct-export-settings',
@@ -105,30 +106,9 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   ];
 
-  reimbursableExpenseGroupingDateOptions: ExportSettingFormOption[] = [
-    {
-      label: 'Spend Date',
-      value: ExportDateType.SPENT_AT
-    },
-    {
-      label: brandingContent.common.currentDate,
-      value: ExportDateType.CURRENT_DATE
-    },
-    {
-      label: 'Verification Date',
-      value: ExportDateType.VERIFIED_DATE
-    },
-    {
-      label: 'Approval Date',
-      value: ExportDateType.APPROVAL_DATE
-    },
-    {
-      label: 'Last Spend Date',
-      value: ExportDateType.LAST_SPENT_AT
-    }
-  ];
+  reimbursableExpenseGroupingDateOptions: SelectFormOption[] = IntacctExportSettingModel.getExpenseGroupingDateOptions();
 
-  cccExpenseGroupingDateOptions: ExportSettingFormOption[];
+  cccExpenseGroupingDateOptions: SelectFormOption[] = this.reimbursableExpenseGroupingDateOptions.concat();
 
   creditCardExportTypes: ExportSettingFormOption[] = ExportSettingModel.constructCCCOptions(brandingConfig.brandId);
 
@@ -506,6 +486,7 @@ export class IntacctExportSettingsComponent implements OnInit {
 
       this.exportFieldsWatcher();
       this.optionSearchWatcher();
+      this.setupCustomWatchers();
     }
 
   private addMissingOption(key: IntacctExportSettingDestinationOptionKey, defaultDestinationAttribute: DefaultDestinationAttribute): void {
@@ -530,6 +511,32 @@ export class IntacctExportSettingsComponent implements OnInit {
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings?.default_ccc_expense_payment_type);
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.VENDOR, this.exportSettings.general_mappings?.default_ccc_vendor);
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.CHARGE_CARD, this.exportSettings.general_mappings?.default_credit_card);
+  }
+
+  private setupCustomWatchers(): void {
+    this.exportSettingsForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
+      this.exportSettingsForm.controls.reimbursableExportGroup.reset();
+      this.exportSettingsForm.controls.reimbursableExportDate.reset();
+    });
+
+    this.exportSettingsForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.reimbursableExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      }
+    });
+
+    this.exportSettingsForm?.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
+      this.exportSettingsForm.controls.cccExportGroup.reset();
+      this.exportSettingsForm.controls.cccExportDate.reset();
+    });
+
+    this.exportSettingsForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.cccExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(cccExportGroup, this.cccExpenseGroupingDateOptions);
+      }
+    });
   }
 
   private getSettingsAndSetupForm(): void {
@@ -645,8 +652,8 @@ export class IntacctExportSettingsComponent implements OnInit {
       this.destinationOptions.CCC_EXPENSE_PAYMENT_TYPE = response[1].results.filter((attr: IntacctDestinationAttribute) => !attr.detail.is_reimbursable);
       this.destinationOptions.VENDOR = response[2].results;
       this.destinationOptions.CHARGE_CARD = response[3].results;
-
       this.getSettingsAndSetupForm();
+
     });
   }
 
