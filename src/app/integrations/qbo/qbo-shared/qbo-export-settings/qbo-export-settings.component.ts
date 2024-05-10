@@ -250,7 +250,9 @@ export class QboExportSettingsComponent implements OnInit {
 
       this.updateCCCExpenseGroupingDateOptions(selectedValue);
     });
+  }
 
+  private setupCustomDateOptionWatchers(): void {
     this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
       this.exportSettingForm.controls.reimbursableExportGroup.reset();
       this.exportSettingForm.controls.reimbursableExportDate.reset();
@@ -266,15 +268,19 @@ export class QboExportSettingsComponent implements OnInit {
     this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
       this.exportSettingForm.controls.creditCardExportGroup.reset();
       this.exportSettingForm.controls.creditCardExportDate.reset();
-    });
-
-    this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      if (brandingConfig.brandId==='fyle') {
-        this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
-        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+      if (creditCardExportType && (creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE)) {
+        this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
       }
     });
 
+    if (this.exportSettingForm.value.creditCardExportType && (this.exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE)) {
+      this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
+        if (brandingConfig.brandId==='fyle') {
+          this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+          this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+        }
+      });
+    }
   }
 
   private getSettingsAndSetupForm(): void {
@@ -323,6 +329,8 @@ export class QboExportSettingsComponent implements OnInit {
       }
 
       this.setupCustomWatchers();
+
+      this.setupCustomDateOptionWatchers();
 
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
 
