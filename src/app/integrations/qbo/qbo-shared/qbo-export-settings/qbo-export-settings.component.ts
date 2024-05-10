@@ -271,7 +271,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     });
 
-    if (this.exportSettingForm.value.creditCardExportType && (this.exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE)) {
+    if (this.exportSettingForm.value.creditCardExportType && ((this.exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE) || (this.exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE))) {
       this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
         if (brandingConfig.brandId==='fyle') {
           this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
