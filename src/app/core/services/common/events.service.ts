@@ -50,7 +50,7 @@ export class EventsService {
 
   receiveEvent(): void {
     this.windowService.nativeWindow.addEventListener('message', (message) => {
-      if (message.data && message.data.redirectUri && message.origin === environment.fyle_app_url) {
+      if (message.data && message.data.redirectUri && (message.origin === environment.fyle_app_url || message.origin === environment.fyle_app_local)) {
         if (message.data.redirectUri.includes('sage-intacct')) {
           this.sageIntacctLogin.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('quickbooks')) {

@@ -50,11 +50,11 @@
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .p-disabled .p-dropdown-trigger, :host ::ng-deep .showClearIcon .p-dropdown-trigger{
+:host ::ng-deep .p-disabled .p-dropdown-trigger, :host ::ng-deep .showClearIcon .p-dropdown-trigger, :host ::ng-deep .defaultFields .selectedItem  .p-dropdown-trigger{
     @apply tw-hidden #{!important};
 }
 
-:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-dropdown-trigger, :host ::ng-deep .filterDropdown .p-dropdown-trigger {
+:host ::ng-deep .dropdown-size-schedule .selectedItem  .p-dropdown-trigger, :host ::ng-deep .filterDropdown .p-dropdown-trigger{
     @apply tw-visible #{!important};
 }
 

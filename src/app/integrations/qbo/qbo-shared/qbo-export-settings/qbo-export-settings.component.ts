@@ -3,9 +3,10 @@ import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -251,6 +252,32 @@ export class QboExportSettingsComponent implements OnInit {
     });
   }
 
+  private setupCustomDateOptionWatchers(): void {
+    this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
+      this.exportSettingForm.controls.reimbursableExportDate.reset();
+    });
+
+    this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
+      if (brandingConfig.brandId==='fyle') {
+        this.reimbursableExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+        this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
+      }
+    });
+
+    this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
+      this.exportSettingForm.controls.creditCardExportDate.reset();
+      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+    });
+
+
+    this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
+      if (brandingConfig.brandId==='fyle'  && this.exportSettingForm.value.creditCardExportType && this.exportSettingForm.value.creditCardExportType !== QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE && this.exportSettingForm.value.creditCardExportType !== QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE) {
+        this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getReimbursableExpenseGroupingDateOptions();
+        this.cccExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(creditCardExportGroup, this.cccExpenseGroupingDateOptions);
+      }
+    });
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT', 'ACCOUNTS_PAYABLE', 'VENDOR'];
@@ -296,9 +323,12 @@ export class QboExportSettingsComponent implements OnInit {
         this.helperService.setOrClearValidators(this.exportSettings.workspace_general_settings.corporate_credit_card_expenses_object, exportSettingValidatorRule.creditCardExpense, this.exportSettingForm);
       }
 
+      this.setupCustomWatchers();
+
+      this.setupCustomDateOptionWatchers();
+
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
 
-      this.setupCustomWatchers();
       this.isLoading = false;
     });
   }

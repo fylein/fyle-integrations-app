@@ -15,6 +15,7 @@ do
     sed -i $SED_EXTRA_ARGS "s?{{XERO_API_URL}}?${XERO_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{NETSUITE_API_URL}}?${NETSUITE_API_URL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{FYLE_APP_URL}}?${FYLE_APP_URL}?g" $f;
+    sed -i $SED_EXTRA_ARGS "s?{{FYLE_APP_LOCAL}}?${FYLE_APP_LOCAL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{CALLBACK_URI}}?${CALLBACK_URI}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{FYLE_CLIENT_ID}}?${FYLE_CLIENT_ID}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{PRODUCTION}}?${PRODUCTION}?g" $f;
