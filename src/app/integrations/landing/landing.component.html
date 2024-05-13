@@ -38,7 +38,7 @@
                         <img src="assets/logos/netsuite-logo.png" width="120px" height="60px" />
                         <span class="landing--accounting-app-name">
                             NetSuite
-                            <div class="landing--accounting-app-open">
+                            <div *ngIf="brandingConfig.brandId !== 'co'" class="landing--accounting-app-open">
                                 <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
                             </div>
                         </span>

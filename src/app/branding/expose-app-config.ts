@@ -44,10 +44,10 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             BUSINESS_CENTRAL: false,
             TRAVELPERK: false,
             XERO: true,
-            NETSUITE: false,
+            NETSUITE: true,
             QBD: false,
             BAMBOO: false
-            },
+        },
         'c1-production-1-us': {
             INTACCT: true,
             SAGE300: false,

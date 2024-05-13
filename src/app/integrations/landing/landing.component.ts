@@ -15,6 +15,7 @@ import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding
 import { QboAuthService } from 'src/app/core/services/qbo/qbo-core/qbo-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
 import { exposeAppConfig } from 'src/app/branding/expose-app-config';
+import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 
 @Component({
   selector: 'app-landing',
@@ -70,7 +71,7 @@ export class LandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly exposeApps = exposeAppConfig[brandingConfig.brandId][brandingConfig.env_id];
+  readonly exposeApps = exposeAppConfig[brandingConfig.brandId][brandingConfig.envId];
 
   readonly hideToCo = !(this.storageService.get('cluster-domain').includes('.fylehq.com') || this.storageService.get('cluster-domain').includes('.fyle.tech') || this.storageService.get('cluster-domain').includes('-qa.'));
 
@@ -78,6 +79,7 @@ export class LandingComponent implements OnInit {
     private eventsService: EventsService,
     private qboAuthService: QboAuthService,
     private xeroAuthService: XeroAuthService,
+    private nsAuthService: NetsuiteAuthService,
     private router: Router,
     private siAuthService: SiAuthService,
     private storageService: StorageService,
@@ -113,8 +115,12 @@ export class LandingComponent implements OnInit {
       login$ = this.siAuthService.loginWithAuthCode(authCode);
     } else if (inAppIntegration === InAppIntegration.QBO) {
       login$ = this.qboAuthService.loginWithAuthCode(authCode);
-    } else {
+    } else if (inAppIntegration === InAppIntegration.XERO) {
       login$ = this.xeroAuthService.login(authCode);
+    } else if (inAppIntegration === InAppIntegration.NETSUITE) {
+      login$ = this.nsAuthService.loginWithAuthCode(authCode);
+    } else {
+      return;
     }
 
     login$.subscribe((token: Token) => {
@@ -143,6 +149,10 @@ export class LandingComponent implements OnInit {
 
     this.eventsService.xeroLogin.subscribe((redirectUri: string) => {
       this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.XERO);
+    });
+
+    this.eventsService.netsuiteLogin.subscribe((redirectUri: string) => {
+      this.loginAndRedirectToInAppIntegration(redirectUri, InAppIntegration.NETSUITE);
     });
   }
 

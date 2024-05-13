@@ -4,5 +4,5 @@
     "brandId": "{{BRAND_ID}}",
     "supportEmail": "{{SUPPORT_EMAIL}}",
     "helpArticleDomain": "{{HELP_ARTICLE_DOMAIN}}",
-    "env_id": "{{ENV_ID}}'}"
+    "envId": "{{ENV_ID}}"
 }
