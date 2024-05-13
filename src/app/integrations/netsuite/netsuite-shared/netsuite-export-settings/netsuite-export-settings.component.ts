@@ -143,7 +143,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   private cccExportTypeWatcher(): void {
     this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe((isCCCExportTypeSelected) => {
-      if (isCCCExportTypeSelected === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+      if (isCCCExportTypeSelected === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.exportSettings?.configuration?.reimbursable_expenses_object) {
         this.exportSettingForm.controls.employeeFieldMapping.enable();
         this.exportSettingForm.controls.nameInJournalEntry.patchValue(NameInJournalEntry.EMPLOYEE);
       }
@@ -155,7 +155,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   private exportFieldsWatcher(): void {
-    if (this.exportSettings?.configuration?.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || this.exportSettings?.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+    if (this.exportSettings?.configuration?.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || (this.exportSettings?.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.exportSettings?.configuration?.reimbursable_expenses_object)) {
       this.exportSettingForm.get('employeeFieldMapping')?.enable();
     } else {
       this.exportSettingForm.get('employeeFieldMapping')?.disable();
