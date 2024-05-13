@@ -266,9 +266,13 @@ export class NetsuiteImportSettingsComponent implements OnInit {
         this.isImportItemsAllowed = true;
       }
 
-      if (!((!workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) ||
-      (!workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) ||
-      ((workspaceGeneralSetting.corporate_credit_card_expenses_object && workspaceGeneralSetting.reimbursable_expenses_object) && (workspaceGeneralSetting.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || workspaceGeneralSetting.corporate_credit_card_expenses_object !== NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY)))) {
+      if (
+        ( workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY && workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY )
+        ||
+        ( !workspaceGeneralSetting.reimbursable_expenses_object && workspaceGeneralSetting.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY )
+        ||
+        ( workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY && !workspaceGeneralSetting.corporate_credit_card_expenses_object )
+      ) {
         this.isImportProjectsAllowed = false;
         this.netsuiteFields = netsuiteFields.filter((filed) => filed.attribute_type !== NetsuiteFyleField.PROJECT);
       } else {

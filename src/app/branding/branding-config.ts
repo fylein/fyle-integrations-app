@@ -68,10 +68,10 @@ const featureConfigs: FeatureConfiguration = {
             },
             importSettings: {
                 tax: false,
-                importVendorsAsMerchants: false,
-                importNetsuiteEmployees: false,
-                importItems: false,
-                importProjects: false
+                importVendorsAsMerchants: true,
+                importNetsuiteEmployees: true,
+                importItems: true,
+                importProjects: true
             },
             advancedSettings: {
                 autoCreateVendors: false,
@@ -81,8 +81,8 @@ const featureConfigs: FeatureConfiguration = {
                 defaultFields: false,
                 skipExport: false,
                 autoCreateContacts: false,
-                useEmployeeAttributes: false,
-                autoCreateMerchants: false
+                useEmployeeAttributes: true,
+                autoCreateMerchants: true
             },
             exportLog: {
                 expenseType: false
