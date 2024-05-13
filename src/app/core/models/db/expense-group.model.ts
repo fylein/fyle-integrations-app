@@ -10,6 +10,7 @@ export type ExpenseGroupDescription = {
 };
 
 export type ExpenseGroup = {
+  export_url: string;
   id: number;
   fund_source: string;
   description: ExpenseGroupDescription;

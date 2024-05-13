@@ -85,12 +85,22 @@
                     [formControllerName]="'changeAccountingPeriod'">
                 </app-configuration-toggle-field>
 
-                <app-configuration-toggle-field *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors"
+                <div class="autoCreateVendor" *ngIf="isAutoCreateVendorsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateVendors" [ngClass]="{'tw-mb-24-px' : !isAutoCreateMerchantsFieldVisible()}">
+                    <app-configuration-toggle-field
+                        [form]="advancedSettingForm"
+                        [iconPath]="'user-plus'"
+                        [label]="brandingContent.autoCreateVendorsLabel + getCreateVendorLabel() "
+                        [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a ' + getCreateVendorLabel().toLowerCase() + ' if a match does not exist in NetSuite already.'"
+                        [formControllerName]="'autoCreateVendors'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
-                    [label]="brandingContent.autoCreateVendorsLabel"
-                    [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in NetSuite already.'"
-                    [formControllerName]="'autoCreateVendors'">
+                    [label]="brandingContent.autoCreateMerchantsLabel"
+                    [subLabel]="'While exporting credit card charge expenses from ' + brandingConfig.brandName + ', the integration will automatically create a merchant if a match does not exist in NetSuite already.'"
+                    [formControllerName]="'autoCreateMerchants'">
                 </app-configuration-toggle-field>
 
             </div>
@@ -146,80 +156,92 @@
                     [subLabel]="brandingContent.dfvSubLabel">
                 </app-configuration-step-sub-header>
 
-                <div class="tw-flex">
+                <div class="tw-flex tw-items-center tw-p-24-px ">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteLocations"
                         [label]="'Default Location'"
                         [placeholder]="'Choose Default NetSuite Location'"
+                        [showClearIcon]="true"
                         [formControllerName]="'netsuiteLocation'">
                     </app-configuration-select-field>
 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in NetSuite</label>   
                     </div>
                 </div>
 
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [destinationAttributes]="netsuiteLocationLevels"
-                    [isDefaultFields]="true"
-                    [label]="'NetSuite Location Level'"
-                    [placeholder]="'Choose NetSuite Location Level'"
-                    [formControllerName]="'netsuiteLocationLevel'">
-                </app-configuration-select-field>
+                <div class="tw-pl-24-px">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [destinationAttributes]="netsuiteLocationLevels"
+                        [isDefaultFields]="true"
+                        [label]="'NetSuite Location Level'"
+                        [placeholder]="'Choose NetSuite Location Level'"
+                        [showClearIcon]="true"
+                        [formControllerName]="'netsuiteLocationLevel'">
+                    </app-configuration-select-field>
+                </div>
 
-                <div class="tw-flex">
+                <div class="tw-flex tw-items-center tw-p-24-px">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteDepartments"
                         [label]="'Default Departments'"
                         [placeholder]="'Choose Default NetSuite Department'"
+                        [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartment'">
                     </app-configuration-select-field>
                 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in NetSuite</label>   
                     </div>
                 </div>
 
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [destinationAttributes]="netsuiteDepartmentLevels"
-                    [isDefaultFields]="true"
-                    [label]="'NetSuite Department Level'"
-                    [placeholder]="'Choose NetSuite Department Level'"
-                    [formControllerName]="'netsuiteDepartmentLevel'">
-                </app-configuration-select-field>
+                <div class="tw-pl-24-px">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [destinationAttributes]="netsuiteDepartmentLevels"
+                        [isDefaultFields]="true"
+                        [label]="'NetSuite Department Level'"
+                        [placeholder]="'Choose NetSuite Department Level'"
+                        [showClearIcon]="true"
+                        [formControllerName]="'netsuiteDepartmentLevel'">
+                    </app-configuration-select-field>
+                </div>
 
-                <div class="tw-flex">
+                <div class="tw-flex tw-items-center tw-p-24-px ">
                     <app-configuration-select-field
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteClasses"
                         [label]="'Default Class'"
                         [placeholder]="'Choose Default NetSuite Class'"
+                        [showClearIcon]="true"
                         [formControllerName]="'netsuiteClass'">
                     </app-configuration-select-field>
                 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-p-24-px tw-mt-36-px">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeClass" type="checkbox" />
                         <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Class</label>   
                     </div>
                 </div>
 
-                <app-configuration-select-field
-                    [form]="advancedSettingForm"
-                    [destinationAttributes]="netsuiteClassLevels"
-                    [isDefaultFields]="true"
-                    [label]="'NetSuite Class Level'"
-                    [placeholder]="'Choose NetSuite Class Level'"
-                    [formControllerName]="'netsuiteClassLevel'">
-                </app-configuration-select-field>
+                <div class="tw-pl-24-px">
+                    <app-configuration-select-field
+                        [form]="advancedSettingForm"
+                        [destinationAttributes]="netsuiteClassLevels"
+                        [isDefaultFields]="true"
+                        [label]="'NetSuite Class Level'"
+                        [placeholder]="'Choose NetSuite Class Level'"
+                        [showClearIcon]="true"
+                        [formControllerName]="'netsuiteClassLevel'">
+                    </app-configuration-select-field>
+                </div>
             </div>
         </div>
         <app-configuration-step-footer

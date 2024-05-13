@@ -3,6 +3,7 @@ import { AutoMapEmployeeOptions, BusinessCentralExportType, CCCExpenseState, Exp
 import { BusinessCentralDestinationAttributes } from "../db/business-central-destination-attribute.model";
 import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
 import { brandingContent } from "src/app/branding/branding-config";
+import { SelectFormOption } from "../../common/select-form-option.model";
 
 export type BusinessCentralExportSetting = {
     reimbursable_expenses_export_type: BusinessCentralExportType,
@@ -38,7 +39,7 @@ export type BusinessCentralExportSettingFormOption = {
 
 export class BusinessCentralExportSettingModel {
 
-    static getExpenseGroupByOptions(): BusinessCentralExportSettingFormOption[] {
+    static getExpenseGroupByOptions(): SelectFormOption[] {
         return [
           {
             label: 'Expense',
@@ -51,7 +52,7 @@ export class BusinessCentralExportSettingModel {
         ];
     }
 
-    static getCCCExpenseGroupingDateOptions(): BusinessCentralExportSettingFormOption[] {
+    static getCCCExpenseGroupingDateOptions(): SelectFormOption[] {
       return [
         {
           label: 'Card Transaction Post date',

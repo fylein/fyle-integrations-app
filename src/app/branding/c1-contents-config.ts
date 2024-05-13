@@ -6,7 +6,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const c1Contents = {
     netsuite: {
         landing: {
-            contentText: 'Import data from NetSuite to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to NetSuite. ',
+            contentText: 'Import GL accounts and projects from NetSuite and export expenses from your ' + brandingConfig.brandName + ' account.',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
@@ -31,10 +31,10 @@ export const c1Contents = {
                     creditCardExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
                     defaultCCCAccountLabel: 'Set default credit card account as',
                     defaultCCCAccountPlaceholder: 'Select default credit card account',
-                    defaultDebitCardAccountLabel: 'Set default debit card account as',
+                    defaultDebitCardAccountLabel: 'Set employee payables account as',
                     defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
-                    accountsPayableLabel: 'To which accounts payable account should the ',
+                    accountsPayableLabel: 'Set vendor payables account as',
                     journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
                 }
@@ -43,8 +43,8 @@ export const c1Contents = {
                 stepName: 'Import Settings',
                 headerText: '',
                 contentText: 'Choose the required import fields from NetSuite to expense management.',
-                importCategoriesLabel: 'Import the chart of accounts as categories',
-                importCategoriesSubLabel: 'Imported accounts will be available as categories in expense management.',
+                importCategoriesLabel: ' as categories',
+                importCategoriesSubLabel: ' will be available as categories in expense management.',
                 importCustomersLabel: 'Import customers from NetSuite',
                 importCustomersSubLabel: 'The customers in NetSuite will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
                 taxCodeLabel: 'Import tax from NetSuite',
@@ -55,8 +55,11 @@ export const c1Contents = {
                 notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from NetSuite as projects in ' + brandingConfig.brandName + '.',
                 toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.',
                 importVendorsAsMerchantsLabel: 'Import vendors from NetSuite',
-                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in' + brandingConfig.brandName,
-                importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in expense management.'
+                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in ' + brandingConfig.brandName,
+                importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in expense management.',
+                customSegmentHeader: 'Add custom segment/list/record',
+                importProjectsLabel: 'Import projects from NetSuite',
+                importItemsLabel: 'Import items from NetSuite'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -64,7 +67,7 @@ export const c1Contents = {
                 scheduleAutoExport: 'Schedule automatic export',
                 email: 'Send error notification to',
                 paymentSyncLabel: 'Auto-sync payment status for reimbursable expenses',
-                autoCreateVendorsLabel: 'Auto create vendor',
+                autoCreateVendorsLabel: 'Auto create ',
                 autoCreateMerchantsAsVendorsLabel: 'Auto create ' + brandingConfig.brandName + ' merchants as vendors on NetSuite',
                 billPaymentAccountLabel: 'To which payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
@@ -73,7 +76,7 @@ export const c1Contents = {
                 dfvSubLabel: 'If you\'ve made a field mandatory in NetSuite but don\'t collect a value from your employees in the expense form, you can set a default value here to be added to all the expenses.',
                 dfvLabel: 'Default field values',
                 changeAccountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
-                defaultPaymentAccount: 'Select payment account',
+                defaultPaymentAccount: 'Select payment bank account',
                 memoStructureLabel: 'Set the line-item description field in NetSuite',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in NetSuite. ',
                 customizationSubLabel: 'Customize the data that you\'d like to export from expense management to NetSuite by choosing which data points need to be exported.',
@@ -82,13 +85,14 @@ export const c1Contents = {
                 frequencySubLabel: 'Set how often your expenses will be exported to NetSuite.',
                 preferenceLabel: 'Other preferences',
                 preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
-                previewDescriptionFieldLabel: 'Preview of the description field'
+                previewDescriptionFieldLabel: 'Preview of the description field',
+                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge'
             }
         }
     },
     xero: {
         landing: {
-            contentText: 'Import data from Xero to ' + brandingConfig.brandName + ' and export expenses from ' + brandingConfig.brandName + ' to Xero. ',
+            contentText: 'Import GL accounts and projects from Xero and export expenses from your ' + brandingConfig.brandName + ' account.',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {

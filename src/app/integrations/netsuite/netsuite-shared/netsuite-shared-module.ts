@@ -5,7 +5,8 @@ import { NetsuiteImportSettingsComponent } from './netsuite-import-settings/nets
 import { NetsuiteAdvancedSettingsComponent } from './netsuite-advanced-settings/netsuite-advanced-settings.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { NetsuiteCustomeSegmentDialogComponent } from './netsuite-import-settings/netsuite-custome-segment-dialog/netsuite-custome-segment-dialog.component';
+import { DialogModule } from 'primeng/dialog';
+import { NetsuiteCustomSegmentDialogComponent } from './netsuite-import-settings/netsuite-custom-segment-dialog/netsuite-custom-segment-dialog.component';
 
 
 
@@ -14,12 +15,13 @@ import { NetsuiteCustomeSegmentDialogComponent } from './netsuite-import-setting
     NetsuiteExportSettingsComponent,
     NetsuiteImportSettingsComponent,
     NetsuiteAdvancedSettingsComponent,
-    NetsuiteCustomeSegmentDialogComponent
+    NetsuiteCustomSegmentDialogComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    MultiSelectModule
+    MultiSelectModule,
+    DialogModule
   ],
   exports: [
     NetsuiteExportSettingsComponent,

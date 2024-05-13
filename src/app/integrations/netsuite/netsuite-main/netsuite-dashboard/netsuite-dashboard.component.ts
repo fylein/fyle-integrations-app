@@ -128,8 +128,8 @@ export class NetsuiteDashboardComponent implements OnInit {
         this.accountingExportSummary = AccountingExportSummaryModel.parseAPIResponseToAccountingSummary(responses[1]);
       }
       this.destinationFieldMap = {
-        EMPLOYEE: responses[3].employee_field_mapping,
-        CATEGORY: (responses[3].reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || responses[3].corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT) ? NetsuiteCategoryDestination.EXPENSE_CATEGORY : NetsuiteCategoryDestination.ACCOUNT
+        EMPLOYEE: responses[4].configuration.employee_field_mapping,
+        CATEGORY: (responses[4].configuration.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT || responses[3].corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT) ? NetsuiteCategoryDestination.EXPENSE_CATEGORY : NetsuiteCategoryDestination.ACCOUNT
       };
 
       this.isLoading = false;

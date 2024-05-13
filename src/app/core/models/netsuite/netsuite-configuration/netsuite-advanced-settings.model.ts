@@ -11,6 +11,7 @@ export type NetsuiteAdvancedSettingConfiguration = {
   sync_fyle_to_netsuite_payments: boolean,
   sync_netsuite_to_fyle_payments: boolean,
   auto_create_destination_entity: boolean,
+  auto_create_merchants: boolean,
   change_accounting_period: boolean,
   memo_structure: string[]
 }
@@ -116,24 +117,26 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
   }
 
   static mapAPIResponseToFormGroup(advancedSettings: NetsuiteAdvancedSettingGet, isSkipExportEnabled: boolean, adminEmails: EmailOption[]): FormGroup {
-
+    const level: DefaultDestinationAttribute[] = this.getDefaultLevelOptions();
+    const findObjectByDestinationId = (id: string) => level?.find(item => item.id === id) || null;
     return new FormGroup({
       paymentSync: new FormControl(advancedSettings?.configuration.sync_fyle_to_netsuite_payments ? NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE : advancedSettings?.configuration.sync_netsuite_to_fyle_payments ? NetsuitePaymentSyncDirection.NETSUITE_TO_FYLE : null),
       paymentAccount: new FormControl(advancedSettings?.general_mappings.vendor_payment_account?.id ? advancedSettings?.general_mappings.vendor_payment_account : null ),
       netsuiteLocation: new FormControl(advancedSettings?.general_mappings.netsuite_location?.id ? advancedSettings?.general_mappings.netsuite_location : null),
       useEmployeeLocation: new FormControl(advancedSettings?.general_mappings.use_employee_location ? advancedSettings?.general_mappings.use_employee_location : false),
-      netsuiteLocationLevel: new FormControl(advancedSettings?.general_mappings.netsuite_location_level ? advancedSettings?.general_mappings.netsuite_location_level : null),
+      netsuiteLocationLevel: new FormControl(advancedSettings?.general_mappings.netsuite_location_level ? findObjectByDestinationId(advancedSettings?.general_mappings.netsuite_location_level) : null),
       netsuiteDepartment: new FormControl(advancedSettings?.general_mappings.netsuite_department?.id ? advancedSettings?.general_mappings.netsuite_department : null),
-      netsuiteDepartmentLevel: new FormControl(advancedSettings?.general_mappings.netsuite_department_level ? advancedSettings?.general_mappings.netsuite_department_level : null),
+      netsuiteDepartmentLevel: new FormControl(advancedSettings?.general_mappings.netsuite_department_level ? findObjectByDestinationId(advancedSettings?.general_mappings.netsuite_department_level) : null),
       useEmployeeDepartment: new FormControl(advancedSettings?.general_mappings.use_employee_department ? advancedSettings?.general_mappings.use_employee_department : false),
       netsuiteClass: new FormControl(advancedSettings?.general_mappings.netsuite_class?.id ? advancedSettings?.general_mappings.netsuite_class : null),
-      netsuiteClassLevel: new FormControl(advancedSettings?.general_mappings.netsuite_class_level ? advancedSettings?.general_mappings.netsuite_class_level : null),
+      netsuiteClassLevel: new FormControl(advancedSettings?.general_mappings.netsuite_class_level ? findObjectByDestinationId(advancedSettings?.general_mappings.netsuite_class_level) : null),
       useEmployeeClass: new FormControl(advancedSettings?.general_mappings.use_employee_class ? advancedSettings?.general_mappings.use_employee_class : false),
       changeAccountingPeriod: new FormControl(advancedSettings?.configuration.change_accounting_period),
       autoCreateVendors: new FormControl(advancedSettings?.configuration.auto_create_destination_entity),
       exportSchedule: new FormControl(advancedSettings?.workspace_schedules?.enabled ? true : false),
       exportScheduleFrequency: new FormControl(advancedSettings?.workspace_schedules?.enabled ? advancedSettings?.workspace_schedules.interval_hours : 1),
       memoStructure: new FormControl(advancedSettings?.configuration.memo_structure),
+      autoCreateMerchants: new FormControl(advancedSettings?.configuration?.auto_create_merchants ? advancedSettings.configuration.auto_create_merchants : false),
       skipExport: new FormControl(isSkipExportEnabled),
       searchOption: new FormControl(),
       search: new FormControl(),
@@ -151,7 +154,8 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
         sync_netsuite_to_fyle_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === NetsuitePaymentSyncDirection.NETSUITE_TO_FYLE ? true : false,
         auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
         change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
-        memo_structure: advancedSettingsForm.get('memoStructure')?.value
+        memo_structure: advancedSettingsForm.get('memoStructure')?.value,
+        auto_create_merchants: advancedSettingsForm.get('autoCreateMerchants')?.value
       },
       general_mappings: {
         vendor_payment_account: advancedSettingsForm.get('paymentAccount')?.value ? advancedSettingsForm.get('paymentAccount')?.value : emptyDestinationAttribute,
