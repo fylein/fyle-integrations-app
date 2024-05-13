@@ -303,7 +303,7 @@ export enum FyleField {
   CATEGORY = 'CATEGORY',
 }
 
-export enum NetsuiteCustomeSegmentOption {
+export enum NetsuiteCustomSegmentOption {
   CUSTOM_LIST = 'CUSTOM_LIST',
   CUSTOM_RECORD = 'CUSTOM_RECORD',
   CUSTOM_SEGMENT = 'CUSTOM_SEGMENT'

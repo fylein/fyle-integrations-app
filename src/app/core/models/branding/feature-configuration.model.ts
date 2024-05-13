@@ -18,6 +18,8 @@ export type FeatureConfiguration = {
                 tax: boolean;
                 importVendorsAsMerchants: boolean;
                 importNetsuiteEmployees: boolean;
+                importItems: boolean;
+                importProjects: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;
@@ -28,6 +30,7 @@ export type FeatureConfiguration = {
                 defaultFields: boolean;
                 autoCreateContacts: boolean;
                 useEmployeeAttributes: boolean;
+                autoCreateMerchants: boolean;
             },
             exportLog: {
                 expenseType: boolean;

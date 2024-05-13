@@ -5,7 +5,7 @@ import { IntegrationField } from "../../db/mapping.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { NetSuiteExportSettingModel } from "./netsuite-export-setting.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
-import { NetsuiteCustomeSegmentOption } from "../../enum/enum.model";
+import { NetsuiteCustomSegmentOption } from "../../enum/enum.model";
 
 
 export type NetsuiteImportSettingConfiguration = {
@@ -13,8 +13,7 @@ export type NetsuiteImportSettingConfiguration = {
     import_vendors_as_merchants: boolean,
     import_tax_items: boolean,
     import_items: boolean,
-    import_netsuite_employees: boolean,
-    auto_create_merchants: boolean
+    import_netsuite_employees: boolean
   }
 
   export type NetsuiteImportSettingGeneralMapping = {
@@ -48,28 +47,29 @@ export type NetsuiteImportSettingConfiguration = {
 
 export class NetsuiteImportSettingModel extends ImportSettingsModel {
 
-  static getCustomeSegmentOptions(): SelectFormOption[] {
+  static getCustomSegmentOptions(): SelectFormOption[] {
     return [
       {
         label: 'Custom List',
-        value: NetsuiteCustomeSegmentOption.CUSTOM_LIST
+        value: NetsuiteCustomSegmentOption.CUSTOM_LIST
       },
       {
         label: 'Custom Record',
-        value: NetsuiteCustomeSegmentOption.CUSTOM_RECORD
+        value: NetsuiteCustomSegmentOption.CUSTOM_RECORD
       },
       {
         label: 'Custom Segment',
-        value: NetsuiteCustomeSegmentOption.CUSTOM_SEGMENT
+        value: NetsuiteCustomSegmentOption.CUSTOM_SEGMENT
       }
     ];
   }
 
-  static constructCustomSegmentPayload(customeSegmentForm: FormGroup): CustomSegment {
+  static constructCustomSegmentPayload(customSegmentForm: FormGroup, workspaceId: number): CustomSegment {
     return {
-      segment_type: customeSegmentForm.get('custom_field_type')?.value,
-      script_id: customeSegmentForm.get('script_id')?.value,
-      internal_id: customeSegmentForm.get('internal_id')?.value
+      segment_type: customSegmentForm.get('customFieldType')?.value,
+      script_id: customSegmentForm.get('scriptId')?.value,
+      internal_id: customSegmentForm.get('internalId')?.value,
+      workspace: workspaceId
     };
   }
 
@@ -79,7 +79,7 @@ export class NetsuiteImportSettingModel extends ImportSettingsModel {
       return new FormGroup({
           importCategories: new FormControl(importSettings?.configuration.import_categories ?? false),
           expenseFields: new FormArray(expenseFieldsArray),
-          import_items: new FormControl(importSettings?.configuration.import_items ?? false),
+          importItems: new FormControl(importSettings?.configuration.import_items ?? false),
           taxCode: new FormControl(importSettings?.configuration.import_tax_items ?? false),
           importVendorsAsMerchants: new FormControl(importSettings?.configuration.import_vendors_as_merchants ?? false),
           importNetsuiteEmployees: new FormControl(importSettings?.configuration.import_netsuite_employees ?? false),
@@ -99,8 +99,7 @@ export class NetsuiteImportSettingModel extends ImportSettingsModel {
             import_tax_items: importSettingsForm.get('taxCode')?.value,
             import_items: importSettingsForm.get('importItems')?.value ? importSettingsForm.get('importItems')?.value : false,
             import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value,
-            import_netsuite_employees: importSettingsForm.get('importNetsuiteEmployees')?.value,
-            auto_create_merchants: importSettingsForm.get('autoCreateMerchants')?.value ? importSettingsForm.get('autoCreateMerchants')?.value : false
+            import_netsuite_employees: importSettingsForm.get('importNetsuiteEmployees')?.value
           },
           general_mappings: {
             default_tax_code: importSettingsForm.get('defaultTaxCode')?.value ? NetSuiteExportSettingModel.formatGeneralMappingPayload(importSettingsForm.get('defaultTaxCode')?.value) : emptyDestinationAttribute

@@ -44,6 +44,8 @@ export type ContentConfiguration = {
                     importCategoriesSubLabel: string;
                     importCustomersLabel: string;
                     importCustomersSubLabel: string;
+                    importProjectsLabel: string;
+                    importItemsLabel: string;
                     taxCodeLabel: string;
                     taxCodeSubLabel: string;
                     defaultTaxCodeLabel: string;
@@ -53,6 +55,7 @@ export type ContentConfiguration = {
                     importNetsuiteEmployeesLabel: string;
                     importNetsuiteEmployeesSubLabel: string;
                     toggleToastMessage: string,
+                    customSegmentHeader: string;
                 },
                 advancedSettings: {
                     memoStructureSubLabel: string;
@@ -79,6 +82,7 @@ export type ContentConfiguration = {
                     changeAccountingPeriodSubLabel: string;
                     scheduleSubLabel: string;
                     previewDescriptionFieldLabel: string;
+                    autoCreateMerchantsLabel: string;
                 }
             },
         },

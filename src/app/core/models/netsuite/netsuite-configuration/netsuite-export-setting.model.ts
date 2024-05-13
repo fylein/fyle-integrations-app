@@ -203,14 +203,15 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       static getMandatoryField(form: FormGroup, controllerName: string): boolean {
         switch (controllerName) {
           case 'bankAccount':
-            return form.value.employeeFieldMapping === EmployeeFieldMapping.EMPLOYEE;
+            return form.controls.employeeFieldMapping.value === EmployeeFieldMapping.EMPLOYEE;
           case 'accountsPayable':
-            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.value.employeeFieldMapping === EmployeeFieldMapping.VENDOR;
+            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.employeeFieldMapping.value === EmployeeFieldMapping.VENDOR;
           case 'creditCardAccount':
             return form.controls.creditCardExportType && form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.BILL;
           case 'defaultCreditCardVendor':
             return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE  || (form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.nameInJournalEntry.value === NameInJournalEntry.MERCHANT);
-
+          case 'nameInJournalEntry':
+            return form.controls.creditCardExportType && form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY;
           default:
             return false;
         }
@@ -236,7 +237,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
             requiredValue: {
               [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor'],
               [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['bankAccount', 'defaultCreditCardVendor'],
-              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalOptions'],
+              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalEntry'],
               [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['creditCardAccount']
             }
           }
@@ -270,13 +271,7 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
 
       static constructPayload(exportSettingsForm: FormGroup): NetSuiteExportSettingPost {
         const emptyDestinationAttribute: DefaultDestinationAttribute = {id: null, name: null};
-        let nameInJournalEntry = NameInJournalEntry.EMPLOYEE;
-
-        if (!brandingFeatureConfig.featureFlags.exportSettings.nameInJournalEntry) {
-          nameInJournalEntry = NameInJournalEntry.MERCHANT;
-        } else {
-          nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value;
-        }
+        const nameInJournalEntry = exportSettingsForm.get('nameInJournalEntry')?.value ? exportSettingsForm.get('nameInJournalEntry')?.value : NameInJournalEntry.EMPLOYEE;
 
         if (brandingConfig.brandId === 'co') {
           exportSettingsForm.controls.creditCardExpense.patchValue(true);

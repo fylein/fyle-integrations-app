@@ -178,7 +178,7 @@ export class GenericMappingTableComponent implements OnInit {
     if (selectedRow.employeemapping) {
       const employeeMapping = MappingClass.constructEmployeeMappingPayload(selectedRow, event, this.employeeFieldMapping, this.workspaceService.getWorkspaceId());
       this.mappingService.postEmployeeMappings(employeeMapping).subscribe((response) => {
-        this.decrementUnmappedCountIfNeeded(selectedRow.employeemapping);
+        this.appName === AppName.NETSUITE && this.destinationField === FyleField.EMPLOYEE ? this.decrementUnmappedCountInNetsuiteEmployeeMapping(selectedRow.employeemapping) : this.decrementUnmappedCountIfNeeded(selectedRow.employeemapping);
         selectedRow.employeemapping = [response];
         this.displaySuccessToast(this.brandingContent.employeeMappingToastText);
       }, () => {
@@ -209,6 +209,12 @@ export class GenericMappingTableComponent implements OnInit {
 
   decrementUnmappedCountIfNeeded(mapping: any): void {
     if (!mapping?.length && !this.isDashboardMappingResolve) {
+      this.mappingStats.unmapped_attributes_count -= 1;
+    }
+  }
+
+  decrementUnmappedCountInNetsuiteEmployeeMapping(mapping: any): void {
+    if (mapping[0]?.destination_employee === null && !this.isDashboardMappingResolve) {
       this.mappingStats.unmapped_attributes_count -= 1;
     }
   }

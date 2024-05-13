@@ -31,10 +31,10 @@ export const fyleContents = {
                     cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).',
                     defaultCCCAccountLabel: 'Set Default Credit Card Account as',
                     defaultCCCAccountPlaceholder: 'Select Default Credit Card Account',
-                    defaultDebitCardAccountLabel: 'Set Default Debit Card Account as',
+                    defaultDebitCardAccountLabel: 'Set Employee Payables Account as',
                     defaultDebitCardAccountPlaceholder: 'Select Default Debit Card Account',
                     defaultCCCVendorLabel: 'Set Default Corporate Card Vendor as',
-                    accountsPayableLabel: 'To which Accounts Payable account should the ',
+                    accountsPayableLabel: 'Set Vendor Payables Account as',
                     journalOptionLabel: 'Name in Journal Entry',
                     journalOptionSubLabel: 'You can select either the \'Merchant Name\' or the \'Employee Name\' to appear in the \'Name\' field of your Journal Entries.'
                 }
@@ -55,8 +55,11 @@ export const fyleContents = {
                 notes: 'NOTE: To export billable expenses from Fyle, import Customers from NetSuite as Projects in Fyle.',
                 toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the Project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import Customers in the Project field.',
                 importVendorsAsMerchantsLabel: 'Import Vendors from NetSuite',
-                importNetsuiteEmployeesLabel: 'Import Netsuite Employee as Employee in' + brandingConfig.brandName,
-                importNetsuiteEmployeesSubLabel: 'Imported NetSuite Employee will be available as Employee in ' + brandingConfig.brandName+ '.'
+                importNetsuiteEmployeesLabel: 'Import Netsuite Employee as Employee in ' + brandingConfig.brandName,
+                importNetsuiteEmployeesSubLabel: 'Imported NetSuite Employee will be available as Employee in ' + brandingConfig.brandName+ '.',
+                customSegmentHeader: 'Add Custom Segment/List/Record',
+                importProjectsLabel: 'Import Projects from NetSuite',
+                importItemsLabel: 'Import Items from NetSuite'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -82,7 +85,8 @@ export const fyleContents = {
                 frequencySubLabel: 'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to NetSuite.',
                 preferenceLabel: 'Other Preferences',
                 preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from expense management. (when there is no employee record found, or when the accounting period is closed).',
-                previewDescriptionFieldLabel: 'Preview of the Description Field'
+                previewDescriptionFieldLabel: 'Preview of the Description Field',
+                autoCreateMerchantsLabel: 'Auto Create Merchant on NetSuite for Credit Card Charge'
             }
         }
     },
