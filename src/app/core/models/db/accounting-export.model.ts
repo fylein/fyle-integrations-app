@@ -253,8 +253,8 @@ export class AccountingExportModel {
   }
 
   static constructNetsuiteExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
-    const words: string[] = expenseGroup.response_logs.type.split(/(?=[A-Z])/);
-    const exportType = new TitleCasePipe().transform(words.join(' '));
+    const words: string[] = expenseGroup.response_logs?.type.split(/(?=[A-Z])/);
+    const exportType = new TitleCasePipe().transform(words?.join(' '));
 
     return [expenseGroup.export_url, exportType];
   }
