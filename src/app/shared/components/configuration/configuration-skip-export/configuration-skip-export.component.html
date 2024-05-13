@@ -58,6 +58,10 @@
                 <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value1" separator="," placeholder="Enter Value"></p-chips>
                 <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
               </div>
+              <div class="tw-w-296-px" *ngIf="showBooleanField(1)">
+                <p-dropdown appendTo="body" formControlName="value1" placeholder="Select Value" [options]="customCheckBoxValueOptions">
+                </p-dropdown>
+              </div>
         </div>
   
         <div *ngIf="showAdditionalCondition" class="tw-pb-24-px">
@@ -123,6 +127,10 @@
             <div *ngIf="showChipField(2)" class="tw-w-296-px">
               <p-chips [addOnBlur]="true" styleClass="tw-w-[296px]" formControlName="value2" placeholder="Enter Value"></p-chips>
               <small class="chip-hint"><br>Separate your values with a comma or enter key.</small>
+            </div>
+            <div class="tw-w-296-px" *ngIf="showBooleanField(2)">
+              <p-dropdown appendTo="body" formControlName="value2" placeholder="Select Value" [options]="customCheckBoxValueOptions">
+              </p-dropdown>
             </div>
             <div *ngIf="showDateField(2)" class="tw-w-296-px">
               <p-calendar formControlName="value2" [readonlyInput]="true" placeholder="Select Date"></p-calendar>

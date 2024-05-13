@@ -69,6 +69,17 @@ export class ConfigurationSkipExportComponent implements OnInit {
     }
   ];
 
+  customCheckBoxValueOptions: { label: string; value: string; }[] = [
+    {
+      label: 'Yes',
+      value: 'true'
+    },
+    {
+      label: 'No',
+      value: 'false'
+    }
+  ];
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly isAsterikAllowed: boolean = brandingFeatureConfig.isAsterikAllowed;
@@ -228,6 +239,10 @@ export class ConfigurationSkipExportComponent implements OnInit {
       :(this.skipExportForm.value?.condition2?.field_name !== 'report_title') && (!this.skipExportForm.value?.condition2 || this.skipExportForm.value?.condition2?.type==='SELECT' || this.skipExportForm.value?.condition2?.type==='TEXT' || this.skipExportForm.value?.condition2?.type==='NUMBER') && (this.skipExportForm.value.operator2 !== 'is_empty')  && (this.skipExportForm.value.operator2 !== 'is_not_empty');
   }
 
+  showBooleanField(rank: number) {
+    return rank === 1 ? this.skipExportForm.value?.condition1?.type==='BOOLEAN' : this.skipExportForm.value?.condition2?.type==='BOOLEAN';
+  }
+
   setDefaultOperatorOptions(conditionField: string) {
     const operatorList = [];
     if (
@@ -259,7 +274,19 @@ export class ConfigurationSkipExportComponent implements OnInit {
   }
 
   setCustomOperatorOptions(rank: number, type: string | null) {
-    if (type !== 'SELECT') {
+    if (type === 'BOOLEAN') {
+      const customCheckBoxOperatorOptions: { label: string; value: string; }[] = [
+        {
+          label: 'Is',
+          value: 'exact'
+        }
+      ];
+      if (rank === 1) {
+        this.operatorFieldOptions1 = customCheckBoxOperatorOptions;
+      } else if (rank === 2) {
+        this.operatorFieldOptions2 = customCheckBoxOperatorOptions;
+      }
+    } else if (type !== 'SELECT') {
       if (rank === 1) {
         this.operatorFieldOptions1 = this.customOperatorOptions;
       } else if (rank === 2) {
