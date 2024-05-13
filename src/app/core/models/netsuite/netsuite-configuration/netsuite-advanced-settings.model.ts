@@ -11,6 +11,7 @@ export type NetsuiteAdvancedSettingConfiguration = {
   sync_fyle_to_netsuite_payments: boolean,
   sync_netsuite_to_fyle_payments: boolean,
   auto_create_destination_entity: boolean,
+  auto_create_merchants: boolean,
   change_accounting_period: boolean,
   memo_structure: string[]
 }
@@ -135,6 +136,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
       exportSchedule: new FormControl(advancedSettings?.workspace_schedules?.enabled ? true : false),
       exportScheduleFrequency: new FormControl(advancedSettings?.workspace_schedules?.enabled ? advancedSettings?.workspace_schedules.interval_hours : 1),
       memoStructure: new FormControl(advancedSettings?.configuration.memo_structure),
+      autoCreateMerchants: new FormControl(advancedSettings?.configuration?.auto_create_merchants ? advancedSettings.configuration.auto_create_merchants : false),
       skipExport: new FormControl(isSkipExportEnabled),
       searchOption: new FormControl(),
       search: new FormControl(),
@@ -152,7 +154,8 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
         sync_netsuite_to_fyle_payments: advancedSettingsForm.get('paymentSync')?.value && advancedSettingsForm.get('paymentSync')?.value === NetsuitePaymentSyncDirection.NETSUITE_TO_FYLE ? true : false,
         auto_create_destination_entity: advancedSettingsForm.get('autoCreateVendors')?.value,
         change_accounting_period: advancedSettingsForm.get('changeAccountingPeriod')?.value,
-        memo_structure: advancedSettingsForm.get('memoStructure')?.value
+        memo_structure: advancedSettingsForm.get('memoStructure')?.value,
+        auto_create_merchants: advancedSettingsForm.get('autoCreateMerchants')?.value
       },
       general_mappings: {
         vendor_payment_account: advancedSettingsForm.get('paymentAccount')?.value ? advancedSettingsForm.get('paymentAccount')?.value : emptyDestinationAttribute,
