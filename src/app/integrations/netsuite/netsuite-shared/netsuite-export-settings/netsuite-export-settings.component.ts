@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -149,8 +150,9 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       }
     });
     this.exportSettingForm.controls.nameInJournalEntry.valueChanges.subscribe((isNameInJournalEntrySelected) => {
-        const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+        if (isNameInJournalEntrySelected === NameInJournalEntry.MERCHANT ) {
+          HelperUtility.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardVendor');
+        }
     });
   }
 

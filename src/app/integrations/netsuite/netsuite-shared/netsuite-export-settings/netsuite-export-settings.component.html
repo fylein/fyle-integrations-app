@@ -167,7 +167,7 @@
                             [exportTypeIconPathArray]="previewImagePaths">
                         </app-configuration-select-field>
 
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')">
+                        <div *ngIf="exportSettingForm.value.creditCardExportType && helperService.isFieldRequired(exportSettingForm, 'nameInJournalEntry')">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -181,7 +181,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
+                        <div *ngIf="exportSettingForm.value.creditCardExportType && helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="creditCardVendors"
@@ -196,7 +196,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')">
+                        <div *ngIf="exportSettingForm.value.creditCardExportType && helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="cccAccounts"
