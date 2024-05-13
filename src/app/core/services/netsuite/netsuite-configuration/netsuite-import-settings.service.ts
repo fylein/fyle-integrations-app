@@ -4,7 +4,7 @@ import { ApiService } from '../../common/api.service';
 import { WorkspaceService } from '../../common/workspace.service';
 import { IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { CacheBuster, Cacheable } from 'ts-cacheable';
-import { NetsuiteImportSettingGet, NetsuiteImportSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
+import { CustomSegment, NetsuiteImportSettingGet, NetsuiteImportSettingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-import-setting.model';
 
 
 const netsuiteImportSettingGetCache$ = new Subject<void>();
@@ -37,5 +37,9 @@ export class NetsuiteImportSettingsService {
 
   getNetsuiteFields(): Observable<IntegrationField[]> {
     return this.apiService.get(`/workspaces/${this.workspaceId}/netsuite/netsuite_fields/`, {});
+  }
+
+  postNetsuiteCustomSegments(customSegmentsPayload: CustomSegment): Observable<CustomSegment> {
+    return this.apiService.post(`/workspaces/${this.workspaceId}/netsuite/custom_segments/`, customSegmentsPayload);
   }
 }
