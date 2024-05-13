@@ -207,7 +207,7 @@ export class SkipExportComponent implements OnInit {
     if (conditionSelected) {
       if (conditionSelected.is_custom) {
         this.setCustomOperatorOptions(rank, conditionSelected.type);
-      } else if (conditionSelected.is_custom === false) {
+      } else if (!conditionSelected.is_custom) {
         if (rank === 1) {
           this.operatorFieldOptions1 = this.setDefaultOperatorOptions(
             conditionSelected.field_name
