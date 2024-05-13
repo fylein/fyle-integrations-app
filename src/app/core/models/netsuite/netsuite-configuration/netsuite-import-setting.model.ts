@@ -20,6 +20,10 @@ export type NetsuiteImportSettingConfiguration = {
     default_tax_code: DefaultDestinationAttribute
   }
 
+  export type NetsuiteImportSettingGeneralMapping = {
+    default_tax_code: DefaultDestinationAttribute
+  }
+
   export type NetsuiteImportSettingPost = {
     configuration: NetsuiteImportSettingConfiguration,
     general_mappings: NetsuiteImportSettingGeneralMapping,
