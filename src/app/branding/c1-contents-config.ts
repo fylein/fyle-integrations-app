@@ -31,10 +31,10 @@ export const c1Contents = {
                     creditCardExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
                     defaultCCCAccountLabel: 'Set default credit card account as',
                     defaultCCCAccountPlaceholder: 'Select default credit card account',
-                    defaultDebitCardAccountLabel: 'Set default debit card account as',
+                    defaultDebitCardAccountLabel: 'Set employee payables account as',
                     defaultDebitCardAccountPlaceholder: 'Select default debit card account',
                     defaultCCCVendorLabel: 'Set default corporate card vendor as',
-                    accountsPayableLabel: 'To which accounts payable account should the ',
+                    accountsPayableLabel: 'Set vendor payables account as',
                     journalOptionLabel: 'Name in journal entry',
                     journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.'
                 }
@@ -55,9 +55,11 @@ export const c1Contents = {
                 notes: 'NOTE: To export billable expenses from ' + brandingConfig.brandName + ', import customers from NetSuite as projects in ' + brandingConfig.brandName + '.',
                 toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.',
                 importVendorsAsMerchantsLabel: 'Import vendors from NetSuite',
-                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in' + brandingConfig.brandName,
+                importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in ' + brandingConfig.brandName,
                 importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in expense management.',
-                customSegmentHeader: 'Add custom segment/list/record'
+                customSegmentHeader: 'Add custom segment/list/record',
+                importProjectsLabel: 'Import projects from NetSuite',
+                importItemsLabel: 'Import items from NetSuite'
             },
             advancedSettings: {
                 stepName: 'Advanced settings',
@@ -83,7 +85,8 @@ export const c1Contents = {
                 frequencySubLabel: 'Set how often your expenses will be exported to NetSuite.',
                 preferenceLabel: 'Other preferences',
                 preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
-                previewDescriptionFieldLabel: 'Preview of the description field'
+                previewDescriptionFieldLabel: 'Preview of the description field',
+                autoCreateMerchantsLabel: 'Auto create merchant on NetSuite for credit card charge'
             }
         }
     },

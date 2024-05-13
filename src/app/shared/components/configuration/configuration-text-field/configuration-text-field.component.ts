@@ -25,6 +25,8 @@ export class ConfigurationTextFieldComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  isPasswordField: any;
+
   constructor() { }
 
   changeFormControllerType(state: boolean) {
@@ -32,6 +34,7 @@ export class ConfigurationTextFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isPasswordField = this.type === 'password' ? true : false;
   }
 
 }

@@ -7,7 +7,7 @@ import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArtic
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteFyleField, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -127,30 +127,35 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe((isreimbursableExportTypeSelected) => {
       if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) {
         this.exportSettingForm.controls.employeeFieldMapping.enable();
-      }
-
-      if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT) {
+      } else if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT) {
         this.exportSettingForm.controls.employeeFieldMapping.patchValue(FyleField.EMPLOYEE);
         this.exportSettingForm.controls.employeeFieldMapping.disable();
-      }
-
-      if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.BILL) {
+      } else if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.BILL) {
         this.exportSettingForm.controls.employeeFieldMapping.patchValue(FyleField.VENDOR);
         this.exportSettingForm.controls.employeeFieldMapping.disable();
       }
+    });
+    this.exportSettingForm.controls.employeeFieldMapping.valueChanges.subscribe((isemployeeFieldMappingSelected) => {
+      const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
+      this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
     });
   }
 
   private cccExportTypeWatcher(): void {
     this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe((isCCCExportTypeSelected) => {
-      if (isCCCExportTypeSelected === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+      if (isCCCExportTypeSelected === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.exportSettings?.configuration?.reimbursable_expenses_object) {
         this.exportSettingForm.controls.employeeFieldMapping.enable();
+        this.exportSettingForm.controls.nameInJournalEntry.patchValue(NameInJournalEntry.EMPLOYEE);
       }
+    });
+    this.exportSettingForm.controls.nameInJournalEntry.valueChanges.subscribe((isNameInJournalEntrySelected) => {
+        const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
+        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
     });
   }
 
   private exportFieldsWatcher(): void {
-    if (this.exportSettings?.configuration?.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || this.exportSettings?.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY) {
+    if (this.exportSettings?.configuration?.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY || (this.exportSettings?.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.exportSettings?.configuration?.reimbursable_expenses_object)) {
       this.exportSettingForm.get('employeeFieldMapping')?.enable();
     } else {
       this.exportSettingForm.get('employeeFieldMapping')?.disable();
@@ -295,6 +300,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
       this.exportFieldsWatcher();
       this.setupCustomWatchers();
+
       this.isLoading = false;
     });
   }

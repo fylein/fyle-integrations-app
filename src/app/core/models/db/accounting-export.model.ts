@@ -252,6 +252,13 @@ export class AccountingExportModel {
     return [exportRedirection, exportType];
   }
 
+  static constructNetsuiteExportUrlAndType(expenseGroup: ExpenseGroup): [string, string] {
+    const words: string[] = expenseGroup.response_logs?.type.split(/(?=[A-Z])/);
+    const exportType = new TitleCasePipe().transform(words?.join(' '));
+
+    return [expenseGroup.export_url, exportType];
+  }
+
   static constructExportUrlAndType(appName: AppName, expenseGroup: ExpenseGroup): [string, string] {
     if (appName === AppName.QBO) {
       return this.constructQBOExportUrlAndType(expenseGroup);
@@ -259,6 +266,8 @@ export class AccountingExportModel {
       return this.constructIntacctExportUrlAndType(expenseGroup);
     } else if (appName === AppName.XERO) {
       return this.constructXeroExportUrlAndType(expenseGroup);
+    } else if (appName === AppName.NETSUITE) {
+      return this.constructNetsuiteExportUrlAndType(expenseGroup);
     }
 
     return ['', ''];
