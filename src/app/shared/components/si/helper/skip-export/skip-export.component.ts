@@ -196,7 +196,7 @@ export class SkipExportComponent implements OnInit {
   }
 
   resetFields(operator: AbstractControl, value: AbstractControl, conditionSelected: ConditionField, rank: number) {
-    
+
     operator.reset();
     value.reset();
     if (rank === 1) {
