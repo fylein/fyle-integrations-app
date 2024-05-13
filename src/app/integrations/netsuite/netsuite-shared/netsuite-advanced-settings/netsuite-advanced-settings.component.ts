@@ -7,7 +7,7 @@ import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArtic
 import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, SkipExportValidatorRule, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteAdvancedSettingGet, NetsuiteAdvancedSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
 import { NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
@@ -108,6 +108,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
       return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.VENDOR.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.VENDOR);
     }
     return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.EMPLOYEE.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.EMPLOYEE);
+  }
+
+  getCreateMerchantLabel(): string {
+    return brandingConfig.brandId === 'co' ? NameInJournalEntry.MERCHANT.toLowerCase() : new TitleCasePipe().transform(NameInJournalEntry.MERCHANT);
   }
 
   navigateToPreviousStep(): void {

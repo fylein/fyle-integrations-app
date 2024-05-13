@@ -98,8 +98,8 @@
                 <app-configuration-toggle-field *ngIf="isAutoCreateMerchantsFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.autoCreateMerchants"
                     [form]="advancedSettingForm"
                     [iconPath]="'user-plus'"
-                    [label]="brandingContent.autoCreateVendorsLabel + getCreateVendorLabel() "
-                    [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a vendor if a match does not exist in NetSuite already.'"
+                    [label]="brandingContent.autoCreateVendorsLabel + getCreateMerchantLabel()"
+                    [subLabel]="'While exporting reimbursable expenses from ' + brandingConfig.brandName + ', the integration will automatically create a merchant if a match does not exist in NetSuite already.'"
                     [formControllerName]="'autoCreateVendors'">
                 </app-configuration-toggle-field>
 
