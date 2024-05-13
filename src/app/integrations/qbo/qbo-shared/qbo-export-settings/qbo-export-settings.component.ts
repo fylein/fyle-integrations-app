@@ -241,7 +241,7 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.value.creditCardExportType) {
+    if (this.exportSettingForm.value.creditCardExportType && [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(this.exportSettingForm.value.creditCardExportType)) {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     }
 

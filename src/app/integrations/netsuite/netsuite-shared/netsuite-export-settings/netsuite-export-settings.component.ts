@@ -218,7 +218,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    if (this.exportSettingForm.value.creditCardExportType) {
+    if (this.exportSettingForm.value.creditCardExportType && (this.exportSettingForm.value.creditCardExportType === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE)) {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     }
 
