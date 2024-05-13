@@ -214,7 +214,7 @@ export class GenericMappingTableComponent implements OnInit {
   }
 
   decrementUnmappedCountInNetsuiteEmployeeMapping(mapping: any): void {
-    if (mapping[0].destination_employee === null && !this.isDashboardMappingResolve) {
+    if (mapping[0]?.destination_employee === null && !this.isDashboardMappingResolve) {
       this.mappingStats.unmapped_attributes_count -= 1;
     }
   }
