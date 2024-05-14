@@ -90,15 +90,15 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   previewImagePaths = [
     {
-      [NetsuiteReimbursableExpensesObject.EXPENSE_REPORT]: 'assets/pngs/preview-screens/qbo-reimburse-expense.png',
-      [NetsuiteReimbursableExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-reimburse-bill.png',
-      [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-reimburse-journal-entry.png'
+      [NetsuiteReimbursableExpensesObject.EXPENSE_REPORT]: 'assets/illustrations/netsuite/expences-report.png',
+      [NetsuiteReimbursableExpensesObject.BILL]: 'assets/illustrations/netsuite/bill.png',
+      [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/netsuite/journal-entry.png'
     },
     {
-      [NetSuiteCorporateCreditCardExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-ccc-bill.png',
-      [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: 'assets/pngs/preview-screens/qbo-ccc-expense.png',
-      [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-ccc-journal-entry.png',
-      [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: 'assets/pngs/preview-screens/qbo-ccc-debit-card.png'
+      [NetSuiteCorporateCreditCardExpensesObject.BILL]: 'assets/illustrations/netsuite/bill.png',
+      [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: 'assets/illustrations/netsuite/ccc.png',
+      [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/netsuite/journal-entry.png',
+      [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: 'assets/illustrations/netsuite/expences-report.png'
     }
   ];
 
