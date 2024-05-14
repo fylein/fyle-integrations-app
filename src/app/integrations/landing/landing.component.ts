@@ -71,9 +71,9 @@ export class LandingComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly exposeApps = exposeAppConfig[brandingConfig.brandId][brandingConfig.envId];
+  readonly isINCluster = this.storageService.get('cluster-domain').includes('in1');
 
-  readonly hideToCo = !(this.storageService.get('cluster-domain').includes('.fylehq.com') || this.storageService.get('cluster-domain').includes('.fyle.tech') || this.storageService.get('cluster-domain').includes('-qa.'));
+  readonly exposeApps = !this.isINCluster ? exposeAppConfig[brandingConfig.brandId][brandingConfig.envId] : exposeAppConfig[brandingConfig.brandId]['production-1-in'];
 
   constructor(
     private eventsService: EventsService,
