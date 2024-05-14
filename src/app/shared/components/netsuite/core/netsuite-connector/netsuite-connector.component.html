@@ -24,7 +24,7 @@
                       </div>
                   </form>
               </div>
-              <app-configuration-step-footer [ctaText]="!saveInProgress ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectNetsuiteForm.valid"></app-configuration-step-footer>
+              <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectNetsuiteForm.valid"></app-configuration-step-footer>
           </div>
       </div>
   </div>
