@@ -24,17 +24,8 @@
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
                 </div>
-                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
-                    <app-configuration-toggle-field
-                        [form]="importSettingForm"
-                        [label]="brandingContent.importVendorsAsMerchantsLabel"
-                        [subLabel]="'Vendors from NetSuite will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
-                        [formControllerName]="'importVendorsAsMerchants'"
-                        [iconPath]="'arrow-tail-down'">
-                    </app-configuration-toggle-field>
-                  </div>
 
-                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportEmployeeAllowed">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportEmployeeAllowed">
                     <app-configuration-toggle-field
                         [form]="importSettingForm"
                         [label]="brandingContent.importNetsuiteEmployeesLabel"
@@ -42,9 +33,29 @@
                         [formControllerName]="'importNetsuiteEmployees'"
                         [iconPath]="'arrow-tail-down'">
                     </app-configuration-toggle-field>
-                  </div>
+                </div>
 
-                  <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportItemsAllowed && brandingFeatureConfig.featureFlags.importSettings.importItems">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="brandingContent.importItemsLabel"
+                        [subLabel]="'Items from NetSuite will be imported as categories in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [formControllerName]="'importItems'"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isImportMerchantsAllowed && brandingFeatureConfig.featureFlags.importSettings.importVendorsAsMerchants">
+                    <app-configuration-toggle-field
+                        [form]="importSettingForm"
+                        [label]="brandingContent.importVendorsAsMerchantsLabel"
+                        [subLabel]="'Vendors from NetSuite will be imported as merchants in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense.'"
+                        [formControllerName]="'importVendorsAsMerchants'"
+                        [iconPath]="'arrow-tail-down'">
+                    </app-configuration-toggle-field>
+                </div>
+
+                <div class="tw-rounded-lg tw-border-border-tertiary tw-border tw-mt-24-px" *ngIf="isTaxGroupSyncAllowed && brandingFeatureConfig.featureFlags.importSettings.tax">
                     <app-configuration-toggle-field
                       [form]="importSettingForm"
                       [label]="brandingContent.taxCodeLabel"
@@ -64,9 +75,9 @@
                         [placeholder]="'Select tax code'"
                         [formControllerName]="'defaultTaxCode'">
                     </app-configuration-select-field>
-                  </div>
+                </div>
 
-                  <div>
+                <div>
                     <app-configuration-import-field
                         [form]="importSettingForm"
                         [appName]="appName"
@@ -75,6 +86,18 @@
                         [isDestinationFixedImport]="true">
                     </app-configuration-import-field>
                 </div>
+
+                <div class="tw-mt-24-px">
+                    <div class="tw-flex tw-items-center" (click)="addCustomSegment()">
+                        <div class="tw-mr-14-px">
+                            <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'"></app-svg-icon>
+                        </div>
+                        <div class="tw-cursor-pointer tw-text-mandatory-field-color tw-font-500 tw-text-14-px">
+                            {{brandingContent.customSegmentHeader}}
+                        </div>
+                    </div>
+                </div>
+
             </div>
             <app-configuration-step-footer
                 [ctaText] = "!isSaveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING"
@@ -101,4 +124,15 @@
         [iconPath]="'assets/illustrations/sageIntacct/IntacctImportSettings.png'" (closeDialog)="closeDialog()"
         [header]="'Preview'">
     </app-preview-dialog>
+</div>
+
+<div *ngIf="isCustomSegmentTrigged">
+    <app-netsuite-custom-segment-dialog
+        [form]="customSegmentForm"
+        [isCustomSegmentDialogVisible]="true"
+        [options]="customrSegmentOptions"
+        [isLoading]="isCustomSegmentSaveInProgress"
+        (closeDialog)="closeCustomSegment()"
+        (saveClick)="saveCustomSegment()">
+    </app-netsuite-custom-segment-dialog>
 </div>

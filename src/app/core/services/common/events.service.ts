@@ -4,6 +4,7 @@ import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.mode
 import { WindowService } from './window.service';
 import { NavigationStart, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { brandingConfig } from 'src/app/branding/c1-contents-config';
 
 
 const MODULE_PATHS = ['mapping', 'export_log', 'configuration', 'intacct', 'qbd'];
@@ -20,6 +21,8 @@ export class EventsService {
   @Output() qboLogin: EventEmitter<string> = new EventEmitter();
 
   @Output() xeroLogin: EventEmitter<string> = new EventEmitter();
+
+  @Output() netsuiteLogin: EventEmitter<string> = new EventEmitter();
 
   history: string[] = [];
 
@@ -57,6 +60,8 @@ export class EventsService {
           this.qboLogin.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('xero')) {
           this.xeroLogin.emit(message.data.redirectUri);
+        } else if (brandingConfig.brandId === 'co' && message.data.redirectUri.includes('netsuite')) {
+          this.netsuiteLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);
         }

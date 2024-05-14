@@ -7,7 +7,7 @@ import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArtic
 import { AdvancedSettingsModel, ConditionField, EmailOption, ExpenseFilterPayload, ExpenseFilterResponse, SkipExportModel, SkipExportValidatorRule, skipExportValidator } from 'src/app/core/models/common/advanced-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, FyleField, NetsuiteCategoryDestination, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, EmployeeFieldMapping, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { NetsuiteConfiguration } from 'src/app/core/models/netsuite/db/netsuite-workspace-general-settings.model';
 import { NetsuiteAdvancedSettingGet, NetsuiteAdvancedSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-advanced-settings.model';
 import { NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
@@ -110,6 +110,9 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.EMPLOYEE.toLowerCase() : new TitleCasePipe().transform(EmployeeFieldMapping.EMPLOYEE);
   }
 
+  getCreateMerchantLabel(): string {
+    return brandingConfig.brandId === 'co' ? NameInJournalEntry.MERCHANT.toLowerCase() : new TitleCasePipe().transform(NameInJournalEntry.MERCHANT);
+  }
 
   navigateToPreviousStep(): void {
     this.router.navigate([`/integrations/netsuite/onboarding/import_settings`]);
@@ -177,6 +180,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   isAutoCreateVendorsFieldVisible(): boolean {
     return this.workspaceGeneralSettings.auto_map_employees !== null && this.workspaceGeneralSettings.auto_map_employees !== AutoMapEmployeeOptions.EMPLOYEE_CODE;
+  }
+
+  isAutoCreateMerchantsFieldVisible(): boolean {
+    return this.workspaceGeneralSettings.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE && !this.workspaceGeneralSettings.import_vendors_as_merchants ? true : false;
   }
 
   isPaymentSyncFieldVisible(): boolean | null {

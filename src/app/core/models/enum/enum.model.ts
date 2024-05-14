@@ -303,6 +303,12 @@ export enum FyleField {
   CATEGORY = 'CATEGORY',
 }
 
+export enum NetsuiteCustomSegmentOption {
+  CUSTOM_LIST = 'CUSTOM_LIST',
+  CUSTOM_RECORD = 'CUSTOM_RECORD',
+  CUSTOM_SEGMENT = 'CUSTOM_SEGMENT'
+}
+
 export enum ExpenseGroupingFieldOption {
   CLAIM_NUMBER = 'claim_number',
   REPORT_ID = 'report_id',
