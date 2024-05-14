@@ -21,7 +21,8 @@ export class IntacctConfigurationComponent implements OnInit {
   modules: MenuItem[] = [
     {label: this.brandingContent.configuration.exportSetting.stepName, routerLink: '/integrations/intacct/main/configuration/export_settings'},
     {label: this.brandingContent.configuration.importSetting.stepName, routerLink: '/integrations/intacct/main/configuration/import_settings'},
-    {label: this.brandingContent.configuration.advancedSettings.stepName, routerLink: '/integrations/intacct/main/configuration/advanced_settings'}
+    {label: this.brandingContent.configuration.advancedSettings.stepName, routerLink: '/integrations/intacct/main/configuration/advanced_settings'},
+    {label: 'Connection', routerLink: '/integrations/intacct/main/configuration/connector'}
   ];
 
   constructor(
