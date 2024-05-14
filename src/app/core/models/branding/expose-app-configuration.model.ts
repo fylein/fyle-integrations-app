@@ -9,7 +9,7 @@ export type AllowedAppsConfiguration = {
             XERO: boolean;
             NETSUITE: boolean;
             QBD: boolean;
-            BAMBOO: boolean
+            BAMBOO: boolean;
         }
     }
 };
