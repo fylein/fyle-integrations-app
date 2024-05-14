@@ -161,15 +161,15 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteLocations"
-                        [label]="'Default Location'"
-                        [placeholder]="'Choose Default NetSuite Location'"
+                        [label]="sentenseCaseConversion('Default Location')"
+                        [placeholder]="sentenseCaseConversion('Choose Default NetSuite Location')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteLocation'">
                     </app-configuration-select-field>
 
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Location in NetSuite</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{sentenseCaseConversion('Use Employee\'s Location in NetSuite')}}</label>   
                     </div>
                 </div>
 
@@ -178,8 +178,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteLocationLevels"
                         [isDefaultFields]="true"
-                        [label]="'NetSuite Location Level'"
-                        [placeholder]="'Choose NetSuite Location Level'"
+                        [label]="sentenseCaseConversion('NetSuite Location Level')"
+                        [placeholder]="sentenseCaseConversion('Choose NetSuite Location Level')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteLocationLevel'">
                     </app-configuration-select-field>
@@ -190,15 +190,15 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteDepartments"
-                        [label]="'Default Departments'"
-                        [placeholder]="'Choose Default NetSuite Department'"
+                        [label]="sentenseCaseConversion('Default Departments')"
+                        [placeholder]="sentenseCaseConversion('Choose Default NetSuite Department')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartment'">
                     </app-configuration-select-field>
                 
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in NetSuite</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{sentenseCaseConversion('Use Employee\'s Department in NetSuite')}}</label>   
                     </div>
                 </div>
 
@@ -207,8 +207,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteDepartmentLevels"
                         [isDefaultFields]="true"
-                        [label]="'NetSuite Department Level'"
-                        [placeholder]="'Choose NetSuite Department Level'"
+                        [label]="sentenseCaseConversion('NetSuite Department Level')"
+                        [placeholder]="sentenseCaseConversion('Choose NetSuite Department Level')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartmentLevel'">
                     </app-configuration-select-field>
@@ -219,15 +219,15 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteClasses"
-                        [label]="'Default Class'"
-                        [placeholder]="'Choose Default NetSuite Class'"
+                        [label]="sentenseCaseConversion('Default Class')"
+                        [placeholder]="sentenseCaseConversion('Choose Default NetSuite Class')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteClass'">
                     </app-configuration-select-field>
                 
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeClass" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">Use Employee's Department in Class</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{sentenseCaseConversion('Use Employee\'s Department in Class')}}</label>   
                     </div>
                 </div>
 
@@ -236,8 +236,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteClassLevels"
                         [isDefaultFields]="true"
-                        [label]="'NetSuite Class Level'"
-                        [placeholder]="'Choose NetSuite Class Level'"
+                        [label]="sentenseCaseConversion('NetSuite Class Level')"
+                        [placeholder]="sentenseCaseConversion('Choose NetSuite Class Level')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteClassLevel'">
                     </app-configuration-select-field>

@@ -1,13 +1,14 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { NetsuiteConnectorModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import { NetsuiteConnectorGet, NetsuiteConnectorModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteConnectorService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-connector.service';
 import { NetsuiteMappingsService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-mappings.service';
+import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 
 @Component({
@@ -50,6 +51,10 @@ export class NetsuiteConnectorComponent implements OnInit {
     this.connectNetsuiteForm.get("tokenSecret")?.setValue('');
   }
 
+  sentenseCaseConversion(content: string) {
+    return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(content) : content;
+  }
+
   save() {
     const connectorPayload = NetsuiteConnectorModel.constructPayload(this.connectNetsuiteForm);
 
@@ -57,7 +62,7 @@ export class NetsuiteConnectorComponent implements OnInit {
     this.connectorService.connectNetsuite(connectorPayload).subscribe((response) => {
       this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
         this.setupConnectionStatus.emit(true);
-        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection successful.');
         this.isLoading = false;
       });
     }, () => {
@@ -71,15 +76,15 @@ export class NetsuiteConnectorComponent implements OnInit {
   private setupPage(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.connectorService.getNetsuiteCredentials().subscribe((netsuiteCredential) => {
+    this.connectorService.getNetsuiteCredentials().subscribe((netsuiteCredential: NetsuiteConnectorGet) => {
+      this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(netsuiteCredential);
+      if (netsuiteCredential.ns_account_id) {
+        this.connectNetsuiteForm.controls.accountId.disable();
+      }
       this.setupConnectionStatus.emit(true);
       this.isLoading = false;
     }, () => {
-      this.connectNetsuiteForm = this.formBuilder.group({
-        accountId: ['', Validators.required],
-        tokenId: ['', Validators.required],
-        tokenSecret: ['', Validators.required]
-      });
+      this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(null);
       this.setupConnectionStatus.emit(false);
       this.isLoading = false;
     });

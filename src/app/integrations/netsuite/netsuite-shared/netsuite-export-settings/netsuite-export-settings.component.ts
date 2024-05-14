@@ -54,7 +54,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   employeeFieldOptions: SelectFormOption[] = NetSuiteExportSettingModel.getEmployeeFieldOptions();
 
-  creditCardExportTypes = NetSuiteExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes = brandingConfig.brandId === 'co' ? NetSuiteExportSettingModel.getCoCreditCardExportTypes() : NetSuiteExportSettingModel.getCreditCardExportTypes();
 
   cccExpenseStateOptions = NetSuiteExportSettingModel.getCCCExpenseStateOptions();
 

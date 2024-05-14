@@ -9,6 +9,7 @@
                 [contentText]="brandingContent.contentText"
                 [redirectLink]="redirectLink"
                 [showSyncButton]="isOnboarding"
+                [appName]="appName"
                 (refreshDimension)="refreshDimensions()">
             </app-configuration-step-header>
         </div>
@@ -205,7 +206,7 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'credit card account'"
                             [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
-                            [subLabel]="'Post all your company corporate card transactions to a default  default credit card account.'"
+                            [subLabel]="'Post all your company corporate card transactions to a default default credit card account.'"
                             [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
                             [formControllerName]="'creditCardAccount'">
                             </app-configuration-select-field>
