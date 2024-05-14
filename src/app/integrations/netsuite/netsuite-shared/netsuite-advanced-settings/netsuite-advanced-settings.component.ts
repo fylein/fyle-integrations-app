@@ -19,7 +19,6 @@ import { SkipExportService } from 'src/app/core/services/common/skip-export.serv
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { NetsuiteAdvancedSettingsService } from 'src/app/core/services/netsuite/netsuite-configuration/netsuite-advanced-settings.service';
 import { NetsuiteHelperService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-helper.service';
-import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
   selector: 'app-netsuite-advanced-settings',
@@ -95,7 +94,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
     private configurationService: ConfigurationService,
-    private helper: HelperService,
+    public helper: HelperService,
     private netsuiteHelperService: NetsuiteHelperService,
     private mappingService: MappingService,
     private router: Router,
@@ -103,10 +102,6 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
-
-  sentenseCaseConversion(content: string) {
-    return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(content) : content;
-  }
 
   getCreateVendorLabel(): string {
     if (this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR) {

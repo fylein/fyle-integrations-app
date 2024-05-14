@@ -161,15 +161,15 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteLocations"
-                        [label]="sentenseCaseConversion('Default Location')"
-                        [placeholder]="sentenseCaseConversion('Choose Default NetSuite Location')"
+                        [label]="helper.sentenseCaseConversion('Default Location')"
+                        [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Location')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteLocation'">
                     </app-configuration-select-field>
 
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeLocation" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">{{sentenseCaseConversion('Use Employee\'s Location in NetSuite')}}</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion('Use Employee\'s Location in NetSuite')}}</label>   
                     </div>
                 </div>
 
@@ -178,8 +178,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteLocationLevels"
                         [isDefaultFields]="true"
-                        [label]="sentenseCaseConversion('NetSuite Location Level')"
-                        [placeholder]="sentenseCaseConversion('Choose NetSuite Location Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite Location Level')"
+                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Location Level')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteLocationLevel'">
                     </app-configuration-select-field>
@@ -190,15 +190,15 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteDepartments"
-                        [label]="sentenseCaseConversion('Default Departments')"
-                        [placeholder]="sentenseCaseConversion('Choose Default NetSuite Department')"
+                        [label]="helper.sentenseCaseConversion('Default Departments')"
+                        [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Department')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartment'">
                     </app-configuration-select-field>
                 
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeDepartment" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">{{sentenseCaseConversion('Use Employee\'s Department in NetSuite')}}</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion('Use Employee\'s Department in NetSuite')}}</label>   
                     </div>
                 </div>
 
@@ -207,8 +207,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteDepartmentLevels"
                         [isDefaultFields]="true"
-                        [label]="sentenseCaseConversion('NetSuite Department Level')"
-                        [placeholder]="sentenseCaseConversion('Choose NetSuite Department Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite Department Level')"
+                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Department Level')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartmentLevel'">
                     </app-configuration-select-field>
@@ -219,15 +219,15 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteClasses"
-                        [label]="sentenseCaseConversion('Default Class')"
-                        [placeholder]="sentenseCaseConversion('Choose Default NetSuite Class')"
+                        [label]="helper.sentenseCaseConversion('Default Class')"
+                        [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Class')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteClass'">
                     </app-configuration-select-field>
                 
                     <div *ngIf="brandingFeatureConfig.featureFlags.advancedSettings.useEmployeeAttributes && workspaceGeneralSettings.employee_field_mapping === 'EMPLOYEE'" class="tw-pl-24-px tw-mt-30-px">
                         <input formControlName="useEmployeeClass" type="checkbox" />
-                        <label class="tw-pl-8-px" for="checkbox">{{sentenseCaseConversion('Use Employee\'s Department in Class')}}</label>   
+                        <label class="tw-pl-8-px" for="checkbox">{{helper.sentenseCaseConversion('Use Employee\'s Department in Class')}}</label>   
                     </div>
                 </div>
 
@@ -236,8 +236,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteClassLevels"
                         [isDefaultFields]="true"
-                        [label]="sentenseCaseConversion('NetSuite Class Level')"
-                        [placeholder]="sentenseCaseConversion('Choose NetSuite Class Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite Class Level')"
+                        [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Class Level')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteClassLevel'">
                     </app-configuration-select-field>
