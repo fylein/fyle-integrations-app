@@ -176,7 +176,7 @@ export class SkipExportModel {
       operator: valueField.operator,
       values:
         valueField.condition.type === 'DATE' ||
-          valueField.operator === 'isnull' || valueField.condition.field_name === 'report_title' ? valueField.value : valueOption,
+          valueField.operator === 'isnull' || valueField.condition.field_name === 'report_title' || valueField.condition.type === 'BOOLEAN' ? valueField.value : valueOption,
       rank: valueField.rank,
       join_by: valueField?.join_by ? JoinOption[valueField.join_by as JoinOption] : null,
       is_custom: valueField.condition.is_custom,
@@ -208,7 +208,7 @@ export class SkipExportModel {
   static getFieldValue(value: any, condition: ConditionField, rank: number) {
     if (condition?.type === 'DATE') {
       return new Date(value[0]);
-    } else if (condition?.field_name === 'report_title') {
+    } else if (condition?.field_name === 'report_title' || condition.type === 'BOOLEAN') {
       return value[0];
     }
     if (rank === 1) {

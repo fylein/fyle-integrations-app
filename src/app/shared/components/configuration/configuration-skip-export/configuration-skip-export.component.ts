@@ -165,10 +165,10 @@ export class ConfigurationSkipExportComponent implements OnInit {
     } else if (rank === 2) {
       this.skipExportForm.controls.value2.reset();
     }
-    if (conditionSelected !== null) {
-      if (conditionSelected.is_custom === true) {
+    if (conditionSelected) {
+      if (conditionSelected.is_custom) {
         this.setCustomOperatorOptions(rank, conditionSelected.type);
-      } else if (conditionSelected.is_custom === false) {
+      } else if (!conditionSelected.is_custom) {
         if (rank === 1) {
           this.operatorFieldOptions1 = this.setDefaultOperatorOptions(
             conditionSelected.field_name
@@ -248,7 +248,8 @@ export class ConfigurationSkipExportComponent implements OnInit {
     if (
       conditionField === 'claim_number' ||
       conditionField === 'employee_email' ||
-      conditionField === 'report_title'
+      conditionField === 'report_title' ||
+      conditionField === 'category'
     ) {
       operatorList.push({
         value: 'iexact',
@@ -268,6 +269,11 @@ export class ConfigurationSkipExportComponent implements OnInit {
       operatorList.push({
         value: 'icontains',
         label: 'contains'
+      });
+    } else if (conditionField === 'category') {
+      operatorList.push({
+        value: 'not_in',
+        label: 'is not'
       });
     }
     return operatorList;
