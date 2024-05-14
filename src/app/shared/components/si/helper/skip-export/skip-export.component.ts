@@ -408,6 +408,11 @@ export class SkipExportComponent implements OnInit {
         value: 'icontains',
         label: 'contains'
       });
+    } else if (conditionField === 'category') {
+      operatorList.push({
+        value: 'not_in',
+        label: 'is not'
+      });
     }
     return operatorList;
   }
