@@ -386,7 +386,8 @@ export class SkipExportComponent implements OnInit {
     if (
       conditionField === 'claim_number' ||
       conditionField === 'employee_email' ||
-      conditionField === 'report_title'
+      conditionField === 'report_title' ||
+      conditionField === 'category'
     ) {
       operatorList.push({
         value: 'iexact',
