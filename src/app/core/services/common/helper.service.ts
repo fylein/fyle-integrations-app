@@ -10,6 +10,8 @@ import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
 import { StorageService } from './storage.service';
+import { brandingConfig } from 'src/app/branding/branding-config';
+import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Injectable({
   providedIn: 'root'
@@ -240,4 +242,9 @@ export class HelperService {
     form.controls.reimbursableExpense.setValidators(this.exportSelectionValidator(form));
     form.controls.creditCardExpense.setValidators(this.exportSelectionValidator(form));
   }
+
+  sentenseCaseConversion(content: string) {
+    return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(content) : content;
+  }
+
 }

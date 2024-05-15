@@ -94,7 +94,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
   constructor(
     private advancedSettingsService: NetsuiteAdvancedSettingsService,
     private configurationService: ConfigurationService,
-    private helper: HelperService,
+    public helper: HelperService,
     private netsuiteHelperService: NetsuiteHelperService,
     private mappingService: MappingService,
     private router: Router,

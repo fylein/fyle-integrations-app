@@ -17,7 +17,7 @@ export const fyleContents = {
                 subLabel: 'Expenses will be posted to the NetSuite Tenant Mapping selected here. Once configured, you can not change ' + brandingConfig.brandName + ' organization or Tenant Mapping.'
             },
             exportSetting: {
-                stepName: 'Export settings',
+                stepName: 'Export Settings',
                 headerText: ' Export Corporate Card Expenses',
                 contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to NetSuite.',
                 corporateCard: {
@@ -62,7 +62,7 @@ export const fyleContents = {
                 importItemsLabel: 'Import Items from NetSuite'
             },
             advancedSettings: {
-                stepName: 'Advanced settings',
+                stepName: 'Advanced Settings',
                 contentText: 'In this section, you can customize the integration based on your accounting requirements. ',
                 scheduleAutoExport: 'Schedule automatic export',
                 email: 'Send error notification to',

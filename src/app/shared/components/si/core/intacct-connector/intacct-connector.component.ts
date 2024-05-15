@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { IntacctConnectorModel } from 'src/app/core/models/intacct/intacct-configuration/connector.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -56,11 +57,9 @@ export class IntacctConnectorComponent implements OnInit {
       this.isLoading = true;
       this.saveInProgress = true;
 
-      this.connectorService.connectSageIntacct({
-        si_user_id: userID,
-        si_company_id: companyID,
-        si_user_password: userPassword
-      }).subscribe((response) => {
+      const sageIntacctConnection = IntacctConnectorModel.constructPayload(this.connectSageIntacctForm);
+
+      this.connectorService.connectSageIntacct(sageIntacctConnection).subscribe((response) => {
         this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           this.setupConnectionStatus.emit(true);
           this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
@@ -80,14 +79,11 @@ export class IntacctConnectorComponent implements OnInit {
       this.isLoading = true;
       this.isOnboarding = this.router.url.includes('onboarding');
       this.connectorService.getSageIntacctCredential().subscribe((intacctCredential) => {
+        this.connectSageIntacctForm = IntacctConnectorModel.mapAPIResponseToFormGroup(intacctCredential);
         this.setupConnectionStatus.emit(true);
         this.isLoading = false;
       }, () => {
-        this.connectSageIntacctForm = this.formBuilder.group({
-          userID: ['', Validators.required],
-          companyID: ['', Validators.required],
-          userPassword: ['', Validators.required]
-        });
+        this.connectSageIntacctForm = IntacctConnectorModel.mapAPIResponseToFormGroup(null);
         this.setupConnectionStatus.emit(false);
         this.isLoading = false;
       });

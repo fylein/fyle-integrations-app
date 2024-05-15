@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -53,7 +54,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   employeeFieldOptions: SelectFormOption[] = NetSuiteExportSettingModel.getEmployeeFieldOptions();
 
-  creditCardExportTypes = NetSuiteExportSettingModel.getCreditCardExportTypes();
+  creditCardExportTypes = brandingConfig.brandId === 'co' ? NetSuiteExportSettingModel.getCoCreditCardExportTypes() : NetSuiteExportSettingModel.getCreditCardExportTypes();
 
   cccExpenseStateOptions = NetSuiteExportSettingModel.getCCCExpenseStateOptions();
 
@@ -89,15 +90,15 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
   previewImagePaths = [
     {
-      [NetsuiteReimbursableExpensesObject.EXPENSE_REPORT]: 'assets/pngs/preview-screens/qbo-reimburse-expense.png',
-      [NetsuiteReimbursableExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-reimburse-bill.png',
-      [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-reimburse-journal-entry.png'
+      [NetsuiteReimbursableExpensesObject.EXPENSE_REPORT]: 'assets/illustrations/netsuite/expences-report.png',
+      [NetsuiteReimbursableExpensesObject.BILL]: 'assets/illustrations/netsuite/bill.png',
+      [NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/netsuite/journal-entry.png'
     },
     {
-      [NetSuiteCorporateCreditCardExpensesObject.BILL]: 'assets/pngs/preview-screens/qbo-ccc-bill.png',
-      [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: 'assets/pngs/preview-screens/qbo-ccc-expense.png',
-      [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/pngs/preview-screens/qbo-ccc-journal-entry.png',
-      [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: 'assets/pngs/preview-screens/qbo-ccc-debit-card.png'
+      [NetSuiteCorporateCreditCardExpensesObject.BILL]: 'assets/illustrations/netsuite/bill.png',
+      [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: 'assets/illustrations/netsuite/ccc.png',
+      [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: 'assets/illustrations/netsuite/journal-entry.png',
+      [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: 'assets/illustrations/netsuite/expences-report.png'
     }
   ];
 
@@ -149,8 +150,9 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       }
     });
     this.exportSettingForm.controls.nameInJournalEntry.valueChanges.subscribe((isNameInJournalEntrySelected) => {
-        const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
+        if (isNameInJournalEntrySelected === NameInJournalEntry.MERCHANT ) {
+          HelperUtility.markControllerAsRequired(this.exportSettingForm, 'defaultCreditCardVendor');
+        }
     });
   }
 
