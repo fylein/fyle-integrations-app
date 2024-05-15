@@ -40,7 +40,7 @@ export const c1Contents = {
                 }
             },
             importSetting: {
-                stepName: 'Import Settings',
+                stepName: 'Import settings',
                 headerText: '',
                 contentText: 'Choose the required import fields from NetSuite to expense management.',
                 importCategoriesLabel: ' as categories',

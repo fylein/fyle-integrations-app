@@ -4,7 +4,7 @@ import { NetsuiteConfigurationComponent } from './netsuite-configuration.compone
 import { NetsuiteExportSettingsComponent } from '../../netsuite-shared/netsuite-export-settings/netsuite-export-settings.component';
 import { NetsuiteImportSettingsComponent } from '../../netsuite-shared/netsuite-import-settings/netsuite-import-settings.component';
 import { NetsuiteAdvancedSettingsComponent } from '../../netsuite-shared/netsuite-advanced-settings/netsuite-advanced-settings.component';
-import { NetsuiteConnectorComponent } from '../../netsuite-shared/netsuite-connector/netsuite-connector.component';
+import { NetsuiteConnectorComponent } from 'src/app/shared/components/netsuite/core/netsuite-connector/netsuite-connector.component';
 
 const routes: Routes = [
   {

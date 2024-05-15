@@ -89,6 +89,23 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       ];
     }
 
+    static getCoCreditCardExportTypes(): SelectFormOption[] {
+      return [
+        {
+          label: 'Bill',
+          value: NetSuiteCorporateCreditCardExpensesObject.BILL
+        },
+        {
+          label: 'Credit Card Charge',
+          value: NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE
+        },
+        {
+          label: 'Journal Entry',
+          value: NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY
+        }
+      ];
+    }
+
     static getCreditCardExportTypes(): SelectFormOption[] {
       return [
         {

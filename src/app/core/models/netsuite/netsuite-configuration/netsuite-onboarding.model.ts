@@ -1,4 +1,4 @@
-import { brandingFeatureConfig } from "src/app/branding/branding-config";
+import { brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
 import { NetsuiteOnboardingState } from "../../enum/enum.model";
 import { OnboardingStepper } from "../../misc/onboarding-stepper.model";
 
@@ -12,12 +12,14 @@ type NetsuiteOnboardingStepperMap = {
     [NetsuiteOnboardingState.COMPLETE]: number,
 }
 
+const brandingContentStepName = brandingContent.netsuite.configuration;
+
 export class NetsuiteOnboardingModel {
     private onboardingSteps: OnboardingStepper[] = [
         {
           active: false,
           completed: false,
-          step: 'Connect to NetSuite',
+          step: brandingContentStepName.connector.stepName,
           icon: 'link-vertical-medium',
           route: '/integrations/netsuite/onboarding/connector',
           styleClasses: ['step-name-connector--text']
@@ -25,7 +27,7 @@ export class NetsuiteOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Export Settings',
+          step: brandingContentStepName.exportSetting.stepName,
           icon: 'arrow-tail-up-medium',
           route: '/integrations/netsuite/onboarding/export_settings',
           styleClasses: ['step-name-export--text']
@@ -33,7 +35,7 @@ export class NetsuiteOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Import Settings',
+          step: brandingContentStepName.importSetting.stepName,
           icon: 'arrow-tail-down-medium',
           route: '/integrations/netsuite/onboarding/import_settings',
           styleClasses: ['step-name-export--text']
@@ -41,7 +43,7 @@ export class NetsuiteOnboardingModel {
         {
           active: false,
           completed: false,
-          step: 'Advanced Settings',
+          step: brandingContentStepName.advancedSettings.stepName,
           icon: 'gear-medium',
           route: '/integrations/netsuite/onboarding/advanced_settings',
           styleClasses: ['step-name-advanced--text']
