@@ -8,6 +8,7 @@ import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -69,12 +70,9 @@ export class GenericMappingTableComponent implements OnInit {
   constructor(
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    public helper: HelperService
   ) { }
-
-  getFieldName(fieldName: string): string {
-    return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(fieldName) : new TitleCasePipe().transform(fieldName);
-  }
 
   isOverflowing(element: any, mapping: DestinationAttribute): string {
     return element.offsetWidth < element.scrollWidth ? mapping.value : '';
