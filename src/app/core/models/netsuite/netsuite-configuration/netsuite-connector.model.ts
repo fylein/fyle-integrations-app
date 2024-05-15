@@ -20,10 +20,11 @@ export interface NetsuiteConnectorPost extends NetsuiteConnector {}
 export class NetsuiteConnectorModel {
 
   static mapAPIResponseToFormGroup(netsuiiteConnection: NetsuiteConnectorGet | null): FormGroup {
+    const isDisabled = netsuiiteConnection?.ns_account_id ? true : false;
     return new FormGroup({
-      accountId: new FormControl(netsuiiteConnection?.ns_account_id ? netsuiiteConnection?.ns_account_id : '', Validators.required),
-      tokenId: new FormControl('', Validators.required),
-      tokenSecret: new FormControl('', Validators.required)
+      accountId: new FormControl({value: netsuiiteConnection?.ns_account_id ? netsuiiteConnection?.ns_account_id : null, disabled: isDisabled}, Validators.required),
+      tokenId: new FormControl(null, Validators.required),
+      tokenSecret: new FormControl(null, Validators.required)
     });
   }
 

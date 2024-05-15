@@ -75,9 +75,6 @@ export class NetsuiteConnectorComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     this.connectorService.getNetsuiteCredentials().subscribe((netsuiteCredential: NetsuiteConnectorGet) => {
       this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(netsuiteCredential);
-      if (netsuiteCredential.ns_account_id) {
-        this.connectNetsuiteForm.controls.accountId.disable();
-      }
       this.setupConnectionStatus.emit(true);
       this.isLoading = false;
     }, () => {
