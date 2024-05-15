@@ -64,7 +64,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
       startDate: lastExportedAt ? new Date(lastExportedAt) : new Date(),
       endDate: new Date()
     };
-    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, dateFilter, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, lastExportedAt ? dateFilter : null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
       );
@@ -77,7 +77,7 @@ export class DashboardExportSummarySectionComponent implements OnInit {
       startDate: lastExportedAt ? new Date(lastExportedAt) : new Date(),
       endDate: new Date()
     };
-    this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, dateFilter, lastExportedAt).subscribe(accountingExportResponse => {
+    this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, lastExportedAt ? dateFilter : null, lastExportedAt).subscribe(accountingExportResponse => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
         AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
       );
