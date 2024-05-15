@@ -14,8 +14,8 @@ export class IntacctConnectorModel {
     const isDisabled = sageIntacctConnection?.si_company_id ? true : false;
     return new FormGroup({
       companyID: new FormControl({value: sageIntacctConnection?.si_company_id ? sageIntacctConnection?.si_company_id : null, disabled: isDisabled}, Validators.required),
-      userID: new FormControl({value: sageIntacctConnection?.si_user_id ? sageIntacctConnection?.si_user_id : null, disabled: isDisabled}, Validators.required),
-      userPassword: new FormControl({ value: sageIntacctConnection?.si_company_id ? 'SAGE INTACCT PASSWORD' : null, disabled: isDisabled}, Validators.required)
+      userID: new FormControl('', Validators.required),
+      userPassword: new FormControl('', Validators.required)
     });
   }
 
