@@ -514,21 +514,11 @@ export class IntacctExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    this.exportSettingsForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
-      this.exportSettingsForm.controls.reimbursableExportGroup.reset();
-      this.exportSettingsForm.controls.reimbursableExportDate.reset();
-    });
-
     this.exportSettingsForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
         this.reimbursableExpenseGroupingDateOptions = IntacctExportSettingModel.getExpenseGroupingDateOptions();
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
       }
-    });
-
-    this.exportSettingsForm?.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.exportSettingsForm.controls.cccExportGroup.reset();
-      this.exportSettingsForm.controls.cccExportDate.reset();
     });
 
     this.exportSettingsForm.controls.cccExportGroup?.valueChanges.subscribe((cccExportGroup) => {
