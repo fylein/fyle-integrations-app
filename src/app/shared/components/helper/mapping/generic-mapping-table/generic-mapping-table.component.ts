@@ -1,3 +1,4 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject, debounceTime, interval } from 'rxjs';
@@ -10,6 +11,7 @@ import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctRe
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
   selector: 'app-generic-mapping-table',
@@ -69,6 +71,10 @@ export class GenericMappingTableComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
+
+  getFieldName(fieldName: string): string {
+    return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(fieldName) : new TitleCasePipe().transform(fieldName);
+  }
 
   isOverflowing(element: any, mapping: DestinationAttribute): string {
     return element.offsetWidth < element.scrollWidth ? mapping.value : '';
