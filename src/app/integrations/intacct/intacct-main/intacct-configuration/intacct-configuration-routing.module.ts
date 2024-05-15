@@ -6,12 +6,17 @@ import { IntacctImportSettingsComponent } from '../../intacct-shared/intacct-imp
 import { IntacctAdvancedSettingsComponent } from '../../intacct-shared/intacct-advanced-settings/intacct-advanced-settings.component';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { IntacctC1ImportSettingsComponent } from '../../intacct-shared/intacct-c1-import-settings/intacct-c1-import-settings.component';
+import { IntacctConnectorComponent } from 'src/app/shared/components/si/core/intacct-connector/intacct-connector.component';
 
 const routes: Routes = [
   {
     path: '',
     component: IntacctConfigurationComponent,
     children: [
+      {
+        path: 'connector',
+        component: IntacctConnectorComponent
+      },
       {
         path: 'export_settings',
         component: IntacctExportSettingsComponent
