@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { brandingConfig } from 'src/app/branding/branding-config';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-preview-dialog',
@@ -18,7 +19,9 @@ export class PreviewDialogComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  constructor() { }
+  constructor(
+    public helper: HelperService
+  ) { }
 
   close() {
     this.closeDialog.emit();
