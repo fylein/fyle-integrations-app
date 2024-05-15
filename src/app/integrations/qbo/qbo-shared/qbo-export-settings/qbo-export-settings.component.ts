@@ -253,9 +253,6 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private setupCustomDateOptionWatchers(): void {
-    this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
-      this.exportSettingForm.controls.reimbursableExportDate.reset();
-    });
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
@@ -265,7 +262,6 @@ export class QboExportSettingsComponent implements OnInit {
     });
 
     this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.exportSettingForm.controls.creditCardExportDate.reset();
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     });
 

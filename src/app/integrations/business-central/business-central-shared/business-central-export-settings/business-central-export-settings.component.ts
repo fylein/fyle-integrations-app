@@ -145,21 +145,11 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   }
 
   private setupCustomWatchers(): void {
-    this.exportSettingForm?.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
-      this.exportSettingForm.controls.reimbursableExportGroup.reset();
-      this.exportSettingForm.controls.reimbursableExportDate.reset();
-    });
-
     this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId==='fyle') {
         this.reimbursableExpenseGroupingDateOptions = BusinessCentralExportSettingModel.getReimbursableExpenseGroupingDateOptions();
         this.reimbursableExpenseGroupingDateOptions = ExportSettingModel.constructGroupingDateOptions(reimbursableExportGroup, this.reimbursableExpenseGroupingDateOptions);
       }
-    });
-
-    this.exportSettingForm?.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.exportSettingForm.controls.creditCardExportGroup.reset();
-      this.exportSettingForm.controls.cccExportDate.reset();
     });
 
     this.exportSettingForm.controls.cccExportGroup.valueChanges.subscribe((cccExportGroup) => {

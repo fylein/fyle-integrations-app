@@ -422,7 +422,7 @@ export class SkipExportComponent implements OnInit {
       const customCheckBoxOperatorOptions: { label: string; value: string; }[] = [
         {
           label: 'Is',
-          value: 'exact'
+          value: 'iexact'
         }
       ];
       if (rank === 1) {
