@@ -1,3 +1,4 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject, debounceTime, interval } from 'rxjs';
@@ -7,9 +8,11 @@ import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-
 import { GenericMapping, MappingClass } from 'src/app/core/models/db/generic-mapping.model';
 import { MappingStats } from 'src/app/core/models/db/mapping.model';
 import { AppName, IntacctCorporateCreditCardExpensesObject, FyleField, IntacctReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
   selector: 'app-generic-mapping-table',
@@ -67,7 +70,8 @@ export class GenericMappingTableComponent implements OnInit {
   constructor(
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    public helper: HelperService
   ) { }
 
   isOverflowing(element: any, mapping: DestinationAttribute): string {

@@ -60,7 +60,11 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   }
 
   private getExpenseGroups(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null): void {
-    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
+    const dateFilter:SelectedDateFilter = {
+      startDate: lastExportedAt ? new Date(lastExportedAt) : new Date(),
+      endDate: new Date()
+    };
+    this.exportLogService.getExpenseGroups((status as unknown as TaskLogState), limit, offset, lastExportedAt ? dateFilter : null, lastExportedAt, '', this.appName).subscribe((accountingExportResponse: ExpenseGroupResponse) => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: ExpenseGroup) =>
         AccountingExportModel.parseExpenseGroupAPIResponseToExportLog(accountingExport, this.org_id, this.appName)
       );
@@ -69,7 +73,11 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   }
 
   private getAccountingExports(limit: number, offset: number, status: AccountingExportStatus, lastExportedAt?: string | null) {
-    this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, null, lastExportedAt).subscribe(accountingExportResponse => {
+    const dateFilter:SelectedDateFilter = {
+      startDate: lastExportedAt ? new Date(lastExportedAt) : new Date(),
+      endDate: new Date()
+    };
+    this.accountingExportService.getAccountingExports(this.accountingExportType, [status], null, limit, offset, lastExportedAt ? dateFilter : null, lastExportedAt).subscribe(accountingExportResponse => {
       const accountingExports: AccountingExportList[] = accountingExportResponse.results.map((accountingExport: AccountingExport) =>
         AccountingExportModel.parseAPIResponseToExportLog(accountingExport, this.org_id)
       );
@@ -80,7 +88,6 @@ export class DashboardExportSummarySectionComponent implements OnInit {
   private setupAccountingExports(limit: number, offset: number, status: AccountingExportStatus) {
     if (this.accountingExportSummary) {
       const lastExportedAt = status === AccountingExportStatus.COMPLETE ? this.accountingExportSummary.last_exported_at : null;
-
       if (this.exportLogVersion === 'v1') {
         this.getExpenseGroups(limit, offset, status, lastExportedAt);
       } else {

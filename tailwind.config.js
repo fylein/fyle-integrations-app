@@ -774,6 +774,7 @@ const componentVariables = {
   // Tabs - Nav Tabs (Secondary)
   'nav-tabs-active': 'var(--nav-tabs-active)',
   'nav-tabs-active-bg': 'var(--nav-tabs-active-bg)',
+  'nav-tabs-inactive-bg': 'var(--nav-tabs-inactive-bg)',
   'nav-tabs-active-border': 'var(--nav-tabs-active-border)',
   'nav-tabs-border': 'var(--nav-tabs-border)',
   'nav-tabs-hover': 'var(--nav-tabs-hover)',
