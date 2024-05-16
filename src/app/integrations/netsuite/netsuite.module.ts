@@ -8,7 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
-    NetsuiteComponent,
+    NetsuiteComponent
   ],
   imports: [
     CommonModule,
