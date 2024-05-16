@@ -111,6 +111,8 @@ export class TravelperkService {
   }
 
   getCategories(): Observable<TravelperkDestinationAttribuite[]> {
-    return this.apiService.get(`/orgs/${this.orgId}/categories/`,  {});
+    return this.apiService.get(`/orgs/${this.orgId}/categories/`,  {
+      attribute_type: 'CATEGORY'
+    });
   }
 }
