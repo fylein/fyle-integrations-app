@@ -27,7 +27,7 @@ describe('SearchPipe', () => {
 
   it('SearchPipe Transform function check 3', () => {
     const names = [{value: 'FyleIntegrations'}, {value: 'Fyle'}, {value: 'Integrations'}, {value: 'QBO'}, {value: 'fyle-integration'}];
-    const text = "Netsuite";
+    const text = "NetSuite";
     const result = [{ id: null, value: 'No result found' }];
     const pipe = new SearchPipe();
     expect(pipe.transform(names, text)).toEqual(result);
