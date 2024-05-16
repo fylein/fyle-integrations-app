@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, filter, forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationFieldMap } from 'src/app/core/models/db/dashboard.model';
 import { DestinationAttribute, GroupedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { Error, AccountingGroupedErrors, AccountingGroupedErrorStat, ErrorModel, ErrorResponse } from 'src/app/core/models/db/error.model';
@@ -11,6 +11,7 @@ import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { DashboardService } from 'src/app/core/services/common/dashboard.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { WindowService } from 'src/app/core/services/common/window.service';
 
 @Component({
   selector: 'app-dashboard-error-section',
@@ -83,14 +84,19 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   readonly brandingContentCommon = brandingContent.common;
 
+  readonly brandingFeatureConfig = brandingFeatureConfig;
+
   employeeFieldMapping: FyleField;
 
   displayName: string | undefined = undefined;
 
+  AppName = AppName;
+
   constructor(
     private dashboardService: DashboardService,
     private mappingService: MappingService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    public windowService: WindowService
   ) { }
 
   getSourceType() {
