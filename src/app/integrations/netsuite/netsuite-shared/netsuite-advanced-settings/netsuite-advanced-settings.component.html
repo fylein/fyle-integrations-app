@@ -46,8 +46,8 @@
                     </div>
                 </div>
 
-                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px">
-                    <app-configuration-select-field *ngIf="isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
+                <div class="tw-rounded-12-px tw-border-border-tertiary tw-border tw-bg-white tw-mb-16-px"  *ngIf="isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync">
+                    <app-configuration-select-field
                         [form]="advancedSettingForm"
                         [options]="paymentSyncOptions"
                         [iconPath]="'arrow-rotate'"

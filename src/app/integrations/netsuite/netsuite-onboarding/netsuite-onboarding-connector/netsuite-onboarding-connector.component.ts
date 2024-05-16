@@ -14,7 +14,7 @@ export class NetsuiteOnboardingConnectorComponent implements OnInit {
 
   isNetsuiteConnected: boolean = false;
 
-  onboardingSteps: OnboardingStepper[] = new NetsuiteOnboardingModel().getOnboardingSteps('Connect to Netsuite', this.workspaceService.getOnboardingState());
+  onboardingSteps: OnboardingStepper[] = new NetsuiteOnboardingModel().getOnboardingSteps('Connect to NetSuite', this.workspaceService.getOnboardingState());
 
   constructor(
     private workspaceService: WorkspaceService
