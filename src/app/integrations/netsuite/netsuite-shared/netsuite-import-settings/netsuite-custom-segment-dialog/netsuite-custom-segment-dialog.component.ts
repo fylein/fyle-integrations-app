@@ -76,13 +76,13 @@ export class NetsuiteCustomSegmentDialogComponent implements OnInit {
 
   getInternalIDLabel(): string {
     if (brandingConfig.brandId === 'co') {
-      return 'Enter ' + new SentenceCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.form.controls.customFieldType.value)) + ' internal ID';
+      return new SentenceCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform('Enter ' + this.form.controls.customFieldType.value)) + ' internal ID';
     }
     return 'Enter ' + new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(this.form.controls.customFieldType.value)) + ' Internal ID';
   }
 
   getTransactionIdLabel(): string {
-    return this.brandingConfig.brandId === 'co' ? new SnakeCaseToSpaceCasePipe().transform('Enter Transaction Line Field ID') : 'Enter Transaction Line Field ID';
+    return this.brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform('Enter Transaction Line Field') + ' ID' : 'Enter Transaction Line Field ID';
   }
 
   setImagesForCustomSegment(): string {

@@ -30,9 +30,9 @@ export class NetsuiteConnectorModel {
 
   static constructPayload(form: FormGroup): NetsuiteConnectorPost {
     return {
-      ns_account_id: form.value.accountId,
-      ns_token_id: form.value.tokenId,
-      ns_token_secret: form.value.tokenSecret
+      ns_account_id: form.controls.accountId.value,
+      ns_token_id: form.controls.tokenId.value,
+      ns_token_secret: form.controls.tokenSecret.value
     };
   }
 }

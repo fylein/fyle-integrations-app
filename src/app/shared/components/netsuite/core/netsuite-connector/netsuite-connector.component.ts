@@ -36,6 +36,8 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  netsuiteConnector: NetsuiteConnectorGet | null = null;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -54,7 +56,6 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   save() {
     const connectorPayload = NetsuiteConnectorModel.constructPayload(this.connectNetsuiteForm);
-
     this.isLoading = true;
     this.connectorService.connectNetsuite(connectorPayload).subscribe((response) => {
       this.mappingsService.refreshNetsuiteDimensions(['subsidiaries']).subscribe(() => {
@@ -64,7 +65,7 @@ export class NetsuiteConnectorComponent implements OnInit {
       });
     }, () => {
       this.setupConnectionStatus.emit(false);
-      this.clearField();
+      this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(this.netsuiteConnector);
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
     });
@@ -74,6 +75,7 @@ export class NetsuiteConnectorComponent implements OnInit {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
     this.connectorService.getNetsuiteCredentials().subscribe((netsuiteCredential: NetsuiteConnectorGet) => {
+      this.netsuiteConnector = netsuiteCredential;
       this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(netsuiteCredential);
       this.setupConnectionStatus.emit(true);
       this.isLoading = false;
