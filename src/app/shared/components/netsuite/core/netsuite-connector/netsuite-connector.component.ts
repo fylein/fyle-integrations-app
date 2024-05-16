@@ -36,7 +36,7 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  netsuiteConnector: NetsuiteConnectorGet | null = null;
+  netsuiteCredential: NetsuiteConnectorGet | null = null;
 
   constructor(
     private router: Router,
@@ -65,7 +65,7 @@ export class NetsuiteConnectorComponent implements OnInit {
       });
     }, () => {
       this.setupConnectionStatus.emit(false);
-      this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(this.netsuiteConnector);
+      this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(this.netsuiteCredential);
       this.isLoading = false;
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Error while connecting, please try again later.');
     });
@@ -75,7 +75,7 @@ export class NetsuiteConnectorComponent implements OnInit {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
     this.connectorService.getNetsuiteCredentials().subscribe((netsuiteCredential: NetsuiteConnectorGet) => {
-      this.netsuiteConnector = netsuiteCredential;
+      this.netsuiteCredential = netsuiteCredential;
       this.connectNetsuiteForm = NetsuiteConnectorModel.mapAPIResponseToFormGroup(netsuiteCredential);
       this.setupConnectionStatus.emit(true);
       this.isLoading = false;
