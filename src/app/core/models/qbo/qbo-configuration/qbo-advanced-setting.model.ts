@@ -60,11 +60,11 @@ export class QBOAdvancedSettingModel extends HelperUtility {
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {
-        label: `Export ${brandingConfig.brandName} ACH Payments to Quickbooks Online`,
+        label: `Export ${brandingConfig.brandName} ACH Payments to QuickBooks Online`,
         value: QBOPaymentSyncDirection.FYLE_TO_QBO
       },
       {
-        label: `Import Quickbooks Payments into ${brandingConfig.brandName}`,
+        label: `Import QuickBooks Payments into ${brandingConfig.brandName}`,
         value: QBOPaymentSyncDirection.QBO_TO_FYLE
       }
     ];
