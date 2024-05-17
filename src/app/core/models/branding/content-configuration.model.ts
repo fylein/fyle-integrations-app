@@ -110,6 +110,7 @@ export type ContentConfiguration = {
                         expenseState: string;
                         creditCardExpenseSubLabel: string;
                         cccExpenseStateSubLabel: string;
+                        cccExpenseBankAccountLabel: string;
                     }
                 },
                 importSetting: {

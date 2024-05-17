@@ -111,6 +111,7 @@ export const c1Contents = {
                     creditCardExportTypeSubLabel: 'Choose how transactions are exported to Xero.',
                     expenseState: '',
                     creditCardExpenseSubLabel: '',
+                    cccExpenseBankAccountLabel: 'Which bank account should the bank transactions post to?',
                     cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. '
                 },
                 stepSubLabel: 'Configure how and when expenses from expense management can be exported to Xero.',
