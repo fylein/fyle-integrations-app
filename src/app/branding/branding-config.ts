@@ -17,6 +17,7 @@ const featureConfigs: FeatureConfiguration = {
         exposeC1Apps: false,
         isBackgroundColorAllowed: false,
         isAsterikAllowed: true,
+        allowIntacctHelperDoc: true,
         featureFlags: {
             cloneSettings: true,
             mapEmployees: true,
@@ -58,6 +59,7 @@ const featureConfigs: FeatureConfiguration = {
         exposeC1Apps: true,
         isBackgroundColorAllowed: true,
         isAsterikAllowed: false,
+        allowIntacctHelperDoc: false,
         featureFlags: {
             cloneSettings: false,
             mapEmployees: false,
