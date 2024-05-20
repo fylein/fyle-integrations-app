@@ -19,6 +19,7 @@ export interface Error {
   expense_attribute: ExpenseAttribute;
   expense_group: AccountingExport;
   type: AccountingErrorType;
+  article_link: string;
   is_resolved: boolean;
   error_title: string;
   error_detail: string;
