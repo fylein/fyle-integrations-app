@@ -31,4 +31,8 @@ export class QboHelperService {
   refreshQBODimensions(): Observable<{}> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbo/refresh_dimensions/`, {});
   }
+
+  disconnect(): Observable<{}> {
+    return this.apiService.patch(`/workspaces/${this.workspaceService.getWorkspaceId()}/credentials/qbo/`, {});
+  }
 }
