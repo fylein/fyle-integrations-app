@@ -31,6 +31,8 @@ export class QboMainComponent implements OnInit {
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
+  readonly disconnectButton = brandingFeatureConfig.featureFlags.dashboard.disconnectButton;
+
   constructor(
     private accountingExportService: AccountingExportService,
     private qboHelperService: QboHelperService,
