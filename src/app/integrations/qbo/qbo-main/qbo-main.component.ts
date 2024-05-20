@@ -49,7 +49,7 @@ export class QboMainComponent implements OnInit {
     this.isConnectionInProgress = true;
     this.qboHelperService.disconnect().subscribe(() => {
       this.isConnectionInProgress = false;
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected QuickBooks successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected QuickBooks Online successfully');
       this.router.navigate(['/integrations/qbo/onboarding/landing']);
     });
   }
