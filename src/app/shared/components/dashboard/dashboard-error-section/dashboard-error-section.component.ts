@@ -12,6 +12,7 @@ import { DashboardService } from 'src/app/core/services/common/dashboard.service
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 
 @Component({
   selector: 'app-dashboard-error-section',
@@ -92,10 +93,13 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   AppName = AppName;
 
+  errorArticle: string;
+
   constructor(
     private dashboardService: DashboardService,
     private mappingService: MappingService,
     private trackingService: TrackingService,
+    public helper: HelperService,
     public windowService: WindowService
   ) { }
 
@@ -163,6 +167,7 @@ export class DashboardErrorSectionComponent implements OnInit {
   showErrorDialog(accountingError: Error) {
     this.isAccountingErrorDialogVisible = true;
     this.errorDetail = accountingError.error_detail;
+    this.errorArticle = accountingError.article_link;
     // @ts-ignore
     this.errorExpenses = accountingError[this.exportKey]?.expenses;
   }
