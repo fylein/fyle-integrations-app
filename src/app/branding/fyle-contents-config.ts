@@ -111,6 +111,7 @@ export const fyleContents = {
                     creditCardExportTypeSubLabel: '',
                     expenseState: '',
                     creditCardExpenseSubLabel: '',
+                    cccExpenseBankAccountLabel: 'To which Bank Account should the Bank Transactions be posted to?',
                     cccExpenseStateSubLabel: 'You can export expenses either when they\'re awaiting payment after approval (Approved) or when the payment has been settled (Closed).'
                 },
                 cccExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',

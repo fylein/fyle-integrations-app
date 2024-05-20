@@ -254,7 +254,9 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     }));
 
     this.sageIntacctFields.push({ attribute_type: 'GENERAL_LEDGER_ACCOUNT', display_name: 'General Ledger Account', source_placeholder: '', is_dependent: false });
+    this.fyleFields.pop();
     this.fyleFields.push({ attribute_type: FyleField.CATEGORY, display_name: 'Category', source_placeholder: '', is_dependent: false });
+    this.fyleFields.push(this.customFieldOption[0]);
 
     // Handle only mapped fields
     this.sageIntacctFields.forEach((sageIntacctField) => {
