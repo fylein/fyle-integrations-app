@@ -55,7 +55,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
 
   @Input() logoWidth: string = '140px';
 
-  @Input() logoStyleClasses: string = 'tw-py-10-px tw-px-20-px';
+  @Input() logoStyleClasses: string = 'tw-py-10-px tw-px-4-px';
 
   @Input() logoSectionStyleClasses: string = 'tw-rounded-4-px tw-border-1-px tw-border-bg-secondary tw-bg-white tw-w-176-px';
 
