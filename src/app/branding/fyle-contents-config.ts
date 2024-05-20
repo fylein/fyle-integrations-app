@@ -240,7 +240,7 @@ export const fyleContents = {
     },
     configuration: {
         connector: {
-            stepName: 'Connect to Quickbooks Online'
+            stepName: 'Connect to QuickBooks Online'
         },
         employeeSetting: {
             stepName: 'Map Employees'

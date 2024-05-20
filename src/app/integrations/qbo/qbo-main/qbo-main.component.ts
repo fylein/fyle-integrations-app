@@ -27,20 +27,35 @@ export class QboMainComponent implements OnInit {
 
   activeModule: MenuItem;
 
+  isConnectionInProgress: boolean;
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
+
+  readonly disconnectButton = brandingFeatureConfig.featureFlags.dashboard.disconnectButton;
 
   constructor(
     private accountingExportService: AccountingExportService,
     private qboHelperService: QboHelperService,
     private router: Router,
-    private toastServeice: IntegrationsToastService
+    private toastService: IntegrationsToastService
   ) { }
 
   refreshDimensions() {
     this.qboHelperService.refreshQBODimensions().subscribe();
     this.qboHelperService.refreshFyleDimensions().subscribe();
     this.accountingExportService.importExpensesFromFyle('v1').subscribe();
-    this.toastServeice.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from QuickBooks Online');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Syncing data dimensions from QuickBooks Online');
+  }
+
+  disconnect(): void {
+    if (!this.isConnectionInProgress) {
+      this.qboHelperService.disconnect().subscribe(() => {
+        this.isConnectionInProgress = false;
+        this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Disconnected QuickBooks Online successfully');
+        this.router.navigate(['/integrations/qbo/onboarding/landing']);
+      });
+    }
+    this.isConnectionInProgress = true;
   }
 
   private setupPage() {
