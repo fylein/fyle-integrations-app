@@ -14,6 +14,7 @@ export type Error = {
   workspace_id: number;
   created_at: Date;
   updated_at: Date;
+  article_link: string;
 };
 
 export type GroupedErrors = {
