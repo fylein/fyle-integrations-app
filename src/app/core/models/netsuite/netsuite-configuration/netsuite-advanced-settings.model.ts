@@ -64,6 +64,10 @@ export type NetsuiteAdvancedSettingAddEmailModel = {
 }
 
 export class NetsuiteAdvancedSettingModel extends HelperUtility {
+  static getDefaultMemoOptions(): string[] {
+    return ['employee_email', 'purpose', 'category', 'spent_on', 'report_number'];
+  }
+
   static getPaymentSyncOptions(): SelectFormOption[] {
     return [
       {

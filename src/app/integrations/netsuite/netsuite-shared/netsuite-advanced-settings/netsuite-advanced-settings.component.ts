@@ -69,7 +69,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
 
   adminEmails: EmailOption[] = [];
 
-  defaultMemoOptions: string[] = AdvancedSettingsModel.getDefaultMemoOptions();
+  defaultMemoOptions: string[] = NetsuiteAdvancedSettingModel.getDefaultMemoOptions();
 
   memoPreviewText: string = '';
 
@@ -102,6 +102,10 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
+
+  isOptional(): string {
+    return brandingConfig.brandId === 'co' ? ' \(optional\)' : '';
+  }
 
   getCreateVendorLabel(): string {
     if (this.workspaceGeneralSettings.employee_field_mapping === EmployeeFieldMapping.VENDOR) {

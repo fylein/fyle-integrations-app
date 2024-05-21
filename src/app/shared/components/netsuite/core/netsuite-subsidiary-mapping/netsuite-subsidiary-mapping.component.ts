@@ -86,7 +86,6 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
         this.netsuiteSubsidiary = netsuiteSubsidiary;
         this.isLoading = false;
         this.handleSuccess(netsuiteSubsidiaryMappingPayload);
-        // This.saveInProgress = false;
       },
       () => {
         this.isLoading = false;
