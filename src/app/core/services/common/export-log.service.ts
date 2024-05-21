@@ -76,6 +76,10 @@ export class ExportLogService {
         params.exported_at__lte = `${endDate[2]}-${endDate[1]}-${endDate[0]}T23:59:59`;
     }
 
+    if (exportedAt) {
+      params.exported_at__gte = exportedAt;
+    }
+
     if (appName === AppName.NETSUITE) {
       return this.apiService.get(`/workspaces/${this.workspaceId}/fyle/expense_groups/v2/`, params);
     }

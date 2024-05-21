@@ -76,7 +76,6 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   }
 
   save() {
-    this.isLoading = true;
     this.saveInProgress = true;
 
     const netsuiteSubsidiaryId = this.netsuiteSubsdiarySelected.destination_id;
@@ -87,6 +86,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
         this.netsuiteSubsidiary = netsuiteSubsidiary;
         this.isLoading = false;
         this.handleSuccess(netsuiteSubsidiaryMappingPayload);
+        // This.saveInProgress = false;
       },
       () => {
         this.isLoading = false;
@@ -109,6 +109,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
       this.router.navigate(['/integrations/netsuite/onboarding/export_settings']);
     }
     this.isLoading = false;
+    this.saveInProgress = false;
     this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Subsidiary Selected Successfully.');
   }
 

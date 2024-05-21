@@ -7,24 +7,24 @@
           <div>
             <app-configuration-step-header 
             [headerText]="'Connect to NetSuite'"
-            [contentText]="'Connect to your NetSuite account to establish a connection between ' + brandingConfig.brandName + ' and NetSuite.'"
+            [contentText]="'Provide your credentials to establish a secure connection between your ' + brandingConfig.brandName + ' and NetSuite account.'"
             [redirectLink]="redirectLink"></app-configuration-step-header>
           </div>
           <div class="tw-p-24-px tw-px-24-px tw-pb-24-px">
               <div class="tw-flex tw-justify-center tw-items-center">
                   <form [formGroup]="connectNetsuiteForm">
                       <div class="tw-mb-16-px">
-                          <app-configuration-text-field [customErrorMessage]="helper.sentenseCaseConversion('Invalid Account ID. Please enter valid Account ID.')" [form]="connectNetsuiteForm" [formControllerName]="'accountId'" [isFieldMandatory]="true" [label]="helper.sentenseCaseConversion('Account ID')" [placeholder]="helper.sentenseCaseConversion('Enter Account') + ' ID'"></app-configuration-text-field>
+                          <app-configuration-text-field [customErrorMessage]="helper.sentenseCaseConversion('Invalid Account ID. Please enter valid Account ID.')" [form]="connectNetsuiteForm" [formControllerName]="'accountId'" [isFieldMandatory]="true" [label]="'Account ID'" [placeholder]="helper.sentenseCaseConversion('Enter Account') + ' ID'"></app-configuration-text-field>
                       </div>
                       <div class="tw-mb-16-px">
-                          <app-configuration-text-field [customErrorMessage]="helper.sentenseCaseConversion('Invalid Token ID. Please enter valid Token ID.')" [form]="connectNetsuiteForm" [formControllerName]="'tokenId'" [isFieldMandatory]="true" [label]="helper.sentenseCaseConversion('Token ID')" [placeholder]="helper.sentenseCaseConversion('Enter Token') + ' ID'"></app-configuration-text-field>
+                          <app-configuration-text-field [customErrorMessage]="helper.sentenseCaseConversion('Invalid Token ID. Please enter valid Token ID.')" [form]="connectNetsuiteForm" [formControllerName]="'tokenId'" [isFieldMandatory]="true" [label]="'Token ID'" [placeholder]="helper.sentenseCaseConversion('Enter Token') + ' ID'"></app-configuration-text-field>
                       </div>
                       <div>
                           <app-configuration-text-field [customErrorMessage]="helper.sentenseCaseConversion('Incorrect Token Secret. Please enter correct Token Secret.')" [form]="connectNetsuiteForm" [formControllerName]="'tokenSecret'" [isFieldMandatory]="true" [label]="helper.sentenseCaseConversion('Token Secret')" [placeholder]="helper.sentenseCaseConversion('Enter Token Secret') + ' ID'"></app-configuration-text-field>
                       </div>
                   </form>
               </div>
-              <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.SAVE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectNetsuiteForm.valid"></app-configuration-step-footer>
+              <app-configuration-step-footer [ctaText]="!saveInProgress ? (isOnboarding ? ConfigurationCtaText.SAVE_AND_CONTINUE : ConfigurationCtaText.UPDATE) : ConfigurationCtaText.SAVING" (save)="save()" [isButtonDisabled]="!connectNetsuiteForm.valid"></app-configuration-step-footer>
           </div>
       </div>
   </div>

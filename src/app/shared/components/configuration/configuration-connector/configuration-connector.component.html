@@ -19,7 +19,7 @@
         <h3 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyName" class="tw-text-18-px tw-text-text-primary tw-font-500 tw-pb-16-px tw-text-center ">
             {{ accountingCompanyName }}
         </h3>
-        <div *ngIf="!accountingCompanyConnectionInProgress && !accountingCompanyName && !isDisconnectClicked" class="tw-flex tw-items-center tw-justify-center">
+        <div *ngIf="!accountingCompanyName && !isDisconnectClicked" class="tw-flex tw-items-center tw-justify-center">
             <div>
                 <div class="tw-flex tw-items-center tw-justify-center">
                     <p-dropdown appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'" 
@@ -40,13 +40,13 @@
                         </ng-template>
                     </p-dropdown>
                 </div>
-                <div class="tw-w-300-px tw-text-pretty tw-text-center tw-py-16-px">
+                <div class="tw-w-300-px tw-text-pretty tw-text-center tw-py-16-px" *ngIf="!accountingCompanyConnectionInProgress">
                     <span class="tw-text-14-px tw-text-normal-text-color tw-font-500 tw-text-center">{{subLabel}}</span>
                 </div>
             </div>
         </div>
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px tw-text-center">
-            <p class="tw-text-14-px tw-pb-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingConfig.brandId === 'co'">
+            <p class="tw-text-14-px tw-py-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingConfig.brandId === 'co'">
                 Fetching data from your {{appName}} account…</p> 
             <app-loader [styleClass]="'!tw-w-16-px !tw-h-16-px spinner-default'"></app-loader>
         </div>

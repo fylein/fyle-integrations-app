@@ -31,7 +31,8 @@ const featureConfigs: FeatureConfiguration = {
                 importVendorsAsMerchants: true,
                 importNetsuiteEmployees: true,
                 importItems: true,
-                importProjects: true
+                importProjects: true,
+                allowCustomSegment: true
             },
             advancedSettings: {
                 autoCreateVendors: true,
@@ -70,10 +71,11 @@ const featureConfigs: FeatureConfiguration = {
             },
             importSettings: {
                 tax: false,
-                importVendorsAsMerchants: true,
+                importVendorsAsMerchants: false,
                 importNetsuiteEmployees: true,
                 importItems: true,
-                importProjects: true
+                importProjects: true,
+                allowCustomSegment: false
             },
             advancedSettings: {
                 autoCreateVendors: false,

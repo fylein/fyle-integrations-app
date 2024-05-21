@@ -21,6 +21,7 @@ export type FeatureConfiguration = {
                 importNetsuiteEmployees: boolean;
                 importItems: boolean;
                 importProjects: boolean;
+                allowCustomSegment: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;

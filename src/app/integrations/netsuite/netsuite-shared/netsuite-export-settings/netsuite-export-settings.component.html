@@ -182,21 +182,6 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="exportSettingForm.value.creditCardExportType && helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
-                            <app-configuration-select-field
-                            [form]="exportSettingForm"
-                            [destinationAttributes]="creditCardVendors"
-                            [optionLabel]="'name'"
-                            [iconPath]="'list'"
-                            [isFieldMandatory]="true"
-                            [mandatoryErrorListName]="'credit card vendor'"
-                            [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
-                            [subLabel]="'Post all your company corporate card transactions to a default credit card vendor.'"
-                            [placeholder]="'Select default credit card vendor'"
-                            [formControllerName]="'defaultCreditCardVendor'">
-                            </app-configuration-select-field>
-                        </div>
-
                         <div *ngIf="exportSettingForm.value.creditCardExportType && helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
@@ -209,6 +194,21 @@
                             [subLabel]="'Post all your company corporate card transactions to a default credit card account.'"
                             [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
                             [formControllerName]="'creditCardAccount'">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="exportSettingForm.value.creditCardExportType && helperService.isFieldRequired(exportSettingForm, 'defaultCreditCardVendor')">
+                            <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [destinationAttributes]="creditCardVendors"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'credit card vendor'"
+                            [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
+                            [subLabel]="'Post all your company corporate card transactions to a default credit card vendor.'"
+                            [placeholder]="'Select default credit card vendor'"
+                            [formControllerName]="'defaultCreditCardVendor'">
                             </app-configuration-select-field>
                         </div>
 
