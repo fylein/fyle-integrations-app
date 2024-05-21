@@ -69,7 +69,7 @@ export type AdvancedSettingValidatorRule = {
 
 export class AdvancedSettingsModel {
   static getDefaultMemoOptions(): string[] {
-    return ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+    return ['employee_email', 'purpose', 'category', 'spent_on', 'report_number'];
   }
 
   static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): string {
@@ -83,7 +83,6 @@ export class AdvancedSettingsModel {
       merchant: 'Pizza Hut',
       report_number: 'C/2021/12/R/1',
       spent_on: today.toLocaleDateString(),
-      expense_link: `${environment.fyle_app_url}/app/main/#/enterprise/view_expense/`
     };
     let memoPreviewText = '';
     const memo: string[] = [];
