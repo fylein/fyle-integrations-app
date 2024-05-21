@@ -39,6 +39,9 @@ export type FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: boolean;
+            },
+            dashboard: {
+                disconnectButton: boolean;
             }
         }
     }

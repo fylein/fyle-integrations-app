@@ -1,3 +1,4 @@
+import { disconnect } from 'process';
 import { BrandingConfiguration } from '../core/models/branding/branding-configuration.model';
 import { ContentConfiguration } from '../core/models/branding/content-configuration.model';
 import { DemoVideo } from '../core/models/branding/demo-video.model';
@@ -50,6 +51,9 @@ const featureConfigs: FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: true
+            },
+            dashboard: {
+                disconnectButton: true
             }
         }
     },
@@ -93,6 +97,9 @@ const featureConfigs: FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: false
+            },
+            dashboard: {
+                disconnectButton: false
             }
         }
     }
