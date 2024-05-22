@@ -145,7 +145,7 @@ export const simple: Story = {
           type: AccountingErrorType.ACCOUNTING_ERROR,
           is_resolved: false,
           error_title: 'Invalid account code for expense',
-          error_detail: 'Account code 223 doesn\'t exist in Quickbooks Online',
+          error_detail: 'Account code 223 doesn\'t exist in QuickBooks Online',
           created_at: new Date(),
           updated_at: new Date(),
           workspace: 1

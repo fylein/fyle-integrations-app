@@ -62,7 +62,7 @@ export class XeroExportSettingModel {
   static getCreditCardExportTypes() {
     return [
       {
-        label: 'Bank Transaction',
+        label: 'Bank Transactions',
         value: XeroCorporateCreditCardExpensesObject.BANK_TRANSACTION
       }
     ];
