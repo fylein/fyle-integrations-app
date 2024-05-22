@@ -1,4 +1,4 @@
-name: Workflow For Release Branch
+name: Deploy to Hulk
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
       - 'integrations_app_release_*'
 jobs:
   hulk_deploy:
-	  name: Hulk Deploy
     runs-on: ubuntu-latest
+    environment: Staging
     steps:
       - uses: actions/checkout@v2
         with:
