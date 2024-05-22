@@ -26,12 +26,18 @@ export class ApiService {
   }
 
   private handleError(error: HttpErrorResponse, httpMethod: string, url: string) {
-    if (error.error instanceof ErrorEvent) {
-      console.error('An error occurred:', error.error.message);
+    if (httpMethod === 'POST') {
+      if (error.status >= 500) {
+        console.error(`POST error ${error.status}: ${error.message}`);
+      }
+    } else if (httpMethod === 'GET') {
+      if (error.status !== 404) {
+        console.error(`GET error ${error.status}: ${error.message}`);
+      }
+      // Else (404 GET error) - do not log
     } else {
-      console.error(
-        `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
-      );
+      // For other HTTP methods, you can add custom logic or just log the errors
+      console.error(`HTTP ${httpMethod} error ${error.status}: ${error.message}`);
     }
     return throwError(error);
   }
