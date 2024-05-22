@@ -1,4 +1,4 @@
-name: Workflow For Release Branch
+name: Deploy to Hulk
 
 on:
   push:
@@ -6,12 +6,10 @@ on:
       - 'integrations_app_release_*'
 jobs:
   hulk_deploy:
-	  name: Hulk Deploy
     runs-on: ubuntu-latest
+    environment: Staging
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: recursive
       - name: Push to dockerhub
         uses: fylein/docker-release-action@master
         id: generate-and-push-tag
