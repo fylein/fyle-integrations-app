@@ -67,17 +67,17 @@ export class LoginComponent implements OnInit {
         };
         this.userService.storeUserProfile(user);
 
-        if (this.exposeApps.fyle.QBD) {
+        if (this.exposeApps.fyle.QBD && this.exposeApps.co.QBD) {
           this.helperService.setBaseApiURL(AppUrl.QBD);
           this.qbdAuthService.qbdLogin(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
 
-        if (this.exposeApps.fyle.SAGE300) {
+        if (this.exposeApps.fyle.SAGE300 && this.exposeApps.co.SAGE300) {
           this.helperService.setBaseApiURL(AppUrl.SAGE300);
           this.sage300AuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
 
-        if (this.exposeApps.fyle.BUSINESS_CENTRAL) {
+        if (this.exposeApps.fyle.BUSINESS_CENTRAL && this.exposeApps.co.BUSINESS_CENTRAL) {
           this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
           this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
@@ -85,19 +85,19 @@ export class LoginComponent implements OnInit {
         // Only local dev needs this, login happens via postMessage for prod/staging through webapp
         if (!environment.production) {
           this.userService.storeUserProfile(user);
-          if (this.exposeApps.fyle.QBO) {
+          if (this.exposeApps.fyle.QBO && this.exposeApps.co.QBO) {
             this.helperService.setBaseApiURL(AppUrl.QBO);
             this.qboAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
-          if (this.exposeApps.fyle.INTACCT) {
+          if (this.exposeApps.fyle.INTACCT && this.exposeApps.co.INTACCT) {
             this.helperService.setBaseApiURL(AppUrl.INTACCT);
             this.siAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
-          if (this.exposeApps.fyle.NETSUITE) {
+          if (this.exposeApps.fyle.NETSUITE && this.exposeApps.co.NETSUITE) {
             this.helperService.setBaseApiURL(AppUrl.NETSUITE);
             this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
-          if (this.exposeApps.fyle.XERO) {
+          if (this.exposeApps.fyle.XERO && this.exposeApps.co.XERO) {
             this.helperService.setBaseApiURL(AppUrl.XERO);
             this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
