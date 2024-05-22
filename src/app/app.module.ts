@@ -18,6 +18,7 @@ import { SharedModule } from './shared/shared.module';
 import { RippleModule } from 'primeng/ripple';
 import { BrandingService } from './core/services/common/branding.service';
 import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/sage300-configuration/sage300-configuration.module';
+import { HttpErrorInterceptor } from './core/interceptor/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,11 @@ import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
       multi: true
     },
     {
