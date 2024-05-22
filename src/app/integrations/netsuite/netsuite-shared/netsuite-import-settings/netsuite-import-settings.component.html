@@ -87,7 +87,7 @@
                     </app-configuration-import-field>
                 </div>
 
-                <div class="tw-mt-24-px">
+                <div class="tw-mt-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowCustomSegment">
                     <div class="tw-flex tw-items-center" (click)="addCustomSegment()">
                         <div class="tw-mr-14-px">
                             <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'"></app-svg-icon>

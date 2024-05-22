@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { BrandingConfiguration } from 'src/app/core/models/branding/branding-configuration.model';
 import { CloneSettingExist } from 'src/app/core/models/common/clone-setting.model';
-import { ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOCredential } from 'src/app/core/models/qbo/db/qbo-credential.model';
@@ -69,6 +69,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
   primaryButtonText: string;
 
   warningEvent: ConfigurationWarningEvent;
+
+  appName = AppName.QBO;
 
   constructor(
     private cloneSettingService: CloneSettingService,

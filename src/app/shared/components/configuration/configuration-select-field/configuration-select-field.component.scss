@@ -50,7 +50,7 @@
     @apply tw-visible #{!important};
 }
 
-:host ::ng-deep .p-disabled .p-dropdown-trigger, :host ::ng-deep .showClearIcon .p-dropdown-trigger, :host ::ng-deep .defaultFields .selectedItem  .p-dropdown-trigger{
+:host ::ng-deep .p-disabled .p-dropdown-trigger, :host ::ng-deep .showClearIcon .p-dropdown-trigger{
     @apply tw-hidden #{!important};
 }
 

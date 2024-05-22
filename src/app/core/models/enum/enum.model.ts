@@ -331,7 +331,8 @@ export enum ConfigurationCta {
   SAVE_AND_CONTINUE = 'Save and Continue',
   CONTINUE = 'Continue',
   SAVING = 'Saving',
-  SYNCING = 'Syncing'
+  SYNCING = 'Syncing',
+  UPDATE = 'Update connection'
 }
 
 export enum QBDReimbursableExpensesObject {
