@@ -36,8 +36,9 @@ export class ApiService {
       }
       // Else (404 GET error) - do not log
     } else {
-      // For other HTTP methods, you can add custom logic or just log the errors
-      console.error(`HTTP ${httpMethod} error ${error.status}: ${error.message}`);
+      console.error(
+        `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
+      );
     }
     return throwError(error);
   }
