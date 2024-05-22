@@ -6,7 +6,7 @@ import {
   HttpRequest,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 @Injectable()
@@ -28,8 +28,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
           console.error(`HTTP ${req.method} error ${error.status}: ${error.message}`);
         }
 
-        // Return a default value or rethrow the error
-        return throwError(() => new Error('Error occurred; error details processed.'));
+        // Return an observable that completes
+        return of(error as any);  // Suppresses further propagation of the error
       })
     );
   }
