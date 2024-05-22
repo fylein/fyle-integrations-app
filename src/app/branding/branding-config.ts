@@ -1,3 +1,4 @@
+import { disconnect } from 'process';
 import { BrandingConfiguration } from '../core/models/branding/branding-configuration.model';
 import { ContentConfiguration } from '../core/models/branding/content-configuration.model';
 import { DemoVideo } from '../core/models/branding/demo-video.model';
@@ -17,6 +18,7 @@ const featureConfigs: FeatureConfiguration = {
         exposeC1Apps: false,
         isBackgroundColorAllowed: false,
         isAsterikAllowed: true,
+        allowIntacctHelperDoc: true,
         featureFlags: {
             cloneSettings: true,
             mapEmployees: true,
@@ -48,6 +50,9 @@ const featureConfigs: FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: true
+            },
+            dashboard: {
+                disconnectButton: true
             }
         }
     },
@@ -58,6 +63,7 @@ const featureConfigs: FeatureConfiguration = {
         exposeC1Apps: true,
         isBackgroundColorAllowed: true,
         isAsterikAllowed: false,
+        allowIntacctHelperDoc: false,
         featureFlags: {
             cloneSettings: false,
             mapEmployees: false,
@@ -89,6 +95,9 @@ const featureConfigs: FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: false
+            },
+            dashboard: {
+                disconnectButton: false
             }
         }
     }

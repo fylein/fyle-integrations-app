@@ -111,6 +111,7 @@ export const c1Contents = {
                     creditCardExportTypeSubLabel: 'Choose how transactions are exported to Xero.',
                     expenseState: '',
                     creditCardExpenseSubLabel: '',
+                    cccExpenseBankAccountLabel: 'Which bank account should the bank transactions post to?',
                     cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. '
                 },
                 stepSubLabel: 'Configure how and when expenses from expense management can be exported to Xero.',
@@ -239,7 +240,7 @@ export const c1Contents = {
     },
     configuration: {
         connector: {
-            stepName: 'Connect to Quickbooks Online'
+            stepName: 'Connect to QuickBooks Online'
         },
         employeeSetting: {
             stepName: 'Map employees'
@@ -298,12 +299,12 @@ export const c1Contents = {
             memoStructureLabel: 'Set the line-item description field in QuickBooks Online',
             automationSubLabel: 'Automate exports and data syncs.',
             scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to QuickBooks Online.',
-            frequencySubLabel: 'Set how often your expenses will be exported to Quickbooks Online.',
+            frequencySubLabel: 'Set how often your expenses will be exported to QuickBooks Online.',
             otherPreferencesLabel: 'Other preferences',
-            otherPreferencesSubLabel: 'Create new records in Quickbooks Online if no vendor record is found or the accounting period is closed.',
+            otherPreferencesSubLabel: 'Create new records in QuickBooks Online if no vendor record is found or the accounting period is closed.',
             accountingPeriodLabel: 'Post entries in the current open accounting period.',
             accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
-            autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in Quickbooks Online if an added merchant doesn\'t have a corresponding match.',
+            autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in QuickBooks Online if an added merchant doesn\'t have a corresponding match.',
             customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
             memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.',
             previewDescriptionFieldLabel: 'Preview of the description field'

@@ -6,6 +6,7 @@ export type FeatureConfiguration = {
         exposeC1Apps: boolean;
         isBackgroundColorAllowed: boolean;
         isAsterikAllowed: boolean;
+        allowIntacctHelperDoc: boolean;
         featureFlags: {
             cloneSettings: boolean;
             mapEmployees: boolean;
@@ -37,6 +38,9 @@ export type FeatureConfiguration = {
             },
             mappings: {
                 employeeMapping: boolean;
+            },
+            dashboard: {
+                disconnectButton: boolean;
             }
         }
     }

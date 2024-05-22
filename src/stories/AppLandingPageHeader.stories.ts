@@ -32,7 +32,7 @@ type Story = StoryObj<AppLandingPageHeaderComponent>;
 export const qbo: Story = {
   args: {
     appName: AppName.QBO,
-    iconPath: 'assets/logos/qbo.svg',
+    iconPath: 'assets/logos/qbo.png',
     appDescription: 'Import data from QuickBooks Online to ' + brandingConfig.brandName + ' and Export expenses from ' + brandingConfig.brandName + ' to QuickBooks Online. ',
     isLoading: false,
     isIntegrationSetupInProgress: false,
