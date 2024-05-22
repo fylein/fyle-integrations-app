@@ -510,7 +510,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings?.default_reimbursable_expense_payment_type);
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.CCC_EXPENSE_PAYMENT_TYPE, this.exportSettings.general_mappings?.default_ccc_expense_payment_type);
     this.addMissingOption(IntacctExportSettingDestinationOptionKey.VENDOR, this.exportSettings.general_mappings?.default_ccc_vendor);
-    this.addMissingOption(IntacctExportSettingDestinationOptionKey.CHARGE_CARD, this.exportSettings.general_mappings?.default_credit_card);
+    this.addMissingOption(IntacctExportSettingDestinationOptionKey.CHARGE_CARD, this.exportSettings.general_mappings?.default_charge_card);
   }
 
   private setupCustomWatchers(): void {
