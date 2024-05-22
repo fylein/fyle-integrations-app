@@ -141,7 +141,7 @@
             </div>
             <div class="tw-pt-2 defaultFields">
                 <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="name"
-                [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}">
+                [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value, 'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value}">
                     <ng-template pTemplate="selectedItem" let-item>
                         <p>
                             {{ item.name }}

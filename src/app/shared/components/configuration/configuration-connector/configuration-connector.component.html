@@ -19,7 +19,7 @@
         <h3 *ngIf="!accountingCompanyConnectionInProgress && accountingCompanyName" class="tw-text-18-px tw-text-text-primary tw-font-500 tw-pb-16-px tw-text-center ">
             {{ accountingCompanyName }}
         </h3>
-        <div *ngIf="!accountingCompanyName && !isDisconnectClicked && appName !== AppName.QBO" class="tw-flex tw-items-center tw-justify-center">
+        <div *ngIf="!accountingCompanyName && !isDisconnectClicked && !accountingCompanyConnectionInProgress" class="tw-flex tw-items-center tw-justify-center">
             <div>
                 <div class="tw-flex tw-items-center tw-justify-center">
                     <p-dropdown appendTo="body" [options]="accountingCompanyList" [optionLabel]="'value'" 
@@ -46,6 +46,9 @@
             </div>
         </div>
         <div *ngIf="accountingCompanyConnectionInProgress" class="tw-pb-8-px tw-text-center">
+            <h3 *ngIf="accountingCompanyName && brandingConfig.brandId === 'co'" class="tw-text-18-px tw-text-text-primary tw-font-500 tw-text-center ">
+                {{ accountingCompanyName }}
+            </h3>
             <p class="tw-text-14-px tw-py-16-px tw-w-300-px tw-text-text-muted tw-text-center" *ngIf="brandingConfig.brandId === 'co'">
                 Fetching data from your {{appName}} account…</p> 
             <div [ngClass]="{'tw-mt-16-px': brandingConfig.brandId !== 'co'}">

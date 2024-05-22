@@ -77,7 +77,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   save() {
     this.saveInProgress = true;
-
+    this.netsuiteSubsdiaryName = this.netsuiteSubsdiarySelected.value;
     const netsuiteSubsidiaryId = this.netsuiteSubsdiarySelected.destination_id;
     const netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost = NetsuiteSubsidiaryMappingModel.constructPayload(netsuiteSubsidiaryId, this.netsuiteSubsidiaryOptions, this.workspaceId);
 

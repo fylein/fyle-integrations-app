@@ -190,6 +190,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     } else if (this.xeroTenantselected && !this.xeroCompanyName) {
       this.xeroConnectionInProgress = true;
       this.isContinueDisabled = true;
+      this.xeroCompanyName = this.xeroTenantselected.value;
       const tenantMappingPayload: TenantMappingPost = TenantMappingModel.constructPayload(this.xeroTenantselected);
       this.xeroConnectorService.postTenantMapping(tenantMappingPayload).subscribe((response:TenantMapping) => {
         this.xeroHelperService.refreshXeroDimensions().subscribe(() => {
