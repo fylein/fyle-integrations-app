@@ -26,9 +26,9 @@ export class NetsuiteConfigurationComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    if (brandingConfig.brandId !== 'co') {
-      this.modules.push({label: 'Connection', routerLink: '/integrations/netsuite/main/configuration/connector'});
-    }
+    // if (brandingConfig.brandId !== 'co') {
+    //   this.modules.push({label: 'Connection', routerLink: '/integrations/netsuite/main/configuration/connector'});
+    // }
   }
 
 }
