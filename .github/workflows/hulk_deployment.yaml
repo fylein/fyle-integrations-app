@@ -4,12 +4,14 @@ on:
   push:
     branches: 
       - 'integrations_app_release_*'
+
 jobs:
   hulk_deploy:
     runs-on: ubuntu-latest
     environment: Staging
     steps:
       - uses: actions/checkout@v2
+
       - name: Push to dockerhub
         uses: fylein/docker-release-action@master
         id: generate-and-push-tag
@@ -32,8 +34,7 @@ jobs:
           persist-credentials: false
           token: ${{ secrets.DEPLOY_GIT_ACCESS_TOKEN }}
           
-          
-     - name: Update Image Tag
+      - name: Update Image Tag
         run: |
           NEW_TAG=${{ steps.generate-and-push-tag.outputs.new_tag }}
           cd ${{ vars.STAGING_DEPLOY_REPO }}/${{ vars.STAGING_DEPLOY_DIR }}/hulk/integrations
@@ -42,7 +43,7 @@ jobs:
       - name: Commit and push changes
         run: |
           NEW_TAG=${{ steps.generate-and-push-tag.outputs.new_tag }}
-          cd ${{ vars.STAGING_DEPLOY_REPO }}/
+          cd ${{ vars.STAGING_DEPLOY_REPO }}
           git config --global user.email "integrations@fylehq.com"
           git config --global user.name "GitHub Actions"
           git add .
