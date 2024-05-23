@@ -33,7 +33,7 @@ export class ApiService {
         console.error(`GET error ${error.status}: ${error.message}`);
       }
       // Else (404 GET error) - do not log
-    } else {
+    } else if (error.status >= 500) {
       console.error(
         `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
       );
