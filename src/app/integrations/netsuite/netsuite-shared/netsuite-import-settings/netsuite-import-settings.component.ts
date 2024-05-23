@@ -232,9 +232,9 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   getCategoryLabel(): string {
     if (this.isImportEmployeeAllowed) {
-      return brandingConfig.brandId !== 'co' ? 'Import the Expense Categories' : 'Import the expense categories';
+      return brandingConfig.brandId !== 'co' ? 'Import the Expense Categories' : 'Import expense categories';
     }
-    return  brandingConfig.brandId !== 'co' ? 'Import the Accounts' : 'Import the accounts';
+    return  brandingConfig.brandId !== 'co' ? 'Import the Accounts' : 'Import accounts';
   }
 
   getCategorySubLabel(): string {

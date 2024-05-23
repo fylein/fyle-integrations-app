@@ -161,7 +161,7 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteLocations"
-                        [label]="helper.sentenseCaseConversion('Default Location')"
+                        [label]="helper.sentenseCaseConversion('Default Location') + isOptional()"
                         [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Location')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteLocation'">
@@ -178,9 +178,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteLocationLevels"
                         [isDefaultFields]="true"
-                        [label]="helper.sentenseCaseConversion('NetSuite Location Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite Location Level') + isOptional()"
                         [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Location Level')"
-                        [showClearIcon]="true"
                         [formControllerName]="'netsuiteLocationLevel'">
                     </app-configuration-select-field>
                 </div>
@@ -190,7 +189,7 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteDepartments"
-                        [label]="helper.sentenseCaseConversion('Default Departments')"
+                        [label]="helper.sentenseCaseConversion('Default Department') + isOptional()"
                         [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Department')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartment'">
@@ -207,9 +206,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteDepartmentLevels"
                         [isDefaultFields]="true"
-                        [label]="helper.sentenseCaseConversion('NetSuite Department Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite Department Level') + isOptional()"
                         [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Department Level')"
-                        [showClearIcon]="true"
                         [formControllerName]="'netsuiteDepartmentLevel'">
                     </app-configuration-select-field>
                 </div>
@@ -219,7 +217,7 @@
                         [form]="advancedSettingForm"
                         [isDefaultFields]="true"
                         [destinationAttributes]="netsuiteClasses"
-                        [label]="helper.sentenseCaseConversion('Default Class')"
+                        [label]="helper.sentenseCaseConversion('Default Class') + isOptional()"
                         [placeholder]="helper.sentenseCaseConversion('Choose Default NetSuite Class')"
                         [showClearIcon]="true"
                         [formControllerName]="'netsuiteClass'">
@@ -236,9 +234,8 @@
                         [form]="advancedSettingForm"
                         [destinationAttributes]="netsuiteClassLevels"
                         [isDefaultFields]="true"
-                        [label]="helper.sentenseCaseConversion('NetSuite Class Level')"
+                        [label]="helper.sentenseCaseConversion('NetSuite Class Level') + isOptional()"
                         [placeholder]="helper.sentenseCaseConversion('Choose NetSuite Class Level')"
-                        [showClearIcon]="true"
                         [formControllerName]="'netsuiteClassLevel'">
                     </app-configuration-select-field>
                 </div>

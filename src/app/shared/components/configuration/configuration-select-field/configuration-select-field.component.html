@@ -135,13 +135,13 @@
         </div>
     </div>
     <div *ngIf="isDefaultFields">
-        <div class="tw-text-text-muted tw-text-14-px">
+        <div class="tw-text-form-label-text-color tw-text-14-px">
             <div>
                 <label>{{label}}</label>
             </div>
             <div class="tw-pt-2 defaultFields">
                 <p-dropdown appendTo="body" [options]="destinationAttributes" optionLabel="name"
-                [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value}">
+                [formControlName]="formControllerName" [placeholder]="placeholder" [ngClass]="{'selectedItem': form.controls[formControllerName].value, 'filterDropdown': !form.controls[formControllerName].value, 'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value}">
                     <ng-template pTemplate="selectedItem" let-item>
                         <p>
                             {{ item.name }}
