@@ -1,6 +1,6 @@
 <div [formGroup]="form" class="tw-pb-24-px">
     <div>
-        <span class="tw-text-14-px tw-text-text-muted">
+        <span class="tw-text-14-px tw-text-form-label-text-color">
             {{label}}
         </span>
         <app-mandatory-field [noSpacing]="true"></app-mandatory-field> 
@@ -9,7 +9,7 @@
     <div class="tw-mt-8-px">
         <span [ngClass]="{'p-input-icon-right': isPasswordField}">
             <i *ngIf="type === 'password'" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-eye fyle' : 'pi pi-eye co']" class="tw-text-placeholder tw-cursor-pointer" (click)="changeFormControllerType(true)"></i>
-            <i *ngIf="type !== 'password' && (formControllerName === 'userPassword' || formControllerName === 'tokenSecret')" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-eye-slash fyle' : 'pi pi-eye-slash co']" class="tw-text-placeholder tw-cursor-pointer" (click)="changeFormControllerType(false)"></i>
+            <i *ngIf="type !== 'password' && isPasswordField" [ngClass]="[brandingConfig.brandId === 'fyle' ? 'pi pi-eye-slash fyle' : 'pi pi-eye-slash co']" class="tw-text-placeholder tw-cursor-pointer" (click)="changeFormControllerType(false)"></i>
             <input [type]="type" class="tw-border-box-color" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']"  pInputText [formControlName]="formControllerName" [placeholder]="placeholder" [required]="isFieldMandatory">
         </span>
         <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>

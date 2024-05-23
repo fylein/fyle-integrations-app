@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
 import { BusinessCentralConnectorModel, BusinessCentralConnectorPost } from 'src/app/core/models/business-central/business-central-configuration/business-central-connector.model';
 import { BusinessCentralCredential } from 'src/app/core/models/business-central/db/business-central-credentials.model';
-import { BusinessCentralField, BusinessCentralOnboardingState, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, BusinessCentralField, BusinessCentralOnboardingState, ConfigurationCta, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { BusinessCentralConnectorService } from 'src/app/core/services/business-central/business-central-configuration/business-central-connector.service';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
@@ -69,6 +69,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
   businessCentralCompanyOptions: BusinessCentralDestinationAttributes[];
 
   businessCentralCompanyselected: BusinessCentralDestinationAttributes;
+
+  appName = AppName.BUSINESS_CENTRAL;
 
   constructor(
     private onboardingService: BusinessCentralOnboardingService,
