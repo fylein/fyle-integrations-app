@@ -27,11 +27,9 @@ export class ApiService {
 
   private handleError(error: HttpErrorResponse, httpMethod: string, url: string) {
     if (httpMethod === 'POST') {
-      if (error.status >= 500) {
         console.error(`POST error ${error.status}: ${error.message}`);
-      }
     } else if (httpMethod === 'GET') {
-      if (error.status !== 404) {
+      if (error.status >= 500) {
         console.error(`GET error ${error.status}: ${error.message}`);
       }
       // Else (404 GET error) - do not log
