@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName, ToastSeverity } from 'src/app/core/models/enum/enum.model';
@@ -25,7 +25,7 @@ export class TravelperkMainComponent implements OnInit {
   constructor(
     private travelperkService: TravelperkService,
     private toastService: IntegrationsToastService,
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   disconnect(): void {

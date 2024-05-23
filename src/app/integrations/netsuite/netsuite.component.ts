@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { NetsuiteOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -28,7 +28,7 @@ export class NetsuiteComponent implements OnInit {
 
   constructor(
     private netsuiteHelperService: NetsuiteHelperService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,

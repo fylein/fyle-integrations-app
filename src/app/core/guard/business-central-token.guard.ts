@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, catchError, forkJoin, map, throwError } from 'rxjs';
 import { BusinessCentralConnectorService } from '../services/business-central/business-central-configuration/business-central-connector.service';
 import { IntegrationsToastService } from '../services/common/integrations-toast.service';
@@ -11,12 +11,12 @@ import { HelperService } from '../services/common/helper.service';
 @Injectable({
   providedIn: 'root'
 })
-export class BusinessCentralTokenGuard implements CanActivate {
+export class BusinessCentralTokenGuard  {
 
   constructor(
     private businessCentralConnectorService: BusinessCentralConnectorService,
     private helperService: HelperService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }

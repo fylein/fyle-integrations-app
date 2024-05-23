@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, of } from 'rxjs';
@@ -63,11 +63,11 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
   sessionStartTime: Date = new Date();
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private importSettingService: BusinessCentralImportSettingsService,
     private mappingService: MappingService,
     private helperService: BusinessCentralHelperService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helper: HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { brandingConfig } from 'src/app/branding/branding-config';
@@ -43,7 +43,7 @@ export class ConfigurationComponent implements OnInit {
   private readonly org: Org = this.orgService.getCachedOrg();
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private orgService: OrgService,
     private trackingService: TrackingService
   ) { }

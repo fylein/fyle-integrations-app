@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -26,7 +26,7 @@ export class IntacctConfigurationComponent implements OnInit {
   ];
 
   constructor(
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   ngOnInit(): void {

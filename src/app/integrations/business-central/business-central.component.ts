@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BusinessCentralWorkspace } from 'src/app/core/models/business-central/db/business-central-workspace.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
@@ -28,7 +28,7 @@ export class BusinessCentralComponent implements OnInit {
   constructor(
     private helperService: HelperService,
     private mapping: BusinessCentralMappingService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private windowService: WindowService,

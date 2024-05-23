@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from '../core/models/db/user.model';
 import { Org } from '../core/models/org/org.model';
@@ -27,7 +27,7 @@ export class IntegrationsComponent implements OnInit {
   constructor(
     private eventsService: EventsService,
     private orgService: OrgService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private storageService: StorageService,
     private trackingService: TrackingService,
     private userService: UserService,

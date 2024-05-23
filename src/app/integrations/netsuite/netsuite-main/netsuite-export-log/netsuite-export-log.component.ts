@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig, brandingConfig } from 'src/app/branding/branding-config';
@@ -24,7 +24,7 @@ export class NetsuiteExportLogComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page } from 'src/app/core/models/enum/enum.model';
 import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
@@ -80,7 +80,7 @@ export class LandingComponent implements OnInit {
     private qboAuthService: QboAuthService,
     private xeroAuthService: XeroAuthService,
     private nsAuthService: NetsuiteAuthService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private siAuthService: SiAuthService,
     private storageService: StorageService,
     private orgService: OrgService

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,7 +11,7 @@ export class TravelperkOnboardingDoneComponent implements OnInit {
   headerText: string = 'Congratulations! <p class="tw-pt-10-px">Your Configuration Setup is now Complete.</p>';
 
   constructor(
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   navigateToDashboard(): void {

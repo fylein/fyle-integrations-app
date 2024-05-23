@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroupedBy, ExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, CCCExpenseState, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -103,9 +103,9 @@ export class ExportSettingComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private exportSettingService: QbdExportSettingService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,

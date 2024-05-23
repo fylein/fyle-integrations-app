@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppName, ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -52,12 +52,12 @@ export class IntacctLocationEntityComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private mappingsService: SiMappingsService,
     private connectorService: IntacctConnectorService,
     private userService: UserService,
     private storageService: StorageService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private workspaceService: SiWorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService

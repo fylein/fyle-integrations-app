@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingContent } from 'src/app/branding/branding-config';
@@ -30,7 +30,7 @@ export class MainComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private mappingsService: SiMappingsService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService
   ) { }
 

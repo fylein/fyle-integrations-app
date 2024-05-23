@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -13,7 +13,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 export class OnboardingStepperComponent implements OnInit {
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private workspaceService: QbdWorkspaceService
   ) { }
 

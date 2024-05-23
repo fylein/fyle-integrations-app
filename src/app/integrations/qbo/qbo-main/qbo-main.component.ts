@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -36,7 +36,7 @@ export class QboMainComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private qboHelperService: QboHelperService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService
   ) { }
 

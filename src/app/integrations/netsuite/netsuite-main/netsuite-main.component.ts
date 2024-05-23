@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -32,7 +32,7 @@ export class NetsuiteMainComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private netsuiteHelperService: NetsuiteHelperService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastServeice: IntegrationsToastService
   ) { }
 

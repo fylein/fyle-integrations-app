@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { environment } from 'src/environments/environment';
@@ -22,7 +22,7 @@ export class HelperService {
 
   constructor(
     private apiService: ApiService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private storageService: StorageService
   ) {}
 

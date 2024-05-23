@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -31,7 +31,7 @@ export class IntacctMappingComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private mappingService: SiMappingsService
   ) { }
 

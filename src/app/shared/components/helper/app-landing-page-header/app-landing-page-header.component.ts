@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -72,7 +72,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
   readonly brandingContent = brandingContent.common;
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private trackingService: TrackingService,
     public windowService: WindowService
   ) { }

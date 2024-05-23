@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { AppName } from 'src/app/core/models/enum/enum.model';
@@ -25,7 +25,7 @@ export class BusinessCentralMainComponent implements OnInit {
 
   constructor(
     private accountingExportService: AccountingExportService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private helperService: BusinessCentralHelperService
   ) { }
 

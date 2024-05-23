@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
@@ -89,7 +89,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   constructor(
     private exportSettingService: Sage300ExportSettingService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private helperService: HelperService,
     private sage300HelperService: Sage300HelperService,
     private toastService: IntegrationsToastService,

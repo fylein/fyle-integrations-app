@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -153,9 +153,9 @@ export class IntacctExportSettingsComponent implements OnInit {
   brandingContent = brandingContent;
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private exportSettingService: SiExportSettingService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,

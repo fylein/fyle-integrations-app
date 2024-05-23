@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -38,7 +38,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
   constructor(
     private helperService: HelperService,
     private businessCentralConnectorService: BusinessCentralConnectorService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService,
     private businessCentralHelperService: BusinessCentralHelperService,
     private workspaceService: WorkspaceService

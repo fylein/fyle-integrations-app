@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, forkJoin } from 'rxjs';
@@ -77,8 +77,8 @@ export class BusinessCentralOnboardingConnectorComponent implements OnInit, OnDe
     private businessCentralConnectorService: BusinessCentralConnectorService,
     private businessCentralExportSettingsService: BusinessCentralExportSettingsService,
     private userService: UserService,
-    private route: ActivatedRoute,
-    private router: Router,
+    @Inject(Router) private route: ActivatedRoute,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private businessCentralHelperService: BusinessCentralHelperService,

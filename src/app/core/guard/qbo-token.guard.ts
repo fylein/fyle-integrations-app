@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, catchError, forkJoin, map, throwError } from 'rxjs';
 import { WorkspaceService } from '../services/common/workspace.service';
 import { QboConnectorService } from '../services/qbo/qbo-configuration/qbo-connector.service';
@@ -10,11 +10,11 @@ import { QBOOnboardingState, ToastSeverity } from '../models/enum/enum.model';
 @Injectable({
   providedIn: 'root'
 })
-export class QboTokenGuard implements CanActivate {
+export class QboTokenGuard  {
 
   constructor(
     private qboConnectorService: QboConnectorService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }

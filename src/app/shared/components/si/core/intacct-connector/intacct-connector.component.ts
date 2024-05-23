@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -36,8 +36,8 @@ export class IntacctConnectorComponent implements OnInit {
   readonly brandingContent = brandingContent;
 
   constructor(
-    private router: Router,
-    private formBuilder: FormBuilder,
+    @Inject(Router) private router: Router,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: IntacctConnectorService,
     private mappingsService: SiMappingsService,
     private toastService: IntegrationsToastService

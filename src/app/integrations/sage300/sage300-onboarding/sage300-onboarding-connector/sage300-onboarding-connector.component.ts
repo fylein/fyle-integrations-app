@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -36,9 +36,9 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   constructor(
     private onboardingService: Sage300OnboardingService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private workspaceService: WorkspaceService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: Sage300ConnectorService,
     private toastService: IntegrationsToastService,
     private mappingService: Sage300MappingService

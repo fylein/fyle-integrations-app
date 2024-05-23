@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -56,7 +56,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
   };
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private travelperkService: TravelperkService,
     private helper: HelperService,
     private toastService: IntegrationsToastService,

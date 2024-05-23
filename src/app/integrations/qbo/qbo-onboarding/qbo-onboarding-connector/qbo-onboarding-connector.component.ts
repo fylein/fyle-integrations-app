@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmEventType } from 'primeng/api';
 import { Subscription } from 'rxjs';
@@ -78,8 +78,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     private qboConnectorService: QboConnectorService,
     private qboHelperService: QboHelperService,
     private qboExportSettingsService: QboExportSettingsService,
-    private route: ActivatedRoute,
-    private router: Router,
+    @Inject(Router) private route: ActivatedRoute,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService,
     private userService: UserService,
     private workspaceService: WorkspaceService

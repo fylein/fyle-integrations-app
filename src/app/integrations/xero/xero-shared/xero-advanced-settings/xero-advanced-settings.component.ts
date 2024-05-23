@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -64,7 +64,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   constructor(
     private advancedSettingService: XeroAdvancedSettingsService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private workspaceService: WorkspaceService,
     private xeroHelperService: XeroHelperService,
     private mappingService: MappingService,

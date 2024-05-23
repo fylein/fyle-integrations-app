@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingContent, brandingDemoVideoLinks, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -41,7 +41,7 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
     private helperService: HelperService,
     private xeroConnectorService: XeroConnectorService,
     private workspaceService: WorkspaceService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private xeroHelper: XeroHelperService,
     private toastService: IntegrationsToastService
   ) { }

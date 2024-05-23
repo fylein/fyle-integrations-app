@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 
@@ -14,7 +14,7 @@ export class SubMenuComponent implements OnInit {
   @Input() activeModule: MenuItem;
 
   constructor(
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   ngOnInit(): void {

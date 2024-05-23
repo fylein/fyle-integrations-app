@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -97,7 +97,7 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     public helper: HelperService,
     private netsuiteHelperService: NetsuiteHelperService,
     private mappingService: MappingService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private skipExportService: SkipExportService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService

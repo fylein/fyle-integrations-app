@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -87,7 +87,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private xeroConnectorService: XeroConnectorService,
     private exportSettingService: XeroExportSettingsService,
     private helperService: HelperService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService,
     private cloneSettingService: CloneSettingService,
     private xeroHelperService: XeroHelperService

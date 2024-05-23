@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
@@ -12,7 +12,7 @@ export class OnboardingDoneComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   navigateToDashboard(): void {

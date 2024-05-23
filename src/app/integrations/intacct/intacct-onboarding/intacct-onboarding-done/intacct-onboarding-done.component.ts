@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, RefinerSurveyType } from 'src/app/core/models/enum/enum.model';
@@ -16,7 +16,7 @@ export class IntacctOnboardingDoneComponent implements OnInit {
 
   constructor(
     private refinerService: RefinerService,
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   navigateToDashboard(): void {

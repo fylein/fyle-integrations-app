@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, forkJoin, of } from 'rxjs';
 import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
@@ -84,7 +84,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private mappingService: MappingService,
     private helperService: HelperService,
     private businessCentralHelperService: BusinessCentralHelperService,

@@ -1,6 +1,6 @@
 import { Router } from '@angular/router';
 import { TravelPerkOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Travelperk } from 'src/app/core/models/travelperk/travelperk.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -25,7 +25,7 @@ export class TravelperkComponent implements OnInit {
     private travelperkService: TravelperkService,
     private storageService: StorageService,
     private windowService: WindowService,
-    private router: Router
+    @Inject(Router) private router: Router
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }

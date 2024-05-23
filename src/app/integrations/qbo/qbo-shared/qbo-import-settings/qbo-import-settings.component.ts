@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -83,12 +83,12 @@ export class QboImportSettingsComponent implements OnInit {
   readonly brandingContent = brandingContent.configuration.importSetting;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helperService: QboHelperService,
     private importSettingService: QboImportSettingsService,
     private qboConnectorService: QboConnectorService,
     private mappingService: MappingService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }

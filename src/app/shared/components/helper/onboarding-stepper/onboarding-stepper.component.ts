@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName, IntacctOnboardingState, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
@@ -18,7 +18,7 @@ export class OnboardingSteppersComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   navigate(canNavigate: boolean, route: string): void {

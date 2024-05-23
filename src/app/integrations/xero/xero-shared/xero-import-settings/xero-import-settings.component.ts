@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -83,10 +83,10 @@ export class XeroImportSettingsComponent implements OnInit {
   constructor(
     private importSettingService: XeroImportSettingsService,
     private workspaceService: WorkspaceService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private mappingService: MappingService,
     private xeroHelperService: XeroHelperService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private xeroConnectorService: XeroConnectorService
   ) { }

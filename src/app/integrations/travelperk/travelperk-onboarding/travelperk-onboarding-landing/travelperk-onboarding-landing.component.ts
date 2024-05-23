@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingKbArticles, brandingConfig, brandingDemoVideoLinks } from 'src/app/branding/branding-config';
@@ -43,7 +43,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private storageService: StorageService,
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   disconnect(): void {

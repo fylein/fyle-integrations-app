@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -105,11 +105,11 @@ export class Sage300ImportSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private importSettingService: Sage300ImportSettingsService,
     private mappingService: MappingService,
     private helperService: Sage300HelperService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helper: HelperService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,

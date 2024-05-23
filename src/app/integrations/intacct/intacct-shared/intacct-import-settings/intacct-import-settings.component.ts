@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
@@ -88,11 +88,11 @@ export class IntacctImportSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private mappingService: SiMappingsService,
     private connectorService: IntacctConnectorService,
     private importSettingService: SiImportSettingService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private storageService: StorageService,

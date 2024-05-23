@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AuthService } from 'src/app/core/services/common/auth.service';
@@ -37,8 +37,8 @@ export class LoginComponent implements OnInit {
     private helperService: HelperService,
     private qboAuthService: QboAuthService,
     private qbdAuthService: QbdAuthService,
-    private route: ActivatedRoute,
-    private router: Router,
+    @Inject(Router) private route: ActivatedRoute,
+    @Inject(Router) private router: Router,
     private sage300AuthService: Sage300AuthService,
     private siAuthService : SiAuthService,
     private netsuiteAuthService: NetsuiteAuthService,

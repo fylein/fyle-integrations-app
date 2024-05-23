@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -110,7 +110,7 @@ export class QboExportSettingsComponent implements OnInit {
     public helperService: HelperService,
     private qboHelperService: QboHelperService,
     private mappingService: MappingService,
-    private router: Router,
+    @Inject(Router) private router: Router,
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService

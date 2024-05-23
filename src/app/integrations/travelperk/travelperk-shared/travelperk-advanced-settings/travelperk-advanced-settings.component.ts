@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 import { ToastSeverity, TrackingApp, Page, TravelPerkOnboardingState, TravelperkUpdateEvent, AppName, ConfigurationCta } from 'src/app/core/models/enum/enum.model';
@@ -63,7 +63,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
   lineItems: SelectFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
 
   constructor(
-    private router: Router,
+    @Inject(Router) private router: Router,
     private travelperkService: TravelperkService,
     private helper: HelperService,
     private toastService: IntegrationsToastService,

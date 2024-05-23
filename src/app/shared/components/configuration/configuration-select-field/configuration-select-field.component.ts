@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { ExportSettingFormOption, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
@@ -106,7 +106,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   constructor(
     private trackingService: TrackingService,
-    private router: Router
+    @Inject(Router) private router: Router
   ) { }
 
   onSearchFocus(isSearchFocused: boolean): void {

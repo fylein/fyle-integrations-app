@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
@@ -40,7 +40,7 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    private formBuilder: FormBuilder
+    @Inject(FormBuilder) private formBuilder: FormBuilder
   ) { }
 
 //   DragStart(memo: string) {
