@@ -84,7 +84,7 @@ export const fyleContents = {
                 scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to NetSuite.',
                 frequencySubLabel: 'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to NetSuite.',
                 preferenceLabel: 'Other Preferences',
-                preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from expense management. (when there is no employee record found, or when the accounting period is closed).',
+                preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from Expense Management. (when there is no employee record found, or when the accounting period is closed).',
                 previewDescriptionFieldLabel: 'Preview of the Description Field',
                 autoCreateMerchantsLabel: 'Auto Create Merchant on NetSuite for Credit Card Charge'
             }
@@ -153,7 +153,7 @@ export const fyleContents = {
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Xero.',
                 accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Xero, you can export those to the current month by enabling this option.',
-                autoCreateVendorsSubLabel: 'While exporting reimbursable expenses from expense management, the integration will automatically create a vendor if a match does not exist in Xero already'
+                autoCreateVendorsSubLabel: 'While exporting reimbursable expenses from Expense Management, the integration will automatically create a vendor if a match does not exist in Xero already'
             }
         }
     },
