@@ -38,7 +38,7 @@ export class BusinessCentralOnboardingLandingComponent implements OnInit, OnDest
   constructor(
     private helperService: HelperService,
     private businessCentralConnectorService: BusinessCentralConnectorService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private businessCentralHelperService: BusinessCentralHelperService,
     private workspaceService: WorkspaceService

@@ -16,7 +16,7 @@ export class XeroTokenGuard  {
 
   constructor(
     private xeroConnectorService: XeroConnectorService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService,
     private helperService: HelperService

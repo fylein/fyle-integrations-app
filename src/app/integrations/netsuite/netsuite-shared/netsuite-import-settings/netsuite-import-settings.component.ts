@@ -102,7 +102,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
     private netsuiteExportSettingService: NetsuiteExportSettingsService,
     private netsuiteConnectorService: NetsuiteConnectorService,
     private workspaceService: WorkspaceService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private netsuiteAdvancedSettingService: NetsuiteAdvancedSettingsService
   ) { }
 

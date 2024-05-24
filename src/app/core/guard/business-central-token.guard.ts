@@ -16,7 +16,7 @@ export class BusinessCentralTokenGuard  {
   constructor(
     private businessCentralConnectorService: BusinessCentralConnectorService,
     private helperService: HelperService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }

@@ -64,7 +64,7 @@ export class XeroAdvancedSettingsComponent implements OnInit {
 
   constructor(
     private advancedSettingService: XeroAdvancedSettingsService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private workspaceService: WorkspaceService,
     private xeroHelperService: XeroHelperService,
     private mappingService: MappingService,

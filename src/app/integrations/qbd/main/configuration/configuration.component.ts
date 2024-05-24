@@ -23,7 +23,7 @@ export class ConfigurationComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   ngOnInit(): void {

@@ -26,7 +26,7 @@ export class XeroComponent implements OnInit {
   windowReference: Window;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private storageService: StorageService,
     private xeroHelperService: XeroHelperService,
     private userService: UserService,

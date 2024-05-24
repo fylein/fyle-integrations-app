@@ -87,7 +87,7 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private xeroConnectorService: XeroConnectorService,
     private exportSettingService: XeroExportSettingsService,
     private helperService: HelperService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private cloneSettingService: CloneSettingService,
     private xeroHelperService: XeroHelperService

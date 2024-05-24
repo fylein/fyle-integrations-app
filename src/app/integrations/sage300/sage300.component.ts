@@ -27,7 +27,7 @@ export class Sage300Component implements OnInit {
 
   constructor(
     private storageService: StorageService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,
     private windowService: WindowService,

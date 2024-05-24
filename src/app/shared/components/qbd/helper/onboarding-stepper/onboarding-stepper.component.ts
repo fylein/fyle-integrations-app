@@ -13,7 +13,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 export class OnboardingStepperComponent implements OnInit {
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private workspaceService: QbdWorkspaceService
   ) { }
 

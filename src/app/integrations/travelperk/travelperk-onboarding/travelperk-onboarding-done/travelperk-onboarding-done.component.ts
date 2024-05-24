@@ -11,7 +11,7 @@ export class TravelperkOnboardingDoneComponent implements OnInit {
   headerText: string = 'Congratulations! <p class="tw-pt-10-px">Your Configuration Setup is now Complete.</p>';
 
   constructor(
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   navigateToDashboard(): void {

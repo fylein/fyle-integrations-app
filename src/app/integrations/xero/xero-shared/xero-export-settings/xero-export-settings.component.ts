@@ -85,7 +85,7 @@ export class XeroExportSettingsComponent implements OnInit {
     private exportSettingService: XeroExportSettingsService,
     private mappingService: MappingService,
     private xeroHelperService: XeroHelperService,
-    @Inject(Router) private router : Router,
+    private router : Router,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService
   ) { }

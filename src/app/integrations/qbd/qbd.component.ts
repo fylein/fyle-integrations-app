@@ -25,7 +25,7 @@ export class QbdComponent implements OnInit {
 
   constructor(
     private helperService: HelperService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: QbdWorkspaceService,

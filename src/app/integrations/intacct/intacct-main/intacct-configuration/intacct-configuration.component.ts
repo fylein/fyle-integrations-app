@@ -26,7 +26,7 @@ export class IntacctConfigurationComponent implements OnInit {
   ];
 
   constructor(
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   ngOnInit(): void {

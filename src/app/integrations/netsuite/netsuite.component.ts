@@ -28,7 +28,7 @@ export class NetsuiteComponent implements OnInit {
 
   constructor(
     private netsuiteHelperService: NetsuiteHelperService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,

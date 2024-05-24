@@ -16,7 +16,7 @@ export class IntacctOnboardingDoneComponent implements OnInit {
 
   constructor(
     private refinerService: RefinerService,
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   navigateToDashboard(): void {

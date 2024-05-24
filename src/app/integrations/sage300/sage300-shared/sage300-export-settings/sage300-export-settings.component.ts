@@ -89,7 +89,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   constructor(
     private exportSettingService: Sage300ExportSettingService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private helperService: HelperService,
     private sage300HelperService: Sage300HelperService,
     private toastService: IntegrationsToastService,

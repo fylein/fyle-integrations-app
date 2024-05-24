@@ -30,7 +30,7 @@ export class MainComponent implements OnInit {
   constructor(
     private dashboardService: DashboardService,
     private mappingsService: SiMappingsService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService
   ) { }
 

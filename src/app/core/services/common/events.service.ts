@@ -28,7 +28,7 @@ export class EventsService {
 
   constructor(
     private location: Location,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private windowService: WindowService
   ) { }
 

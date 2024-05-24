@@ -36,7 +36,7 @@ export class Sage300OnboardingConnectorComponent implements OnInit {
 
   constructor(
     private onboardingService: Sage300OnboardingService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private workspaceService: WorkspaceService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: Sage300ConnectorService,

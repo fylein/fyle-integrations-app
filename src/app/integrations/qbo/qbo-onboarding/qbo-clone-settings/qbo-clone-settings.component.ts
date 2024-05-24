@@ -171,7 +171,7 @@ export class QboCloneSettingsComponent implements OnInit {
     private mappingService: MappingService,
     private qboConnectorService: QboConnectorService,
     private qboImportSettingsService: QboImportSettingsService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }

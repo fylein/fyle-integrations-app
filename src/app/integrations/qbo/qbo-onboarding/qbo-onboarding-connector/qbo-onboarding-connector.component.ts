@@ -78,8 +78,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     private qboConnectorService: QboConnectorService,
     private qboHelperService: QboHelperService,
     private qboExportSettingsService: QboExportSettingsService,
-    @Inject(Router) private route: ActivatedRoute,
-    @Inject(Router) private router: Router,
+    private route: ActivatedRoute,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private userService: UserService,
     private workspaceService: WorkspaceService

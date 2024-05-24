@@ -103,7 +103,7 @@ export class ExportSettingComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private exportSettingService: QbdExportSettingService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,

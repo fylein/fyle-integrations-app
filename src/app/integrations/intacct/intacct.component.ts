@@ -28,7 +28,7 @@ export class IntacctComponent implements OnInit {
   constructor(
     private appcuesService: AppcuesService,
     private helperService: HelperService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private storageService: StorageService,
     private userService: UserService,
     private windowService: WindowService,

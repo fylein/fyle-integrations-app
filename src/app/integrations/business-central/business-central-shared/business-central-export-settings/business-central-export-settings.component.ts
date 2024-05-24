@@ -84,7 +84,7 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private mappingService: MappingService,
     private helperService: HelperService,
     private businessCentralHelperService: BusinessCentralHelperService,

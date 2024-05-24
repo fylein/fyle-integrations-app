@@ -106,7 +106,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   constructor(
     private trackingService: TrackingService,
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   onSearchFocus(isSearchFocused: boolean): void {

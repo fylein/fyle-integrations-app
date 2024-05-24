@@ -28,7 +28,7 @@ export class QboComponent implements OnInit {
   constructor(
     private helperService: HelperService,
     private qboHelperService: QboHelperService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private storageService: StorageService,
     private userService: IntegrationsUserService,
     private workspaceService: WorkspaceService,

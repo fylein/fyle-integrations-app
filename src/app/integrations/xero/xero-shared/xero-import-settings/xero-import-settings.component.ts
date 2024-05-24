@@ -83,7 +83,7 @@ export class XeroImportSettingsComponent implements OnInit {
   constructor(
     private importSettingService: XeroImportSettingsService,
     private workspaceService: WorkspaceService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private mappingService: MappingService,
     private xeroHelperService: XeroHelperService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,

@@ -36,7 +36,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
   constructor(
     private helperService: HelperService,
     private qboConnectorService: QboConnectorService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }

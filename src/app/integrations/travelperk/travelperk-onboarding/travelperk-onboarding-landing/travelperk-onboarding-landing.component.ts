@@ -43,7 +43,7 @@ export class TravelperkOnboardingLandingComponent implements OnInit {
     private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private storageService: StorageService,
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   disconnect(): void {

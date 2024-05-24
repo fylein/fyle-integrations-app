@@ -72,7 +72,7 @@ export class AppLandingPageHeaderComponent implements OnInit {
   readonly brandingContent = brandingContent.common;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private trackingService: TrackingService,
     public windowService: WindowService
   ) { }

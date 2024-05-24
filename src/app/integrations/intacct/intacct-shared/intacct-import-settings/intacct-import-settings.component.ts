@@ -88,7 +88,7 @@ export class IntacctImportSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private mappingService: SiMappingsService,
     private connectorService: IntacctConnectorService,
     private importSettingService: SiImportSettingService,

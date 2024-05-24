@@ -18,7 +18,7 @@ export class OnboardingSteppersComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   navigate(canNavigate: boolean, route: string): void {

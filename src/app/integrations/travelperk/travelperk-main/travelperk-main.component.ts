@@ -25,7 +25,7 @@ export class TravelperkMainComponent implements OnInit {
   constructor(
     private travelperkService: TravelperkService,
     private toastService: IntegrationsToastService,
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   disconnect(): void {

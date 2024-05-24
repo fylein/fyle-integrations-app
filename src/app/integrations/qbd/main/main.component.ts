@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
   appName: AppName = AppName.QBD;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private mappingService: QbdMappingService,
     private qbdservice: QbdExportSettingService
   ) {

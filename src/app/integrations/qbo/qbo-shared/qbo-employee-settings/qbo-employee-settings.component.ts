@@ -58,7 +58,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
     private employeeSettingService: QboEmployeeSettingsService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private exportSettingService: QboExportSettingsService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService

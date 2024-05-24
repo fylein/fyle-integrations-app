@@ -12,7 +12,7 @@ export class OnboardingDoneComponent implements OnInit {
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
   constructor(
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   navigateToDashboard(): void {

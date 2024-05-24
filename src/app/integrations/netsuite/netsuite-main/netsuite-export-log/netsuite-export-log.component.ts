@@ -24,7 +24,7 @@ export class NetsuiteExportLogComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
 

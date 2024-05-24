@@ -63,7 +63,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     private connectorService: NetsuiteConnectorService,
     private userService: UserService,
     private storageService: StorageService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService

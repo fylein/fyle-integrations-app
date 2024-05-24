@@ -110,7 +110,7 @@ export class QboExportSettingsComponent implements OnInit {
     public helperService: HelperService,
     private qboHelperService: QboHelperService,
     private mappingService: MappingService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService

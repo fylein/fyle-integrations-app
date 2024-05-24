@@ -25,7 +25,7 @@ export class TravelperkComponent implements OnInit {
     private travelperkService: TravelperkService,
     private storageService: StorageService,
     private windowService: WindowService,
-    @Inject(Router) private router: Router
+    private router: Router
   ) {
     this.windowReference = this.windowService.nativeWindow;
   }

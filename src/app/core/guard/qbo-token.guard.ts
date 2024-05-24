@@ -14,7 +14,7 @@ export class QboTokenGuard  {
 
   constructor(
     private qboConnectorService: QboConnectorService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }

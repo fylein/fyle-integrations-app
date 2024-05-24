@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class Sage300OnboardingDoneComponent implements OnInit {
 
   constructor(
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   navigateToDashboard(): void {

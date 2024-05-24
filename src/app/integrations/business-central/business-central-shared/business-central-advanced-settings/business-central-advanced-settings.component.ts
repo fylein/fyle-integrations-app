@@ -67,7 +67,7 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: WorkspaceService,
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   getSkipExportValue() {

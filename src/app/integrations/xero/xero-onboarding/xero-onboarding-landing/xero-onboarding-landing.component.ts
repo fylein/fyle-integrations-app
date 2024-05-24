@@ -41,7 +41,7 @@ export class XeroOnboardingLandingComponent implements OnInit, OnDestroy {
     private helperService: HelperService,
     private xeroConnectorService: XeroConnectorService,
     private workspaceService: WorkspaceService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private xeroHelper: XeroHelperService,
     private toastService: IntegrationsToastService
   ) { }

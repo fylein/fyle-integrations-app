@@ -14,7 +14,7 @@ export class SubMenuComponent implements OnInit {
   @Input() activeModule: MenuItem;
 
   constructor(
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   ngOnInit(): void {

@@ -111,7 +111,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     public helperService: HelperService,
     private netsuiteHelperServie: NetsuiteHelperService,
     private mappingService: MappingService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private windowService: WindowService,
     private workspaceService: WorkspaceService

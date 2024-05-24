@@ -39,7 +39,7 @@ export class NetsuiteConnectorComponent implements OnInit {
   netsuiteCredential: NetsuiteConnectorGet | null = null;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private connectorService: NetsuiteConnectorService,

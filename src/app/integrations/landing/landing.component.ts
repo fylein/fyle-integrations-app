@@ -80,7 +80,7 @@ export class LandingComponent implements OnInit {
     private qboAuthService: QboAuthService,
     private xeroAuthService: XeroAuthService,
     private nsAuthService: NetsuiteAuthService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private siAuthService: SiAuthService,
     private storageService: StorageService,
     private orgService: OrgService

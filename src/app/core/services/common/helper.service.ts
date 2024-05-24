@@ -6,12 +6,12 @@ import { AppUrlMap } from '../../models/integrations/integrations.model';
 import { AppUrl, BusinessCentralExportType, ExpenseGroupingFieldOption, ExpenseState, FyleField, ProgressPhase, Sage300ExportType, XeroCorporateCreditCardExpensesObject, XeroReimbursableExpensesObject } from '../../models/enum/enum.model';
 import { AbstractControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ExportModuleRule, ExportSettingValidatorRule } from '../../models/sage300/sage300-configuration/sage300-export-setting.model';
-import { TitleCasePipe } from '@angular/common';
 import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-space-case.pipe';
 import { SkipExportValidatorRule, skipExportValidator } from '../../models/common/advanced-settings.model';
 import { StorageService } from './storage.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
+import { TitleCasePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class HelperService {
 
   constructor(
     private apiService: ApiService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private storageService: StorageService
   ) {}
 

@@ -142,7 +142,7 @@ export class XeroCloneSettingsComponent implements OnInit {
     private mappingService: MappingService,
     private xeroConnectorService: XeroConnectorService,
     private xeroImportSettingsService: XeroImportSettingsService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }

@@ -73,7 +73,7 @@ export class AdvancedSettingComponent implements OnInit {
   readonly AppName = AppName;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private advancedSettingService: QbdAdvancedSettingService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,

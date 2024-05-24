@@ -36,7 +36,7 @@ export class QboMainComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private qboHelperService: QboHelperService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService
   ) { }
 

@@ -25,7 +25,7 @@ export class BusinessCentralMainComponent implements OnInit {
 
   constructor(
     private accountingExportService: AccountingExportService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private helperService: BusinessCentralHelperService
   ) { }
 

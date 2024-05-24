@@ -113,7 +113,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   readonly AppName = AppName;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private advancedSettingsService: SiAdvancedSettingService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,

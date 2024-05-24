@@ -153,7 +153,7 @@ export class IntacctExportSettingsComponent implements OnInit {
   brandingContent = brandingContent;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private exportSettingService: SiExportSettingService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,

@@ -32,7 +32,7 @@ export class NetsuiteMainComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private netsuiteHelperService: NetsuiteHelperService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastServeice: IntegrationsToastService
   ) { }
 

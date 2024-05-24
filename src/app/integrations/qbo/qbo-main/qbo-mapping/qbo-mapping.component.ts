@@ -30,7 +30,7 @@ export class QboMappingComponent implements OnInit {
 
   constructor(
     private mappingService: MappingService,
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   private setupPage(): void {

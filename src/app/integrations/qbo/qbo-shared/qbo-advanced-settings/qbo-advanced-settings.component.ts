@@ -83,7 +83,7 @@ export class QboAdvancedSettingsComponent implements OnInit {
     private helper: HelperService,
     private qboHelperService: QboHelperService,
     private mappingService: MappingService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private skipExportService: SkipExportService,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService

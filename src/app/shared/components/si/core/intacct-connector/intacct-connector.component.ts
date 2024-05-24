@@ -36,7 +36,7 @@ export class IntacctConnectorComponent implements OnInit {
   readonly brandingContent = brandingContent;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: IntacctConnectorService,
     private mappingsService: SiMappingsService,

@@ -8,7 +8,7 @@ import { AuthService } from '../services/common/auth.service';
 export class AuthGuard  {
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private authService: AuthService
   ) { }
 

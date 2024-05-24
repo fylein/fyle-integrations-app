@@ -31,7 +31,7 @@ export class XeroMainComponent implements OnInit {
   constructor(
     private accountingExportService: AccountingExportService,
     private xeroHelperService: XeroHelperService,
-    @Inject(Router) private router: Router
+    private router: Router
   ) { }
 
   refreshDimensions() {

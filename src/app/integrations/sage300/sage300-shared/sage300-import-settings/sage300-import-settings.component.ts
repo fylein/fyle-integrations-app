@@ -105,7 +105,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private importSettingService: Sage300ImportSettingsService,
     private mappingService: MappingService,
     private helperService: Sage300HelperService,

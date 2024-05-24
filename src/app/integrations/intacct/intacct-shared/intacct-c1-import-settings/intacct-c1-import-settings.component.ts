@@ -77,7 +77,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   supportArticleLink: string = brandingKbArticles.onboardingArticles.INTACCT.IMPORT_SETTING;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private mappingService: SiMappingsService,
     private connectorService: IntacctConnectorService,
     private importSettingService: SiImportSettingService,

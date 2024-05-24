@@ -56,7 +56,7 @@ export class TravelperkPaymentProfileSettingsComponent implements OnInit {
   };
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private travelperkService: TravelperkService,
     private helper: HelperService,
     private toastService: IntegrationsToastService,

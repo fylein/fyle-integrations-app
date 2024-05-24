@@ -57,7 +57,7 @@ export class IntacctLocationEntityComponent implements OnInit {
     private connectorService: IntacctConnectorService,
     private userService: UserService,
     private storageService: StorageService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private workspaceService: SiWorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService

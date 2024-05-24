@@ -47,7 +47,7 @@ export class FieldMappingComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
     private fieldMappingService: QbdFieldMappingService,
     private workspaceService: QbdWorkspaceService,

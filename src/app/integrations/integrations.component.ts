@@ -27,7 +27,7 @@ export class IntegrationsComponent implements OnInit {
   constructor(
     private eventsService: EventsService,
     private orgService: OrgService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private storageService: StorageService,
     private trackingService: TrackingService,
     private userService: UserService,

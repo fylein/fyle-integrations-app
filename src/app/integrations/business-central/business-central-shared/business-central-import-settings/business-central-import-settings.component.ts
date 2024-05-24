@@ -63,7 +63,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
   sessionStartTime: Date = new Date();
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private importSettingService: BusinessCentralImportSettingsService,
     private mappingService: MappingService,
     private helperService: BusinessCentralHelperService,

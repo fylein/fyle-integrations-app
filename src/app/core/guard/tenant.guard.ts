@@ -15,7 +15,7 @@ export class TenantGuard  {
 
   constructor(
     private xeroConnectorService: XeroConnectorService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService
   ) { }

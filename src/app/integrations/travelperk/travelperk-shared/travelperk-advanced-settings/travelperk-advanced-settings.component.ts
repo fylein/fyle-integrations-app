@@ -63,7 +63,7 @@ export class TravelperkAdvancedSettingsComponent implements OnInit {
   lineItems: SelectFormOption[] = TravelperkAdvancedSettingModel.getExpenseGroup();
 
   constructor(
-    @Inject(Router) private router: Router,
+    private router: Router,
     private travelperkService: TravelperkService,
     private helper: HelperService,
     private toastService: IntegrationsToastService,

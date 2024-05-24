@@ -88,7 +88,7 @@ export class QboImportSettingsComponent implements OnInit {
     private importSettingService: QboImportSettingsService,
     private qboConnectorService: QboConnectorService,
     private mappingService: MappingService,
-    @Inject(Router) private router: Router,
+    private router: Router,
     private toastService: IntegrationsToastService,
     private workspaceService: WorkspaceService
   ) { }
