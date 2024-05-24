@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "fyle-integrations-app:build:production"
+              "buildTarget": "fyle-integrations-app:build:production"
             },
             "development": {
-              "browserTarget": "fyle-integrations-app:build:development"
+              "buildTarget": "fyle-integrations-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fyle-integrations-app:build"
+            "buildTarget": "fyle-integrations-app:build"
           }
         },
         "test": {
