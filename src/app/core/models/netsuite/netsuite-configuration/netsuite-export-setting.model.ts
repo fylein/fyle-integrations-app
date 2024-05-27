@@ -220,9 +220,9 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
       static getMandatoryField(form: FormGroup, controllerName: string): boolean {
         switch (controllerName) {
           case 'bankAccount':
-            return form.controls.employeeFieldMapping.value === EmployeeFieldMapping.EMPLOYEE;
+            return (form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT || form.controls.reimbursableExportType.value === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT) || (form.controls.reimbursableExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.employeeFieldMapping.value === EmployeeFieldMapping.EMPLOYEE);
           case 'accountsPayable':
-            return form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL || form.controls.employeeFieldMapping.value === EmployeeFieldMapping.VENDOR;
+            return (form.controls.reimbursableExportType.value === NetsuiteReimbursableExpensesObject.BILL || form.controls.creditCardExportType.value === NetSuiteCorporateCreditCardExpensesObject.BILL) || (form.controls.reimbursableExportType.value === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY && form.controls.employeeFieldMapping.value === EmployeeFieldMapping.VENDOR);
           case 'creditCardAccount':
             return form.controls.creditCardExportType && form.controls.creditCardExportType.value !== NetSuiteCorporateCreditCardExpensesObject.BILL;
           case 'defaultCreditCardVendor':
@@ -252,9 +252,9 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           {
             formController: 'creditCardExportType',
             requiredValue: {
-              [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor', 'accountsPayable', 'bankAccount'],
+              [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor'],
               [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['accountsPayable', 'defaultCreditCardVendor'],
-              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalEntry', 'accountsPayable', 'bankAccount'],
+              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalEntry', 'accountsPayable'],
               [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['bankAccount', 'creditCardAccount']
             }
           }
@@ -263,14 +263,14 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         return [exportSettingValidatorRule, exportModuleRule];
       }
 
-      static getEmployeeFieldMapping(employee_field_mapping: string): string {
-        return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.VENDOR : employee_field_mapping;
+      static getEmployeeFieldMapping(employeeFieldMapping: string): string {
+        return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.VENDOR : employeeFieldMapping;
       }
 
       static mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null): FormGroup {
         return new FormGroup({
           expenseState: new FormControl(exportSettings?.expense_group_settings?.expense_state),
-          employeeFieldMapping: new FormControl(exportSettings?.configuration?.employee_field_mapping ? this.getEmployeeFieldMapping(exportSettings?.configuration?.employee_field_mapping) : EmployeeFieldMapping.VENDOR),
+          employeeFieldMapping: new FormControl(exportSettings?.configuration?.employee_field_mapping ? this.getEmployeeFieldMapping(exportSettings?.configuration?.employee_field_mapping) : null),
           autoMapEmployees: new FormControl(exportSettings?.configuration?.auto_map_employees),
           reimbursableExpense: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object ? true : false),
           reimbursableExportType: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object),
