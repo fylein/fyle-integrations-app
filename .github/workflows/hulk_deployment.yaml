@@ -1,6 +1,9 @@
 name: Deploy to Hulk
 
 on:
+  create:
+    branches: 
+      - 'integrations_app_release_*'
   push:
     branches: 
       - 'integrations_app_release_*'
