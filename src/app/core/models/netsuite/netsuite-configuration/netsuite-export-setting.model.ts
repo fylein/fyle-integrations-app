@@ -252,10 +252,10 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
           {
             formController: 'creditCardExportType',
             requiredValue: {
-              [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor'],
-              [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['bankAccount', 'defaultCreditCardVendor'],
-              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalEntry'],
-              [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['creditCardAccount']
+              [NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE]: ['creditCardAccount', 'defaultCreditCardVendor', 'accountsPayable', 'bankAccount'],
+              [NetSuiteCorporateCreditCardExpensesObject.BILL]: ['accountsPayable', 'defaultCreditCardVendor'],
+              [NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY]: ['creditCardAccount', 'defaultCreditCardVendor', 'nameInJournalEntry', 'accountsPayable', 'bankAccount'],
+              [NetSuiteCorporateCreditCardExpensesObject.EXPENSE_REPORT]: ['bankAccount', 'creditCardAccount']
             }
           }
         ];
@@ -263,10 +263,14 @@ export class NetSuiteExportSettingModel extends ExportSettingModel {
         return [exportSettingValidatorRule, exportModuleRule];
       }
 
+      static getEmployeeFieldMapping(employee_field_mapping: string): string {
+        return brandingConfig.brandId === 'co' ? EmployeeFieldMapping.VENDOR : employee_field_mapping;
+      }
+
       static mapAPIResponseToFormGroup(exportSettings: NetSuiteExportSettingGet | null): FormGroup {
         return new FormGroup({
           expenseState: new FormControl(exportSettings?.expense_group_settings?.expense_state),
-          employeeFieldMapping: new FormControl(exportSettings?.configuration?.employee_field_mapping ? exportSettings?.configuration?.employee_field_mapping : null),
+          employeeFieldMapping: new FormControl(exportSettings?.configuration?.employee_field_mapping ? this.getEmployeeFieldMapping(exportSettings?.configuration?.employee_field_mapping) : EmployeeFieldMapping.VENDOR),
           autoMapEmployees: new FormControl(exportSettings?.configuration?.auto_map_employees),
           reimbursableExpense: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object ? true : false),
           reimbursableExportType: new FormControl(exportSettings?.configuration?.reimbursable_expenses_object),
