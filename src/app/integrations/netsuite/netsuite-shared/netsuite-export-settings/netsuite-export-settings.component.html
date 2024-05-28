@@ -197,7 +197,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="(!exportSettingForm.value.reimbursableExportType || brandingConfig.brandId === 'co') && helperService.isFieldRequired(exportSettingForm, 'bankAccount') && brandingConfig.brandId === 'co'">
+                        <div *ngIf="(!exportSettingForm.value.reimbursableExportType || brandingConfig.brandId === 'co') && helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="bankAccounts"
