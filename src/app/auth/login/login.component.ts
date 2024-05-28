@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  readonly isINCluster = this.storageService.get('cluster-domain').includes('in1');
+  readonly isINCluster = this.storageService.get('cluster-domain')?.includes('in1');
 
   readonly exposeApps = !this.isINCluster ? exposeAppConfig[brandingConfig.brandId][brandingConfig.envId] : exposeAppConfig[brandingConfig.brandId]['production-1-in'];
 
@@ -72,17 +72,17 @@ export class LoginComponent implements OnInit {
         };
         this.userService.storeUserProfile(user);
 
-        if (this.exposeApps.QBD) {
+        if (this.exposeApps?.QBD) {
           this.helperService.setBaseApiURL(AppUrl.QBD);
           this.qbdAuthService.qbdLogin(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
 
-        if (this.exposeApps.SAGE300) {
+        if (this.exposeApps?.SAGE300) {
           this.helperService.setBaseApiURL(AppUrl.SAGE300);
           this.sage300AuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
 
-        if (this.exposeApps.BUSINESS_CENTRAL) {
+        if (this.exposeApps?.BUSINESS_CENTRAL) {
           this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
           this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
         }
@@ -90,19 +90,19 @@ export class LoginComponent implements OnInit {
         // Only local dev needs this, login happens via postMessage for prod/staging through webapp
         if (!environment.production) {
           this.userService.storeUserProfile(user);
-          if (this.exposeApps.QBO) {
+          if (this.exposeApps?.QBO) {
             this.helperService.setBaseApiURL(AppUrl.QBO);
             this.qboAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
-          if (this.exposeApps.INTACCT) {
+          if (this.exposeApps?.INTACCT) {
             this.helperService.setBaseApiURL(AppUrl.INTACCT);
             this.siAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
-          if (this.exposeApps.NETSUITE) {
+          if (this.exposeApps?.NETSUITE) {
             this.helperService.setBaseApiURL(AppUrl.NETSUITE);
             this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
-          if (this.exposeApps.XERO) {
+          if (this.exposeApps?.XERO) {
             this.helperService.setBaseApiURL(AppUrl.XERO);
             this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
           }
