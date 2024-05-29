@@ -27,7 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     Sage300SharedModule,
     Sage300OnboardingRoutingModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     Sage300OnboardingExportSettingsComponent,
