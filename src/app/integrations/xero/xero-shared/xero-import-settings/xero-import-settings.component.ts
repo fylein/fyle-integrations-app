@@ -212,12 +212,12 @@ export class XeroImportSettingsComponent implements OnInit {
     if (brandingConfig.brandId === 'co') {
       const formArray = this.importSettingsForm.get('expenseFields') as FormArray;
       const index = formArray.value.findIndex((data:any) => data.destination_field === XeroFyleField.CUSTOMER);
-      formArray.controls.at(index)?.get('import_to_fyle')?.valueChanges.subscribe((isCustomerImportEnabled) => {
+      formArray.controls[index]?.get('import_to_fyle')?.valueChanges.subscribe((isCustomerImportEnabled) => {
         if (isCustomerImportEnabled) {
-          formArray.controls.at(index)?.get('source_field')?.patchValue(XeroFyleField.PROJECT);
+          formArray.controls[index]?.get('source_field')?.patchValue(XeroFyleField.PROJECT);
           this.importSettingsForm.controls.importCustomers.patchValue(true);
         } else {
-          formArray.controls.at(index)?.get('source_field')?.patchValue('DISABLED_XERO_SOURCE_FIELD');
+          formArray.controls[index]?.get('source_field')?.patchValue('DISABLED_XERO_SOURCE_FIELD');
           this.importSettingsForm.controls.importCustomers.patchValue(false);
         }
       });
