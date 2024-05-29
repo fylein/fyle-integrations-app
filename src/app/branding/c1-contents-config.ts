@@ -6,7 +6,7 @@ export const brandingConfig: BrandingConfiguration = config as BrandingConfigura
 export const c1Contents = {
     netsuite: {
         landing: {
-            contentText: 'Import chart of accounts and projects from NetSuite and export expenses from your expense management account.',
+            contentText: 'Import chart of accounts and projects from NetSuite and export expenses from your Expense Management account.',
             guideHeaderText: 'How to setup your integration'
         },
         configuration: {
@@ -14,12 +14,12 @@ export const c1Contents = {
                 configurationHeaderText: 'Connect to NetSuite subsidary',
                 configurationSubHeaderText: 'Expenses will be posted to the NetSuite subsidary selected here. You can\'t change the subsidary once they\'re configured.',
                 stepName: 'Connect to NetSuite',
-                subLabel: 'Provide your credentials to establish a secure connection between your expense management and NetSuite account'
+                subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and NetSuite account'
             },
             exportSetting: {
                 stepName: 'Export settings',
                 headerText: ' Export Corporate Card Expenses',
-                contentText: 'Configure how and when expenses from expense management can be exported to NetSuite.',
+                contentText: 'Configure how and when expenses from Expense Management can be exported to NetSuite.',
                 corporateCard: {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
                     cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
@@ -27,7 +27,7 @@ export const c1Contents = {
                     expenseState: '',
                     creditCardExpenseSubLabel: 'Choose the type of NetSuite transaction to export your expenses.',
                     cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
-                    creditCardExpenseStateLabel: 'How should expenses be labeled  before exporting from expense management?',
+                    creditCardExpenseStateLabel: 'How should expenses be labeled  before exporting from Expense Management?',
                     creditCardExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
                     defaultCCCAccountLabel: 'Set default credit card account as',
                     defaultCCCAccountPlaceholder: 'Select default credit card account',
@@ -42,9 +42,9 @@ export const c1Contents = {
             importSetting: {
                 stepName: 'Import settings',
                 headerText: '',
-                contentText: 'Choose the required import fields from NetSuite to expense management.',
+                contentText: 'Choose the required import fields from NetSuite to Expense Management.',
                 importCategoriesLabel: ' as categories',
-                importCategoriesSubLabel: ' will be available as categories in expense management.',
+                importCategoriesSubLabel: ' will be available as categories in Expense Management.',
                 importCustomersLabel: 'Import customers from NetSuite',
                 importCustomersSubLabel: 'The customers in NetSuite will be imported as projects in ' + brandingConfig.brandName + ' and will be a selectable field while creating an expense',
                 taxCodeLabel: 'Import tax from NetSuite',
@@ -56,7 +56,7 @@ export const c1Contents = {
                 toggleToastMessage: 'You have already mapped a tracking category from NetSuite to the project field in '+ brandingConfig.brandName +'. Change the configured mapping to a new field to be able to import customers in the project field.',
                 importVendorsAsMerchantsLabel: 'Import vendors from NetSuite',
                 importNetsuiteEmployeesLabel: 'Import NetSuite employee as employee in ' + brandingConfig.brandName,
-                importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in expense management.',
+                importNetsuiteEmployeesSubLabel: 'Imported NetSuite employee will be available as employee in Expense Management.',
                 customSegmentHeader: 'Add custom segment/list/record',
                 importProjectsLabel: 'Import projects from NetSuite',
                 importItemsLabel: 'Import items from NetSuite'
@@ -79,9 +79,9 @@ export const c1Contents = {
                 defaultPaymentAccount: 'Select payment bank account',
                 memoStructureLabel: 'Set the line-item description field in NetSuite',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in NetSuite. ',
-                customizationSubLabel: 'Customize the data that you\'d like to export from expense management to NetSuite by choosing which data points need to be exported.',
+                customizationSubLabel: 'Customize the data that you\'d like to export from Expense Management to NetSuite by choosing which data points need to be exported.',
                 automationSubLabel: 'Automate exports and data syncs.',
-                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to NetSuite.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from Expense Management to NetSuite.',
                 frequencySubLabel: 'Set how often your expenses will be exported to NetSuite.',
                 preferenceLabel: 'Other preferences',
                 preferenceSubLabel: 'Create new records in NetSuite if no vendor record is found or the accounting period is closed.',
@@ -107,20 +107,20 @@ export const c1Contents = {
                 headerText: 'Export corporate card expenses',
                 contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to Xero.',
                 corporateCard: {
-                    cccExpenseBankAccountSubLabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective bank accounts in Xero will post to this bank account.',
+                    cccExpenseBankAccountSubLabel: 'Expenses of corporate cards in Expense Management that aren\'t mapped to their respective bank accounts in Xero will post to this bank account.',
                     creditCardExportTypeSubLabel: 'Choose how transactions are exported to Xero.',
                     expenseState: '',
                     creditCardExpenseSubLabel: '',
                     cccExpenseBankAccountLabel: 'Which bank account should the bank transactions post to?',
                     cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed. '
                 },
-                stepSubLabel: 'Configure how and when expenses from expense management can be exported to Xero.',
-                cccExpenseStateLabel: 'How should expenses be labeled before exporting from expense management?'
+                stepSubLabel: 'Configure how and when expenses from Expense Management can be exported to Xero.',
+                cccExpenseStateLabel: 'How should expenses be labeled before exporting from Expense Management?'
             },
             importSetting: {
                 stepName: 'Import Settings',
                 headerText: '',
-                contentText: 'Choose the required import fields from Xero to expense management.',
+                contentText: 'Choose the required import fields from Xero to Expense Management.',
                 importCategoriesLabel: 'Import the chart of accounts as categories.',
                 importCategoriesSubLabel: 'Imported accounts will be available as categories in ' + brandingConfig.brandName + '.',
                 importCustomersLabel: 'Import customers from Xero',
@@ -149,7 +149,7 @@ export const c1Contents = {
                 frequencySubLabel: 'Set how often your expenses will be exported to Xero.',
                 contentText: 'Customize the integration based on your accounting requirements.',
                 automationSubLabel: 'Automate exports and data syncs.',
-                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to Xero.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from Expense Management to Xero.',
                 accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
                 autoCreateVendorsSubLabel: 'Automatically create a new contact in Xero if an added merchant doesn\'t have a corresponding match.',
                 customPreferencesLabel: 'Other preferences',
@@ -159,7 +159,7 @@ export const c1Contents = {
     },
     intacct: {
         landing: {
-            contentText: 'Import GL accounts and projects from Sage Intacct and export expenses from your expense management account.',
+            contentText: 'Import GL accounts and projects from Sage Intacct and export expenses from your Expense Management account.',
             guideHeaderText: 'How to setup your integration'
         },
         common: {
@@ -184,7 +184,7 @@ export const c1Contents = {
         configuration: {
             connector: {
                 stepName: 'Connect to Sage Intacct',
-                subLabel: 'Provide your credentials to establish a secure connection between your expense management and Sage Intacct account. ',
+                subLabel: 'Provide your credentials to establish a secure connection between your Expense Management and Sage Intacct account. ',
                 locationSubLabel: 'Expenses will be posted to the Sage Intacct location entity selected here. You can\'t change the location entity once they\'re configured.'
             },
             exportSetting: {
@@ -198,7 +198,7 @@ export const c1Contents = {
                     creditCardVendorSublabel: 'The vendor configured here will be added to all the credit card expenses exported as bills.',
                     chargeCard: 'Set the default charge card',
                     chargeCardPlaceholder: 'Select a charge card',
-                    chargeCardSublabel: 'Expenses of corporate cards in expense management that aren\'t mapped to their respective cards in Sage Intacct will post to this card. You can still map cards after configuring the integration.',
+                    chargeCardSublabel: 'Expenses of corporate cards in Expense Management that aren\'t mapped to their respective cards in Sage Intacct will post to this card. You can still map cards after configuring the integration.',
                     cccExpenseState: 'You can choose to only export expenses when they\'ve been labeled approved or closed. ',
                     cccExportGroup: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                     employeeFieldMapping: 'How are your employees represented in Sage Intacct?',
@@ -227,10 +227,10 @@ export const c1Contents = {
                 contentText: 'Customize the integration based on your accounting requirements.',
                 automationSubLabel: 'Automate exports and data syncs.',
                 frequencySubLabel: 'Set how often your expenses will be exported to Sage Intacct.',
-                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to Sage Intacct.',
+                scheduleSubLabel: 'Set up a schedule to automate the export of expenses from Expense Management to Sage Intacct.',
                 accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period.',
                 memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in Sage Intacct.',
-                customizeSectionSubLabel: 'Customize the data that you\'d like to export from expense management to Sage Intacct by choosing which data points need to be exported.'
+                customizeSectionSubLabel: 'Customize the data that you\'d like to export from Expense Management to Sage Intacct by choosing which data points need to be exported.'
             },
             done: {
                 ctaText: '',
@@ -248,7 +248,7 @@ export const c1Contents = {
         exportSetting: {
             stepName: 'Export settings',
             headerText: 'Export corporate card expenses',
-            contentText: 'Configure how and when expenses from expense management can be exported to QuickBooks Online.',
+            contentText: 'Configure how and when expenses from Expense Management can be exported to QuickBooks Online.',
             corporateCard: {
                 expenseState: 'Select ccc expense state',
                 sectionLabel: '',
@@ -266,18 +266,18 @@ export const c1Contents = {
                 creditCardExportGroupSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
                 journalOptionLabel: 'Name in journal entry',
                 journalOptionSubLabel: 'You can select either the \'merchant name\' or the \'employee name\' to appear in the \'name\' field of your journal entries.',
-                creditCardExpenseLabel: 'How should expenses be labeled  before exporting from expense management?',
+                creditCardExpenseLabel: 'How should expenses be labeled  before exporting from Expense Management?',
                 creditCardExportTypeSubLabel: 'Choose how transactions are exported to QuickBooks Online.'
             }
         },
         importSetting: {
             stepName: 'Import settings',
             headerText: '',
-            contentText: 'Choose the required import fields from QuickBooks Online to expense management.',
+            contentText: 'Choose the required import fields from QuickBooks Online to Expense Management.',
             importCategoriesLabel: 'Import the chart of accounts as categories',
-            importCategoriesSubLabel: 'Imported accounts will be available as categories in expense management.',
+            importCategoriesSubLabel: 'Imported accounts will be available as categories in Expense Management.',
             importItemsLabel: 'Import products/services from QuickBooks Online',
-            importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in expense management.',
+            importItemsSubLabel: 'Products/services from QuickBooks Online will be imported as categories in Expense Management.',
             taxCodeLabel: 'Import tax from QuickBooks Online',
             taxCodeSubLabel: 'The imported tax codes from QuickBooks Online will be set as tax group in ',
             defaultTaxCodeLabel: 'Select default tax code',
@@ -298,14 +298,14 @@ export const c1Contents = {
             billPaymentAccountSubLabel: ', the payment entries will be posted to the selected payment account in ',
             memoStructureLabel: 'Set the line-item description field in QuickBooks Online',
             automationSubLabel: 'Automate exports and data syncs.',
-            scheduleSubLabel: 'Set up a schedule to automate the export of expenses from expense management to QuickBooks Online.',
+            scheduleSubLabel: 'Set up a schedule to automate the export of expenses from Expense Management to QuickBooks Online.',
             frequencySubLabel: 'Set how often your expenses will be exported to QuickBooks Online.',
             otherPreferencesLabel: 'Other preferences',
             otherPreferencesSubLabel: 'Create new records in QuickBooks Online if no vendor record is found or the accounting period is closed.',
             accountingPeriodLabel: 'Post entries in the current open accounting period.',
             accountingPeriodSubLabel: 'If the accounting period is closed, the expenses will be exported with a date stamp for the first day of the current open accounting period',
             autoCreateMerchantsAsVendorsSubLabel: 'Automatically create a new vendor in QuickBooks Online if an added merchant doesn\'t have a corresponding match.',
-            customizeSectionSubLAbel: 'Customize the data that you\'d like to export from expense management to QuickBooks Online by choosing which data points need to be exported.',
+            customizeSectionSubLAbel: 'Customize the data that you\'d like to export from Expense Management to QuickBooks Online by choosing which data points need to be exported.',
             memoStructureSubLabel: 'Choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.',
             previewDescriptionFieldLabel: 'Preview of the description field'
         },
@@ -349,7 +349,7 @@ export const c1Contents = {
         mappingToastText: 'Mapping saved successfully.'
     },
     landing: {
-        contentText: 'Import GL accounts and projects from QuickBooks Online and export expenses from your expense management account.',
+        contentText: 'Import GL accounts and projects from QuickBooks Online and export expenses from your Expense Management account.',
         guideHeaderText: 'How to setup your integration'
     },
     common: {
