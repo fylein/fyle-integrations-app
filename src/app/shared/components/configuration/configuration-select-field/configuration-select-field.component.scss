@@ -67,15 +67,10 @@
 }
 
 .selected-item-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
+    @apply tw-flex tw-content-center tw-justify-between tw-w-full #{!important};
+}
   
   .selected-item-text {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+    @apply tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis #{!important};
+}
   
