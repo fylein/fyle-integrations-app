@@ -51,22 +51,25 @@
                         'selectedItem': form.controls[formControllerName].value,
                         'filterDropdown': !form.controls[formControllerName].value,
                         'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
-                    }" [disabled]="isDisabled"
-                    >
+                    }" [disabled]="isDisabled">
+                    
                     <ng-template let-option pTemplate="item">
                         <div #textElement
                             [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                             [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
-                            {{ brandingConfig.brandId ==='co' ? (option.label| sentenceCase) : (option.label)}}
+                            {{ brandingConfig.brandId === 'co' ? (option.label | sentenceCase) : (option.label)}}
                         </div>
                     </ng-template>
+                    
                     <ng-template pTemplate="selectedItem" let-item>
-                        <span>
-                            {{ brandingConfig.brandId ==='co' ? (item.label| sentenceCase) : (item.label)}}
-                        </span>
-                        <app-svg-icon  *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                {{ brandingConfig.brandId === 'co' ? (item.label | sentenceCase) : (item.label)}}
+                            </span>
+                            <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                        </div>
                     </ng-template>
-                </p-dropdown>
+                </p-dropdown>                
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="tw-text-link-primary !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">Preview</a>
                         <span *ngIf="brandingConfig.brandId !== 'co'"> how it looks on {{appName}}</span>
