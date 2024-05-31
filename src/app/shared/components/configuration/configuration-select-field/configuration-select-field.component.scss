@@ -65,3 +65,17 @@
 :host ::ng-deep .p-disabled {
     @apply tw-text-input-read-only-text tw-bg-select-disabled-bg tw-border-select-disabled-border tw-border-solid tw-opacity-100 #{!important};
 }
+
+.selected-item-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .selected-item-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

@@ -62,13 +62,13 @@
                     </ng-template>
                     
                     <ng-template pTemplate="selectedItem" let-item>
-                        <div style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
-                            <span style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <div class="selected-item-container">
+                            <span class="selected-item-text">
                                 {{ brandingConfig.brandId === 'co' ? (item.label | sentenceCase) : (item.label)}}
                             </span>
                             <app-svg-icon *ngIf="showClearIcon && !isDisabled" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(form.controls[formControllerName])" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                         </div>
-                    </ng-template>
+                    </ng-template>                    
                 </p-dropdown>                
                     <div *ngIf="showExportPreview && form.controls[formControllerName].value" class="sub-text tw-text-pretty tw-pt-3-px">
                         <a class="tw-text-link-primary !tw-cursor-pointer" (click)="showExportPreviewDialog(form.controls[formControllerName].value)">Preview</a>
