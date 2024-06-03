@@ -184,12 +184,8 @@ p {
     @apply tw-p-0 #{!important};
 }
 
-.p-dialog .p-dialog-header .p-dialog-header-icon:enabled:hover {
-    background: none !important;
-}
-
-.p-dialog .p-dialog-header .p-dialog-header-icon:focus {
-    @apply tw-shadow-none #{!important};
+.p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:hover {
+    @apply tw-bg-none tw-text-placeholder tw-shadow-none #{!important};
 }
 
 // Input text
@@ -286,7 +282,7 @@ p {
 
 // Dropdown
 .p-dropdown {
-    @apply tw-h-40-px lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] tw-border-select-default-border tw-py-8-px tw-px-12-px tw-rounded-4-px #{!important};
+    @apply tw-h-40-px lg:tw-w-300-px md:tw-w-260-px tw-scale-[1] tw-border tw-border-select-default-border tw-py-8-px tw-px-12-px tw-rounded-4-px #{!important};
 }
 
 .p-dropdown:disabled {
@@ -311,16 +307,15 @@ p {
     @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-rounded-4-px #{!important};
 }
 
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
-    @apply tw-text-mandatory-field-color tw-bg-dd-menu-item-hover-bg tw-rounded-none #{!important};
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-focus, .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-focus:hover {
+    @apply tw-text-mandatory-field-color tw-bg-dd-menu-item-hover-bg tw-rounded-none tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px #{!important};
 }
 
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled):hover {
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-focus):not(.p-disabled):hover {
     @apply tw-bg-dd-menu-item-hover-bg tw-text-slightly-normal-text-color tw-rounded-none #{!important};
 }
 
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item,
-.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
     @apply tw-min-h-dropdown-option-height tw-flex tw-items-center tw-py-8-px tw-pl-14-px tw-text-14-px tw-rounded-none #{!important};
 }
 

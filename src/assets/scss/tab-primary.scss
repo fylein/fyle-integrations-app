@@ -7,7 +7,7 @@
 }
 
 :host ::ng-deep .p-tabmenu-nav .p-menuitem-text:hover {
-    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-16-px tw-border-nav-tabs-hover-bg tw-border-solid tw-border-b-2-px;
+    @apply tw-text-nav-link-text tw-text-14-px tw-font-nav-link-font-weight tw-pb-16-px tw-border-nav-tabs-hover-bg tw-border-solid;
 }
 
 :host ::ng-deep .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-text {
