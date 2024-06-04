@@ -98,12 +98,20 @@ export class BusinessCentralAdvancedSettingsComponent implements OnInit {
     this.helper.handleSkipExportFormInAdvancedSettingsUpdates(this.skipExportForm, formWatcher, this.advancedSettingForm);
   }
 
+  onMultiSelectChange() {
+    const memo = this.advancedSettingForm.controls.memoStructure.value;
+    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoOptions)[1];
+    this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
+  }
+
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSettingForm.value.memoStructure;
-    this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    const memo = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    this.memoPreviewText = memo[0];
+    this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
       this.memoStructure = memoChanges;
-      this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+      this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions)[0];
     });
   }
 

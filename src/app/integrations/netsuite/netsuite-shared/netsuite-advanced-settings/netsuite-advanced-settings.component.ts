@@ -194,11 +194,19 @@ export class NetsuiteAdvancedSettingsComponent implements OnInit {
     return this.workspaceGeneralSettings.reimbursable_expenses_object && this.workspaceGeneralSettings.reimbursable_expenses_object !== NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY;
   }
 
+  onMultiSelectChange() {
+    const memo = this.advancedSettingForm.controls.memoStructure.value;
+    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoOptions)[1];
+    this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
+  }
+
   private createMemoStructureWatcher(): void {
     this.memoStructure = this.advancedSetting.configuration.memo_structure;
-    this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    const memo: [string, string[]] = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    this.memoPreviewText = memo[0];
+    this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
-       this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoOptions);
+      this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
     });
   }
 
