@@ -126,7 +126,8 @@
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"
                     [placeholder]="'Set description'"
-                    [formControllerName]="'memoStructure'">
+                    [formControllerName]="'memoStructure'"
+                    (changeInMultiSelect)="onMultiSelectChange()">
                 </app-configuration-multi-select>
                 <div class="preview-text">
                     <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{brandingContent.previewDescriptionFieldLabel}}</h4>
