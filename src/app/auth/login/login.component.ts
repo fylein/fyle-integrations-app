@@ -15,6 +15,8 @@ import { ClusterDomainWithToken } from 'src/app/core/models/misc/token.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { NetsuiteAuthService } from 'src/app/core/services/netsuite/netsuite-core/netsuite-auth.service';
 import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.service';
+import { exposeAppConfig } from 'src/app/branding/expose-app-config';
+import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +24,12 @@ import { XeroAuthService } from 'src/app/core/services/xero/xero-core/xero-auth.
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  readonly brandingConfig = brandingConfig;
+
+  readonly isINCluster = this.storageService.get('cluster-domain')?.includes('in1');
+
+  readonly exposeApps = !this.isINCluster ? exposeAppConfig[brandingConfig.brandId][brandingConfig.envId] : exposeAppConfig[brandingConfig.brandId]['production-1-in'];
 
   constructor(
     private authService: AuthService,
@@ -64,26 +72,40 @@ export class LoginComponent implements OnInit {
         };
         this.userService.storeUserProfile(user);
 
-        this.helperService.setBaseApiURL(AppUrl.QBD);
-        this.qbdAuthService.qbdLogin(clusterDomainWithToken.tokens.refresh_token).subscribe();
+        if (this.exposeApps?.QBD) {
+          this.helperService.setBaseApiURL(AppUrl.QBD);
+          this.qbdAuthService.qbdLogin(clusterDomainWithToken.tokens.refresh_token).subscribe();
+        }
 
-        this.helperService.setBaseApiURL(AppUrl.SAGE300);
-        this.sage300AuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+        if (this.exposeApps?.SAGE300) {
+          this.helperService.setBaseApiURL(AppUrl.SAGE300);
+          this.sage300AuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+        }
 
-        this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
-        this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+        if (this.exposeApps?.BUSINESS_CENTRAL) {
+          this.helperService.setBaseApiURL(AppUrl.BUSINESS_CENTRAL);
+          this.businessCentralAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+        }
 
         // Only local dev needs this, login happens via postMessage for prod/staging through webapp
         if (!environment.production) {
           this.userService.storeUserProfile(user);
-          this.helperService.setBaseApiURL(AppUrl.QBO);
-          this.qboAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
-          this.helperService.setBaseApiURL(AppUrl.INTACCT);
-          this.siAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
-          this.helperService.setBaseApiURL(AppUrl.NETSUITE);
-          this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
-          this.helperService.setBaseApiURL(AppUrl.XERO);
-          this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          if (this.exposeApps?.QBO) {
+            this.helperService.setBaseApiURL(AppUrl.QBO);
+            this.qboAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          }
+          if (this.exposeApps?.INTACCT) {
+            this.helperService.setBaseApiURL(AppUrl.INTACCT);
+            this.siAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          }
+          if (this.exposeApps?.NETSUITE) {
+            this.helperService.setBaseApiURL(AppUrl.NETSUITE);
+            this.netsuiteAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          }
+          if (this.exposeApps?.XERO) {
+            this.helperService.setBaseApiURL(AppUrl.XERO);
+            this.xeroAuthService.loginWithRefreshToken(clusterDomainWithToken.tokens.refresh_token).subscribe();
+          }
           this.redirect(redirectUri);
         } else {
           this.redirect(redirectUri);

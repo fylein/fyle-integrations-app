@@ -36,6 +36,6 @@ jobs:
         id: notify
         with:
           # Send message to #integrations slack channel
-          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_INTEGRATIONS_OAUTH_ACCESS_TOKEN }}
           slack-channel: C074E8V8EL8
           slack-text: "${{env.message}} \nCheck diff here: https://github.com/fylein/fyle-integrations-app/compare/${{env.last_release_branch}}...${{env.release_branch}}"

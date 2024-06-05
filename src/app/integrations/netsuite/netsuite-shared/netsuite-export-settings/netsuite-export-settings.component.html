@@ -182,6 +182,36 @@
                             </app-configuration-select-field>
                         </div>
 
+                        <div *ngIf="(!exportSettingForm.value.reimbursableExportType || brandingConfig.brandId === 'co') && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
+                            <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [destinationAttributes]="accountsPayables"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Vendor Payables Account'"
+                            [label]="brandingContent.corporateCard.accountsPayableLabel"
+                            [subLabel]="'Post all your company corporate card transactions to a default vendor payables account.'"
+                            [placeholder]="'Select vendor payable account'"
+                            [formControllerName]="'accountsPayable'">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="(!exportSettingForm.value.reimbursableExportType || brandingConfig.brandId === 'co') && helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
+                            <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [destinationAttributes]="bankAccounts"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Employee Payables Account'"
+                            [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
+                            [subLabel]="'Post all your company corporate card transactions to a default employee payables account.'"
+                            [placeholder]="'select a employee payables account'"
+                            [formControllerName]="'bankAccount'">
+                            </app-configuration-select-field>
+                        </div>
+
                         <div *ngIf="exportSettingForm.value.creditCardExportType && helperService.isFieldRequired(exportSettingForm, 'creditCardAccount')">
                             <app-configuration-select-field
                             [form]="exportSettingForm"

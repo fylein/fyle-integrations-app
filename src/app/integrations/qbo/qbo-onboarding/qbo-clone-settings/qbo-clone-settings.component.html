@@ -495,7 +495,8 @@
                         [iconPath]="'list'"
                         [placeholder]="'Set description'"
                         [formControllerName]="'memoStructure'"
-                        [isCloneSettingView]="true">
+                        [isCloneSettingView]="true"
+                        (changeInMultiSelect)="onMultiSelectChange()">
                     </app-configuration-multi-select>
                 </div>
                 <div class="clone-setting--dependent-field tw-text-14-px tw-font-400 tw-text-text-muted !tw-pl-40-px">
