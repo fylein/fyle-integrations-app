@@ -433,7 +433,7 @@ p {
 }
 
 .p-checkbox .p-checkbox-box.p-highlight {
-    @apply tw-bg-checkbox-icon-selected-color tw-border-none tw-pb-checkbox-marked-icon-spacing #{!important};
+    @apply tw-bg-checkbox-icon-selected-color tw-border-none #{!important};
 }
 
 .pi-check:before {
