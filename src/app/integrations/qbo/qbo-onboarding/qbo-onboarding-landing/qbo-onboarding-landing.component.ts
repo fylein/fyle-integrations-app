@@ -70,7 +70,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
         this.isIncorrectQBOConnectedDialogVisible = true;
       } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
         this.router.navigate([`/integrations/qbo/onboarding/landing`]);
       }
     });
