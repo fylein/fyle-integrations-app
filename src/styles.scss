@@ -412,6 +412,10 @@ p {
     @apply tw-h-16-px tw-w-16-px tw-rounded-5-px tw-transition-none tw-border-[1.5px] tw-border-checkbox-icon-color #{!important};
 }
 
+.p-checkbox .p-checkbox-box .p-icon {
+    @apply tw-w-[9px] #{!important};
+}
+
 .p-checkbox-box {
     @apply tw-border-[1.5px] #{!important};
 }
@@ -437,7 +441,7 @@ p {
 }
 
 .pi-check:before {
-    @apply tw-font-700 tw-text-9-px #{!important};
+    @apply tw-font-700 tw-text-9-px tw-w-[9-px] tw-h-14-px #{!important};
 }
 
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
