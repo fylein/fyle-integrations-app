@@ -43,7 +43,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Category" disabled>
             </div>
             <div class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importCategories"></p-inputSwitch>
+                <app-toggle [form]="importSettingsForm" [formControllerName]="'importCategories'"></app-toggle>
             </div>
         </div>
         <div class="tw-flex tw-pt-18-px">
@@ -57,7 +57,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Merchant" disabled>
             </span>
             <span class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importVendorAsMerchant"></p-inputSwitch>
+                <app-toggle [form]="importSettingsForm" [formControllerName]="'importVendorAsMerchant'"></app-toggle>
             </span>
         </div>
         <div class="tw-flex tw-pt-18-px" *ngIf="isImportTaxVisible">
@@ -71,7 +71,7 @@
                 <input type="text" class="tw-text-14-px tw-text-slightly-normal-text-color !tw-font-500 tw-w-300-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-separator tw-rounded-4-px" value="Tax Group" disabled>
             </span>
             <span class="input-toggle-section tw-w-10-vw">
-                <p-inputSwitch formControlName="importTaxCodes"></p-inputSwitch>
+                <app-toggle [form]="importSettingsForm" [formControllerName]="'importTaxCodes'"></app-toggle>
             </span>
         </div>
         <div class="tw-flex tw-pl-48-px tw-pt-18-px" *ngIf="importSettingsForm.value?.importTaxCodes && isImportTaxVisible">
@@ -136,7 +136,9 @@
                                 {{brandingConfig.brandName}} Fields should be unique
                                 </p>
                             </div>
-                        <p-inputSwitch (onChange)="showWarningForDependentFields($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (iclick)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="tw-pl-32-px input-toggle-section"></p-inputSwitch>
+                            <div class="tw-pl-32-px input-toggle-section">
+                                <app-toggle [form]="importSettingsForm" [formControllerName]="'import_to_fyle'" [toolTipText]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (toggleChange)="showWarningForDependentFields($event, expenseField)" (toggleClick)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)"></app-toggle>
+                            </div>                            
                     </div>
                     <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field === 'PROJECT' && expenseField.value.destination_field === 'PROJECT' && expenseField.value.import_to_fyle" [formGroup]="importSettingsForm">
                         <div class="tw-flex">
@@ -162,7 +164,7 @@
                                     </div>
                                 </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                            <app-toggle [form]="importSettingsForm" class="tw-pl-32-px input-toggle-section" [formControllerName]="'dependentFieldImportToggle'" [isDisabled]="true"></app-toggle>
                         </div>
                         <div class="tw-flex tw-pt-4" *ngIf="importSettingsForm.value.isDependentImportEnabled">
                             <div>
@@ -180,7 +182,7 @@
                                         {{ option.display_name }}                                    </div>
                                   </ng-template>
                             </p-dropdown>
-                            <p-inputSwitch class="tw-pl-32-px input-toggle-section" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                            <app-toggle [form]="importSettingsForm" class="tw-pl-32-px input-toggle-section" [formControllerName]="'dependentFieldImportToggle'" [isDisabled]="true"></app-toggle>
                         </div>
                     </div>                      
                 </div>
