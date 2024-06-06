@@ -1,3 +1,74 @@
-:host ::ng-deep .p-multiselect-label {
-    @apply tw-z-1 tw-w-270-px #{!important};
+.p-multiselect {
+    @apply tw-h-40-px tw-flex tw-items-center lg:tw-w-300-px md:tw-w-260-px tw-border tw-border-solid tw-border-select-default-border tw-rounded-4-px #{!important};
+
+    &.p-focus:not(.p-disabled) {
+        @apply tw-shadow-none tw-border-select-focused-border #{!important};
+    }
+
+    &.p-focus {
+        @apply tw-shadow-none #{!important};
+    }
+
+    .p-multiselect-trigger {
+        @apply tw-w-12-px #{!important};
+    }
+
+    .p-multiselect-label {
+        @apply tw-text-select-focused-text tw-text-14-px tw-p-0 tw-z-1 tw-w-270-px #{!important};
+
+        &.p-placeholder {
+            @apply tw-text-select-focused-placeholder-text #{!important};
+        }
+    }
+
+    .p-multiselect-close {
+        @apply tw-hidden #{!important};
+    }
+
+    .p-multiselect-panel {
+        @apply tw-w-300-px;
+
+        .p-multiselect-header {
+            @apply tw-border-none tw-p-0 #{!important};
+
+            .p-checkbox {
+                @apply tw-hidden;
+            }
+        }
+
+        .p-multiselect-items {
+            @apply tw-p-0 #{!important};
+
+            .p-multiselect-item {
+                @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-px-12-px tw-py-6-px #{!important};
+
+                .p-checkbox {
+                    @apply tw-mb-0 #{!important};
+                }
+
+                &.p-highlight {
+                    @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-bg-white tw-rounded-4-px #{!important};
+                }
+
+                &:not(.p-highlight):not(.p-disabled):hover,
+                &:focus,
+                &:hover {
+                    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg #{!important};
+                }
+
+                &:hover {
+                    @apply tw-shadow-none tw-bg-dd-menu-item-hover-bg tw-rounded-none #{!important};
+                }
+            }
+
+            .p-multiselect-empty-message {
+                @apply tw-py-24-px tw-flex tw-justify-center tw-text-slightly-normal-text-color tw-text-14-px tw-italic #{!important};
+            }
+        }
+    }
+    
+    .p-multiselect-filter-container {
+        @apply tw-hidden;
+    }
 }
+

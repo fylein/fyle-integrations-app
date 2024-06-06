@@ -9,48 +9,12 @@
         </div>
     </div>
     <div class="tw-pl-34-px">
-        <p-multiSelect [options]="emails" styleClass="tw-z-1 tw-py-8-px tw-px-12-px" [formControlName]="formControllerName" [defaultLabel]="placeholder" optionLabel="email" class="tw-text-sub-text-color"
-	    display="chip" [filter]="true" [filterBy]="'email,name'" [ngClass]="[form.controls[formControllerName].invalid && form.controls[formControllerName].touched ? 'error-box' : 'normal-box']">
-            <ng-template let-value pTemplate="selectedItems">
-                <div *ngIf="selectedEmail"
-                    class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
-                    <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px">{{ selectedEmail }}</p>
-                    <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
-                    <app-svg-icon (iconClick)="removeEmail()" [svgSource]="'cross-small'" [width]="'12px'" [height]="'12px'"
-                        [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"></app-svg-icon>
-                </div>
-                <div *ngIf="selectedEmail && form.value.email.length > 1" class="tw-pl-8-px">
-                    <p class="tw-flex tw-justify-center tw-items-center tw-p-5-px tw-h-24-px tw-w-24-px tw-bg-input-read-only-bg tw-text-12-px tw-text-text-muted tw-rounded-12-px">
-                        +{{ form.value.email.length - 1 }}
-                    </p>
-                </div>
-                <div *ngIf="!selectedEmail" class="tw-text-placeholder">
-                    Select Email Address
-                </div>
-            </ng-template>
-            <ng-template pTemplate="filter" let-options="options">
-                <div *ngIf="emails.length" class="p-inputgroup tw-p-6-px">
-                    <div class="p-input-icon-left">
-                        <i>
-                            <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
-                        </i>
-                        <input type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px" (keyup)="options.filter($event)" pInputText placeholder="Search by Name / Email" formControlName="search"/>
-                    </div>
-                </div>
-            </ng-template>
-            <ng-template let-user pTemplate="item">
-                <div>
-                    <span class="tw-text-sub-text-color tw-text-14-px">
-                        <span #textElement 
-                        [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                        [pTooltip]="isOverflowing(textElement) ? user.name : null" tooltipPosition="top">
-                        {{ user.name }}
-                        </span>
-                    </span>
-                    <p class="tw-pt-4-px tw-text-text-muted tw-text-12-px">{{ user.email }}</p>
-                </div>
-            </ng-template>
-        </p-multiSelect>
+        <app-multi-select
+            [form]="form" [formControllerName]="formControllerName"
+            [options]="emails" [optionLabel]="'email'" [displayAs]="'chip'"
+            [filterBy]="'email,name'" [isFilter]="true" [selectedValue]="selectedEmail"
+            [placeholder]="'Select Email Address'" (removeItem)="removeEmail()">
+        </app-multi-select>
         <div>
             <app-mandatory-error-message *ngIf="isFieldMandatory && form.controls[formControllerName].touched && !form.controls[formControllerName].valid && !form.controls[formControllerName].disabled" [listName]="mandatoryErrorListName" [customErrorMessage]="customErrorMessage"></app-mandatory-error-message>
         </div>
