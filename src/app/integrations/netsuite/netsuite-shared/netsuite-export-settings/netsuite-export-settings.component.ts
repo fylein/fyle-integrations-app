@@ -8,7 +8,7 @@ import { ExportSettingModel } from 'src/app/core/models/common/export-settings.m
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -124,6 +124,17 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     this.netsuiteHelperServie.refreshNetsuiteDimensions().subscribe();
   }
 
+  reimbursableExpenseGroupingWatcher() {
+    if (this.exportSettingForm.controls.reimbursableExportGroup.value === ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+      this.reimbursableExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.filter((date) => date.value !== ExportDateType.SPENT_AT);
+    }
+    this.exportSettingForm.controls.reimbursableExportGroup.valueChanges.subscribe((expenseGroup) => {
+      if (expenseGroup === ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+        this.reimbursableExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.filter((date) => date.value !== ExportDateType.SPENT_AT);
+      }
+    });
+  }
+
   private reimbursableExportTypeWatcher(): void {
     this.exportSettingForm.controls.reimbursableExportType.valueChanges.subscribe((isreimbursableExportTypeSelected) => {
       if (isreimbursableExportTypeSelected === NetsuiteReimbursableExpensesObject.JOURNAL_ENTRY) {
@@ -140,6 +151,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       const [exportSettingValidatorRule, exportModuleRule] = NetSuiteExportSettingModel.getValidators();
       this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY);
     });
+    this.reimbursableExpenseGroupingWatcher();
   }
 
   private cccExportTypeWatcher(): void {
