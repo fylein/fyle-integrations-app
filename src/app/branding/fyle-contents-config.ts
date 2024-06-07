@@ -19,7 +19,7 @@ export const fyleContents = {
             exportSetting: {
                 stepName: 'Export Settings',
                 headerText: ' Export Corporate Card Expenses',
-                contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' can be exported to Netsuite',
+                contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' can be exported to NetSuite',
                 corporateCard: {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
                     cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
