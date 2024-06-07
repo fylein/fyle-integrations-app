@@ -243,7 +243,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   private setupCustomDateOptionWatchers(): void {
     if (brandingConfig.brandId === 'fyle') {
       this.reimbursableExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(this.exportSettingForm.controls.reimbursableExportGroup?.value, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
-      
       if (this.exportSettingForm.value.creditCardExportType && this.exportSettingForm.value.creditCardExportType !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
         this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(this.exportSettingForm.controls.creditCardExportGroup?.value, NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions());
       }
@@ -255,7 +254,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId === 'fyle') {
-        const reimbursableExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions()
+        const reimbursableExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
         this.reimbursableExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(reimbursableExportGroup, reimbursableExpenseGroupingDateOptions);
       }
     });
@@ -266,7 +265,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
 
     this.exportSettingForm.controls.creditCardExportGroup?.valueChanges.subscribe((creditCardExportGroup) => {
-      
       if (brandingConfig.brandId==='fyle' && this.exportSettingForm.value.creditCardExportType && this.exportSettingForm.value.creditCardExportType !== NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE) {
         const cccExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
         this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDate(creditCardExportGroup, cccExpenseGroupingDateOptions);
