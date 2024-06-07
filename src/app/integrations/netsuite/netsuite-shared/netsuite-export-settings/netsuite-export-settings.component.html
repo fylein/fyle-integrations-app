@@ -54,7 +54,7 @@
                                 [mandatoryErrorListName]="'Employee Payables Account'"
                                 [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
                                 [subLabel]="'Post all your company corporate card transactions to a default employee payables account.'"
-                                [placeholder]="'select a employee payables account'"
+                                [placeholder]="'Select a Employee Payables Account'"
                                 [formControllerName]="'bankAccount'">
                                 </app-configuration-select-field>
                             </div>
@@ -69,7 +69,7 @@
                                 [mandatoryErrorListName]="'Vendor Payables Account'"
                                 [label]="brandingContent.corporateCard.accountsPayableLabel"
                                 [subLabel]="'Post all your company corporate card transactions to a default vendor payables account.'"
-                                [placeholder]="'Select vendor payable account'"
+                                [placeholder]="'Select Vendor Payable Account'"
                                 [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
                             </div>
@@ -192,7 +192,7 @@
                             [mandatoryErrorListName]="'Vendor Payables Account'"
                             [label]="brandingContent.corporateCard.accountsPayableLabel"
                             [subLabel]="'Post all your company corporate card transactions to a default vendor payables account.'"
-                            [placeholder]="'Select vendor payable account'"
+                            [placeholder]="helperService.sentenseCaseConversion('Select Vendor Payable Account')"
                             [formControllerName]="'accountsPayable'">
                             </app-configuration-select-field>
                         </div>
@@ -207,7 +207,7 @@
                             [mandatoryErrorListName]="'Employee Payables Account'"
                             [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
                             [subLabel]="'Post all your company corporate card transactions to a default employee payables account.'"
-                            [placeholder]="'select a employee payables account'"
+                            [placeholder]="helperService.sentenseCaseConversion('Select a Employee Payables Account')"
                             [formControllerName]="'bankAccount'">
                             </app-configuration-select-field>
                         </div>
