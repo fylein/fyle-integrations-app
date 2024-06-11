@@ -38,9 +38,6 @@
                         <img src="assets/logos/netsuite-logo.png" width="120px" height="60px" />
                         <span class="landing--accounting-app-name">
                             NetSuite
-                            <div *ngIf="brandingConfig.brandId !== 'co'" class="landing--accounting-app-open">
-                                <app-svg-icon [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"></app-svg-icon>
-                            </div>
                         </span>
                     </div>
                     <div *ngIf="exposeApps.QBD" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.QBD)">
