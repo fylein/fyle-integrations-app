@@ -75,7 +75,10 @@ export class MappingService {
         CREDIT_CARD_ACCOUNT: [],
         ACCOUNTS_PAYABLE: [],
         TAX_CODE: [],
-        COMPANY: []
+        COMPANY: [],
+        Location: [],
+        Department: [],
+        Class: []
       });
     }));
   }
