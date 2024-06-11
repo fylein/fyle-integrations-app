@@ -57,6 +57,30 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "port1": {
+              "fileReplacements": [
+                {
+                  "replace": "src/app/branding/config.json",
+                  "with": "src/app/branding/fyle-config.json"
+                },
+                {
+                  "replace": "src/environments/environment.json",
+                  "with": "src/environments/fyle-environment.json"
+                }
+              ]
+            },
+            "port2": {
+              "fileReplacements": [
+                {
+                  "replace": "src/app/branding/config.json",
+                  "with": "src/app/branding/c1-config.json"
+                },
+                {
+                  "replace": "src/environments/environment.json",
+                  "with": "src/environments/c1-environment.json"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -69,6 +93,14 @@
             },
             "development": {
               "browserTarget": "fyle-integrations-app:build:development"
+            },
+            "port1": {
+              "browserTarget": "fyle-integrations-app:build:port1",
+              "port": 4201
+            },
+            "port2": {
+              "browserTarget": "fyle-integrations-app:build:port2",
+              "port": 4202
             }
           },
           "defaultConfiguration": "development"
