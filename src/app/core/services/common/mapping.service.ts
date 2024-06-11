@@ -76,9 +76,9 @@ export class MappingService {
         ACCOUNTS_PAYABLE: [],
         TAX_CODE: [],
         COMPANY: [],
-        Location: [],
-        Department: [],
-        Class: []
+        LOCATION: [],
+        DEPARTMENT: [],
+        CLASS: []
       });
     }));
   }
