@@ -8,7 +8,8 @@ import { IntacctCategoryDestination, ConfigurationCta, IntacctOnboardingState, I
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
-import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, IntacctDependentImportFields, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -60,11 +61,15 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   showDialog: boolean;
 
-  customField: ExpenseField;
+  customField: any;
 
   customFieldControl: AbstractControl;
 
   private sessionStartTime = new Date();
+
+  costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+
+  costCategoryOption = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
 
   customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
 
@@ -76,6 +81,23 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   supportArticleLink: string = brandingKbArticles.onboardingArticles.INTACCT.IMPORT_SETTING;
 
+  readonly dependentImportFields: IntacctDependentImportFields[] = [
+    {
+      source_field: 'Cost Codes',
+      options: this.costCodeFieldOption,
+      formController: 'costCodes',
+      isDisabled: false
+    },
+    {
+      source_field: 'Cost Types',
+      options: this.costCategoryOption,
+      formController: 'costTypes',
+      isDisabled: false
+    }
+  ];
+
+  customFieldType: string;
+
   constructor(
     private router: Router,
     private mappingService: SiMappingsService,
@@ -85,7 +107,8 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private storageService: StorageService,
-    private workspaceService: SiWorkspaceService
+    private workspaceService: SiWorkspaceService,
+    private helper: HelperService
   ) { }
 
   get expenseFieldsGetter() {
@@ -149,6 +172,84 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
   }
 
   saveCustomField() {
+    if (this.customFieldType?.length > 0 && this.customFieldForm.value) {
+      this.saveDependentCustomField();
+    } else {
+      this.saveFyleExpenseField();
+    }
+  }
+
+  private dependentCostFieldsWatchers(formControllerName: string): void {
+    this.importSettingsForm.controls[formControllerName].valueChanges.subscribe((value) => {
+      if (value?.attribute_type === 'custom_field') {
+        this.addCustomField();
+        this.customFieldType = formControllerName;
+        this.customFieldControl = this.importSettingsForm.controls[formControllerName];
+        if (value.source_field === 'custom_field') {
+          this.importSettingsForm.controls[formControllerName].patchValue({
+            source_field: null
+          });
+        }
+      } else if (value) {
+        this.dependentImportFields.forEach((fields, index) => {
+          if (fields.formController === formControllerName) {
+            this.dependentImportFields[index].isDisabled = true;
+          }
+        });
+      }
+    });
+  }
+
+  private dependentFieldWatchers(): void {
+    if (this.importSettingsForm.value.isDependentImportEnabled) {
+      this.helper.disableFormField(this.importSettingsForm, 'costCodes');
+      this.helper.disableFormField(this.importSettingsForm, 'costTypes');
+    }
+
+    this.importSettingsForm.controls.isDependentImportEnabled.valueChanges.subscribe((isDependentImportEnabled) => {
+      if (isDependentImportEnabled) {
+        this.helper.enableFormField(this.importSettingsForm, 'costCodes');
+        this.helper.enableFormField(this.importSettingsForm, 'costTypes');
+        this.helper.markControllerAsRequired(this.importSettingsForm, 'costCodes');
+        this.helper.markControllerAsRequired(this.importSettingsForm, 'costTypes');
+        this.dependentImportFields[0].isDisabled = false;
+        this.dependentImportFields[1].isDisabled = false;
+      } else {
+        this.helper.disableFormField(this.importSettingsForm, 'costCodes');
+        this.helper.disableFormField(this.importSettingsForm, 'costTypes');
+        this.helper.clearValidatorAndResetValue(this.importSettingsForm, 'costCodes');
+        this.helper.clearValidatorAndResetValue(this.importSettingsForm, 'costTypes');
+        this.dependentImportFields[0].isDisabled = true;
+        this.dependentImportFields[1].isDisabled = true;
+      }
+    });
+
+    this.dependentCostFieldsWatchers('costCodes');
+    this.dependentCostFieldsWatchers('costTypes');
+  }
+
+  saveDependentCustomField(): void {
+    this.customField = {
+      attribute_type: this.customFieldForm.value.attribute_type,
+      display_name: this.customFieldForm.value.attribute_type,
+      source_placeholder: this.customFieldForm.value.source_placeholder,
+      is_dependent: true,
+      is_custom: true
+    };
+    if (this.customFieldControl) {
+      if (this.customFieldType === 'costCodes') {
+        this.costCodeFieldOption.push(this.customField);
+      } else {
+        this.costCategoryOption.push(this.customField);
+      }
+      this.importSettingsForm.controls[this.customFieldType].patchValue(this.customField);
+      this.customFieldForm.reset();
+      this.showDialog = false;
+    }
+    this.customFieldControl.disable();
+  }
+
+  saveFyleExpenseField() {
     this.customField = {
       attribute_type: this.customFieldForm.value.attribute_type.split(' ').join('_').toUpperCase(),
       display_name: this.customFieldForm.value.attribute_type,
@@ -291,6 +392,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     });
 
     this.importSettingWatcher();
+    this.dependentFieldWatchers();
     this.isLoading = false;
   }
 

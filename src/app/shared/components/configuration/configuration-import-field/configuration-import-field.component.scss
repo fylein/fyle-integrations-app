@@ -107,8 +107,12 @@
   @apply tw-absolute tw-top-0 tw-left-0 tw-h-18-px tw-w-18-px tw-bg-white tw-rounded-md tw-border tw-border-box-color
 }
 
-.container input:checked ~ .checkmark {
+.fyle .container input:checked ~ .checkmark {
   @apply tw-bg-faded-text-color
+}
+
+.co .container input:checked ~ .checkmark {
+  @apply tw-bg-mandatory-field-color
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
