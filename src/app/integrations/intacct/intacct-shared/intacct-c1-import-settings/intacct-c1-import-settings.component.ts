@@ -400,20 +400,40 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     return expenseFieldFormArray;
   }
 
+  dependentFieldFormValue(fieldName: string, placeholder: string, formfield: string): ExpenseField {
+    const fieldValue = {
+      attribute_type: fieldName,
+      display_name: fieldName,
+      source_placeholder: placeholder,
+      is_dependent: true,
+      is_custom: true
+    }
+
+    if (formfield === 'costCodes') {
+      this.costCodeFieldOption.pop();
+      this.costCodeFieldOption.push(fieldValue);
+    } else {
+      this.costCategoryOption.pop();
+      this.costCategoryOption.push(fieldValue);
+    }
+
+    return fieldValue;
+  }
+
   private initializeForm(importSettings: ImportSettingGet): void {
     this.importSettingsForm = this.formBuilder.group({
       importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
       importCategories: [importSettings.configurations.import_categories || null],
-      importTaxCodes: [false],
-      costCodes: [null],
+      importTaxCodes: [importSettings.configurations.import_tax_codes || false],
+      costCodes: [importSettings.dependent_field_settings.cost_code_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder, 'costCodes') : null],
       dependentFieldImportToggle: [false],
       workspaceId: this.storageService.get('workspaceId'),
-      costTypes: [null],
-      isDependentImportEnabled: [false],
-      sageIntacctTaxCodes: [null],
+      costTypes: [importSettings.dependent_field_settings.cost_type_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder, 'costTypes') : null],
+      isDependentImportEnabled: [importSettings.dependent_field_settings.is_import_enabled || false],
+      sageIntacctTaxCodes: [importSettings.general_mappings.default_tax_code.id || null],
       expenseFields: this.formBuilder.array(this.constructFormArray())
     });
-
+    console.log(this.importSettingsForm)
     this.importSettingWatcher();
     this.dependentFieldWatchers();
     this.isLoading = false;
