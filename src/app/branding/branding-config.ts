@@ -185,11 +185,11 @@ const kbArticles: KbArticle = {
             QBD: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle#quickbooks-desktop`,
             QBO: `${brandingConfig.helpArticleDomain}/en/articles/9054778-configure-capital-one-quickbooks-online-integration`,
             INTACCT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`,
-            NETSUITE: `${brandingConfig.helpArticleDomain}/en/articles/4424242-fyle-netsuite-integration`,
+            NETSUITE: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration`,
             TRAVELPERK: `${brandingConfig.helpArticleDomain}/en/articles/7549535-how-are-travelperk-invoices-created-as-expenses-in-fyle`,
             SAGE300: `${brandingConfig.helpArticleDomain}/en/articles/8948413-how-to-set-up-the-fyle-sage-300-cre-integration`,
             BUSINESS_CENTRAL: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`,
-            XERO: `${brandingConfig.helpArticleDomain}/en/collections/215867-integrations-with-fyle`
+            XERO: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration`
         },
         onboardingArticles: {
             INTACCT: {
@@ -201,10 +201,10 @@ const kbArticles: KbArticle = {
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
             },
             NETSUITE: {
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
-                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
-                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
-                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/8394683-how-to-configure-the-fyle-sage-intacct-integration#h_85f929716c`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_a4c1a46107`,
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_cca32ec1be`,
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/een/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_c18c533ca1`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_b394546a8c`,
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/7882821-how-to-skip-exporting-specific-expenses-from-fyle-to-sage-intacct`
             },
             SAGE300: {
@@ -239,12 +239,12 @@ const kbArticles: KbArticle = {
             },
             // TODO
             XERO: {
-                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration`,
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_e3ade308dc`,
+                LANDING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_9b4570099f`,
                 EMPLOYEE_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6208620-how-to-set-up-the-fyle-xero-integration-v2-0#h_d70f1d54cc`,
-                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_ad07470d98`,
-                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_04d289fd42`,
-                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/6721333-how-to-set-up-the-fyle-xero-integration#h_d95b791edd`
+                EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_0f42f8bf02`,
+                IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_19858cad25`,
+                ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9361876-set-up-the-expense-management-xero-integration#h_dab5b9668c`
             }
         }
     }
@@ -263,7 +263,7 @@ const demoVideoLinks: DemoVideo = {
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
-            NETSUITE: 'https://www.youtube.com/embed/IplJd7tGWBk'
+            NETSUITE: 'https://www.youtube.com/embed/wQXQYTLsVH8'
         }
     },
     co: {
