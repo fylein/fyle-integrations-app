@@ -263,7 +263,7 @@ const demoVideoLinks: DemoVideo = {
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
-            NETSUITE: 'https://www.youtube.com/embed/IplJd7tGWBk'
+            NETSUITE: 'https://www.youtube.com/embed/wQXQYTLsVH8'
         }
     },
     co: {
