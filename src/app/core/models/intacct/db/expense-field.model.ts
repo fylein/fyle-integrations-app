@@ -3,6 +3,7 @@ export type ExpenseField = {
     display_name: string;
     source_placeholder: string | null;
     is_dependent: boolean;
+    is_custom?: boolean;
   };
 
   export type ExpenseFieldFormArray = {
