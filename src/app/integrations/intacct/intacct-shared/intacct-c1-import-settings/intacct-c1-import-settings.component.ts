@@ -407,7 +407,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       source_placeholder: placeholder,
       is_dependent: true,
       is_custom: true
-    }
+    };
 
     if (formfield === 'costCodes') {
       this.costCodeFieldOption.pop();
@@ -433,7 +433,7 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       sageIntacctTaxCodes: [importSettings.general_mappings.default_tax_code.id || null],
       expenseFields: this.formBuilder.array(this.constructFormArray())
     });
-    console.log(this.importSettingsForm)
+
     this.importSettingWatcher();
     this.dependentFieldWatchers();
     this.isLoading = false;
