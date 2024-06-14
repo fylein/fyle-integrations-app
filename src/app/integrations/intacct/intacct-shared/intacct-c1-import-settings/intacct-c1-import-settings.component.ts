@@ -425,11 +425,11 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
       importVendorAsMerchant: [importSettings.configurations.import_vendors_as_merchants || null],
       importCategories: [importSettings.configurations.import_categories || null],
       importTaxCodes: [importSettings.configurations.import_tax_codes || false],
-      costCodes: [importSettings.dependent_field_settings.cost_code_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder, 'costCodes') : null],
+      costCodes: [importSettings.dependent_field_settings?.cost_code_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder, 'costCodes') : null],
       dependentFieldImportToggle: [false],
       workspaceId: this.storageService.get('workspaceId'),
-      costTypes: [importSettings.dependent_field_settings.cost_type_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder, 'costTypes') : null],
-      isDependentImportEnabled: [importSettings.dependent_field_settings.is_import_enabled || false],
+      costTypes: [importSettings.dependent_field_settings?.cost_type_field_name ? this.dependentFieldFormValue(importSettings.dependent_field_settings.cost_type_field_name, importSettings.dependent_field_settings.cost_type_placeholder, 'costTypes') : null],
+      isDependentImportEnabled: [importSettings.dependent_field_settings?.is_import_enabled || false],
       sageIntacctTaxCodes: [importSettings.general_mappings.default_tax_code.id || null],
       expenseFields: this.formBuilder.array(this.constructFormArray())
     });

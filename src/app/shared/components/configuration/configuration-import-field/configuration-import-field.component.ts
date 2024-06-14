@@ -65,7 +65,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   @Output() xeroProjectMapping:EventEmitter<boolean> = new EventEmitter();
 
   constructor(
-    public windowService: WindowService
+    public windowService: WindowService,
+    public helper: HelperService
   ) { }
 
   get expenseFieldsGetter() {
