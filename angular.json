@@ -58,7 +58,7 @@
               "sourceMap": true,
               "namedChunks": true
             },
-            "fylePort": {
+            "fyleport": {
               "fileReplacements": [
                 {
                   "replace": "src/app/branding/config.json",
@@ -70,7 +70,7 @@
                 }
               ]
             },
-            "c1Port": {
+            "c1port": {
               "fileReplacements": [
                 {
                   "replace": "src/app/branding/config.json",
@@ -94,12 +94,12 @@
             "development": {
               "browserTarget": "fyle-integrations-app:build:development"
             },
-            "port1": {
-              "browserTarget": "fyle-integrations-app:build:port1",
+            "fyleport": {
+              "browserTarget": "fyle-integrations-app:build:fyleport",
               "port": 4201
             },
-            "port2": {
-              "browserTarget": "fyle-integrations-app:build:port2",
+            "c1port": {
+              "browserTarget": "fyle-integrations-app:build:c1port",
               "port": 4202
             }
           },
