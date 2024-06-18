@@ -58,7 +58,7 @@
               "sourceMap": true,
               "namedChunks": true
             },
-            "port1": {
+            "fylePort": {
               "fileReplacements": [
                 {
                   "replace": "src/app/branding/config.json",
@@ -70,7 +70,7 @@
                 }
               ]
             },
-            "port2": {
+            "c1Port": {
               "fileReplacements": [
                 {
                   "replace": "src/app/branding/config.json",
