@@ -172,6 +172,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.form.controls.isDependentImportEnabled.setValue(true);
   }
 
 }
