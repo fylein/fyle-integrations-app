@@ -89,8 +89,8 @@ export class QboEmployeeSettingsComponent implements OnInit {
   }
 
   acceptWarning(data: ConfigurationWarningOut): void {
+    this.isConfirmationDialogVisible = false;
     if (data.hasAccepted) {
-      this.isConfirmationDialogVisible = false;
       this.constructPayloadAndSave();
     }
   }

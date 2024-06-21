@@ -85,6 +85,7 @@ p {
 }
 
 .pi-chevron-down.fyle {
+    padding-left: 10px !important;
     content: url('./assets/icons/arrow-down.svg') !important;
 }
 
@@ -385,7 +386,7 @@ p {
 }
 
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
-    @apply tw-min-h-dropdown-option-height tw-py-6-px tw-px-12-px #{!important};
+    @apply tw-min-h-dropdown-option-height tw-py-8-px tw-pr-12-px tw-pl-14-px #{!important};
 }
 
 .p-dropdown .p-dropdown-label.p-placeholder {
@@ -413,7 +414,7 @@ p {
 }
 
 .p-checkbox .p-checkbox-box .p-icon {
-    @apply tw-w-[9px] #{!important};
+    @apply tw-w-[9px] tw-text-white #{!important};
 }
 
 .p-checkbox-box {
@@ -670,7 +671,7 @@ p {
 }
 
 .p-chips .p-chips-multiple-container:not(.p-disabled) {
-    @apply tw-border-select-default-border #{!important};
+    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px #{!important};
 }
 
 .p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
