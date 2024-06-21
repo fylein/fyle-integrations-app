@@ -37,7 +37,6 @@ export class Sage300MappingComponent implements OnInit {
     this.isLoading = true;
     this.mappingService.getMappingSettings().subscribe((response) => {
       if (response.results && Array.isArray(response.results)) {
-        console.table(response.results);
         response.results.forEach((item) => {
           if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY' && item.source_field !== 'PROJECT') {
             this.mappingPages.push({
