@@ -33,7 +33,8 @@ const featureConfigs: FeatureConfiguration = {
                 importNetsuiteEmployees: true,
                 importItems: true,
                 importProjects: true,
-                allowCustomSegment: true
+                allowCustomSegment: true,
+                dependentField: true
             },
             advancedSettings: {
                 autoCreateVendors: true,
@@ -79,7 +80,8 @@ const featureConfigs: FeatureConfiguration = {
                 importNetsuiteEmployees: true,
                 importItems: true,
                 importProjects: true,
-                allowCustomSegment: false
+                allowCustomSegment: false,
+                dependentField: true
             },
             advancedSettings: {
                 autoCreateVendors: false,
@@ -106,6 +108,10 @@ const featureConfigs: FeatureConfiguration = {
 };
 
 // @ts-ignore
+if (brandingConfig.brandId === 'co' && brandingConfig.envId !== 'c1-qa') {
+    const feature =  featureConfigs[brandingConfig.brandId];
+    feature.featureFlags.importSettings.dependentField = false;
+}
 export const brandingFeatureConfig = featureConfigs[brandingConfig.brandId];
 
 const kbArticles: KbArticle = {
