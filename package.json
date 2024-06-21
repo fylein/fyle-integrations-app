@@ -15,8 +15,8 @@
     "stop": "kill $(lsof -t -i:4200) || true",
     "storybook": "ng run fyle-integrations-app:storybook",
     "build-storybook": "npm run setup:env && npm run setup:branding && ng run fyle-integrations-app:build-storybook",
-    "start:fyleport": "ng serve --configuration=fyleport",
-    "start:c1port": "ng serve --configuration=c1port"
+    "start:fyle": "ng serve --configuration=fyle",
+    "start:c1": "ng serve --configuration=c1"
   },
   "private": true,
   "dependencies": {

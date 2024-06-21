@@ -52,25 +52,25 @@ Follow instructions mentioned in [Integrations Central](https://github.com/fylei
 * Run app in Fyle theme
 
     ```bash
-    npm run start:fyleport
+    npm run start:fyle
     ```
 
     or
 
     ```bash
-    ng serve --configuration=fyleport
+    ng serve --configuration=fyle
     ```
 
 * Run app in Capital One theme
 
     ```bash
-    npm run start:c1port
+    npm run start:c1
     ```
 
     or
 
     ```bash
-    ng serve --configuration=c1port
+    ng serve --configuration=c1
     ```
 
 * Run unit test 
