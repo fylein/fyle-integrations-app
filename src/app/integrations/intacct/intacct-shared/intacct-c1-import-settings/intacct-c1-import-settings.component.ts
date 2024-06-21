@@ -170,6 +170,8 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
             source_placeholder: control.value.source_placeholder
           });
           this.importSettingsForm.controls.isDependentImportEnabled.setValue(true);
+          this.importSettingsForm.controls.costCodes.disable();
+          this.importSettingsForm.controls.costTypes.disable();
         }
       });
     }
@@ -261,8 +263,10 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
     };
     if (this.customFieldControl) {
       if (this.customFieldType === 'costCodes') {
+        this.costCodeFieldOption.pop();
         this.costCodeFieldOption.push(this.customField);
       } else {
+        this.costCategoryOption.pop();
         this.costCategoryOption.push(this.customField);
       }
       this.importSettingsForm.controls[this.customFieldType].patchValue(this.customField);

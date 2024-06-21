@@ -527,13 +527,15 @@ export class IntacctImportSettingsComponent implements OnInit {
             source_placeholder: control.value.source_placeholder
           });
           this.importSettingsForm.controls.isDependentImportEnabled.setValue(true);
+          this.importSettingsForm.controls.costCodes.disable();
+          this.importSettingsForm.controls.costTypes.disable();
         }
       });
     }
   }
 
   showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
-    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
+    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costTypeFieldOption[0].attribute_type !== 'custom_field') {
       this.showDependentFieldWarning = true;
     }
   }
