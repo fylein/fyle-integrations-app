@@ -35,8 +35,21 @@ export class Sage300MappingComponent implements OnInit {
 
   private setupPage(): void {
     this.isLoading = true;
-    this.router.navigateByUrl(this.mappingPages[0].routerLink);
-    this.isLoading = false;
+    this.mappingService.getMappingSettings().subscribe((response) => {
+      if (response.results && Array.isArray(response.results)) {
+        console.table(response.results);
+        response.results.forEach((item) => {
+          if (item.source_field!==FyleField.EMPLOYEE && item.source_field!=='CATEGORY' && item.source_field !== 'PROJECT') {
+            this.mappingPages.push({
+              label: new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(item.source_field)),
+              routerLink: `/integrations/sage300/main/mapping/${encodeURIComponent(item.source_field.toLowerCase())}`
+            });
+          }
+        });
+      }
+      this.router.navigateByUrl(this.mappingPages[0].routerLink);
+      this.isLoading = false;
+    });
   }
 
   ngOnInit(): void {
