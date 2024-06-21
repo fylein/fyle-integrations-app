@@ -16,6 +16,9 @@ Please refer this link to find the [storybook](https://fylein.github.io/fyle-int
 Follow instructions mentioned in [Integrations Central](https://github.com/fylein/fyle-integrations-central/)
 
 ### Setup - 2
+* Run the `integrations-settings-api` service following instructions from [Integrations Central](https://github.com/fylein/fyle-integrations-central/)
+
+
 * Install dependencies
 
     ```bash
