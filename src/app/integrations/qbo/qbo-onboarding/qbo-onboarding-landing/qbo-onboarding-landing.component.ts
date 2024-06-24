@@ -29,6 +29,8 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 
   isIncorrectQBOConnectedDialogVisible: boolean = false;
 
+  qboConnectionInProgress = false;
+
   private oauthCallbackSubscription: Subscription;
 
   readonly brandingContent = brandingContent.landing;
@@ -49,6 +51,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
   }
 
   connectQbo(): void {
+    this.qboConnectionInProgress = true;
     const url = `${environment.qbo_authorize_uri}?client_id=${environment.qbo_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.qbo_oauth_redirect_uri}&state=qbo_local_redirect`;
 
     this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
@@ -87,6 +90,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
       }
     };
 
+    this.qboConnectionInProgress = false;
     if (onboardingState !== QBOOnboardingState.COMPLETE) {
       this.qboConnectionInProgress = false;
       this.router.navigate(['integrations/qbo/onboarding/connector'], navigationExtras);
