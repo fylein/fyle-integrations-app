@@ -103,7 +103,7 @@
             </div>
             <div class="tw-pt-26-px" *ngIf="expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex">
-                    <label class="container cursor-default tw-pl-24-px tw-text-14-px">Import Cost Code and Cost Type from {{appName}} as dependent fields
+                    <label [ngClass]="appName === AppName.SAGE300 ? 'cursor-default' : ''" class="container tw-pl-24-px tw-text-14-px">Import Cost Code and Cost Type from {{appName}} as dependent fields
                         <a *ngIf="appName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-inline-flex tw-items-center"
                             (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
                             Read More
@@ -111,7 +111,7 @@
                                 class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                             </app-svg-icon>
                         </a>
-                        <input type="checkbox" formControlName="isDependentImportEnabled" (click)="false">
+                        <input type="checkbox" formControlName="isDependentImportEnabled" (click)="appName === AppName.SAGE300 ? false : undefined">
                         <span class="checkmark"></span>
                     </label>
                 </div>
