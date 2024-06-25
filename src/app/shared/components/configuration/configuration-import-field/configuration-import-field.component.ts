@@ -126,7 +126,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
 
-    if(selectedValue === 'custom_field') {
+    if (selectedValue === 'custom_field') {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
     }
 
