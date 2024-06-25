@@ -647,7 +647,7 @@ p {
 }
 
 .p-dropdown-filter {
-    @apply tw-pl-40-px tw-pr-12-px tw-py-12-px tw-rounded-4-px tw-border-border-primary #{!important}
+    @apply tw-pl-40-px tw-pr-12-px tw-py-12-px tw-rounded-4-px tw-border tw-border-border-primary #{!important}
 }
 
 .p-inputtext:enabled:focus {
@@ -671,11 +671,11 @@ p {
 }
 
 .p-chips .p-chips-multiple-container:not(.p-disabled) {
-    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px #{!important};
+    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px tw-shadow-none #{!important};
 }
 
 .p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
-    @apply tw-shadow-none #{!important};
+    @apply tw-border tw-border-select-focused-border #{!important};
 }
 
 .preview-text {

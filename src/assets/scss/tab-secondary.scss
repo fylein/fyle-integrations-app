@@ -20,7 +20,7 @@
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight) .p-menuitem-link {
-    @apply tw-border-b-nav-tabs-active-border tw-text-nav-tabs-inactive-text-color tw-bg-nav-tabs-inactive-bg #{!important};
+    @apply tw-border-b-nav-tabs-active-border tw-py-10-px tw-text-nav-tabs-inactive-text-color tw-bg-nav-tabs-inactive-bg #{!important};
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {

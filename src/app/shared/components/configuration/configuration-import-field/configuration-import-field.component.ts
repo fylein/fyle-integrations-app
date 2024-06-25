@@ -126,6 +126,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
 
+    if(selectedValue === 'custom_field') {
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
+    }
+
     if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER && this.appName === AppName.XERO) {
       this.isXeroProjectMapped = true;
       this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -157,6 +161,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
       this.showWarningForDependentFields.emit();
+
     }
   }
 

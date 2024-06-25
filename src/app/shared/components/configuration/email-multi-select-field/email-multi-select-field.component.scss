@@ -48,3 +48,7 @@
 :host ::ng-deep .normal-box, :host ::ng-deep .error-box{
     @apply tw-w-full #{!important};
 }
+
+:host ::ng-deep .p-inputtext {
+    @apply tw-border #{!important};
+}
