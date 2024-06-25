@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
@@ -31,6 +31,8 @@ export class ConfigurationMultiSelectComponent implements OnInit {
 
   @Input() isCloneSettingView: boolean;
 
+  @Output() changeInMultiSelect = new EventEmitter();
+
   currentlyDragging: string | null;
 
   selected: any[];
@@ -42,6 +44,10 @@ export class ConfigurationMultiSelectComponent implements OnInit {
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder
   ) { }
+
+  onMultiSelectChange() {
+    this.changeInMultiSelect.emit();
+  }
 
 //   DragStart(memo: string) {
 //     This.currentlyDragging = memo;

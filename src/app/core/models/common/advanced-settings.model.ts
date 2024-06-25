@@ -69,10 +69,10 @@ export type AdvancedSettingValidatorRule = {
 
 export class AdvancedSettingsModel {
   static getDefaultMemoOptions(): string[] {
-    return ['employee_email', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
+    return ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number', 'expense_link'];
   }
 
-  static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): string {
+  static formatMemoPreview(memoStructure: string[], defaultMemoOptions: string[]): [string, string[]] {
     const time = Date.now();
     const today = new Date(time);
 
@@ -87,19 +87,22 @@ export class AdvancedSettingsModel {
     };
     let memoPreviewText = '';
     const memo: string[] = [];
+    const originMemo: string[] = [];
     memoStructure.forEach((field, index) => {
       if (field in previewValues) {
         const defaultIndex = defaultMemoOptions.indexOf(memoStructure[index]);
         memo[defaultIndex] = previewValues[field];
+        originMemo[defaultIndex] = field;
       }
     });
+    memoStructure = originMemo.filter(item => item.trim() !== '');
     memo.forEach((field, index) => {
       memoPreviewText += field;
       if (index + 1 !== memo.length) {
         memoPreviewText = memoPreviewText + ' - ';
       }
     });
-    return memoPreviewText;
+    return [memoPreviewText, memoStructure];
   }
 
   static filterAdminEmails = (emailToSearch: string[], adminEmails: EmailOption[]) => {

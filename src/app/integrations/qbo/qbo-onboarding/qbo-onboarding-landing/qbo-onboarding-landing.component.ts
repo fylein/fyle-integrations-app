@@ -29,6 +29,8 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
 
   isIncorrectQBOConnectedDialogVisible: boolean = false;
 
+  qboConnectionInProgress = false;
+
   private oauthCallbackSubscription: Subscription;
 
   readonly brandingContent = brandingContent.landing;
@@ -49,6 +51,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
   }
 
   connectQbo(): void {
+    this.qboConnectionInProgress = true;
     const url = `${environment.qbo_authorize_uri}?client_id=${environment.qbo_oauth_client_id}&scope=com.intuit.quickbooks.accounting&response_type=code&redirect_uri=${environment.qbo_oauth_redirect_uri}&state=qbo_local_redirect`;
 
     this.helperService.oauthCallbackUrl.subscribe((callbackURL: string) => {
@@ -64,13 +67,15 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
     const payload: QBOConnectorPost = QBOConnectorModel.constructPayload(code, realmId);
 
     this.qboConnectorService.connectQBO(payload).subscribe((qboCredential: QBOCredential) => {
+      this.qboConnectionInProgress = false;
       this.router.navigate([`/integrations/qbo/main/dashboard`]);
     }, (error) => {
+      this.qboConnectionInProgress = false;
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to QuickBooks Online. Please try again';
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
         this.isIncorrectQBOConnectedDialogVisible = true;
       } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
         this.router.navigate([`/integrations/qbo/onboarding/landing`]);
       }
     });
@@ -86,6 +91,7 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
     };
 
     if (onboardingState !== QBOOnboardingState.COMPLETE) {
+      this.qboConnectionInProgress = false;
       this.router.navigate(['integrations/qbo/onboarding/connector'], navigationExtras);
     } else {
       this.postQboCredentials(code, realmId);
