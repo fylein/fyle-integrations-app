@@ -154,6 +154,13 @@ export class ConfigurationImportFieldComponent implements OnInit {
     this.xeroProjectMapping.emit(this.isXeroProjectMapped);
   }
 
+  onSwitchChanged(event: any, formGroup: AbstractControl): void {
+    this.onShowWarningForDependentFields(event, formGroup);
+    if (event.checked && this.appName === AppName.SAGE300) {
+      this.form.controls.isDependentImportEnabled.setValue(true);
+    }
+  }
+  
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
       this.showWarningForDependentFields.emit();
