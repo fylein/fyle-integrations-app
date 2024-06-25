@@ -125,6 +125,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
+    
+    if ( this.appName === AppName.SAGE300) {
+      this.form.controls.isDependentImportEnabled.setValue(true);
+    }
 
     if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER && this.appName === AppName.XERO) {
       this.isXeroProjectMapped = true;
@@ -160,7 +164,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       this.form.controls.isDependentImportEnabled.setValue(true);
     }
   }
-  
+
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
       this.showWarningForDependentFields.emit();
