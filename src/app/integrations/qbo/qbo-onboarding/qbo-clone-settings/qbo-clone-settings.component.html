@@ -381,7 +381,7 @@
                         [tooltipText]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to QuickBooks Online'">
                     </app-clone-setting-field>
                     <div class="tw-ml-16-px">
-                        <input type="text" class="tw-border-input-read-only-border !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
+                        <input type="text" class="tw-border tw-px-12-px tw-border-input-read-only-border !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-input-read-only-text" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
                     </div>
                 </div>
     
@@ -478,7 +478,7 @@
     
             <div class="clone-setting--field">
                 <div class="tw-flex tw-justify-between">
-                    <div class="tw-flex">
+                    <div class="tw-flex tw-items-center">
                         <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="'list'" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
                         <p class="tw-flex tw-items-center tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
                             Set the Description Field in QuickBooks Online

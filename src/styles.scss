@@ -149,7 +149,7 @@ p {
 }
 
 .p-button.outline-sm {
-    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color #{!important};
+    @apply tw-px-12-px tw-py-8-px tw-text-12-px tw-text-btn-outline-secondary-text-color tw-bg-btn-outline-secondary-bg tw-border-solid tw-border-btn-outline-secondary-border-color tw-border #{!important};
 }
 
 .p-button.danger-outline {
@@ -674,8 +674,12 @@ p {
     @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px tw-shadow-none #{!important};
 }
 
-.p-chips .p-chips-multiple-container:not(.p-disabled).p-focus {
-    @apply tw-border tw-border-select-focused-border #{!important};
+// .p-chips .p-chips-multiple-container:focus {
+//     @apply tw-shadow-none tw-border tw-border-select-focused-border #{!important};
+// }
+
+.input1 .p-focus {
+    @apply tw-shadow-none tw-border tw-border-select-focused-border tw-rounded-8-px #{!important};
 }
 
 .preview-text {
