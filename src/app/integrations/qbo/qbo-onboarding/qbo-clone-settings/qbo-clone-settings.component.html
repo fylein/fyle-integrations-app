@@ -46,7 +46,7 @@
                         <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
                     <div>
-                        <p-inputSwitch formControlName="reimbursableExpense"></p-inputSwitch>
+                        <app-toggle  [form]="exportSettingForm" [formControllerName]="'reimbursableExpense'"></app-toggle>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
                         <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'Enable this to export the Non-Reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any out-of-pocket expenses will not be exported to QuickBooks Online'" [tooltipPosition]="'top'"></app-svg-icon>
                     </div>
                     <div>
-                        <p-inputSwitch formControlName="creditCardExpense"></p-inputSwitch>
+                        <app-toggle [form]="exportSettingForm" [formControllerName]="'creditCardExpense'"></app-toggle>
                     </div>
                 </div>
             </div>

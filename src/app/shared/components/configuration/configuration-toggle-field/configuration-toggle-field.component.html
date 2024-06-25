@@ -22,6 +22,6 @@
       </div>
     </div>
     <div *ngIf="!hideToggle" class="configuration--input-toggle-section">
-      <p-inputSwitch [formControlName]="formControllerName" [disabled]="disabled" [tooltipPosition]="'top'" [pTooltip]="disabled && appName === AppName.XERO ? brandingXeroContent : ''"></p-inputSwitch>
+      <app-toggle [form]="form" [formControllerName]="formControllerName" [isDisabled]="disabled" [toolTipText]="disabled && appName === AppName.XERO ? brandingXeroContent : ''"></app-toggle>
     </div>
   </div>
