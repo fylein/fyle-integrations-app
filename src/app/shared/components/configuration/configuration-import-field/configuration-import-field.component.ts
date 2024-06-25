@@ -172,6 +172,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.appName === AppName.SAGE300) {
+      this.form.controls.isDependentImportEnabled.setValue(true);
+    }
   }
 
 }
