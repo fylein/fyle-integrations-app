@@ -103,7 +103,7 @@
             </div>
             <div class="tw-pt-26-px" [ngClass]="{'tw-pr-24-px tw-pl-[58px]': brandingConfig.brandId === 'co'}" *ngIf="brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex" [ngClass]="{'fyle': brandingConfig.brandId !== 'co', 'co': brandingConfig.brandId === 'co'}">
-                    <label class="container tw-pl-24-px tw-text-14-px">{{helper.sentenseCaseConversion('Import Cost Code and Cost Type from ')}} {{appName}} as dependent fields
+                    <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{helper.sentenseCaseConversion('Import Cost Code and Cost Type from ')}} {{appName}} as dependent fields.
                         <a *ngIf="appName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                             (click)="windowService.openInNewTab(dependantFieldSupportArticleLink)">
                             Read More
@@ -116,20 +116,20 @@
                     </label>
                 </div>
                 <div *ngIf="form.value.isDependentImportEnabled && dependentImportFields">
-                    <div *ngFor="let dependentField of dependentImportFields; index as i" class="tw-flex tw-items-center tw-justify-between tw-pt-4" [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']">
+                    <div *ngFor="let dependentField of dependentImportFields; index as i" class="tw-flex tw-items-center tw-justify-between tw-pt-24-px" [ngClass]="[i ? 'tw-pl-20-px' : 'tw-pl-0-px']">
                         <div class="tw-flex">
                             <div>
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'line'" [width]="'21px'" [height]="'49px'" [styleClasses]="'tw-text-box-color'"></app-svg-icon>
                             </div>
-                            <div class="tw-pl-10-px">
-                                <p class="tw-mb-8-px tw-text-14-px tw-text-sub-text-color !tw-font-400">{{helper.sentenseCaseConversion('Dependent Field')}}<app-mandatory-field></app-mandatory-field> </p>
-                                <input type="text" [ngClass]="[i ? 'tw-w-240-px' : 'tw-w-260-px']" class="tw-text-14-px tw-text-text-secondary !tw-font-500 !tw-h-38-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-input-read-only-border tw-rounded-4-px" value="{{helper.sentenseCaseConversion(dependentField.source_field)}}" disabled>
+                            <div class="tw-pl-8-px">
+                                <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="{'!tw-font-400 tw-text-14-px': brandingConfig.brandId !== 'co', '!tw-font-600 tw-text-12-px': brandingConfig.brandId === 'co'}">{{helper.sentenseCaseConversion('Dependent Field')}}<app-mandatory-field></app-mandatory-field> </p>
+                                <input type="text" [ngClass]="[i ? 'tw-w-240-px' : 'tw-w-260-px']" class="tw-text-14-px tw-text-input-read-only-text !tw-font-500 !tw-h-38-px !tw-px-14-px !tw-py-10-px tw-border tw-border-solid !tw-border-input-read-only-border tw-rounded-4-px" value="{{helper.sentenseCaseConversion(dependentField.source_field)}}" disabled>
                             </div>
                             <div [ngClass]="{'tw-pt-46-px': brandingConfig.brandId !== 'co', 'tw-pt-42-px': brandingConfig.brandId === 'co'}">
                                 <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-text-border-secondary'"></app-svg-icon>
                             </div>
                             <div>
-                                <p class="tw-mb-8-px tw-text-14-px tw-text-sub-text-color !tw-font-400">{{brandingConfig.brandName}} {{brandingConfig.brandId === 'co' ? 'field' : 'Field'}} <app-mandatory-field></app-mandatory-field> </p>
+                                <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="{'!tw-font-400 tw-text-14-px': brandingConfig.brandId !== 'co', '!tw-font-600 tw-text-12-px': brandingConfig.brandId === 'co'}">{{brandingConfig.brandName}} {{brandingConfig.brandId === 'co' ? 'field' : 'Field'}} <app-mandatory-field></app-mandatory-field> </p>
                                 <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select Expense Field')" [disabled]="dependentField.isDisabled" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                                     <ng-template let-option pTemplate="item">
                                         <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
@@ -145,7 +145,7 @@
                         <p-inputSwitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                     </div>
                     <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px">
-                        <label class="container tw-pl-24-px tw-text-14-px">Auto-Export Commitment based on the Cost Code and Cost Category.
+                        <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">Auto-Export Commitment based on the Cost Code and Cost Category.
                             <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
                                 Read More
