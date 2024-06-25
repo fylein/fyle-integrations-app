@@ -111,7 +111,7 @@
                                 class="tw-text-link-primary tw-pl-2-px tw-w-fit">
                             </app-svg-icon>
                         </a>
-                        <input type="checkbox" formControlName="isDependentImportEnabled">
+                        <input type="checkbox" formControlName="isDependentImportEnabled" (click)="appName === AppName.SAGE300 ? false : undefined">
                         <span class="checkmark"></span>
                     </label>
                 </div>
