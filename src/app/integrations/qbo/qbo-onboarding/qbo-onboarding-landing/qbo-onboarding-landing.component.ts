@@ -67,8 +67,10 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
     const payload: QBOConnectorPost = QBOConnectorModel.constructPayload(code, realmId);
 
     this.qboConnectorService.connectQBO(payload).subscribe((qboCredential: QBOCredential) => {
+      this.qboConnectionInProgress = false;
       this.router.navigate([`/integrations/qbo/main/dashboard`]);
     }, (error) => {
+      this.qboConnectionInProgress = false;
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to QuickBooks Online. Please try again';
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
         this.isIncorrectQBOConnectedDialogVisible = true;
@@ -88,8 +90,8 @@ export class QboOnboardingLandingComponent implements OnInit, OnDestroy {
       }
     };
 
-    this.qboConnectionInProgress = false;
     if (onboardingState !== QBOOnboardingState.COMPLETE) {
+      this.qboConnectionInProgress = false;
       this.router.navigate(['integrations/qbo/onboarding/connector'], navigationExtras);
     } else {
       this.postQboCredentials(code, realmId);
