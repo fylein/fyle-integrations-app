@@ -48,6 +48,11 @@ p {
     .p-checkbox .p-checkbox-box .p-icon {
         content: url('./assets/icons/check.svg') !important;
     }
+
+    .p-dialog .p-dialog-header .p-dialog-header-icons .p-button {
+        content: url('./assets/icons/cross-medium.svg') !important;
+        color: var(--icon-muted) !important;
+    }
 }
 
 [data-theme='co'] {
@@ -190,7 +195,7 @@ p {
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:enabled:hover {
-    @apply tw-bg-none tw-text-placeholder tw-shadow-none tw-bg-white #{!important};
+    @apply tw-bg-none tw-text-placeholder tw-shadow-none tw-bg-white tw-p-8-px #{!important};
 }
 
 // Input text
@@ -583,6 +588,10 @@ p {
     @apply tw-p-0 tw-bg-white tw-border-none tw-cursor-pointer tw-transition-none #{!important};
 }
 
+.p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
+    @apply tw-shadow-none #{!important};
+}
+
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):hover .p-calendar .p-inputtext,
 .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight .p-calendar .p-inputtext {
     @apply tw-bg-input-read-only-bg #{!important};
@@ -675,12 +684,12 @@ p {
 }
 
 .p-chips .p-chips-multiple-container:not(.p-disabled) {
-    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px tw-shadow-none #{!important};
+    @apply tw-border tw-border-select-default-border tw-pl-14-px tw-pr-12-px #{!important};
 }
 
-// .p-chips .p-chips-multiple-container:focus {
-//     @apply tw-shadow-none tw-border tw-border-select-focused-border #{!important};
-// }
+.p-inputtext .p-chips-multiple-container:enabled:focus, .p-chips:not(.p-disabled).p-focus .p-chips-multiple-container {
+    @apply tw-shadow-none tw-border tw-border-select-focused-border #{!important};
+}
 
 .input1 .p-focus {
     @apply tw-shadow-none tw-border tw-border-select-focused-border tw-rounded-8-px #{!important};

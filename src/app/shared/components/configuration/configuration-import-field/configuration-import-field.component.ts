@@ -145,9 +145,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   getOptions(expenseField: AbstractControl): FyleField[] {
-    if (expenseField.value.destination_field === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.value.import_to_fyle) {
+    if (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.get('import_to_fyle')?.value) {
       return [{ attribute_type: 'DISABLED_XERO_SOURCE_FIELD', display_name: 'Project', is_dependent: false }];
-    } else if (expenseField.value.source_field === 'CATEGORY') {
+    } else if (expenseField.get('source_field')?.value === 'CATEGORY') {
       return this.fyleFieldOptions.filter(option => option.attribute_type === 'CATEGORY');
     }
 
@@ -188,6 +188,19 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  disableDestinationFields() {
+    this.expenseFieldsGetter.controls.forEach((expenseField) => {
+      const value = expenseField.get('destination_field')?.value;
+      expenseField.get('destination_field')?.disable();
+      expenseField.get('destination_field')?.patchValue(value);
+      if ((expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO)) {
+        expenseField.get('source_field')?.disable();
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    this.disableDestinationFields();
+  }
 
 }

@@ -42,7 +42,8 @@
   :host ::ng-deep .p-chips input:focus {
     // outline: none !important;
     box-shadow: none !important;
-    border-color: inherit !important;
+    // border-color: inherit !important;
+    border: 1px solid inherit !important;
   }
   
   /* Scrollable container */
@@ -50,9 +51,16 @@
     max-height: 80px;
     overflow-y: auto;
     width: 360px !important;
-    height: 40px !important;
+    height: auto !important;
+    min-height: 38px !important;
     padding-top: 2px!important;
     padding-bottom: 2px!important;
+    box-shadow: 1px 1px white;
+  }
+
+  :host ::ng-deep .p-chips-multiple-container:enabled:focus {
+    box-shadow: none;
+    border: 1px solid var(--select-focused-border);
   }
   
   /* Change text color to black */

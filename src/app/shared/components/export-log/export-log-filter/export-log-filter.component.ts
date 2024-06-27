@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { Calendar } from 'primeng/calendar';
 import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
@@ -36,6 +37,8 @@ export class ExportLogFilterComponent implements OnInit {
 
   isSelectionStartDate: boolean = true;
 
+  @ViewChild('calendar') calendar: Calendar;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingContent = brandingContent.exportLog;
@@ -59,6 +62,10 @@ export class ExportLogFilterComponent implements OnInit {
 
   showCalendar(event: Event) {
     this.isCalendarVisible = true;
+    this.calendar.inputfieldViewChild?.nativeElement.focus();
+    setTimeout(() => {
+      this.calendar.showOverlay();
+    }, 0);
     event?.stopPropagation();
   }
 

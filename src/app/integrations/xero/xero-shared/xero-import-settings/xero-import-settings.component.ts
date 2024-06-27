@@ -216,9 +216,16 @@ export class XeroImportSettingsComponent implements OnInit {
         if (isCustomerImportEnabled) {
           formArray.controls[index]?.get('source_field')?.patchValue(XeroFyleField.PROJECT);
           this.importSettingsForm.controls.importCustomers.patchValue(true);
+          this.fyleExpenseFields = this.fyleExpenseFields.filter((field) => field.attribute_type !== XeroFyleField.PROJECT);
         } else {
           formArray.controls[index]?.get('source_field')?.patchValue('DISABLED_XERO_SOURCE_FIELD');
           this.importSettingsForm.controls.importCustomers.patchValue(false);
+          const fyleField = this.fyleExpenseFields.filter((field) => field.attribute_type === XeroFyleField.PROJECT);
+          if (fyleField.length === 0) {
+            this.fyleExpenseFields.pop();
+            this.fyleExpenseFields.push({ attribute_type: XeroFyleField.PROJECT, display_name: 'Project', is_dependent: false });
+            this.fyleExpenseFields.push(this.customFieldOption[0]);
+          }
         }
       });
     } else {
