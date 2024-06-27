@@ -82,13 +82,13 @@ export class IntacctC1ImportSettingsComponent implements OnInit {
 
   readonly dependentImportFields: IntacctDependentImportFields[] = [
     {
-      source_field: 'Cost Codes',
+      source_field: 'Cost Code',
       options: this.costCodeFieldOption,
       formController: 'costCodes',
       isDisabled: false
     },
     {
-      source_field: 'Cost Types',
+      source_field: 'Cost Type',
       options: this.costCategoryOption,
       formController: 'costTypes',
       isDisabled: false
