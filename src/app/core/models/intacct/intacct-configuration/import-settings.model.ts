@@ -2,6 +2,7 @@ import { FormGroup } from "@angular/forms";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { FyleField } from "../../enum/enum.model";
 import { brandingConfig } from "src/app/branding/branding-config";
+import { ImportSettingsCustomFieldRow } from "../../common/import-settings.model";
 
 const emptyDestinationAttribute = { id: null, name: null };
 
@@ -46,6 +47,14 @@ export type ImportSettingPost = {
     mapping_settings: MappingSetting[],
     dependent_field_settings: DependentFieldSetting | null
   }
+
+export type IntacctDependentImportFields = {
+    options: ImportSettingsCustomFieldRow[],
+    source_field: string,
+    formController: string,
+    isDisabled: boolean
+}
+
 export class ImportSettings {
     static constructPayload(importSettingsForm: FormGroup, existingDependentFieldSettings: DependentFieldSetting | null): ImportSettingPost{
         const expenseFieldArray = importSettingsForm.value.expenseFields;

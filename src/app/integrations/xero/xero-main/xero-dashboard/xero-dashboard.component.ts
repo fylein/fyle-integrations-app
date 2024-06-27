@@ -167,7 +167,7 @@ export class XeroDashboardComponent implements OnInit {
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
-        this.pollExportStatus();
+        this.pollExportStatus(this.exportableAccountingExportIds);
       } else {
         this.accountingExportService.importExpensesFromFyle('v1').subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds('v1').subscribe((exportableAccountingExportIds) => {
