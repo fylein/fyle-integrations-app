@@ -39,7 +39,7 @@ const ICON_MAPPING = {
   'gear': 'grv-settings',
   'info-circle-fill-medium': 'c1-info-medium',
   'info-circle-fill': 'c1-info-small',
-  'line': 'line',
+  'line': 'grv-line',
   'link-vertical-medium': 'grv-link-medium',
   'list': 'grv-notes',
   'mapping-medium': 'grv-transfer-medium',
