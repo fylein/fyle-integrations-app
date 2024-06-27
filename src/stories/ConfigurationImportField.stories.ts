@@ -37,7 +37,8 @@ const fixture: QBOImportSettingGet = {
     import_items: true,
     import_vendors_as_merchants: true,
     charts_of_accounts: ['Expense'],
-    import_tax_codes: true
+    import_tax_codes: true,
+    is_tax_override_enabled: true
   },
   general_mappings: {
     default_tax_code: {

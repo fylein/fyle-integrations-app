@@ -15,6 +15,7 @@ export type QBOWorkspaceGeneralSetting = {
   import_vendors_as_merchants: boolean;
   charts_of_accounts: string[];
   import_tax_codes: boolean;
+  is_tax_override_enabled: boolean;
   sync_fyle_to_qbo_payments: boolean;
   sync_qbo_to_fyle_payments: boolean;
   auto_create_destination_entity: boolean;

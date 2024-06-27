@@ -10,7 +10,8 @@ export type QBOImportSettingWorkspaceGeneralSetting = {
   import_items: boolean,
   import_vendors_as_merchants: boolean,
   charts_of_accounts: string[],
-  import_tax_codes: boolean
+  import_tax_codes: boolean,
+  is_tax_override_enabled: boolean
 }
 
 export type QBOImportSettingGeneralMapping = {
@@ -66,6 +67,7 @@ export class QBOImportSettingModel extends ImportSettingsModel {
         import_items: importSettingsForm.get('importItems')?.value,
         charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value,
         import_tax_codes: importSettingsForm.get('taxCode')?.value,
+        is_tax_override_enabled: importSettingsForm.get('taxCode')?.value,
         import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value
       },
       mapping_settings: mappingSettings,
