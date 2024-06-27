@@ -44,6 +44,10 @@ p {
     .pi-search {
         content: url('./assets/icons/search-medium.svg') !important ;
     }
+
+    .p-checkbox .p-checkbox-box .p-icon {
+        content: url('./assets/icons/check.svg') !important;
+    }
 }
 
 [data-theme='co'] {
@@ -55,7 +59,7 @@ p {
         content: url('./assets/icons/co/grv-search-medium.svg') !important;
     }
 
-    .pi-check {
+    .p-checkbox .p-checkbox-box .p-icon, .pi-check {
         content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
     }
 }
@@ -185,8 +189,8 @@ p {
     @apply tw-p-0 #{!important};
 }
 
-.p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:hover {
-    @apply tw-bg-none tw-text-placeholder tw-shadow-none #{!important};
+.p-dialog .p-dialog-header .p-dialog-header-icons .p-button, .p-dialog .p-dialog-header .p-dialog-header-icons .p-button:enabled:hover {
+    @apply tw-bg-none tw-text-placeholder tw-shadow-none tw-bg-white #{!important};
 }
 
 // Input text
