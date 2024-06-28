@@ -22,17 +22,23 @@ export type QBOExportSettingGeneralMapping = {
 }
 
 export type QBOExportSettingPost = {
-  expense_group_settings: ExpenseGroupSettingPost,
+  expense_group_settings: QBOExpenseGroupSettingPost,
   workspace_general_settings: QBOExportSettingWorkspaceGeneralSettingPost,
   general_mappings: QBOExportSettingGeneralMapping
 }
 
 export type QBOExportSettingGet = {
-  expense_group_settings: ExpenseGroupSettingGet,
+  expense_group_settings: QBOExpenseGroupSettingGet,
   workspace_general_settings: QBOExportSettingWorkspaceGeneralSettingPost,
   general_mappings: QBOExportSettingGeneralMapping,
   workspace_id: number
 }
+
+export interface QBOExpenseGroupSettingPost extends ExpenseGroupSettingPost {
+  split_expense_grouping: SplitExpenseGrouping;
+}
+
+export interface QBOExpenseGroupSettingGet extends QBOExpenseGroupSettingPost {}
 
 
 export class QBOExportSettingModel extends ExportSettingModel {
@@ -290,7 +296,7 @@ export class QBOExportSettingModel extends ExportSettingModel {
         reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value,
         corporate_credit_card_expense_group_fields: exportSettingsForm.get('creditCardExportGroup')?.value ? [exportSettingsForm.get('creditCardExportGroup')?.value] : null,
         ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value,
-        split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value
+        split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
       },
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,

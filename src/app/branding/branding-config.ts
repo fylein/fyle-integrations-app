@@ -25,7 +25,8 @@ const featureConfigs: FeatureConfiguration = {
             exportSettings: {
                 reimbursableExpenses: true,
                 nameInJournalEntry: true,
-                useMerchantInJournalLine: true
+                useMerchantInJournalLine: true,
+                splitExpenseGrouping: true
             },
             importSettings: {
                 tax: true,
@@ -72,7 +73,8 @@ const featureConfigs: FeatureConfiguration = {
             exportSettings: {
                 reimbursableExpenses: false,
                 nameInJournalEntry: false,
-                useMerchantInJournalLine: false
+                useMerchantInJournalLine: false,
+                splitExpenseGrouping: false
             },
             importSettings: {
                 tax: false,

@@ -257,7 +257,8 @@
                 </app-clone-setting-field>
 
                 <app-clone-setting-field
-                    *ngIf="exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
+                    *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
+                    exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
                     [iconSource]="'question-square-outline'"
                     [label]="'How should the split expenses be grouped?'"
                     [options]="splitExpenseGroupingOptions"

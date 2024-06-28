@@ -276,8 +276,8 @@
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
 
-                        <app-configuration-select-field
-                        *ngIf="exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
+                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
+                        exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [showClearIcon]="true"
