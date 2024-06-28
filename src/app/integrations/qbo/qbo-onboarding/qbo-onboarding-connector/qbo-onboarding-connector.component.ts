@@ -196,7 +196,7 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
         this.warningEvent = ConfigurationWarningEvent.INCORRECT_QBO_ACCOUNT_CONNECTED;
         this.isWarningDialogVisible = true;
       } else {
-        this.toastService.displayToastMessage(ToastSeverity.ERROR, errorMessage);
+        this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong, please try again.');
         this.router.navigate([`/integrations/qbo/onboarding/landing`]);
       }
     });

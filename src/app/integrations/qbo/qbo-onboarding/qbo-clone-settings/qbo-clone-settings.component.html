@@ -482,7 +482,7 @@
                         <app-svg-icon [width]="'24px'" [height]="'24px'" [svgSource]="'list'" [styleClasses]="'tw-text-menu-inactive-text-color'"></app-svg-icon>
                         <p class="tw-flex tw-items-center tw-pl-16-px tw-py-2-px tw-text-slightly-normal-text-color tw-text-14-px">
                             Set the Description Field in QuickBooks Online
-                            <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'" [tooltipPosition]="'top'"></app-svg-icon>
+                            <app-svg-icon [width]="'16px'" [height]="'16px'" [svgSource]="'info-circle-fill'" [styleClasses]="'tw-text-placeholder tw-ml-8-px'" [tooltipText]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.'" [tooltipPosition]="'top'"></app-svg-icon>
                         </p>
                     </div>
                     <app-configuration-multi-select
@@ -490,12 +490,13 @@
                         [isFieldMandatory]="false"
                         [mandatoryErrorListName]="'Item level description'"
                         [label]="'Set the line item-level Description Field in QuickBooks Online'"
-                        [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement.'"
+                        [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.'"
                         [options]="defaultMemoOptions"
                         [iconPath]="'list'"
                         [placeholder]="'Set description'"
                         [formControllerName]="'memoStructure'"
-                        [isCloneSettingView]="true">
+                        [isCloneSettingView]="true"
+                        (changeInMultiSelect)="onMultiSelectChange()">
                     </app-configuration-multi-select>
                 </div>
                 <div class="clone-setting--dependent-field tw-text-14-px tw-font-400 tw-text-text-muted !tw-pl-40-px">

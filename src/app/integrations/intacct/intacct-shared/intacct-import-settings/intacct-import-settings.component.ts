@@ -161,23 +161,19 @@ export class IntacctImportSettingsComponent implements OnInit {
         attribute_type: this.customFieldForm.value.attribute_type,
         display_name: this.customFieldForm.value.attribute_type,
         source_placeholder: this.customFieldForm.value.source_placeholder,
-        is_dependent: true
+        is_dependent: true,
+        is_custom: true
       };
       if (this.customFieldControl) {
+        const fieldName = this.isCostCodeFieldSelected ? 'costCodes' : 'costTypes';
         if (this.isCostCodeFieldSelected) {
           this.costCodeFieldOption.push(this.customField);
         } else {
           this.costTypeFieldOption.push(this.customField);
         }
-        this.customFieldControl.patchValue({
-          attribute_type: this.customFieldForm.value.attribute_type,
-          display_name: this.customFieldForm.value.attribute_type,
-          source_placeholder: this.customFieldForm.value.source_placeholder,
-          is_dependent: true
-        });
 
         this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
-        this.customFieldControl.value.is_custom = true;
+        this.importSettingsForm.controls[fieldName]?.patchValue(this.customField);
         this.customFieldForm.reset();
         this.showDialog = false;
       }
@@ -531,13 +527,15 @@ export class IntacctImportSettingsComponent implements OnInit {
             source_placeholder: control.value.source_placeholder
           });
           this.importSettingsForm.controls.isDependentImportEnabled.setValue(true);
+          this.importSettingsForm.controls.costCodes.disable();
+          this.importSettingsForm.controls.costTypes.disable();
         }
       });
     }
   }
 
   showWarningForDependentFields(event: any, formGroup: AbstractControl): void {
-    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
+    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costTypeFieldOption[0].attribute_type !== 'custom_field') {
       this.showDependentFieldWarning = true;
     }
   }
