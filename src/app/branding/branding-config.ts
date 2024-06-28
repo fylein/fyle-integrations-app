@@ -207,7 +207,7 @@ const kbArticles: KbArticle = {
                 SKIP_EXPORT: `${brandingConfig.helpArticleDomain}/en/articles/9082146-configure-the-capital-one-sage-intacct-integration`
             },
             NETSUITE: {
-                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_a4c1a46107`,
+                CONNECTOR: `${brandingConfig.helpArticleDomain}/en/articles/9471329-generate-credentials-to-connect-with-netsuite`,
                 EXPORT_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_cca32ec1be`,
                 IMPORT_SETTING: `${brandingConfig.helpArticleDomain}/een/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_c18c533ca1`,
                 ADVANCED_SETTING: `${brandingConfig.helpArticleDomain}/en/articles/9330230-onboarding-process-to-set-up-netsuite-integration#h_b394546a8c`,
