@@ -275,6 +275,20 @@
                             [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
+
+                        <app-configuration-select-field
+                        *ngIf="exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="true"
+                        [showClearIcon]="true"
+                        [mandatoryErrorListName]="'split expense grouping'"
+                        [label]="'How should the split expenses be grouped?'"
+                        [subLabel]="'Choose how expenses should be grouped for split expenses'"
+                        [options]="splitExpenseGroupingOptions"
+                        [iconPath]="'question-square-outline'"
+                        [placeholder]="'Select split expense grouping'"
+                        [formControllerName]="'splitExpenseGrouping'">
+                    </app-configuration-select-field>
                     </div>
                 </div>
             </div>

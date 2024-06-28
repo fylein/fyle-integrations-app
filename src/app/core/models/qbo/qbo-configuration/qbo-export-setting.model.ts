@@ -1,5 +1,5 @@
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
-import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject } from "../../enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -181,6 +181,19 @@ export class QBOExportSettingModel extends ExportSettingModel {
       {
         label: 'Spend date',
         value: ExportDateType.SPENT_AT
+      }
+    ];
+  }
+
+  static getSplitExpenseGroupingOptions(): SelectFormOption[] {
+    return [
+      {
+        label: 'Single Line Item',
+        value: SplitExpenseGrouping.SINGLE_LINE_ITEM
+      },
+      {
+        label: 'Multiple Line Item',
+        value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
       }
     ];
   }
