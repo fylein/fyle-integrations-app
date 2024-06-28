@@ -70,7 +70,7 @@ export class ExportSettingModel {
       cccExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date : null),
       cccExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by: null),
       defaultCreditCardCCCAccountName: new FormControl(exportSettings?.default_ccc_credit_card_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_ccc_credit_card_account_id) : null),
-      defaultCCCAP: new FormControl(exportSettings?.default_reimbursable_account_payable_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_reimbursable_account_payable_id) : null),
+      defaultCCCAP: new FormControl(exportSettings?.default_ccc_account_payable_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_ccc_account_payable_id) : null),
       defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? findObjectByDestinationId(destinationAttribute.VENDOR, exportSettings?.default_vendor_id) : null),
       defaultDebitCardAccountName: new FormControl(exportSettings?.default_debit_card_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_debit_card_account_id) : null),
       defaultJobName: new FormControl(exportSettings?.default_job_name ? findObjectByDestinationId(destinationAttribute.JOB, exportSettings?.default_job_id) : null),
