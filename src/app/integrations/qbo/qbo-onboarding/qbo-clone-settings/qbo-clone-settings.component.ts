@@ -151,6 +151,8 @@ export class QboCloneSettingsComponent implements OnInit {
 
   InputType = InputType;
 
+  splitExpenseGroupingOptions = QBOExportSettingModel.getSplitExpenseGroupingOptions();
+
   scheduleIntervalHours: SelectFormOption[] = [...Array(24).keys()].map(day => {
     return {
       label: (day + 1).toString(),
