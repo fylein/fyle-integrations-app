@@ -193,7 +193,7 @@ export class IntacctImportSettingsComponent implements OnInit {
         this.fyleFields.push(this.customFieldOption[0]);
         const expenseField = {
           source_field: this.customField.attribute_type,
-          destination_field: this.customFieldControl.value.destination_field,
+          destination_field: this.customFieldControl.get('destination_field')?.value,
           import_to_fyle: true,
           is_custom: true,
           source_placeholder: this.customField.source_placeholder
