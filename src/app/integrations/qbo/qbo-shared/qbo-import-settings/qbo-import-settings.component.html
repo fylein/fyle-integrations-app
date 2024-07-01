@@ -36,7 +36,7 @@
                                         <div class="tw-inline-flex tw-align-items-center" *ngFor="let option of value; let i = index">
                                             <div>{{ option }}<span *ngIf="i !== value?.length-1">,&nbsp;</span></div>
                                         </div>
-                                        <div *ngIf="!value || value.length === 0">Select Countries</div>
+                                        <div *ngIf="!value || value.length === 0">{{helper.sentenseCaseConversion('Select Chart of Accounts')}}</div>
                                     </ng-template>
                                 </p-multiSelect>
                             </div>

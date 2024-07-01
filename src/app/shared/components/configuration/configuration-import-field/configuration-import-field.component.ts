@@ -190,9 +190,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   disableDestinationFields() {
     this.expenseFieldsGetter.controls.forEach((expenseField) => {
-      const value = expenseField.get('destination_field')?.value;
       expenseField.get('destination_field')?.disable();
-      expenseField.get('destination_field')?.patchValue(value);
       if ((expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO)) {
         expenseField.get('source_field')?.disable();
       }
