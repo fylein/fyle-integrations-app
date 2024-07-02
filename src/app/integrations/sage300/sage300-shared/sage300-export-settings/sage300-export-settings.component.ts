@@ -61,6 +61,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   debitCardAccountOptions: Sage300DestinationAttributes[];
 
+  accountsPayableOptions: Sage300DestinationAttributes[];
+
   sage300Jobs: Sage300DestinationAttributes[];
 
   previewImagePaths =[
@@ -168,8 +170,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
-      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState'],
-      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState']
+      'reimbursableExpense': ['reimbursableExportType', 'reimbursableExportGroup', 'reimbursableExportDate', 'reimbursableExpenseState', 'defaultReimbursableAP'],
+      'creditCardExpense': ['cccExportType', 'cccExportGroup', 'cccExportDate', 'cccExpenseState', 'defaultCCCAP']
     };
 
     const exportModuleRule: ExportModuleRule[] = [
@@ -194,7 +196,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
       this.exportSettings = exportSettingsResponse;
       this.vendorOptions = destinationAttributes.VENDOR;
-      this.creditCardAccountOptions = this.debitCardAccountOptions = destinationAttributes.ACCOUNT;
+      this.creditCardAccountOptions = this.debitCardAccountOptions = this.accountsPayableOptions = destinationAttributes.ACCOUNT;
       this.sage300Jobs = destinationAttributes.JOB;
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, destinationAttributes );
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);

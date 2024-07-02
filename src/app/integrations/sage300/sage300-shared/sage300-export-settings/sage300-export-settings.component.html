@@ -85,6 +85,19 @@
                     <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingForm"
+                        [isFieldMandatory]="false"
+                        [mandatoryErrorListName]="'AP account to post to'"
+                        [label]="'To which Accounts Payable account should the Invoice be posted to?'"
+                        [subLabel]="'The expenses will be coded to the selected Accounts Payable account.'"
+                        [destinationAttributes]="accountsPayableOptions"
+                        [iconPath]="'list'"
+                        [placeholder]="'Select A/P account'"
+                        [appName]="appName"
+                        [formControllerName]="'defaultReimbursableAP'"></app-configuration-select-field>
+                    </div>
+                    <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'expense state'"
                         [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
@@ -193,6 +206,19 @@
                                 </app-configuration-select-field>
                             </div>
                         </div>
+                    </div>
+                    <div *ngIf="exportSettingForm?.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="exportSettingForm"
+                        [isFieldMandatory]="false"
+                        [mandatoryErrorListName]="'AP account to post to'"
+                        [label]="'To which Accounts Payable account should the Invoice be posted to?'"
+                        [subLabel]="'The expenses will be coded to the selected Accounts Payable account.'"
+                        [destinationAttributes]="accountsPayableOptions"
+                        [iconPath]="'list'"
+                        [placeholder]="'Select A/P account'"
+                        [appName]="appName"
+                        [formControllerName]="'defaultCCCAP'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE">
