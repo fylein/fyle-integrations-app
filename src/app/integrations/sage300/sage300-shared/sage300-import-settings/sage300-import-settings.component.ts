@@ -132,9 +132,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
         if (control.value.source_field === MappingSourceField.PROJECT) {
           control.patchValue({
             source_field: MappingSourceField.PROJECT,
-            destination_field: control.value.destination_field,
+            destination_field: control.get('destination_field')?.value,
             import_to_fyle: true,
-            is_custom: control.value.is_custom,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: control.value.source_placeholder
           });
           this.importSettingForm.controls.isDependentImportEnabled.setValue(true);
@@ -277,9 +277,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
           this.customFieldControl = control;
           this.customFieldControl.patchValue({
             source_field: '',
-            destination_field: control.value.destination_field,
-            import_to_fyle: control.value.import_to_fyle,
-            is_custom: control.value.is_custom,
+            destination_field: control.get('destination_field')?.value,
+            import_to_fyle: control.get('import_to_fyle')?.value,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: null
           });
         } else if (value.source_field === 'PROJECT' && value.destination_field === 'PROJECT') {
