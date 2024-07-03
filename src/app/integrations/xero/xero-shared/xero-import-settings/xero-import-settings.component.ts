@@ -130,7 +130,7 @@ export class XeroImportSettingsComponent implements OnInit {
         import_to_fyle: true,
         is_custom: true,
         source_placeholder: this.customField.source_placeholder
-      };     
+      };
       (this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
       ((this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0] as FormGroup).controls.import_to_fyle.disable();
       this.customFieldForm.reset();

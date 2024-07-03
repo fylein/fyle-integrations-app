@@ -103,7 +103,6 @@ export class Sage300ImportSettingsComponent implements OnInit {
   ConfigurationCtaText = ConfigurationCta;
 
   readonly brandingConfig = brandingConfig;
-  dependentFieldSettings: Sage300ImportSettingsDependentFieldSetting | null;
 
   constructor(
     private router: Router,
@@ -345,7 +344,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = Sage300ImportSettingModel.createImportSettingPayload(this.importSettingForm, this.importSettings, this.dependentFieldSettings);
+    const importSettingPayload = Sage300ImportSettingModel.createImportSettingPayload(this.importSettingForm, this.importSettings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((importSettingsResponse: Sage300ImportSettingGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
@@ -393,7 +392,6 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse);
       this.fyleFields = fyleFieldsResponse;
       this.sage300Fields = sage300FieldsResponse;
-      this.dependentFieldSettings = this.importSettings.dependent_field_settings;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
       this.dependentFieldFormCreation();
