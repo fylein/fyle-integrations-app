@@ -48,11 +48,6 @@ p {
     .p-checkbox .p-checkbox-box .p-icon {
         content: url('./assets/icons/check.svg') !important;
     }
-
-    .p-dialog .p-dialog-header .p-dialog-header-icons .p-button {
-        content: url('./assets/icons/cross-medium.svg') !important;
-        color: var(--icon-muted) !important;
-    }
 }
 
 [data-theme='co'] {
@@ -66,11 +61,6 @@ p {
 
     .p-checkbox .p-checkbox-box .p-icon, .pi-check {
         content: url('./assets/icons/co/grv-checkmark-small.svg') !important;
-    }
-
-    .p-dialog .p-dialog-header .p-dialog-header-icons .p-button {
-        content: url('./assets/icons/co/grv-close-medium.svg') !important;
-        color: var(--icon-muted) !important;
     }
 }
 
@@ -709,7 +699,7 @@ p {
 }
 
 .p-dialog-header-close-icon {
-    @apply tw-mt-[-3px] #{!important} ;
+    @apply tw-mt-[-3px] tw-w-12-px tw-h-12-px #{!important} ;
 }
 
 .landing {

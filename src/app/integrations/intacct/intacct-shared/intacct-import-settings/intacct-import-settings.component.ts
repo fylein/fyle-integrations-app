@@ -388,6 +388,10 @@ export class IntacctImportSettingsComponent implements OnInit {
       // Get the 'import_to_fyle' control at the specified index and disable it
       (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     }
+
+    if (selectedValue === 'custom_field') {
+      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
+    }
   }
 
   isExpenseFieldDependent(expenseField: MappingSetting): boolean {

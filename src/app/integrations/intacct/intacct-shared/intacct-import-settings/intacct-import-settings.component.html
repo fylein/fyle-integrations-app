@@ -222,13 +222,13 @@
             <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
                 Field Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="attribute_type" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
+            <input formControlName="attribute_type" type="text" class="tw-w-388-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'Enter a valid type'"></app-mandatory-error-message>
 
             <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
                 Placeholder Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="source_placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+            <input formControlName="source_placeholder" type="text" class="tw-w-388-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
 
             <div>
