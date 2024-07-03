@@ -21,6 +21,12 @@ export type QBOExportSettingGeneralMapping = {
   default_debit_card_account: DefaultDestinationAttribute
 }
 
+export interface QBOExpenseGroupSettingPost extends ExpenseGroupSettingPost {
+  split_expense_grouping: SplitExpenseGrouping;
+}
+
+export interface QBOExpenseGroupSettingGet extends QBOExpenseGroupSettingPost {}
+
 export type QBOExportSettingPost = {
   expense_group_settings: QBOExpenseGroupSettingPost,
   workspace_general_settings: QBOExportSettingWorkspaceGeneralSettingPost,
@@ -33,13 +39,6 @@ export type QBOExportSettingGet = {
   general_mappings: QBOExportSettingGeneralMapping,
   workspace_id: number
 }
-
-export interface QBOExpenseGroupSettingPost extends ExpenseGroupSettingPost {
-  split_expense_grouping: SplitExpenseGrouping;
-}
-
-export interface QBOExpenseGroupSettingGet extends QBOExpenseGroupSettingPost {}
-
 
 export class QBOExportSettingModel extends ExportSettingModel {
   static getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
