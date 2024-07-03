@@ -198,7 +198,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.appName !== AppName.SAGE300) {
+    if (this.appName !== AppName.SAGE300) {
       this.disableDestinationFields();
     }
   }
