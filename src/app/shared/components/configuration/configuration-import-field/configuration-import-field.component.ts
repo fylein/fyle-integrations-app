@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, MappingSourceField, XeroFyleField } from 'src/app/core/models/enum/enum.model';
+import { AppName, MappingSourceField, Sage300Field, XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -131,7 +131,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
     }
 
-    if ( this.appName === AppName.SAGE300) {
+    if ( selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value === Sage300Field.JOB && this.appName === AppName.SAGE300) {
       this.form.controls.isDependentImportEnabled.setValue(true);
     }
 
@@ -198,7 +198,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.disableDestinationFields();
+    if(this.appName !== AppName.SAGE300) {
+      this.disableDestinationFields();
+    }
   }
 
 }

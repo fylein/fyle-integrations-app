@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields, Sage300ImportSettingsDependentFieldSetting } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { ExpenseField, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -103,6 +103,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
   ConfigurationCtaText = ConfigurationCta;
 
   readonly brandingConfig = brandingConfig;
+  dependentFieldSettings: Sage300ImportSettingsDependentFieldSetting | null;
 
   constructor(
     private router: Router,
@@ -195,7 +196,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
         is_custom: true,
         source_placeholder: this.customField.source_placeholder
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -344,7 +345,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   constructPayloadAndSave() {
     this.isSaveInProgress = true;
-    const importSettingPayload = Sage300ImportSettingModel.createImportSettingPayload(this.importSettingForm, this.importSettings);
+    const importSettingPayload = Sage300ImportSettingModel.createImportSettingPayload(this.importSettingForm, this.importSettings, this.dependentFieldSettings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((importSettingsResponse: Sage300ImportSettingGet) => {
       this.isSaveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
@@ -392,6 +393,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse);
       this.fyleFields = fyleFieldsResponse;
       this.sage300Fields = sage300FieldsResponse;
+      this.dependentFieldSettings = this.importSettings.dependent_field_settings;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
       this.setupFormWatchers();
       this.dependentFieldFormCreation();

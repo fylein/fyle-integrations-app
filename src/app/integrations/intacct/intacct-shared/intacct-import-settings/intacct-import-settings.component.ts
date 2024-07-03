@@ -198,7 +198,7 @@ export class IntacctImportSettingsComponent implements OnInit {
           is_custom: true,
           source_placeholder: this.customField.source_placeholder
         };
-        (this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+        (this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
         this.customFieldForm.reset();
         this.showDialog = false;
       }

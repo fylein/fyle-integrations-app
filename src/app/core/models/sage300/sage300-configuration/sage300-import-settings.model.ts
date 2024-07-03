@@ -64,9 +64,21 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
         });
     }
 
-    static createImportSettingPayload(importSettingsForm: FormGroup, importSettings: Sage300ImportSettingGet): Sage300ImportSettingPost {
+    static createImportSettingPayload(importSettingsForm: FormGroup, importSettings: Sage300ImportSettingGet, existingDependentFieldSettings: Sage300ImportSettingsDependentFieldSetting | null): Sage300ImportSettingPost {
         const expenseFieldArray = importSettingsForm.getRawValue().expenseFields;
         const mappingSettings = this.constructMappingSettingPayload(expenseFieldArray);
+        console.log(importSettingsForm.get('isDependentImportEnabled')?.value)
+        let dependentFieldSetting = null;
+        if (existingDependentFieldSettings || importSettingsForm.value.isDependentImportEnabled) {
+            dependentFieldSetting = {
+                is_import_enabled: importSettingsForm.value.isDependentImportEnabled,
+                cost_code_field_name: importSettingsForm.get('costCodes')?.value?.attribute_type,
+                cost_code_placeholder: importSettingsForm.get('costCodes')?.value?.source_placeholder,
+                cost_type_field_name: importSettingsForm.get('costTypes')?.value?.attribute_type,
+                cost_type_placeholder: importSettingsForm.get('costTypes')?.value?.source_placeholder,
+                workspace: importSettingsForm.value.workspaceId
+            };
+        }
 
         return {
             import_settings: {

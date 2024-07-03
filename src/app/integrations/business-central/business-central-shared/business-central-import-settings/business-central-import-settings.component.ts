@@ -114,7 +114,7 @@ export class BusinessCentralImportSettingsComponent implements OnInit {
         is_custom: true,
         source_placeholder: this.customField.source_placeholder
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
