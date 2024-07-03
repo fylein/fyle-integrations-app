@@ -770,3 +770,8 @@ export enum TravelPerkOnboardingState {
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
 }
+
+export enum SplitExpenseGrouping {
+  SINGLE_LINE_ITEM = 'SINGLE_LINE_ITEM',
+  MULTIPLE_LINE_ITEM = 'MULTIPLE_LINE_ITEM'
+}

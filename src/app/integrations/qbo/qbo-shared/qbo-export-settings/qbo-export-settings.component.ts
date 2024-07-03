@@ -84,6 +84,8 @@ export class QboExportSettingsComponent implements OnInit {
 
   EmployeeFieldMapping = EmployeeFieldMapping;
 
+  splitExpenseGroupingOptions = QBOExportSettingModel.getSplitExpenseGroupingOptions();
+
   previewImagePaths =[
     {
       [QBOReimbursableExpensesObject.EXPENSE]: 'assets/pngs/preview-screens/qbo-reimburse-expense.png',
