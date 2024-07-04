@@ -1,5 +1,5 @@
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
-import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject } from "../../enum/enum.model";
+import { CCCExpenseState, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExpenseState, ExportDateType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOReimbursableExpensesObject, SplitExpenseGrouping } from "../../enum/enum.model";
 import { ExpenseGroupSettingGet, ExpenseGroupSettingPost } from "../../db/expense-group-setting.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
@@ -21,19 +21,24 @@ export type QBOExportSettingGeneralMapping = {
   default_debit_card_account: DefaultDestinationAttribute
 }
 
+export interface QBOExpenseGroupSettingPost extends ExpenseGroupSettingPost {
+  split_expense_grouping: SplitExpenseGrouping;
+}
+
+export interface QBOExpenseGroupSettingGet extends QBOExpenseGroupSettingPost {}
+
 export type QBOExportSettingPost = {
-  expense_group_settings: ExpenseGroupSettingPost,
+  expense_group_settings: QBOExpenseGroupSettingPost,
   workspace_general_settings: QBOExportSettingWorkspaceGeneralSettingPost,
   general_mappings: QBOExportSettingGeneralMapping
 }
 
 export type QBOExportSettingGet = {
-  expense_group_settings: ExpenseGroupSettingGet,
+  expense_group_settings: QBOExpenseGroupSettingGet,
   workspace_general_settings: QBOExportSettingWorkspaceGeneralSettingPost,
   general_mappings: QBOExportSettingGeneralMapping,
   workspace_id: number
 }
-
 
 export class QBOExportSettingModel extends ExportSettingModel {
   static getReimbursableExportTypeOptions(employeeFieldMapping: EmployeeFieldMapping): SelectFormOption[] {
@@ -185,6 +190,19 @@ export class QBOExportSettingModel extends ExportSettingModel {
     ];
   }
 
+  static getSplitExpenseGroupingOptions(): SelectFormOption[] {
+    return [
+      {
+        label: 'Single Line Item',
+        value: SplitExpenseGrouping.SINGLE_LINE_ITEM
+      },
+      {
+        label: 'Multiple Line Item',
+        value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
+      }
+    ];
+  }
+
   static getMandatoryField(form: FormGroup, controllerName: string): boolean {
     switch (controllerName) {
       case 'bankAccount':
@@ -254,7 +272,8 @@ export class QBOExportSettingModel extends ExportSettingModel {
       qboExpenseAccount: new FormControl(exportSettings?.general_mappings?.qbo_expense_account?.id ? exportSettings.general_mappings.qbo_expense_account : null),
       defaultDebitCardAccount: new FormControl(exportSettings?.general_mappings?.default_debit_card_account?.id ? exportSettings.general_mappings.default_debit_card_account : null),
       nameInJournalEntry: new FormControl(exportSettings?.workspace_general_settings.name_in_journal_entry ? exportSettings.workspace_general_settings.name_in_journal_entry : NameInJournalEntry.EMPLOYEE ),
-      searchOption: new FormControl('')
+      searchOption: new FormControl(''),
+      splitExpenseGrouping: new FormControl(exportSettings?.expense_group_settings?.split_expense_grouping)
     });
   }
 
@@ -275,7 +294,8 @@ export class QBOExportSettingModel extends ExportSettingModel {
         reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.get('reimbursableExportGroup')?.value] : null,
         reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value,
         corporate_credit_card_expense_group_fields: exportSettingsForm.get('creditCardExportGroup')?.value ? [exportSettingsForm.get('creditCardExportGroup')?.value] : null,
-        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value
+        ccc_export_date_type: exportSettingsForm.get('creditCardExportDate')?.value,
+        split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
       },
       workspace_general_settings: {
         reimbursable_expenses_object: exportSettingsForm.get('reimbursableExportType')?.value,
