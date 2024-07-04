@@ -27,10 +27,14 @@ export class ApiService {
 
   private handleError(error: HttpErrorResponse, httpMethod: string, url: string) {
     if (httpMethod === 'POST') {
-        console.error(`POST error ${error.status}: ${error.message}`);
+        console.error(
+          `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
+        );
     } else if (httpMethod === 'GET') {
       if (error.status >= 500) {
-        console.error(`GET error ${error.status}: ${error.message}`);
+        console.error(
+          `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
+        );
       }
       // Else (404 GET error) - do not log
     } else if (error.status >= 500) {
