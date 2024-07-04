@@ -39,7 +39,7 @@ export type ExpenseGroupSettingPost = {
 export interface IntacctExpenseGroupSettingPost extends ExpenseGroupSettingPost {
     split_expense_grouping: SplitExpenseGrouping;
   }
-  
+
 export interface IntacctExpenseGroupSettingGet extends IntacctExpenseGroupSettingPost {}
 
 export type ExportSettingGet = {
