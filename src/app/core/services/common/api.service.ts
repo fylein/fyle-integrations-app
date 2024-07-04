@@ -26,11 +26,9 @@ export class ApiService {
   }
 
   private handleError(error: HttpErrorResponse, httpMethod: string, url: string) {
-    if (httpMethod === 'POST') {
-        console.error(
-          `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
-        );
-    } else if (httpMethod === 'GET') {
+    if (error.error instanceof ErrorEvent) {
+      console.error('An error occurred:', error.error.message);
+    } else if (httpMethod === 'POST' || httpMethod === 'GET') {
       if (error.status >= 500) {
         console.error(
           `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
