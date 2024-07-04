@@ -57,11 +57,12 @@
                         [isFieldMandatory]="false"
                         [mandatoryErrorListName]="'Item level description'"
                         [label]="'Set the line item-level Description Field in Dynamics 365 Business Central'"
-                        [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Dynamics 365 Business Central and re-order them as per your requirement.'"
+                        [subLabel]="'You can choose from a list of available data points that you\'d like to export to the description field in Dynamics 365 Business Central.'"
                         [options]="defaultMemoOptions"
                         [iconPath]="'list'"
                         [placeholder]="'Set description'"
-                        [formControllerName]="'memoStructure'">
+                        [formControllerName]="'memoStructure'"
+                        (changeInMultiSelect)="onMultiSelectChange()">
                     </app-configuration-multi-select>
                     <div class="preview-text">
                         <h4 class="tw-text-form-label-text-color tw-mb-12-px">Preview of the Description Field</h4>

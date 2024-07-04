@@ -170,13 +170,22 @@ export class QboAdvancedSettingsComponent implements OnInit {
     return !this.workspaceGeneralSettings.import_vendors_as_merchants && (this.workspaceGeneralSettings.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE || this.workspaceGeneralSettings.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE || this.workspaceGeneralSettings.name_in_journal_entry === NameInJournalEntry.MERCHANT);
   }
 
+  onMultiSelectChange() {
+    const memo = this.advancedSettingForm.controls.memoStructure.value;
+    const changedMemo = AdvancedSettingsModel.formatMemoPreview(memo, this.defaultMemoOptions)[1];
+    this.advancedSettingForm.controls.memoStructure.patchValue(changedMemo);
+  }
+
   private createMemoStructureWatcher(): void {
-    this.memoStructure = this.advancedSetting.workspace_general_settings.memo_structure;
-    this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    this.memoStructure = this.advancedSettingForm.value.memoStructure;
+    const memo = AdvancedSettingsModel.formatMemoPreview(this.memoStructure, this.defaultMemoOptions);
+    this.memoPreviewText = memo[0];
+    this.advancedSettingForm.controls.memoStructure.patchValue(memo[1]);
     this.advancedSettingForm.controls.memoStructure.valueChanges.subscribe((memoChanges) => {
-       this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoOptions);
+      this.memoPreviewText = AdvancedSettingsModel.formatMemoPreview(memoChanges, this.defaultMemoOptions)[0];
     });
   }
+
 
   skipExportWatcher(): void {
     const skipExportFormWatcherFields: SkipExportValidatorRule = {

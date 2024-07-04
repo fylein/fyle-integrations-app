@@ -5,6 +5,7 @@ import { NetsuiteDefaultLevelOptions, NetsuitePaymentSyncDirection, QBOPaymentSy
 import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
 import { brandingConfig } from "src/app/branding/branding-config";
+import { environment } from "src/environments/environment";
 
 
 export type NetsuiteAdvancedSettingConfiguration = {
@@ -65,7 +66,7 @@ export type NetsuiteAdvancedSettingAddEmailModel = {
 
 export class NetsuiteAdvancedSettingModel extends HelperUtility {
   static getDefaultMemoOptions(): string[] {
-    return ['employee_email', 'purpose', 'category', 'spent_on', 'report_number'];
+    return ['employee_email', 'merchant', 'purpose', 'category', 'spent_on', 'report_number'];
   }
 
   static getPaymentSyncOptions(): SelectFormOption[] {

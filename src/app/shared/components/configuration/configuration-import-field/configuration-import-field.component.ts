@@ -65,7 +65,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   @Output() xeroProjectMapping:EventEmitter<boolean> = new EventEmitter();
 
   constructor(
-    public windowService: WindowService
+    public windowService: WindowService,
+    public helper: HelperService
   ) { }
 
   get expenseFieldsGetter() {
@@ -126,6 +127,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
 
+    if ( this.appName === AppName.SAGE300) {
+      this.form.controls.isDependentImportEnabled.setValue(true);
+    }
+
     if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER && this.appName === AppName.XERO) {
       this.isXeroProjectMapped = true;
       this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -154,8 +159,15 @@ export class ConfigurationImportFieldComponent implements OnInit {
     this.xeroProjectMapping.emit(this.isXeroProjectMapped);
   }
 
+  onSwitchChanged(event: any, formGroup: AbstractControl): void {
+    this.onShowWarningForDependentFields(event, formGroup);
+    if (event.checked && this.appName === AppName.SAGE300) {
+      this.form.controls.isDependentImportEnabled.setValue(true);
+    }
+  }
+
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
-    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT) {
+    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costCodeFieldOption[0].attribute_type !== 'custom_field') {
       this.showWarningForDependentFields.emit();
     }
   }
@@ -171,7 +183,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }

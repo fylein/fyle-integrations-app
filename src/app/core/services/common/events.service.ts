@@ -60,7 +60,7 @@ export class EventsService {
           this.qboLogin.emit(message.data.redirectUri);
         } else if (message.data.redirectUri.includes('xero')) {
           this.xeroLogin.emit(message.data.redirectUri);
-        } else if (brandingConfig.brandId === 'co' && message.data.redirectUri.includes('netsuite')) {
+        } else if (message.data.redirectUri.includes('netsuite')) {
           this.netsuiteLogin.emit(message.data.redirectUri);
         } else {
           this.windowService.openInNewTab(message.data.redirectUri);

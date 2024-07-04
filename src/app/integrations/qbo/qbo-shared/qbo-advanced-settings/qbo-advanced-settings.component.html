@@ -77,7 +77,8 @@
                     [label]="brandingContent.paymentSyncLabel"
                     [subLabel]="'When expense is marked paid in ' + brandingConfig.brandName + ' the transaction in QuickBooks Online will be automatically be updated to Paid and vice versa.'"
                     [placeholder]="'Select how payments should be synced for reimbursable expenses'"
-                    [formControllerName]="'paymentSync'">
+                    [formControllerName]="'paymentSync'"
+                    [showClearIcon]="true">
                 </app-configuration-select-field>
 
                 <app-configuration-select-field *ngIf="advancedSettingForm.value.paymentSync && advancedSettingForm.value.paymentSync === 'fyle_to_qbo'"
@@ -125,7 +126,8 @@
                     [options]="defaultMemoOptions"
                     [iconPath]="'list'"
                     [placeholder]="'Set description'"
-                    [formControllerName]="'memoStructure'">
+                    [formControllerName]="'memoStructure'"
+                    (changeInMultiSelect)="onMultiSelectChange()">
                 </app-configuration-multi-select>
                 <div class="preview-text">
                     <h4 class="tw-text-form-label-text-color tw-mb-12-px">{{brandingContent.previewDescriptionFieldLabel}}</h4>

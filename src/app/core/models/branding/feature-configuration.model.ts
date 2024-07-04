@@ -14,6 +14,7 @@ export type FeatureConfiguration = {
                 reimbursableExpenses: boolean;
                 nameInJournalEntry: boolean;
                 useMerchantInJournalLine: boolean;
+                splitExpenseGrouping: boolean;
             },
             importSettings: {
                 tax: boolean;
@@ -22,6 +23,7 @@ export type FeatureConfiguration = {
                 importItems: boolean;
                 importProjects: boolean;
                 allowCustomSegment: boolean;
+                dependentField: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;

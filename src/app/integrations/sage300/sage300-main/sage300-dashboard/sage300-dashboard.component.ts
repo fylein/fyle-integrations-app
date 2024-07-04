@@ -145,7 +145,7 @@ export class Sage300DashboardComponent implements OnInit {
       if (queuedTasks.length) {
         this.isImportInProgress = false;
         this.isExportInProgress = true;
-        this.pollExportStatus();
+        this.pollExportStatus(this.exportableAccountingExportIds);
       } else {
         this.accountingExportService.importExpensesFromFyle().subscribe(() => {
           this.dashboardService.getExportableAccountingExportIds().subscribe((exportableAccountingExportIds) => {

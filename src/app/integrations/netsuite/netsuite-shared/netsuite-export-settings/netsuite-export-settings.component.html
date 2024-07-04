@@ -53,8 +53,8 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Employee Payables Account'"
                                 [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
-                                [subLabel]="'Post all your company corporate card transactions to a default employee payables account.'"
-                                [placeholder]="'select a employee payables account'"
+                                [subLabel]="'Post all your reimbursable expenses to a default employee payables account.'"
+                                [placeholder]="'Select a Employee Payables Account'"
                                 [formControllerName]="'bankAccount'">
                                 </app-configuration-select-field>
                             </div>
@@ -68,8 +68,8 @@
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'Vendor Payables Account'"
                                 [label]="brandingContent.corporateCard.accountsPayableLabel"
-                                [subLabel]="'Post all your company corporate card transactions to a default vendor payables account.'"
-                                [placeholder]="'Select vendor payable account'"
+                                [subLabel]="'Post all your reimbursable expenses to a default vendor payables account.'"
+                                [placeholder]="'Select Vendor Payable Account'"
                                 [formControllerName]="'accountsPayable'">
                                 </app-configuration-select-field>
                             </div>
@@ -179,6 +179,36 @@
                                 [iconPath]="'list'"
                                 [placeholder]="'Select a name in journal entry'"
                                 [formControllerName]="'nameInJournalEntry'">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="(!exportSettingForm.value.reimbursableExportType || brandingConfig.brandId === 'co') && helperService.isFieldRequired(exportSettingForm, 'accountsPayable')">
+                            <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [destinationAttributes]="accountsPayables"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Vendor Payables Account'"
+                            [label]="brandingContent.corporateCard.accountsPayableLabel"
+                            [subLabel]="'Post all your company corporate card transactions to a default vendor payables account.'"
+                            [placeholder]="helperService.sentenseCaseConversion('Select Vendor Payable Account')"
+                            [formControllerName]="'accountsPayable'">
+                            </app-configuration-select-field>
+                        </div>
+
+                        <div *ngIf="(!exportSettingForm.value.reimbursableExportType || brandingConfig.brandId === 'co') && helperService.isFieldRequired(exportSettingForm, 'bankAccount')">
+                            <app-configuration-select-field
+                            [form]="exportSettingForm"
+                            [destinationAttributes]="bankAccounts"
+                            [optionLabel]="'name'"
+                            [iconPath]="'list'"
+                            [isFieldMandatory]="true"
+                            [mandatoryErrorListName]="'Employee Payables Account'"
+                            [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
+                            [subLabel]="'Post all your company corporate card transactions to a default employee payables account.'"
+                            [placeholder]="helperService.sentenseCaseConversion('Select a Employee Payables Account')"
+                            [formControllerName]="'bankAccount'">
                             </app-configuration-select-field>
                         </div>
 

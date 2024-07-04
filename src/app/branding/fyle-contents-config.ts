@@ -19,7 +19,7 @@ export const fyleContents = {
             exportSetting: {
                 stepName: 'Export Settings',
                 headerText: ' Export Corporate Card Expenses',
-                contentText: 'Enable this to export non-reimbursable expenses from ' + brandingConfig.brandName + '. If not enabled, any <b>corporate credit card</b> expenses will not be exported to NetSuite.',
+                contentText: 'In this section, you can configure how and when the expenses from ' + brandingConfig.brandName + ' can be exported to NetSuite',
                 corporateCard: {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
                     cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
@@ -78,13 +78,13 @@ export const fyleContents = {
                 changeAccountingPeriodSubLabel: 'If the accounting period in NetSuite is closed, the expenses from ' + brandingConfig.brandName + ' will be exported with a date stamp of the first day next open accounting period.',
                 defaultPaymentAccount: 'Select Payment Bank Account',
                 memoStructureLabel: 'Set the line item-level description field in NetSuite',
-                memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in NetSuite and re-order them as per your requirement.',
+                memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in NetSuite.',
                 customizationSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to NetSuite, You can choose what data points need to be exported and what shouldn\'t be.',
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to NetSuite.',
                 frequencySubLabel: 'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to NetSuite.',
                 preferenceLabel: 'Other Preferences',
-                preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from expense management. (when there is no employee record found, or when the accounting period is closed).',
+                preferenceSubLabel: 'Based on your preference, you can choose whether you want to create any new records in NetSuite from Fyle. (when there is no employee record found, or when the accounting period is closed).',
                 previewDescriptionFieldLabel: 'Preview of the Description Field',
                 autoCreateMerchantsLabel: 'Auto Create Merchant on NetSuite for Credit Card Charge'
             }
@@ -153,7 +153,7 @@ export const fyleContents = {
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Xero.',
                 accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Xero, you can export those to the current month by enabling this option.',
-                autoCreateVendorsSubLabel: 'While exporting reimbursable expenses from expense management, the integration will automatically create a vendor if a match does not exist in Xero already'
+                autoCreateVendorsSubLabel: 'While exporting reimbursable expenses from Fyle, the integration will automatically create a vendor if a match does not exist in Xero already'
             }
         }
     },
@@ -229,7 +229,7 @@ export const fyleContents = {
                 automationSubLabel: 'You can automate the export and sync of your data in this section.',
                 scheduleSubLabel: 'Set up a schedule to frequently automate the export of expenses from ' + brandingConfig.brandName + ' to Sage Intacct.',
                 accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in Sage Intacct, you can export those to the current month by enabling this option.',
-                memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct and re-order them as per your requirement.',
+                memoStructureSubLabel: 'You can choose from a list of available data points that you would like to export to the description field in Sage Intacct.',
                 customizeSectionSubLabel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to Sage Intacct You can choose what data points need to be exported and what shouldn\'t be.'
             },
             done: {
@@ -306,7 +306,7 @@ export const fyleContents = {
             accountingPeriodSubLabel: 'If there are expenses for which the accounting period is closed in QuickBooks Online, you can export those to the current month by enabling this option.',
             autoCreateMerchantsAsVendorsSubLabel: 'Fyle will auto-create a new vendor in QuickBooks Online if a merchant added by an employee does not have a corresponding match in QuickBooks Online. ',
             customizeSectionSubLAbel: 'In this section, you can customize the data that you\'d like to export from ' + brandingConfig.brandName + ' to QuickBooks Online You can choose what data points need to be exported and what shouldn\'t be.',
-            memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online and re-order them as per your requirement',
+            memoStructureSubLabel: 'You can choose from a list of available data points that you\'d like to export to the description field in QuickBooks Online.',
             previewDescriptionFieldLabel: 'Preview of the Description Field'
         },
         done: {
