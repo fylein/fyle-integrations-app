@@ -186,6 +186,8 @@
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="accountsPayables"
+                            [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
                             [isFieldMandatory]="true"
@@ -193,7 +195,9 @@
                             [label]="brandingContent.corporateCard.accountsPayableLabel"
                             [subLabel]="'Post all your company corporate card transactions to a default vendor payables account.'"
                             [placeholder]="helperService.sentenseCaseConversion('Select Vendor Payable Account')"
-                            [formControllerName]="'accountsPayable'">
+                            [formControllerName]="'accountsPayable'"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)">
                             </app-configuration-select-field>
                         </div>
 
@@ -201,6 +205,8 @@
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="bankAccounts"
+                            [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
                             [isFieldMandatory]="true"
@@ -208,7 +214,9 @@
                             [label]="brandingContent.corporateCard.defaultDebitCardAccountLabel"
                             [subLabel]="'Post all your company corporate card transactions to a default employee payables account.'"
                             [placeholder]="helperService.sentenseCaseConversion('Select a Employee Payables Account')"
-                            [formControllerName]="'bankAccount'">
+                            [formControllerName]="'bankAccount'"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)">
                             </app-configuration-select-field>
                         </div>
 
@@ -216,6 +224,8 @@
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="cccAccounts"
+                            [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
                             [isFieldMandatory]="true"
@@ -223,7 +233,9 @@
                             [label]="brandingContent.corporateCard.defaultCCCAccountLabel"
                             [subLabel]="'Post all your company corporate card transactions to a default credit card account.'"
                             [placeholder]="brandingContent.corporateCard.defaultCCCAccountPlaceholder"
-                            [formControllerName]="'creditCardAccount'">
+                            [formControllerName]="'creditCardAccount'"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)">
                             </app-configuration-select-field>
                         </div>
 
@@ -231,6 +243,8 @@
                             <app-configuration-select-field
                             [form]="exportSettingForm"
                             [destinationAttributes]="creditCardVendors"
+                            [destinationOptionKey]="NetsuiteExportSettingDestinationOptionKey.VENDOR"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
                             [optionLabel]="'name'"
                             [iconPath]="'list'"
                             [isFieldMandatory]="true"
@@ -238,7 +252,9 @@
                             [label]="brandingContent.corporateCard.defaultCCCVendorLabel"
                             [subLabel]="'Post your company corporate card transactions to a default credit card vendor when a match is not found in NetSuite and auto creation is switched off.'"
                             [placeholder]="'Select default credit card vendor'"
-                            [formControllerName]="'defaultCreditCardVendor'">
+                            [formControllerName]="'defaultCreditCardVendor'"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)">
                             </app-configuration-select-field>
                         </div>
 

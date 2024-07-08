@@ -5,11 +5,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { DefaultDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { CCCExpenseState, ConfigurationCta, IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseGroupedBy, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, ExpenseGroupingFieldOption, Page, ToastSeverity, IntacctOnboardingState, ProgressPhase, IntacctUpdateEvent, AppName, IntacctExportSettingDestinationOptionKey, TrackingApp, EmployeeFieldMapping } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingDestinationAttributeOption, IntacctDestinationAttribute, PaginatedintacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
-import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel as IntacctExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import { ExportSettingFormOption, ExportSettingGet, ExportSettingModel as IntacctExportSettingModel, IntacctExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SiExportSettingService } from 'src/app/core/services/si/si-configuration/si-export-setting.service';
@@ -144,7 +144,7 @@ export class IntacctExportSettingsComponent implements OnInit {
     }
   ];
 
-  private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
+  private optionSearchUpdate = new Subject<IntacctExportSettingOptionSearch>();
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
@@ -586,7 +586,7 @@ export class IntacctExportSettingsComponent implements OnInit {
   private optionSearchWatcher(): void {
     this.optionSearchUpdate.pipe(
       debounceTime(1000)
-    ).subscribe((event: ExportSettingOptionSearch) => {
+    ).subscribe((event: IntacctExportSettingOptionSearch) => {
       const existingOptions = this.destinationOptions[event.destinationOptionKey].concat();
       const newOptions: IntacctDestinationAttribute[] = [];
 
@@ -620,7 +620,8 @@ export class IntacctExportSettingsComponent implements OnInit {
     });
   }
 
-  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+  searchOptionsDropdown(_event: ExportSettingOptionSearch): void {
+    const event = _event as IntacctExportSettingOptionSearch
     if (event.searchTerm) {
       this.isOptionSearchInProgress = true;
       this.optionSearchUpdate.next(event);

@@ -4,6 +4,7 @@ import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/dest
 import { IntacctDestinationAttribute } from "../db/destination-attribute.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
+import { ExportSettingOptionSearch } from "../../common/export-settings.model";
 
 export type ExportSettingFormOption = {
     label: string,
@@ -49,9 +50,7 @@ export type ExportSettingPost = {
     general_mappings: ExportSettingGeneralMapping
   }
 
-export type ExportSettingOptionSearch = {
-    searchTerm: string,
-    destinationAttributes: any[],
+export interface IntacctExportSettingOptionSearch extends ExportSettingOptionSearch {
     destinationOptionKey: IntacctExportSettingDestinationOptionKey
 }
 
