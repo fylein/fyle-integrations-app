@@ -190,19 +190,6 @@ export class QBOExportSettingModel extends ExportSettingModel {
     ];
   }
 
-  static getSplitExpenseGroupingOptions(): SelectFormOption[] {
-    return [
-      {
-        label: 'Single Line Item',
-        value: SplitExpenseGrouping.SINGLE_LINE_ITEM
-      },
-      {
-        label: 'Multiple Line Item',
-        value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
-      }
-    ];
-  }
-
   static getMandatoryField(form: FormGroup, controllerName: string): boolean {
     switch (controllerName) {
       case 'bankAccount':
