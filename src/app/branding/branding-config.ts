@@ -110,10 +110,6 @@ const featureConfigs: FeatureConfiguration = {
 };
 
 // @ts-ignore
-if (brandingConfig.brandId === 'co' && brandingConfig.envId !== 'c1-qa') {
-    const feature =  featureConfigs[brandingConfig.brandId];
-    feature.featureFlags.importSettings.dependentField = false;
-}
 export const brandingFeatureConfig = featureConfigs[brandingConfig.brandId];
 
 const kbArticles: KbArticle = {
