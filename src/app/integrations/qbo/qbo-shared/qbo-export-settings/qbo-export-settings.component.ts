@@ -84,7 +84,7 @@ export class QboExportSettingsComponent implements OnInit {
 
   EmployeeFieldMapping = EmployeeFieldMapping;
 
-  splitExpenseGroupingOptions = QBOExportSettingModel.getSplitExpenseGroupingOptions();
+  splitExpenseGroupingOptions = ExportSettingModel.getSplitExpenseGroupingOptions();
 
   previewImagePaths =[
     {
