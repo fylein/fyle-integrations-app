@@ -21,11 +21,15 @@ export type QBOCloneSettingPost = {
 }
 
 export class QBOCloneSettingModel {
-    static constructPayload(employeeSettingForm: FormGroup, exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup): QBOCloneSettingPost {
+    static constructPayload(employeeSettingForm: FormGroup, exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup, isTaxGroupSyncAllowed: boolean): QBOCloneSettingPost {
         const employeeSettingPayload = QBOEmployeeSettingModel.constructPayload(employeeSettingForm);
         const exportSettingPayload = QBOExportSettingModel.constructPayload(exportSettingForm);
         const importSettingPayload = QBOImportSettingModel.constructPayload(importSettingForm);
         const advancedSettingPayload = QBOAdvancedSettingModel.constructPayload(advancedSettingForm);
+
+        if (!isTaxGroupSyncAllowed) {
+            importSettingPayload.workspace_general_settings.import_tax_codes = false;
+        }
 
         return {
             export_settings: exportSettingPayload,

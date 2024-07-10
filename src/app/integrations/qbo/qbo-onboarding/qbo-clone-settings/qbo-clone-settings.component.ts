@@ -241,7 +241,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const cloneSettingPayload = QBOCloneSettingModel.constructPayload(this.employeeSettingForm, this.exportSettingForm, this.importSettingForm, this.advancedSettingForm);
+    const cloneSettingPayload = QBOCloneSettingModel.constructPayload(this.employeeSettingForm, this.exportSettingForm, this.importSettingForm, this.advancedSettingForm, this.isTaxGroupSyncAllowed);
 
     this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
       this.isSaveInProgress = false;
