@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
+import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AdvancedSettingsModel, EmailOption } from 'src/app/core/models/common/advanced-settings.model';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
 import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
@@ -151,6 +151,8 @@ export class QboCloneSettingsComponent implements OnInit {
 
   InputType = InputType;
 
+  splitExpenseGroupingOptions = QBOExportSettingModel.getSplitExpenseGroupingOptions();
+
   scheduleIntervalHours: SelectFormOption[] = [...Array(24).keys()].map(day => {
     return {
       label: (day + 1).toString(),
@@ -159,6 +161,8 @@ export class QboCloneSettingsComponent implements OnInit {
   });
 
   readonly AppName = AppName;
+
+  readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
 
@@ -237,7 +241,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const cloneSettingPayload = QBOCloneSettingModel.constructPayload(this.employeeSettingForm, this.exportSettingForm, this.importSettingForm, this.advancedSettingForm);
+    const cloneSettingPayload = QBOCloneSettingModel.constructPayload(this.employeeSettingForm, this.exportSettingForm, this.importSettingForm, this.advancedSettingForm, this.isTaxGroupSyncAllowed);
 
     this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
       this.isSaveInProgress = false;
