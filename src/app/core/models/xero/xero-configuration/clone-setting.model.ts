@@ -19,10 +19,14 @@ export type XeroCloneSettingPost = {
 }
 
 export class XeroCloneSettingModel {
-    static constructPayload(exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup): XeroCloneSettingPost {
+    static constructPayload(exportSettingForm: FormGroup, importSettingForm: FormGroup, advancedSettingForm: FormGroup, isTaxGroupSyncAllowed: boolean): XeroCloneSettingPost {
         const exportSettingPayload = XeroExportSettingModel.constructPayload(exportSettingForm);
         const importSettingPayload = XeroImportSettingModel.constructPayload(importSettingForm);
         const advancedSettingPayload = XeroAdvancedSettingModel.constructPayload(advancedSettingForm);
+
+        if (!isTaxGroupSyncAllowed) {
+            importSettingPayload.workspace_general_settings.import_tax_codes = false;
+        }
 
         return {
             export_settings: exportSettingPayload,
