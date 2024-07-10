@@ -261,8 +261,7 @@
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
                     
-                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
-                        exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
+                        <app-configuration-select-field *ngIf="false"
                         [form]="exportSettingsForm"
                         [isFieldMandatory]="true"
                         [showClearIcon]="true"
