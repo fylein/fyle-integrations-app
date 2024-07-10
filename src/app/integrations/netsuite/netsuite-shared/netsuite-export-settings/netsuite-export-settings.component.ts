@@ -284,7 +284,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       debounceTime(1000)
     ).subscribe((event: ExportSettingOptionSearch) => {
       let existingOptions: DefaultDestinationAttribute[] = [];
-      // = this.destinationOptions[event.destinationOptionKey].concat();
 
       switch (event.destinationOptionKey) {
         case NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
@@ -319,19 +318,19 @@ export class NetsuiteExportSettingsComponent implements OnInit {
         switch (event.destinationOptionKey) {
           case NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
             this.accountsPayables = existingOptions.concat();
-            this.accountsPayables.sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+            this.accountsPayables.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
             break;
           case NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT:
             this.bankAccounts = existingOptions.concat();
-            this.bankAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+            this.bankAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
             break;
           case NetsuiteExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
             this.cccAccounts = existingOptions.concat();
-            this.cccAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+            this.cccAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
             break;
           case NetsuiteExportSettingDestinationOptionKey.VENDOR:
             this.creditCardVendors = existingOptions.concat();
-            this.creditCardVendors.sort((a, b) => (a.name || '').localeCompare(b.name || ''))
+            this.creditCardVendors.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
             break;
         }
 
@@ -351,7 +350,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     const destinationAttributes = ['VENDOR', 'ACCOUNTS_PAYABLE', 'BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT'];
-    
+
     const groupedAttributes: Observable<PaginatedDestinationAttribute>[]= [];
 
     destinationAttributes.forEach((destinationAttribute) => {
@@ -360,7 +359,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
 
     forkJoin([
       this.exportSettingService.getExportSettings(),
-      ...groupedAttributes,
+      ...groupedAttributes
     ]).subscribe(([exportSetting, vendors, accountsPayables, bankAccounts, cccAccounts]) => {
       this.exportSettings = exportSetting;
 

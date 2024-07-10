@@ -621,7 +621,7 @@ export class IntacctExportSettingsComponent implements OnInit {
   }
 
   searchOptionsDropdown(_event: ExportSettingOptionSearch): void {
-    const event = _event as IntacctExportSettingOptionSearch
+    const event = _event as IntacctExportSettingOptionSearch;
     if (event.searchTerm) {
       this.isOptionSearchInProgress = true;
       this.optionSearchUpdate.next(event);
