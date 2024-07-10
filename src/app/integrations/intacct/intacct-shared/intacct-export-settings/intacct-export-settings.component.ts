@@ -478,8 +478,7 @@ export class IntacctExportSettingsComponent implements OnInit {
         creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
         chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)],
         useMerchantInJournalLine: [brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine ? (configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false) : true],
-        searchOption: [''],
-        splitExpenseGrouping: new FormControl(this.exportSettings?.expense_group_settings?.split_expense_grouping)
+        searchOption: ['']
       });
 
       if (brandingConfig.brandId === 'co') {

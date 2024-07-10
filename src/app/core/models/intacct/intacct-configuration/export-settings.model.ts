@@ -44,14 +44,14 @@ export interface IntacctExpenseGroupSettingGet extends IntacctExpenseGroupSettin
 
 export type ExportSettingGet = {
     configurations: ExportSettingConfiguration,
-    expense_group_settings: IntacctExpenseGroupSettingGet,
+    expense_group_settings: ExpenseGroupSettingPost,
     general_mappings: ExportSettingGeneralMapping,
     workspace_id: number
 }
 
 export type ExportSettingPost = {
     configurations: ExportSettingConfiguration,
-    expense_group_settings: IntacctExpenseGroupSettingPost,
+    expense_group_settings: ExpenseGroupSettingPost,
     general_mappings: ExportSettingGeneralMapping
   }
 
@@ -82,8 +82,7 @@ export type ExportSettingOptionSearch = {
                 reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.value.reimbursableExportGroup] : null,
                 reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
                 corporate_credit_card_expense_group_fields: cccExportGroup,
-                ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend Date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate')),
-                split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
+                ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend Date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate'))
             },
             configurations: {
                 reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),
