@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
-import { ExportSettingFormOption, ExportSettingOptionSearch } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { AppName, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { ExportSettingFormOption } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
+import { AppName, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, NetsuiteExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SafeHtml } from '@angular/platform-browser';
@@ -15,6 +15,7 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { TravelperkDestinationAttribuite } from 'src/app/core/models/travelperk/travelperk.model';
+import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 
 @Component({
   selector: 'app-configuration-select-field',
@@ -58,7 +59,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() isDefaultFields: boolean = false;
 
-  @Input() destinationOptionKey: IntacctExportSettingDestinationOptionKey;
+  @Input() destinationOptionKey: IntacctExportSettingDestinationOptionKey | NetsuiteExportSettingDestinationOptionKey;
 
   @Input() isOptionSearchInProgress: boolean;
 
