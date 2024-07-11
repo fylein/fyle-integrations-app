@@ -1,5 +1,5 @@
 import { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
-import { ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey } from "../enum/enum.model";
+import { ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../enum/enum.model";
 import { SelectFormOption } from "./select-form-option.model";
 
 export type ExportSettingValidatorRule = {
@@ -19,6 +19,19 @@ export type ExportSettingOptionSearch = {
 };
 
 export class ExportSettingModel {
+    static getSplitExpenseGroupingOptions(): SelectFormOption[] {
+      return [
+        {
+          label: 'Single Line Item',
+          value: SplitExpenseGrouping.SINGLE_LINE_ITEM
+        },
+        {
+          label: 'Multiple Line Item',
+          value: SplitExpenseGrouping.MULTIPLE_LINE_ITEM
+        }
+      ];
+    }
+
     static getExportGroup(exportGroups: string[] | null | undefined): string {
         if (exportGroups) {
             const exportGroup = exportGroups.find((exportGroup) => {

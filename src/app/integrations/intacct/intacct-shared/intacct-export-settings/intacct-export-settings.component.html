@@ -260,6 +260,19 @@
                         [iconPath]="'calendar'"
                         [placeholder]="'Select date'"
                         [formControllerName]="'cccExportDate'"></app-configuration-select-field>
+                    
+                        <app-configuration-select-field *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
+                        exportSettingsForm.value.cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION"
+                        [form]="exportSettingsForm"
+                        [isFieldMandatory]="true"
+                        [showClearIcon]="true"
+                        [mandatoryErrorListName]="'split expense grouping'"
+                        [label]="'How should the split expenses be grouped?'"
+                        [subLabel]="'Choose how expenses should be grouped for split expenses'"
+                        [options]="splitExpenseGroupingOptions"
+                        [iconPath]="'question-square-outline'"
+                        [placeholder]="'Select split expense grouping'"
+                        [formControllerName]="'splitExpenseGrouping'"></app-configuration-select-field>
                     </div>
                 </div>
             </div>

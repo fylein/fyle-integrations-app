@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TitleCasePipe } from '@angular/common';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
@@ -51,6 +51,8 @@ export class IntacctExportSettingsComponent implements OnInit {
   exportSettings: ExportSettingGet;
 
   customMessage: string;
+
+  splitExpenseGroupingOptions = ExportSettingModel.getSplitExpenseGroupingOptions();
 
   destinationOptions: ExportSettingDestinationAttributeOption = {
     [IntacctExportSettingDestinationOptionKey.ACCOUNT]: [],
@@ -476,7 +478,8 @@ export class IntacctExportSettingsComponent implements OnInit {
         creditCard: [findObjectById(this.destinationOptions.ACCOUNT, generalMappings?.default_credit_card.id)],
         chargeCard: [findObjectById(this.destinationOptions.CHARGE_CARD, generalMappings?.default_charge_card.id)],
         useMerchantInJournalLine: [brandingFeatureConfig.featureFlags.exportSettings.useMerchantInJournalLine ? (configurations?.use_merchant_in_journal_line ? configurations?.use_merchant_in_journal_line: false) : true],
-        searchOption: ['']
+        searchOption: [''],
+        splitExpenseGrouping: new FormControl(this.exportSettings?.expense_group_settings?.split_expense_grouping)
       });
 
       if (brandingConfig.brandId === 'co') {
