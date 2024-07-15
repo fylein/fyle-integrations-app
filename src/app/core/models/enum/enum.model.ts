@@ -380,7 +380,7 @@ export enum XeroFyleField {
 
 export enum NetsuiteFyleField {
   PROJECT = 'PROJECT',
-  TAX_CODE = 'TAX_CODE'
+  TAX_ITEM = 'TAX_ITEM'
 }
 
 export enum QBDAccountingExportsState {
