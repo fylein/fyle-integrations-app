@@ -2,13 +2,13 @@ import { TitleCasePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
 import { HelperUtility } from 'src/app/core/models/common/helper.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteExportSettingDestinationOptionKey, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, FyleField, NameInJournalEntry, NetSuiteCorporateCreditCardExpensesObject, NetsuiteOnboardingState, NetsuiteReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { NetSuiteExportSettingGet, NetSuiteExportSettingModel } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -105,12 +105,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   ConfigurationCtaText = ConfigurationCta;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
-
-  isOptionSearchInProgress: boolean;
-
-  private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
-
-  NetsuiteExportSettingDestinationOptionKey = NetsuiteExportSettingDestinationOptionKey;
 
   constructor(
     private exportSettingService: NetsuiteExportSettingsService,
@@ -278,96 +272,20 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     });
   }
 
-
-  private optionSearchWatcher(): void {
-    this.optionSearchUpdate.pipe(
-      debounceTime(1000)
-    ).subscribe((event: ExportSettingOptionSearch) => {
-      let existingOptions: DefaultDestinationAttribute[] = [];
-
-      switch (event.destinationOptionKey) {
-        case NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
-          existingOptions = this.accountsPayables;
-          break;
-        case NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT:
-          existingOptions = this.bankAccounts;
-          break;
-        case NetsuiteExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
-          existingOptions = this.cccAccounts;
-          break;
-        case NetsuiteExportSettingDestinationOptionKey.VENDOR:
-          existingOptions = this.creditCardVendors;
-          break;
-      }
-
-      let newOptions: DefaultDestinationAttribute[];
-
-      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
-
-        // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
-        newOptions = response.results.map(NetSuiteExportSettingModel.formatGeneralMappingPayload);
-
-        // Insert new options to existing options
-        newOptions.forEach((option) => {
-          if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
-            existingOptions.push(option);
-          }
-        });
-
-
-        switch (event.destinationOptionKey) {
-          case NetsuiteExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
-            this.accountsPayables = existingOptions.concat();
-            this.accountsPayables.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-            break;
-          case NetsuiteExportSettingDestinationOptionKey.BANK_ACCOUNT:
-            this.bankAccounts = existingOptions.concat();
-            this.bankAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-            break;
-          case NetsuiteExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
-            this.cccAccounts = existingOptions.concat();
-            this.cccAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-            break;
-          case NetsuiteExportSettingDestinationOptionKey.VENDOR:
-            this.creditCardVendors = existingOptions.concat();
-            this.creditCardVendors.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-            break;
-        }
-
-        this.isOptionSearchInProgress = false;
-      });
-    });
-  }
-
-  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
-    if (event.searchTerm) {
-      this.isOptionSearchInProgress = true;
-      this.optionSearchUpdate.next(event);
-    }
-  }
-
-
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     const destinationAttributes = ['VENDOR', 'ACCOUNTS_PAYABLE', 'BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT'];
 
-    const groupedAttributes: Observable<PaginatedDestinationAttribute>[]= [];
-
-    destinationAttributes.forEach((destinationAttribute) => {
-      groupedAttributes.push(this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response)));
-    });
-
-    forkJoin([
-      this.exportSettingService.getExportSettings(),
-      ...groupedAttributes
-    ]).subscribe(([exportSetting, vendors, accountsPayables, bankAccounts, cccAccounts]) => {
+    forkJoin({
+      exportSetting: this.exportSettingService.getExportSettings(),
+      destinationAttributes: this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v2', 'netsuite')
+    }).subscribe(({exportSetting, destinationAttributes}) => {
       this.exportSettings = exportSetting;
 
-      this.creditCardVendors =  vendors.results.map((option) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
-      this.accountsPayables = accountsPayables.results.map((option) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
-      this.bankAccounts =  bankAccounts.results.map((option) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
-      this.cccAccounts =  cccAccounts.results.map((option) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
-
+      this.creditCardVendors =  destinationAttributes.VENDOR.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.accountsPayables = destinationAttributes.ACCOUNTS_PAYABLE.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.bankAccounts =  destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
+      this.cccAccounts =  destinationAttributes.CREDIT_CARD_ACCOUNT.map((option: DestinationAttribute) => NetSuiteExportSettingModel.formatGeneralMappingPayload(option));
 
       this.reimbursableExportTypes = NetSuiteExportSettingModel.getReimbursableExportTypeOptions();
       this.showNameInJournalOption = this.exportSettings.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
@@ -396,7 +314,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
 
       this.exportFieldsWatcher();
-      this.optionSearchWatcher();
       this.setupCustomWatchers();
       this.setupCustomDateOptionWatchers();
       this.isLoading = false;
