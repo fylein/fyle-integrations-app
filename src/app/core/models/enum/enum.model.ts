@@ -627,13 +627,6 @@ export enum IntacctExportSettingDestinationOptionKey {
   CHARGE_CARD = 'CHARGE_CARD'
 }
 
-export enum NetsuiteExportSettingDestinationOptionKey {
-  VENDOR = 'VENDOR',
-  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
-  BANK_ACCOUNT = 'BANK_ACCOUNT',
-  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
-}
-
 export enum IntegrationName {
   SAGE300 = 'SAGE300'
 }
