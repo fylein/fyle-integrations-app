@@ -146,9 +146,6 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   clearSearch(): void {
     this.form.controls.searchOption.patchValue('');
-    if (this.destinationAttributes) {
-      this.destinationAttributes = this.optionsCopy.concat();
-    }
   }
 
   searchOptions(event: any) {
