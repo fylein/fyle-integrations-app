@@ -73,5 +73,6 @@ cypress/coverage/*
 !cypress/coverage/coverage-summary.json
 storybook-static/
 documentation.json
+
 # Sentry Config File
 .sentryclirc
