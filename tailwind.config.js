@@ -1168,7 +1168,9 @@ module.exports = {
       },
       maxHeight: {
         '20-px': '20px',
-        '36-px': '36px'
+        '36-px': '36px',
+        'dropdown-option-height': 'var(--dropdown-option-height)',
+        ...dimensions
       },
       lineHeight: {
         'normal': 'normal',
