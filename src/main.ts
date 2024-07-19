@@ -28,7 +28,7 @@ if (environment.sentry_dsn) {
     // Set tracesSampleRate to 1.0 to capture 100%
     // Of transactions for tracing.
     // We recommend adjusting this value in production
-    tracesSampleRate: 1.0,
+    tracesSampleRate: 0.1,
 
     // Set `tracePropagationTargets` to control for which URLs trace propagation should be enabled
     // eslint-disable-next-line capitalized-comments
