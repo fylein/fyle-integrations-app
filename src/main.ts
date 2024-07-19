@@ -12,7 +12,7 @@ if (environment.production) {
 
 
 Sentry.init({
-  dsn: "https://a2a46483eabc1b84420e4226a539daa5@o341960.ingest.us.sentry.io/4507616626933760",
+  dsn: environment.sentry_dsn,
 
   integrations: [
     // Registers and configures the Tracing integration,
