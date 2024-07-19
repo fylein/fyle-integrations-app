@@ -12,13 +12,13 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { ExportSettingComponent } from './export-setting.component';
-import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } from './export-setting.fixture';
+import { QbdExportSettingComponent } from './qbd-export-setting.component';
+import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } from './qbd-export-setting.fixture';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 
-describe('ExportSettingComponent', () => {
-  let component: ExportSettingComponent;
-  let fixture: ComponentFixture<ExportSettingComponent>;
+describe('QbdExportSettingComponent', () => {
+  let component: QbdExportSettingComponent;
+  let fixture: ComponentFixture<QbdExportSettingComponent>;
   let service1: any;
   let service2: any;
   let service3: any;
@@ -51,7 +51,7 @@ describe('ExportSettingComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-      declarations: [ ExportSettingComponent ],
+      declarations: [ QbdExportSettingComponent ],
       providers: [
         FormBuilder,
         { provide: Router, useValue: routerSpy },
@@ -63,7 +63,7 @@ describe('ExportSettingComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ExportSettingComponent);
+    fixture = TestBed.createComponent(QbdExportSettingComponent);
     component = fixture.componentInstance;
     component.exportSettings = QBDExportSettingResponse;
     formbuilder = TestBed.inject(FormBuilder);

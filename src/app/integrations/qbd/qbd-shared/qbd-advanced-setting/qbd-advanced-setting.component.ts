@@ -13,11 +13,11 @@ import { environment } from 'src/environments/environment';
 import { brandingConfig } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-advanced-setting',
-  templateUrl: './advanced-setting.component.html',
-  styleUrls: ['./advanced-setting.component.scss']
+  selector: 'app-qbd-advanced-setting',
+  templateUrl: './qbd-advanced-setting.component.html',
+  styleUrls: ['./qbd-advanced-setting.component.scss']
 })
-export class AdvancedSettingComponent implements OnInit {
+export class QbdAdvancedSettingComponent implements OnInit {
   isOnboarding: any;
 
   isLoading: boolean;

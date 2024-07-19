@@ -10,12 +10,12 @@ import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configurat
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { FieldMappingComponent } from './field-mapping.component';
-import { errorResponse, QBDFieldMappingResponse, QBDFieldMappingResponse2 } from './field-mapping.fixture';
+import { QbdFieldMappingComponent } from './qbd-field-mapping.component';
+import { errorResponse, QBDFieldMappingResponse, QBDFieldMappingResponse2 } from './qbd-field-mapping.fixture';
 
-describe('FieldMappingComponent', () => {
-  let component: FieldMappingComponent;
-  let fixture: ComponentFixture<FieldMappingComponent>;
+describe('QbdFieldMappingComponent', () => {
+  let component: QbdFieldMappingComponent;
+  let fixture: ComponentFixture<QbdFieldMappingComponent>;
   let service1: any;
   let service2: any;
   let service3: any;
@@ -42,7 +42,7 @@ describe('FieldMappingComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-      declarations: [ FieldMappingComponent ],
+      declarations: [ QbdFieldMappingComponent ],
       providers: [FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: QbdFieldMappingService, useValue: service1 },
@@ -52,7 +52,7 @@ describe('FieldMappingComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FieldMappingComponent);
+    fixture = TestBed.createComponent(QbdFieldMappingComponent);
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);

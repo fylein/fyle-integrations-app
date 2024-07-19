@@ -11,11 +11,11 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-field-mapping',
-  templateUrl: './field-mapping.component.html',
-  styleUrls: ['./field-mapping.component.scss']
+  selector: 'app-qbd-field-mapping',
+  templateUrl: './qbd-field-mapping.component.html',
+  styleUrls: ['./qbd-field-mapping.component.scss']
 })
-export class FieldMappingComponent implements OnInit {
+export class QbdFieldMappingComponent implements OnInit {
 
   isLoading: boolean;
 

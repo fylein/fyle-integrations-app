@@ -9,6 +9,7 @@ import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
+import { QbdSharedModule } from './qbd-shared/qbd-shared.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { TableModule } from 'primeng/table';
     TabMenuModule,
     DropdownModule,
     TableModule,
-    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
+    IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' }),
+    QbdSharedModule
   ]
 })
 export class QbdModule { }

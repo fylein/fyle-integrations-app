@@ -11,11 +11,11 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-map
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-export-setting',
-  templateUrl: './export-setting.component.html',
-  styleUrls: ['./export-setting.component.scss']
+  selector: 'app-qbd-export-setting',
+  templateUrl: './qbd-export-setting.component.html',
+  styleUrls: ['./qbd-export-setting.component.scss']
 })
-export class ExportSettingComponent implements OnInit {
+export class QbdExportSettingComponent implements OnInit {
 
   isLoading: boolean = true;
 

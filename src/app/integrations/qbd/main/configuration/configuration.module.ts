@@ -5,6 +5,7 @@ import { ConfigurationRoutingModule } from './configuration-routing.module';
 import { ConfigurationAdvancedSettingComponent } from './configuration-advanced-setting/configuration-advanced-setting.component';
 import { ConfigurationFieldSettingComponent } from './configuration-field-setting/configuration-field-setting.component';
 import { ConfigurationExportSettingComponent } from './configuration-export-setting/configuration-export-setting.component';
+import { QbdSharedModule } from '../../qbd-shared/qbd-shared.module';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ConfigurationExportSettingComponent } from './configuration-export-sett
   imports: [
     CommonModule,
     ConfigurationRoutingModule,
-    SharedModule
+    SharedModule,
+    QbdSharedModule
   ]
 })
 export class ConfigurationModule { }

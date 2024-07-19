@@ -13,12 +13,12 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 
-import { AdvancedSettingComponent } from './advanced-setting.component';
-import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDEmailOptioResponse } from './advanced-setting.fixture';
+import { QbdAdvancedSettingComponent } from './qbd-advanced-setting.component';
+import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDEmailOptioResponse } from './qbd-advanced-setting.fixture';
 
-describe('AdvancedSettingComponent', () => {
-  let component: AdvancedSettingComponent;
-  let fixture: ComponentFixture<AdvancedSettingComponent>;
+describe('QbdAdvancedSettingComponent', () => {
+  let component: QbdAdvancedSettingComponent;
+  let fixture: ComponentFixture<QbdAdvancedSettingComponent>;
   let service1: any;
   let service2: any;
   let service3: any;
@@ -49,7 +49,7 @@ describe('AdvancedSettingComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [FormsModule, ReactiveFormsModule, HttpClientModule, RouterTestingModule, SharedModule, NoopAnimationsModule],
-      declarations: [ AdvancedSettingComponent ],
+      declarations: [ QbdAdvancedSettingComponent ],
       providers: [
         FormBuilder,
         { provide: Router, useValue: routerSpy },
@@ -61,7 +61,7 @@ describe('AdvancedSettingComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AdvancedSettingComponent);
+    fixture = TestBed.createComponent(QbdAdvancedSettingComponent);
     component = fixture.componentInstance;
     formbuilder = TestBed.inject(FormBuilder);
     router = TestBed.inject(Router);
