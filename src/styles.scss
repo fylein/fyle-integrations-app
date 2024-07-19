@@ -194,6 +194,11 @@ p {
     @apply tw-bg-none tw-text-placeholder tw-shadow-none tw-bg-white tw-p-8-px #{!important};
 }
 
+.p-dialog-top-right .p-dialog {
+    margin: .75rem !important;
+    transform: translateZ(0) !important;
+}
+
 // Input text
 .p-inputtext {
     @apply tw-font-primary tw-text-14-px tw-border-box-color #{!important};

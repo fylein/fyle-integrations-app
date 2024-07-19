@@ -35,5 +35,5 @@
 }
 
 :host ::ng-deep .p-button:enabled:hover {
-    @apply tw-w-fit tw-bg-none tw-bg-white tw-text-calendar-day-text-color tw-shadow-none #{!important}
+    @apply tw-bg-none tw-bg-white tw-text-calendar-day-text-color tw-shadow-none #{!important}
 }
