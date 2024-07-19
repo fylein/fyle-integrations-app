@@ -35,10 +35,5 @@
 }
 
 :host ::ng-deep .p-button:enabled:hover {
-    @apply tw-bg-none tw-bg-white tw-text-calendar-day-text-color tw-shadow-none #{!important}
-}
-
-::ng-deep .p-dialog-mask {
-    background-color: transparent !important;
-    pointer-events: none; /* Allows interaction with elements behind the overlay */
+    @apply tw-bg-none tw-bg-white tw-text-calendar-day-text-color tw-shadow-btn-cta-shadow #{!important}
 }
