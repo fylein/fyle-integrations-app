@@ -50,11 +50,6 @@ jobs:
           git pull origin master
           git push origin master
 
-          - name: Install node.js
-          uses: actions/setup-node@v1
-          with:
-            node-version: 20
-  
       - name: Install node.js
         uses: actions/setup-node@v1
         with:
