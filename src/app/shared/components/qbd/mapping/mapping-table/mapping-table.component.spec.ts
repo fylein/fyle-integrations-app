@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MappingTableComponent } from './mapping-table.component';
-import { postMappingResponse } from 'src/app/integrations/qbd/main/mapping/generic-mapping/generic-mapping.fixture';
+import { postMappingResponse } from 'src/app/integrations/qbd/qbd-main/qbd-mapping/qbd-generic-mapping/qbd-generic-mapping.fixture';
 import { OperatingSystem } from 'src/app/core/models/enum/enum.model';
 
 describe('MappingTableComponent', () => {

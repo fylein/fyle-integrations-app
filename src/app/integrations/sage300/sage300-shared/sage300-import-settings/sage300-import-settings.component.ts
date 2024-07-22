@@ -69,7 +69,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
       formController: 'importCategories'
     },
     {
-      source_field: DefaultImportFields.MERCHANTS,
+      source_field: DefaultImportFields.MERCHANT,
       destination_field: DefaultImportFields.VENDOR,
       formController: 'importVendorAsMerchant'
     }
