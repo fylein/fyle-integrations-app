@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields, Sage300ImportSettingsDependentFieldSetting } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { ExpenseField, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -132,9 +132,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
         if (control.value.source_field === MappingSourceField.PROJECT) {
           control.patchValue({
             source_field: MappingSourceField.PROJECT,
-            destination_field: control.value.destination_field,
+            destination_field: control.get('destination_field')?.value,
             import_to_fyle: true,
-            is_custom: control.value.is_custom,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: control.value.source_placeholder
           });
           this.importSettingForm.controls.isDependentImportEnabled.setValue(true);
@@ -190,12 +190,12 @@ export class Sage300ImportSettingsComponent implements OnInit {
       this.fyleFields.push(this.customFieldOption[0]);
       const expenseField = {
         source_field: this.customField.attribute_type,
-        destination_field: this.customFieldControl.value.destination_field,
+        destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
         source_placeholder: this.customField.source_placeholder
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -277,9 +277,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
           this.customFieldControl = control;
           this.customFieldControl.patchValue({
             source_field: '',
-            destination_field: control.value.destination_field,
-            import_to_fyle: control.value.import_to_fyle,
-            is_custom: control.value.is_custom,
+            destination_field: control.get('destination_field')?.value,
+            import_to_fyle: control.get('import_to_fyle')?.value,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: null
           });
         } else if (value.source_field === 'PROJECT' && value.destination_field === 'PROJECT') {

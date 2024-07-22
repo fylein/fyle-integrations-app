@@ -116,6 +116,7 @@ export class XeroExportSettingsComponent implements OnInit {
   }
 
   constructPayloadAndSave(event: ConfigurationWarningOut) {
+    this.isConfirmationDialogVisible = false;
     if (event.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = XeroExportSettingModel.constructPayload(this.exportSettingForm);

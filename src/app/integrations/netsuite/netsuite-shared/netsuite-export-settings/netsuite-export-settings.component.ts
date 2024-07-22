@@ -195,6 +195,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   constructPayloadAndSave(data: ConfigurationWarningOut): void {
+    this.isConfirmationDialogVisible = false;
     if (data.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = NetSuiteExportSettingModel.constructPayload(this.exportSettingForm);
@@ -254,10 +255,6 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       }
     }
 
-    this.exportSettingForm.controls.reimbursableExportType?.valueChanges.subscribe(reimbursableExportType => {
-      this.exportSettingForm.controls.reimbursableExportDate.reset();
-    });
-
     this.exportSettingForm.controls.reimbursableExportGroup?.valueChanges.subscribe((reimbursableExportGroup) => {
       if (brandingConfig.brandId === 'fyle') {
         const reimbursableExpenseGroupingDateOptions = NetSuiteExportSettingModel.getReimbursableExpenseGroupingDateOptions();
@@ -265,8 +262,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       }
     });
 
-    this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.exportSettingForm.controls.creditCardExportDate.reset();
+    this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe(creditCardExportType => {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     });
 

@@ -23,7 +23,7 @@
 }
 
 input[type="text"] {
-    @apply tw-rounded-4-px tw-border tw-border-input-read-only-border #{!important};
+    @apply tw-rounded-4-px tw-border tw-border-input-read-only-border tw-py-8-px tw-pl-14-px tw-pr-12-px #{!important};
 }
 
 ::placeholder {

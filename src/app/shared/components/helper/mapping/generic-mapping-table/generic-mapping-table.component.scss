@@ -62,3 +62,7 @@ input[type="text"] {
 ::placeholder {
     @apply tw-text-search-focused-placeholder-text;
 }
+
+.fyle input[type="text"]:focus{
+    @apply tw-border tw-border-border-primary #{!important};
+}
