@@ -15,6 +15,8 @@ if (environment.sentry_dsn) {
   Sentry.init({
     dsn: environment.sentry_dsn,
 
+    environment: environment.sentry_env,
+
     integrations: [
       // Registers and configures the Tracing integration,
       // Which automatically instruments your application to monitor its
