@@ -559,7 +559,7 @@ export enum DefaultImportFields {
   CATEGORY = 'CATEGORY',
   ACCOUNT = 'ACCOUNT',
   VENDOR = 'VENDOR',
-  MERCHANTS = 'MERCHANTS',
+  MERCHANT = 'MERCHANT',
   LOCATION = 'LOCATION'
 }
 
