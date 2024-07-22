@@ -26,6 +26,7 @@
                     [filter]="true" [filterBy]="optionLabel"
                     (onFilter)="searchOptions($event)"
                     (onHide)="clearSearch()" 
+                    [resetFilterOnHide]="true"
                     [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
                     [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
                     <ng-template let-options pTemplate="item">
