@@ -5,7 +5,7 @@ import { moduleMetadata } from '@storybook/angular';
 import { IconSpriteModule } from 'ng-svg-icon-sprite';
 import { QBDExpenseGroupedBy } from 'src/app/core/models/enum/enum.model';
 import { MandatoryFieldComponent } from 'src/app/shared/components/helper/mandatory-field/mandatory-field.component';
-import { ConfigurationLabelComponent } from 'src/app/shared/components/qbd/configuration/configuration-label/configuration-label.component';
+import { ConfigurationLabelComponent } from 'src/app/shared/components/configuration/configuration-label/configuration-label.component';
 
 const meta: Meta<ConfigurationLabelComponent> = {
   title: 'Configuration/ExportSetting/ConfigurationLabel',

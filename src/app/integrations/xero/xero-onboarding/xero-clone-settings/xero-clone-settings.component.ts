@@ -208,7 +208,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   save(): void {
     this.isSaveInProgress = true;
-    const cloneSettingPayload = XeroCloneSettingModel.constructPayload(this.exportSettingForm, this.importSettingForm, this.advancedSettingForm);
+    const cloneSettingPayload = XeroCloneSettingModel.constructPayload(this.exportSettingForm, this.importSettingForm, this.advancedSettingForm, this.isTaxGroupSyncAllowed);
 
     this.cloneSettingService.postCloneSettings(cloneSettingPayload).subscribe((response) => {
       this.isSaveInProgress = false;
