@@ -380,7 +380,7 @@ export enum XeroFyleField {
 
 export enum NetsuiteFyleField {
   PROJECT = 'PROJECT',
-  TAX_CODE = 'TAX_CODE'
+  TAX_ITEM = 'TAX_ITEM'
 }
 
 export enum QBDAccountingExportsState {
@@ -559,7 +559,7 @@ export enum DefaultImportFields {
   CATEGORY = 'CATEGORY',
   ACCOUNT = 'ACCOUNT',
   VENDOR = 'VENDOR',
-  MERCHANTS = 'MERCHANTS',
+  MERCHANT = 'MERCHANT',
   LOCATION = 'LOCATION'
 }
 
@@ -625,6 +625,13 @@ export enum IntacctExportSettingDestinationOptionKey {
   EXPENSE_PAYMENT_TYPE = 'EXPENSE_PAYMENT_TYPE',
   CCC_EXPENSE_PAYMENT_TYPE = 'CCC_EXPENSE_PAYMENT_TYPE',
   CHARGE_CARD = 'CHARGE_CARD'
+}
+
+export enum NetsuiteExportSettingDestinationOptionKey {
+  VENDOR = 'VENDOR',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
 }
 
 export enum IntegrationName {
@@ -769,4 +776,9 @@ export enum TravelPerkOnboardingState {
   PAYMENT_PROFILE_SETTINGS = 'PAYMENT_PROFILE_SETTINGS',
   ADVANCED_SETTINGS = 'ADVANCED_SETTINGS',
   COMPLETE = 'COMPLETE'
+}
+
+export enum SplitExpenseGrouping {
+  SINGLE_LINE_ITEM = 'SINGLE_LINE_ITEM',
+  MULTIPLE_LINE_ITEM = 'MULTIPLE_LINE_ITEM'
 }

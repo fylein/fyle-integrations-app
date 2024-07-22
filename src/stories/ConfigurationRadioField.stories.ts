@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import type { Meta, StoryObj } from '@storybook/angular';
 import { moduleMetadata } from '@storybook/angular';
-import { ConfigurationRadioFieldComponent } from 'src/app/shared/components/qbd/configuration/configuration-radio-field/configuration-radio-field.component';
+import { ConfigurationRadioFieldComponent } from 'src/app/shared/components/configuration/configuration-radio-field/configuration-radio-field.component';
 import { setupStoryBookFormGroup } from './utility';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RadioButtonModule } from 'primeng/radiobutton';

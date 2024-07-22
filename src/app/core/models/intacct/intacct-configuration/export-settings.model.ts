@@ -1,9 +1,10 @@
 import { AbstractControl, FormGroup } from "@angular/forms";
-import { IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption, IntacctExportSettingDestinationOptionKey } from "../../enum/enum.model";
+import { IntacctCorporateCreditCardExpensesObject, FyleField, ExpenseState, ExportDateType, IntacctReimbursableExpensesObject, CCCExpenseState, ExpenseGroupingFieldOption, IntacctExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../../enum/enum.model";
 import { DefaultDestinationAttribute, DestinationAttribute } from "../../db/destination-attribute.model";
 import { IntacctDestinationAttribute } from "../db/destination-attribute.model";
 import { SelectFormOption } from "../../common/select-form-option.model";
 import { brandingConfig, brandingContent, brandingFeatureConfig } from "src/app/branding/branding-config";
+import { ExportSettingOptionSearch } from "../../common/export-settings.model";
 
 export type ExportSettingFormOption = {
     label: string,
@@ -36,22 +37,26 @@ export type ExpenseGroupSettingPost = {
     ccc_export_date_type: ExportDateType | null;
   };
 
+export interface IntacctExpenseGroupSettingPost extends ExpenseGroupSettingPost {
+    split_expense_grouping: SplitExpenseGrouping;
+  }
+
+export interface IntacctExpenseGroupSettingGet extends IntacctExpenseGroupSettingPost {}
+
 export type ExportSettingGet = {
     configurations: ExportSettingConfiguration,
-    expense_group_settings: ExpenseGroupSettingPost,
+    expense_group_settings: IntacctExpenseGroupSettingGet,
     general_mappings: ExportSettingGeneralMapping,
     workspace_id: number
 }
 
 export type ExportSettingPost = {
     configurations: ExportSettingConfiguration,
-    expense_group_settings: ExpenseGroupSettingPost,
+    expense_group_settings: IntacctExpenseGroupSettingPost,
     general_mappings: ExportSettingGeneralMapping
   }
 
-export type ExportSettingOptionSearch = {
-    searchTerm: string,
-    destinationAttributes: any[],
+export interface IntacctExportSettingOptionSearch extends ExportSettingOptionSearch {
     destinationOptionKey: IntacctExportSettingDestinationOptionKey
 }
 
@@ -76,7 +81,8 @@ export type ExportSettingOptionSearch = {
                 reimbursable_expense_group_fields: exportSettingsForm.get('reimbursableExportGroup')?.value ? [exportSettingsForm.value.reimbursableExportGroup] : null,
                 reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
                 corporate_credit_card_expense_group_fields: cccExportGroup,
-                ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend Date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate'))
+                ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend Date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate')),
+                split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
             },
             configurations: {
                 reimbursable_expenses_object: getValueOrDefault(exportSettingsForm.get('reimbursableExportType')),

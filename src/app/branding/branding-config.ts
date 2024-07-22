@@ -24,7 +24,8 @@ const featureConfigs: FeatureConfiguration = {
             exportSettings: {
                 reimbursableExpenses: true,
                 nameInJournalEntry: true,
-                useMerchantInJournalLine: true
+                useMerchantInJournalLine: true,
+                splitExpenseGrouping: true
             },
             importSettings: {
                 tax: true,
@@ -71,7 +72,8 @@ const featureConfigs: FeatureConfiguration = {
             exportSettings: {
                 reimbursableExpenses: false,
                 nameInJournalEntry: false,
-                useMerchantInJournalLine: false
+                useMerchantInJournalLine: false,
+                splitExpenseGrouping: false
             },
             importSettings: {
                 tax: false,
@@ -107,10 +109,6 @@ const featureConfigs: FeatureConfiguration = {
 };
 
 // @ts-ignore
-if (brandingConfig.brandId === 'co' && brandingConfig.envId !== 'c1-qa') {
-    const feature =  featureConfigs[brandingConfig.brandId];
-    feature.featureFlags.importSettings.dependentField = false;
-}
 export const brandingFeatureConfig = featureConfigs[brandingConfig.brandId];
 
 const kbArticles: KbArticle = {
@@ -280,8 +278,8 @@ const demoVideoLinks: DemoVideo = {
             // TODO: Update link for MS Dynamics
             BUSINESS_CENTRAL: 'https://www.youtube.com/embed/2oYdc8KcQnk',
             TRAVELPERK: 'https://www.youtube.com/embed/2oYdc8KcQnk',
-            XERO: 'https://www.youtube.com/embed/IplJd7tGWBk',
-            NETSUITE: 'https://www.youtube.com/embed/IplJd7tGWBk'
+            XERO: 'https://www.youtube.com/embed/KeiegWDj308',
+            NETSUITE: 'https://www.youtube.com/embed/e3X3TtjxrHk'
         }
     }
 };
