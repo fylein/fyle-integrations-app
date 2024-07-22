@@ -1,17 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Calendar } from 'primeng/calendar';
 import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
-import { AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
-import { ExportLogService } from 'src/app/core/services/common/export-log.service';
+import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
 
 @Component({
   selector: 'app-export-log-filter',
   templateUrl: './export-log-filter.component.html',
   styleUrls: ['./export-log-filter.component.scss']
 })
-export class ExportLogFilterComponent implements OnInit {
+export class ExportLogFilterComponent implements OnInit, OnDestroy {
 
   @Input() exportLogForm: FormGroup;
 
@@ -39,11 +37,16 @@ export class ExportLogFilterComponent implements OnInit {
 
   @ViewChild('calendar') calendar: Calendar;
 
+
+  @ViewChild('calendarContainer', { static: true }) calendarContainer: any;
+
+  private observer: MutationObserver | undefined;
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingContent = brandingContent.exportLog;
 
-  constructor() { }
+  constructor(private renderer: Renderer2) { }
 
   clearDateFilter(): void {
     this.exportLogForm.controls.start.patchValue('');
@@ -65,6 +68,12 @@ export class ExportLogFilterComponent implements OnInit {
     this.calendar.inputfieldViewChild?.nativeElement.focus();
     setTimeout(() => {
       this.calendar.showOverlay();
+      const overlayElement = document.querySelector('.p-datepicker-mask');
+      if (overlayElement) {
+        this.renderer.removeClass(overlayElement, 'p-component-overlay');
+        this.renderer.setStyle(overlayElement, 'background-color', 'transparent');
+        this.renderer.setStyle(overlayElement, 'pointer-events', 'none');
+      }
     }, 0);
     event?.stopPropagation();
   }
@@ -87,8 +96,20 @@ export class ExportLogFilterComponent implements OnInit {
     this.exportLogForm.controls.start.patchValue([this.dateOptions[selectedOption].startDate, this.dateOptions[selectedOption].endDate]);
   }
 
+  handleClickOutside(event: Event) {
+    if (!this.calendarContainer) {
+      this.isCalendarVisible = false;
+      this.isDateFilterFocused = false;
+    }
+  }
+
+  ngOnDestroy() {
+    document.removeEventListener('click', this.handleClickOutside.bind(this));
+  }
+
   ngOnInit(): void {
     this.setupSearchWatcher();
+    document.addEventListener('click', this.handleClickOutside.bind(this));
   }
 
 }
