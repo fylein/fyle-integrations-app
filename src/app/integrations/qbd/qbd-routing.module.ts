@@ -9,11 +9,11 @@ const routes: Routes = [
     children: [
       {
         path: 'onboarding',
-        loadChildren: () => import('./onboarding/onboarding.module').then(m => m.OnboardingModule)
+        loadChildren: () => import('./qbd-onboarding/qbd-onboarding.module').then(m => m.QbdOnboardingModule)
       },
       {
         path: 'main',
-        loadChildren: () => import('./main/main.module').then(m => m.MainModule)
+        loadChildren: () => import('./qbd-main/qbd-main.module').then(m => m.QbdMainModule)
       }
     ]
   }
