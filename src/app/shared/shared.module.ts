@@ -28,18 +28,15 @@ import { MandatoryErrorMessageComponent } from './components/helper/mandatory-er
 import { ZeroStateWithIllustrationComponent } from './components/qbd/core/zero-state-with-illustration/zero-state-with-illustration.component';
 import { OnboardingStepperComponent } from './components/qbd/helper/onboarding-stepper/onboarding-stepper.component';
 import { OnboardingSteppersComponent } from './components/helper/onboarding-stepper/onboarding-stepper.component';
-import { ExportSettingComponent } from './components/qbd/configuration/export-setting/export-setting.component';
-import { AdvancedSettingComponent } from './components/qbd/configuration/advanced-setting/advanced-setting.component';
-import { FieldMappingComponent } from './components/qbd/configuration/field-mapping/field-mapping.component';
 import { ConfigurationToggleFieldComponent } from './components/configuration/configuration-toggle-field/configuration-toggle-field.component';
 import { ConfigurationSelectFieldComponent } from './components/configuration/configuration-select-field/configuration-select-field.component';
-import { ConfigurationRadioFieldComponent } from './components/qbd/configuration/configuration-radio-field/configuration-radio-field.component';
+import { ConfigurationRadioFieldComponent } from './components/configuration/configuration-radio-field/configuration-radio-field.component';
 import { ConfigurationStepFooterComponent } from './components/configuration/configuration-step-footer/configuration-step-footer.component';
 import { ConfigurationStepHeaderComponent } from './components/configuration/configuration-step-header/configuration-step-header.component';
 import { EmailMultiSelectFieldComponent } from './components/configuration/email-multi-select-field/email-multi-select-field.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigurationMultiSelectComponent } from './components/configuration/configuration-multi-select/configuration-multi-select.component';
-import { ConfigurationLabelComponent } from './components/qbd/configuration/configuration-label/configuration-label.component';
+import { ConfigurationLabelComponent } from './components/configuration/configuration-label/configuration-label.component';
 import { CalendarModule } from 'primeng/calendar';
 import { AppLandingPageBodyComponent } from './components/helper/app-landing-page-body/app-landing-page-body.component';
 import { MappingTableComponent } from './components/qbd/mapping/mapping-table/mapping-table.component';
@@ -108,9 +105,6 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     ZeroStateWithIllustrationComponent,
     OnboardingStepperComponent,
     OnboardingSteppersComponent,
-    ExportSettingComponent,
-    AdvancedSettingComponent,
-    FieldMappingComponent,
     ConfigurationToggleFieldComponent,
     ConfigurationSelectFieldComponent,
     ConfigurationRadioFieldComponent,
@@ -208,9 +202,6 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     ZeroStateWithIllustrationComponent,
     OnboardingStepperComponent,
     OnboardingSteppersComponent,
-    ExportSettingComponent,
-    AdvancedSettingComponent,
-    FieldMappingComponent,
     ConfigurationToggleFieldComponent,
     ConfigurationSelectFieldComponent,
     ConfigurationRadioFieldComponent,
@@ -240,6 +231,7 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     OnboardingDoneComponent,
     MainMenuComponent,
     ConfigurationImportFieldComponent,
+    ConfigurationLabelComponent,
     ConfigurationInfoLabelComponent,
     ConfigurationCustomFieldCreationDialogComponent,
     ConfigurationConfirmationDialogComponent,
