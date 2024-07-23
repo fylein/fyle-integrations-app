@@ -62,7 +62,7 @@ export class IntacctConnectorComponent implements OnInit {
       this.connectorService.connectSageIntacct(sageIntacctConnection).subscribe((response) => {
         this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           this.setupConnectionStatus.emit(true);
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection successful.');
           this.isLoading = false;
           this.saveInProgress = false;
         });
