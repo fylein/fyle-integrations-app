@@ -54,8 +54,8 @@ export const exposeAppConfig: AllowedAppsConfiguration = {
             QBO: true,
             BUSINESS_CENTRAL: false,
             TRAVELPERK: false,
-            XERO: false,
-            NETSUITE: false,
+            XERO: true,
+            NETSUITE: true,
             QBD: false,
             BAMBOO: false
         }
