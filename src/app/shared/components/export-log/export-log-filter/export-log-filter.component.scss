@@ -37,3 +37,7 @@
 :host ::ng-deep .p-button:enabled:hover {
     @apply tw-bg-none tw-bg-white tw-text-calendar-day-text-color tw-shadow-btn-cta-shadow #{!important}
 }
+
+:host ::ng-deep .p-datepicker-title {
+    @apply tw-justify-evenly #{!important};
+}

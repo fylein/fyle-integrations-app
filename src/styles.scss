@@ -552,6 +552,10 @@ p {
     @apply tw-text-12-px tw-font-primary tw-text-calendar-header-text-color #{!important};
 }
 
+.p-datepicker .p-datepicker-header .p-datepicker-title .p-datepicker-month {
+    @apply tw-pr-24-px #{!important};
+}
+
 .p-datepicker .p-datepicker-header {
     @apply tw-p-0 #{!important};
 }
