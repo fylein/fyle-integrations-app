@@ -16,6 +16,9 @@ RUN npm install --production
 # add app
 COPY . /app
 
+# debug
+RUN echo $SENTRY_AUTH_TOKEN
+
 # generate build
 RUN npm run build
 
