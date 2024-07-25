@@ -634,6 +634,34 @@ export enum NetsuiteExportSettingDestinationOptionKey {
   CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
 }
 
+export enum QboExportSettingDestinationOptionKey {
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
+  VENDOR = 'VENDOR',
+  EXPENSE_ACCOUNT = 'EXPENSE_ACCOUNT'
+}
+
+export enum XeroExportSettingDestinationOptionKey {
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+}
+
+export enum Sage300ExportSettingDestinationOptionKey {
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+}
+
+export enum BCExportSettingDestinationOptionKey {
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+}
+
+export type DestinationOptionKey =
+  IntacctExportSettingDestinationOptionKey |
+  NetsuiteExportSettingDestinationOptionKey |
+  QboExportSettingDestinationOptionKey |
+  XeroExportSettingDestinationOptionKey |
+  Sage300ExportSettingDestinationOptionKey |
+  BCExportSettingDestinationOptionKey;
+
 export enum IntegrationName {
   SAGE300 = 'SAGE300'
 }
