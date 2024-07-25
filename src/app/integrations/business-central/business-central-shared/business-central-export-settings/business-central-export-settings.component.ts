@@ -30,8 +30,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   exportSettingForm: FormGroup;
 
-  creditCardAccountOptions: BusinessCentralDestinationAttributes[];
-
   bankOptions: BusinessCentralDestinationAttributes[];
 
   vendorOptions: BusinessCentralDestinationAttributes[];
@@ -191,7 +189,6 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
-      this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
       this.bankOptions = destinationAttributes.ACCOUNT;
       this.vendorOptions = destinationAttributes.VENDOR;
       this.setupCustomWatchers();
