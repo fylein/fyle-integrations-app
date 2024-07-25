@@ -647,7 +647,11 @@ export enum XeroExportSettingDestinationOptionKey {
 }
 
 export enum Sage300ExportSettingDestinationOptionKey {
-  BANK_ACCOUNT = 'BANK_ACCOUNT',
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
+  DEBIT_CARD_ACCOUNT = 'DEBIT_CARD_ACCOUNT',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
+  JOB = 'JOB',
+  VENDOR = 'VENDOR'
 }
 
 export enum BCExportSettingDestinationOptionKey {
