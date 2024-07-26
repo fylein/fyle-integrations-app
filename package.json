@@ -17,8 +17,7 @@
     "storybook": "ng run fyle-integrations-app:storybook",
     "build-storybook": "npm run setup:env && npm run setup:branding && ng run fyle-integrations-app:build-storybook",
     "start:fyle": "ng serve --configuration=fyle",
-    "start:c1": "ng serve --configuration=c1",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org fyle-technologies-private-limi --project integrations-app ./dist && sentry-cli sourcemaps upload --org fyle-technologies-private-limi --project integrations-app ./dist"
+    "start:c1": "ng serve --configuration=c1"
   },
   "private": true,
   "dependencies": {
@@ -35,8 +34,6 @@
     "@angular/router": "^14.0.0",
     "@auth0/angular-jwt": "^5.1.0",
     "@rxweb/reactive-form-validators": "^2.1.6",
-    "@sentry/angular": "^8.18.0",
-    "@sentry/cli": "^2.32.2",
     "@types/node": "^16.11.7",
     "ng-svg-icon-sprite": "~1.12.0",
     "primeicons": "^6.0.1",
