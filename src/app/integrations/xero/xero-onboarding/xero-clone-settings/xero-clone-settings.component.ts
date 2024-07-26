@@ -149,7 +149,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   resetCloneSetting(): void {
     this.warningHeaderText = 'Are you sure?';
-    this.warningContextText = `By resetting the configuration, you will be configuring each setting individually from the beginning.<br><br>Would you like to continue?`;
+    this.warningContextText = `By resetting the configuration, you will be configuring each setting individually from the beginning.`;
     this.primaryButtonText = 'Yes';
     this.warningEvent = ConfigurationWarningEvent.RESET_CONFIGURATION;
 

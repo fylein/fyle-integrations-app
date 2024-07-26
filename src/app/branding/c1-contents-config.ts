@@ -24,7 +24,7 @@ export const c1Contents = {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
                     cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
                     creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (i.e., expenses) or as a grouped report with multiple line items (i.e., expense reports).',
-                    expenseState: '',
+                    expenseState: 'Select export state',
                     creditCardExpenseSubLabel: 'Choose the type of NetSuite transaction to export your expenses.',
                     cccExpenseStateSubLabel: 'You can choose to only export expenses when they\'ve been labeled approved or closed.',
                     creditCardExpenseStateLabel: 'How should expenses be labeled  before exporting from Expense Management?',

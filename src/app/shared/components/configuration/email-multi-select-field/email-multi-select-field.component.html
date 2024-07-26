@@ -34,7 +34,7 @@
                         <p-inputIcon>
                             <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
                         </p-inputIcon>
-                        <input type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-34-px" (keyup)="options.filter($event)" pInputText placeholder="Search by Name / Email" formControlName="search"/>
+                        <input type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-40-px !tw-pr-12-px !tw-py-12-px" (keyup)="options.filter($event)" pInputText placeholder="Search by Name / Email" formControlName="search"/>
                     </p-iconField>
                 </div>
             </ng-template>

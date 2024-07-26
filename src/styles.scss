@@ -436,7 +436,7 @@ p {
     @apply tw-border-[1.5px] #{!important};
 }
 
-.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight, .p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
     @apply tw-text-14-px tw-text-dd-menu-item-default-text-color tw-bg-white tw-rounded-4-px #{!important};
 }
 
@@ -778,4 +778,12 @@ p {
 
 ::-webkit-scrollbar-thumb:hover {
     @apply tw-bg-[#aaa] tw-rounded-99-px;
+}
+
+body > div:nth-child(3) {
+    @apply tw-fixed #{!important};
+}
+
+body > div > div:nth-child(1) {
+    @apply tw-absolute tw-w-300-px #{!important};
 }

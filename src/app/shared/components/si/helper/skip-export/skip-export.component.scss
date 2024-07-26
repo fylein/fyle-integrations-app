@@ -26,7 +26,7 @@
 }
 
 :host ::ng-deep .p-calendar .p-inputtext {
-  @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border-solid tw-py-10-px tw-px-14-px #{!important};
+  @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border-solid tw-py-10-px tw-px-14-px tw-border #{!important};
 }
 
 :host ::ng-deep .p-chips-token {

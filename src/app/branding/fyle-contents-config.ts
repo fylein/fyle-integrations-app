@@ -24,7 +24,7 @@ export const fyleContents = {
                     creditCardExpenseLabel: 'How should the expenses be exported?',
                     cccExpenseBankAccountSubLabel: 'The selected expense payment type will be added to the corporate credit card expenses exported from ' + brandingConfig.brandName + ' to NetSuite.',
                     creditCardExportTypeSubLabel: 'Expenses can either be exported as single line items (Expense) or as a grouped report with multiple line items (Report)',
-                    expenseState: '',
+                    expenseState: 'Select export state',
                     creditCardExpenseStateSubLabel: 'You could choose to export ccc expenses when they have been approved and are awaiting payment clearance, or simply when they have been paid out.',
                     creditCardExpenseStateLabel: 'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?',
                     creditCardExpenseSubLabel: 'Choose the type of transaction in NetSuite to export your ' + brandingConfig.brandName +' expenses.',

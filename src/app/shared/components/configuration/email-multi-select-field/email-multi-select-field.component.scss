@@ -29,10 +29,6 @@
     @apply tw-border-slightly-normal-text-color tw-border #{!important};
 }
 
-:host ::ng-deep .p-icon-field-left .p-input-icon:first-of-type {
-    @apply tw-left-0 tw-pl-8-px #{!important}
-}
-
 .cancel-btn {
     @apply tw-px-24-px tw-py-12-px tw-mr-10-px tw-border tw-border-box-color tw-bg-white tw-rounded-4-px #{!important};
 }
