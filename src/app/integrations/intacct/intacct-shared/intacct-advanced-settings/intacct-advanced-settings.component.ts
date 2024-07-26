@@ -229,7 +229,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       useEmployeeLocation: [this.advancedSettings.general_mappings.use_intacct_employee_locations ? this.advancedSettings.general_mappings.use_intacct_employee_locations : null],
       useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null],
       searchOption: [''],
-      autoCreateMerchants: new FormControl(this.advancedSettings?.configurations.auto_create_merchants_as_vendors ? true : false),
+      autoCreateMerchants: new FormControl(this.advancedSettings?.configurations.auto_create_merchants_as_vendors ? true : false)
     });
     this.createAutoSyncPaymentsWatcher();
     this.createMemoStructureWatcher();
@@ -357,7 +357,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   isAutoCreateMerchantsFieldVisible(): boolean {
     return (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION && !this.importVendorsAsMerchants) ||
       (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.importVendorsAsMerchants && this.useMerchantInJournalLine);
-  };
+  }
 
   ngOnInit(): void {
     this.getAdminEmails();
