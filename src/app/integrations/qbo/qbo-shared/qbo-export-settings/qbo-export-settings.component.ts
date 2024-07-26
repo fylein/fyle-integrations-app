@@ -235,7 +235,9 @@ export class QboExportSettingsComponent implements OnInit {
     if ([QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(selectedValue)) {
       this.cccExpenseGroupingDateOptions = QBOExportSettingModel.getAdditionalCreditCardExpenseGroupingDateOptions();
       this.exportSettingForm.controls.creditCardExportGroup.setValue(ExpenseGroupingFieldOption.EXPENSE_ID);
-      this.exportSettingForm.controls.creditCardExportGroup.disable();
+      setTimeout(() => {
+        this.exportSettingForm.controls.creditCardExportGroup.disable();
+      }, 10);
     } else {
       this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
       this.helperService.clearValidatorAndResetValue(this.exportSettingForm, 'creditCardExportGroup');
@@ -247,12 +249,6 @@ export class QboExportSettingsComponent implements OnInit {
     if (this.exportSettingForm.value.creditCardExportType && [QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE, QBOCorporateCreditCardExpensesObject.DEBIT_CARD_EXPENSE].includes(this.exportSettingForm.value.creditCardExportType)) {
       this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
     }
-
-    this.exportSettingService.creditCardExportTypeChange.subscribe((selectedValue: QBOCorporateCreditCardExpensesObject) => {
-      this.showNameInJournalOption = selectedValue === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
-
-      this.updateCCCExpenseGroupingDateOptions(selectedValue);
-    });
   }
 
   private setupCustomDateOptionWatchers(): void {
@@ -264,8 +260,9 @@ export class QboExportSettingsComponent implements OnInit {
       }
     });
 
-    this.exportSettingForm.controls.creditCardExportType?.valueChanges.subscribe(creditCardExportType => {
-      this.updateCCCExpenseGroupingDateOptions(this.exportSettingForm.value.creditCardExportType);
+    this.exportSettingForm.controls.creditCardExportType.valueChanges.subscribe((selectedValue) => {
+      this.showNameInJournalOption = selectedValue === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
+      this.updateCCCExpenseGroupingDateOptions(selectedValue);
     });
 
 
