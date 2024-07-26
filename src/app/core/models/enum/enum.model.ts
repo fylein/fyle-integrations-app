@@ -655,7 +655,8 @@ export enum Sage300ExportSettingDestinationOptionKey {
 }
 
 export enum BCExportSettingDestinationOptionKey {
-  BANK_ACCOUNT = 'BANK_ACCOUNT',
+  ACCOUNT = 'ACCOUNT',
+  VENDOR = 'VENDOR'
 }
 
 export type DestinationOptionKey =
