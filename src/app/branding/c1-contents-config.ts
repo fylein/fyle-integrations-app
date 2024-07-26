@@ -213,6 +213,7 @@ export const c1Contents = {
                 autoSyncPayments: 'Auto-sync payment status for reimbursable expenses',
                 defaultPaymentAccount: 'Select payment account',
                 autoCreateEmployeeVendor: 'Auto-create ',
+                autoCreateMerchantsAsVendorsLabel: 'Auto-create Merchants as Vendors',
                 postEntriesCurrentPeriod: 'Post entries in the current open accounting period',
                 setDescriptionField: 'Set the line-item description field in Sage Intacct',
                 dfvLabel: 'Default field values',
