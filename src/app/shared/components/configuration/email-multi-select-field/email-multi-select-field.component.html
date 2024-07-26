@@ -14,7 +14,7 @@
             <ng-template let-value pTemplate="selectedItems">
                 <div *ngIf="selectedEmail"
                     class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
-                    <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px">{{ selectedEmail }}</p>
+                    <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px tw-max-w-[150px] tw-overflow-hidden tw-whitespace-nowrap tw-text-ellipsis">{{ selectedEmail }}</p>
                     <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
                     <app-svg-icon (iconClick)="removeEmail()" [svgSource]="'cross-small'" [width]="'12px'" [height]="'12px'"
                         [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"></app-svg-icon>
