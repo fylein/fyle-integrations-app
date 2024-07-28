@@ -12,7 +12,7 @@ export class QbdMappingComponent implements OnInit {
 
   mappingPages: MenuItem[] = [
     {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'},
-    {label: 'Item', routerLink: '/integrations/qbd/main/mapping/item'},
+    {label: 'Item', routerLink: '/integrations/qbd/main/mapping/item'}
   ];
 
   activeModule: MenuItem;
