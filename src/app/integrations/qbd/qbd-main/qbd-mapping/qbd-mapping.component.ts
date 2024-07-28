@@ -11,7 +11,8 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 export class QbdMappingComponent implements OnInit {
 
   mappingPages: MenuItem[] = [
-    {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'}
+    {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'},
+    {label: 'Item', routerLink: '/integrations/qbd/main/mapping/item'},
   ];
 
   activeModule: MenuItem;
