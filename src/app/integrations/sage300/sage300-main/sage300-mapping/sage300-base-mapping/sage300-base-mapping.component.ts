@@ -32,7 +32,7 @@ export class Sage300BaseMappingComponent implements OnInit {
 
   AppName = AppName;
 
-  isMultiLineOption: boolean;
+  isMultiLineOption: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -73,7 +73,6 @@ export class Sage300BaseMappingComponent implements OnInit {
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
       this.destinationField = this.getSourceType(mappingSettingsResponse.results);
       this.isMultiLineOption = importSettingsResponse.import_code_fields?.length > 0;
-      console.log(this.isMultiLineOption)
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField).subscribe((response: any) => {
         this.destinationOptions = response.results;
         this.isLoading = false;
