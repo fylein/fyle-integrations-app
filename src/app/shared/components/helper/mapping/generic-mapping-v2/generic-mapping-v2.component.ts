@@ -38,6 +38,8 @@ export class GenericMappingV2Component implements OnInit {
 
   @Input() displayName: string | undefined;
 
+  @Input() isMultiLineOption: boolean = false;
+
   isInitialSetupComplete: boolean = false;
 
   mappingStats: MappingStats;

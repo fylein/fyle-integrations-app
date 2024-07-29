@@ -32,6 +32,8 @@ export class Sage300BaseMappingComponent implements OnInit {
 
   AppName = AppName;
 
+  isMultiLineOption: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
@@ -63,12 +65,14 @@ export class Sage300BaseMappingComponent implements OnInit {
     this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
     forkJoin(
       this.mappingService.getExportSettings(),
+      this.mappingService.getImportSettings(),
       this.mappingService.getMappingSettings()
-    ).subscribe(([exportSettingsResponse, mappingSettingsResponse]) => {
+    ).subscribe(([exportSettingsResponse, importSettingsResponse, mappingSettingsResponse]) => {
       this.reimbursableExpenseObject = exportSettingsResponse.reimbursable_expenses_object;
       this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
       this.destinationField = this.getSourceType(mappingSettingsResponse.results);
+      this.isMultiLineOption = importSettingsResponse.import_code_fields?.length > 0 ? true : false;
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField).subscribe((response: any) => {
         this.destinationOptions = response.results;
         this.isLoading = false;
