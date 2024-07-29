@@ -130,7 +130,10 @@ export class QbdGenericMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setupPage();
+    this.route.params.subscribe(() => {
+      this.isLoading = true;
+      this.setupPage();
+    });
   }
 
 }
