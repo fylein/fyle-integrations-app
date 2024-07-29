@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { Observable, Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { DefaultDestinationAttribute, PaginatedDestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, QBOCorporateCreditCardExpensesObject, QBOOnboardingState, QBOReimbursableExpensesObject, QboExportSettingDestinationOptionKey, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { QBOExportSettingGet, QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -85,6 +85,12 @@ export class QboExportSettingsComponent implements OnInit {
   EmployeeFieldMapping = EmployeeFieldMapping;
 
   splitExpenseGroupingOptions = ExportSettingModel.getSplitExpenseGroupingOptions();
+
+  isOptionSearchInProgress: boolean;
+
+  private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
+
+  QboExportSettingDestinationOptionKey = QboExportSettingDestinationOptionKey;
 
   previewImagePaths =[
     {
@@ -276,22 +282,129 @@ export class QboExportSettingsComponent implements OnInit {
     });
   }
 
+
+  private optionSearchWatcher(): void {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+    ).subscribe((event: ExportSettingOptionSearch) => {
+      let existingOptions: DefaultDestinationAttribute[] = [];
+
+      switch (event.destinationOptionKey) {
+        case QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
+          existingOptions = this.accountsPayables;
+          break;
+        case QboExportSettingDestinationOptionKey.BANK_ACCOUNT:
+          existingOptions = this.bankAccounts;
+          break;
+        case QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
+          existingOptions = this.cccAccounts;
+          break;
+        case QboExportSettingDestinationOptionKey.VENDOR:
+          existingOptions = this.vendors;
+          break;
+        case QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT:
+          existingOptions = this.expenseAccounts;
+      }
+
+      let newOptions: DefaultDestinationAttribute[];
+
+      // Handle EXPENSE_ACCOUNT events with 2 paginated_destination_attributes calls instead of 1
+      if (event.destinationOptionKey === QboExportSettingDestinationOptionKey.EXPENSE_ACCOUNT) {
+        forkJoin([
+          QboExportSettingDestinationOptionKey.BANK_ACCOUNT,
+          QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT
+        ].map(attributeType =>
+          this.mappingService.getPaginatedDestinationAttributes(attributeType, event.searchTerm)
+            .pipe(filter(response => !!response))
+        )).subscribe(([bankAccounts, cccAccounts]) => {
+          const expenseAccounts = bankAccounts.results.concat(cccAccounts.results);
+
+          // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
+          newOptions = expenseAccounts.map(QBOExportSettingModel.formatGeneralMappingPayload);
+
+          // Insert new options to existing options
+          newOptions.forEach((option) => {
+            if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
+              existingOptions.push(option);
+            }
+          });
+
+          this.expenseAccounts = existingOptions.concat();
+          this.expenseAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+
+          this.isOptionSearchInProgress = false;
+        });
+
+        return;
+      }
+
+      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+
+        // Convert DestinationAttributes to DefaultDestinationAttributes (name, id)
+        newOptions = response.results.map(QBOExportSettingModel.formatGeneralMappingPayload);
+
+        // Insert new options to existing options
+        newOptions.forEach((option) => {
+          if (!existingOptions.find((existingOption) => existingOption.id === option.id)) {
+            existingOptions.push(option);
+          }
+        });
+
+
+        switch (event.destinationOptionKey) {
+          case QboExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
+            this.accountsPayables = existingOptions.concat();
+            this.accountsPayables.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+            break;
+          case QboExportSettingDestinationOptionKey.BANK_ACCOUNT:
+            this.bankAccounts = existingOptions.concat();
+            this.bankAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+            break;
+          case QboExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
+            this.cccAccounts = existingOptions.concat();
+            this.cccAccounts.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+            break;
+          case QboExportSettingDestinationOptionKey.VENDOR:
+            this.vendors = existingOptions.concat();
+            this.vendors.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+            break;
+        }
+
+        this.isOptionSearchInProgress = false;
+      });
+    });
+  }
+
+  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+    if (event.searchTerm) {
+      this.isOptionSearchInProgress = true;
+      this.optionSearchUpdate.next(event);
+    }
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT', 'ACCOUNTS_PAYABLE', 'VENDOR'];
 
-    forkJoin({
-      exportSetting: this.exportSettingService.getExportSettings(),
-      destinationAttributes: this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v1', 'qbo'),
-      workspaceGeneralSettings: this.workspaceService.getWorkspaceGeneralSettings()
-    }).subscribe(({exportSetting, destinationAttributes, workspaceGeneralSettings}) => {
+    const groupedAttributes: Observable<PaginatedDestinationAttribute>[]= [];
+
+    destinationAttributes.forEach((destinationAttribute) => {
+      groupedAttributes.push(this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response)));
+    });
+
+    forkJoin([
+      this.exportSettingService.getExportSettings(),
+      this.workspaceService.getWorkspaceGeneralSettings(),
+      ...groupedAttributes
+    ]).subscribe(([exportSetting, workspaceGeneralSettings, bankAccounts, cccAccounts, accountsPayables, vendors]) => {
+
       this.exportSettings = exportSetting;
       this.employeeFieldMapping = workspaceGeneralSettings.employee_field_mapping;
 
-      this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.cccAccounts = destinationAttributes.CREDIT_CARD_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.accountsPayables = destinationAttributes.ACCOUNTS_PAYABLE.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.vendors = destinationAttributes.VENDOR.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+      this.bankAccounts = bankAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+      this.cccAccounts = cccAccounts.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+      this.accountsPayables = accountsPayables.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+      this.vendors = vendors.results.map((option) => QBOExportSettingModel.formatGeneralMappingPayload(option));
       this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
 
       this.isImportItemsEnabled = workspaceGeneralSettings.import_items;
@@ -324,6 +437,8 @@ export class QboExportSettingsComponent implements OnInit {
       this.setupCustomWatchers();
 
       this.setupCustomDateOptionWatchers();
+
+      this.optionSearchWatcher();
 
       this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
 
