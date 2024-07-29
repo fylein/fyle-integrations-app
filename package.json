@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "npm run setup:env && npm run setup:branding && ng build",
+    "build:dev": "ng build --configuration development",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "unit_test:ci": "npm run setup:env && ng test --watch=false --browsers=ChromeHeadlessCustom",
