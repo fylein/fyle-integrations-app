@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, forkJoin, of } from 'rxjs';
+import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { BusinessCentralExportSettingFormOption, BusinessCentralExportSettingGet, BusinessCentralExportSettingModel } from 'src/app/core/models/business-central/business-central-configuration/business-central-export-setting.model';
-import { ExportModuleRule, ExportSettingModel, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
-import { AppName,  AutoMapEmployeeOptions, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, ExpenseGroupingFieldOption, ExportDateType, FyleField, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
+import { ExportModuleRule, ExportSettingModel, ExportSettingOptionSearch, ExportSettingValidatorRule } from 'src/app/core/models/common/export-settings.model';
+import { AppName, BCExportSettingDestinationOptionKey, BusinessCentralExportType, BusinessCentralField, BusinessCentralOnboardingState, BusinessCentralUpdateEvent, ConfigurationCta, ExpenseGroupedBy, ExportDateType, FyleField, Page, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { BusinessCentralExportSettingsService } from 'src/app/core/services/business-central/business-central-configuration/business-central-export-settings.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
-import { BusinessCentralDestinationAttributes } from 'src/app/core/models/business-central/db/business-central-destination-attribute.model';
 import { FormGroup } from '@angular/forms';
 import { BusinessCentralHelperService } from 'src/app/core/services/business-central/business-central-core/business-central-helper.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { destinationAttributes, exportSettingsResponse } from '../business-central.fixture';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-business-central-export-settings',
@@ -30,11 +29,9 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
 
   exportSettingForm: FormGroup;
 
-  creditCardAccountOptions: BusinessCentralDestinationAttributes[];
+  bankOptions: DestinationAttribute[];
 
-  bankOptions: BusinessCentralDestinationAttributes[];
-
-  vendorOptions: BusinessCentralDestinationAttributes[];
+  vendorOptions: DestinationAttribute[];
 
   isLoading: boolean = true;
 
@@ -81,6 +78,12 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
   sessionStartTime = new Date();
 
   isSaveInProgress: boolean;
+
+  isOptionSearchInProgress: boolean;
+
+  private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
+
+  BCExportSettingDestinationOptionKey = BCExportSettingDestinationOptionKey;
 
   constructor(
     private exportSettingService: BusinessCentralExportSettingsService,
@@ -160,6 +163,54 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     });
   }
 
+  private optionSearchWatcher(): void {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+    ).subscribe((event: ExportSettingOptionSearch) => {
+
+      let existingOptions: DestinationAttribute[];
+      switch (event.destinationOptionKey) {
+        case BCExportSettingDestinationOptionKey.ACCOUNT:
+          existingOptions = this.bankOptions;
+          break;
+        case BCExportSettingDestinationOptionKey.VENDOR:
+          existingOptions = this.vendorOptions;
+          break;
+      }
+
+      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+
+        // Insert new options to existing options
+        response.results.forEach((option) => {
+          if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
+            existingOptions.push(option);
+          }
+        });
+
+
+        switch (event.destinationOptionKey) {
+          case BCExportSettingDestinationOptionKey.ACCOUNT:
+            this.bankOptions = existingOptions.concat();
+            this.bankOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            break;
+          case BCExportSettingDestinationOptionKey.VENDOR:
+            this.vendorOptions = existingOptions.concat();
+            this.vendorOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            break;
+        }
+
+        this.isOptionSearchInProgress = false;
+      });
+    });
+  }
+
+  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+    if (event.searchTerm) {
+      this.isOptionSearchInProgress = true;
+      this.optionSearchUpdate.next(event);
+    }
+  }
+
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
@@ -182,19 +233,26 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
       }
     ];
     const commonFormFields: string[] = ['defaultBankName'];
+
+    const destinationAttributes = [BusinessCentralField.ACCOUNT, FyleField.VENDOR];
+
+    const groupedAttributes = destinationAttributes.map(destinationAttribute =>
+      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response))
+    );
+
     forkJoin([
       this.exportSettingService.getExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([BusinessCentralField.ACCOUNT, FyleField.VENDOR], 'v2')
-    ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
+      ...groupedAttributes
+    ]).subscribe(([exportSettingsResponse, accounts, vendors]) => {
       this.exportSettings = exportSettingsResponse;
-      this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, destinationAttributes);
+      this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, accounts.results, vendors.results);
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm, commonFormFields);
-      this.creditCardAccountOptions = destinationAttributes.ACCOUNT;
-      this.bankOptions = destinationAttributes.ACCOUNT;
-      this.vendorOptions = destinationAttributes.VENDOR;
+      this.bankOptions = accounts.results;
+      this.vendorOptions = vendors.results;
       this.setupCustomWatchers();
+      this.optionSearchWatcher();
       this.isLoading = false;
     });
   }
