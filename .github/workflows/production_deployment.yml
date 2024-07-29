@@ -49,20 +49,3 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.DEPLOY_GIT_ACCESS_TOKEN }}@github.com/${{ vars.PROD_DEPLOY_REPO }}
           git pull origin master
           git push origin master
-
-      - name: Install node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: npm install
-  
-      - name: Create a dev build
-        run: npm run build:dev
-  
-      - name: Inject to and upload sourcemaps
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        run: npm run sentry:sourcemaps
-    
