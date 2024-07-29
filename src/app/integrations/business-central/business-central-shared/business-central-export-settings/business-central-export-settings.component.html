@@ -92,6 +92,10 @@
                             [label]="'Set the Default Bank Account as?'"
                             [subLabel]="'The integration will assign the Expenses that is exported as Journal Entry to the Bank Account selected here.'"
                             [destinationAttributes]="bankOptions"
+                            [destinationOptionKey]="BCExportSettingDestinationOptionKey.ACCOUNT"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
                             [placeholder]="'Select default Bank Account'"
                             [formControllerName]="'defaultBankName'">
@@ -176,6 +180,10 @@
                             [label]="'Set the Default Bank Account as?'"
                             [subLabel]="'The integration will assign the Expenses that is exported as Journal Entry to the Bank Account selected here.'"
                             [destinationAttributes]="bankOptions"
+                            [destinationOptionKey]="BCExportSettingDestinationOptionKey.ACCOUNT"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
                             [placeholder]="'Select default Bank Account'"
                             [formControllerName]="'defaultBankName'">
@@ -189,6 +197,10 @@
                             [label]="'Set the Default Vendor as?'"
                             [subLabel]="'The integration will assign the Corporate Card Expenses that is exported as Journal Entry to the Vendor selected here.'"
                             [destinationAttributes]="vendorOptions"
+                            [destinationOptionKey]="BCExportSettingDestinationOptionKey.VENDOR"
+                            [isOptionSearchInProgress]="isOptionSearchInProgress"
+                            [isAdvanceSearchEnabled]="true"
+                            (searchOptionsDropdown)="searchOptionsDropdown($event)"
                             [iconPath]="'list'"
                             [placeholder]="'Select default Vendor'"
                             [formControllerName]="'defaultVendorName'">
