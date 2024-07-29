@@ -1,5 +1,5 @@
 import { DefaultDestinationAttribute, DestinationAttribute } from "../db/destination-attribute.model";
-import { ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../enum/enum.model";
+import { DestinationOptionKey, ExpenseGroupingFieldOption, ExportDateType, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, IntacctReimbursableExpensesObject, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey, SplitExpenseGrouping } from "../enum/enum.model";
 import { SelectFormOption } from "./select-form-option.model";
 
 export type ExportSettingValidatorRule = {
@@ -15,7 +15,7 @@ export type ExportModuleRule = {
 export type ExportSettingOptionSearch = {
   searchTerm: string,
   destinationAttributes: any[],
-  destinationOptionKey: IntacctExportSettingDestinationOptionKey | NetsuiteExportSettingDestinationOptionKey;
+  destinationOptionKey: DestinationOptionKey;
 };
 
 export class ExportSettingModel {

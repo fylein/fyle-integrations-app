@@ -1,12 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { catchError, forkJoin, of } from 'rxjs';
+import { Subject, catchError, debounceTime, filter, forkJoin, of } from 'rxjs';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { AppName, ConfigurationCta, ExpenseGroupedBy, ExpenseGroupingFieldOption, ExportDateType, FyleField, Page, Sage300ExpenseDate, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { Sage300DestinationAttributes } from 'src/app/core/models/sage300/db/sage300-destination-attribuite.model';
+import { AppName, ConfigurationCta, ExpenseGroupedBy, FyleField, Page, Sage300ExpenseDate, Sage300ExportSettingDestinationOptionKey, Sage300ExportType, Sage300Field, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { ExportSettingModel, ExportModuleRule, Sage300ExportSettingFormOption, Sage300ExportSettingGet, ExportSettingValidatorRule } from 'src/app/core/models/sage300/sage300-configuration/sage300-export-setting.model';
-import { ExportSettingModel as CommonExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel as CommonExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -15,6 +14,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 
 @Component({
   selector: 'app-sage300-export-settings',
@@ -55,15 +55,21 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   sessionStartTime = new Date();
 
-  vendorOptions: Sage300DestinationAttributes[];
+  vendorOptions: DestinationAttribute[];
 
-  creditCardAccountOptions: Sage300DestinationAttributes[];
+  creditCardAccountOptions: DestinationAttribute[];
 
-  debitCardAccountOptions: Sage300DestinationAttributes[];
+  debitCardAccountOptions: DestinationAttribute[];
 
-  accountsPayableOptions: Sage300DestinationAttributes[];
+  accountsPayableOptions: DestinationAttribute[];
 
-  sage300Jobs: Sage300DestinationAttributes[];
+  sage300Jobs: DestinationAttribute[];
+
+  isOptionSearchInProgress: boolean;
+
+  private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
+
+  Sage300ExportSettingDestinationOptionKey = Sage300ExportSettingDestinationOptionKey;
 
   previewImagePaths =[
     {
@@ -167,6 +173,81 @@ export class Sage300ExportSettingsComponent implements OnInit {
     return options.filter(option => option.value !== Sage300ExpenseDate.SPENT_AT);
   }
 
+
+  private optionSearchWatcher(): void {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+    ).subscribe((event: ExportSettingOptionSearch) => {
+      let existingOptions: DestinationAttribute[] = [];
+
+      let attribuiteType: string = event.destinationOptionKey;
+
+      switch (event.destinationOptionKey) {
+        case Sage300ExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
+          existingOptions = this.accountsPayableOptions;
+          attribuiteType = Sage300Field.ACCOUNT;
+          break;
+        case Sage300ExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
+          existingOptions = this.creditCardAccountOptions;
+          attribuiteType = Sage300Field.ACCOUNT;
+          break;
+        case Sage300ExportSettingDestinationOptionKey.DEBIT_CARD_ACCOUNT:
+          existingOptions = this.debitCardAccountOptions;
+          attribuiteType = Sage300Field.ACCOUNT;
+          break;
+        case Sage300ExportSettingDestinationOptionKey.JOB:
+          existingOptions = this.sage300Jobs;
+          break;
+        case Sage300ExportSettingDestinationOptionKey.VENDOR:
+          existingOptions = this.vendorOptions;
+          break;
+      }
+
+      this.mappingService.getPaginatedDestinationAttributes(attribuiteType, event.searchTerm).subscribe((response) => {
+
+        // Insert new options to existing options
+        response.results.forEach((option) => {
+          if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
+            existingOptions.push(option);
+          }
+        });
+
+
+        switch (event.destinationOptionKey) {
+          case Sage300ExportSettingDestinationOptionKey.ACCOUNTS_PAYABLE:
+            this.accountsPayableOptions = existingOptions.concat();
+            this.accountsPayableOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            break;
+          case Sage300ExportSettingDestinationOptionKey.CREDIT_CARD_ACCOUNT:
+            this.creditCardAccountOptions = existingOptions.concat();
+            this.creditCardAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            break;
+          case Sage300ExportSettingDestinationOptionKey.DEBIT_CARD_ACCOUNT:
+            this.debitCardAccountOptions = existingOptions.concat();
+            this.debitCardAccountOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            break;
+          case Sage300ExportSettingDestinationOptionKey.JOB:
+            this.sage300Jobs = existingOptions.concat();
+            this.sage300Jobs.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            break;
+          case Sage300ExportSettingDestinationOptionKey.VENDOR:
+            this.vendorOptions = existingOptions.concat();
+            this.vendorOptions.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+            break;
+        }
+
+        this.isOptionSearchInProgress = false;
+      });
+    });
+  }
+
+  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+    if (event.searchTerm) {
+      this.isOptionSearchInProgress = true;
+      this.optionSearchUpdate.next(event);
+    }
+  }
+
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
@@ -190,19 +271,28 @@ export class Sage300ExportSettingsComponent implements OnInit {
         }
       }
     ];
+
+    const destinationAttributes = [FyleField.VENDOR, Sage300Field.ACCOUNT, Sage300Field.JOB];
+
+    const groupedAttributes = destinationAttributes.map(destinationAttribute =>
+      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response))
+    );
+
     forkJoin([
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
-      this.mappingService.getGroupedDestinationAttributes([FyleField.VENDOR, Sage300Field.ACCOUNT, Sage300Field.JOB], 'v2')
-    ]).subscribe(([exportSettingsResponse, destinationAttributes]) => {
+      ...groupedAttributes
+    ]).subscribe(([exportSettingsResponse, vendors, accounts, jobs]) => {
       this.exportSettings = exportSettingsResponse;
-      this.vendorOptions = destinationAttributes.VENDOR;
-      this.creditCardAccountOptions = this.debitCardAccountOptions = this.accountsPayableOptions = destinationAttributes.ACCOUNT;
-      this.sage300Jobs = destinationAttributes.JOB;
-      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, destinationAttributes );
+      this.vendorOptions = vendors.results;
+      this.creditCardAccountOptions = this.debitCardAccountOptions = this.accountsPayableOptions = accounts.results;
+      this.sage300Jobs = jobs.results;
+      this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, vendors.results, accounts.results, jobs.results);
+
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
       this.helper.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
       this.helper.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
       this.setupCustomWatchers();
+      this.optionSearchWatcher();
       this.isLoading = false;
     });
   }

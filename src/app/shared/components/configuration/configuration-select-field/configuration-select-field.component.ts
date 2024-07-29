@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, Simp
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { ExportSettingFormOption } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
-import { AppName, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, NetsuiteExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
+import { AppName, DestinationOptionKey, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { AdvancedSettingFormOption, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { SafeHtml } from '@angular/platform-browser';
@@ -59,7 +59,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Input() isDefaultFields: boolean = false;
 
-  @Input() destinationOptionKey: IntacctExportSettingDestinationOptionKey | NetsuiteExportSettingDestinationOptionKey;
+  @Input() destinationOptionKey: DestinationOptionKey;
 
   @Input() isOptionSearchInProgress: boolean;
 
