@@ -559,7 +559,7 @@ export enum DefaultImportFields {
   CATEGORY = 'CATEGORY',
   ACCOUNT = 'ACCOUNT',
   VENDOR = 'VENDOR',
-  MERCHANTS = 'MERCHANTS',
+  MERCHANT = 'MERCHANT',
   LOCATION = 'LOCATION'
 }
 
@@ -633,6 +633,39 @@ export enum NetsuiteExportSettingDestinationOptionKey {
   BANK_ACCOUNT = 'BANK_ACCOUNT',
   CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
 }
+
+export enum QboExportSettingDestinationOptionKey {
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
+  VENDOR = 'VENDOR',
+  EXPENSE_ACCOUNT = 'EXPENSE_ACCOUNT'
+}
+
+export enum XeroExportSettingDestinationOptionKey {
+  BANK_ACCOUNT = 'BANK_ACCOUNT',
+}
+
+export enum Sage300ExportSettingDestinationOptionKey {
+  CREDIT_CARD_ACCOUNT = 'CREDIT_CARD_ACCOUNT',
+  DEBIT_CARD_ACCOUNT = 'DEBIT_CARD_ACCOUNT',
+  ACCOUNTS_PAYABLE = 'ACCOUNTS_PAYABLE',
+  JOB = 'JOB',
+  VENDOR = 'VENDOR'
+}
+
+export enum BCExportSettingDestinationOptionKey {
+  ACCOUNT = 'ACCOUNT',
+  VENDOR = 'VENDOR'
+}
+
+export type DestinationOptionKey =
+  IntacctExportSettingDestinationOptionKey |
+  NetsuiteExportSettingDestinationOptionKey |
+  QboExportSettingDestinationOptionKey |
+  XeroExportSettingDestinationOptionKey |
+  Sage300ExportSettingDestinationOptionKey |
+  BCExportSettingDestinationOptionKey;
 
 export enum IntegrationName {
   SAGE300 = 'SAGE300'
