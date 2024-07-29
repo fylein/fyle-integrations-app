@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
-import { ExportSettingModel } from 'src/app/core/models/common/export-settings.model';
+import { ExportSettingModel, ExportSettingOptionSearch } from 'src/app/core/models/common/export-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
-import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
-import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, ExportDateType, ToastSeverity, XeroCorporateCreditCardExpensesObject, XeroOnboardingState, XeroReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
+import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { AppName, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, XeroExportSettingDestinationOptionKey, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { XeroExportSettingGet, XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -68,6 +68,12 @@ export class XeroExportSettingsComponent implements OnInit {
   EmployeeFieldMapping = EmployeeFieldMapping;
 
   ConfigurationCtaText = ConfigurationCta;
+
+  isOptionSearchInProgress: boolean;
+
+  private optionSearchUpdate = new Subject<ExportSettingOptionSearch>();
+
+  XeroExportSettingDestinationOptionKey = XeroExportSettingDestinationOptionKey;
 
   previewImagePaths =[
     {},
@@ -134,16 +140,51 @@ export class XeroExportSettingsComponent implements OnInit {
     }
   }
 
+
+  private optionSearchWatcher(): void {
+    this.optionSearchUpdate.pipe(
+      debounceTime(1000)
+    ).subscribe((event: ExportSettingOptionSearch) => {
+      const existingOptions = this.bankAccounts;
+
+      this.mappingService.getPaginatedDestinationAttributes(event.destinationOptionKey, event.searchTerm).subscribe((response) => {
+
+        // Insert new options to existing options
+        response.results.forEach((option) => {
+          if (!existingOptions.find((existingOption) => existingOption.destination_id === option.destination_id)) {
+            existingOptions.push(option);
+          }
+        });
+
+        this.bankAccounts = existingOptions.concat();
+        this.bankAccounts.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+
+        this.isOptionSearchInProgress = false;
+      });
+    });
+  }
+
+  searchOptionsDropdown(event: ExportSettingOptionSearch): void {
+    if (event.searchTerm) {
+      this.isOptionSearchInProgress = true;
+      this.optionSearchUpdate.next(event);
+    }
+  }
+
   setupPage() {
     this.isOnboarding = this.router.url.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT'];
 
+    const groupedAttributes = destinationAttributes.map(destinationAttribute =>
+      this.mappingService.getPaginatedDestinationAttributes(destinationAttribute).pipe(filter(response => !!response))
+    );
+
     forkJoin([
       this.exportSettingService.getExportSettings(),
-      this.mappingService.getGroupedDestinationAttributes(destinationAttributes, 'v1', 'xero')
-    ]).subscribe(response => {
-      this.exportSettings = response[0];
-      this.bankAccounts = response[1].BANK_ACCOUNT;
+      ...groupedAttributes
+    ]).subscribe(([exportSettings, bankAccounts]) => {
+      this.exportSettings = exportSettings;
+      this.bankAccounts = bankAccounts.results;
       this.exportSettingForm = XeroExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.bankAccounts);
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
@@ -156,6 +197,8 @@ export class XeroExportSettingsComponent implements OnInit {
       this.helperService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
 
       this.setupCustomWatchers();
+
+      this.optionSearchWatcher();
 
       this.isLoading = false;
 

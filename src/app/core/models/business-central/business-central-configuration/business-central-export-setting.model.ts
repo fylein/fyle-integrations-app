@@ -1,7 +1,6 @@
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AutoMapEmployeeOptions, BusinessCentralExportType, CCCExpenseState, ExpenseGroupedBy, ExpenseState, ExportDateType, FyleField, NameInJEField } from "../../enum/enum.model";
-import { BusinessCentralDestinationAttributes } from "../db/business-central-destination-attribute.model";
-import { GroupedDestinationAttribute } from "../../db/destination-attribute.model";
+import { DestinationAttribute } from "../../db/destination-attribute.model";
 import { brandingContent } from "src/app/branding/branding-config";
 import { SelectFormOption } from "../../common/select-form-option.model";
 
@@ -171,8 +170,8 @@ export class BusinessCentralExportSettingModel {
         ];
     }
 
-    static mapAPIResponseToFormGroup(exportSettings: BusinessCentralExportSettingGet | null,  destinationAttribute: GroupedDestinationAttribute): FormGroup {
-      const findObjectByDestinationId = (array: BusinessCentralDestinationAttributes[], id: string) => array?.find(item => item.destination_id === id) || null;
+    static mapAPIResponseToFormGroup(exportSettings: BusinessCentralExportSettingGet | null,  accounts: DestinationAttribute[], vendors: DestinationAttribute[]): FormGroup {
+      const findObjectByDestinationId = (array: DestinationAttribute[], id: string) => array?.find(item => item.destination_id === id) || null;
         return new FormGroup({
             reimbursableExpense: new FormControl(exportSettings?.reimbursable_expenses_export_type ? true : false),
             reimbursableExportType: new FormControl(exportSettings?.reimbursable_expenses_export_type ? exportSettings.reimbursable_expenses_export_type : null),
@@ -184,11 +183,11 @@ export class BusinessCentralExportSettingModel {
             cccExpenseState: new FormControl(exportSettings?.credit_card_expense_state ? exportSettings?.credit_card_expense_state : null),
             cccExportDate: new FormControl(exportSettings?.credit_card_expense_date ? exportSettings?.credit_card_expense_date.toLowerCase() : null),
             cccExportGroup: new FormControl(exportSettings?.credit_card_expense_grouped_by ? exportSettings?.credit_card_expense_grouped_by: null),
-            defaultBankName: new FormControl(exportSettings?.default_bank_account_name ? findObjectByDestinationId(destinationAttribute.ACCOUNT, exportSettings?.default_bank_account_id) : null),
+            defaultBankName: new FormControl(exportSettings?.default_bank_account_name ? findObjectByDestinationId(accounts, exportSettings?.default_bank_account_id) : null),
             reimbursableEmployeeMapping: new FormControl(exportSettings?.employee_field_mapping ? exportSettings?.employee_field_mapping : null, Validators.required),
             journalEntryNamePreference: new FormControl(exportSettings?.name_in_journal_entry ? exportSettings?.name_in_journal_entry : null),
             autoMapEmployee: new FormControl(exportSettings?.auto_map_employees ? exportSettings?.auto_map_employees : null),
-            defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? findObjectByDestinationId(destinationAttribute.VENDOR, exportSettings?.default_vendor_id) : null),
+            defaultVendorName: new FormControl(exportSettings?.default_vendor_name ? findObjectByDestinationId(vendors, exportSettings?.default_vendor_id) : null),
             searchOption: new FormControl('')
         });
     }
