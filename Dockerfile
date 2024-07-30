@@ -3,7 +3,8 @@ FROM node:16-slim as build
 
 ARG SENTRY_AUTH_TOKEN
 
-RUN apt-get update && apt-get install nginx vim -y --no-install-recommends git
+RUN apt-get update && apt-get install ca-certificates nginx vim -y --no-install-recommends git
+
 
 # set working directory
 WORKDIR /app
