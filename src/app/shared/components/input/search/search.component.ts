@@ -59,7 +59,7 @@ export class SearchComponent implements OnInit {
 
   private searchQueryWatcher(): void {
     this.form.controls.searchOption.valueChanges.subscribe((value) => {
-      this.handleSimpleSearch.emit(value);
+      this.handleSimpleSearch.emit((value as string).trim());
     });
   }
 
