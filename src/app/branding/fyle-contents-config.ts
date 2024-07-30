@@ -214,7 +214,7 @@ export const fyleContents = {
                 autoSyncPayments: 'Auto-Sync Payment Status for Reimbursable Expenses',
                 defaultPaymentAccount: 'Select Payment Account',
                 autoCreateEmployeeVendor: 'Auto-Create ',
-                autoCreateMerchantsAsVendorsLabel: 'Auto-create Merchants as Vendors',
+                autoCreateMerchantsAsVendorsLabel: 'Auto-Create Merchants as Vendors',
                 postEntriesCurrentPeriod: 'Post Entries in the Current Accounting Period',
                 setDescriptionField: 'Set the Description Field in Sage Intacct',
                 dfvLabel: 'Default Field Values',
