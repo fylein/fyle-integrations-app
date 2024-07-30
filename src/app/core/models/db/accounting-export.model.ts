@@ -4,7 +4,7 @@ import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intac
 import { Expense } from "../intacct/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
 import { ExportLogService } from "../../services/common/export-log.service";
-import { DateFilter } from "../qbd/misc/date-filter.model";
+import { DateFilter } from "../qbd/misc/qbd-date-filter.model";
 import { environment } from "src/environments/environment";
 import { ExpenseGroup } from "./expense-group.model";
 import { XeroWorkspace } from "../xero/db/xero-workspace.model";
