@@ -145,7 +145,7 @@ export const fyleContents = {
                 billPaymentAccountLabel: 'To which Payment account should the payment entries be posted?',
                 billPaymentAccountSubLabel: ', the payment entries will be posted to the selected Payment account in ',
                 postEntriesCurrentPeriod: 'Post entries in the current accounting period',
-                autoCreateEmployeeVendor: 'Auto-create ',
+                autoCreateEmployeeVendor: 'Auto-create Merchants as Contacts',
                 contentText: 'In this section, you can customize the integration based on your accounting requirements. ',
                 frequencySubLabel: 'Set a frequency based on how often you want your expenses in Fyle to be exported to Xero.',
                 customPreferencesLabel: 'Other Preferences',
