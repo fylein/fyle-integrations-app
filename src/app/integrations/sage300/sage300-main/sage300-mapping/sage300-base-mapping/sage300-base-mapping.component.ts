@@ -79,11 +79,12 @@ export class Sage300BaseMappingComponent implements OnInit {
       });
     });
   }
+
   getImportCodeField(importCodeFields: string[] | []): boolean {
-    if(importCodeFields?.length) {
+    if (importCodeFields?.length) {
       return importCodeFields.filter((field) => field === this.destinationField).length === 1 ? true : false;
     }
-    return false
+    return false;
   }
 
   ngOnInit(): void {
