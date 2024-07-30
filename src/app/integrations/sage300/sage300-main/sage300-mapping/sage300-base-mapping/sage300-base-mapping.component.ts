@@ -72,12 +72,18 @@ export class Sage300BaseMappingComponent implements OnInit {
       this.cccExpenseObject = exportSettingsResponse.corporate_credit_card_expenses_object;
       this.showAutoMapEmployee = exportSettingsResponse.auto_map_employees ? true : false;
       this.destinationField = this.getSourceType(mappingSettingsResponse.results);
-      this.isMultiLineOption = importSettingsResponse.import_code_fields?.length > 0;
+      this.isMultiLineOption = this.getImportCodeField(importSettingsResponse.import_code_fields);
       this.mappingService.getPaginatedDestinationAttributes(this.destinationField).subscribe((response: any) => {
         this.destinationOptions = response.results;
         this.isLoading = false;
       });
     });
+  }
+  getImportCodeField(importCodeFields: string[] | []): boolean {
+    if(importCodeFields?.length) {
+      return importCodeFields.filter((field) => field === this.destinationField).length === 1 ? true : false;
+    }
+    return false
   }
 
   ngOnInit(): void {

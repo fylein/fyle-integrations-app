@@ -75,7 +75,7 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
                 add_commitment_details: importSettingsForm.get('addCommitmentDetails')?.value
             },
             mapping_settings: mappingSettings,
-            dependent_field_settings: importSettingsForm.get('isDependentImportEnabled')?.value ? {
+            dependent_field_settings: importSettingsForm.get('isDependentImportEnabled')?.value && (importSettingsForm.get('costCodes')?.value || importSettingsForm.get('costCategory')?.value) ? {
                 cost_code_field_name: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.attribute_type : (importSettings?.dependent_field_settings?.cost_code_field_name ? importSettings.dependent_field_settings?.cost_code_field_name : null),
                 cost_code_placeholder: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.source_placeholder : (importSettings?.dependent_field_settings?.cost_code_placeholder ? importSettings.dependent_field_settings?.cost_code_placeholder : null),
                 cost_category_field_name: importSettingsForm.get('costCategory')?.value ? importSettingsForm.get('costCategory')?.value.attribute_type : (importSettings?.dependent_field_settings?.cost_category_field_name ? importSettings.dependent_field_settings?.cost_category_field_name : null),
