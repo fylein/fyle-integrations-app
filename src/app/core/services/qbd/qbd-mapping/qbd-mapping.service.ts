@@ -1,8 +1,8 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
-import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
+import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
 import { Observable } from 'rxjs';
-import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
 import { ApiService } from '../../common/api.service';
 
