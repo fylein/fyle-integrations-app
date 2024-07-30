@@ -44,4 +44,4 @@ COPY --from=build /app/run.sh ./
 EXPOSE 80
 
 # run nginx
-CMD bash xp.sh
+CMD bash run.sh
