@@ -1,10 +1,14 @@
 # base image
 FROM node:16-slim as build
 
+ARG SENTRY_AUTH_TOKEN
+
 RUN apt-get update && apt-get install nginx vim -y --no-install-recommends git
 
 # set working directory
 WORKDIR /app
+
+ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
@@ -40,4 +44,4 @@ COPY --from=build /app/run.sh ./
 EXPOSE 80
 
 # run nginx
-CMD bash run.sh
+CMD bash xp.sh
