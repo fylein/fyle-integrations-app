@@ -149,7 +149,7 @@ export class ConfigurationSelectFieldComponent implements OnInit {
   }
 
   searchOptions(event: any) {
-    this.searchOptionsDropdown.emit({ searchTerm: event.filter, destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey });
+    this.searchOptionsDropdown.emit({ searchTerm: (event.filter as string).trim(), destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey });
   }
 
   ngOnInit(): void {
