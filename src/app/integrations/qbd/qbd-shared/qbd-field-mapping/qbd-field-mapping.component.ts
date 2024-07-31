@@ -78,7 +78,7 @@ export class QbdFieldMappingComponent implements OnInit {
   constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const fieldMappingPayload = FieldMappingModel.constructPayload(this.fieldMappingForm);
- 
+
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');

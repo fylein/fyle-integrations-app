@@ -39,7 +39,7 @@ export class QbdMappingService {
   }
 
   getMappingStats(sourceType: string, itemType?: string | null): Observable<MappingStats> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/stats/`, { 
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/stats/`, {
       source_type: sourceType === 'item' ? itemType : sourceType.toUpperCase()
     });
   }
