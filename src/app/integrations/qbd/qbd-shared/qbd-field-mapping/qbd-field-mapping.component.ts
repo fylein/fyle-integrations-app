@@ -9,6 +9,7 @@ import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configurat
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-qbd-field-mapping',
@@ -40,6 +41,10 @@ export class QbdFieldMappingComponent implements OnInit {
     }
   ];
 
+  additionalOptionsItemType: QBDExportSettingFormOption[] = [
+    {label: 'Custom Expense Field', value: 'DUMMY_VALUE'}
+  ];
+
   private sessionStartTime = new Date();
 
   fieldMapping: QBDFieldMappingGet;
@@ -55,10 +60,17 @@ export class QbdFieldMappingComponent implements OnInit {
     private trackingService: TrackingService
   ) { }
 
-  mappingFieldFormOptionsFunction(formControllerName: string): QBDExportSettingFormOption[] {
-    return this.representationOption.filter(option => {
-      return option.value !== this.fieldMappingForm.value[formControllerName];
+  mappingFieldFormOptionsFunction(formControllerName1: string, formControllerName2: string): QBDExportSettingFormOption[] {
+    let filteredOptions = this.representationOption.filter(option => {
+      return option.value !== this.fieldMappingForm.value[formControllerName1] && 
+             option.value !== this.fieldMappingForm.value[formControllerName2];
     });
+
+    if (formControllerName1==='customerType' && formControllerName2==='classType'){
+      filteredOptions.push(...this.additionalOptionsItemType)
+    }
+  
+    return filteredOptions;
   }
 
   private getPhase(): ProgressPhase {
@@ -106,17 +118,22 @@ export class QbdFieldMappingComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
+    this.fieldMappingService.getFyleCustomFields().subscribe((additionalOptions: QBDExportSettingFormOption[]) => {
+      this.additionalOptionsItemType = additionalOptions;
+    });
     this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
       this.fieldMapping = fieldMappingResponse;
       this.fieldMappingForm = this.formBuilder.group({
         classType: [this.fieldMapping?.class_type ? this.fieldMapping?.class_type : null],
-        customerType: [this.fieldMapping?.project_type ? this.fieldMapping?.project_type : null]
+        customerType: [this.fieldMapping?.project_type ? this.fieldMapping?.project_type : null],
+        itemType: [this.fieldMapping?.item_type ? this.fieldMapping?.item_type : null]
       });
       this.isLoading = false;
     }, () => {
         this.fieldMappingForm = this.formBuilder.group({
           classType: [null],
-          customerType: [null]
+          customerType: [null],
+          itemType: [null]
         });
         this.isLoading = false;
       }

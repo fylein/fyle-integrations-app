@@ -43,6 +43,8 @@ export class QbdGenericMappingComponent implements OnInit {
 
   operationgSystem: string;
 
+  destinationHeaderName: string;
+
   readonly brandingConfig = brandingConfig;
 
   readonly AppName = AppName;
@@ -116,6 +118,7 @@ export class QbdGenericMappingComponent implements OnInit {
   private setupPage(): void {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
+    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in Quickbooks Desktop' : 'QuickBooks Desktop Credit Card Account';
     forkJoin([
       this.mappingService.getMappingStats(this.sourceType),
       this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
