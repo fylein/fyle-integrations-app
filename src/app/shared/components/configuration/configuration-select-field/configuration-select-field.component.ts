@@ -71,6 +71,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() isAdvanceSearchEnabled: boolean;
 
+  @Input() isMultiLineOption: boolean;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;

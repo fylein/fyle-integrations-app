@@ -8,6 +8,8 @@ import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettin
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -44,6 +46,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() dependantFieldSupportArticleLink: string;
 
+  isOnboarding: boolean;
+
   @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;
@@ -53,6 +57,19 @@ export class ConfigurationImportFieldComponent implements OnInit {
   AppName = AppName;
 
   isXeroProjectMapped: boolean;
+
+  importCodeSelectorOptions: SelectFormOption[] = [
+    {
+      label: 'Import Codes + Names',
+      value: true,
+      subLabel: 'Example: 4567 Meals & Entertainment'
+    },
+    {
+      label: 'Import Names only',
+      value: false,
+      subLabel: 'Example: Meals & Entertainment'
+    }
+  ];
 
   readonly brandingConfig = brandingConfig;
 
@@ -66,11 +83,16 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   constructor(
     public windowService: WindowService,
-    public helper: HelperService
+    public helper: HelperService,
+    public router: Router
   ) { }
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
+  }
+
+  getFormGroup(control: AbstractControl): FormGroup {
+    return control as FormGroup;
   }
 
   getDestinationField(destinationField: string): string {
@@ -183,6 +205,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isOnboarding = this.router.url.includes('onboarding/import_settings');
+  }
 
 }

@@ -30,7 +30,8 @@ export type ImportSettingMappingRow = {
   import_to_fyle: boolean,
   is_custom: boolean,
   source_field: string,
-  source_placeholder: string | null
+  source_placeholder: string | null,
+  import_code?: boolean
 }
 
 export type ImportSettingsCustomFieldRow = {
@@ -52,11 +53,19 @@ export class ImportSettingsModel {
       destination_field: new FormControl(data.destination_field || '', RxwebValidators.unique()),
       import_to_fyle: new FormControl(data.import_to_fyle || false),
       is_custom: new FormControl(data.is_custom || false),
-      source_placeholder: new FormControl(data.source_placeholder || null)
+      source_placeholder: new FormControl(data.source_placeholder || null),
+      import_code: new FormControl(data.import_code || false, RxwebValidators.unique())
     });
   }
 
-  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] | [], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true): FormGroup[] {
+  static getImportCodeField(importCodeFields: string[] | [], destinationField: string): boolean {
+    if (importCodeFields?.length) {
+      return importCodeFields.filter((field) => field === destinationField).length === 1 ? true : false;
+    }
+    return false;
+  }
+
+  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] | [], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();
@@ -72,9 +81,11 @@ export class ImportSettingsModel {
           import_to_fyle: false,
           is_custom: false,
           source_field: '',
-          source_placeholder: null
+          source_placeholder: null,
+          import_code: this.getImportCodeField(importCodeFields, accountingAppField.attribute_type)
       };
       if (mappingSetting) {
+        fieldData.import_code = this.getImportCodeField(importCodeFields, accountingAppField.attribute_type);
         mappedFieldMap.set(accountingAppField.attribute_type, fieldData);
       } else {
           unmappedFieldMap.set(accountingAppField.attribute_type, fieldData);

@@ -55,10 +55,12 @@
                     }" [disabled]="isDisabled">
                     
                     <ng-template let-option pTemplate="item">
-                        <div #textElement
+                        <div>
+                            <span #textElement
                             [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
                             [pTooltip]="isOverflowing(textElement) ? option.label : null" tooltipPosition="top">
-                            {{ brandingConfig.brandId === 'co' ? (option.label | sentenceCase) : (option.label)}}
+                            {{ brandingConfig.brandId === 'co' ? (option.label | sentenceCase) : (option.label)}}</span>
+                            <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ option.subLabel}}</p>
                         </div>
                     </ng-template>
                     
@@ -76,7 +78,7 @@
                         <span *ngIf="brandingConfig.brandId !== 'co'"> how it looks on {{appName}}</span>
                         <span *ngIf="brandingConfig.brandId === 'co'"> in {{appName}}</span>
                     </div>
-                    <div *ngIf="!showExportPreview && isDisabled" class="sub-text tw-text-pretty">
+                    <div *ngIf="!showExportPreview && isDisabled && formControllerName !=='import_code'" class="sub-text tw-text-pretty">
                         <span>Auto-selected based on your export module</span>
                     </div>
                     <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.value.cccExportType!==IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION" class="sub-text">

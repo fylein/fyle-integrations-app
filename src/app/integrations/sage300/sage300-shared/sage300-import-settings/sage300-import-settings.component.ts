@@ -284,6 +284,17 @@ export class Sage300ImportSettingsComponent implements OnInit {
           });
         } else if (value.source_field === 'PROJECT' && value.destination_field === 'PROJECT') {
           this.isDependentFieldAllowed = true;
+        } else if (control.value.import_code &&  control.value.import_to_fyle) {
+	        const fields = this.importSettingForm.get('importCodeFields')?.value;
+	        fields.push(value.destination_field);
+	        this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+        } else if (!control.value.import_code || !control.value.import_to_fyle) {
+	        const fields = this.importSettingForm.get('importCodeFields')?.value;
+	        if (fields.length > 0) {
+		        const index = fields.indexOf(value.destination_field);
+		        fields.splice(index, 1);
+	        }
+	        this.importSettingForm.get('importCodeFields')?.patchValue(fields);
         }
       });
     });

@@ -1,6 +1,7 @@
 export type SelectFormOption = {
   label: string;
-  value: string | null | number;
+  value: string | null | number | boolean;
+  subLabel?: string;
 }
 
 export type SelectFormLabel = {
