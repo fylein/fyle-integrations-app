@@ -41,9 +41,7 @@ export class QbdFieldMappingComponent implements OnInit {
     }
   ];
 
-  additionalOptionsItemType: QBDExportSettingFormOption[] = [
-    {label: 'Custom Expense Field', value: 'DUMMY_VALUE'}
-  ];
+  additionalOptionsItemType: QBDExportSettingFormOption[] = [];
 
   private sessionStartTime = new Date();
 
@@ -80,7 +78,7 @@ export class QbdFieldMappingComponent implements OnInit {
   constructPayloadAndSave(): void {
     this.saveInProgress = true;
     const fieldMappingPayload = FieldMappingModel.constructPayload(this.fieldMappingForm);
-
+ 
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Field mapping saved successfully');
@@ -115,11 +113,21 @@ export class QbdFieldMappingComponent implements OnInit {
     }
   }
 
+
+  buildCustomFieldOptions(options: string[]): QBDExportSettingFormOption[] {
+    return options.map((label) => {
+      return {
+        label,
+        value: label
+      };
+    });
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
-    this.fieldMappingService.getFyleCustomFields().subscribe((additionalOptions: QBDExportSettingFormOption[]) => {
-      this.additionalOptionsItemType = additionalOptions;
+    this.fieldMappingService.getFyleCustomFields().subscribe((additionalOptions: string[]) => {
+      this.additionalOptionsItemType = this.buildCustomFieldOptions(additionalOptions);
     });
     this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
       this.fieldMapping = fieldMappingResponse;

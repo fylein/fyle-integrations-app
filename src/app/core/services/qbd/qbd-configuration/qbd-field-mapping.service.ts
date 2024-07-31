@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { QBDFieldMappingGet, QBDFieldMappingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
 import { ApiService } from '../../common/api.service';
-import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +23,7 @@ export class QbdFieldMappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/field_mappings/`, fieldMappingPayload);
   }
 
-  getFyleCustomFields(): Observable<QBDExportSettingFormOption[]> {
+  getFyleCustomFields(): Observable<string[]> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/custom_fields/`, {});
   }
 

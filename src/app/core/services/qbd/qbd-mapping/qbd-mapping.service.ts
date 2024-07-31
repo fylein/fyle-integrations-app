@@ -18,11 +18,11 @@ export class QbdMappingService {
     private workspaceService: QbdWorkspaceService
   ) { }
 
-  getMappings(limit: number, offset: number, sourceType: string, mappingState: MappingState): Observable<MappingResponse> {
+  getMappings(limit: number, offset: number, sourceType: string, mappingState: MappingState, itemType: string | null): Observable<MappingResponse> {
     const params: any = {
       limit,
       offset,
-      attribute_type: sourceType.toUpperCase()
+      attribute_type: sourceType === 'item' ? itemType : sourceType.toUpperCase()
     };
 
 		if (mappingState === MappingState.MAPPED){
@@ -38,8 +38,10 @@ export class QbdMappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/`, mappingPayload);
   }
 
-  getMappingStats(sourceType: string): Observable<MappingStats> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/stats/`, { source_type: sourceType.toUpperCase() });
+  getMappingStats(sourceType: string, itemType?: string | null): Observable<MappingStats> {
+    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/stats/`, { 
+      source_type: sourceType === 'item' ? itemType : sourceType.toUpperCase()
+    });
   }
 
   refreshMappingPages(): void {
