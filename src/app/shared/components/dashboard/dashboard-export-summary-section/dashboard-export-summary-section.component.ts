@@ -4,7 +4,7 @@ import { AccountingExportSummary } from 'src/app/core/models/db/accounting-expor
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { AccountingExportStatus, AppName, TaskLogState } from 'src/app/core/models/enum/enum.model';
-import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { UserService } from 'src/app/core/services/misc/user.service';

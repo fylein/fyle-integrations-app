@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { PaymentSyncDirection } from "../../enum/enum.model";
-import { EmailOptions } from "../../qbd/qbd-configuration/advanced-setting.model";
+import { EmailOptions } from "../../qbd/qbd-configuration/qbd-advanced-setting.model";
 import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
 
   export interface GeneralMappingEntity {
