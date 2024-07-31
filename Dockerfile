@@ -21,15 +21,6 @@ RUN npm install --production
 # add app
 COPY . /app
 
-# debug
-RUN echo $SENTRY_AUTH_TOKEN
-
-# debug
-RUN echo $IMAGE_NAME
-
-# debug
-RUN echo $QBD_API_URL
-
 # generate build
 RUN npm run build
 
