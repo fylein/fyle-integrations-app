@@ -61,15 +61,15 @@ export class QbdFieldMappingComponent implements OnInit {
   ) { }
 
   mappingFieldFormOptionsFunction(formControllerName1: string, formControllerName2: string): QBDExportSettingFormOption[] {
-    let filteredOptions = this.representationOption.filter(option => {
-      return option.value !== this.fieldMappingForm.value[formControllerName1] && 
+    const filteredOptions = this.representationOption.filter(option => {
+      return option.value !== this.fieldMappingForm.value[formControllerName1] &&
              option.value !== this.fieldMappingForm.value[formControllerName2];
     });
 
     if (formControllerName1==='customerType' && formControllerName2==='classType'){
-      filteredOptions.push(...this.additionalOptionsItemType)
+      filteredOptions.push(...this.additionalOptionsItemType);
     }
-  
+
     return filteredOptions;
   }
 

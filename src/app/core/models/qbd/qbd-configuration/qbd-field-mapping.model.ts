@@ -21,7 +21,7 @@ export class FieldMappingModel {
     const fieldMappingPayload: QBDFieldMappingPost = {
       class_type: fieldMappingForm.get('classType')?.value ? fieldMappingForm.get('classType')?.value : null,
       project_type: fieldMappingForm.get('customerType')?.value ? fieldMappingForm.get('customerType')?.value : null,
-      item_type: fieldMappingForm.get('itemType')?.value ? fieldMappingForm.get('itemType')?.value : null,
+      item_type: fieldMappingForm.get('itemType')?.value ? fieldMappingForm.get('itemType')?.value : null
     };
     return fieldMappingPayload;
   }
