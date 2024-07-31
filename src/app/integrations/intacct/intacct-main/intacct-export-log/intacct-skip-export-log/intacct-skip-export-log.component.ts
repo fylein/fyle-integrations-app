@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { SkipExportLogResponse, SkipExportList, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
