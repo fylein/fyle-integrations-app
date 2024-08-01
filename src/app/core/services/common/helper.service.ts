@@ -244,7 +244,7 @@ export class HelperService {
   }
 
   sentenseCaseConversion(content: string) {
-    content = new TitleCasePipe().transform(new SnakeCaseToSpaceCasePipe().transform(content));
+    content = new SnakeCaseToSpaceCasePipe().transform(content);
     return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(content) : content;
   }
 
