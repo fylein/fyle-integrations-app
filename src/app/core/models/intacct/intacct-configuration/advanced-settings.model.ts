@@ -1,6 +1,6 @@
 import { FormGroup } from "@angular/forms";
 import { PaymentSyncDirection } from "../../enum/enum.model";
-import { EmailOptions } from "../../qbd/qbd-configuration/advanced-setting.model";
+import { EmailOptions } from "../../qbd/qbd-configuration/qbd-advanced-setting.model";
 import { AdvancedSettingsModel } from "../../common/advanced-settings.model";
 
   export interface GeneralMappingEntity {
@@ -76,6 +76,7 @@ export interface Configuration {
     auto_create_destination_entity: boolean;
     auto_create_merchant_destination_entity: boolean;
     memo_structure: string[];
+    auto_create_merchants_as_vendors: boolean;
   }
 
   export interface AdvancedSettingGeneralMapping {
@@ -126,7 +127,8 @@ export type AdvancedSettingsPost = {
           sync_sage_intacct_to_fyle_payments: getFormValue('autoSyncPayments') === PaymentSyncDirection.INTACCT_TO_FYLE,
           auto_create_destination_entity: getFormValue('autoCreateEmployeeVendor'),
           change_accounting_period: !!getFormValue('postEntriesCurrentPeriod'),
-          memo_structure: getFormValue('setDescriptionField')
+          memo_structure: getFormValue('setDescriptionField'),
+          auto_create_merchants_as_vendors: getFormValue('autoCreateMerchants') ? getFormValue('autoCreateMerchants') : false
         },
         general_mappings: {
           payment_account: mapAttribute('defaultPaymentAccount', 'destination_id', 'value'),

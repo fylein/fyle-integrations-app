@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, V
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Calendar } from 'primeng/calendar';
 import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
-import { DateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 
 @Component({
   selector: 'app-export-log-filter',

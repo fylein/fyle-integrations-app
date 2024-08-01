@@ -209,6 +209,7 @@ export type ContentConfiguration = {
                     autoSyncPayments: string;
                     defaultPaymentAccount: string;
                     autoCreateEmployeeVendor: string;
+                    autoCreateMerchantsAsVendorsLabel: string;
                     postEntriesCurrentPeriod: string;
                     setDescriptionField: string;
                     dfvLabel: string;

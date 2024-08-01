@@ -143,7 +143,7 @@ export class GenericMappingTableComponent implements OnInit {
   searchOptions(event: any) {
     if (event.filter) {
       this.isSearching = true;
-      this.optionSearchUpdate.next({searchTerm: event.filter});
+      this.optionSearchUpdate.next({searchTerm: (event.filter as string).trim()});
     }
   }
 

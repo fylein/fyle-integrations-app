@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { ExportSettingFormOption } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
 import { AppName, DestinationOptionKey, IntacctCorporateCreditCardExpensesObject, IntacctExportSettingDestinationOptionKey, NetsuiteExportSettingDestinationOptionKey, QboExportSettingDestinationOptionKey } from 'src/app/core/models/enum/enum.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -149,7 +149,7 @@ export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
   }
 
   searchOptions(event: any) {
-    this.searchOptionsDropdown.emit({ searchTerm: event.filter, destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey });
+    this.searchOptionsDropdown.emit({ searchTerm: (event.filter as string).trim(), destinationAttributes: this.destinationAttributes, destinationOptionKey: this.destinationOptionKey });
   }
 
   ngOnInit(): void {
