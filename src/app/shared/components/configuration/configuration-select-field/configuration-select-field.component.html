@@ -78,7 +78,7 @@
                         <span *ngIf="brandingConfig.brandId !== 'co'"> how it looks on {{appName}}</span>
                         <span *ngIf="brandingConfig.brandId === 'co'"> in {{appName}}</span>
                     </div>
-                    <div *ngIf="!showExportPreview && isDisabled && formControllerName !=='import_code'" class="sub-text tw-text-pretty">
+                    <div *ngIf="!showExportPreview && isDisabled && !formControllerName.includes('Code') && formControllerName !== 'import_code'" class="sub-text tw-text-pretty">
                         <span>Auto-selected based on your export module</span>
                     </div>
                     <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.value.cccExportType!==IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION" class="sub-text">

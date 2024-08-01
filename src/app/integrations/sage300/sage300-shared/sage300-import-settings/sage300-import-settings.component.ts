@@ -66,12 +66,14 @@ export class Sage300ImportSettingsComponent implements OnInit {
     {
       source_field: DefaultImportFields.CATEGORY,
       destination_field: DefaultImportFields.ACCOUNT,
-      formController: 'importCategories'
+      formController: 'importCategories',
+      import_code: 'importCategoryCode'
     },
     {
       source_field: DefaultImportFields.MERCHANT,
       destination_field: DefaultImportFields.VENDOR,
-      formController: 'importVendorAsMerchant'
+      formController: 'importVendorAsMerchant',
+      import_code: 'importVendorCode'
     }
   ];
 
@@ -289,12 +291,15 @@ export class Sage300ImportSettingsComponent implements OnInit {
 	        fields.push(value.destination_field);
 	        this.importSettingForm.get('importCodeFields')?.patchValue(fields);
         } else if (!control.value.import_code || !control.value.import_to_fyle) {
-	        const fields = this.importSettingForm.get('importCodeFields')?.value;
-	        if (fields.length > 0) {
-		        const index = fields.indexOf(value.destination_field);
-		        fields.splice(index, 1);
-	        }
-	        this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+          const onboardingState = this.workspaceService.getOnboardingState();
+	        if (onboardingState === Sage300OnboardingState.IMPORT_SETTINGS) {
+            const fields = this.importSettingForm.get('importCodeFields')?.value;
+            if (fields.length > 0) {
+              const index = fields.indexOf(value.destination_field);
+              index > -1 ? fields.splice(index, 1) : '';
+            }
+            this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+          }
         }
       });
     });
@@ -348,9 +353,69 @@ export class Sage300ImportSettingsComponent implements OnInit {
     }
   }
 
+  private defaultFieldWatcher() {
+    this.importSettingForm.controls.importCategories.valueChanges.subscribe((importFromFyle) => {
+      if (!importFromFyle) {
+        this.importSettingForm.controls.importCategoryCode.patchValue(false);
+        const fields = this.importSettingForm.get('importCodeFields')?.value;
+	      if (fields.length > 0) {
+		      const index = fields.indexOf(DefaultImportFields.ACCOUNT);
+		      index > -1 ? fields.splice(index, 1) : '';
+	      }
+        this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+      }
+    });
+
+    this.importSettingForm.controls.importVendorAsMerchant.valueChanges.subscribe((importFromFyle) => {
+      if (!importFromFyle) {
+        this.importSettingForm.controls.importVendorCode.patchValue(false);
+        const fields = this.importSettingForm.get('importCodeFields')?.value;
+	      if (fields.length > 0) {
+		      const index = fields.indexOf(DefaultImportFields.VENDOR);
+		      index > -1 ? fields.splice(index, 1) : '';
+	      }
+        this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+      }
+    });
+  }
+
+  private defaultFieldCodeImportFieldWatcher() {
+    this.importSettingForm.controls.importCategoryCode.valueChanges.subscribe((importCode) => {
+      if (importCode && this.importSettingForm.controls.importCategories) {
+        const fields = this.importSettingForm.get('importCodeFields')?.value;
+	      fields.push(DefaultImportFields.ACCOUNT);
+	      this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+      } else {
+        const fields = this.importSettingForm.get('importCodeFields')?.value;
+	      if (fields.length > 0) {
+		      const index = fields.indexOf(DefaultImportFields.ACCOUNT);
+		      index > -1 ? fields.splice(index, 1) : '';
+	      }
+        this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+      }
+    });
+
+    this.importSettingForm.controls.importVendorCode.valueChanges.subscribe((importCode) => {
+      if (importCode && this.importSettingForm.controls.importVendorAsMerchant) {
+        const fields = this.importSettingForm.get('importCodeFields')?.value;
+	      fields.push(DefaultImportFields.VENDOR);
+	      this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+      } else {
+        const fields = this.importSettingForm.get('importCodeFields')?.value;
+	      if (fields.length > 0) {
+		      const index = fields.indexOf(DefaultImportFields.VENDOR);
+		      index > -1 ? fields.splice(index, 1) : '';
+	      }
+        this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+      }
+    });
+  }
+
   private setupFormWatchers() {
     this.importSettingWatcher();
     this.dependentFieldWatchers();
+    this.defaultFieldWatcher();
+    this.defaultFieldCodeImportFieldWatcher();
   }
 
   constructPayloadAndSave() {

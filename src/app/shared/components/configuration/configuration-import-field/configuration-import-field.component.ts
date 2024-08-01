@@ -4,12 +4,13 @@ import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, MappingSourceField, XeroFyleField } from 'src/app/core/models/enum/enum.model';
-import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { Router } from '@angular/router';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -71,6 +72,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   ];
 
+  importCodeEnabled: boolean[] = [];
+
   readonly brandingConfig = brandingConfig;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
@@ -84,7 +87,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   constructor(
     public windowService: WindowService,
     public helper: HelperService,
-    public router: Router
+    public router: Router,
+    private workspace: WorkspaceService
   ) { }
 
   get expenseFieldsGetter() {
@@ -145,8 +149,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
       // Get the 'import_to_fyle' control at the specified index and disable it
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
-    } else {
-      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
 
     if ( this.appName === AppName.SAGE300) {
@@ -189,6 +191,11 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
+    if (event.checked && this.appName === AppName.SAGE300) {
+      this.importCodeEnabled.push(true);
+    } else if (!event.checked && this.appName === AppName.SAGE300) {
+      this.importCodeEnabled.pop();
+    }
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costCodeFieldOption[0].attribute_type !== 'custom_field') {
       this.showWarningForDependentFields.emit();
     }
@@ -206,7 +213,15 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isOnboarding = this.router.url.includes('onboarding/import_settings');
+    this.isOnboarding = this.workspace.getOnboardingState() === 'IMPORT_SETTINGS';
+    Object.keys(this.form.controls).forEach(key => {
+      if (key !== 'expenseFields' && key !== 'dependentFieldImportToggle') {
+        this.form.get(key)?.value === true ? this.importCodeEnabled.push(true) : '';
+      }
+    });
+    Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
+      this.expenseFieldsGetter.controls[(key as unknown as number)].get('import_code')?.value === true ? this.importCodeEnabled.push(true) : '';
+    });
   }
 
 }

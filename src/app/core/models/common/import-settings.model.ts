@@ -7,7 +7,8 @@ import { Sage300ImportSettingGet } from "../sage300/sage300-configuration/sage30
 export type ImportDefaultField = {
   destination_field: string,
   source_field: string,
-  formController: string
+  formController: string,
+  import_code?: string
 }
 
 export type ExpenseField = {

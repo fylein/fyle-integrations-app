@@ -5,7 +5,8 @@ import { IntegrationField } from "../../db/mapping.model";
 export type Sage300DefaultFields = {
     destination_field: string,
     source_field: string,
-    formController: string
+    formController: string,
+    import_code: string
 }
 
 export type Sage300DependentImportFields = {
@@ -57,7 +58,9 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
         return new FormGroup({
             importCodeFields: new FormControl(importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings.import_code_fields : []),
             importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
+            importCategoryCode: new FormControl(this.getImportCodeField(import_code, 'ACCOUNTS')),
             importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),
+            importVendorCode: new FormControl(this.getImportCodeField(import_code, 'VENDOR')),
             expenseFields: new FormArray(expenseFieldsArray),
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),
