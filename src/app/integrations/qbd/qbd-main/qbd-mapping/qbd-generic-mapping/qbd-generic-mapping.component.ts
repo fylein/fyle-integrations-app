@@ -127,7 +127,7 @@ export class QbdGenericMappingComponent implements OnInit {
     forkJoin([
       this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type),
       this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL, this.fieldMapping?.item_type),
-      this.fieldMappingService.getQbdFieldMapping(),
+      this.fieldMappingService.getQbdFieldMapping()
     ]).subscribe((response) => {
       this.mappingStats = response[0];
       this.mappings = response[1];
