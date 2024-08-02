@@ -70,7 +70,7 @@ export class MappingFilterComponent implements OnInit {
 
   searchingFilter(): void {
     this.form.controls.searchOption.valueChanges.subscribe((searchValue) => {
-      this.mappingSearchingEvent.emit(searchValue);
+      this.mappingSearchingEvent.emit((searchValue as string).trim());
     });
   }
 
