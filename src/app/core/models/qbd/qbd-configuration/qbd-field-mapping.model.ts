@@ -7,6 +7,7 @@ export type QBDFieldMappingGet = {
     class_type: string | null,
     project_type: string | null,
     item_type: string | null,
+    custom_fields: string[],
     workspace: number
 }
 

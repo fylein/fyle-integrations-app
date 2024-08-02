@@ -22,9 +22,4 @@ export class QbdFieldMappingService {
   postQbdFieldMapping(fieldMappingPayload: QBDFieldMappingPost): Observable<QBDFieldMappingGet> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/field_mappings/`, fieldMappingPayload);
   }
-
-  getFyleCustomFields(): Observable<string[]> {
-    return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/fyle/custom_fields/`, {});
-  }
-
 }

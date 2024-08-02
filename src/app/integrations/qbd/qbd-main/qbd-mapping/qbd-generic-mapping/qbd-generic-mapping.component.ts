@@ -137,7 +137,7 @@ export class QbdGenericMappingComponent implements OnInit {
   }
 
   getFieldMapping() {
-    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in Quickbooks Desktop' : 'QuickBooks Desktop Credit Card Account';
+    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in QuickBooks Desktop' : 'QuickBooks Desktop Credit Card Account';
     this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
       this.fieldMapping = fieldMappingResponse;
     });
