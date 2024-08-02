@@ -72,7 +72,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   ];
 
-  importCodeEnabled: boolean[] = [];
+  isImportCodeEnabledCounter: boolean[] = [];
 
   readonly brandingConfig = brandingConfig;
 
@@ -93,6 +93,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
+  }
+
+  disabledToolTipText(expenseField: { value: { source_field: any; }; }): string {
+    return !expenseField.value.source_field ? this.helper.sentenseCaseConversion('Fill in the Fyle Field toggle will be enabled') : '';
   }
 
   getFormGroup(control: AbstractControl): FormGroup {
@@ -149,6 +153,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
       // Get the 'import_to_fyle' control at the specified index and disable it
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
+    } else {
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
+      this.onImportToFyleToggleChange({checked: true});
     }
 
     if ( this.appName === AppName.SAGE300) {
@@ -178,6 +185,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
     (expenseField as FormGroup).controls.source_field.patchValue('');
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     (expenseField as FormGroup).controls.import_to_fyle.enable();
+    this.onImportToFyleToggleChange({checked: false});
     event?.stopPropagation();
     this.isXeroProjectMapped = false;
     this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -190,12 +198,14 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
-    if (event.checked && this.appName === AppName.SAGE300) {
-      this.importCodeEnabled.push(true);
-    } else if (!event.checked && this.appName === AppName.SAGE300) {
-      this.importCodeEnabled.pop();
+  onImportToFyleToggleChange(event: any): void {
+    if (this.appName === AppName.SAGE300) {
+      event.checked ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
     }
+  }
+
+  onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
+    this.onImportToFyleToggleChange(event);
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costCodeFieldOption[0].attribute_type !== 'custom_field') {
       this.showWarningForDependentFields.emit();
     }
@@ -212,16 +222,23 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {
-    this.isOnboarding = this.workspace.getOnboardingState() === 'IMPORT_SETTINGS';
+  setupImportCodeCounter() {
     Object.keys(this.form.controls).forEach(key => {
-      if (key !== 'expenseFields' && key !== 'dependentFieldImportToggle') {
-        this.form.get(key)?.value === true ? this.importCodeEnabled.push(true) : '';
+      if (key in ['importCategoryCode', 'importVendorCode'] && this.form.get(key)?.value) {
+        this.isImportCodeEnabledCounter.push(true);
       }
     });
     Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
-      this.expenseFieldsGetter.controls[(key as unknown as number)].get('import_code')?.value === true ? this.importCodeEnabled.push(true) : '';
+      const control = this.expenseFieldsGetter.controls[key as unknown as number].get('import_code');
+      if (control?.value === true) {
+        this.isImportCodeEnabledCounter.push(true);
+      }
     });
+  }
+
+  ngOnInit(): void {
+    this.isOnboarding = this.workspace.getOnboardingState() === 'IMPORT_SETTINGS';
+    this.setupImportCodeCounter();
   }
 
 }

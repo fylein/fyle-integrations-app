@@ -73,6 +73,8 @@ export class ConfigurationSelectFieldComponent implements OnInit {
 
   @Input() isMultiLineOption: boolean;
 
+  @Input() isDisableTextRequired: boolean = true;
+
   @Output() searchOptionsDropdown: EventEmitter<ExportSettingOptionSearch> = new EventEmitter<ExportSettingOptionSearch>();
 
   exportTypeIconPath: string;

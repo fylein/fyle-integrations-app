@@ -53,14 +53,14 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
     }
 
     static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[]): FormGroup {
-        const import_code = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
-        const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, sage300Fields, false, import_code) : [] ;
+        const importCode = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
+        const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, sage300Fields, false, importCode) : [] ;
         return new FormGroup({
             importCodeFields: new FormControl(importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings.import_code_fields : []),
             importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
-            importCategoryCode: new FormControl(this.getImportCodeField(import_code, 'ACCOUNTS')),
+            importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNTS')),
             importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),
-            importVendorCode: new FormControl(this.getImportCodeField(import_code, 'VENDOR')),
+            importVendorCode: new FormControl(this.getImportCodeField(importCode, 'VENDOR')),
             expenseFields: new FormArray(expenseFieldsArray),
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),

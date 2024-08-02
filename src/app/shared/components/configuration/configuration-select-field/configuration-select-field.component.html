@@ -1,7 +1,7 @@
 <div [formGroup]="form" >
     <div *ngIf="!isDefaultFields" class="tw-flex tw-flex-row tw-justify-between tw-items-center tw-p-24-px">
         <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
-            <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'tw-pr-40-px']">
+            <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'noIcon']">
                 <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
             </div>
 
@@ -78,7 +78,7 @@
                         <span *ngIf="brandingConfig.brandId !== 'co'"> how it looks on {{appName}}</span>
                         <span *ngIf="brandingConfig.brandId === 'co'"> in {{appName}}</span>
                     </div>
-                    <div *ngIf="!showExportPreview && isDisabled && !formControllerName.includes('Code') && formControllerName !== 'import_code'" class="sub-text tw-text-pretty">
+                    <div *ngIf="!showExportPreview && isDisabled && isDisableTextRequired" class="sub-text tw-text-pretty">
                         <span>Auto-selected based on your export module</span>
                     </div>
                     <div *ngIf="brandingConfig.brandId !== 'co' && form.controls[formControllerName].value==='spent_at' && isOnboarding && form.value.cccExportType!==IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION" class="sub-text">
