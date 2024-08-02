@@ -17,7 +17,7 @@
                         [form]="fieldMappingForm"
                         [label]="'How to map CUSTOMER: JOB in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
                         [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'Customers\' field in QuickBooks Desktops'"
-                        [options]="mappingFieldFormOptionsFunction('classType')"
+                        [options]="mappingFieldFormOptionsFunction('classType', 'itemType')"
                         [iconPath]="'user-two'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'customerType'"></app-configuration-select-field>
@@ -27,10 +27,20 @@
                         [form]="fieldMappingForm"
                         [label]="'How to map CLASS in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
                         [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'Class\' field in QuickBooks Desktops'"
-                        [options]="mappingFieldFormOptionsFunction('customerType')"
+                        [options]="mappingFieldFormOptionsFunction('customerType', 'itemType')"
                         [iconPath]="'list'"
                         [placeholder]="'Select representation'"
                         [formControllerName]="'classType'"></app-configuration-select-field>
+                    </div>
+                    <div class="tw-mt-12-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <app-configuration-select-field
+                        [form]="fieldMappingForm"
+                        [label]="'How to map ITEMS in QuickBooks Desktop to ' + brandingConfig.brandName + ''"
+                        [subLabel]="'Select the field in ' + brandingConfig.brandName + ' that needs to be mapped to the \'Items\' field in QuickBooks Desktops'"
+                        [options]="mappingFieldFormOptionsFunction('customerType', 'classType')"
+                        [iconPath]="'list'"
+                        [placeholder]="'Select representation'"
+                        [formControllerName]="'itemType'"></app-configuration-select-field>
                     </div>
                 </div> 
             </div>
