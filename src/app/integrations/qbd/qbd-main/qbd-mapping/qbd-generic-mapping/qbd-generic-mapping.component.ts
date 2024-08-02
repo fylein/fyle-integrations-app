@@ -123,12 +123,15 @@ export class QbdGenericMappingComponent implements OnInit {
   private setupPage(): void {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
+    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in QuickBooks Desktop' : 'QuickBooks Desktop Credit Card Account';
     forkJoin([
       this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type),
-      this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL, this.fieldMapping?.item_type)
+      this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL, this.fieldMapping?.item_type),
+      this.fieldMappingService.getQbdFieldMapping(),
     ]).subscribe((response) => {
       this.mappingStats = response[0];
       this.mappings = response[1];
+      this.fieldMapping = response[2];
       this.filteredMappings = this.mappings.results.concat();
       this.totalCount = this.mappings.count;
       this.getOperatingSystem();
@@ -136,15 +139,7 @@ export class QbdGenericMappingComponent implements OnInit {
     });
   }
 
-  getFieldMapping() {
-    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in QuickBooks Desktop' : 'QuickBooks Desktop Credit Card Account';
-    this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
-      this.fieldMapping = fieldMappingResponse;
-    });
-  }
-
   ngOnInit(): void {
-    this.getFieldMapping();
     this.route.params.subscribe(() => {
       this.isLoading = true;
       this.setupPage();
