@@ -126,6 +126,7 @@ export class QbdFieldMappingComponent implements OnInit {
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
+    this.workspaceService.syncFyleDimensions().subscribe();
     this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
       this.fieldMapping = fieldMappingResponse;
       this.additionalOptionsItemType = this.buildCustomFieldOptions(fieldMappingResponse.custom_fields);
