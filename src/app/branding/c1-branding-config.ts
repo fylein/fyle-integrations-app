@@ -1,7 +1,10 @@
+import { BrandingConfiguration } from "../core/models/branding/branding-configuration.model";
 import { DemoVideo } from "../core/models/branding/demo-video.model";
 import { FeatureConfiguration } from "../core/models/branding/feature-configuration.model";
 import { KbArticle } from "../core/models/branding/kb-article.model";
-import { brandingConfig } from "./branding-config";
+import config from './config.json';
+
+const brandingConfig = config as BrandingConfiguration;
 
 export const c1FeatureConfig: FeatureConfiguration[string] = {
     illustrationsAllowed: false,
