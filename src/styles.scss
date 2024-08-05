@@ -779,11 +779,3 @@ p {
 ::-webkit-scrollbar-thumb:hover {
     @apply tw-bg-[#aaa] tw-rounded-99-px;
 }
-
-body > div:nth-child(3) {
-    @apply tw-fixed #{!important};
-}
-
-body > div > div:nth-child(1) {
-    @apply tw-absolute tw-w-300-px #{!important};
-}

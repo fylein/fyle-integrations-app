@@ -9,7 +9,7 @@ export class HelperUtility {
         form.controls[controllerName].clearValidators();
 
         // Temporary hack: Don't reset value for fields that are used in reimbursable + ccc section
-        if (controllerName !== 'accountsPayable' && controllerName !== 'defaultCCCAccount' && controllerName !== 'bankAccount' && controllerName !== 'creditCardAccount' && controllerName !== 'defaultCreditCardVendor' && controllerName !== 'nameInJournalEntry') {
+        if (controllerName !== 'accountsPayable' && controllerName !== 'defaultCCCAccount' && controllerName !== 'bankAccount' && controllerName !== 'creditCardAccount' && controllerName !== 'defaultCreditCardVendor' && controllerName !== 'nameInJournalEntry' && controllerName !== 'exportScheduleFrequency') {
             form.controls[controllerName].setValue(null);
         }
     }

@@ -1,0 +1,7 @@
+:host ::ng-deep body > div:nth-child(3) {
+    @apply tw-fixed #{!important};
+}
+
+:host ::ng-deep body > div > div:nth-child(1) {
+    @apply tw-absolute tw-w-300-px #{!important};
+}
