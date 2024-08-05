@@ -259,9 +259,12 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
         this.isTaxGroupSyncAllowed = true;
       }
-      if (workspaceGeneralSetting.employee_field_mapping === EmployeeFieldMapping .EMPLOYEE){
-        this.isImportEmployeeAllowed = true;
-      }
+
+      this.isImportEmployeeAllowed = (
+        workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ||
+        workspaceGeneralSetting.corporate_credit_card_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT
+      );
+
       if (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.corporate_credit_card_expenses_object || workspaceGeneralSetting.corporate_credit_card_expenses_object === 'BILL')) {
         this.isImportItemsAllowed = true;
       }
