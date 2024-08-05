@@ -197,12 +197,12 @@
                         [appName]="appName"
                         [form]="form"
                         [isDisableTextRequired]="false"
-                        [options]="importCodeSelectorOptions"
+                        [options]="getImportCodeSelectorOptions(defaultField.destination_field)"
                         [placeholder]="'Select the how to import ' + helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase()"
                         [label]="'How to import the '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' from ' + appName + '?'"
                         [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                         [isMultiLineOption]="true"
-                        [isDisabled]="form.controls[defaultField.formController].value && !isOnboarding"
+                        [isDisabled]="form.controls[defaultField.formController].value && isOnboarding"
                         [formControllerName]="defaultField.import_code">
                     </app-configuration-select-field>
                 </div>
@@ -214,12 +214,12 @@
                             [appName]="appName"
                             [isDisableTextRequired]="false"
                             [form]="getFormGroup(expenseField)"
-                            [options]="importCodeSelectorOptions"
+                            [options]="getImportCodeSelectorOptions(expenseField.value.destination_field)"
                             [placeholder]="'Select the how to import ' + helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase()"
                             [label]="'How to import the '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' from ' + appName + '?'"
                             [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                             [isMultiLineOption]="true"
-                            [isDisabled]="expenseField.value.import_to_fyle && !isOnboarding"
+                            [isDisabled]="expenseField.value.import_to_fyle && isOnboarding"
                             [formControllerName]="'import_code'">
                         </app-configuration-select-field>
                     </div>

@@ -59,14 +59,14 @@ export class ImportSettingsModel {
     });
   }
 
-  static getImportCodeField(importCodeFields: string[] | [], destinationField: string): boolean {
+  static getImportCodeField(importCodeFields: string[] , destinationField: string): boolean {
     if (importCodeFields?.length) {
-      return importCodeFields.filter((field) => field === destinationField).length === 1 ? true : false;
+      return importCodeFields.includes(destinationField);
     }
     return false;
   }
 
-  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] | [], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
+  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] , accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();

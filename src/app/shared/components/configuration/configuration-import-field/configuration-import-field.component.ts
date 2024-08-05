@@ -59,18 +59,44 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   isXeroProjectMapped: boolean;
 
-  importCodeSelectorOptions: SelectFormOption[] = [
-    {
-      label: 'Import Codes + Names',
-      value: true,
-      subLabel: 'Example: 4567 Meals & Entertainment'
-    },
-    {
-      label: 'Import Names only',
-      value: false,
-      subLabel: 'Example: Meals & Entertainment'
-    }
-  ];
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
+    "ACCOUNT": [
+      {
+        label: 'Import Codes + Names',
+        value: true,
+        subLabel: 'Example: 4567 Meals & Entertainment'
+      },
+      {
+        label: 'Import Names only',
+        value: false,
+        subLabel: 'Example: Meals & Entertainment'
+      }
+    ],
+    "VENDOR": [
+      {
+        label: 'Import Codes + Names',
+        value: true,
+        subLabel: 'Example: 4567 Joanna'
+      },
+      {
+        label: 'Import Names only',
+        value: false,
+        subLabel: 'Example: Joanna'
+      }
+    ],
+    "JOB": [
+      {
+        label: 'Import Codes + Names',
+        value: true,
+        subLabel: 'Example: 4567 Test Job'
+      },
+      {
+        label: 'Import Names only',
+        value: false,
+        subLabel: 'Example: Test Job'
+      }
+    ]
+  };
 
   isImportCodeEnabledCounter: boolean[] = [];
 
@@ -93,6 +119,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
+  }
+
+  getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
+    return this.importCodeSelectorOptions[destinationField];
   }
 
   disabledToolTipText(expenseField: { value: { source_field: any; }; }): string {

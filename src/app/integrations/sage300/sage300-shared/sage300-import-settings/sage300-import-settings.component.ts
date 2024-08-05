@@ -270,14 +270,11 @@ export class Sage300ImportSettingsComponent implements OnInit {
   }
 
   updateImportCodeFields(isImportCodeEnabled: boolean, value: string): void {
-    const fields = this.importSettingForm.get('importCodeFields')?.value || [];
+    let fields = this.importSettingForm.get('importCodeFields')?.value;
     if (isImportCodeEnabled) {
       fields.push(value);
     } else {
-      const index = fields.indexOf(value);
-      if (index > -1) {
-        fields.splice(index, 1);
-      }
+      fields = fields.filter((field: string) => field !== value);
     }
     this.importSettingForm.get('importCodeFields')?.patchValue(fields);
   }

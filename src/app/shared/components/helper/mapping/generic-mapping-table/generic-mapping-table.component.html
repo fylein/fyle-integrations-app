@@ -29,8 +29,9 @@
                     (onFilter)="searchOptions($event)">
                     <ng-template let-value pTemplate="selectedItem">
                         <div *ngIf="value">
-                            <p>{{ value?.value }} 
-                                <span *ngIf="value?.code && isMultiLineOption">({{ value?.code }})</span>
+                            <p>
+                                <span *ngIf="value?.code && isMultiLineOption">{{ value?.code }}</span>
+                                {{ value?.value }} 
                             </p>
                         </div>
                         <div *ngIf="!value" class="tw-text-placeholder">
