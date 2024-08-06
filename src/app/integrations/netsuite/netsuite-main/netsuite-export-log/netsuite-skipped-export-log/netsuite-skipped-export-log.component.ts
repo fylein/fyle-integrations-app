@@ -77,7 +77,7 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
     }
 
     return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery, AppName.NETSUITE).subscribe((skippedExpenses: SkipExportLogResponse) => {
-        this.totalCount = skippedExpenses.count;
+      this.totalCount = skippedExpenses.count;
       const orgId = this.userService.getUserProfile().org_id;
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
         skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
