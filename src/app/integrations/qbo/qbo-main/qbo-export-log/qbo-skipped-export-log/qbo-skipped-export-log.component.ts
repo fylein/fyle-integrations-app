@@ -13,6 +13,7 @@ import { brandingConfig } from 'src/app/branding/branding-config';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-qbo-skipped-export-log',
@@ -52,7 +53,8 @@ export class QboSkippedExportLogComponent implements OnInit {
   hideCalendar: boolean;
 
   constructor(
-    @Inject(FormBuilder) private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
     private exportLogService: ExportLogService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
@@ -81,10 +83,10 @@ export class QboSkippedExportLogComponent implements OnInit {
     }
 
     return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
-        this.totalCount = skippedExpenses.count;
-
+      this.totalCount = skippedExpenses.count;
+      const orgId = this.userService.getUserProfile().org_id;
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
+        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
       });
 
       this.filteredExpenses = skippedExpenseGroup;

@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-sage300-skipped-export-log',
@@ -51,7 +52,8 @@ export class Sage300SkippedExportLogComponent implements OnInit {
   hideCalendar: boolean;
 
   constructor(
-    @Inject(FormBuilder) private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private accountingExportService: AccountingExportService,
@@ -81,11 +83,11 @@ export class Sage300SkippedExportLogComponent implements OnInit {
     }
 
     return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
-        this.totalCount = skippedExpenses.count;
-
+      this.totalCount = skippedExpenses.count;
+      const orgId = this.userService.getUserProfile().org_id;
 
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
+        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
       });
 
       this.filteredExpenses = skippedExpenseGroup;

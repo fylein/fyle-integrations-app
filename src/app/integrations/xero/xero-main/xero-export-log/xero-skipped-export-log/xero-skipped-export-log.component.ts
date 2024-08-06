@@ -11,6 +11,7 @@ import { AccountingExportService } from 'src/app/core/services/common/accounting
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-xero-skipped-export-log',
@@ -50,7 +51,8 @@ export class XeroSkippedExportLogComponent implements OnInit {
   hideCalendar: boolean;
 
   constructor(
-    @Inject(FormBuilder) private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
+    private userService: UserService,
     private exportLogService: ExportLogService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,
@@ -79,10 +81,10 @@ export class XeroSkippedExportLogComponent implements OnInit {
     }
 
     return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
-        this.totalCount = skippedExpenses.count;
-
+      this.totalCount = skippedExpenses.count;
+      const orgId = this.userService.getUserProfile().org_id;
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
+        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
       });
 
       this.filteredExpenses = skippedExpenseGroup;
