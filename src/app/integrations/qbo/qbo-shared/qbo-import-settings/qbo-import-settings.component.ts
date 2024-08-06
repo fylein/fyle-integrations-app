@@ -227,7 +227,7 @@ export class QboImportSettingsComponent implements OnInit {
 
       this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;

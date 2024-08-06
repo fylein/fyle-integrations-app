@@ -351,7 +351,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
       this.importSettingForm = XeroImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent, destinationAttributes.TAX_CODE);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupImportSettingFormWatcher();
       this.initializeCustomFieldForm(false);
 

@@ -428,7 +428,7 @@ export class QboCloneSettingsComponent implements OnInit {
 
       this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupImportSettingFormWatcher();
       this.initializeCustomFieldForm(false);
 
