@@ -45,6 +45,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
 
   isImportEmployeeAllowed: boolean;
 
+  isExpenseCategoryEnabled: boolean;
+
   netsuiteFields: IntegrationField[];
 
   fyleFields: FyleField[];
@@ -231,14 +233,14 @@ export class NetsuiteImportSettingsComponent implements OnInit {
   }
 
   getCategoryLabel(): string {
-    if (this.isImportEmployeeAllowed) {
+    if (this.isExpenseCategoryEnabled) {
       return brandingConfig.brandId !== 'co' ? 'Import the Expense Categories' : 'Import expense categories';
     }
     return  brandingConfig.brandId !== 'co' ? 'Import the Accounts' : 'Import accounts';
   }
 
   getCategorySubLabel(): string {
-    if (this.isImportEmployeeAllowed) {
+    if (this.isExpenseCategoryEnabled) {
       return 'Imported expense categories';
     }
     return 'Imported accounts';
@@ -260,7 +262,11 @@ export class NetsuiteImportSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      this.isImportEmployeeAllowed = (
+      if (workspaceGeneralSetting.employee_field_mapping === EmployeeFieldMapping .EMPLOYEE){
+        this.isImportEmployeeAllowed = true;
+      }
+
+      this.isExpenseCategoryEnabled = (
         workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ||
         workspaceGeneralSetting.corporate_credit_card_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT
       );
