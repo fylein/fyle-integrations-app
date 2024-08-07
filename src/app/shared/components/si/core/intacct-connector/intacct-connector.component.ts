@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingContent, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -37,7 +37,7 @@ export class IntacctConnectorComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private connectorService: IntacctConnectorService,
     private mappingsService: SiMappingsService,
     private toastService: IntegrationsToastService
@@ -62,7 +62,7 @@ export class IntacctConnectorComponent implements OnInit {
       this.connectorService.connectSageIntacct(sageIntacctConnection).subscribe((response) => {
         this.mappingsService.refreshSageIntacctDimensions(['location_entities']).subscribe(() => {
           this.setupConnectionStatus.emit(true);
-          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection Successful.');
+          this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Connection successful.');
           this.isLoading = false;
           this.saveInProgress = false;
         });

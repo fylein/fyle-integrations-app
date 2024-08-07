@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, MappingSourceField, XeroFyleField } from 'src/app/core/models/enum/enum.model';
+import { AppName, MappingSourceField, Sage300Field, XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
@@ -127,7 +127,11 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
     }
 
-    if ( this.appName === AppName.SAGE300) {
+    if (selectedValue === 'custom_field') {
+      (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
+    }
+
+    if ( selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('destination_field')?.value === Sage300Field.JOB && this.appName === AppName.SAGE300) {
       this.form.controls.isDependentImportEnabled.setValue(true);
     }
 
@@ -141,9 +145,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   getOptions(expenseField: AbstractControl): FyleField[] {
-    if (expenseField.value.destination_field === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.value.import_to_fyle) {
+    if (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO && !expenseField.get('import_to_fyle')?.value) {
       return [{ attribute_type: 'DISABLED_XERO_SOURCE_FIELD', display_name: 'Project', is_dependent: false }];
-    } else if (expenseField.value.source_field === 'CATEGORY') {
+    } else if (expenseField.get('source_field')?.value === 'CATEGORY') {
       return this.fyleFieldOptions.filter(option => option.attribute_type === 'CATEGORY');
     }
 
@@ -167,8 +171,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
-    if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costCodeFieldOption[0].attribute_type !== 'custom_field') {
-      this.showWarningForDependentFields.emit();
+    if (this.costCodeFieldOption?.length && this.costCodeFieldOption?.length) {
+      if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0]?.attribute_type !== 'custom_field' && this.costCodeFieldOption[0]?.attribute_type !== 'custom_field') {
+        this.showWarningForDependentFields.emit();
+      }
     }
   }
 
@@ -183,6 +189,19 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  disableDestinationFields() {
+    this.expenseFieldsGetter.controls.forEach((expenseField) => {
+      expenseField.get('destination_field')?.disable();
+      if ((expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO)) {
+        expenseField.get('source_field')?.disable();
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    if (this.appName !== AppName.SAGE300) {
+      this.disableDestinationFields();
+    }
+  }
 
 }

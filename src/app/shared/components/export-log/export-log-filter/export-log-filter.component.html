@@ -3,8 +3,8 @@
     <div *ngIf="isSimpleSearchRequired" class="tw-flex tw-mr-4"></div>
     <div *ngIf="!hideCalendar">
         <div *ngIf="isSimpleSearchRequired" class="tw-text-form-label-text-color tw-text-12-px tw-pb-8-px tw-pl-16-px tw-font-nav-link-font-weight">Date of export</div>
-        <div [ngClass]="{'tw-border-l tw-border-l-qf-divider tw-pl-16-px': isSimpleSearchRequired}" class="tw-flex tw-items-center">
-            <p-calendar (onClickOutside)="isDateFilterFocused = false" (onShow)="isDateFilterFocused = true" class="tw-pl-12-px tw-py-4-px tw-rounded-4-px drop-down tw-border tw-border-select-default-border tw-border-r-0 tw-rounded-br-0-px tw-rounded-tr-0-px" (onSelect)="onSelect($event)" (click)="showCalendar($event)" placeholder="Select date range" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [monthNavigator]="false" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
+        <div #calendarContainer [ngClass]="{'tw-border-l tw-border-l-qf-divider tw-pl-16-px': isSimpleSearchRequired}" class="tw-flex tw-items-center" (click)="showCalendar($event)">
+            <p-calendar #calendar (onClickOutside)="isDateFilterFocused = false" (onShow)="isDateFilterFocused = true" class="tw-pl-12-px tw-py-4-px tw-rounded-4-px drop-down tw-border tw-border-select-default-border tw-border-r-0 tw-rounded-br-0-px tw-rounded-tr-0-px" (onSelect)="onSelect($event)" (click)="showCalendar($event)" placeholder="Select date range" formControlName="start" [touchUI]="isCalendarVisible" selectionMode="range" [readonlyInput]="true" inputId="range" [showOtherMonths]="false" [selectOtherMonths]="false" [monthNavigator]="false" [ngClass]="{'tw-border-select-focused-border': isDateFilterFocused}">
                 <ng-template pTemplate="header">
                     <div class="tw-flex tw-items-center tw-justify-between">
                         <div class="tw-pr-8-px">

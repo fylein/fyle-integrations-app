@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { ExportSettingFormOption } from 'src/app/core/models/intacct/intacct-configuration/export-settings.model';
@@ -22,7 +22,7 @@ import { ExportSettingOptionSearch } from 'src/app/core/models/common/export-set
   templateUrl: './configuration-select-field.component.html',
   styleUrls: ['./configuration-select-field.component.scss']
 })
-export class ConfigurationSelectFieldComponent implements OnInit {
+export class ConfigurationSelectFieldComponent implements OnInit, OnChanges {
 
   @Input() options: QBDExportSettingFormOption[] | string[] | ExportSettingFormOption[] | AdvancedSettingFormOption[] | HourOption[] | SelectFormOption[];
 
@@ -156,6 +156,14 @@ export class ConfigurationSelectFieldComponent implements OnInit {
     this.isOnboarding = this.router.url.includes('onboarding');
     if (this.destinationAttributes) {
       this.optionsCopy = this.destinationAttributes.slice();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.isDisabled?.currentValue) {
+      this.form.get(this.formControllerName)?.disable();
+    } else if (!changes.isDisabled?.currentValue) {
+      this.form.get(this.formControllerName)?.enable();
     }
   }
 }

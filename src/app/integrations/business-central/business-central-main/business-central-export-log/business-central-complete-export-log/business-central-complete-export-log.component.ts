@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -58,7 +58,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,

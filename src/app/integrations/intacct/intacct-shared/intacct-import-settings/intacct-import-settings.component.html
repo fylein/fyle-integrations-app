@@ -93,8 +93,8 @@
             </div>
             <div class="tw-p-22-px" formArrayName="expenseFields">
                 <div class="tw-flex fields-header" fxLayout="row" fxLayoutAlign="start center">
-                    <div class="fields-header-text tw-pl-4-px tw-w-404-px tw-whitespace-nowrap">Sage Intacct Dimensions</div>
-                    <div class="fields-header-text tw-w-30-vw tw-whitespace-nowrap">{{brandingConfig.brandName}} Fields</div>
+                    <div class="fields-header-text tw-pl-14-px tw-w-404-px tw-whitespace-nowrap">Sage Intacct Dimensions</div>
+                    <div class="fields-header-text tw-w-30-vw tw-pl-14-px tw-whitespace-nowrap">{{brandingConfig.brandName}} Fields</div>
                     <div class="fields-header-text tw-flex tw-whitespace-nowrap">
                         Import to {{brandingConfig.brandName}}
                         <app-svg-icon [svgSource]="'info-circle-fill'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-text-muted'" [tooltipText]="'Importing a dimension syncs active values from Sage Intacct every 24 hours. Deactivated values in Sage will also be disabled in ' + brandingConfig.brandName " [tooltipPosition]="'top'"></app-svg-icon>
@@ -105,7 +105,7 @@
                         <div>
                             <p-dropdown appendTo="body" [options]="sageIntacctFields" placeholder="Choose Sage Intacct field" formControlName="destination_field"
                             optionLabel="display_name" optionValue="attribute_type"></p-dropdown>
-                            <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                            <p *ngIf="expenseField.value.destination_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'destination_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
                                 Sage Intacct Fields should be unique
                             </p>
                         </div>
@@ -132,7 +132,7 @@
                                     
                                     </ng-template>
                               </p-dropdown>
-                              <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                              <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px tw-pl-14-px">
                                 {{brandingConfig.brandName}} Fields should be unique
                                 </p>
                             </div>
@@ -184,11 +184,11 @@
                         </div>
                     </div>                      
                 </div>
-                <div class="tw-text-alert-toast tw-pt-4 tw-pl-1" *ngIf="importSettingsForm.get('expenseFields')?.hasError('duplicateFyleFields') || importSettingsForm.get('expenseFields')?.hasError('duplicateSageIntacctFields')">
+                <div class="tw-text-alert-toast tw-pt-4 tw-pl-14-px" *ngIf="importSettingsForm.get('expenseFields')?.hasError('duplicateFyleFields') || importSettingsForm.get('expenseFields')?.hasError('duplicateSageIntacctFields')">
                     *{{brandingConfig.brandName}} and Sage Intacct Fields should be unique.
                   </div>                  
             </div>
-            <div *ngIf="showAddButton" class="add-button-container tw-pl-4">
+            <div *ngIf="showAddButton" class="add-button-container tw-pl-36-px">
                 <app-svg-icon [svgSource]="'plus-square-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="'tw-cursor-pointer tw-text-mandatory-field-color'" (iconClick)="addExpenseField()"></app-svg-icon>
                 <a class="tw-cursor-pointer tw-text-mandatory-field-color tw-pl-2" (click)="addExpenseField()">
                     Add more fields
@@ -222,31 +222,31 @@
             <p class="tw-pb-8-px tw-text-sub-text-color tw-text-14-px">
                 Field Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="attribute_type" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
+            <input formControlName="attribute_type" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText placeholder="Enter field type" [ngClass]="[customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="customFieldForm.controls['attribute_type'].touched && !customFieldForm.controls['attribute_type'].valid && !customFieldForm.controls['attribute_type'].disabled" [customErrorMessage]="'Enter a valid type'"></app-mandatory-error-message>
 
             <p class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
                 Placeholder Name <span class="tw-text-mandatory-field-color">*</span>
             </p>
-            <input formControlName="source_placeholder" type="text" class="tw-w-388-px tw-h-48-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
+            <input formControlName="source_placeholder" type="text" class="tw-w-420-px tw-border tw-px-10-px tw-py-12-px tw-h-32-px" pInputText placeholder="Enter field name" [ngClass]="[customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled ? 'error-box' : 'normal-box']" required/>
             <app-mandatory-error-message *ngIf="customFieldForm.controls['source_placeholder'].touched && !customFieldForm.controls['source_placeholder'].valid && !customFieldForm.controls['source_placeholder'].disabled" [customErrorMessage]="'Enter a valid Name'"></app-mandatory-error-message>
 
             <div>
                 <h5 class="tw-pt-16-px tw-text-sub-text-color tw-text-14-px tw-pb-8-px">
                   Field Type
                 </h5>
-                <div class="tw-w-388-px tw-h-48-px">
-                  <input class="tw-w-388-px form-input-disabled" type="text" placeholder="Select" disabled>
+                <div class="tw-w-420-px tw-h-48-px">
+                  <input class="tw-w-420-px form-input-disabled" type="text" placeholder="Select" disabled>
                 </div>
               </div>
 
               <div class="label-section tw-pt-8">
-                <div class="label-content tw-w-388-px">
+                <div class="label-content tw-w-420-px">
                   <h5 class="name-text sub-text-color tw-text-14-px">
                     {{customFieldForm.value.attribute_type ? customFieldForm.value.attribute_type : 'Label'}}
                   </h5>
                   <div class="form-field tw-pt-4-px">
-                    <input class="form-input tw-w-320-px" type="text"
+                    <input class="form-input tw-w-352-px" type="text"
                     [placeholder]="customFieldForm.value.source_placeholder ? customFieldForm.value.source_placeholder : 'Enter Text'">
                   </div>
                 </div>
