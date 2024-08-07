@@ -126,7 +126,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   disabledToolTipText(expenseField: { value: { source_field: any; }; }): string {
-    return !expenseField.value.source_field ? this.helper.sentenseCaseConversion('Fill in the Fyle Field toggle will be enabled') : '';
+    return !expenseField.value.source_field ? this.helper.sentenseCaseConversion('To import a '+ this.appName +' dimension, map it to a Fyle field') : '';
   }
 
   getFormGroup(control: AbstractControl): FormGroup {
