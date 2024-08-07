@@ -41,8 +41,6 @@ if (environment.sentry_dsn) {
     replaysSessionSampleRate: 0.1,
     replaysOnErrorSampleRate: 1.0
   });
-} else {
-  console.error("[SENTRY] Not initialized: Missing environment variable SENTRY_DSN");
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
