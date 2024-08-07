@@ -76,7 +76,6 @@ export type ContentConfiguration = {
                     billPaymentAccountLabel: string;
                     billPaymentAccountSubLabel: string;
                     autoCreateVendorsLabel: string;
-                    autoCreateEmployeeVendor: string;
                     dfvSubLabel: string;
                     dfvLabel: string;
                     changeAccountingPeriodSubLabel: string;
@@ -142,7 +141,6 @@ export type ContentConfiguration = {
                     billPaymentAccountLabel: string;
                     billPaymentAccountSubLabel: string;
                     autoCreateVendorsLabel: string;
-                    autoCreateEmployeeVendor: string;
                     customPreferencesLabel: string;
                     customPreferencesSubLabel: string;
                     automationSubLabel: string;

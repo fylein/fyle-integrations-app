@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Inject, Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { forkJoin, Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { globalCacheBusterNotifier } from 'ts-cacheable';
@@ -11,7 +11,7 @@ import { IntegrationsToastService } from '../services/common/integrations-toast.
 @Injectable({
   providedIn: 'root'
 })
-export class TenantGuard implements CanActivate {
+export class TenantGuard  {
 
   constructor(
     private xeroConnectorService: XeroConnectorService,

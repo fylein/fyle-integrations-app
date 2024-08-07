@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { catchError, concat, merge, of, toArray } from 'rxjs';
@@ -57,7 +57,7 @@ export class BambooHrComponent implements OnInit {
 
   constructor(
     private bambooHrService: BambooHrService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helperService: HelperService,
     private messageService: MessageService,
     private orgService: OrgService,

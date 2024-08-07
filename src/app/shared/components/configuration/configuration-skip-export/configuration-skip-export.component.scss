@@ -31,7 +31,7 @@
 }
   
 :host ::ng-deep .p-calendar .p-inputtext {
-    @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border-solid tw-py-10-px tw-px-14-px #{!important};
+    @apply tw-cursor-pointer tw-w-360-px tw-h-40-px tw-border tw-border-solid tw-py-10-px tw-px-14-px #{!important};
 }
   
 :host ::ng-deep .p-chips-token {
@@ -40,9 +40,10 @@
   
   /* To remove blue hover and other styles */
   :host ::ng-deep .p-chips input:focus {
-    outline: none !important;
+    // outline: none !important;
     box-shadow: none !important;
-    border-color: inherit !important;
+    // border-color: inherit !important;
+    border: 1px solid inherit !important;
   }
   
   /* Scrollable container */
@@ -54,6 +55,12 @@
     min-height: 38px !important;
     padding-top: 2px!important;
     padding-bottom: 2px!important;
+    box-shadow: 1px 1px white;
+  }
+
+  :host ::ng-deep .p-chips-multiple-container:enabled:focus {
+    box-shadow: none;
+    border: 1px solid var(--select-focused-border);
   }
   
   /* Change text color to black */
@@ -89,9 +96,5 @@
   
   :host ::ng-deep input {
     @apply tw-text-14-px #{!important};
-  }
-  
-  :host ::ng-deep .p-datepicker table td > span {
-    @apply tw-w-auto tw-h-auto #{!important};
   }
   

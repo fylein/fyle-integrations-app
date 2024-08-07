@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppName, ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -52,7 +52,7 @@ export class IntacctLocationEntityComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private mappingsService: SiMappingsService,
     private connectorService: IntacctConnectorService,
     private userService: UserService,
@@ -119,7 +119,7 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
     }
     this.isLoading = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location Entity Selected Successfully.');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location entity selected successfully.');
   }
 
   private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {

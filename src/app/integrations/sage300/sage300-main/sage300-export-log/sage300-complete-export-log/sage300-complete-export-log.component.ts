@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExportStatus, AccountingExportType, AppName, FundSource, FyleReferenceType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
@@ -63,7 +63,7 @@ export class Sage300CompleteExportLogComponent implements OnInit {
   hideCalendar: boolean;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,

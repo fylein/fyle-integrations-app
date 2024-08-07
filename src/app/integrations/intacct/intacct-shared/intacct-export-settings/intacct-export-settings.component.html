@@ -247,6 +247,7 @@
                         [options]="expenseGroupingFieldOptions"
                         [iconPath]="'question-square-outline'"
                         [placeholder]="'Select expense grouping'"
+                        [isDisabled]="exportSettingsForm.get('cccExportType')?.value === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION ? true : false"
                         [formControllerName]="'cccExportGroup'"></app-configuration-select-field>
                     </div>
                     <div *ngIf="exportSettingsForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">

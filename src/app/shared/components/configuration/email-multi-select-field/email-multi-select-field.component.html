@@ -14,7 +14,7 @@
             <ng-template let-value pTemplate="selectedItems">
                 <div *ngIf="selectedEmail"
                     class="tw-flex tw-text-12-px tw-h-22-px tw-rounded-12-px tw-text-slightly-normal-text-color tw-border-1-px tw-border-box-color tw-bg-white">
-                    <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px">{{ selectedEmail }}</p>
+                    <p class="tw-pt-2-px tw-pl-12-px tw-pr-6-px tw-max-w-[150px] tw-overflow-hidden tw-whitespace-nowrap tw-text-ellipsis">{{ selectedEmail }}</p>
                     <p class="tw-w-1-px tw-mr-8-px tw-bg-separator"></p>
                     <app-svg-icon (iconClick)="removeEmail()" [svgSource]="'cross-small'" [width]="'12px'" [height]="'12px'"
                         [styleClasses]="'tw-pr-10-px tw-pt-6-px tw-text-slightly-normal-text-color'"></app-svg-icon>
@@ -29,13 +29,13 @@
                 </div>
             </ng-template>
             <ng-template pTemplate="filter" let-options="options">
-                <div *ngIf="emails.length" class="p-inputgroup tw-p-6-px">
-                    <div class="p-input-icon-left">
-                        <i>
+                <div *ngIf="emails.length" class="tw-p-6-px">
+                    <p-iconField iconPosition="left">
+                        <p-inputIcon>
                             <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
-                        </i>
-                        <input type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px" (keyup)="options.filter($event)" pInputText placeholder="Search by Name / Email" formControlName="search"/>
-                    </div>
+                        </p-inputIcon>
+                        <input type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-40-px !tw-pr-12-px !tw-py-12-px" (keyup)="options.filter($event)" pInputText placeholder="Search by Name / Email" formControlName="search"/>
+                    </p-iconField>
                 </div>
             </ng-template>
             <ng-template let-user pTemplate="item">

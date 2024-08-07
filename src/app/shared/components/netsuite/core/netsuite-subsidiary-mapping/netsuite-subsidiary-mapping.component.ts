@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -57,7 +57,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private netsuiteMappingsService: NetsuiteMappingsService,
     private mappingService: MappingService,
     private connectorService: NetsuiteConnectorService,
@@ -109,7 +109,7 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     }
     this.isLoading = false;
     this.saveInProgress = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Subsidiary Selected Successfully.');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Subsidiary selected successfully.');
   }
 
   private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {

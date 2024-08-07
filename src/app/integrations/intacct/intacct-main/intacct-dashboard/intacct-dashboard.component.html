@@ -33,7 +33,7 @@
         [accountingExportSummary]="accountingExportSummary">
     </app-dashboard-export-summary-section>
 
-    <app-dashboard-error-section *ngIf="errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length"
+    <app-dashboard-error-section *ngIf="(errors.EMPLOYEE_MAPPING.length || errors.CATEGORY_MAPPING.length || errors.ACCOUNTING_ERROR.length) && exportableAccountingExportIds.length"
         [appName]="appName"
         [apiModuleUrl]="AppUrl.INTACCT"
         [errors]="errors"

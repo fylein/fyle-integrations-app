@@ -9,6 +9,7 @@ import { Sage300OnboardingConnectorComponent } from './sage300-onboarding-connec
 import { Sage300OnboardingDoneComponent } from './sage300-onboarding-done/sage300-onboarding-done.component';
 import { Sage300OnboardingImportSettingsComponent } from './sage300-onboarding-import-settings/sage300-onboarding-import-settings.component';
 import { Sage300OnboardingAdvancedSettingsComponent } from './sage300-onboarding-advanced-settings/sage300-onboarding-advanced-settings.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -25,7 +26,8 @@ import { Sage300OnboardingAdvancedSettingsComponent } from './sage300-onboarding
     CommonModule,
     SharedModule,
     Sage300SharedModule,
-    Sage300OnboardingRoutingModule
+    Sage300OnboardingRoutingModule,
+    ReactiveFormsModule
   ],
   exports: [
     Sage300OnboardingExportSettingsComponent,
