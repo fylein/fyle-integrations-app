@@ -137,6 +137,7 @@
                                 [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to QuickBooks Online.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
+                                [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | lowercase))"
                                 [iconPath]="'calendar'"
                                 [formControllerName]="'reimbursableExportDate'">
                             </app-configuration-select-field>
@@ -287,6 +288,7 @@
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
+                            [isDisabled]="exportSettingForm.get('creditCardExportType')?.value === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE ? true : false"
                             [formControllerName]="'creditCardExportGroup'">
                         </app-configuration-select-field>
                     </div>

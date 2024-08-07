@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfigurationCta, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -51,7 +51,7 @@ export class QbdFieldMappingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private fieldMappingService: QbdFieldMappingService,
     private workspaceService: QbdWorkspaceService,
     private toastService: IntegrationsToastService,

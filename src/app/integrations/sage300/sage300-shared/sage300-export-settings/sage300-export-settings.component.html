@@ -42,7 +42,7 @@
                             [showExportPreview]="true"
                             [isDisabled]="true">
                         </app-configuration-select-field>
-                        <div *ngIf="exportSettingForm?.value.reimbursableExportType===Sage300ExportType.DIRECT_COST">
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -94,7 +94,7 @@
                             </app-configuration-select-field>
                         </div>
                     </div>
-                    <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="false"
@@ -111,7 +111,7 @@
                         [appName]="appName"
                         [formControllerName]="'defaultReimbursableAP'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
@@ -124,7 +124,7 @@
                         [appName]="appName"
                         [formControllerName]="'reimbursableExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm?.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -139,16 +139,16 @@
                             [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.reimbursableExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date as'"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.get('reimbursableExportType')?.value) + ' date as'"
                         [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Sage 300 CRE.'"
                         [options]="getExportDate(reimbursableExpenseGroupingDateOptions, 'reimbursableExportGroup')"
                         [iconPath]="'calendar'"
-                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.value.reimbursableExportType) + ' date'"
+                        [placeholder]="'Select ' + helper.getExportType(exportSettingForm.get('reimbursableExportType')?.value) + ' date'"
                         [appName]="appName"
                         [formControllerName]="'reimbursableExportDate'"></app-configuration-select-field>
                     </div>
@@ -181,7 +181,7 @@
                             [showExportPreview]="true"
                             [isDisabled]="true">
                         </app-configuration-select-field>
-                        <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.DIRECT_COST">
+                        <div *ngIf="exportSettingForm.get('cccExportType')?.value===Sage300ExportType.DIRECT_COST">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -198,7 +198,7 @@
                                 [appName]="appName"
                                 [formControllerName]="'defaultCreditCardCCCAccountName'">
                             </app-configuration-select-field>
-                            <div *ngIf="exportSettingForm?.value.reimbursableExportType!==Sage300ExportType.DIRECT_COST">
+                            <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value!==Sage300ExportType.DIRECT_COST">
                                 <app-configuration-select-field
                                     [form]="exportSettingForm"
                                     [isFieldMandatory]="true"
@@ -235,7 +235,7 @@
                             </div>
                         </div>
                     </div>
-                    <div *ngIf="exportSettingForm?.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="false"
@@ -252,8 +252,8 @@
                         [appName]="appName"
                         [formControllerName]="'defaultCCCAP'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
-                        <div *ngIf="exportSettingForm.value.cccExportType===Sage300ExportType.PURCHASE_INVOICE">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                        <div *ngIf="exportSettingForm.get('cccExportType')?.value===Sage300ExportType.PURCHASE_INVOICE">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -272,7 +272,7 @@
                             </app-configuration-select-field>
                         </div>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
@@ -285,7 +285,7 @@
                         [appName]="appName"
                         [formControllerName]="'cccExpenseState'"></app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -300,12 +300,12 @@
                             [exportTypeIconPathArray]="previewExpenseGroupTypeImagePath">
                         </app-configuration-select-field>
                     </div>
-                    <div *ngIf="exportSettingForm.value.cccExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('cccExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-separator tw-rounded-12-px">
                         <app-configuration-select-field
                         [form]="exportSettingForm"
                         [isFieldMandatory]="true"
                         [mandatoryErrorListName]="'export date'"
-                        [label]="'Set the ' + helper.getExportType(exportSettingForm.value.cccExportType) + ' date as'"
+                        [label]="'Set the ' + helper.getExportType(exportSettingForm.get('cccExportType')?.value) + ' date as'"
                         [subLabel]="'Expenses will be grouped and posted using the configured date when exporting from ' + brandingConfig.brandName + ' to Sage 300 CRE. Click here for more details.'"
                         [options]="getExportDate(cccExpenseGroupingDateOptions, 'cccExportGroup')"
                         [iconPath]="'calendar'"

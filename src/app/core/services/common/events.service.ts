@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable, Output } from '@angular/core';
+import { EventEmitter, Inject, Injectable, Output } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { WorkatoConnectionStatus } from '../../models/travelperk/travelperk.model';
 import { WindowService } from './window.service';
