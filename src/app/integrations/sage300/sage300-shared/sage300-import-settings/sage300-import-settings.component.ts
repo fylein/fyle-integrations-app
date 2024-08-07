@@ -66,12 +66,14 @@ export class Sage300ImportSettingsComponent implements OnInit {
     {
       source_field: DefaultImportFields.CATEGORY,
       destination_field: DefaultImportFields.ACCOUNT,
-      formController: 'importCategories'
+      formController: 'importCategories',
+      import_code: 'importCategoryCode'
     },
     {
       source_field: DefaultImportFields.MERCHANT,
       destination_field: DefaultImportFields.VENDOR,
-      formController: 'importVendorAsMerchant'
+      formController: 'importVendorAsMerchant',
+      import_code: 'importVendorCode'
     }
   ];
 
@@ -267,6 +269,16 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.showCustomFieldDialog = shouldShowDialog;
   }
 
+  updateImportCodeFields(isImportCodeEnabled: boolean, value: string): void {
+    let fields = this.importSettingForm.get('importCodeFields')?.value;
+    if (isImportCodeEnabled) {
+      fields.push(value);
+    } else {
+      fields = fields.filter((field: string) => field !== value);
+    }
+    this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+  }
+
   private importSettingWatcher(): void {
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control:any) => {
@@ -284,6 +296,13 @@ export class Sage300ImportSettingsComponent implements OnInit {
           });
         } else if (value.source_field === 'PROJECT' && value.destination_field === 'PROJECT') {
           this.isDependentFieldAllowed = true;
+        } else if (control.value.import_code &&  control.value.import_to_fyle) {
+          this.updateImportCodeFields(true, value.destination_field);
+        } else if (!control.value.import_code || !control.value.import_to_fyle) {
+          const onboardingState = this.workspaceService.getOnboardingState();
+	        if (onboardingState === Sage300OnboardingState.IMPORT_SETTINGS) {
+            this.updateImportCodeFields(false, value.destination_field);
+          }
         }
       });
     });
@@ -337,9 +356,45 @@ export class Sage300ImportSettingsComponent implements OnInit {
     }
   }
 
+  private defaultFieldWatcher() {
+    this.importSettingForm.controls.importCategories.valueChanges.subscribe((importFromFyle) => {
+      if (!importFromFyle) {
+        this.importSettingForm.controls.importCategoryCode.patchValue(false);
+        this.updateImportCodeFields(false, DefaultImportFields.ACCOUNT);
+      }
+    });
+
+    this.importSettingForm.controls.importVendorAsMerchant.valueChanges.subscribe((importFromFyle) => {
+      if (!importFromFyle) {
+        this.importSettingForm.controls.importVendorCode.patchValue(false);
+        this.updateImportCodeFields(false, DefaultImportFields.VENDOR);
+      }
+    });
+  }
+
+  private defaultFieldCodeImportFieldWatcher() {
+    this.importSettingForm.controls.importCategoryCode.valueChanges.subscribe((importCode) => {
+      if (importCode && this.importSettingForm.controls.importCategories) {
+        this.updateImportCodeFields(true, DefaultImportFields.ACCOUNT);
+      } else {
+        this.updateImportCodeFields(false, DefaultImportFields.ACCOUNT);
+      }
+    });
+
+    this.importSettingForm.controls.importVendorCode.valueChanges.subscribe((importCode) => {
+      if (importCode && this.importSettingForm.controls.importVendorAsMerchant) {
+        this.updateImportCodeFields(true, DefaultImportFields.VENDOR);
+      } else {
+        this.updateImportCodeFields(false, DefaultImportFields.VENDOR);
+      }
+    });
+  }
+
   private setupFormWatchers() {
     this.importSettingWatcher();
     this.dependentFieldWatchers();
+    this.defaultFieldWatcher();
+    this.defaultFieldCodeImportFieldWatcher();
   }
 
   constructPayloadAndSave() {

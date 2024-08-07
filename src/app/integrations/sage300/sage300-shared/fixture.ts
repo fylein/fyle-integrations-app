@@ -9,7 +9,8 @@ export const importSettingsResponse: Sage300ImportSettingGet = {
     "import_settings": {
         "import_categories": false,
         "import_vendors_as_merchants": false,
-        "add_commitment_details": false
+        "add_commitment_details": false,
+        "import_code_fields": []
     },
     "mapping_settings": [
         {

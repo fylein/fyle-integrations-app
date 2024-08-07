@@ -4,10 +4,13 @@ import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, MappingSourceField, XeroFyleField } from 'src/app/core/models/enum/enum.model';
-import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
+import { Router } from '@angular/router';
+import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 
 @Component({
   selector: 'app-configuration-import-field',
@@ -44,6 +47,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() dependantFieldSupportArticleLink: string;
 
+  isOnboarding: boolean;
+
   @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;
@@ -53,6 +58,47 @@ export class ConfigurationImportFieldComponent implements OnInit {
   AppName = AppName;
 
   isXeroProjectMapped: boolean;
+
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
+    "ACCOUNT": [
+      {
+        label: 'Import Codes + Names',
+        value: true,
+        subLabel: 'Example: 4567 Meals & Entertainment'
+      },
+      {
+        label: 'Import Names only',
+        value: false,
+        subLabel: 'Example: Meals & Entertainment'
+      }
+    ],
+    "VENDOR": [
+      {
+        label: 'Import Codes + Names',
+        value: true,
+        subLabel: 'Example: 4567 Joanna'
+      },
+      {
+        label: 'Import Names only',
+        value: false,
+        subLabel: 'Example: Joanna'
+      }
+    ],
+    "JOB": [
+      {
+        label: 'Import Codes + Names',
+        value: true,
+        subLabel: 'Example: 4567 Test Job'
+      },
+      {
+        label: 'Import Names only',
+        value: false,
+        subLabel: 'Example: Test Job'
+      }
+    ]
+  };
+
+  isImportCodeEnabledCounter: boolean[] = [];
 
   readonly brandingConfig = brandingConfig;
 
@@ -66,11 +112,25 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   constructor(
     public windowService: WindowService,
-    public helper: HelperService
+    public helper: HelperService,
+    public router: Router,
+    private workspace: WorkspaceService
   ) { }
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
+  }
+
+  getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
+    return this.importCodeSelectorOptions[destinationField];
+  }
+
+  disabledToolTipText(expenseField: { value: { source_field: any; }; }): string {
+    return !expenseField.value.source_field ? this.helper.sentenseCaseConversion('To import a '+ this.appName +' dimension, map it to a Fyle field') : '';
+  }
+
+  getFormGroup(control: AbstractControl): FormGroup {
+    return control as FormGroup;
   }
 
   getDestinationField(destinationField: string): string {
@@ -125,6 +185,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
+      this.onImportToFyleToggleChange({checked: true});
     }
 
     if ( this.appName === AppName.SAGE300) {
@@ -154,6 +215,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
     (expenseField as FormGroup).controls.source_field.patchValue('');
     (expenseField as FormGroup).controls.import_to_fyle.patchValue(false);
     (expenseField as FormGroup).controls.import_to_fyle.enable();
+    this.onImportToFyleToggleChange({checked: false});
     event?.stopPropagation();
     this.isXeroProjectMapped = false;
     this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -166,7 +228,14 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
+  onImportToFyleToggleChange(event: any): void {
+    if (this.appName === AppName.SAGE300) {
+      event.checked ? this.isImportCodeEnabledCounter.push(true) : this.isImportCodeEnabledCounter.pop();
+    }
+  }
+
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
+    this.onImportToFyleToggleChange(event);
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costCodeFieldOption[0].attribute_type !== 'custom_field') {
       this.showWarningForDependentFields.emit();
     }
@@ -183,6 +252,23 @@ export class ConfigurationImportFieldComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  setupImportCodeCounter() {
+    Object.keys(this.form.controls).forEach(key => {
+      if (key in ['importCategoryCode', 'importVendorCode'] && this.form.get(key)?.value) {
+        this.isImportCodeEnabledCounter.push(true);
+      }
+    });
+    Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
+      const control = this.expenseFieldsGetter.controls[key as unknown as number].get('import_code');
+      if (control?.value === true) {
+        this.isImportCodeEnabledCounter.push(true);
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    this.isOnboarding = this.workspace.getOnboardingState() === 'IMPORT_SETTINGS';
+    this.setupImportCodeCounter();
+  }
 
 }

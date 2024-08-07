@@ -73,4 +73,8 @@
   .selected-item-text {
     @apply tw-whitespace-nowrap tw-overflow-hidden tw-text-ellipsis #{!important};
 }
+
+.noIcon {
+    @apply tw-pr-40-px #{!important};
+}
   
