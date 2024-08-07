@@ -76,6 +76,10 @@ export class GenericMappingTableComponent implements OnInit {
     public helper: HelperService
   ) { }
 
+  clearSearch($event: Event) {
+    this.form.controls.searchOption.reset();
+  }
+
   isOverflowing(element: any, mapping: DestinationAttribute): string {
     return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }

@@ -40,7 +40,7 @@
                                 <p-inputIcon>
                                     <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
                                 </p-inputIcon>
-                                <input #filterInput type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-40-px" (keyup)="options.filter($event)" pInputText formControlName="searchOption"/>
+                                <input #filterInput type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-40-px" (focus)="clearSearch($event); options.filter($event)" (keyup)="options.filter($event)" pInputText formControlName="searchOption"/>
                             </p-iconField>
                         </div>
                     </ng-template>
