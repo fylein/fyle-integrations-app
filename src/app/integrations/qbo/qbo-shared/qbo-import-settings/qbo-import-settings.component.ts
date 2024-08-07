@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -10,6 +10,7 @@ import { AppName, ConfigurationCta, QBOCorporateCreditCardExpensesObject, QBOFie
 import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace-general-setting.model';
 import { QBOExportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
 import { QBOImportSettingGet, QBOImportSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-import-setting.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
@@ -83,14 +84,15 @@ export class QboImportSettingsComponent implements OnInit {
   readonly brandingContent = brandingContent.configuration.importSetting;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helperService: QboHelperService,
     private importSettingService: QboImportSettingsService,
     private qboConnectorService: QboConnectorService,
     private mappingService: MappingService,
     private router: Router,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    public helper: HelperService
   ) { }
 
   closeModel() {
@@ -145,13 +147,13 @@ export class QboImportSettingsComponent implements OnInit {
       this.fyleFields.push(this.customFieldOption[0]);
       const expenseField = {
         source_field: this.customField.attribute_type,
-        destination_field: this.customFieldControl.value.destination_field,
+        destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
         source_placeholder: this.customField.source_placeholder
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
-      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0] as FormGroup).controls.import_to_fyle.disable();
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
+      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0] as FormGroup).controls.import_to_fyle.disable();
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -185,7 +187,7 @@ export class QboImportSettingsComponent implements OnInit {
     this.createTaxCodeWatcher();
     this.createCOAWatcher();
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
-    expenseFieldArray.controls.forEach((control:any) => {
+    expenseFieldArray.controls.forEach((control:AbstractControl) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
         if (value.source_field === 'custom_field') {
           this.initializeCustomFieldForm(true);
@@ -193,9 +195,9 @@ export class QboImportSettingsComponent implements OnInit {
           this.customFieldControl = control;
           this.customFieldControl.patchValue({
             source_field: '',
-            destination_field: control.value.destination_field,
-            import_to_fyle: control.value.import_to_fyle,
-            is_custom: control.value.is_custom,
+            destination_field: control.get('destination_field')?.value,
+            import_to_fyle: control.get('import_to_fyle')?.value,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: null
           });
         }
@@ -225,7 +227,7 @@ export class QboImportSettingsComponent implements OnInit {
 
       this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;

@@ -29,3 +29,15 @@
 :host ::ng-deep .p-button.outline-sm {
     @apply tw-w-100-px tw-justify-center #{!important};
 }
+
+:host ::ng-deep .p-button {
+    @apply tw-w-fit tw-bg-none tw-bg-white tw-text-calendar-day-text-color #{!important}
+}
+
+:host ::ng-deep .p-button:enabled:hover {
+    @apply tw-bg-none tw-bg-white tw-text-calendar-day-text-color tw-shadow-btn-cta-shadow #{!important}
+}
+
+:host ::ng-deep .p-datepicker-title {
+    @apply tw-justify-evenly #{!important};
+}

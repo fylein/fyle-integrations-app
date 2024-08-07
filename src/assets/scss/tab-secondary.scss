@@ -7,28 +7,24 @@
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav {
-    @apply tw-bg-[transparent];
+    @apply tw-bg-[transparent] tw-border-b tw-border-nav-tabs-active-border;
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
-    @apply tw-bg-nav-tabs-hover-bg tw-ml-0 tw-mr-22-px tw-px-24-px tw-py-12-px tw-mx-10-px tw-mt-0 tw-border-x-nav-tabs-active-border tw-border-t-nav-tabs-active-border tw-border-t tw-border-x tw-rounded-t-lg #{!important};
+    @apply tw-bg-nav-tabs-hover-bg tw-ml-0 tw-mr-22-px tw-px-24-px tw-py-12-px tw-mx-10-px tw-mt-0 tw-border tw-text-text-primary tw-border-nav-tabs-active-border tw-rounded-t-lg;
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link, :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link:not(.p-disabled):hover {
-    @apply tw-text-text-primary tw-border-b-border-white tw-bg-nav-tabs-active-bg #{!important};
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link,
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link:not(.p-disabled):hover {
+    @apply tw-text-text-primary tw-border-b-0 tw-bg-nav-tabs-active-bg;
 }
 
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight) .p-menuitem-link{
-    @apply tw-border-b-nav-tabs-active-border tw-text-nav-tabs-inactive-text-color tw-bg-nav-tabs-inactive-bg #{!important};
-}
-
-:host ::ng-deep .p-tabmenu .p-tabmenu-nav {
-    background-color: transparent;
-    @apply tw-border-b tw-border-b-nav-tabs-active-border #{!important};
+:host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight) .p-menuitem-link {
+    @apply tw-border-b-nav-tabs-active-border tw-py-10-px tw-text-nav-tabs-inactive-text-color tw-bg-nav-tabs-inactive-bg #{!important};
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
-    @apply -tw-mr-12-px #{!important};
+    @apply -tw-mr-12-px;
 }
 
 :host ::ng-deep .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {

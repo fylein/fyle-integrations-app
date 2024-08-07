@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RxwebValidators } from '@rxweb/reactive-form-validators';
@@ -92,7 +92,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     private mappingService: SiMappingsService,
     private connectorService: IntacctConnectorService,
     private importSettingService: SiImportSettingService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private storageService: StorageService,
@@ -193,12 +193,12 @@ export class IntacctImportSettingsComponent implements OnInit {
         this.fyleFields.push(this.customFieldOption[0]);
         const expenseField = {
           source_field: this.customField.attribute_type,
-          destination_field: this.customFieldControl.value.destination_field,
+          destination_field: this.customFieldControl.get('destination_field')?.value,
           import_to_fyle: true,
           is_custom: true,
           source_placeholder: this.customField.source_placeholder
         };
-        (this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
+        (this.importSettingsForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
         this.customFieldForm.reset();
         this.showDialog = false;
       }
@@ -288,9 +288,9 @@ export class IntacctImportSettingsComponent implements OnInit {
          this.customFieldControl = control;
          this.customFieldControl.patchValue({
             source_field: '',
-            destination_field: control.value.destination_field,
-            import_to_fyle: control.value.import_to_fyle,
-            is_custom: control.value.is_custom,
+            destination_field: control.get('destination_field')?.value,
+            import_to_fyle: control.get('import_to_fyle')?.value,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: null
           });
         }
@@ -387,6 +387,10 @@ export class IntacctImportSettingsComponent implements OnInit {
 
       // Get the 'import_to_fyle' control at the specified index and disable it
       (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.disable();
+    }
+
+    if (selectedValue === 'custom_field') {
+      (this.importSettingsForm.get('expenseFields') as FormArray).at(index)?.get('source_field')?.setValue(null);
     }
   }
 
@@ -521,9 +525,9 @@ export class IntacctImportSettingsComponent implements OnInit {
         if (control.value.source_field === MappingSourceField.PROJECT) {
           control.patchValue({
             source_field: MappingSourceField.PROJECT,
-            destination_field: control.value.destination_field,
+            destination_field: control.get('destination_field')?.value,
             import_to_fyle: true,
-            is_custom: control.value.is_custom,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: control.value.source_placeholder
           });
           this.importSettingsForm.controls.isDependentImportEnabled.setValue(true);

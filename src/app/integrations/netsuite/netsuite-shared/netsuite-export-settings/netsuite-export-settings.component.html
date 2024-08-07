@@ -296,6 +296,7 @@
                             [options]="expenseGroupByOptions"
                             [iconPath]="'question-square-outline'"
                             [placeholder]="'Select expense grouping'"
+                            [isDisabled]="exportSettingForm.get('creditCardExportType')?.value === NetSuiteCorporateCreditCardExpensesObject.CREDIT_CARD_CHARGE ? true : false"
                             [formControllerName]="'creditCardExportGroup'">
                         </app-configuration-select-field>
                     </div>

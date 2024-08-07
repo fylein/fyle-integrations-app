@@ -188,7 +188,7 @@ export class ConfigurationSkipExportComponent implements OnInit {
     if (this.showAdditionalCondition) {
       const fields = ['join_by', 'condition2', 'operator2'];
       this.helper.handleSkipExportFormUpdates(this.skipExportForm, fields, true);
-      if (this.skipExportForm.controls.value2.value.length===0) {
+      if (this.skipExportForm.controls.value2.value?.length===0) {
         this.helper.markControllerAsRequired(this.skipExportForm, 'value2');
       }
     }

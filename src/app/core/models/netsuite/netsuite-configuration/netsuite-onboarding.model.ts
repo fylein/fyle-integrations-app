@@ -22,7 +22,7 @@ export class NetsuiteOnboardingModel {
           step: brandingContentStepName.connector.stepName,
           icon: 'link-vertical-medium',
           route: '/integrations/netsuite/onboarding/connector',
-          styleClasses: ['step-name-connector--text']
+          styleClasses: ['step-name-connector--text tw-pl-14-px']
         },
         {
           active: false,

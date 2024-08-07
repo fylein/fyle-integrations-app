@@ -89,6 +89,8 @@ import { NetsuiteSubsidiaryMappingComponent } from './components/netsuite/core/n
 import { SearchComponent } from './components/input/search/search.component';
 import { OptionalFieldComponent } from './components/helper/optional-field/optional-field.component';
 import { SentenceCasePipe } from './pipes/sentence-case.pipe';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 
 @NgModule({
@@ -186,6 +188,8 @@ import { SentenceCasePipe } from './pipes/sentence-case.pipe';
     ChipsModule,
     TableModule,
     TabMenuModule,
+    IconFieldModule,
+    InputIconModule,
     IconSpriteModule.forRoot({ path: 'assets/sprites/sprite.svg' })
   ],
   exports: [

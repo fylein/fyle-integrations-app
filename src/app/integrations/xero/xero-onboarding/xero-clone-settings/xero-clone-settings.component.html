@@ -50,7 +50,7 @@
                 </app-clone-setting-field>
             </div>
     
-            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+            <div class="clone-setting--field" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
                 <app-clone-setting-field
                     [iconSource]="'question-square-outline'"
                     [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
@@ -64,7 +64,7 @@
                 </app-clone-setting-field>
             </div>
     
-            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+            <div class="clone-setting--field" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
                 <app-clone-setting-field
                     [iconSource]="'question-square-outline'"
                     [label]="'How should the expenses be grouped?'"
@@ -79,10 +79,10 @@
                 </app-clone-setting-field>
             </div>
     
-            <div class="clone-setting--field" *ngIf="exportSettingForm.value.reimbursableExportType">
+            <div class="clone-setting--field" *ngIf="exportSettingForm.controls.reimbursableExportType.value">
                 <app-clone-setting-field
                     [iconSource]="'calendar'"
-                    [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                    [label]="'Set the ' + (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
                     [options]="reimbursableExpenseGroupingDateOptions"
                     [placeholder]="'Select export date'"
                     [form]="exportSettingForm"
@@ -122,21 +122,21 @@
                         [tooltipText]="'Select expense export type'">
                     </app-clone-setting-field>
 
-                    <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.value.creditCardExportType">
+                    <div class="clone-setting--dependent-field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                         <app-clone-setting-field
-                            [label]="'To which Bank Account should the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
+                            [label]="'To which Bank Account should the ' + (exportSettingForm.controls.reimbursableExportType.value | snakeCaseToSpaceCase | titlecase) + ' be posted to?'"
                             [options]="bankAccounts"
                             [placeholder]="'Select bank account'"
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [formControllerName]="'bankAccount'"
-                            [dropdownDisplayKey]="'value'"
+                            [dropdownDisplayKey]="'name'"
                             [tooltipText]="'All the offset entry in the Journal will be posted to the selected Bank account'">
                         </app-clone-setting-field>
                     </div>
                 </div>
 
-                <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                <div class="clone-setting--field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                     <app-clone-setting-field
                         [iconSource]="'question-square-outline'"
                         [label]="'At which state should the expenses be ready to export from ' + brandingConfig.brandName + '?'"
@@ -150,7 +150,7 @@
                     </app-clone-setting-field>
                 </div>
         
-                <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                <div class="clone-setting--field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                     <app-clone-setting-field
                         [iconSource]="'question-square-outline'"
                         [label]="'How should the expenses be grouped?'"
@@ -165,10 +165,10 @@
                     </app-clone-setting-field>
                 </div>
         
-                <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
+                <div class="clone-setting--field" *ngIf="exportSettingForm.controls.creditCardExportType.value">
                     <app-clone-setting-field
                         [iconSource]="'calendar'"
-                        [label]="'Set the ' + (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                        [label]="'Set the ' + (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | titlecase) + ' date as'"
                         [options]="cccExpenseGroupingDateOptions"
                         [placeholder]="'Select export date'"
                         [form]="exportSettingForm"
@@ -250,7 +250,7 @@
                         [form]="importSettingForm"
                         [isFieldMandatory]="true"
                         [formControllerName]="'defaultTaxCode'"
-                        [dropdownDisplayKey]="'value'"
+                        [dropdownDisplayKey]="'name'"
                         [tooltipText]="'If an expense from ' + brandingConfig.brandName + ' does not contain any tax group information during export, the default tax code will be used.'">
                     </app-clone-setting-field>
                 </div>
@@ -292,7 +292,7 @@
                         [tooltipText]="'Set a frequency based on how often you want your expenses in ' + brandingConfig.brandName + ' to be exported to Xero'">
                     </app-clone-setting-field>
                     <div class="tw-ml-16-px">
-                        <input type="text" class="tw-border-input-read-only-border !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
+                        <input type="text" class="tw-border-input-read-only-border tw-border !tw-p-12-px !tw-w-100-px !tw-h-40-px !tw-bg-input-read-only-bg tw-text-slightly-normal-text-color" pInputText disabled [value]="advancedSettingForm.value.exportScheduleFrequency > 1 ? 'Hours' : 'Hour'">
                     </div>
                 </div>
     
@@ -368,7 +368,7 @@
             <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object">
                 <app-clone-setting-field
                     [iconSource]="'user-plus'"
-                    [label]="brandingContent.xero.configuration.advancedSettings.autoCreateEmployeeVendor"
+                    [label]="brandingContent.xero.configuration.advancedSettings.autoCreateMerchantsAsVendorsLabel"
                     [form]="advancedSettingForm"
                     [formControllerName]="'autoCreateMerchantDestinationEntity'"
                     [inputType]="InputType.TOGGLE"

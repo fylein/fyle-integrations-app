@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AuthService } from 'src/app/core/services/common/auth.service';

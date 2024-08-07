@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingKbArticles, brandingConfig, brandingDemoVideoLinks } from 'src/app/branding/branding-config';
