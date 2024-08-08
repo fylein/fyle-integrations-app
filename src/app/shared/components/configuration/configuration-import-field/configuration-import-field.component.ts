@@ -125,19 +125,19 @@ export class ConfigurationImportFieldComponent implements OnInit {
     if (defaultField.import_code) {
       if (this.isOnboarding) {
         return this.form.controls[defaultField.formController].value ? true : false;
-      } else {
-        return this.form.controls[defaultField.import_code].value ? true : false;
       }
+      return this.form.controls[defaultField.import_code].value ? true : false;
+
     }
     return false;
   }
 
-  showImportCodeSection(expenseField: AbstractControl<any,any>): any {
+  showImportCodeSection(expenseField: AbstractControl<any, any>): any {
     if (this.isOnboarding) {
-      return expenseField.value.import_to_fyle && expenseField.value.source_field
+      return expenseField.value.import_to_fyle && expenseField.value.source_field;
     }
-    return expenseField.value.import_code
-  }  
+    return expenseField.value.import_code;
+  }
 
   disabledImportCode(): boolean {
     if (!this.isOnboarding) {
