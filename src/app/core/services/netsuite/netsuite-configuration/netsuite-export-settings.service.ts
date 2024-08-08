@@ -41,7 +41,9 @@ export class NetsuiteExportSettingsService {
 
           const isFieldMandatory = NetSuiteExportSettingModel.getMandatoryField(form, formController);
           if (isFieldMandatory) {
-            this.mandatoryFormController.push(formController);
+            if (!this.mandatoryFormController.includes(formController)) {
+              this.mandatoryFormController.push(formController);
+            }
             HelperUtility.markControllerAsRequired(form, formController);
           } else {
             HelperUtility.clearValidatorAndResetValue(form, formController);
@@ -58,9 +60,9 @@ export class NetsuiteExportSettingsService {
   }
 
   setExportTypeValidatorsAndWatchers(exportTypeValidatorRule: ExportModuleRule[], form: FormGroup): void {
+    this.mandatoryFormController = [];
     Object.values(exportTypeValidatorRule).forEach((values) => {
       form.controls[values.formController].valueChanges.subscribe((selectedValue) => {
-        this.mandatoryFormController = [];
         this.setupDynamicValidators(form, values, selectedValue);
       });
     });
