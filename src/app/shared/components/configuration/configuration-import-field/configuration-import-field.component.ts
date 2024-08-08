@@ -122,19 +122,16 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   disabledImportCode(expenseField: AbstractControl<any, any>): boolean {
-    if (this.isOnboarding) {
-      return expenseField.value.import_to_fyle;
+    if (!this.isOnboarding) {
+      return true;
     }
-    return expenseField.value.import_code;
+    return false;
   }
 
   getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
     return this.importCodeSelectorOptions[destinationField];
   }
 
-  disabledToolTipText(expenseField: { value: { source_field: any; }; }): string {
-    return !expenseField.value.source_field ? this.helper.sentenseCaseConversion('To import a '+ this.appName +' dimension, map it to a Fyle field') : '';
-  }
 
   getFormGroup(control: AbstractControl): FormGroup {
     return control as FormGroup;
@@ -195,10 +192,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
       this.onImportToFyleToggleChange({checked: true});
     }
 
-    if ( this.appName === AppName.SAGE300) {
-      this.form.controls.isDependentImportEnabled.setValue(true);
-    }
-
     if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER && this.appName === AppName.XERO) {
       this.isXeroProjectMapped = true;
       this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -230,7 +223,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   onSwitchChanged(event: any, formGroup: AbstractControl): void {
     this.onShowWarningForDependentFields(event, formGroup);
-    if (event.checked && this.appName === AppName.SAGE300) {
+    if (event.checked && this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value === 'PROJECT') {
       this.form.controls.isDependentImportEnabled.setValue(true);
     }
   }
@@ -242,7 +235,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   onShowWarningForDependentFields(event: any, formGroup: AbstractControl): void {
-    this.onImportToFyleToggleChange(event);
+    if (formGroup.get('source_field')?.value) {
+      this.onImportToFyleToggleChange(event);
+    }
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costCodeFieldOption[0].attribute_type !== 'custom_field') {
       this.showWarningForDependentFields.emit();
     }
