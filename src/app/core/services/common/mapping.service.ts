@@ -31,6 +31,10 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
   }
 
+  getImportSettings(): Observable<any> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/import_settings/`, {});
+  }
+
   getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean, displayName?: string): Observable<any> {
     const params: {attribute_type__in: string | string[], account_type?: string, active?: boolean, display_name__in?: string} = {
       attribute_type__in: attributeTypes

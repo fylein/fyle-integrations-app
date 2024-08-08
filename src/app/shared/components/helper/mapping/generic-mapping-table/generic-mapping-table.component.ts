@@ -45,6 +45,8 @@ export class GenericMappingTableComponent implements OnInit {
 
   @Input() displayName: string | undefined;
 
+  @Input() isMultiLineOption: boolean = false;
+
   private searchSubject = new Subject<string>();
 
   searchQuery: string;
