@@ -209,7 +209,7 @@
             </div>
             <div formArrayName="expenseFields">
                 <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
-                    <div *ngIf="expenseField.value.import_to_fyle">
+                    <div *ngIf="(expenseField.value.import_to_fyle || expenseField.value.import_code)">
                         <app-configuration-select-field
                             [appName]="appName"
                             [isDisableTextRequired]="false"
@@ -219,7 +219,7 @@
                             [label]="'How to import the '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' from ' + appName + '?'"
                             [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                             [isMultiLineOption]="true"
-                            [isDisabled]="expenseField.value.import_to_fyle && !isOnboarding"
+                            [isDisabled]="disabledImportCode(expenseField)"
                             [formControllerName]="'import_code'">
                         </app-configuration-select-field>
                     </div>

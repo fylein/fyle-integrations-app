@@ -121,6 +121,13 @@ export class ConfigurationImportFieldComponent implements OnInit {
     return this.form.get('expenseFields') as FormArray;
   }
 
+  disabledImportCode(expenseField: AbstractControl<any,any>): boolean {
+    if(this.isOnboarding) {
+      return expenseField.value.import_to_fyle;
+    }
+    return expenseField.value.import_code
+  }
+
   getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
     return this.importCodeSelectorOptions[destinationField];
   }
@@ -254,13 +261,13 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   setupImportCodeCounter() {
     Object.keys(this.form.controls).forEach(key => {
-      if (key in ['importCategoryCode', 'importVendorCode'] && this.form.get(key)?.value) {
+      if (['importCategories', 'importVendorAsMerchant'].includes(key) && this.form.get(key)?.value) {
         this.isImportCodeEnabledCounter.push(true);
       }
     });
     Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
-      const control = this.expenseFieldsGetter.controls[key as unknown as number].get('import_code');
-      if (control?.value === true) {
+      const importCode = this.expenseFieldsGetter.controls[key as unknown as number].get('import_code');
+      if (importCode?.value === true) {
         this.isImportCodeEnabledCounter.push(true);
       }
     });

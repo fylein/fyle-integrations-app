@@ -60,10 +60,7 @@ export class ImportSettingsModel {
   }
 
   static getImportCodeField(importCodeFields: string[], destinationField: string): boolean {
-    if (importCodeFields?.length) {
-      return importCodeFields.includes(destinationField);
-    }
-    return false;
+    return importCodeFields.includes(destinationField);
   }
 
   static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
