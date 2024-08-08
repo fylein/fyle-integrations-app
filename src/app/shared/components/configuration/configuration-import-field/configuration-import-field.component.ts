@@ -121,11 +121,11 @@ export class ConfigurationImportFieldComponent implements OnInit {
     return this.form.get('expenseFields') as FormArray;
   }
 
-  disabledImportCode(expenseField: AbstractControl<any,any>): boolean {
-    if(this.isOnboarding) {
+  disabledImportCode(expenseField: AbstractControl<any, any>): boolean {
+    if (this.isOnboarding) {
       return expenseField.value.import_to_fyle;
     }
-    return expenseField.value.import_code
+    return expenseField.value.import_code;
   }
 
   getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
