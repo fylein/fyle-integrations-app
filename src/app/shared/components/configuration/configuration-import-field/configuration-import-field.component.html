@@ -192,7 +192,7 @@
         </div>
         <div>
             <div *ngFor="let defaultField of defaultImportFields">
-                <div *ngIf="defaultField.import_code && ( isOnboarding ? form.controls[defaultField.formController].value : form.controls[defaultField.import_code].value)">
+                <div *ngIf="defaultField.import_code && showDefaultFieldImportCode(defaultField)">
                     <app-configuration-select-field
                         [appName]="appName"
                         [form]="form"
@@ -202,14 +202,14 @@
                         [label]="'How to import the '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' from ' + appName + '?'"
                         [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                         [isMultiLineOption]="true"
-                        [isDisabled]="form.controls[defaultField.formController].value && !isOnboarding"
+                        [isDisabled]="disabledImportCode()"
                         [formControllerName]="defaultField.import_code">
                     </app-configuration-select-field>
                 </div>
             </div>
             <div formArrayName="expenseFields">
                 <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
-                    <div *ngIf="isOnboarding ? (expenseField.value.import_to_fyle && expenseField.value.source_field) : expenseField.value.import_code">
+                    <div *ngIf="showImportCodeSection(expenseField)">
                         <app-configuration-select-field
                             [appName]="appName"
                             [isDisableTextRequired]="false"
@@ -219,7 +219,7 @@
                             [label]="'How to import the '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' from ' + appName + '?'"
                             [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                             [isMultiLineOption]="true"
-                            [isDisabled]="disabledImportCode(expenseField)"
+                            [isDisabled]="disabledImportCode()"
                             [formControllerName]="'import_code'">
                         </app-configuration-select-field>
                     </div>
