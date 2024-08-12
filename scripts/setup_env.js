@@ -11,7 +11,6 @@ const environment = {
   business_central_api_url: `${process.env.BUSINESS_CENTRAL_API_URL ? process.env.BUSINESS_CENTRAL_API_URL : '{{BUSINESS_CENTRAL_API_URL}}'}`,
   qbo_api_url: `${process.env.QBO_API_URL ? process.env.QBO_API_URL : '{{QBO_API_URL}}'}`,
   xero_api_url: `${process.env.XERO_API_URL ? process.env.XERO_API_URL : '{{XERO_API_URL}}'}`,
-  netsuite_api_url: `${process.env.NETSUITE_API_URL ? process.env.NETSUITE_API_URL : '{{NETSUITE_API_URL}}'}`,
   cluster_domain_api_url: `${process.env.CLUSTER_DOMAIN_API_URL ? process.env.CLUSTER_DOMAIN_API_URL : '{{CLUSTER_DOMAIN_API_URL}}'}`,
   fyle_app_url: `${process.env.FYLE_APP_URL ? process.env.FYLE_APP_URL : '{{FYLE_APP_URL}}'}`,
   fyle_app_local: `${process.env.FYLE_APP_LOCAL ? process.env.FYLE_APP_LOCAL : '{{FYLE_APP_LOCAL}}'}`,
