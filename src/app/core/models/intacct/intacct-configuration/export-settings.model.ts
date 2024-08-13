@@ -72,7 +72,7 @@ export interface IntacctExportSettingOptionSearch extends ExportSettingOptionSea
             return ['expense_id', 'expense_number'];
 
           // "Report"
-          } else if (exportGroupValue === ExpenseGroupingFieldOption.CLAIM_NUMBER) {
+          } else if (exportGroupValue === ExpenseGroupingFieldOption.CLAIM_NUMBER || exportGroupValue === ExpenseGroupingFieldOption.REPORT_ID) {
             return ['report_id', 'claim_number'];
           }
           return null;
@@ -82,23 +82,23 @@ export interface IntacctExportSettingOptionSearch extends ExportSettingOptionSea
 
         const cccExportType = getValueOrDefault(exportSettingsForm.get('cccExportType'));
         const cccExportGroup = exportSettingsForm.get('cccExportGroup')?.value;
-        let corporate_credit_card_expense_group_fields = getExpenseGroupFields(cccExportGroup);
+        let corporateCreditCardExpenseGroupFields = getExpenseGroupFields(cccExportGroup);
 
         if (cccExportType === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION) {
-          corporate_credit_card_expense_group_fields = [ExpenseGroupingFieldOption.EXPENSE_ID];
+          corporateCreditCardExpenseGroupFields = [ExpenseGroupingFieldOption.EXPENSE_ID];
         }
 
         const reimbursableExportGroup = exportSettingsForm.get('reimbursableExportGroup')?.value;
-        const reimbursable_expense_group_fields = getExpenseGroupFields(reimbursableExportGroup);
+        const reimbursableExpenseGroupFields = getExpenseGroupFields(reimbursableExportGroup);
 
 
         const exportSettingPayload: ExportSettingPost = {
             expense_group_settings: {
                 expense_state: getValueOrDefault(exportSettingsForm.get('reimbursableExpenseState')),
                 ccc_expense_state: getValueOrDefault(exportSettingsForm.get('cccExpenseState')),
-                reimbursable_expense_group_fields,
+                reimbursable_expense_group_fields: reimbursableExpenseGroupFields,
                 reimbursable_export_date_type: exportSettingsForm.get('reimbursableExportDate')?.value ? exportSettingsForm.get('reimbursableExportDate')?.value : null,
-                corporate_credit_card_expense_group_fields,
+                corporate_credit_card_expense_group_fields: corporateCreditCardExpenseGroupFields,
                 ccc_export_date_type: getValueOrDefault(exportSettingsForm.get('cccExportDate')) === 'Spend Date' ? 'spent_at' : getValueOrDefault(exportSettingsForm.get('cccExportDate')),
                 split_expense_grouping: exportSettingsForm.get('splitExpenseGrouping')?.value ? exportSettingsForm.get('splitExpenseGrouping')?.value : SplitExpenseGrouping.MULTIPLE_LINE_ITEM
             },
