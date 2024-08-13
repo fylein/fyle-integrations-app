@@ -12,6 +12,7 @@ import { StorageService } from './storage.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { TitleCasePipe } from '@angular/common';
+import { DestinationAttribute } from '../../models/db/destination-attribute.model';
 
 @Injectable({
   providedIn: 'root'
@@ -245,6 +246,31 @@ export class HelperService {
 
   sentenseCaseConversion(content: string) {
     return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(content) : content;
+  }
+
+  /**
+   * If the destination attribute with `destination_id` does not exist in `options`, add it
+   */
+  addDestinationAttributeIfNotExists(
+    {options, destination_id, value}: {options?: DestinationAttribute[]; destination_id?: string; value?: string}
+  ) {
+    if (
+      destination_id &&
+      options &&
+      !options.find((option) => option.destination_id === destination_id)
+    ) {
+      // @ts-ignore
+      options.push({
+        value: value || '',
+        destination_id
+      });
+
+      // eslint-disable-next-line no-console
+      console.log('added', {
+        value: value || '',
+        destination_id
+      });
+    }
   }
 
 }
