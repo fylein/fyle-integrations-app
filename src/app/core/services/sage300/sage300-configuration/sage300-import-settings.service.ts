@@ -36,4 +36,9 @@ export class Sage300ImportSettingsService {
   postImportSettings(importSettingsPayload: Sage300ImportSettingPost): Observable<Sage300ImportSettingGet> {
     return this.apiService.put(`/workspaces/${this.workspaceService.getWorkspaceId()}/import_settings/`, importSettingsPayload);
   }
+
+  getImportCodeFieldConfig() {
+    const workspaceId = this.workspaceService.getWorkspaceId();
+    return this.apiService.get(`/workspaces/${workspaceId}/import_settings/import_code_fields_config/`, {});
+  }
 }

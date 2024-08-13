@@ -192,7 +192,7 @@
         </div>
         <div>
             <div *ngFor="let defaultField of defaultImportFields">
-                <div *ngIf="defaultField.import_code && showDefaultFieldImportCode(defaultField)">
+                <div *ngIf="defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value">
                     <app-configuration-select-field
                         [appName]="appName"
                         [form]="form"
@@ -202,7 +202,7 @@
                         [label]="'How to import the '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' from ' + appName + '?'"
                         [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                         [isMultiLineOption]="true"
-                        [isDisabled]="disabledImportCode()"
+                        [isDisabled]="importCodeFieldConfig[defaultField.destination_field]"
                         [formControllerName]="defaultField.import_code">
                     </app-configuration-select-field>
                 </div>
@@ -219,7 +219,7 @@
                             [label]="'How to import the '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' from ' + appName + '?'"
                             [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                             [isMultiLineOption]="true"
-                            [isDisabled]="disabledImportCode()"
+                            [isDisabled]="!importCodeFieldConfig[expenseField.value.destination_field]"
                             [formControllerName]="'import_code'">
                         </app-configuration-select-field>
                     </div>
