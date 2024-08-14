@@ -383,6 +383,17 @@ export class QboExportSettingsComponent implements OnInit {
     }
   }
 
+  private addMissingOptions() {
+    // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.bank_account});
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.expenseAccounts, newOption: this.exportSettings.general_mappings.qbo_expense_account});
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
+
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.default_debit_card_account});
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.vendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
     const destinationAttributes = ['BANK_ACCOUNT', 'CREDIT_CARD_ACCOUNT', 'ACCOUNTS_PAYABLE', 'VENDOR'];
@@ -413,6 +424,7 @@ export class QboExportSettingsComponent implements OnInit {
       this.reimbursableExportTypes = QBOExportSettingModel.getReimbursableExportTypeOptions(this.employeeFieldMapping);
       this.showNameInJournalOption = this.exportSettings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
+      this.addMissingOptions();
       this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.employeeFieldMapping);
 
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {

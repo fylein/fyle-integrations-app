@@ -12,7 +12,7 @@ import { StorageService } from './storage.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { TitleCasePipe } from '@angular/common';
-import { DestinationAttribute } from '../../models/db/destination-attribute.model';
+import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
 
 @Injectable({
   providedIn: 'root'
@@ -259,17 +259,33 @@ export class HelperService {
       options &&
       !options.find((option) => option.destination_id === destination_id)
     ) {
-      // @ts-ignore
       options.push({
         value: value || '',
         destination_id
-      });
+      } as DestinationAttribute);
 
       // eslint-disable-next-line no-console
       console.log('added', {
         value: value || '',
         destination_id
       });
+    }
+  }
+
+  /**
+   * If the default destination attribute with `destination_id` does not exist in `options`, add it
+   */
+  addDefaultDestinationAttributeIfNotExists(
+    {options, newOption}: {options?: DefaultDestinationAttribute[]; newOption: DefaultDestinationAttribute}
+  ) {
+    if (
+      newOption.id && options &&
+      !options.find((option) => option.id === newOption.id)
+    ) {
+      options.push(newOption);
+
+      // eslint-disable-next-line no-console
+      console.log('added', {newOption});
     }
   }
 
