@@ -275,7 +275,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
     let fields = this.importSettingForm.get('importCodeFields')?.value;
     if (!isImportCodeEnabled && this.sage300ImportCodeFieldCodeConfig[value]) {
       fields = fields.filter((field: string) => field !== value);
-    } else if (isImportCodeEnabled && !this.sage300ImportCodeFieldCodeConfig[value]) {
+    } else if (isImportCodeEnabled && !fields.includes(value)) {
       fields.push(value);
     }
     this.importSettingForm.get('importCodeFields')?.patchValue(fields);

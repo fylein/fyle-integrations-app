@@ -201,6 +201,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
       this.onImportToFyleToggleChange({checked: true});
     }
 
+    if ( this.appName === AppName.SAGE300) {
+      this.form.controls.isDependentImportEnabled.setValue(true);
+    }
+
     if (selectedValue === MappingSourceField.PROJECT && (this.form.get('expenseFields') as FormArray).at(index)?.get('source_field')?.value !== XeroFyleField.CUSTOMER && this.appName === AppName.XERO) {
       this.isXeroProjectMapped = true;
       this.xeroProjectMapping.emit(this.isXeroProjectMapped);
@@ -231,6 +235,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   onSwitchChanged(event: any, formGroup: AbstractControl): void {
+    console.log('fef')
     this.onShowWarningForDependentFields(event, formGroup);
     if (event.checked && this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value === 'PROJECT') {
       this.form.controls.isDependentImportEnabled.setValue(true);
