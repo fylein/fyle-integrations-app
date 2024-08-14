@@ -252,7 +252,7 @@ export class HelperService {
    * If the destination attribute with `destination_id` does not exist in `options`, add it
    */
   addDestinationAttributeIfNotExists(
-    {options, destination_id, value}: {options?: DestinationAttribute[]; destination_id?: string; value?: string}
+    {options, destination_id, value}: {options?: DestinationAttribute[]; destination_id?: string | null; value?: string | null}
   ) {
     if (
       destination_id &&

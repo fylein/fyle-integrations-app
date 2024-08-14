@@ -186,6 +186,12 @@ export class XeroExportSettingsComponent implements OnInit {
     ]).subscribe(([exportSettings, bankAccounts]) => {
       this.exportSettings = exportSettings;
       this.bankAccounts = bankAccounts.results;
+
+      this.helperService.addDestinationAttributeIfNotExists({
+        options: this.bankAccounts,
+        destination_id: this.exportSettings.general_mappings.bank_account.id,
+        value: this.exportSettings.general_mappings.bank_account.name
+      });
       this.exportSettingForm = XeroExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, this.bankAccounts);
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);
