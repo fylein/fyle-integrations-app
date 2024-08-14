@@ -358,25 +358,6 @@ export class Sage300ImportSettingsComponent implements OnInit {
     }
   }
 
-  private defaultFieldWatcher() {
-    this.importSettingForm.controls.importCategories.valueChanges.subscribe((importFromFyle) => {
-      if (!importFromFyle) {
-        this.importSettingForm.controls.importCategoryCode.patchValue(false);
-        this.updateImportCodeFields(false, DefaultImportFields.ACCOUNT);
-      } else {
-        this.updateImportCodeFields(true, DefaultImportFields.ACCOUNT);
-      }
-    });
-
-    this.importSettingForm.controls.importVendorAsMerchant.valueChanges.subscribe((importFromFyle) => {
-      if (!importFromFyle) {
-        this.importSettingForm.controls.importVendorCode.patchValue(false);
-        this.updateImportCodeFields(false, DefaultImportFields.VENDOR);
-      } else {
-        this.updateImportCodeFields(true, DefaultImportFields.VENDOR);
-      }
-    });
-  }
 
   private defaultFieldCodeImportFieldWatcher() {
     this.importSettingForm.controls.importCategoryCode.valueChanges.subscribe((importCode) => {
@@ -399,8 +380,22 @@ export class Sage300ImportSettingsComponent implements OnInit {
   private setupFormWatchers() {
     this.importSettingWatcher();
     this.dependentFieldWatchers();
-    this.defaultFieldWatcher();
     this.defaultFieldCodeImportFieldWatcher();
+  }
+
+updateImportCodeFieldConfig() {
+    if (this.importSettingForm.controls.importCategories.value && this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]) {
+      this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT] = false;
+    }
+    if (this.importSettingForm.controls.importVendorAsMerchant.value && this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.VENDOR]) {
+      this.sage300ImportCodeFieldCodeConfig[DefaultImportFields.VENDOR] = false;
+    }
+
+    this.expenseFieldsGetter.controls.forEach(element => {
+      if (element.value.import_to_fyle && this.sage300ImportCodeFieldCodeConfig[element.value.destination_field]) {
+        this.sage300ImportCodeFieldCodeConfig[element.value.destination_field] = false;
+      }
+    });
   }
 
   constructPayloadAndSave() {
@@ -408,6 +403,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
     const importSettingPayload = Sage300ImportSettingModel.createImportSettingPayload(this.importSettingForm, this.importSettings);
     this.importSettingService.postImportSettings(importSettingPayload).subscribe((importSettingsResponse: Sage300ImportSettingGet) => {
       this.isSaveInProgress = false;
+      this.updateImportCodeFieldConfig();
       this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Import settings saved successfully');
       this.trackingService.trackTimeSpent(TrackingApp.SAGE300, Page.IMPORT_SETTINGS_SAGE300, this.sessionStartTime);
       if (this.workspaceService.getOnboardingState() === Sage300OnboardingState.IMPORT_SETTINGS) {

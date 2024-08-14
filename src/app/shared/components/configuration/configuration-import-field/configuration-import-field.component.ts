@@ -124,10 +124,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   showImportCodeSection(expenseField: AbstractControl<any, any>): any {
-    if (this.isOnboarding) {
-      return expenseField.value.import_to_fyle && expenseField.value.source_field;
-    }
-    return expenseField.value.import_to_fyle || expenseField.value.import_code;
+    return expenseField.value.import_to_fyle && expenseField.value.source_field;
   }
 
   isImportCodeFieldDisabledportCode(): boolean {
@@ -235,7 +232,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   onSwitchChanged(event: any, formGroup: AbstractControl): void {
-    console.log('fef')
     this.onShowWarningForDependentFields(event, formGroup);
     if (event.checked && this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value === 'PROJECT') {
       this.form.controls.isDependentImportEnabled.setValue(true);
@@ -275,7 +271,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       }
     });
     Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
-      const importCode = this.expenseFieldsGetter.controls[key as unknown as number].get('import_code');
+      const importCode = this.expenseFieldsGetter.controls[key as unknown as number].get('import_to_fyle');
       if (importCode?.value === true) {
         this.isImportCodeEnabledCounter.push(true);
       }
