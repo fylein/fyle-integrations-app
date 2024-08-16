@@ -31,7 +31,11 @@ export class SiWorkspaceService {
 
   @Cacheable()
   getWorkspace(orgId: string): Observable<IntacctWorkspace[]> {
-    return this.apiService.get('/workspaces/', {org_id: orgId});
+    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: false});
+  }
+
+  getWorkspaceWithoutCache(orgId: string, isPolling = false): Observable<IntacctWorkspace[]> {
+    return this.apiService.get('/workspaces/', {org_id: orgId, is_polling: isPolling});
   }
 
   postWorkspace(): Observable<IntacctWorkspace> {
