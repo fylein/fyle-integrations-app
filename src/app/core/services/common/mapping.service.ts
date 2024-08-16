@@ -181,9 +181,9 @@ export class MappingService {
 
     if (value) {
       if (appName === AppName.SAGE300) {
-        params.value = value
+        params.value = value;
       } else {
-        params.value__icontains = value
+        params.value__icontains = value;
       }
     }
 
