@@ -170,9 +170,9 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 
-  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string): Observable<PaginatedDestinationAttribute> {
+  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, display_name__in?: string} = {
+    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string} = {
       limit: 100,
       offset: 0,
       attribute_type: attributeType,
@@ -180,7 +180,11 @@ export class MappingService {
     };
 
     if (value) {
-      params.value__icontains = value;
+      if (appName === AppName.SAGE300) {
+        params.value = value
+      } else {
+        params.value__icontains = value
+      }
     }
 
     if (display_name) {

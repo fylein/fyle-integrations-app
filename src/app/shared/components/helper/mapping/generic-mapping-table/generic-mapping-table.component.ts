@@ -121,7 +121,7 @@ export class GenericMappingTableComponent implements OnInit {
       const existingOptions = this.destinationOptions.concat();
       const newOptions: DestinationAttribute[] = [];
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event.searchTerm, this.displayName).subscribe((response) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event.searchTerm, this.displayName, this.appName).subscribe((response) => {
         response.results.forEach((option) => {
           // If option is not already present in the list, add it
           if (!this.optionsMap[option.id.toString()]) {
