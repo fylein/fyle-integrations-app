@@ -253,7 +253,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
     // Reimbursable
     this.helper.addDestinationAttributeIfNotExists({
       options: this.creditCardAccountOptions,
-      destination_id: this.exportSettings?.default_reimbursable_credit_card_account_name,
+      destination_id: this.exportSettings?.default_reimbursable_credit_card_account_id,
       value: this.exportSettings?.default_reimbursable_credit_card_account_name
     });
 
