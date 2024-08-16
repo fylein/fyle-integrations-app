@@ -56,8 +56,9 @@
                     </div>
                     <div *ngIf="exposeApps.SAGE300" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
                         <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
-                        <span class="landing--accounting-app-name">
+                        <span class="landing--accounting-app-name tw-gap-2">
                             Sage 300 CRE
+                            <app-badge theme="dark" text="Beta"></app-badge>
                         </span>
                     </div>
                 </div>
