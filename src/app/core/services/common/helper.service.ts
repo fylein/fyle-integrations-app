@@ -252,7 +252,7 @@ export class HelperService {
    * If the destination attribute with `destination_id` does not exist in `options`, add it
    */
   addDestinationAttributeIfNotExists(
-    {options, destination_id, value}: {options?: DestinationAttribute[]; destination_id?: string | null; value?: string | null}
+    {options, destination_id, value}: {options: DestinationAttribute[]; destination_id?: string | null; value?: string | null}
   ) {
     if (
       destination_id &&
@@ -270,13 +270,15 @@ export class HelperService {
         destination_id
       });
     }
+
+    options.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
   }
 
   /**
    * If the default destination attribute with `destination_id` does not exist in `options`, add it
    */
   addDefaultDestinationAttributeIfNotExists(
-    {options, newOption}: {options?: DefaultDestinationAttribute[]; newOption: DefaultDestinationAttribute}
+    {options, newOption}: {options: DefaultDestinationAttribute[]; newOption: DefaultDestinationAttribute}
   ) {
     if (
       newOption.id && options &&
@@ -287,6 +289,8 @@ export class HelperService {
       // eslint-disable-next-line no-console
       console.log('added', {newOption});
     }
+
+    options.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
   }
 
 }
