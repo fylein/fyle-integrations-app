@@ -264,11 +264,6 @@ export class HelperService {
         destination_id
       } as DestinationAttribute);
 
-      // eslint-disable-next-line no-console
-      console.log('added', {
-        value: value || '',
-        destination_id
-      });
     }
 
     options.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
@@ -286,8 +281,6 @@ export class HelperService {
     ) {
       options.push(newOption);
 
-      // eslint-disable-next-line no-console
-      console.log('added', {newOption});
     }
 
     options.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
