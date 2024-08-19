@@ -8,11 +8,13 @@ import { DestinationAttribute } from 'src/app/core/models/db/destination-attribu
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, ConfigurationCta, ToastSeverity, XeroOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { XeroFyleField } from 'src/app/core/models/enum/enum.model';
+import { Org } from 'src/app/core/models/org/org.model';
 import { XeroWorkspaceGeneralSetting } from 'src/app/core/models/xero/db/xero-workspace-general-setting.model';
 import { XeroImportSettingGet, XeroImportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-import-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { OrgService } from 'src/app/core/services/org/org.service';
 import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
 import { XeroImportSettingsService } from 'src/app/core/services/xero/xero-configuration/xero-import-settings.service';
 import { XeroHelperService } from 'src/app/core/services/xero/xero-core/xero-helper.service';
@@ -72,6 +74,8 @@ export class XeroImportSettingsComponent implements OnInit {
 
   isCustomerPresent: boolean;
 
+  org: Org = this.orgService.getCachedOrg();
+
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.xero.configuration.importSetting;
@@ -87,6 +91,7 @@ export class XeroImportSettingsComponent implements OnInit {
     private mappingService: MappingService,
     private xeroHelperService: XeroHelperService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
+    private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private xeroConnectorService: XeroConnectorService
   ) { }
@@ -266,7 +271,7 @@ export class XeroImportSettingsComponent implements OnInit {
 
       this.importSettingsForm = XeroImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.xeroExpenseFields, this.isCustomerPresent, this.taxCodes);
 
-      if (response[5] && response[5].country !== 'US') {
+      if (response[5] && response[5].country !== 'US' && new Date(this.org.created_at) < new Date('2024-08-19')) {
         this.isTaxGroupSyncAllowed = true;
       }
       // This is only for C1
