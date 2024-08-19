@@ -58,7 +58,7 @@
                         <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
                         <span class="landing--accounting-app-name tw-gap-2">
                             Sage 300 CRE
-                            <app-badge theme="dark" text="Beta"></app-badge>
+                            <app-badge *ngIf="!orgsToHideSage300BetaBadge.includes(org.fyle_org_id)" theme="dark" text="Beta"></app-badge>
                         </span>
                     </div>
                 </div>

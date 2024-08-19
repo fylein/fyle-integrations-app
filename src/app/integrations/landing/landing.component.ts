@@ -75,6 +75,13 @@ export class LandingComponent implements OnInit {
 
   readonly exposeApps = !this.isINCluster ? exposeAppConfig[brandingConfig.brandId][brandingConfig.envId] : exposeAppConfig[brandingConfig.brandId]['production-1-in'];
 
+  readonly orgsToHideSage300BetaBadge = [
+    'or4xcag0tfuk',
+    'orC3X89Ku6wE',
+    'orUpM1wmNBJX',
+    'orOiAVGiOnrh'
+  ];
+
   constructor(
     private eventsService: EventsService,
     private qboAuthService: QboAuthService,
