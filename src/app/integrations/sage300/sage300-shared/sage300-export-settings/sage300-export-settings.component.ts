@@ -248,6 +248,56 @@ export class Sage300ExportSettingsComponent implements OnInit {
     }
   }
 
+  private addMissingOptions() {
+
+    // Reimbursable
+    this.helper.addDestinationAttributeIfNotExists({
+      options: this.creditCardAccountOptions,
+      destination_id: this.exportSettings?.default_reimbursable_credit_card_account_id,
+      value: this.exportSettings?.default_reimbursable_credit_card_account_name
+    });
+
+    this.helper.addDestinationAttributeIfNotExists({
+      options: this.debitCardAccountOptions,
+      destination_id: this.exportSettings?.default_debit_card_account_id,
+      value: this.exportSettings?.default_debit_card_account_name
+    });
+
+    this.helper.addDestinationAttributeIfNotExists({
+      options: this.sage300Jobs,
+      destination_id: this.exportSettings?.default_job_id,
+      value: this.exportSettings?.default_job_name
+    });
+
+    this.helper.addDestinationAttributeIfNotExists({
+      options: this.accountsPayableOptions,
+      destination_id: this.exportSettings?.default_reimbursable_account_payable_id,
+      value: this.exportSettings?.default_reimbursable_account_payable_name
+    });
+
+    // CCC
+    this.helper.addDestinationAttributeIfNotExists({
+      options: this.creditCardAccountOptions,
+      destination_id: this.exportSettings?.default_ccc_credit_card_account_id,
+      value: this.exportSettings?.default_ccc_credit_card_account_name
+    });
+
+    // Debit card account added in call #2
+    // Jobs added in call #3
+
+    this.helper.addDestinationAttributeIfNotExists({
+      options: this.accountsPayableOptions,
+      destination_id: this.exportSettings?.default_ccc_account_payable_id,
+      value: this.exportSettings?.default_ccc_account_payable_name
+    });
+
+    this.helper.addDestinationAttributeIfNotExists({
+      options: this.vendorOptions,
+      destination_id: this.exportSettings?.default_vendor_id,
+      value: this.exportSettings?.default_vendor_name
+    });
+  }
+
   private setupPage(): void {
     this.isOnboarding = this.router.url.includes('onboarding');
     const exportSettingValidatorRule: ExportSettingValidatorRule = {
@@ -286,6 +336,8 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.vendorOptions = vendors.results;
       this.creditCardAccountOptions = this.debitCardAccountOptions = this.accountsPayableOptions = accounts.results;
       this.sage300Jobs = jobs.results;
+
+      this.addMissingOptions();
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, vendors.results, accounts.results, jobs.results);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
