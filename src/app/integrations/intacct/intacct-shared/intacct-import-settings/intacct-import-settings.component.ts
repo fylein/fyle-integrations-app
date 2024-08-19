@@ -414,11 +414,7 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   showImportTax(locationEntity: LocationEntityMapping) {
-    if (new Date(this.org.created_at) < new Date('2024-08-19')) {
-      return (locationEntity.country_name && locationEntity.country_name !== 'United States' && locationEntity.destination_id !== 'top_level') ? true : false;
-    }
-
-    return false;
+    return new Date(this.org.created_at) < new Date('2024-08-19') && locationEntity.country_name && locationEntity.country_name !== 'United States' && locationEntity.destination_id !== 'top_level' ? true : false;
   }
 
   private initializeForm(importSettings: ImportSettingGet): void {
