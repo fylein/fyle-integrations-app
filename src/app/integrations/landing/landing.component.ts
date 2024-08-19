@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page } from 'src/app/core/models/enum/enum.model';
+import { AccountingIntegrationApp, ClickEvent, InAppIntegration, IntegrationView, Page, ThemeOption } from 'src/app/core/models/enum/enum.model';
 import { AccountingIntegrationEvent, InAppIntegrationUrlMap, IntegrationCallbackUrl, IntegrationsView } from 'src/app/core/models/integrations/integrations.model';
 import { EventsService } from 'src/app/core/services/common/events.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -81,6 +81,8 @@ export class LandingComponent implements OnInit {
     'orUpM1wmNBJX',
     'orOiAVGiOnrh'
   ];
+
+  readonly ThemeOption = ThemeOption;
 
   constructor(
     private eventsService: EventsService,

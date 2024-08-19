@@ -8,9 +8,9 @@ import { SizeOption, ThemeOption } from 'src/app/core/models/enum/enum.model';
   styleUrl: './badge.component.scss'
 })
 export class BadgeComponent {
-  @Input() size: SizeOption = 'default';
+  @Input() size: SizeOption = SizeOption.DEFAULT;
 
-  @Input() theme: ThemeOption = 'dark';
+  @Input() theme: ThemeOption = ThemeOption.DARK;
 
   @Input() text: string = '';
 
