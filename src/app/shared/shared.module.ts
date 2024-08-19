@@ -91,6 +91,7 @@ import { OptionalFieldComponent } from './components/helper/optional-field/optio
 import { SentenceCasePipe } from './pipes/sentence-case.pipe';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { BadgeComponent } from './components/core/badge/badge.component';
 
 
 @NgModule({
@@ -165,7 +166,8 @@ import { InputIconModule } from 'primeng/inputicon';
     NetsuiteSubsidiaryMappingComponent,
     SearchComponent,
     OptionalFieldComponent,
-    SentenceCasePipe
+    SentenceCasePipe,
+    BadgeComponent
   ],
   imports: [
     CommonModule,
@@ -263,7 +265,8 @@ import { InputIconModule } from 'primeng/inputicon';
     SearchComponent,
     SkipExportComponent,
     OptionalFieldComponent,
-    SentenceCasePipe
+    SentenceCasePipe,
+    BadgeComponent
   ]
 })
 export class SharedModule { }
