@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AppName, ConfigurationCta, IntacctField, IntacctOnboardingState, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
@@ -13,6 +13,13 @@ import { LocationEntityPost } from 'src/app/core/models/intacct/intacct-configur
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
 import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/destination-attribute.model';
 import { brandingConfig, brandingContent, brandingFeatureConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { interval, take } from 'rxjs';
+
+/** Time (in ms) to wait before each request while polling for refresh dimensions status */
+const DIMENSIONS_POLLING_INTERVAL = 3000;
+
+/** Maximum time (in ms) to wait before terminating the poll for refresh dimensions status */
+const DIMENSIONS_POLLING_TIMEOUT = 60_000;
 
 @Component({
   selector: 'app-intacct-location-entity',
@@ -52,7 +59,7 @@ export class IntacctLocationEntityComponent implements OnInit {
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private mappingsService: SiMappingsService,
     private connectorService: IntacctConnectorService,
     private userService: UserService,
@@ -119,15 +126,48 @@ export class IntacctLocationEntityComponent implements OnInit {
       this.router.navigate(['/integrations/intacct/onboarding/export_settings']);
     }
     this.isLoading = false;
-    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location Entity Selected Successfully.');
+    this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Location entity selected successfully.');
   }
 
   private handleSuccess(locationEntityMappingPayload: LocationEntityPost): void {
     this.isRefreshDimensionInProgress = true;
-    this.mappingsService.refreshSageIntacctDimensions().subscribe(() => {
-      this.setOnboardingStateAndRedirect(locationEntityMappingPayload);
-    }, () => {
-      this.setOnboardingStateAndRedirect(locationEntityMappingPayload);
+
+    this.mappingsService.refreshSageIntacctDimensions().subscribe();
+    this.pollDimensionsSyncStatus({
+      onPollingComplete: () => {
+        this.setOnboardingStateAndRedirect(locationEntityMappingPayload);
+      }
+    });
+
+  }
+
+  /**
+   * Checks every `DIMENSIONS_POLLING_INTERVAL` ms whether dimensions have been refreshed
+   * for a maximum of `DIMENSIONS_POLLING_TIMEOUT` ms.
+   *
+   * Terminates either when dimensions have been refreshed, when refresh dimensions fails,
+   * or when polling times out - whichever occurs first.
+   */
+  private pollDimensionsSyncStatus({onPollingComplete}: {onPollingComplete: () => void}) {
+    const ticks = Math.floor(DIMENSIONS_POLLING_TIMEOUT / DIMENSIONS_POLLING_INTERVAL);
+    const fyleOrgId = this.storageService.get('org').fyle_org_id;
+
+    const pollingSubscription = interval(DIMENSIONS_POLLING_INTERVAL).pipe(take(ticks)).subscribe(
+      {
+        next: (_tick) => {
+          this.workspaceService.getWorkspaceWithoutCache(fyleOrgId, true).subscribe(workspaces => {
+            const {destination_synced_at} = workspaces[0];
+
+            if (destination_synced_at !== null) {
+              onPollingComplete();
+              pollingSubscription.unsubscribe();
+            }
+          });
+        },
+
+        complete: () => {
+          onPollingComplete();
+        }
     });
   }
 

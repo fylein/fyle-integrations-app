@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
+import { MappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
 
 @Component({
   selector: 'app-mapping-header-section',

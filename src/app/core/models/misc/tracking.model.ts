@@ -2,9 +2,9 @@ import { BusinessCentralAdvancedSettingsGet } from "../business-central/business
 import { BusinessCentralExportSettingGet } from "../business-central/business-central-configuration/business-central-export-setting.model";
 import { BusinessCentralImportSettingsGet } from "../business-central/business-central-configuration/business-central-import-settings.model";
 import { AccountingErrorType, AppName, IntacctErrorType, ProgressPhase, TrackingApp } from "../enum/enum.model";
-import { QBDAdvancedSettingsGet } from "../qbd/qbd-configuration/advanced-setting.model";
-import { QBDExportSettingGet } from "../qbd/qbd-configuration/export-setting.model";
-import { QBDFieldMappingGet } from "../qbd/qbd-configuration/field-mapping.model";
+import { QBDAdvancedSettingsGet } from "../qbd/qbd-configuration/qbd-advanced-setting.model";
+import { QBDExportSettingGet } from "../qbd/qbd-configuration/qbd-export-setting.model";
+import { QBDFieldMappingGet } from "../qbd/qbd-configuration/qbd-field-mapping.model";
 import { Sage300AdvancedSettingGet } from "../sage300/sage300-configuration/sage300-advanced-settings.model";
 import { Sage300ExportSettingGet } from "../sage300/sage300-configuration/sage300-export-setting.model";
 import { Sage300ImportSettingGet } from "../sage300/sage300-configuration/sage300-import-settings.model";

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClickEvent, Page, ConfigurationCta, QBDOnboardingState, ProgressPhase, QBDScheduleFrequency, ToastSeverity, UpdateEvent, TrackingApp, AppName } from 'src/app/core/models/enum/enum.model';
-import { AdvancedSettingModel, QBDAdvancedSettingsGet, EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
-import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { AdvancedSettingModel, QBDAdvancedSettingsGet, EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { OrgService } from 'src/app/core/services/org/org.service';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
@@ -75,7 +75,7 @@ export class QbdAdvancedSettingComponent implements OnInit {
   constructor(
     private router: Router,
     private advancedSettingService: QbdAdvancedSettingService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
     private orgService: OrgService,
     private toastService: IntegrationsToastService,

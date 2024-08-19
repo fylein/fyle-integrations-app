@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
@@ -6,9 +6,10 @@ import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/cor
 import { AppName, PaginatorPage } from 'src/app/core/models/enum/enum.model';
 import { SkipExportList, SkipExportLogResponse, SkipExportLog } from 'src/app/core/models/intacct/db/expense-group.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-netsuite-skipped-export-log',
@@ -49,6 +50,7 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService
   ) {
@@ -75,10 +77,10 @@ export class NetsuiteSkippedExportLogComponent implements OnInit {
     }
 
     return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery, AppName.NETSUITE).subscribe((skippedExpenses: SkipExportLogResponse) => {
-        this.totalCount = skippedExpenses.count;
-
+      this.totalCount = skippedExpenses.count;
+      const orgId = this.userService.getUserProfile().org_id;
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
+        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
       });
 
       this.filteredExpenses = skippedExpenseGroup;

@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExport, AccountingExportList, AccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { AccountingExportStatus, AccountingExportType, AppName, BusinessCentralExportType, PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
@@ -58,7 +58,7 @@ export class BusinessCentralCompleteExportLogComponent implements OnInit {
 
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private accountingExportService: AccountingExportService,
     private windowService: WindowService,

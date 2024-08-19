@@ -132,9 +132,5 @@
 /* Style the checkmark/indicator */
 .container .checkmark:after {
   content: url('./../../../../../assets/icons/co/grv-checkmark-small.svg') !important;
-  @apply tw-left-[3px] tw-top-0 tw-w-6-px tw-h-10-px tw-border-t-0-px tw-border-r-0-px tw-border-b-0-px tw-border-l-0-px tw-border-white;
-}
-
-:host ::ng-deep .noIcon{
-  @apply tw-pr-22-px #{!important};
+  @apply tw-left-[3px] tw-top-[-2px] tw-w-6-px tw-h-10-px tw-border-t-0-px tw-border-r-0-px tw-border-b-0-px tw-border-l-0-px tw-border-white;
 }

@@ -39,8 +39,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "600kb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -48,7 +48,8 @@
                   "maximumError": "6kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "sourceMap": true
             },
             "development": {
               "buildOptimizer": false,
@@ -89,7 +90,7 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "fyle-integrations-app:build:production"
+              "buildTarget": "fyle-integrations-app:build:production"
             },
             "development": {
               "browserTarget": "fyle-integrations-app:build:development"
@@ -108,7 +109,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fyle-integrations-app:build"
+            "buildTarget": "fyle-integrations-app:build"
           }
         },
         "test": {

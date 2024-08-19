@@ -1,4 +1,4 @@
-<p-dialog header="Expenses" [(visible)]="isDialogOpen" [position]="'top-right'" [modal]="true" [draggable]="false" [dismissableMask]="true" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
+<p-dialog header="Expenses" [(visible)]="isDialogOpen" [position]="'topright'" [modal]="true" [draggable]="false" [dismissableMask]="true" (onHide)="handleDialogClose()" [style]="{ width: '50vw', height: '100vh' }">
     <div class="tw-bg-white">
         <p-table #dt2 [value]="expenses">
             <ng-template pTemplate="header">

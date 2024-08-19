@@ -41,8 +41,7 @@
                                 </h5>
                             </div>
                         </div>
-                        <div
-                            class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                        <div class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
@@ -56,7 +55,7 @@
                                 [isDisabled]="true">
                             </app-configuration-select-field>
                         </div>
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType"
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -71,7 +70,7 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType"
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
@@ -85,14 +84,14 @@
                             </app-configuration-select-field>
                         </div>
 
-                        <div *ngIf="exportSettingForm.value.reimbursableExportType"
+                        <div *ngIf="exportSettingForm.get('reimbursableExportType')?.value"
                             class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                             <app-configuration-select-field
                                 [form]="exportSettingForm"
                                 [isFieldMandatory]="true"
                                 [mandatoryErrorListName]="'export date'"
                                 [placeholder]="'Select export date'"
-                                [label]="'Set the ' + (exportSettingForm.value.reimbursableExportType | snakeCaseToSpaceCase | titlecase) + ' date as'"
+                                [label]="'Set the ' + (exportSettingForm.controls.reimbursableExportType.value| snakeCaseToSpaceCase | titlecase) + ' date as'"
                                 [subLabel]="'The selected type of date will reflect in the expenses exported from ' + brandingConfig.brandName + ' to Xero.'"
                                 [options]="reimbursableExpenseGroupingDateOptions"
                                 [iconPath]="'calendar'"
@@ -120,7 +119,6 @@
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export module'"
                             [label]="'How should the expenses be exported?'"
-                            [subLabel]="brandingContent.corporateCard.creditCardExportTypeSubLabel"
                             [options]="creditCardExportTypes"
                             [iconPath]="'list'"
                             [placeholder]="'Select expense export type'"
@@ -132,7 +130,7 @@
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -152,7 +150,7 @@
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
@@ -166,7 +164,7 @@
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isDisabled]="true"
@@ -179,16 +177,16 @@
                         </app-configuration-select-field>
                     </div>
 
-                    <div *ngIf="exportSettingForm.value.creditCardExportType" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
+                    <div *ngIf="exportSettingForm.get('creditCardExportType')?.value" class="tw-mt-16-px tw-bg-white tw-border tw-border-solid tw-border-border-tertiary tw-rounded-12-px">
                         <app-configuration-select-field
                             [form]="exportSettingForm"
                             [isFieldMandatory]="true"
                             [mandatoryErrorListName]="'export date'"
-                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | lowercase))  + ' date as'"
+                            [label]=" 'Set the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.controls.creditCardExportType.value | lowercase))  + ' date as'"
                             [subLabel]="'The selected date will reflect in the corporate card expenses exported to Xero.'"
                             [options]="cccExpenseGroupingDateOptions"
                             [iconPath]="'calendar'"
-                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.value.creditCardExportType | snakeCaseToSpaceCase | lowercase))"
+                            [placeholder]="'Select the date of the ' + (brandingConfig.brandId === 'fyle' ? (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | titlecase) : (exportSettingForm.controls.creditCardExportType.value | snakeCaseToSpaceCase | lowercase))"
                             [formControllerName]="'creditCardExportDate'">
                         </app-configuration-select-field>
                     </div>

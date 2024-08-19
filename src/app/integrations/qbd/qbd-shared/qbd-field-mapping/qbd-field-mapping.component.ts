@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfigurationCta, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
-import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/field-mapping.model';
+import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
+import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-qbd-field-mapping',
@@ -40,6 +41,8 @@ export class QbdFieldMappingComponent implements OnInit {
     }
   ];
 
+  additionalOptionsItemType: QBDExportSettingFormOption[] = [];
+
   private sessionStartTime = new Date();
 
   fieldMapping: QBDFieldMappingGet;
@@ -48,17 +51,24 @@ export class QbdFieldMappingComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private fieldMappingService: QbdFieldMappingService,
     private workspaceService: QbdWorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService
   ) { }
 
-  mappingFieldFormOptionsFunction(formControllerName: string): QBDExportSettingFormOption[] {
-    return this.representationOption.filter(option => {
-      return option.value !== this.fieldMappingForm.value[formControllerName];
+  mappingFieldFormOptionsFunction(formControllerName1: string, formControllerName2: string): QBDExportSettingFormOption[] {
+    const filteredOptions = this.representationOption.filter(option => {
+      return option.value !== this.fieldMappingForm.value[formControllerName1] &&
+             option.value !== this.fieldMappingForm.value[formControllerName2];
     });
+
+    if (formControllerName1==='customerType' && formControllerName2==='classType'){
+      filteredOptions.push(...this.additionalOptionsItemType);
+    }
+
+    return filteredOptions;
   }
 
   private getPhase(): ProgressPhase {
@@ -103,20 +113,33 @@ export class QbdFieldMappingComponent implements OnInit {
     }
   }
 
+
+  buildCustomFieldOptions(options: string[]): QBDExportSettingFormOption[] {
+    return options.map((label) => {
+      return {
+        label,
+        value: label
+      };
+    });
+  }
+
   private getSettingsAndSetupForm(): void {
     this.isLoading = true;
     this.isOnboarding = this.router.url.includes('onboarding');
     this.fieldMappingService.getQbdFieldMapping().subscribe((fieldMappingResponse : QBDFieldMappingGet) => {
       this.fieldMapping = fieldMappingResponse;
+      this.additionalOptionsItemType = this.buildCustomFieldOptions(fieldMappingResponse.custom_fields);
       this.fieldMappingForm = this.formBuilder.group({
         classType: [this.fieldMapping?.class_type ? this.fieldMapping?.class_type : null],
-        customerType: [this.fieldMapping?.project_type ? this.fieldMapping?.project_type : null]
+        customerType: [this.fieldMapping?.project_type ? this.fieldMapping?.project_type : null],
+        itemType: [this.fieldMapping?.item_type ? this.fieldMapping?.item_type : null]
       });
       this.isLoading = false;
     }, () => {
         this.fieldMappingForm = this.formBuilder.group({
           classType: [null],
-          customerType: [null]
+          customerType: [null],
+          itemType: [null]
         });
         this.isLoading = false;
       }

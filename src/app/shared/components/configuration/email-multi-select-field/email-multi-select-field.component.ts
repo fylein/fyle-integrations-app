@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { BambooHRConfigurationPost } from 'src/app/core/models/bamboo-hr/bamboo-hr.model';
 import { AppName, ClickEvent, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { EmailOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
@@ -57,7 +57,7 @@ export class EmailMultiSelectFieldComponent implements OnInit {
   readonly brandingConfig = brandingConfig;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private toastService: IntegrationsToastService
   ) { }

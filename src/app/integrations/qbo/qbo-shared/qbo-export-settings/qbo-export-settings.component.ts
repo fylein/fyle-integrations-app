@@ -127,6 +127,7 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   constructPayloadAndSave(data: ConfigurationWarningOut): void {
+    this.isConfirmationDialogVisible = false;
     if (data.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = QBOExportSettingModel.constructPayload(this.exportSettingForm);

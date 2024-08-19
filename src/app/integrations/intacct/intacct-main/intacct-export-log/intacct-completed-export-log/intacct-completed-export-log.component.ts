@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AppName, PaginatorPage, TaskLogState, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { ExpenseGroup, ExpenseGroupResponse } from 'src/app/core/models/db/expense-group.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
@@ -69,7 +69,7 @@ export class IntacctCompletedExportLogComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService,

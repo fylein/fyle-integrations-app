@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -11,7 +11,8 @@ import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 export class QbdMappingComponent implements OnInit {
 
   mappingPages: MenuItem[] = [
-    {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'}
+    {label: 'Corporate Card', routerLink: '/integrations/qbd/main/mapping/corporate_card'},
+    {label: 'Item', routerLink: '/integrations/qbd/main/mapping/item'}
   ];
 
   activeModule: MenuItem;
