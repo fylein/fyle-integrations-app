@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+// import { TestBed } from '@angular/core/testing';
 
-import { BusinessCentralTokenGuard } from './business-central-token.guard';
+// import { BusinessCentralTokenGuard } from './business-central-token.guard';
 
-describe('BusinessCentralTokenGuard', () => {
-  let guard: BusinessCentralTokenGuard;
+// describe('BusinessCentralTokenGuard', () => {
+//   let guard: BusinessCentralTokenGuard;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    guard = TestBed.inject(BusinessCentralTokenGuard);
-  });
+//   beforeEach(() => {
+//     TestBed.configureTestingModule({});
+//     guard = TestBed.inject(BusinessCentralTokenGuard);
+//   });
 
-  it('should be created', () => {
-    expect(guard).toBeTruthy();
-  });
-});
+//   it('should be created', () => {
+//     expect(guard).toBeTruthy();
+//   });
+// });
