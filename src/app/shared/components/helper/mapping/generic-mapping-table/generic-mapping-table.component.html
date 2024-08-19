@@ -24,9 +24,24 @@
                     placeholder="Select an option" 
                     (onChange)="save(mapping, $event); getDropdownValue(mapping)"
                     [filter]="true"
-                    filterBy="value"
                     [emptyFilterMessage]="isSearching ? 'Searching...' : 'No results found'"
                     (onFilter)="searchOptions($event)">
+                    <ng-template pTemplate="filter" let-options="options">
+                        <!-- <ng-template pTemplate="filter" let-options="options"> -->
+                            <div class="flex gap-1">
+                                <div class="p-inputgroup" (click)="$event.stopPropagation()">
+                                    <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
+                                    <input 
+                                        type="text"
+                                        pInputText
+                                        placeholder="Filter" 
+                                        [(ngModel)]="filterValue"
+                                        (keyup)="customFilterFunction($event, options)" />
+                                </div>
+                            </div>
+                        <!-- </ng-template> -->
+                        <!-- <app-search [form]="form" [isDropdown]="true" [placeholder]="'Search'" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white '" (handleSimpleSearch)="searchOptions({filter:$event})" (searchFocused)="onSearchFocus($event)"></app-search> -->
+                    </ng-template>
                     <ng-template let-value pTemplate="selectedItem">
                         <div *ngIf="value">
                             <p>

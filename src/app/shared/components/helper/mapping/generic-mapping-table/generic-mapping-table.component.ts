@@ -1,7 +1,7 @@
-import { TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subject, debounceTime, interval } from 'rxjs';
+import { DropdownFilterOptions } from 'primeng/dropdown';
+import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -12,7 +12,6 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
   selector: 'app-generic-mapping-table',
@@ -20,6 +19,10 @@ import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
   styleUrls: ['./generic-mapping-table.component.scss']
 })
 export class GenericMappingTableComponent implements OnInit {
+filterValue: any;
+onSearchFocus(isSearchFocused: boolean) {
+  this.isSearchFocused = isSearchFocused;
+}
 
   @Input() isLoading: boolean;
 
@@ -113,6 +116,14 @@ export class GenericMappingTableComponent implements OnInit {
   sortDropdownOptions() {
     this.destinationOptions.sort((a, b) => a.value.localeCompare(b.value));
   }
+
+  customFilterFunction(event: KeyboardEvent, options: DropdownFilterOptions) {
+    this.isSearching = true;
+    console.log(options)
+    //@ts-ignore
+    options.filter(event);
+    // this.optionSearchUpdate.next({searchTerm: event.key});
+}
 
   optionSearchWatcher() {
     this.optionSearchUpdate.pipe(
