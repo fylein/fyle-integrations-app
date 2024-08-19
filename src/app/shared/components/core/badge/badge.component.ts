@@ -1,8 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-
-type SizeOption = 'default' | 'large';
-type ThemeOption = 'brand' | 'light' | 'dark';
+import { SizeOption, ThemeOption } from 'src/app/core/models/enum/enum.model';
 
 
 @Component({
