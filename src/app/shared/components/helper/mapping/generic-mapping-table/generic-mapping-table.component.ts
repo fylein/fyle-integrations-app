@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { DropdownFilterOptions } from 'primeng/dropdown';
 import { Subject, debounceTime } from 'rxjs';
@@ -70,6 +70,8 @@ onSearchFocus(isSearchFocused: boolean) {
 
   optionSearchUpdate = new Subject<{searchTerm: string}>();
 
+  @ViewChild('filterInput') filterInput!: ElementRef;
+
   private optionsMap: {[key: string]: boolean} = {};
 
   constructor(
@@ -79,6 +81,10 @@ onSearchFocus(isSearchFocused: boolean) {
     public helper: HelperService
   ) { }
 
+  clearSearch($event: Event) {
+    this.form.controls.searchOption.reset();
+  }
+
   isOverflowing(element: any, mapping: DestinationAttribute): string {
     return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
@@ -87,6 +93,9 @@ onSearchFocus(isSearchFocused: boolean) {
     const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
     if (element) {
       element.style.width = '300px';
+      setTimeout(() => {
+        this.filterInput.nativeElement.focus();
+    }, 0);
     }
   }
 
@@ -151,7 +160,7 @@ onSearchFocus(isSearchFocused: boolean) {
   searchOptions(event: any) {
     if (event.filter) {
       this.isSearching = true;
-      this.optionSearchUpdate.next({searchTerm: event.filter});
+      this.optionSearchUpdate.next({searchTerm: (event.filter as string).trim()});
     }
   }
 

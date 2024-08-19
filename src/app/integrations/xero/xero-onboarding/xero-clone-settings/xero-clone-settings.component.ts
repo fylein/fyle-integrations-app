@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -11,7 +11,7 @@ import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.mode
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, InputType, ToastSeverity, XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { XeroCloneSetting, XeroCloneSettingModel } from 'src/app/core/models/xero/xero-configuration/clone-setting.model';
 import { XeroAdvancedSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
 import { XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
@@ -136,7 +136,7 @@ export class XeroCloneSettingsComponent implements OnInit {
   constructor(
     private cloneSettingService: CloneSettingService,
     private configurationService: ConfigurationService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private exportSettingService: XeroExportSettingsService,
     public helperService: HelperService,
     private mappingService: MappingService,
@@ -149,7 +149,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   resetCloneSetting(): void {
     this.warningHeaderText = 'Are you sure?';
-    this.warningContextText = `By resetting the configuration, you will be configuring each setting individually from the beginning.<br><br>Would you like to continue?`;
+    this.warningContextText = `By resetting the configuration, you will be configuring each setting individually from the beginning.`;
     this.primaryButtonText = 'Yes';
     this.warningEvent = ConfigurationWarningEvent.RESET_CONFIGURATION;
 
@@ -194,13 +194,13 @@ export class XeroCloneSettingsComponent implements OnInit {
       this.fyleFields.push(this.customFieldOption[0]);
       const expenseField = {
         source_field: this.customField.attribute_type,
-        destination_field: this.customFieldControl.value.destination_field,
+        destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
         source_placeholder: this.customField.source_placeholder
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
-      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0] as FormGroup).controls.import_to_fyle.disable();
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
+      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0] as FormGroup).controls.import_to_fyle.disable();
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -286,9 +286,9 @@ export class XeroCloneSettingsComponent implements OnInit {
           this.customFieldControl = control;
           this.customFieldControl.patchValue({
             source_field: '',
-            destination_field: control.value.destination_field,
-            import_to_fyle: control.value.import_to_fyle,
-            is_custom: control.value.is_custom,
+            destination_field: control.get('destination_field')?.value,
+            import_to_fyle: control.get('import_to_fyle')?.value,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: null
           });
         }
@@ -351,7 +351,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
       this.importSettingForm = XeroImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.xeroFields, this.isCustomerPresent, destinationAttributes.TAX_CODE);
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupImportSettingFormWatcher();
       this.initializeCustomFieldForm(false);
 

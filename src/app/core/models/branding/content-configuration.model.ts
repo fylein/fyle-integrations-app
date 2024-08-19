@@ -76,7 +76,6 @@ export type ContentConfiguration = {
                     billPaymentAccountLabel: string;
                     billPaymentAccountSubLabel: string;
                     autoCreateVendorsLabel: string;
-                    autoCreateEmployeeVendor: string;
                     dfvSubLabel: string;
                     dfvLabel: string;
                     changeAccountingPeriodSubLabel: string;
@@ -142,7 +141,6 @@ export type ContentConfiguration = {
                     billPaymentAccountLabel: string;
                     billPaymentAccountSubLabel: string;
                     autoCreateVendorsLabel: string;
-                    autoCreateEmployeeVendor: string;
                     customPreferencesLabel: string;
                     customPreferencesSubLabel: string;
                     automationSubLabel: string;
@@ -211,6 +209,7 @@ export type ContentConfiguration = {
                     autoSyncPayments: string;
                     defaultPaymentAccount: string;
                     autoCreateEmployeeVendor: string;
+                    autoCreateMerchantsAsVendorsLabel: string;
                     postEntriesCurrentPeriod: string;
                     setDescriptionField: string;
                     dfvLabel: string;

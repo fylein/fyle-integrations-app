@@ -41,7 +41,7 @@
                         </span>
                     </div>
                     <div *ngIf="exposeApps.QBD" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.QBD)">
-                        <img src="assets/logos/quickbooks-desktop.svg" class="tw-mt-[-20px]" width="120px" height="60px" />
+                        <img src="assets/logos/quickbooks-logo.png" class="tw-mt-[-20px]" width="120px" height="60px" />
                         <span class="landing--accounting-app-name">
                             QuickBooks Desktop
                         </span>
@@ -54,10 +54,10 @@
                             Sage Intacct
                         </span>
                     </div>
-                    <div *ngIf="exposeApps.BUSINESS_CENTRAL" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
-                        <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
+                    <div *ngIf="exposeApps.SAGE300" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
+                        <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
                         <span class="landing--accounting-app-name">
-                            Dynamics 365 Business Central
+                            Sage 300 CRE
                         </span>
                     </div>
                 </div>
@@ -68,10 +68,10 @@
                             QuickBooks Online
                         </span>
                     </div>
-                    <div *ngIf="exposeApps.SAGE300" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.SAGE300)">
-                        <img src="assets/logos/sage300-logo.svg" width="110px" height="60px" />
+                    <div *ngIf="exposeApps.BUSINESS_CENTRAL && org.allow_dynamics" class="landing--accounting-app tw-mr-20-px tw-mt-20-px" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}" (click)="openInAppIntegration(InAppIntegration.BUSINESS_CENTRAL)">
+                        <img src="assets/logos/BusinessCentral-logo.svg" class="tw-mt-[-20px]" width="50px" height="60px" />
                         <span class="landing--accounting-app-name">
-                            Sage 300 CRE
+                            Dynamics 365 Business Central
                         </span>
                     </div>
                 </div>

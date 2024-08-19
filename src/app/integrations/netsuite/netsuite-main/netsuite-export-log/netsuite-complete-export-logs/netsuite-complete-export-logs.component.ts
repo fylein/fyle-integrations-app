@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
@@ -7,7 +7,7 @@ import { ExpenseGroupResponse, ExpenseGroup } from 'src/app/core/models/db/expen
 import { AppName, PaginatorPage, TaskLogState } from 'src/app/core/models/enum/enum.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -57,7 +57,7 @@ export class NetsuiteCompleteExportLogsComponent implements OnInit {
   private searchQuerySubject = new Subject<string>();
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private exportLogService: ExportLogService,
     private windowService: WindowService,
     private paginatorService: PaginatorService,

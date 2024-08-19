@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
 import { PaginatorService } from 'src/app/core/services/common/paginator.service';
@@ -12,6 +12,7 @@ import { TrackingService } from 'src/app/core/services/integration/tracking.serv
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-business-central-skipped-export-log',
@@ -50,6 +51,7 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private paginatorService: PaginatorService
@@ -79,9 +81,9 @@ export class BusinessCentralSkippedExportLogComponent implements OnInit {
     return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, null).subscribe((skippedExpenses: SkipExportLogResponse) => {
 
       this.totalCount = skippedExpenses.count;
-
+      const orgId = this.userService.getUserProfile().org_id;
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
+        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
       });
 
       this.filteredExpenses = skippedExpenseGroup;

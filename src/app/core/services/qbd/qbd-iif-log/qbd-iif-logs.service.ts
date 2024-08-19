@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
-import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
+import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
 import { ApiService } from '../../common/api.service';
 

@@ -1,36 +1,42 @@
 <div class="tw-p-24-px tw-border-b tw-border-b-border-tertiary">
-    <div class="tw-flex tw-items-center tw-justify-between">
-        <div>
-          <h3 class="tw-text-text-primary tw-font-nav-link-font-weight" [ngClass]="{'tw-text-18-px': brandingConfig.brandId === 'co'}">
-            {{ headerText }}
-          </h3>
-          <div class="tw-flex tw-pt-8-px">
-            <h5 class="tw-text-text-muted tw-text-14-px !tw-font-400 tw-text-pretty" [innerHTML]="contentText">
-            </h5>
-            <a *ngIf="redirectLink"
-            class="tw-text-14-px tw-text-link-primary tw-w-fit tw-cursor-pointer tw-pl-4-px tw-inline-flex tw-items-center"
-            (click)="windowService.openInNewTab(redirectLink)">
-            {{brandingContent.readMoreText}}
-              <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'" [width]="'16px'" [height]="'16px'"
-                class="tw-text-link-primary tw-pl-2-px tw-w-fit">
-              </app-svg-icon>
-            </a>
-          </div>
-        </div>
+  <div class="tw-flex tw-items-center tw-justify-between">
+    
+    <div>
+      <h3 class="tw-text-text-primary tw-font-nav-link-font-weight"
+        [ngClass]="{'tw-text-18-px': brandingConfig.brandId === 'co'}">
+        {{ headerText }}
+      </h3>
+      <h5 class="tw-text-text-muted tw-text-14-px !tw-font-400 tw-text-pretty tw-pt-8-px tw-mr-4-px">
+        <span [innerHTML]="contentText"></span>
+        <a *ngIf="redirectLink"
+          class="tw-text-14-px tw-text-link-primary tw-w-fit tw-cursor-pointer tw-pl-4-px tw-inline-flex tw-items-center"
+          (click)="windowService.openInNewTab(redirectLink)">
+          {{brandingContent.readMoreText}}
+          <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'open-in-new-tab'"
+            [width]="'16px'" [height]="'16px'" class="tw-text-link-primary tw-pl-2-px tw-w-fit">
+          </app-svg-icon>
+        </a>
+      </h5>
+    </div>
 
-        <button *ngIf="showSyncButton && brandingFeatureConfig.isIconsInsideButtonAllowed" [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'"
-            (click)="refreshDimensions()" tooltipPosition="bottom"
-            class="tw-py-8-px tw-px-12-px tw-h-32-px tw-mr-12-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
-            <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-rotate-sync'" [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
-            <span class="tw-text-14-px">
-                Sync
-            </span>
-        </button>
-        <div *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed" tooltipPosition="bottom" [pTooltip]="'If you are unable to find a required value, click the sync button to instantly retrieve the latest values from ' + appName">
-          <span (click)="refreshDimensions()" class="p-button primary-outline tw-mr-12-px">
-            Refresh data
+    <div>
+      <button *ngIf="showSyncButton && brandingFeatureConfig.isIconsInsideButtonAllowed"
+        [pTooltip]="'The integration will import all the newly updated '+ appName +' dimensions and ' + brandingConfig.brandName + ' expenses in the configured state of export'"
+        (click)="refreshDimensions()" tooltipPosition="bottom"
+        class="tw-py-8-px tw-px-12-px tw-h-32-px tw-flex tw-items-center focus:tw-ring-0 tw-justify-center tw-rounded tw-bg-white tw-text-black tw-border tw-border-gray-300 focus:tw-outline-none focus:tw-ring-opacity-50 active:tw-scale-95 transition-transform">
+        <app-svg-icon *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed" [svgSource]="'arrow-rotate-sync'"
+          [width]="'16px'" [height]="'16px'" [styleClasses]="'tw-text-mandatory-field-color tw-pr-8-px'"></app-svg-icon>
+        <span class="tw-text-14-px">
+          Sync
         </span>
-        </div>
+      </button>
+      <div *ngIf="showSyncButton && !brandingFeatureConfig.isIconsInsideButtonAllowed" tooltipPosition="bottom"
+        [pTooltip]="'If you are unable to find a required value, click the sync button to instantly retrieve the latest values from ' + appName">
+        <span (click)="refreshDimensions()" class="p-button primary-outline">
+          Refresh data
+        </span>
+      </div>
+    </div>
 
-      </div>                             
+  </div>
 </div>

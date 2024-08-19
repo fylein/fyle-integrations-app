@@ -4,7 +4,7 @@ import { ExpenseGroupDescription, SkipExportList, SkipExportLog } from "../intac
 import { Expense } from "../intacct/db/expense.model";
 import { TitleCasePipe } from "@angular/common";
 import { ExportLogService } from "../../services/common/export-log.service";
-import { DateFilter } from "../qbd/misc/date-filter.model";
+import { DateFilter } from "../qbd/misc/qbd-date-filter.model";
 import { environment } from "src/environments/environment";
 import { ExpenseGroup } from "./expense-group.model";
 import { XeroWorkspace } from "../xero/db/xero-workspace.model";
@@ -311,13 +311,13 @@ export class SkippedAccountingExportModel {
     );
   }
 
-  static parseAPIResponseToSkipExportList(skippedExpense: SkipExportLog): SkipExportList {
+  static parseAPIResponseToSkipExportList(skippedExpense: SkipExportLog, org_id?: string): SkipExportList {
     return {
       updated_at: skippedExpense.updated_at,
       claim_number: skippedExpense.claim_number,
       employee: [skippedExpense.employee_name, skippedExpense.employee_email],
       expenseType: skippedExpense.fund_source === 'PERSONAL' ? 'Reimbursable' : 'Corporate Card',
-      fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpense.expense_id}?org_id=${skippedExpense.org_id}`
+      fyleUrl: `${environment.fyle_app_url}/app/admin/#/view_expense/${skippedExpense.expense_id}?org_id=${org_id}`
     };
   }
 }

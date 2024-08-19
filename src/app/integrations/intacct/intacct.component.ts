@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppName, AppUrl, IntacctOnboardingState } from 'src/app/core/models/enum/enum.model';

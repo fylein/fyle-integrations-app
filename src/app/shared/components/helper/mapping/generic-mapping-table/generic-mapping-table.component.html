@@ -63,6 +63,16 @@
                             <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
                         </div>
                     </ng-template>
+                    <ng-template [formGroup]="form" pTemplate="filter" let-options="options">
+                        <div *ngIf="destinationOptions.length" [ngClass]="{'tw-border tw-border-border-primary tw-w-290-px tw-rounded-4-px' : brandingConfig.brandId === 'co', 'fyle' : brandingConfig.brandId !== 'co'}">
+                            <p-iconField iconPosition="left">
+                                <p-inputIcon>
+                                    <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
+                                </p-inputIcon>
+                                <input #filterInput type="text" class="!tw-h-32-px !tw-w-288-px !tw-rounded-4-px !tw-pl-40-px" (focus)="clearSearch($event); options.filter($event)" (keyup)="options.filter($event)" pInputText formControlName="searchOption"/>
+                            </p-iconField>
+                        </div>
+                    </ng-template>
                 </p-dropdown>
             </td>
             <td *ngIf="!isDashboardMappingResolve">

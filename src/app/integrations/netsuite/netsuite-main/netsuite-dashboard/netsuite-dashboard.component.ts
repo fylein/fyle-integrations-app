@@ -50,7 +50,7 @@ export class NetsuiteDashboardComponent implements OnInit {
 
   getAccountingExportSummary$: Observable<AccountingExportSummary> = this.accountingExportService.getAccountingExportSummary('v1');
 
-  accountingExportType: NetsuiteTaskLogType[] = [NetsuiteTaskLogType.FETCHING_EXPENSES, NetsuiteTaskLogType.CREATING_BILL, NetsuiteTaskLogType.CREATING_EXPENSE_REPORT, NetsuiteTaskLogType.CREATING_CREDIT_CARD_CHARGE, NetsuiteTaskLogType.CREATING_CREDIT_CARD_REFUND, NetsuiteTaskLogType.CREATING_JOURNAL_ENTRY];
+  accountingExportType: NetsuiteTaskLogType[] = [NetsuiteTaskLogType.CREATING_BILL, NetsuiteTaskLogType.CREATING_EXPENSE_REPORT, NetsuiteTaskLogType.CREATING_CREDIT_CARD_CHARGE, NetsuiteTaskLogType.CREATING_CREDIT_CARD_REFUND, NetsuiteTaskLogType.CREATING_JOURNAL_ENTRY];
 
   reimbursableImportState: ReimbursableImportState | null;
 

@@ -19,4 +19,5 @@ export interface IntacctConfiguration {
     import_vendors_as_merchants: boolean;
     created_at: Date;
     updated_at: Date;
+    use_merchant_in_journal_line: boolean;
   }

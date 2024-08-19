@@ -1168,7 +1168,9 @@ module.exports = {
       },
       maxHeight: {
         '20-px': '20px',
-        '36-px': '36px'
+        '36-px': '36px',
+        'dropdown-option-height': 'var(--dropdown-option-height)',
+        ...dimensions
       },
       lineHeight: {
         'normal': 'normal',
@@ -1226,11 +1228,13 @@ module.exports = {
         '270-px': '270px',
         '282-px': '282px',
         '288-px': '288px',
+        '290-px': '290px',
         '296-px': '296px',
         '300-px': '300px',
         '302-px': '302px',
         '320-px': '320px',
         '350-px': '350px',
+        '352-px': '352px',
         '354-px': '354px',
         '360-px': '360px',
         '388-px': '388px',

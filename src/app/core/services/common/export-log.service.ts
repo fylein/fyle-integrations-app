@@ -7,7 +7,7 @@ import { SkipExportLogResponse } from '../../models/intacct/db/expense-group.mod
 import { AppName, FyleReferenceType, TaskLogState } from '../../models/enum/enum.model';
 import { Observable } from 'rxjs';
 import { AccountingExport } from '../../models/db/accounting-export.model';
-import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
+import { SelectedDateFilter } from '../../models/qbd/misc/qbd-date-filter.model';
 import { ExpenseGroupParam, ExpenseGroupResponse, SkipExportParam } from '../../models/db/expense-group.model';
 
 @Injectable({

@@ -19,6 +19,9 @@ import { RippleModule } from 'primeng/ripple';
 import { BrandingService } from './core/services/common/branding.service';
 import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/sage300-configuration/sage300-configuration.module';
 
+import * as Sentry from "@sentry/angular";
+import { Router } from '@angular/router';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -51,9 +54,17 @@ import { Sage300ConfigurationModule } from './integrations/sage300/sage300-main/
       useClass: GlobalErrorHandler
     },
     {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler()
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router]
+    },
+    {
       provide: APP_INITIALIZER,
       useFactory: (brandingService: BrandingService) => () => brandingService.init(),
-      deps: [BrandingService],
+      deps: [BrandingService, Sentry.TraceService],
       multi: true
     }
   ],

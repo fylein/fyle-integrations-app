@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AppName } from 'src/app/core/models/enum/enum.model';
@@ -9,7 +9,7 @@ import { WindowService } from 'src/app/core/services/common/window.service';
   templateUrl: './configuration-toggle-field.component.html',
   styleUrls: ['./configuration-toggle-field.component.scss']
 })
-export class ConfigurationToggleFieldComponent implements OnInit {
+export class ConfigurationToggleFieldComponent implements OnInit, OnChanges {
 
   @Input() form: FormGroup;
 
@@ -50,6 +50,14 @@ export class ConfigurationToggleFieldComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.disabled?.currentValue) {
+      this.form.get(this.formControllerName)?.disable();
+    } else if (!changes.disabled?.currentValue) {
+      this.form.get(this.formControllerName)?.enable();
+    }
   }
 
 }

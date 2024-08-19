@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { constructPayload1, constructPayload2 } from 'src/app/core/models/intacct/misc/skip-export.model';
@@ -88,7 +88,7 @@ export class SkipExportComponent implements OnInit {
   ];
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private advancedSettingsService: SiAdvancedSettingService
   ) { }
 

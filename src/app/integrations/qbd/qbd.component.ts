@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 import { AppUrl, QBDOnboardingState } from 'src/app/core/models/enum/enum.model';
-import { QBDWorkspace } from 'src/app/core/models/qbd/db/workspaces.model';
+import { QBDWorkspace } from 'src/app/core/models/qbd/db/qbd-workspace.model';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { IntegrationsUserService } from 'src/app/core/services/common/integrations-user.service';

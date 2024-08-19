@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccountingExportModel, SkippedAccountingExportModel } from 'src/app/core/models/db/accounting-export.model';
 import { PaginatorPage, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Paginator } from 'src/app/core/models/misc/paginator.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { SkipExportList, SkipExportLog, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { ExportLogService } from 'src/app/core/services/common/export-log.service';
@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 
 import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { UserService } from 'src/app/core/services/misc/user.service';
 
 @Component({
   selector: 'app-sage300-skipped-export-log',
@@ -52,6 +53,7 @@ export class Sage300SkippedExportLogComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private userService: UserService,
     private trackingService: TrackingService,
     private exportLogService: ExportLogService,
     private accountingExportService: AccountingExportService,
@@ -81,11 +83,11 @@ export class Sage300SkippedExportLogComponent implements OnInit {
     }
 
     return this.exportLogService.getSkippedExpenses(limit, offset, this.selectedDateFilter, this.searchQuery).subscribe((skippedExpenses: SkipExportLogResponse) => {
-        this.totalCount = skippedExpenses.count;
-
+      this.totalCount = skippedExpenses.count;
+      const orgId = this.userService.getUserProfile().org_id;
 
       skippedExpenses.results.forEach((skippedExpense: SkipExportLog) => {
-        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense));
+        skippedExpenseGroup.push(SkippedAccountingExportModel.parseAPIResponseToSkipExportList(skippedExpense, orgId));
       });
 
       this.filteredExpenses = skippedExpenseGroup;

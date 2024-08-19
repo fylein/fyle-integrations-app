@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { forkJoin, from, interval, switchMap, takeWhile } from 'rxjs';
 import { ClickEvent, Page, PaginatorPage, QBDAccountingExportsState, QBDAccountingExportsType, QBDScheduleFrequency, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/iif-logs.model';
-import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { AccountingExportsResult, QbdExportTriggerResponse, QbdAccountingExportDownload, QbdExportTriggerGet } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
+import { DateFilter, SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { QbdAdvancedSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-advanced-setting.service';
 import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif-logs.service';
-import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { QBDAdvancedSettingsGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { brandingConfig, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -71,7 +71,7 @@ export class QbdDashboardComponent implements OnInit {
 
   constructor(
     private iifLogsService: QbdIifLogsService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private advancedSettingService: QbdAdvancedSettingService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService

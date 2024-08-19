@@ -28,10 +28,20 @@ export class ApiService {
   private handleError(error: HttpErrorResponse, httpMethod: string, url: string) {
     if (error.error instanceof ErrorEvent) {
       console.error('An error occurred:', error.error.message);
-    } else if (error.status >= 500) {
-      console.error(
-        `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
-      );
+    } else {
+      // Raise error only for non GET requests and 5xx errors (incase of GET)
+      let raiseError: boolean = false;
+      if (httpMethod !== 'GET') {
+        raiseError = true;
+      } else if (error.status >= 500) {
+        raiseError = true;
+      }
+
+      if (raiseError) {
+        console.error(
+          `Backend returned code ${error.status}, url was: ${url} method was: ${httpMethod}, body was: ${JSON.stringify(error.error)}`
+        );
+      }
     }
     return throwError(error);
   }

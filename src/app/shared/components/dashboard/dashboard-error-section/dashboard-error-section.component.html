@@ -104,7 +104,7 @@
 </div>
 <!-- Integration Specific Errors -->
 <div *ngIf="isAccountingErrorDialogVisible">
-    <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="isAccountingErrorDialogVisible" [position]="'top-right'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
+    <p-dialog [dismissableMask]="true" [modal]="true" [(visible)]="isAccountingErrorDialogVisible" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }">
         <p-header>
             <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{appName}} {{brandingContent.qboErrorDialogHeaderText}}</p>
             <h3 class="dialog-sub-header">
@@ -130,7 +130,7 @@
 
 <!-- Mapping Errors -->
 <div>
-    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'top-right'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="handleResolvedMappingStat()">
+    <p-dialog [dismissableMask]="true" [(visible)]="isMappingResolveVisible" [modal]="true" [position]="'topright'" [style]="{ width: 'fit-content', height: '100vh' }" [maximizable]="false" [draggable]="false" [resizable]="false" [breakpoints]="{ '960px': '75vw' }" (onHide)="handleResolvedMappingStat()">
         <p-header>
             <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{ brandingConfig.brandId === 'co' ? (errorType | snakeCaseToSpaceCase | sentenceCase) : (errorType | snakeCaseToSpaceCase | titlecase) }} {{brandingContentCommon.errors}}</p>
             <p class="dialog-sub-header">Resolve the following mapping errors to export your failed expenses successfully to {{appName}}</p>
