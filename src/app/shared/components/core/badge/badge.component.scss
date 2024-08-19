@@ -1,28 +1,28 @@
 .badge {
-    @apply tw-inline-flex tw-py-[var(--spacing-spacing-2,2px)] tw-px-[var(--spacing-spacing-6,6px)];
+    @apply tw-inline-flex tw-py-[2px] tw-px-[6px];
     @apply tw-justify-center tw-items-center tw-rounded-full tw-text-center;
 
     /* Body-semibold/font-10 */
-    @apply tw-text-[length:var(--font-size-font-10,10px)] tw-not-italic tw-font-500 tw-leading-[125%];
+    @apply tw-text-[10px] tw-not-italic tw-font-500 tw-leading-[125%];
     @apply tw-relative tw-bottom-[2px];
 }
 
 .theme-light {
-    @apply tw-border tw-border-solid tw-border-[var(--badges-badge-light-border-color,#ECECEE)];
-    @apply tw-bg-[var(--badges-badge-light-bg,#FFF)];
+    @apply tw-border tw-border-solid tw-border-badge-light-border-color;
+    @apply tw-bg-badge-light-bg;
 }
 
 .theme-brand {
-    @apply tw-bg-[var(--badges-badge-brand-bg,#F36)];
-    @apply tw-text-[var(--badges-badge-dark-text-color,#FFF)];
+    @apply tw-bg-badge-brand-bg;
+    @apply tw-text-badge-dark-text-color;
 }
 
 .theme-dark {
-    @apply tw-bg-[var(--badges-badge-dark-bg,#161528)];
-    @apply tw-text-[var(--badges-badge-dark-text-color,#FFF)];
+    @apply tw-bg-badge-dark-bg;
+    @apply tw-text-badge-dark-text-color;
 }
 
 .size-large {
-    @apply tw-min-w-[var(--font-size-font-24,24px)];
-    @apply tw-min-h-[var(--font-size-font-24,24px)];
+    @apply tw-min-w-[24px];
+    @apply tw-min-h-[24px];
 }
