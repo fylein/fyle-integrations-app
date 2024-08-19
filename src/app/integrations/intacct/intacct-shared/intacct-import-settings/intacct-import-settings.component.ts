@@ -9,9 +9,11 @@ import { IntacctDestinationAttribute } from 'src/app/core/models/intacct/db/dest
 import { ExpenseField } from 'src/app/core/models/intacct/db/expense-field.model';
 import { LocationEntityMapping } from 'src/app/core/models/intacct/db/location-entity-mapping.model';
 import { DependentFieldSetting, ImportSettingGet, ImportSettingPost, ImportSettings, MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
+import { Org } from 'src/app/core/models/org/org.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
+import { OrgService } from 'src/app/core/services/org/org.service';
 import { SiImportSettingService } from 'src/app/core/services/si/si-configuration/si-import-setting.service';
 import { IntacctConnectorService } from 'src/app/core/services/si/si-core/intacct-connector.service';
 import { SiMappingsService } from 'src/app/core/services/si/si-core/si-mappings.service';
@@ -28,6 +30,8 @@ export class IntacctImportSettingsComponent implements OnInit {
   isLoading: boolean = true;
 
   appName = AppName.INTACCT;
+
+  org: Org = this.orgService.getCachedOrg();
 
   importSettingsForm: FormGroup;
 
@@ -93,6 +97,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     private connectorService: IntacctConnectorService,
     private importSettingService: SiImportSettingService,
     @Inject(FormBuilder) private formBuilder: FormBuilder,
+    private orgService: OrgService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private storageService: StorageService,
@@ -409,7 +414,11 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   showImportTax(locationEntity: LocationEntityMapping) {
-    return (locationEntity.country_name && locationEntity.country_name !== 'United States' && locationEntity.destination_id !== 'top_level') ? true : false;
+    if (new Date(this.org.created_at) < new Date('2024-08-19')) {
+      return (locationEntity.country_name && locationEntity.country_name !== 'United States' && locationEntity.destination_id !== 'top_level') ? true : false;
+    }
+
+    return false;
   }
 
   private initializeForm(importSettings: ImportSettingGet): void {
