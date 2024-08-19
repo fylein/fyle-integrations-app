@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -44,6 +44,8 @@ export class NetsuiteImportSettingsComponent implements OnInit {
   isImportMerchantsAllowed: boolean;
 
   isImportEmployeeAllowed: boolean;
+
+  isExpenseCategoryEnabled: boolean;
 
   netsuiteFields: IntegrationField[];
 
@@ -94,7 +96,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
   isCustomSegmentSaveInProgress: boolean = false;
 
   constructor(
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private helperService: NetsuiteHelperService,
     private importSettingService: NetsuiteImportSettingsService,
     private mappingService: MappingService,
@@ -160,13 +162,13 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.fyleFields.push(this.customFieldOption[0]);
       const expenseField = {
         source_field: this.customField.attribute_type,
-        destination_field: this.customFieldControl.value.destination_field,
+        destination_field: this.customFieldControl.get('destination_field')?.value,
         import_to_fyle: true,
         is_custom: true,
         source_placeholder: this.customField.source_placeholder
       };
-      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0].patchValue(expenseField);
-      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.value.destination_field === this.customFieldControl.value.destination_field)[0] as FormGroup).controls.import_to_fyle.disable();
+      (this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0].patchValue(expenseField);
+      ((this.importSettingForm.get('expenseFields') as FormArray).controls.filter(field => field.get('destination_field')?.value === this.customFieldControl.get('destination_field')?.value)[0] as FormGroup).controls.import_to_fyle.disable();
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
@@ -187,9 +189,9 @@ export class NetsuiteImportSettingsComponent implements OnInit {
           this.customFieldControl = control;
           this.customFieldControl.patchValue({
             source_field: '',
-            destination_field: control.value.destination_field,
-            import_to_fyle: control.value.import_to_fyle,
-            is_custom: control.value.is_custom,
+            destination_field: control.get('destination_field')?.value,
+            import_to_fyle: control.get('import_to_fyle')?.value,
+            is_custom: control.get('is_custom')?.value,
             source_placeholder: null
           });
         }
@@ -231,14 +233,14 @@ export class NetsuiteImportSettingsComponent implements OnInit {
   }
 
   getCategoryLabel(): string {
-    if (this.isImportEmployeeAllowed) {
+    if (this.isExpenseCategoryEnabled) {
       return brandingConfig.brandId !== 'co' ? 'Import the Expense Categories' : 'Import expense categories';
     }
     return  brandingConfig.brandId !== 'co' ? 'Import the Accounts' : 'Import accounts';
   }
 
   getCategorySubLabel(): string {
-    if (this.isImportEmployeeAllowed) {
+    if (this.isExpenseCategoryEnabled) {
       return 'Imported expense categories';
     }
     return 'Imported accounts';
@@ -259,9 +261,16 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       if (subsidiaryMapping && subsidiaryMapping.country_name !== '_unitedStates') {
         this.isTaxGroupSyncAllowed = true;
       }
+
       if (workspaceGeneralSetting.employee_field_mapping === EmployeeFieldMapping .EMPLOYEE){
         this.isImportEmployeeAllowed = true;
       }
+
+      this.isExpenseCategoryEnabled = (
+        workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT ||
+        workspaceGeneralSetting.corporate_credit_card_expenses_object === NetsuiteReimbursableExpensesObject.EXPENSE_REPORT
+      );
+
       if (workspaceGeneralSetting.reimbursable_expenses_object === NetsuiteReimbursableExpensesObject.BILL && (!workspaceGeneralSetting.corporate_credit_card_expenses_object || workspaceGeneralSetting.corporate_credit_card_expenses_object === 'BILL')) {
         this.isImportItemsAllowed = true;
       }
@@ -287,7 +296,7 @@ export class NetsuiteImportSettingsComponent implements OnInit {
       this.importSettingForm = NetsuiteImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.netsuiteFields, this.taxCodes);
       this.taxCodes = destinationAttribute;
       this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: true });
+      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupFormWatchers();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;

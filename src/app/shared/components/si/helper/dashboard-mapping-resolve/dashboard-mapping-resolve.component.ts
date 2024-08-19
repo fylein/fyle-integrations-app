@@ -66,7 +66,7 @@ export class DashboardMappingResolveComponent implements OnInit {
       workspace: parseInt(this.workspaceService.getWorkspaceId())
     };
     this.mappingService.postEmployeeMappings(employeeMapping).subscribe(() => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee Mapping saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Employee mapping saved successfully');
     }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
     });
@@ -105,7 +105,7 @@ export class DashboardMappingResolveComponent implements OnInit {
     };
 
     this.mappingService.postCategoryMappings(categoryMappingsPayload).subscribe(() => {
-      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category Mapping saved successfully');
+      this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Category mapping saved successfully');
     }, () => {
       this.toastService.displayToastMessage(ToastSeverity.ERROR, 'Something went wrong');
     });

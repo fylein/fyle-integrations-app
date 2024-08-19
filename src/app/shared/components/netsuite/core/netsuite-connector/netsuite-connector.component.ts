@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { brandingConfig, brandingKbArticles } from 'src/app/branding/branding-config';
@@ -40,7 +40,7 @@ export class NetsuiteConnectorComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private connectorService: NetsuiteConnectorService,
     private mappingsService: NetsuiteMappingsService,

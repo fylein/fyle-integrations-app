@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { InputType } from 'src/app/core/models/enum/enum.model';
 
@@ -7,7 +7,7 @@ import { InputType } from 'src/app/core/models/enum/enum.model';
   templateUrl: './clone-setting-field.component.html',
   styleUrls: ['./clone-setting-field.component.scss']
 })
-export class CloneSettingFieldComponent {
+export class CloneSettingFieldComponent implements OnInit, OnChanges {
 
   @Input() label: string;
 
@@ -38,5 +38,19 @@ export class CloneSettingFieldComponent {
   InputType = InputType;
 
   constructor() { }
+
+  ngOnInit() {
+    if (this.isDisabled) {
+      this.form.get(this.formControllerName)?.disable();
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.disabled?.currentValue) {
+      this.form.get(this.formControllerName)?.disable();
+    } else if (!changes.disabled?.currentValue) {
+      this.form.get(this.formControllerName)?.enable();
+    }
+  }
 
 }

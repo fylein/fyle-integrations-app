@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, debounceTime, filter, forkJoin } from 'rxjs';
@@ -122,6 +122,7 @@ export class XeroExportSettingsComponent implements OnInit {
   }
 
   constructPayloadAndSave(event: ConfigurationWarningOut) {
+    this.isConfirmationDialogVisible = false;
     if (event.hasAccepted) {
       this.isSaveInProgress = true;
       const exportSettingPayload = XeroExportSettingModel.constructPayload(this.exportSettingForm);

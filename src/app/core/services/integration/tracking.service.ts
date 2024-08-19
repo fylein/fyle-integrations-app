@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BusinessCentralOnboardingState, NetsuiteOnboardingState, BusinessCentralUpdateEvent, ClickEvent, IntacctOnboardingState, IntacctUpdateEvent, Page, QBDOnboardingState, Sage300OnboardingState, Sage300UpdateEvent, TrackingApp, TravelPerkOnboardingState, TravelperkUpdateEvent, UpdateEvent } from '../../models/enum/enum.model';
 import { MappingAlphabeticalFilterAdditionalProperty, ResolveMappingErrorProperty, UpdateEventAdditionalProperty, UpdateIntacctEventAdditionalProperty } from '../../models/misc/tracking.model';
-import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/advanced-setting.model';
-import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/export-setting.model';
-import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/field-mapping.model';
+import { QBDAdvancedSettingsPost } from '../../models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { QBDExportSettingPost } from '../../models/qbd/qbd-configuration/qbd-export-setting.model';
+import { QBDFieldMappingPost } from '../../models/qbd/qbd-configuration/qbd-field-mapping.model';
 import { LocationEntityPost } from '../../models/intacct/intacct-configuration/connector.model';
 import { ExportSettingPost } from '../../models/intacct/intacct-configuration/export-settings.model';
 import { ImportSettingPost } from '../../models/intacct/intacct-configuration/import-settings.model';

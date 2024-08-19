@@ -6,7 +6,7 @@ import { ApiService } from './api.service';
 import { WorkspaceService } from './workspace.service';
 import { HelperService } from './helper.service';
 import { AccountingExportCount, AccountingExportGetParam } from '../../models/db/accounting-export.model';
-import { SelectedDateFilter } from '../../models/qbd/misc/date-filter.model';
+import { SelectedDateFilter } from '../../models/qbd/misc/qbd-date-filter.model';
 import { Cacheable } from 'ts-cacheable';
 
 @Injectable({

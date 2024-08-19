@@ -2,7 +2,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { QbdExportTriggerResponse, QbdAccountingExportDownload } from 'src/app/core/models/qbd/db/iif-logs.model';
+import { QbdExportTriggerResponse, QbdAccountingExportDownload } from 'src/app/core/models/qbd/db/qbd-iif-logs.model';
 import { environment } from 'src/environments/environment';
 
 import { QbdIifLogsService } from './qbd-iif-logs.service';

@@ -5,7 +5,7 @@ import { Cacheable } from 'ts-cacheable';
 import { UserService } from '../../misc/user.service';
 import { SiWorkspaceService } from '../si-core/si-workspace.service';
 import { FyleReferenceType, TaskLogState } from 'src/app/core/models/enum/enum.model';
-import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/date-filter.model';
+import { SelectedDateFilter } from 'src/app/core/models/qbd/misc/qbd-date-filter.model';
 import { ExpenseGroup, ExpenseGroupDescription, ExpenseGroupResponse, SkipExportLogResponse } from 'src/app/core/models/intacct/db/expense-group.model';
 import { ExpenseGroupSetting } from 'src/app/core/models/db/expense-group-setting.model';
 import { Expense } from 'src/app/core/models/intacct/db/expense.model';

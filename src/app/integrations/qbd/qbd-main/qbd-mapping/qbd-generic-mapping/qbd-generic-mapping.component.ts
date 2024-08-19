@@ -3,9 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AppName, FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/mapping.model';
+import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
+import { QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
+import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 
 @Component({
@@ -43,19 +45,24 @@ export class QbdGenericMappingComponent implements OnInit {
 
   operationgSystem: string;
 
+  destinationHeaderName: string;
+
+  fieldMapping: QBDFieldMappingGet;
+
   readonly brandingConfig = brandingConfig;
 
   readonly AppName = AppName;
 
   constructor(
     private mappingService: QbdMappingService,
+    private fieldMappingService: QbdFieldMappingService,
     private route: ActivatedRoute,
     private toastService: IntegrationsToastService,
     private window: WindowService
   ) { }
 
   private getFilteredMappings(): void {
-    this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter).subscribe((qbdMappingResult: MappingResponse) => {
+    this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter, this.fieldMapping?.item_type).subscribe((qbdMappingResult: MappingResponse) => {
       this.filteredMappings = qbdMappingResult.results.concat();
       this.totalCount = qbdMappingResult.count;
       this.isLoading = false;
@@ -80,7 +87,7 @@ export class QbdGenericMappingComponent implements OnInit {
 
   postMapping(mappingPayload: MappingPost): void {
     this.mappingService.postMappings(mappingPayload).subscribe(() => {
-      this.mappingService.getMappingStats(this.sourceType).subscribe((mappingStat: MappingStats) => {
+      this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type).subscribe((mappingStat: MappingStats) => {
         this.mappingStats = mappingStat;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Changes saved successfully');
       });
@@ -116,12 +123,15 @@ export class QbdGenericMappingComponent implements OnInit {
   private setupPage(): void {
     this.isLoading = true;
     this.sourceType = decodeURIComponent(decodeURIComponent(this.route.snapshot.params.source_field));
+    this.destinationHeaderName = this.sourceType === 'item' ? 'Account in QuickBooks Desktop' : 'QuickBooks Desktop Credit Card Account';
     forkJoin([
-      this.mappingService.getMappingStats(this.sourceType),
-      this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL)
+      this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type),
+      this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, MappingState.ALL, this.fieldMapping?.item_type),
+      this.fieldMappingService.getQbdFieldMapping()
     ]).subscribe((response) => {
       this.mappingStats = response[0];
       this.mappings = response[1];
+      this.fieldMapping = response[2];
       this.filteredMappings = this.mappings.results.concat();
       this.totalCount = this.mappings.count;
       this.getOperatingSystem();
@@ -130,7 +140,10 @@ export class QbdGenericMappingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setupPage();
+    this.route.params.subscribe(() => {
+      this.isLoading = true;
+      this.setupPage();
+    });
   }
 
 }

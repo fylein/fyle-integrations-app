@@ -1,9 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/advanced-setting.model';
+import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp, QBDAccountingExportsState } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
@@ -77,6 +77,12 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   reimbursableExpense?: IntacctReimbursableExpensesObject;
 
+  corporateCreditCardExpense?: IntacctCorporateCreditCardExpensesObject;
+
+  importVendorsAsMerchants: boolean;
+
+  useMerchantInJournalLine: boolean;
+
   IntacctReimbursableExpensesObjectER: IntacctReimbursableExpensesObject.EXPENSE_REPORT;
 
   IntacctReimbursableExpensesObjectBILL: IntacctReimbursableExpensesObject.BILL;
@@ -115,7 +121,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
   constructor(
     private router: Router,
     private advancedSettingsService: SiAdvancedSettingService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,
     private workspaceService: SiWorkspaceService,
@@ -222,7 +228,8 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       defaultPaymentAccount: [findObjectByDestinationId(this.sageIntacctPaymentAccount, this.advancedSettings.general_mappings.payment_account.id)],
       useEmployeeLocation: [this.advancedSettings.general_mappings.use_intacct_employee_locations ? this.advancedSettings.general_mappings.use_intacct_employee_locations : null],
       useEmployeeDepartment: [this.advancedSettings.general_mappings.use_intacct_employee_departments ? this.advancedSettings.general_mappings.use_intacct_employee_departments : null],
-      searchOption: ['']
+      searchOption: [''],
+      autoCreateMerchants: new FormControl(this.advancedSettings?.configurations.auto_create_merchants_as_vendors ? true : false)
     });
     this.createAutoSyncPaymentsWatcher();
     this.createMemoStructureWatcher();
@@ -286,6 +293,9 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
         this.sageIntacctClasses = groupedAttributes.CLASS;
         this.sageIntacctPaymentAccount = groupedAttributes.PAYMENT_ACCOUNT;
         this.reimbursableExpense = configuration.reimbursable_expenses_object;
+        this.corporateCreditCardExpense = configuration.corporate_credit_card_expenses_object;
+        this.importVendorsAsMerchants = configuration.import_vendors_as_merchants;
+        this.useMerchantInJournalLine = configuration.use_merchant_in_journal_line;
         this.employeeFieldMapping = configuration.employee_field_mapping;
 
         if (this.advancedSettings.workspace_schedules?.additional_email_options) {
@@ -342,6 +352,11 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
       this.adminEmails = emailResponse;
       this.getSettingsAndSetupForm();
     });
+  }
+
+  isAutoCreateMerchantsFieldVisible(): boolean {
+    return (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.CHARGE_CARD_TRANSACTION && !this.importVendorsAsMerchants) ||
+      (this.corporateCreditCardExpense === IntacctCorporateCreditCardExpensesObject.JOURNAL_ENTRY && !this.importVendorsAsMerchants && this.useMerchantInJournalLine);
   }
 
   ngOnInit(): void {

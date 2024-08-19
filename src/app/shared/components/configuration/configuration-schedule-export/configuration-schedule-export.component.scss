@@ -23,5 +23,5 @@
 }
 
 input[type="text"] {
-    @apply tw-rounded-4-px tw-border-none #{!important};
+    @apply tw-rounded-4-px tw-border-none tw-p-12-px #{!important};
 }

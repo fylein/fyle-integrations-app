@@ -29,7 +29,7 @@
     </div>
     <div formArrayName="expenseFields" [ngClass]="[isDestinationFixedImport ? '' : 'tw-pl-24-px tw-mt-18px']">
         <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i" [ngClass]="{'tw-mt-24-px tw-pb-24-px': isDestinationFixedImport, 'tw-rounded-lg tw-border-border-tertiary tw-border': isDestinationFixedImport && !isCloneSettingView, 'tw-pr-24-px': isCloneSettingView}">
-            <div class="tw-mt-18-px" [ngClass]="{'tw-bg-bg-tertiary-lighter tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px': expenseField.value.source_field === 'PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue && brandingConfig.brandId !== 'co' , 'tw-pl-24-px': !isDestinationFixedImport}">
+            <div class="tw-mt-18-px" [ngClass]="{'tw-bg-bg-tertiary-lighter tw-rounded-8-px tw-py-16-px tw-w-fit tw-pr-24-px': expenseField.get('source_field')?.value === 'PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue && brandingConfig.brandId !== 'co' , 'tw-pl-24-px': !isDestinationFixedImport}">
             <div *ngIf="isDestinationFixedImport">
                 <div [ngClass]="!isCloneSettingView ? 'tw-p-24-px': 'tw-pl-24-px'" class="tw-flex tw-justify-between">
                     <div class="tw-w-3/4 tw-flex tw-items-start">
@@ -38,25 +38,25 @@
                       </div>
                       <div>
                         <h4 class="tw-font-500 tw-text-14-px tw-text-text-secondary" [ngClass]="isCloneSettingView ? 'tw-py-2-px' : ''">
-                            Import {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.value.destination_field | snakeCaseToSpaceCase) | titlecase | lowercase ) : (getDestinationField(expenseField.value.destination_field | snakeCaseToSpaceCase) | titlecase) }} from {{ appName }}
+                            Import {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase | lowercase ) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase) }} from {{ appName }}
                             <app-optional-field *ngIf="!isAsterikAllowed"></app-optional-field>
                         </h4>
                         <h5 *ngIf="!isCloneSettingView" class="!tw-text-text-muted tw-text-14-px !tw-font-400 !tw-leading-4" [ngClass]="{'tw-pt-4-px': brandingConfig.brandId === 'co', 'tw-pt-8-px': brandingConfig.brandId !== 'co'}">
-                          The imported {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.value.destination_field | snakeCaseToSpaceCase) | titlecase | lowercase) : (getDestinationField(expenseField.value.destination_field | snakeCaseToSpaceCase) | titlecase) }} 
+                          The imported {{ brandingConfig.brandId === 'co' ? (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase | lowercase) : (getDestinationField(expenseField.get('destination_field')?.value | snakeCaseToSpaceCase) | titlecase) }} 
                           <span *ngIf="brandingConfig.brandId !== 'co'">from {{ appName }} will be a selectable field while creating an expense.</span>
                           <span *ngIf="brandingConfig.brandId === 'co'"> will be an available field when creating an expense.</span>
                         </h5>        
                       </div>
                     </div>
                     <div class="configuration--input-toggle-section">
-                      <p-inputSwitch formControlName="import_to_fyle" [disabled]="(expenseField.value.destination_field === 'CUSTOMER' && appName === AppName.XERO && isXeroProjectMapped)" [tooltipPosition]="'top'" [pTooltip]="expenseField.value.destination_field === 'CUSTOMER' && appName === AppName.XERO && isXeroProjectMapped ? brandingXeroContent : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)"></p-inputSwitch>
+                      <p-inputSwitch formControlName="import_to_fyle" [tooltipPosition]="'top'" [pTooltip]="expenseField.get('destination_field')?.value === 'CUSTOMER' && appName === AppName.XERO && isXeroProjectMapped ? brandingXeroContent : ''" (onChange)="onShowWarningForDependentFields($event, expenseField)"></p-inputSwitch>
                     </div>
                 </div>
             </div>
             <div class="tw-flex" [ngClass]="{'tw-pl-60-px': isDestinationFixedImport, 'tw-mt-24-px': isCloneSettingView}">
                 <div>
                     <p-dropdown appendTo="body" [options]="accountingFieldOptions" placeholder="Choose {{appName}} field" formControlName="destination_field" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId"
-                        optionLabel="display_name" optionValue="attribute_type" [disabled]="isDestinationFixedImport" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">
+                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedAccItem !tw-text-text-secondary': isDestinationFixedImport}">
                         <ng-template let-option pTemplate="item">
                             <div>
                                 {{ brandingConfig.brandId === 'co' ? (option.display_name | snakeCaseToSpaceCase | sentenceCase) : option.display_name | snakeCaseToSpaceCase | titlecase }}
@@ -78,8 +78,8 @@
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
                     <div class="tw-w-28-vw">
-                        <p-dropdown [disabled]="(expenseField.value.source_field === 'CATEGORY') || (expenseField.value.destination_field === 'CUSTOMER' && appName === AppName.XERO)" (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField)" [placeholder]="'Choose expense field in ' + brandingConfig.brandName" formControlName="source_field"
-                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.value.source_field, 'selectedAccItem !tw-text-text-secondary': expenseField.value.source_field === 'CATEGORY' || (expenseField.value.destination_field === 'CUSTOMER' && appName === AppName.XERO), 'filterDropdown': !expenseField.value.source_field}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+                        <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField)" [placeholder]="'Choose expense field in ' + brandingConfig.brandName" formControlName="source_field"
+                        optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">
                             <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                 <div *ngIf="brandingFeatureConfig.isIconsInsideButtonAllowed && option.attribute_type === 'custom_field'" class="tw-ml-0 tw-mr-6-px ">
@@ -92,16 +92,16 @@
                                 <p>
                                     {{ brandingConfig.brandId === 'co' ? (item.display_name | sentenceCase) : item.display_name }}
                                 </p>
-                                <app-svg-icon *ngIf="(expenseField.value.source_field !== 'CATEGORY') && (appName === AppName.XERO ? expenseField.value.destination_field !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
+                                <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (appName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                       </p-dropdown>
                       <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
                         {{brandingConfig.brandName}} Fields should be unique
                         </p>
                     </div>
-                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.value.source_field,expenseField.value.import_to_fyle)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-inputSwitch>
+                <p-inputSwitch *ngIf="!isDestinationFixedImport" (onChange)="onSwitchChanged($event, expenseField)" [pTooltip]="isExpenseFieldDependent(expenseField.value) ? 'You cannot import dependent fields' : '' " (click)="updateDependentField(expenseField.get('source_field')?.value,expenseField.get('import_to_fyle')?.value)" formControlName="import_to_fyle" class="input-toggle-section tw-pl-4-px tw-pt-10-px"></p-inputSwitch>
             </div>
-            <div class="tw-pt-26-px" [ngClass]="{'tw-pr-24-px tw-pl-[58px]': brandingConfig.brandId === 'co'}" *ngIf="brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.value.source_field==='PROJECT' && expenseField.value.import_to_fyle && expenseField.value.destination_field === dependentDestinationValue" [formGroup]="form">
+            <div class="tw-pt-26-px" [ngClass]="{'tw-pr-24-px tw-pl-[58px]': brandingConfig.brandId === 'co'}" *ngIf="brandingFeatureConfig.featureFlags.importSettings.dependentField && expenseField.get('source_field')?.value==='PROJECT' && expenseField.get('import_to_fyle')?.value && expenseField.get('destination_field')?.value === dependentDestinationValue" [formGroup]="form">
                 <div class="tw-flex" [ngClass]="{'fyle': brandingConfig.brandId !== 'co', 'co': brandingConfig.brandId === 'co'}">
                     <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">{{helper.sentenseCaseConversion('Import Cost Code and Cost Type from ')}} {{appName}} as dependent fields.
                         <a *ngIf="appName === AppName.SAGE300" class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"

@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { brandingConfig, brandingContent } from 'src/app/branding/branding-config';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { AppName, MappingState } from 'src/app/core/models/enum/enum.model';
@@ -46,7 +46,7 @@ export class MappingFilterComponent implements OnInit {
   readonly brandingContent = brandingContent.mapping;
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
+    @Inject(FormBuilder) private formBuilder: UntypedFormBuilder,
     private trackingService: TrackingService
   ) { }
 
@@ -70,7 +70,7 @@ export class MappingFilterComponent implements OnInit {
 
   searchingFilter(): void {
     this.form.controls.searchOption.valueChanges.subscribe((searchValue) => {
-      this.mappingSearchingEvent.emit(searchValue);
+      this.mappingSearchingEvent.emit((searchValue as string).trim());
     });
   }
 

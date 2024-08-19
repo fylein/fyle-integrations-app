@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="!isLoading" class="tw-py-16-px" [ngClass]="{'tw-px-120-px': brandingConfig.brandId === 'fyle', 'tw-px-60-px': brandingConfig.brandId === 'co'}">
     <div>
-        <app-mapping-header-section [sourceType]="'Corporate Card'" [mappingStats]="mappingStats"></app-mapping-header-section>
+        <app-mapping-header-section [sourceType]="sourceType" [mappingStats]="mappingStats"></app-mapping-header-section>
     </div>
 
     <div class="tw-shadow-app-card tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-separator tw-mt-16-px">
@@ -11,13 +11,13 @@
             <app-mapping-filter [appName]="AppName.QBD" [mappingFilter]="selectedMappingFilter" (mappingFilterChangeEvent)="mappingStateFilter($event)" (mappingSearchingEvent)="mappingSeachingFilter($event)" [isAlphabetFilterHidden]="true"></app-mapping-filter>
         </div>
         <div *ngIf="totalCount > 0" >
-            <app-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="'Corporate Card in ' + brandingConfig.brandName + ''" [destinationHeaderName]="'QuickBooks Desktop Credit Card Account'" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-mapping-table>
+            <app-mapping-table [mappings]="filteredMappings" [destinationFieldType]="destinationFieldType.TEXT" [fyleHeaderName]="sourceType + ' in ' + brandingConfig.brandName + ''" [destinationHeaderName]="destinationHeaderName" [operatingSystem]="operationgSystem" (postMapping)="postMapping($event)"></app-mapping-table>
         </div>
         <div class="tw-p-24-px tw-border tw-border-t-separator" *ngIf="totalCount > 0" >
             <app-paginator [totalCount]="totalCount" [pageType]="PaginatorPage.MAPPING" [page]="currentPage" [dropDownValue]="limit" (pageSizeChangeEvent)="pageSizeChanges($event)" (pageOffsetChangeEvent)="pageOffsetChanges($event)"></app-paginator>
         </div>
         <div *ngIf="totalCount === 0">
-            <app-zero-state-with-illustration [mainText]="'No corporate card to show yet!'" [subText]="'Add corporate cards to ' + brandingConfig.brandName + ' to map them to individual credit card account in QuickBooks Desktop'"></app-zero-state-with-illustration>
+            <app-zero-state-with-illustration [mainText]="'No ' + sourceType +  ' to show yet!'" [subText]="'Add ' + sourceType + ' to ' + brandingConfig.brandName + ' to map them to individual credit card account in QuickBooks Desktop'"></app-zero-state-with-illustration>
         </div>
     </div>
 </div>

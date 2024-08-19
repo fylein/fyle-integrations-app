@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { QBDCorporateCreditCardExpensesObject, ConfigurationCta, QBDExpenseGroupedBy, ExpenseState, QBDExportDateType, QBDReimbursableExpensesObject, QBDOnboardingState, QBDEntity, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, CCCExpenseState, TrackingApp } from 'src/app/core/models/enum/enum.model';
-import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
+import { ExportSettingModel, QBDExportSettingFormOption, QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdExportSettingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-export-setting.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -105,7 +105,7 @@ export class QbdExportSettingComponent implements OnInit {
   constructor(
     private router: Router,
     private exportSettingService: QbdExportSettingService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private workspaceService: QbdWorkspaceService,
     private toastService: IntegrationsToastService,
     private trackingService: TrackingService,

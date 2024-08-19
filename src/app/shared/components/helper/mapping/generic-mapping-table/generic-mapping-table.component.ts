@@ -1,5 +1,5 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subject, debounceTime, interval } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
@@ -67,6 +67,8 @@ export class GenericMappingTableComponent implements OnInit {
 
   optionSearchUpdate = new Subject<{searchTerm: string}>();
 
+  @ViewChild('filterInput') filterInput!: ElementRef;
+
   private optionsMap: {[key: string]: boolean} = {};
 
   constructor(
@@ -76,6 +78,10 @@ export class GenericMappingTableComponent implements OnInit {
     public helper: HelperService
   ) { }
 
+  clearSearch($event: Event) {
+    this.form.controls.searchOption.reset();
+  }
+
   isOverflowing(element: any, mapping: DestinationAttribute): string {
     return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
@@ -84,6 +90,9 @@ export class GenericMappingTableComponent implements OnInit {
     const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
     if (element) {
       element.style.width = '300px';
+      setTimeout(() => {
+        this.filterInput.nativeElement.focus();
+    }, 0);
     }
   }
 
@@ -140,7 +149,7 @@ export class GenericMappingTableComponent implements OnInit {
   searchOptions(event: any) {
     if (event.filter) {
       this.isSearching = true;
-      this.optionSearchUpdate.next({searchTerm: event.filter});
+      this.optionSearchUpdate.next({searchTerm: (event.filter as string).trim()});
     }
   }
 

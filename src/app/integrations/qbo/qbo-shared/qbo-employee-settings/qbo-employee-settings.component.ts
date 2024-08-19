@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
@@ -56,7 +56,7 @@ export class QboEmployeeSettingsComponent implements OnInit {
 
   constructor(
     private employeeSettingService: QboEmployeeSettingsService,
-    private formBuilder: FormBuilder,
+    @Inject(FormBuilder) private formBuilder: FormBuilder,
     private exportSettingService: QboExportSettingsService,
     private router: Router,
     private toastService: IntegrationsToastService,
@@ -89,8 +89,8 @@ export class QboEmployeeSettingsComponent implements OnInit {
   }
 
   acceptWarning(data: ConfigurationWarningOut): void {
+    this.isConfirmationDialogVisible = false;
     if (data.hasAccepted) {
-      this.isConfirmationDialogVisible = false;
       this.constructPayloadAndSave();
     }
   }

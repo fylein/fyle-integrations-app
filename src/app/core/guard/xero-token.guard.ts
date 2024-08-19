@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
+import { Inject, Injectable } from "@angular/core";
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from "@angular/router";
 import { XeroConnectorService } from "../services/xero/xero-configuration/xero-connector.service";
 import { Observable, forkJoin, map, catchError, throwError } from "rxjs";
 import { globalCacheBusterNotifier } from "ts-cacheable";
@@ -12,7 +12,7 @@ import { HelperService } from "../services/common/helper.service";
 @Injectable({
   providedIn: 'root'
 })
-export class XeroTokenGuard implements CanActivate {
+export class XeroTokenGuard  {
 
   constructor(
     private xeroConnectorService: XeroConnectorService,

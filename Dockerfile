@@ -1,10 +1,15 @@
 # base image
-FROM node:16-slim as build
+FROM node:18-slim as build
 
-RUN apt-get update && apt-get install nginx vim -y --no-install-recommends git
+ARG SENTRY_AUTH_TOKEN
+
+RUN apt-get update && apt-get install ca-certificates nginx vim -y --no-install-recommends git
+
 
 # set working directory
 WORKDIR /app
+
+ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
@@ -15,18 +20,6 @@ RUN npm install --production
 
 # add app
 COPY . /app
-
-
-# debug
-RUN echo $SENTRY_AUTH_TOKEN
-
-# debug
-RUN echo $IMAGE_NAME
-
-# debug
-RUN echo $QBD_API_URL
-
-
 
 # generate build
 RUN npm run build
