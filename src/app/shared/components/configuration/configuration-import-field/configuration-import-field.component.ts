@@ -143,6 +143,13 @@ export class ConfigurationImportFieldComponent implements OnInit {
     return control as FormGroup;
   }
 
+  disablethefield(dependentField: Sage300DependentImportFields) {
+    if (dependentField.isDisabled) {
+      this.form.controls[dependentField.formController].disable();
+    }
+    return dependentField.isDisabled;
+  }
+
   getDestinationField(destinationField: string): string {
     const lastChar = destinationField.slice(-1).toLowerCase();
     const lastTwoChars = destinationField.slice(-2).toLowerCase();
@@ -276,9 +283,25 @@ export class ConfigurationImportFieldComponent implements OnInit {
     });
   }
 
+  setupImportCodeCounter() {
+    Object.keys(this.form.controls).forEach(key => {
+      if (['importCategories', 'importVendorAsMerchant'].includes(key) && this.form.get(key)?.value) {
+        this.isImportCodeEnabledCounter.push(true);
+      }
+    });
+    Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
+      const importCode = this.expenseFieldsGetter.controls[key as unknown as number].get('import_to_fyle');
+      if (importCode?.value === true) {
+        this.isImportCodeEnabledCounter.push(true);
+      }
+    });
+  }
+
   ngOnInit(): void {
     if (this.appName !== AppName.SAGE300) {
       this.disableDestinationFields();
+    } else {
+      this.setupImportCodeCounter();
     }
   }
 

@@ -450,6 +450,7 @@ updateImportCodeFieldConfig() {
       this.importSettingForm = Sage300ImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, sage300FieldsResponse);
       this.fyleFields = fyleFieldsResponse;
       this.sage300Fields = sage300FieldsResponse;
+      this.sage300ImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupFormWatchers();
       this.dependentFieldFormCreation();

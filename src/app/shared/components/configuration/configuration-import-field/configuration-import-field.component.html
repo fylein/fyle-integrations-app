@@ -130,7 +130,7 @@
                             </div>
                             <div>
                                 <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="{'!tw-font-400 tw-text-14-px': brandingConfig.brandId !== 'co', '!tw-font-600 tw-text-12-px': brandingConfig.brandId === 'co'}">{{brandingConfig.brandName}} {{brandingConfig.brandId === 'co' ? 'field' : 'Field'}} <app-mandatory-field></app-mandatory-field> </p>
-                                <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select Expense Field')" [disabled]="dependentField.isDisabled" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+                                <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select Expense Field')" [disabled]="disablethefield(dependentField)" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                                     <ng-template let-option pTemplate="item">
                                         <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                             <div class="tw-ml-0 tw-mr-6-px ">

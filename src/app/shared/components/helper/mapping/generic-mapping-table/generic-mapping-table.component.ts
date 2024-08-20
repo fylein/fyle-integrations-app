@@ -19,10 +19,6 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
   styleUrls: ['./generic-mapping-table.component.scss']
 })
 export class GenericMappingTableComponent implements OnInit {
-filterValue: any;
-onSearchFocus(isSearchFocused: boolean) {
-  this.isSearchFocused = isSearchFocused;
-}
 
   @Input() isLoading: boolean;
 
@@ -89,15 +85,6 @@ onSearchFocus(isSearchFocused: boolean) {
     return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
 
-  tableDropdownWidth() {
-    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
-    if (element) {
-      element.style.width = '300px';
-      setTimeout(() => {
-        this.filterInput.nativeElement.focus();
-    }, 0);
-    }
-  }
 
   constructDestinationOptions() {
     const mappingType:string = this.filteredMappings.flatMap(mapping =>
@@ -125,14 +112,6 @@ onSearchFocus(isSearchFocused: boolean) {
   sortDropdownOptions() {
     this.destinationOptions.sort((a, b) => a.value.localeCompare(b.value));
   }
-
-  customFilterFunction(event: KeyboardEvent, options: DropdownFilterOptions) {
-    this.isSearching = true;
-    console.log(options)
-    //@ts-ignore
-    options.filter(event);
-    // this.optionSearchUpdate.next({searchTerm: event.key});
-}
 
   optionSearchWatcher() {
     this.optionSearchUpdate.pipe(
