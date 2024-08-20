@@ -13,7 +13,7 @@ xdescribe('RefinerService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule]
     });
     service = TestBed.inject(RefinerService);
     (window as any)._refiner = () => {
