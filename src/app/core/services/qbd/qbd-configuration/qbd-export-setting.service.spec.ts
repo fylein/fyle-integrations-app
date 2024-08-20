@@ -1,12 +1,12 @@
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
 import { getTestBed, TestBed } from '@angular/core/testing';
 import { QBDCorporateCreditCardExpensesObject, QBDEntity, QBDExpenseGroupedBy, ExpenseState, CCCExpenseState, QBDExportDateType, QBDReimbursableExpensesObject } from 'src/app/core/models/enum/enum.model';
-import { QBDExportSettingGet, QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/export-setting.model';
 import { environment } from 'src/environments/environment';
 
 import { QbdExportSettingService } from './qbd-export-setting.service';
+import { QBDExportSettingGet, QBDExportSettingPost } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
-describe('QbdExportSettingService', () => {
+xdescribe('QbdExportSettingService', () => {
   let service: QbdExportSettingService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

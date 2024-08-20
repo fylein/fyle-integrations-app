@@ -1,4 +1,6 @@
-import { Mapping, MappingPost, MappingResponse, MappingStats } from "src/app/core/models/qbd/db/mapping.model";
+import { MappingStats } from "src/app/core/models/db/mapping.model";
+import { Mapping, MappingPost, MappingResponse } from "src/app/core/models/qbd/db/qbd-mapping.model";
+
 
 export const getMappingResponse: MappingResponse = {
     "count": 16,

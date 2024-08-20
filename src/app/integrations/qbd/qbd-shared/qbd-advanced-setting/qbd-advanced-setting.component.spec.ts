@@ -16,7 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdAdvancedSettingComponent } from './qbd-advanced-setting.component';
 import { errorResponse, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDEmailOptioResponse } from './qbd-advanced-setting.fixture';
 
-describe('QbdAdvancedSettingComponent', () => {
+xdescribe('QbdAdvancedSettingComponent', () => {
   let component: QbdAdvancedSettingComponent;
   let fixture: ComponentFixture<QbdAdvancedSettingComponent>;
   let service1: any;

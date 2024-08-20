@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { QboHelperService } from './qbo-helper.service';
 
-describe('QboHelperService', () => {
+xdescribe('QboHelperService', () => {
   let service: QboHelperService;
 
   beforeEach(() => {

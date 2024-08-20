@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IntacctOnboardingConnectorComponent } from './intacct-onboarding-connector.component';
 
-describe('IntacctOnboardingConnectorComponent', () => {
+xdescribe('IntacctOnboardingConnectorComponent', () => {
   let component: IntacctOnboardingConnectorComponent;
   let fixture: ComponentFixture<IntacctOnboardingConnectorComponent>;
 

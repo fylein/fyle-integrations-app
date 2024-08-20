@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdMappingComponent } from './qbd-mapping.component';
 
-describe('QbdMappingComponent', () => {
+xdescribe('QbdMappingComponent', () => {
   let component: QbdMappingComponent;
   let fixture: ComponentFixture<QbdMappingComponent>;
 

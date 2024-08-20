@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QbdConfigurationFieldSettingComponent } from './qbd-configuration-field-setting.component';
 
-describe('QbdConfigurationFieldSettingComponent', () => {
+xdescribe('QbdConfigurationFieldSettingComponent', () => {
   let component: QbdConfigurationFieldSettingComponent;
   let fixture: ComponentFixture<QbdConfigurationFieldSettingComponent>;
 

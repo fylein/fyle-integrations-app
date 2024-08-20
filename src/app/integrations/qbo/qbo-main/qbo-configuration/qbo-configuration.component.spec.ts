@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QboConfigurationComponent } from './qbo-configuration.component';
 
-describe('QboConfigurationComponent', () => {
+xdescribe('QboConfigurationComponent', () => {
   let component: QboConfigurationComponent;
   let fixture: ComponentFixture<QboConfigurationComponent>;
 

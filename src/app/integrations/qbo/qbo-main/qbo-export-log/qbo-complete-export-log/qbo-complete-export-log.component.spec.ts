@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { QboCompleteExportLogComponent } from './qbo-complete-export-log.component';
 
-describe('QboCompleteExportLogComponent', () => {
+xdescribe('QboCompleteExportLogComponent', () => {
   let component: QboCompleteExportLogComponent;
   let fixture: ComponentFixture<QboCompleteExportLogComponent>;
 

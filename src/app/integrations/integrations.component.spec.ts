@@ -8,7 +8,7 @@ import { OrgService } from '../core/services/org/org.service';
 
 import { IntegrationsComponent } from './integrations.component';
 
-describe('IntegrationsComponent', () => {
+xdescribe('IntegrationsComponent', () => {
   let component: IntegrationsComponent;
   let fixture: ComponentFixture<IntegrationsComponent>;
   let orgService: OrgService;

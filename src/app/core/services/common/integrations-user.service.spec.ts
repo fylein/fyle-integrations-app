@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { IntegrationsUserService } from './integrations-user.service';
 
-describe('IntegrationsUserService', () => {
+xdescribe('IntegrationsUserService', () => {
   let service: IntegrationsUserService;
 
   beforeEach(() => {

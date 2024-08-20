@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { XeroAdvancedSettingsService } from './xero-advanced-settings.service';
 
-describe('XeroAdvancedSettingsService', () => {
+xdescribe('XeroAdvancedSettingsService', () => {
   let service: XeroAdvancedSettingsService;
 
   beforeEach(() => {

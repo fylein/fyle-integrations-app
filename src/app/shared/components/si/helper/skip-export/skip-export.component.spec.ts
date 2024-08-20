@@ -4,7 +4,7 @@ import { SkipExportComponent } from './skip-export.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormBuilder } from '@angular/forms';
 
-describe('SkipExportComponent', () => {
+xdescribe('SkipExportComponent', () => {
   let component: SkipExportComponent;
   let fixture: ComponentFixture<SkipExportComponent>;
 

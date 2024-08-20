@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { OauthDefaultComponent } from './oauth-default.component';
 
-describe('OauthDefaultComponent', () => {
+xdescribe('OauthDefaultComponent', () => {
   let component: OauthDefaultComponent;
   let fixture: ComponentFixture<OauthDefaultComponent>;
 

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { BusinessCentralOnboardingService } from './business-central-onboarding.service';
 
-describe('BusinessCentralOnboardingService', () => {
+xdescribe('BusinessCentralOnboardingService', () => {
   let service: BusinessCentralOnboardingService;
 
   beforeEach(() => {

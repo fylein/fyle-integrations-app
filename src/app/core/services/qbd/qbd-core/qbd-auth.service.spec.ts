@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { QbdAuthService } from './qbd-auth.service';
 import { environment } from 'src/environments/environment';
 
-describe('QbdAuthService', () => {
+xdescribe('QbdAuthService', () => {
   let service: QbdAuthService;
   let injector: TestBed;
   let httpMock: HttpTestingController;

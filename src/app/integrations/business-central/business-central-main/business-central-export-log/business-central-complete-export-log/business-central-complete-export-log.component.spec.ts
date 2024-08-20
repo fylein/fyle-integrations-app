@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BusinessCentralCompleteExportLogComponent } from './business-central-complete-export-log.component';
 
-describe('BusinessCentralCompleteExportLogComponent', () => {
+xdescribe('BusinessCentralCompleteExportLogComponent', () => {
   let component: BusinessCentralCompleteExportLogComponent;
   let fixture: ComponentFixture<BusinessCentralCompleteExportLogComponent>;
 

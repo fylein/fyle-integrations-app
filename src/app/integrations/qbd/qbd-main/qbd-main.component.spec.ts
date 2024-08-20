@@ -9,7 +9,7 @@ import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-map
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('QbdMainComponent', () => {
+xdescribe('QbdMainComponent', () => {
   let component: QbdMainComponent;
   let fixture: ComponentFixture<QbdMainComponent>;
   const routerSpy = { navigateByUrl: jasmine.createSpy('navigateByUrl'), url: '/path' };

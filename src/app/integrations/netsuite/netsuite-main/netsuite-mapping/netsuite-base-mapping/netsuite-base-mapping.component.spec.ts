@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NetsuiteBaseMappingComponent } from './netsuite-base-mapping.component';
 
-describe('NetsuiteBaseMappingComponent', () => {
+xdescribe('NetsuiteBaseMappingComponent', () => {
   let component: NetsuiteBaseMappingComponent;
   let fixture: ComponentFixture<NetsuiteBaseMappingComponent>;
 

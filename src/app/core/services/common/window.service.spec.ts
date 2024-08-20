@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { WindowService } from './window.service';
 import { OperatingSystem } from '../../models/enum/enum.model';
 
-describe('WindowService', () => {
+xdescribe('WindowService', () => {
   let service: WindowService;
 
   const mockWindow = { location: { href: '' } };

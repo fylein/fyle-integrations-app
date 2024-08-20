@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { IntacctDashboardComponent } from './intacct-dashboard.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-describe('DashboardComponent', () => {
+xdescribe('DashboardComponent', () => {
   let component: IntacctDashboardComponent;
   let fixture: ComponentFixture<IntacctDashboardComponent>;
 

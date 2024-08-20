@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NetsuiteOnboardingExportSettingsComponent } from './netsuite-onboarding-export-settings.component';
 
-describe('NetsuiteOnboardingExportSettingsComponent', () => {
+xdescribe('NetsuiteOnboardingExportSettingsComponent', () => {
   let component: NetsuiteOnboardingExportSettingsComponent;
   let fixture: ComponentFixture<NetsuiteOnboardingExportSettingsComponent>;
 

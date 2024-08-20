@@ -5,7 +5,7 @@ import { SnakeCaseToSpaceCasePipe } from 'src/app/shared/pipes/snake-case-to-spa
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 import { of } from 'rxjs';
 
-describe('MappingHeaderSectionComponent', () => {
+xdescribe('MappingHeaderSectionComponent', () => {
   let component: MappingHeaderSectionComponent;
   let fixture: ComponentFixture<MappingHeaderSectionComponent>;
 

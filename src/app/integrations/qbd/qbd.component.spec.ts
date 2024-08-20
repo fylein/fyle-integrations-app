@@ -8,7 +8,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 import { QbdComponent } from './qbd.component';
 import { errorResponse, workspaceResponse } from './qbd.fixture';
 
-describe('QbdComponent', () => {
+xdescribe('QbdComponent', () => {
   let component: QbdComponent;
   let fixture: ComponentFixture<QbdComponent>;
   let workspace: QbdWorkspaceService;

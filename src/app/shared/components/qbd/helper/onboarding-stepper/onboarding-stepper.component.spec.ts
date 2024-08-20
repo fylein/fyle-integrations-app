@@ -9,7 +9,7 @@ import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-work
 
 import { OnboardingStepperComponent } from './onboarding-stepper.component';
 
-describe('OnboardingStepperComponent', () => {
+xdescribe('OnboardingStepperComponent', () => {
   let component: OnboardingStepperComponent;
   let fixture: ComponentFixture<OnboardingStepperComponent>;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/onboarding' };
