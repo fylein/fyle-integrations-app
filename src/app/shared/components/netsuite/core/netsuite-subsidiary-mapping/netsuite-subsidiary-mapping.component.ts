@@ -6,6 +6,7 @@ import { AppName, ConfigurationCta, NetsuiteOnboardingState, ToastSeverity, Trac
 import { NetsuiteDestinationAttribute } from 'src/app/core/models/netsuite/db/destination-attribute.model';
 import { NetsuiteSubsidiaryMappingModel, SubsidiaryMapping } from 'src/app/core/models/netsuite/db/subsidiary-mapping.model';
 import { NetsuiteSubsidiaryMappingPost } from 'src/app/core/models/netsuite/netsuite-configuration/netsuite-connector.model';
+import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { StorageService } from 'src/app/core/services/common/storage.service';
@@ -66,7 +67,8 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
     private router: Router,
     private workspaceService: WorkspaceService,
     private toastService: IntegrationsToastService,
-    private trackingService: TrackingService
+    private trackingService: TrackingService,
+    private helperService: HelperService
   ) { }
 
 
@@ -114,10 +116,15 @@ export class NetsuiteSubsidiaryMappingComponent implements OnInit {
 
   private handleSuccess(netsuiteSubsidiaryMappingPayload: NetsuiteSubsidiaryMappingPost): void {
     this.isRefreshDimensionInProgress = true;
-    this.netsuiteMappingsService.refreshNetsuiteDimensions().subscribe(() => {
-      this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
-    }, () => {
-      this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
+
+    this.netsuiteMappingsService.refreshNetsuiteDimensions().subscribe();
+
+    const fyleOrgId = this.storageService.get('org').fyle_org_id;
+    this.helperService.pollDimensionsSyncStatus({
+      onPollingComplete: () => {
+        this.setOnboardingStateAndRedirect(netsuiteSubsidiaryMappingPayload);
+      },
+      getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId)
     });
   }
 
