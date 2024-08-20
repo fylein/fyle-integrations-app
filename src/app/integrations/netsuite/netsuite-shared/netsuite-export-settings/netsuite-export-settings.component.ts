@@ -338,6 +338,12 @@ export class NetsuiteExportSettingsComponent implements OnInit {
     }
   }
 
+  addMissingOptions() {
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.reimbursable_account});
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
+    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.creditCardVendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
+  }
 
   private getSettingsAndSetupForm(): void {
     this.isOnboarding = this.windowReference.location.pathname.includes('onboarding');
@@ -363,6 +369,7 @@ export class NetsuiteExportSettingsComponent implements OnInit {
       this.reimbursableExportTypes = NetSuiteExportSettingModel.getReimbursableExportTypeOptions();
       this.showNameInJournalOption = this.exportSettings.configuration?.corporate_credit_card_expenses_object === NetSuiteCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
 
+      this.addMissingOptions();
       this.exportSettingForm = NetSuiteExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings);
       if (!this.brandingFeatureConfig.featureFlags.exportSettings.reimbursableExpenses) {
         this.exportSettingForm.controls.creditCardExpense.patchValue(true);

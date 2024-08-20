@@ -404,5 +404,14 @@
     --qf-divider: var(--border-tertiary);
 
     --input-default-placeholder-text: var(--text-placeholder);
+
+    // Badge
+    --badge-brand-bg: var(--bg-brand-primary);
+    --badge-brand-text-color: var(--text-white);
+    --badge-dark-bg: var(--bg-primary);
+    --badge-dark-text-color: var(--text-white);
+    --badge-light-bg: var(--bg-white);
+    --badge-light-border-color: var(--border-tertiary);
+    --badge-light-text-color: var(--text-tertiary);
   }
 }

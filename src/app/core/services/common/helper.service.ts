@@ -12,6 +12,7 @@ import { StorageService } from './storage.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { TitleCasePipe } from '@angular/common';
+import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
 
 @Injectable({
   providedIn: 'root'
@@ -245,6 +246,44 @@ export class HelperService {
 
   sentenseCaseConversion(content: string) {
     return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(content) : content;
+  }
+
+  /**
+   * If the destination attribute with `destination_id` does not exist in `options`, add it
+   */
+  addDestinationAttributeIfNotExists(
+    {options, destination_id, value}: {options: DestinationAttribute[]; destination_id?: string | null; value?: string | null}
+  ) {
+    if (
+      destination_id &&
+      options &&
+      !options.find((option) => option.destination_id === destination_id)
+    ) {
+      options.push({
+        value: value || '',
+        destination_id
+      } as DestinationAttribute);
+
+    }
+
+    options.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+  }
+
+  /**
+   * If the default destination attribute with `destination_id` does not exist in `options`, add it
+   */
+  addDefaultDestinationAttributeIfNotExists(
+    {options, newOption}: {options: DefaultDestinationAttribute[]; newOption: DefaultDestinationAttribute}
+  ) {
+    if (
+      newOption.id && options &&
+      !options.find((option) => option.id === newOption.id)
+    ) {
+      options.push(newOption);
+
+    }
+
+    options.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
   }
 
 }
