@@ -244,7 +244,6 @@ export class QboExportSettingsComponent implements OnInit {
       this.exportSettingForm.controls.creditCardExportGroup.disable();
     } else {
       this.cccExpenseGroupingDateOptions = this.reimbursableExpenseGroupingDateOptions.concat();
-      this.helperService.clearValidatorAndResetValue(this.exportSettingForm, 'creditCardExportGroup');
       this.helperService.enableFormField(this.exportSettingForm, 'creditCardExportGroup');
     }
   }
