@@ -143,12 +143,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
     return control as FormGroup;
   }
 
-  disablethefield(dependentField: Sage300DependentImportFields) {
-    if (dependentField.isDisabled) {
-      this.form.controls[dependentField.formController].disable();
-    }
-    return dependentField.isDisabled;
-  }
 
   getDestinationField(destinationField: string): string {
     const lastChar = destinationField.slice(-1).toLowerCase();
@@ -298,6 +292,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.form.controls?.dependentFieldImportToggle.disable();
     if (this.appName !== AppName.SAGE300) {
       this.disableDestinationFields();
     } else {

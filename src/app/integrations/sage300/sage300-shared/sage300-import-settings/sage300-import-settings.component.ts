@@ -3,7 +3,7 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '
 import { Router } from '@angular/router';
 import { AppName, AppNameInService, ConfigurationCta, DefaultImportFields, MappingSourceField, Page, Sage300OnboardingState, Sage300UpdateEvent, ToastSeverity, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { Sage300ImportSettingGet, Sage300DefaultFields, Sage300ImportSettingModel, Sage300DependentImportFields, Sage300ImportSettingsDependentFieldSetting } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
-import { ExpenseField, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
+import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow } from 'src/app/core/models/common/import-settings.model';
 import { IntegrationField, FyleField } from 'src/app/core/models/db/mapping.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
@@ -50,9 +50,9 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   customField: any;
 
-  costCodeFieldOption = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+  costCodeFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
 
-  costCategoryOption = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
+  costCategoryOption:ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: true }];
 
   customFieldOption: ExpenseField[] = [{ attribute_type: 'custom_field', display_name: 'Create a Custom Field', source_placeholder: null, is_dependent: false }];
 
@@ -106,7 +106,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
-  sage300ImportCodeFieldCodeConfig: any;
+  sage300ImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
 
   constructor(
     private router: Router,
@@ -151,32 +151,31 @@ export class Sage300ImportSettingsComponent implements OnInit {
     this.showDependentFieldWarning = true;
   }
 
-  saveDependentCustomField(): void {
+  saveDependentCustomField(formControllerName: string): void {
     this.customField = {
       attribute_type: this.customFieldForm.value.attribute_type,
       display_name: this.customFieldForm.value.attribute_type,
       source_placeholder: this.customFieldForm.value.source_placeholder,
-      is_dependent: true
+      is_dependent: true,
+      is_custom: true
     };
     if (this.customFieldControl) {
       if (this.customFieldType === 'costCodes') {
+        this.costCodeFieldOption.pop();
         this.costCodeFieldOption.push(this.customField);
+        this.costCodeFieldOption.push(this.customFieldOption[0]);
       } else {
+        this.costCategoryOption.pop();
         this.costCategoryOption.push(this.customField);
+        this.costCategoryOption.push(this.customFieldOption[0]);
       }
-      this.customFieldControl.patchValue({
-        attribute_type: this.customFieldForm.value.attribute_type,
-        display_name: this.customFieldForm.value.attribute_type,
-        source_placeholder: this.customFieldForm.value.source_placeholder,
-        is_dependent: true
-      });
+      this.importSettingForm.controls[formControllerName].patchValue(this.customField);
 
       this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
-      this.customFieldControl.value.is_custom = true;
       this.customFieldForm.reset();
       this.showCustomFieldDialog = false;
     }
-    this.customFieldControl.disable();
+    this.importSettingForm.controls[formControllerName].disable();
     this.customFieldForDependentField = false;
   }
 
@@ -207,7 +206,7 @@ export class Sage300ImportSettingsComponent implements OnInit {
 
   saveCustomField() {
     if (this.customFieldType.length > 0 && this.customFieldForm.value) {
-      this.saveDependentCustomField();
+      this.saveDependentCustomField(this.customFieldType);
     } else {
       this.saveFyleExpenseField();
     }

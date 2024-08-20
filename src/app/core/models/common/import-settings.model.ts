@@ -42,6 +42,10 @@ export type ImportSettingsCustomFieldRow = {
   is_dependent: boolean
 }
 
+export type ImportCodeFieldConfigType = {
+  [key: string]: boolean;
+};
+
 export class ImportSettingsModel {
 
   static getCustomFieldOption(): ExpenseField[] {
