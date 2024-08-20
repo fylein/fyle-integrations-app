@@ -144,7 +144,7 @@
                         </div>
                         <p-inputSwitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
                     </div>
-                    <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px">
+                    <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="{'fyle': brandingConfig.brandId !== 'co', 'co': brandingConfig.brandId === 'co'}">
                         <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">Auto-Export Commitment based on the Cost Code and Cost Category.
                             <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
