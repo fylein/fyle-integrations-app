@@ -15,6 +15,7 @@ import { XeroOnboardingModel } from 'src/app/core/models/xero/xero-configuration
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { XeroConnectorService } from 'src/app/core/services/xero/xero-configuration/xero-connector.service';
@@ -90,7 +91,8 @@ export class XeroOnboardingConnectorComponent implements OnInit {
     private router: Router,
     private toastService: IntegrationsToastService,
     private cloneSettingService: CloneSettingService,
-    private xeroHelperService: XeroHelperService
+    private xeroHelperService: XeroHelperService,
+    private storageService: StorageService
   ) { }
 
   private checkCloneSettingsAvailablity(): void {
@@ -193,15 +195,22 @@ export class XeroOnboardingConnectorComponent implements OnInit {
       this.xeroCompanyName = this.xeroTenantselected.value;
       const tenantMappingPayload: TenantMappingPost = TenantMappingModel.constructPayload(this.xeroTenantselected);
       this.xeroConnectorService.postTenantMapping(tenantMappingPayload).subscribe((response:TenantMapping) => {
-        this.xeroHelperService.refreshXeroDimensions().subscribe(() => {
-          this.workspaceService.setOnboardingState(XeroOnboardingState.EXPORT_SETTINGS);
-          this.xeroConnectionInProgress = false;
-          this.xeroTokenExpired = false;
-          this.isXeroConnected = true;
-          this.xeroCompanyName = response.tenant_name;
-          this.showOrHideDisconnectXero();
-          this.checkCloneSettingsAvailablity();
+        this.xeroHelperService.refreshXeroDimensions().subscribe();
+
+        const fyleOrgId = this.storageService.get('org').fyle_org_id;
+        this.helperService.pollDimensionsSyncStatus({
+          onPollingComplete: () => {
+            this.workspaceService.setOnboardingState(XeroOnboardingState.EXPORT_SETTINGS);
+            this.xeroConnectionInProgress = false;
+            this.xeroTokenExpired = false;
+            this.isXeroConnected = true;
+            this.xeroCompanyName = response.tenant_name;
+            this.showOrHideDisconnectXero();
+            this.checkCloneSettingsAvailablity();
+          },
+          getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId)
         });
+
       });
     } else {
       return;
