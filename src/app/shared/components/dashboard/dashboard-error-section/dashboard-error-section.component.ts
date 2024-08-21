@@ -49,6 +49,8 @@ export class DashboardErrorSectionComponent implements OnInit {
 
   @Input() isEmployeeMappingGeneric: boolean;
 
+  @Input() importCodeFields: string[];
+
   filteredMappings: ExtendedGenericMapping[];
 
   destinationOptions: DestinationAttribute[];
@@ -94,6 +96,8 @@ export class DashboardErrorSectionComponent implements OnInit {
   AppName = AppName;
 
   errorArticle: string;
+
+  isMultiLineOption: boolean;
 
   constructor(
     private dashboardService: DashboardService,
@@ -154,6 +158,7 @@ export class DashboardErrorSectionComponent implements OnInit {
     this.groupedError = groupedError;
     this.sourceField = sourceField;
     this.destinationField = this.destinationFieldMap[this.sourceField];
+    this.isMultiLineOption = this.destinationField !== FyleField.VENDOR ? this.importCodeFields?.includes(this.destinationField) : false;
 
     if (this.destinationOptionsVersion === 'v1') {
       this.getDestinationOptionsV1(errorType);

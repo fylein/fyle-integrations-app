@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
@@ -46,6 +46,8 @@ export class ConfigurationImportFieldComponent implements OnInit {
   @Input() commitmentFieldSupportArticleLink: string;
 
   @Input() dependantFieldSupportArticleLink: string;
+
+  @Input() importCodeFieldConfig: any;
 
   isOnboarding: boolean;
 
@@ -121,17 +123,26 @@ export class ConfigurationImportFieldComponent implements OnInit {
     return this.form.get('expenseFields') as FormArray;
   }
 
+  showImportCodeSection(expenseField: AbstractControl<any, any>): any {
+    return expenseField.value.import_to_fyle && expenseField.value.source_field;
+  }
+
+  isImportCodeFieldDisabledportCode(): boolean {
+    if (!this.isOnboarding) {
+      return !this.isOnboarding;
+    }
+    return this.isOnboarding;
+  }
+
   getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
     return this.importCodeSelectorOptions[destinationField];
   }
 
-  disabledToolTipText(expenseField: { value: { source_field: any; }; }): string {
-    return !expenseField.value.source_field ? this.helper.sentenseCaseConversion('To import a '+ this.appName +' dimension, map it to a Fyle field') : '';
-  }
 
   getFormGroup(control: AbstractControl): FormGroup {
     return control as FormGroup;
   }
+
 
   getDestinationField(destinationField: string): string {
     const lastChar = destinationField.slice(-1).toLowerCase();
@@ -186,6 +197,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
       this.onImportToFyleToggleChange({checked: true});
+      if (this.appName === AppName.SAGE300) {
+        (this.form.get('expenseFields') as FormArray).at(index)?.get('import_code')?.addValidators(Validators.required);
+      }
     }
 
     if (selectedValue === 'custom_field') {
@@ -227,8 +241,11 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   onSwitchChanged(event: any, formGroup: AbstractControl): void {
     this.onShowWarningForDependentFields(event, formGroup);
-    if (event.checked && this.appName === AppName.SAGE300) {
+    if (event.checked && this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value === 'PROJECT') {
       this.form.controls.isDependentImportEnabled.setValue(true);
+    }
+    if (!event.checked && this.appName === AppName.SAGE300) {
+      formGroup?.get('import_code')?.clearValidators();
     }
   }
 
@@ -266,9 +283,26 @@ export class ConfigurationImportFieldComponent implements OnInit {
     });
   }
 
+  setupImportCodeCounter() {
+    Object.keys(this.form.controls).forEach(key => {
+      if (['importCategories', 'importVendorAsMerchant'].includes(key) && this.form.get(key)?.value) {
+        this.isImportCodeEnabledCounter.push(true);
+      }
+    });
+    Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
+      const importCode = this.expenseFieldsGetter.controls[key as unknown as number].get('import_to_fyle');
+      if (importCode?.value === true) {
+        this.isImportCodeEnabledCounter.push(true);
+      }
+    });
+  }
+
   ngOnInit(): void {
+    this.form.controls?.dependentFieldImportToggle.disable();
     if (this.appName !== AppName.SAGE300) {
       this.disableDestinationFields();
+    } else {
+      this.setupImportCodeCounter();
     }
   }
 

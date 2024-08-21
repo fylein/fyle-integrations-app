@@ -42,6 +42,10 @@ export type ImportSettingsCustomFieldRow = {
   is_dependent: boolean
 }
 
+export type ImportCodeFieldConfigType = {
+  [key: string]: boolean;
+};
+
 export class ImportSettingsModel {
 
   static getCustomFieldOption(): ExpenseField[] {
@@ -60,10 +64,7 @@ export class ImportSettingsModel {
   }
 
   static getImportCodeField(importCodeFields: string[], destinationField: string): boolean {
-    if (importCodeFields?.length) {
-      return importCodeFields.includes(destinationField);
-    }
-    return false;
+    return importCodeFields.includes(destinationField);
   }
 
   static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
@@ -83,10 +84,10 @@ export class ImportSettingsModel {
           is_custom: false,
           source_field: '',
           source_placeholder: null,
-          import_code: this.getImportCodeField(importCodeFields, accountingAppField.attribute_type)
+          import_code: null
       };
       if (mappingSetting) {
-        fieldData.import_code = this.getImportCodeField(importCodeFields, accountingAppField.attribute_type);
+        fieldData.import_code = fieldData.import_to_fyle ? this.getImportCodeField(importCodeFields, accountingAppField.attribute_type) : null;
         mappedFieldMap.set(accountingAppField.attribute_type, fieldData);
       } else {
           unmappedFieldMap.set(accountingAppField.attribute_type, fieldData);

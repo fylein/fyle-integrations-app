@@ -58,9 +58,9 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
         return new FormGroup({
             importCodeFields: new FormControl(importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings.import_code_fields : []),
             importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
-            importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNTS')),
+            importCategoryCode: new FormControl(importSettings?.import_settings?.import_categories ? this.getImportCodeField(importCode, 'ACCOUNT') : null),
             importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),
-            importVendorCode: new FormControl(this.getImportCodeField(importCode, 'VENDOR')),
+            importVendorCode: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ? this.getImportCodeField(importCode, 'VENDOR') : null),
             expenseFields: new FormArray(expenseFieldsArray),
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),

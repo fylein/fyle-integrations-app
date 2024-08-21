@@ -1,5 +1,5 @@
 <div [formGroup]="form" >
-    <div *ngIf="!isDefaultFields" class="tw-flex tw-flex-row tw-justify-between tw-items-center tw-p-24-px">
+    <div *ngIf="!isDefaultFields" class="tw-flex tw-flex-row tw-justify-between tw-items-center tw-py-24-px" [ngClass]="{'tw-px-6-px': isimportSettings, 'tw-px-24-px': !isimportSettings}">
         <div class="lg:tw-w-3/5 md:tw-w-1/2 tw-flex tw-items-start">
             <div [ngClass]="[iconPath || formControllerName === 'dayOfMonth' || formControllerName === 'dayOfWeek' || formControllerName === 'timeOfDay' ? 'tw-pr-16-px tw-mt-4-px' : 'noIcon']">
                 <app-svg-icon *ngIf="iconPath" [svgSource]="iconPath" [width]="'24px'" [height]="'24px'" [styleClasses]="'tw-text-mandatory-field-color'"></app-svg-icon>
@@ -23,21 +23,39 @@
                     [ngClass]="{
                         'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused,
                         'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched && !isSearchFocused)}" 
-                    [filter]="true" [filterBy]="optionLabel"
+                    [filter]="true"
                     (onFilter)="searchOptions($event)"
                     (onHide)="clearSearch()" 
+                    [filterFields]="isMultiLineOption ? ['value', 'code'] : ['value']"
                     [resetFilterOnHide]="true"
                     [emptyFilterMessage]="isOptionSearchInProgress ? 'Searching...' : 'No results found'" 
                     [dropdownIcon]="isOptionSearchInProgress ? 'pi pi-spinner pi-spin' : 'pi pi-chevron-down ' + brandingConfig.brandId">
                     <ng-template let-options pTemplate="item">
-                        <div #textElement
-                            [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
-                            [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
-                            {{options[optionLabel]}}
+                        <div>
+                            <span #textElement
+                                [ngStyle]="{'white-space': 'nowrap', 'overflow': 'hidden', 'text-overflow': 'ellipsis', 'max-width': '16rem'}"
+                                [pTooltip]="isOverflowing(textElement) ? options.value: null" tooltipPosition="top">
+                                {{options[optionLabel]}}
+                            </span>
+                            <p *ngIf="isMultiLineOption" class="tw-text-text-muted tw-text-12-px">{{ options.code ? options.code : '--'}}</p>
+                        </div>
+                    </ng-template>
+                    <ng-template let-value pTemplate="selectedItem">
+                        <div *ngIf="value">
+                            <p>
+                                <span *ngIf="value?.code && isMultiLineOption">{{ value?.code }}</span>
+                                {{ value?.value }} 
+                            </p>
+                        </div>
+                        <div *ngIf="!value" class="tw-text-placeholder">
+                           {{placeholder}}
                         </div>
                     </ng-template>
                     <ng-template *ngIf="!isAdvanceSearchEnabled" pTemplate="filter" let-dropdownOptions="options">
                         <app-search [form]="form" [isDropdown]="true" [placeholder]="'Search'" [styleClasses]="'tw-w-[100%] tw-h-dropdown-option-height tw-bg-white '" (handleSimpleSearch)="simpleSearch($event)" (searchFocused)="onSearchFocus($event)"></app-search>
+                    </ng-template>
+                    <ng-template pTemplate="filtericon">
+                        <app-svg-icon [svgSource]="'search-medium'" [width]="'18px'" [height]="'18px'" [styleClasses]="brandingConfig.brandId === 'fyle' ? 'tw-text-search-focused-search-icon' : 'tw-text-search-focused-filled-border'" [isTextColorAllowed]="true"></app-svg-icon>
                     </ng-template>
                 </p-dropdown>
             </div>

@@ -95,7 +95,7 @@
                                 <app-svg-icon *ngIf="(expenseField.get('source_field')?.value !== 'CATEGORY') && (appName === AppName.XERO ? expenseField.get('destination_field')?.value !== 'CUSTOMER' : true )" [svgSource]="'cross-medium'" [c1SvgSource]="'grv-cross-filled-medium'" (click)="removeFilter(expenseField)" [height]="'18px'" [width]="'18px'" [styleClasses]="'tw-mt-4-px'"></app-svg-icon>
                             </ng-template>
                       </p-dropdown>
-                      <p *ngIf="expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
+                      <p *ngIf="(expenseField.value.source_field && !expenseField.valid && !hasDuplicateOption(expenseField, i, 'source_field')) || (!expenseField.value.source_field && expenseField.value.import_to_fyle)" class="tw-text-alert-toast tw-text-12-px tw-pt-4-px">
                         {{brandingConfig.brandName}} Fields should be unique
                         </p>
                     </div>
@@ -130,7 +130,7 @@
                             </div>
                             <div>
                                 <p class="tw-mb-8-px tw-text-form-label-text-color" [ngClass]="{'!tw-font-400 tw-text-14-px': brandingConfig.brandId !== 'co', '!tw-font-600 tw-text-12-px': brandingConfig.brandId === 'co'}">{{brandingConfig.brandName}} {{brandingConfig.brandId === 'co' ? 'field' : 'Field'}} <app-mandatory-field></app-mandatory-field> </p>
-                                <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select Expense Field')" [disabled]="dependentField.isDisabled" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
+                                <p-dropdown appendTo="body" class="tw-w-28-vw" [formControlName]="dependentField.formController" [options]="dependentField.options" optionLabel="attribute_type" [placeholder]="helper.sentenseCaseConversion('Select Expense Field')" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                                     <ng-template let-option pTemplate="item">
                                         <div [ngClass]="{'custom-option': option.attribute_type === 'custom_field'}" class="tw-align-middle">
                                             <div class="tw-ml-0 tw-mr-6-px ">
@@ -142,9 +142,9 @@
                                 </p-dropdown>
                             </div>
                         </div>
-                        <p-inputSwitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle" [disabled]="true"></p-inputSwitch>
+                        <p-inputSwitch class="input-toggle-section tw-pt-24-px" formControlName="dependentFieldImportToggle"></p-inputSwitch>
                     </div>
-                    <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px">
+                    <div *ngIf="appName === AppName.SAGE300" class="tw-flex tw-mt-24-px" [ngClass]="{'fyle': brandingConfig.brandId !== 'co', 'co': brandingConfig.brandId === 'co'}">
                         <label class="container tw-pl-24-px tw-text-14-px tw-text-form-label-text-color">Auto-Export Commitment based on the Cost Code and Cost Category.
                             <a class="tw-text-link-primary tw-w-fit tw-cursor-pointer tw-inline-flex tw-items-center"
                                 (click)="windowService.openInNewTab(commitmentFieldSupportArticleLink)">
@@ -191,7 +191,7 @@
         </div>
         <div>
             <div *ngFor="let defaultField of defaultImportFields">
-                <div *ngIf="form.controls[defaultField.formController].value && defaultField.import_code">
+                <div *ngIf="defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value">
                     <app-configuration-select-field
                         [appName]="appName"
                         [form]="form"
@@ -201,14 +201,17 @@
                         [label]="'How to import the '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' from ' + appName + '?'"
                         [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                         [isMultiLineOption]="true"
-                        [isDisabled]="form.controls[defaultField.formController].value && !isOnboarding"
+                        [isFieldMandatory]="true"
+                        [isimportSettings]="true"
+                        [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(defaultField.destination_field).toLowerCase() + ' should be imported'"
+                        [isDisabled]="!importCodeFieldConfig[defaultField.destination_field]"
                         [formControllerName]="defaultField.import_code">
                     </app-configuration-select-field>
                 </div>
             </div>
             <div formArrayName="expenseFields">
                 <div *ngFor="let expenseField of expenseFieldsGetter.controls; let i = index" [formGroupName]="i">
-                    <div *ngIf="expenseField.value.import_to_fyle">
+                    <div *ngIf="showImportCodeSection(expenseField)">
                         <app-configuration-select-field
                             [appName]="appName"
                             [isDisableTextRequired]="false"
@@ -218,7 +221,10 @@
                             [label]="'How to import the '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' from ' + appName + '?'"
                             [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
                             [isMultiLineOption]="true"
-                            [isDisabled]="expenseField.value.import_to_fyle && !isOnboarding"
+                            [isimportSettings]="true"
+                            [isFieldMandatory]="true"
+                            [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(expenseField.value.destination_field).toLowerCase() + ' should be imported'"
+                            [isDisabled]="!importCodeFieldConfig[expenseField.value.destination_field]"
                             [formControllerName]="'import_code'">
                         </app-configuration-select-field>
                     </div>
