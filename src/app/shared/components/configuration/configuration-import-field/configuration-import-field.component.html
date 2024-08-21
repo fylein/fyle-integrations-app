@@ -77,7 +77,7 @@
                     <div [ngClass]="{'tw-pt-16-px': brandingConfig.brandId === 'co', 'tw-pt-18-px': brandingConfig.brandId !== 'co'}">
                         <app-svg-icon [isTextColorAllowed]="true" [svgSource]="'arrow-line'" [height]="'10px'" [width]="'100px'" [styleClasses]="'tw-self-center tw-text-border-secondary'"></app-svg-icon>
                     </div>
-                    <div class="tw-w-28-vw">
+                    <div class="lg:tw-w-30-vw md:tw-w-28-vw">
                         <p-dropdown (onChange)="onDropdownChange($event, i)" appendTo="body" [options]="getOptions(expenseField)" [placeholder]="'Choose expense field in ' + brandingConfig.brandName" formControlName="source_field"
                         optionLabel="display_name" optionValue="attribute_type" [ngClass]="{'selectedItem': expenseField.get('source_field')?.value, 'selectedAccItem !tw-text-text-secondary': (expenseField.get('source_field')?.value === 'CATEGORY') || (expenseField.get('destination_field')?.value === 'CUSTOMER' && this.appName === AppName.XERO), 'filterDropdown': !expenseField.get('source_field')?.value}" [dropdownIcon]="'pi pi-chevron-down ' + brandingConfig.brandId">
                             <ng-template let-option pTemplate="item">

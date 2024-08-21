@@ -67,7 +67,7 @@
                     [ngClass]="{
                         'error-box': form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched,
                         'normal-box': !(form.controls[formControllerName].invalid && isFieldMandatory && form.controls[formControllerName].touched),
-                        'selectedItem': form.controls[formControllerName].value,
+                        'selectedItem': form.controls[formControllerName].value && !isMultiLineOption,
                         'filterDropdown': !form.controls[formControllerName].value,
                         'showClearIcon': showClearIcon && !isDisabled && form.controls[formControllerName].value
                     }" [disabled]="isDisabled">

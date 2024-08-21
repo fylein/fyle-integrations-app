@@ -59,7 +59,7 @@ export class ImportSettingsModel {
       import_to_fyle: new FormControl(data.import_to_fyle || false),
       is_custom: new FormControl(data.is_custom || false),
       source_placeholder: new FormControl(data.source_placeholder || null),
-      import_code: new FormControl(data.import_code || false)
+      import_code: new FormControl(data.import_code)
     });
   }
 
