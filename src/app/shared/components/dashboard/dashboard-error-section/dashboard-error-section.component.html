@@ -135,6 +135,6 @@
             <p class="tw-text-text-primary tw-text-20-px tw-line-height-20">{{ brandingConfig.brandId === 'co' ? (errorType | snakeCaseToSpaceCase | sentenceCase) : (errorType | snakeCaseToSpaceCase | titlecase) }} {{brandingContentCommon.errors}}</p>
             <p class="dialog-sub-header">Resolve the following mapping errors to export your failed expenses successfully to {{appName}}</p>
         </p-header>
-          <app-generic-mapping-table *ngIf="isMappingResolveVisible && !isLoading" [employeeFieldMapping]="employeeFieldMapping" [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="true" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [destinationOptions]="destinationOptions" [displayName]="displayName"></app-generic-mapping-table>
+          <app-generic-mapping-table *ngIf="isMappingResolveVisible && !isLoading" [employeeFieldMapping]="employeeFieldMapping" [isLoading]="isLoading" [appName]="appName" [isDashboardMappingResolve]="true" [destinationField]="destinationField" [filteredMappings]="filteredMappings" [sourceField]="sourceField" [destinationOptions]="destinationOptions" [displayName]="displayName" [isMultiLineOption]="isMultiLineOption"></app-generic-mapping-table>
     </p-dialog>
 </div>

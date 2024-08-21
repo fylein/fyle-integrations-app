@@ -376,8 +376,27 @@ export class Sage300ImportSettingsComponent implements OnInit {
     });
   }
 
+  private defaultFieldWatcher() {
+    this.importSettingForm.controls.importCategories.valueChanges.subscribe((importFromFyle) => {
+      if (importFromFyle) {
+        this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
+      } else {
+        this.helper.clearValidatorAndResetValue(this.importSettingForm, 'importCategoryCode');
+      }
+    });
+
+    this.importSettingForm.controls.importVendorAsMerchant.valueChanges.subscribe((importFromFyle) => {
+      if (importFromFyle) {
+        this.helper.markControllerAsRequired(this.importSettingForm, 'importVendorCode');
+      } else {
+        this.helper.clearValidatorAndResetValue(this.importSettingForm, 'importVendorCode');
+      }
+    });
+  }
+
   private setupFormWatchers() {
     this.importSettingWatcher();
+    this.defaultFieldWatcher();
     this.dependentFieldWatchers();
     this.defaultFieldCodeImportFieldWatcher();
   }
@@ -452,6 +471,7 @@ updateImportCodeFieldConfig() {
       this.sage300ImportCodeFieldCodeConfig = importCodeFieldConfig;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupFormWatchers();
+      this.updateImportCodeFieldConfig();
       this.dependentFieldFormCreation();
       this.initializeCustomFieldForm(false);
       this.isLoading = false;

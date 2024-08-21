@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
@@ -197,6 +197,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
     } else {
       (this.form.get('expenseFields') as FormArray).at(index)?.get('import_to_fyle')?.setValue(true);
       this.onImportToFyleToggleChange({checked: true});
+      if (this.appName === AppName.SAGE300) {
+        (this.form.get('expenseFields') as FormArray).at(index)?.get('import_code')?.addValidators(Validators.required);
+      }
     }
 
     if (selectedValue === 'custom_field') {
@@ -240,6 +243,9 @@ export class ConfigurationImportFieldComponent implements OnInit {
     this.onShowWarningForDependentFields(event, formGroup);
     if (event.checked && this.appName === AppName.SAGE300 && formGroup.get('source_field')?.value === 'PROJECT') {
       this.form.controls.isDependentImportEnabled.setValue(true);
+    }
+    if (!event.checked && this.appName === AppName.SAGE300) {
+      formGroup?.get('import_code')?.clearValidators();
     }
   }
 
