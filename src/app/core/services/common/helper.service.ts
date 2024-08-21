@@ -12,6 +12,13 @@ import { StorageService } from './storage.service';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 import { TitleCasePipe } from '@angular/common';
+import { DefaultDestinationAttribute, DestinationAttribute } from '../../models/db/destination-attribute.model';
+import { Observable, interval, take } from 'rxjs';
+
+type PollDimensionsSyncStatusParams = {
+  onPollingComplete: () => void
+  getWorkspacesObserver: () => Observable<{destination_synced_at: any}[]>
+}
 
 @Injectable({
   providedIn: 'root'
@@ -248,4 +255,77 @@ export class HelperService {
     return brandingConfig.brandId === 'co' ? new SentenceCasePipe().transform(content) : content;
   }
 
+  /**
+   * If the destination attribute with `destination_id` does not exist in `options`, add it
+   */
+  addDestinationAttributeIfNotExists(
+    {options, destination_id, value}: {options: DestinationAttribute[]; destination_id?: string | null; value?: string | null}
+  ) {
+    if (
+      destination_id &&
+      options &&
+      !options.find((option) => option.destination_id === destination_id)
+    ) {
+      options.push({
+        value: value || '',
+        destination_id
+      } as DestinationAttribute);
+
+    }
+
+    options.sort((a, b) => (a.value || '').localeCompare(b.value || ''));
+  }
+
+  /**
+   * If the default destination attribute with `destination_id` does not exist in `options`, add it
+   */
+  addDefaultDestinationAttributeIfNotExists(
+    {options, newOption}: {options: DefaultDestinationAttribute[]; newOption: DefaultDestinationAttribute}
+  ) {
+    if (
+      newOption.id && options &&
+      !options.find((option) => option.id === newOption.id)
+    ) {
+      options.push(newOption);
+
+    }
+
+    options.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+  }
+
+
+  /**
+   * Checks every `DIMENSIONS_POLLING_INTERVAL` ms whether dimensions have been refreshed
+   * for a maximum of `DIMENSIONS_POLLING_TIMEOUT` ms.
+   *
+   * Terminates either when dimensions have been refreshed, when refresh dimensions fails,
+   * or when polling times out - whichever occurs first.
+   */
+  pollDimensionsSyncStatus({onPollingComplete, getWorkspacesObserver}: PollDimensionsSyncStatusParams) {
+
+    /** Time (in ms) to wait before each request while polling for refresh dimensions status */
+    const DIMENSIONS_POLLING_INTERVAL = 3000;
+
+    /** Maximum time (in ms) to wait before terminating the poll for refresh dimensions status */
+    const DIMENSIONS_POLLING_TIMEOUT = 60_000;
+
+    const ticks = Math.floor(DIMENSIONS_POLLING_TIMEOUT / DIMENSIONS_POLLING_INTERVAL);
+
+    const pollingSubscription = interval(DIMENSIONS_POLLING_INTERVAL).pipe(take(ticks)).subscribe(
+      {
+        next: (_tick) => {
+          getWorkspacesObserver().subscribe(workspaces => {
+            const {destination_synced_at} = workspaces[0];
+            if (destination_synced_at !== null) {
+              onPollingComplete();
+              pollingSubscription.unsubscribe();
+            }
+          });
+        },
+
+        complete: () => {
+          onPollingComplete();
+        }
+    });
+  }
 }

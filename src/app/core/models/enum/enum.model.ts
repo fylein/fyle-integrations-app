@@ -815,3 +815,14 @@ export enum SplitExpenseGrouping {
   SINGLE_LINE_ITEM = 'SINGLE_LINE_ITEM',
   MULTIPLE_LINE_ITEM = 'MULTIPLE_LINE_ITEM'
 }
+
+export enum SizeOption {
+  DEFAULT= 'default',
+  LARGE = 'large'
+}
+
+export enum ThemeOption {
+  BRAND = 'brand',
+  LIGHT = 'light',
+  DARK = 'dark'
+}
