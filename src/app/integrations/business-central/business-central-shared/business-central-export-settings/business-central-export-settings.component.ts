@@ -246,18 +246,19 @@ export class BusinessCentralExportSettingsComponent implements OnInit {
     ]).subscribe(([exportSettingsResponse, accounts, vendors]) => {
       this.exportSettings = exportSettingsResponse;
 
-      this.helperService.addDestinationAttributeIfNotExists({
-        options: accounts.results,
-        value: exportSettingsResponse?.default_bank_account_name,
-        destination_id: exportSettingsResponse?.default_bank_account_id
-      });
+      if (exportSettingsResponse) {
+        this.helperService.addDestinationAttributeIfNotExists({
+          options: accounts.results,
+          value: exportSettingsResponse?.default_bank_account_name,
+          destination_id: exportSettingsResponse?.default_bank_account_id
+        });
 
-
-      this.helperService.addDestinationAttributeIfNotExists({
-        options: vendors.results,
-        value: exportSettingsResponse?.default_vendor_name,
-        destination_id: exportSettingsResponse?.default_vendor_id
-      });
+        this.helperService.addDestinationAttributeIfNotExists({
+          options: vendors.results,
+          value: exportSettingsResponse?.default_vendor_name,
+          destination_id: exportSettingsResponse?.default_vendor_id
+        });
+      }
 
       this.exportSettingForm = BusinessCentralExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, accounts.results, vendors.results);
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);

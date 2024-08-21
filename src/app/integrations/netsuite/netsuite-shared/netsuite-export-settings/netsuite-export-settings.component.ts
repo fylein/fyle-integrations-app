@@ -339,10 +339,12 @@ export class NetsuiteExportSettingsComponent implements OnInit {
   }
 
   addMissingOptions() {
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.reimbursable_account});
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.creditCardVendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
+    if (this.exportSettings.general_mappings) {
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.reimbursable_account});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.creditCardVendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
+    }
   }
 
   private getSettingsAndSetupForm(): void {
