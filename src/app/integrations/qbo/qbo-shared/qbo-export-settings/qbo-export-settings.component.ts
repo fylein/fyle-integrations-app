@@ -383,14 +383,16 @@ export class QboExportSettingsComponent implements OnInit {
   }
 
   private addMissingOptions() {
-    // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.bank_account});
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.expenseAccounts, newOption: this.exportSettings.general_mappings.qbo_expense_account});
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
+    if (this.exportSettings.general_mappings) {
+      // Since pagination call doesn't return all results for options, we're making use of the export settings API to fill in options
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.bank_account});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.expenseAccounts, newOption: this.exportSettings.general_mappings.qbo_expense_account});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.accountsPayables, newOption: this.exportSettings.general_mappings.accounts_payable});
 
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.default_debit_card_account});
-    this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.vendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.cccAccounts, newOption: this.exportSettings.general_mappings.default_ccc_account});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.bankAccounts, newOption: this.exportSettings.general_mappings.default_debit_card_account});
+      this.helperService.addDefaultDestinationAttributeIfNotExists({options: this.vendors, newOption: this.exportSettings.general_mappings.default_ccc_vendor});
+    }
   }
 
   private getSettingsAndSetupForm(): void {

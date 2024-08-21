@@ -337,7 +337,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
       this.creditCardAccountOptions = this.debitCardAccountOptions = this.accountsPayableOptions = accounts.results;
       this.sage300Jobs = jobs.results;
 
-      this.addMissingOptions();
+      if (exportSettingsResponse) {
+        this.addMissingOptions();
+      }
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, vendors.results, accounts.results, jobs.results);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
