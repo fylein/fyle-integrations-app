@@ -340,10 +340,13 @@ export class Sage300ExportSettingsComponent implements OnInit {
       ...groupedAttributes
     ]).subscribe(([exportSettingsResponse, importSettingsResponse, vendors, accounts, jobs]) => {
       this.exportSettings = exportSettingsResponse;
-      this.sage300ImportCodeFields = importSettingsResponse?.import_settings?.import_code_fields ? importSettingsResponse?.import_settings?.import_code_fields : [];
       this.vendorOptions = vendors.results;
       this.creditCardAccountOptions = this.debitCardAccountOptions = this.accountsPayableOptions = accounts.results;
       this.sage300Jobs = jobs.results;
+
+      if (importSettingsResponse) {
+        this.sage300ImportCodeFields = importSettingsResponse.import_settings?.import_code_fields || [];
+      }
 
       this.addMissingOptions();
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, vendors.results, accounts.results, jobs.results);

@@ -49,8 +49,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   @Input() importCodeFieldConfig: any;
 
-  isOnboarding: boolean;
-
   @Output() showWarningForDependentFields = new EventEmitter();
 
   showDependentFieldWarning: boolean;
@@ -125,13 +123,6 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   showImportCodeSection(expenseField: AbstractControl<any, any>): any {
     return expenseField.value.import_to_fyle && expenseField.value.source_field;
-  }
-
-  isImportCodeFieldDisabledportCode(): boolean {
-    if (!this.isOnboarding) {
-      return !this.isOnboarding;
-    }
-    return this.isOnboarding;
   }
 
   getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
