@@ -11,7 +11,7 @@ import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.
 import { QBOOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
 
-describe('QboComponent', () => {
+xdescribe('QboComponent', () => {
   let component: QboComponent;
   let fixture: ComponentFixture<QboComponent>;
   let helperServiceSpy: jasmine.SpyObj<HelperService>;

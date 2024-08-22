@@ -5,7 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { AuthService } from '../services/common/auth.service';
 import { Router } from '@angular/router';
 
-xdescribe('AuthGuard', () => {
+describe('AuthGuard', () => {
   let guard: AuthGuard;
   let authService: AuthService;
 

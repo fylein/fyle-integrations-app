@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { UserService } from '../misc/user.service';
 import { minimalUser } from '../../interceptor/jwt.fixture';
 
-xdescribe('AppcuesService', () => {
+describe('AppcuesService', () => {
   let service: AppcuesService;
 
   beforeEach(() => {
