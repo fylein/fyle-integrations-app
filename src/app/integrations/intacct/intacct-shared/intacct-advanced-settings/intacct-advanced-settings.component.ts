@@ -2,7 +2,7 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { AppName, ConfigurationCta, FyleField, IntacctOnboardingState, IntacctReimbursableExpensesObject, IntacctCorporateCreditCardExpensesObject, IntacctUpdateEvent, Page, PaymentSyncDirection, ProgressPhase, ToastSeverity, TrackingApp, QBDAccountingExportsState } from 'src/app/core/models/enum/enum.model';
 import { AdvancedSetting, AdvancedSettingFormOption, AdvancedSettingsGet, AdvancedSettingsPost, HourOption } from 'src/app/core/models/intacct/intacct-configuration/advanced-settings.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -50,7 +50,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   memoPreviewText: string;
 
-  adminEmails: EmailOptions[] = [];
+  adminEmails: QBDEmailOptions[] = [];
 
   hours: SelectFormOption[] = [...Array(24).keys()].map(day => {
     return {
@@ -348,7 +348,7 @@ export class IntacctAdvancedSettingsComponent implements OnInit {
 
   getAdminEmails() {
     this.isLoading= true;
-    this.advancedSettingsService.getAdditionalEmails().subscribe((emailResponse: EmailOptions[]) => {
+    this.advancedSettingsService.getAdditionalEmails().subscribe((emailResponse: QBDEmailOptions[]) => {
       this.adminEmails = emailResponse;
       this.getSettingsAndSetupForm();
     });

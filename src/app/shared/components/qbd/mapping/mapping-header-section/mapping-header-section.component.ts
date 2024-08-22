@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { MappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
+import { QBDMappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
 
 @Component({
   selector: 'app-mapping-header-section',
@@ -10,7 +10,7 @@ export class MappingHeaderSectionComponent implements OnInit {
 
   @Input() sourceType: string;
 
-  @Input() mappingStats: MappingStats;
+  @Input() mappingStats: QBDMappingStats;
 
   constructor() { }
 

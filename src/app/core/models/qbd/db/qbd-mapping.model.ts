@@ -1,31 +1,31 @@
-export type MappingPost = {
+export type QBDMappingPost = {
   attribute_type: string;
   source_value: string;
   source_id: string;
   destination_value: string | null;
 };
 
-export interface Mapping extends MappingPost {
+export interface QBDMapping extends QBDMappingPost {
   id: number;
   created_at: Date;
   updated_at: Date;
   workspace: number;
 }
 
-export type MappingResponse = {
+export type QBDMappingResponse = {
   count: number;
   next: string;
   previous: string;
-  results: Mapping[];
+  results: QBDMapping[];
 };
 
-export type MappingStats = {
+export type QBDMappingStats = {
   all_attributes_count: number;
   unmapped_attributes_count: number;
 };
 
-export class MappingModel {
-  static constructPayload(mapping: Mapping): MappingPost {
+export class QBDMappingModel {
+  static constructPayload(mapping: QBDMapping): QBDMappingPost {
     return {
       attribute_type: mapping.attribute_type,
       source_value: mapping.source_value,

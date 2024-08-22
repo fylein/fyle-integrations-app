@@ -11,7 +11,7 @@ import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.mode
 import { AppName, ConfigurationCta, ConfigurationWarningEvent, InputType, ToastSeverity, XeroFyleField } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
-import { EmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
+import { QBDEmailOptions } from 'src/app/core/models/qbd/qbd-configuration/qbd-advanced-setting.model';
 import { XeroCloneSetting, XeroCloneSettingModel } from 'src/app/core/models/xero/xero-configuration/clone-setting.model';
 import { XeroAdvancedSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-advanced-settings.model';
 import { XeroExportSettingModel } from 'src/app/core/models/xero/xero-configuration/xero-export-settings.model';
@@ -97,7 +97,7 @@ export class XeroCloneSettingsComponent implements OnInit {
 
   advancedSettingForm: FormGroup<any>;
 
-  adminEmails: EmailOptions[];
+  adminEmails: QBDEmailOptions[];
 
   billPaymentAccounts: DefaultDestinationAttribute[];
 
