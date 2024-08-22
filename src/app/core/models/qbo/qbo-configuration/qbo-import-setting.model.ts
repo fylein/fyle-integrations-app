@@ -10,7 +10,8 @@ export type QBOImportSettingWorkspaceGeneralSetting = {
   import_items: boolean,
   import_vendors_as_merchants: boolean,
   charts_of_accounts: string[],
-  import_tax_codes: boolean
+  import_tax_codes: boolean,
+  import_code_fields: string[]
 }
 
 export type QBOImportSettingGeneralMapping = {
@@ -42,6 +43,7 @@ export class QBOImportSettingModel extends ImportSettingsModel {
   }
 
   static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null, qboFields: IntegrationField[]): FormGroup {
+    const importCode = importSettings?.workspace_general_settings?.import_code_fields ? importSettings?.workspace_general_settings?.import_code_fields : [];
     const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, qboFields) : [];
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
@@ -51,7 +53,9 @@ export class QBOImportSettingModel extends ImportSettingsModel {
       taxCode: new FormControl(importSettings?.workspace_general_settings.import_tax_codes ?? false),
       importVendorsAsMerchants: new FormControl(importSettings?.workspace_general_settings.import_vendors_as_merchants ?? false),
       defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
-      searchOption: new FormControl('')
+      searchOption: new FormControl(''),
+      importCodeFields: new FormControl( importSettings?.workspace_general_settings?.import_code_fields ? importSettings.workspace_general_settings.import_code_fields : null),
+      importCategoryCode: new FormControl(importSettings?.workspace_general_settings?.import_categories ? this.getImportCodeField(importCode, 'ACCOUNT') : null),
     });
   }
 
@@ -66,7 +70,8 @@ export class QBOImportSettingModel extends ImportSettingsModel {
         import_items: importSettingsForm.get('importItems')?.value,
         charts_of_accounts: importSettingsForm.get('chartOfAccountTypes')?.value,
         import_tax_codes: importSettingsForm.get('taxCode')?.value,
-        import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value
+        import_vendors_as_merchants: importSettingsForm.get('importVendorsAsMerchants')?.value,
+        import_code_fields: importSettingsForm.get('importCodeFields')?.value
       },
       mapping_settings: mappingSettings,
       general_mappings: {
