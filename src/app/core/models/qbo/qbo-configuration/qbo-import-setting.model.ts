@@ -55,7 +55,7 @@ export class QBOImportSettingModel extends ImportSettingsModel {
       defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
       searchOption: new FormControl(''),
       importCodeFields: new FormControl( importSettings?.workspace_general_settings?.import_code_fields ? importSettings.workspace_general_settings.import_code_fields : null),
-      importCategoryCode: new FormControl(importSettings?.workspace_general_settings?.import_categories ? this.getImportCodeField(importCode, 'ACCOUNT') : null),
+      importCategoryCode: new FormControl(importSettings?.workspace_general_settings?.import_categories ? this.getImportCodeField(importCode, 'ACCOUNT') : null)
     });
   }
 

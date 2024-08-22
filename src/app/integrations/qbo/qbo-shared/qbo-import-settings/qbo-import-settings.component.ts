@@ -101,7 +101,7 @@ export class QboImportSettingsComponent implements OnInit {
         subLabel: 'Example: Meals & Entertainment'
       }
     ]
-  }
+  };
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
@@ -233,7 +233,7 @@ export class QboImportSettingsComponent implements OnInit {
         } else {
           this.updateImportCodeFields(false, DefaultImportFields.ACCOUNT);
         }
-    });	
+    });
   }
 
   private setupFormWatchers(): void {

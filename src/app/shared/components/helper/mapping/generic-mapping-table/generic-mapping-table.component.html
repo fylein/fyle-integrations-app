@@ -17,6 +17,7 @@
             <td>
                 <p-dropdown #destinationAttributes
                     appendTo="body" 
+                    (onShow)="tableDropdownWidth()"
                     [ngModel]="getDropdownValue(mapping)" 
                     [options]="destinationOptions" 
                     optionLabel="value" 
