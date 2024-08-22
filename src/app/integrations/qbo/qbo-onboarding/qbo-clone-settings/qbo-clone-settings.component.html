@@ -255,7 +255,9 @@
                     [dropdownDisplayKey]="'label'"
                     [tooltipText]="'Expense can either be exported as single line items (Expense) or as a grouped report with multiple line items (Expense Report)'">
                 </app-clone-setting-field>
-
+            </div>
+            
+            <div class="clone-setting--field" *ngIf="exportSettingForm.value.creditCardExportType">
                 <app-clone-setting-field
                     *ngIf="brandingFeatureConfig.featureFlags.exportSettings.splitExpenseGrouping && 
                     exportSettingForm.value.creditCardExportType === QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE"
