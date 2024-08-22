@@ -7,7 +7,7 @@ import { IntegrationsToastService } from 'src/app/core/services/common/integrati
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { EventEmitter } from '@angular/core';
 
-xdescribe('QboOnboardingLandingComponent', () => {
+describe('QboOnboardingLandingComponent', () => {
   let component: QboOnboardingLandingComponent;
   let fixture: ComponentFixture<QboOnboardingLandingComponent>;
   let helperServiceSpy: jasmine.SpyObj<HelperService>;
