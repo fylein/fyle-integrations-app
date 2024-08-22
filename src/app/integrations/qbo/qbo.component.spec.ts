@@ -43,7 +43,7 @@ describe('QboComponent', () => {
     windowServiceMock = {
       get nativeWindow() {
         return window;
-      },
+      }
     };
 
     await TestBed.configureTestingModule({
@@ -83,7 +83,7 @@ describe('QboComponent', () => {
   it('should setup workspace on init', () => {
     const mockWorkspace = { id: '1', onboarding_state: QBOOnboardingState.CONNECTION };
     workspaceServiceSpy.getWorkspace.and.returnValue(of([mockWorkspace]));
-    
+
     fixture.detectChanges();
 
     expect(helperServiceSpy.setBaseApiURL).toHaveBeenCalled();
@@ -99,7 +99,7 @@ describe('QboComponent', () => {
     const mockWorkspace = { id: '1', onboarding_state: QBOOnboardingState.CONNECTION };
     workspaceServiceSpy.getWorkspace.and.returnValue(of([]));
     workspaceServiceSpy.postWorkspace.and.returnValue(of(mockWorkspace));
-    
+
     fixture.detectChanges();
 
     expect(workspaceServiceSpy.postWorkspace).toHaveBeenCalled();
@@ -108,5 +108,5 @@ describe('QboComponent', () => {
     expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/integrations/qbo/onboarding/landing');
   });
 
-  
+
 });

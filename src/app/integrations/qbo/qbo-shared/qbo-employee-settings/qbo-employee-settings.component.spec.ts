@@ -31,7 +31,7 @@ describe('QboEmployeeSettingsComponent', () => {
     windowServiceMock = {
       get nativeWindow() {
         return window;
-      },
+      }
     };
     workspaceServiceSpy = jasmine.createSpyObj('WorkspaceService', ['setOnboardingState']);
 
@@ -44,8 +44,8 @@ describe('QboEmployeeSettingsComponent', () => {
         { provide: IntegrationsToastService, useValue: toastServiceSpy },
         { provide: WindowService, useValue: windowServiceMock },
         { provide: WorkspaceService, useValue: workspaceServiceSpy },
-        FormBuilder,
-      ],
+        FormBuilder
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(QboEmployeeSettingsComponent);
@@ -61,8 +61,8 @@ describe('QboEmployeeSettingsComponent', () => {
       workspace_id: 1,
       workspace_general_settings: {
         employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-        auto_map_employees: AutoMapEmployeeOptions.EMAIL,
-      },
+        auto_map_employees: AutoMapEmployeeOptions.EMAIL
+      }
     };
     const destinationAttributes: DestinationAttribute[] = [
       {
@@ -74,7 +74,7 @@ describe('QboEmployeeSettingsComponent', () => {
         value: 'some_value',
         created_at: new Date('2022-01-01T00:00:00.000Z'),
         updated_at: new Date('2022-01-01T00:00:00.000Z'),
-        workspace: 1,
+        workspace: 1
       },
       {
         id: 2,
@@ -85,8 +85,8 @@ describe('QboEmployeeSettingsComponent', () => {
         value: 'some_value',
         created_at: new Date('2022-01-01T00:00:00.000Z'),
         updated_at: new Date('2022-01-01T00:00:00.000Z'),
-        workspace: 2,
-      },
+        workspace: 2
+      }
     ];
 
     employeeSettingServiceSpy.getEmployeeSettings.and.returnValue(of(employeeSetting));
@@ -99,5 +99,5 @@ describe('QboEmployeeSettingsComponent', () => {
     expect(component.liveEntityExample).toBeDefined();
   });
 
-  
+
 });
