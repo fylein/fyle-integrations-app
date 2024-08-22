@@ -19,6 +19,7 @@ export type DestinationAttribute = {
   value: string;
   destination_id: string;
   active: boolean;
+  code?: string;
   created_at: Date;
   updated_at: Date;
   workspace: number;
