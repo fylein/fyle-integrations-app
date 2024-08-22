@@ -348,7 +348,9 @@ export class Sage300ExportSettingsComponent implements OnInit {
         this.sage300ImportCodeFields = importSettingsResponse.import_settings?.import_code_fields || [];
       }
 
-      this.addMissingOptions();
+      if (exportSettingsResponse) {
+        this.addMissingOptions();
+      }
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, vendors.results, accounts.results, jobs.results);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);
