@@ -11,6 +11,7 @@ import { Sage300AccountingExportResponse, Sage300AccountingExport } from 'src/ap
 import { AccountingExportService } from 'src/app/core/services/common/accounting-export.service';
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage300-configuration/sage300-export-setting.service';
+import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 
 @Component({
   selector: 'app-sage300-dashboard',
@@ -67,11 +68,14 @@ export class Sage300DashboardComponent implements OnInit {
 
   readonly isGradientAllowed: boolean = brandingFeatureConfig.isGradientAllowed;
 
+  importCodeFields: any;
+
   constructor(
     private accountingExportService: AccountingExportService,
     private dashboardService: DashboardService,
     private refinerService: RefinerService,
-    private sage300ExportSettingService: Sage300ExportSettingService
+    private sage300ExportSettingService: Sage300ExportSettingService,
+    private sage300ImportSettingService: Sage300ImportSettingsService
   ) { }
 
   private pollExportStatus(exportableAccountingExportIds: number[] = []): void {
@@ -128,7 +132,8 @@ export class Sage300DashboardComponent implements OnInit {
       this.getAccountingExportSummary$.pipe(catchError(() => of(null))),
       this.accountingExportService.getAccountingExports(this.accountingExportType, [AccountingExportStatus.ENQUEUED, AccountingExportStatus.IN_PROGRESS, AccountingExportStatus.EXPORT_QUEUED, AccountingExportStatus.FAILED, AccountingExportStatus.FATAL], [], 500, 0),
       this.dashboardService.getExportableAccountingExportIds(),
-      this.sage300ExportSettingService.getSage300ExportSettings()
+      this.sage300ExportSettingService.getSage300ExportSettings(),
+      this.sage300ImportSettingService.getSage300ImportSettings()
     ]).subscribe((responses) => {
       this.errors = DashboardModel.parseAPIResponseToGroupedError(responses[0].results);
       this.accountingExportSummary = responses[1];
@@ -139,6 +144,8 @@ export class Sage300DashboardComponent implements OnInit {
 
       this.reimbursableImportState = responses[4].reimbursable_expenses_export_type ? this.reimbursableExpenseImportStateMap[responses[4].reimbursable_expense_state] : null;
       this.cccImportState = responses[4].credit_card_expense_export_type ? this.cccExpenseImportStateMap[responses[4].credit_card_expense_state] : null;
+
+      this.importCodeFields = responses[5].import_settings.import_code_fields ? responses[5].import_settings.import_code_fields : [];
 
       this.isLoading = false;
 

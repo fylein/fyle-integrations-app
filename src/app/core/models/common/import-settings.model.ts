@@ -7,7 +7,8 @@ import { Sage300ImportSettingGet } from "../sage300/sage300-configuration/sage30
 export type ImportDefaultField = {
   destination_field: string,
   source_field: string,
-  formController: string
+  formController: string,
+  import_code?: string
 }
 
 export type ExpenseField = {
@@ -30,7 +31,8 @@ export type ImportSettingMappingRow = {
   import_to_fyle: boolean,
   is_custom: boolean,
   source_field: string,
-  source_placeholder: string | null
+  source_placeholder: string | null,
+  import_code?: boolean
 }
 
 export type ImportSettingsCustomFieldRow = {
@@ -39,6 +41,10 @@ export type ImportSettingsCustomFieldRow = {
   source_placeholder: string | null,
   is_dependent: boolean
 }
+
+export type ImportCodeFieldConfigType = {
+  [key: string]: boolean;
+};
 
 export class ImportSettingsModel {
 
@@ -52,11 +58,16 @@ export class ImportSettingsModel {
       destination_field: new FormControl(data.destination_field || '', RxwebValidators.unique()),
       import_to_fyle: new FormControl(data.import_to_fyle || false),
       is_custom: new FormControl(data.is_custom || false),
-      source_placeholder: new FormControl(data.source_placeholder || null)
+      source_placeholder: new FormControl(data.source_placeholder || null),
+      import_code: new FormControl(data.import_code)
     });
   }
 
-  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[] | [], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true): FormGroup[] {
+  static getImportCodeField(importCodeFields: string[], destinationField: string): boolean {
+    return importCodeFields.includes(destinationField);
+  }
+
+  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();
@@ -72,9 +83,11 @@ export class ImportSettingsModel {
           import_to_fyle: false,
           is_custom: false,
           source_field: '',
-          source_placeholder: null
+          source_placeholder: null,
+          import_code: null
       };
       if (mappingSetting) {
+        fieldData.import_code = fieldData.import_to_fyle ? this.getImportCodeField(importCodeFields, accountingAppField.attribute_type) : null;
         mappedFieldMap.set(accountingAppField.attribute_type, fieldData);
       } else {
           unmappedFieldMap.set(accountingAppField.attribute_type, fieldData);

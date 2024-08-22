@@ -5,7 +5,8 @@ import { IntegrationField } from "../../db/mapping.model";
 export type Sage300DefaultFields = {
     destination_field: string,
     source_field: string,
-    formController: string
+    formController: string,
+    import_code: string
 }
 
 export type Sage300DependentImportFields = {
@@ -27,7 +28,8 @@ export type Sage300ImportSetting = {
     import_settings: {
         import_categories: boolean,
         import_vendors_as_merchants: boolean,
-        add_commitment_details: boolean
+        add_commitment_details: boolean,
+        import_code_fields: string[] | [],
     },
     mapping_settings: ImportSettingMappingRow[] | [],
     dependent_field_settings: Sage300ImportSettingsDependentFieldSetting | null,
@@ -51,10 +53,14 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
     }
 
     static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[]): FormGroup {
-        const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, sage300Fields, false) : [] ;
+        const importCode = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
+        const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, sage300Fields, false, importCode) : [] ;
         return new FormGroup({
+            importCodeFields: new FormControl(importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings.import_code_fields : []),
             importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
+            importCategoryCode: new FormControl(importSettings?.import_settings?.import_categories ? this.getImportCodeField(importCode, 'ACCOUNT') : null),
             importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),
+            importVendorCode: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ? this.getImportCodeField(importCode, 'VENDOR') : null),
             expenseFields: new FormArray(expenseFieldsArray),
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),
@@ -72,10 +78,11 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
             import_settings: {
                 import_categories: importSettingsForm.get('importCategories')?.value,
                 import_vendors_as_merchants: importSettingsForm.get('importVendorAsMerchant')?.value,
-                add_commitment_details: importSettingsForm.get('addCommitmentDetails')?.value
+                add_commitment_details: importSettingsForm.get('addCommitmentDetails')?.value,
+                import_code_fields: importSettingsForm.get('importCodeFields')?.value
             },
             mapping_settings: mappingSettings,
-            dependent_field_settings: importSettingsForm.get('isDependentImportEnabled')?.value ? {
+            dependent_field_settings: importSettingsForm.get('isDependentImportEnabled')?.value && (importSettingsForm.get('costCodes')?.value && importSettingsForm.get('costCategory')?.value) ? {
                 cost_code_field_name: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.attribute_type : (importSettings?.dependent_field_settings?.cost_code_field_name ? importSettings.dependent_field_settings?.cost_code_field_name : null),
                 cost_code_placeholder: importSettingsForm.get('costCodes')?.value ? importSettingsForm.get('costCodes')?.value.source_placeholder : (importSettings?.dependent_field_settings?.cost_code_placeholder ? importSettings.dependent_field_settings?.cost_code_placeholder : null),
                 cost_category_field_name: importSettingsForm.get('costCategory')?.value ? importSettingsForm.get('costCategory')?.value.attribute_type : (importSettings?.dependent_field_settings?.cost_category_field_name ? importSettings.dependent_field_settings?.cost_category_field_name : null),

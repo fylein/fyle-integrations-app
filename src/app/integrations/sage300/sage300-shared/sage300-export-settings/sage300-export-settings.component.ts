@@ -15,6 +15,7 @@ import { Sage300ExportSettingService } from 'src/app/core/services/sage300/sage3
 import { Sage300HelperService } from 'src/app/core/services/sage300/sage300-helper/sage300-helper.service';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
+import { Sage300ImportSettingsService } from 'src/app/core/services/sage300/sage300-configuration/sage300-import-settings.service';
 
 @Component({
   selector: 'app-sage300-export-settings',
@@ -95,8 +96,13 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
   readonly brandingConfig = brandingConfig;
 
+  sage300ImportCodeFields: string[];
+
+  sage300Field = Sage300Field;
+
   constructor(
     private exportSettingService: Sage300ExportSettingService,
+    private importSettingsService: Sage300ImportSettingsService,
     private router: Router,
     private helperService: HelperService,
     private sage300HelperService: Sage300HelperService,
@@ -203,7 +209,7 @@ export class Sage300ExportSettingsComponent implements OnInit {
           break;
       }
 
-      this.mappingService.getPaginatedDestinationAttributes(attribuiteType, event.searchTerm).subscribe((response) => {
+      this.mappingService.getPaginatedDestinationAttributes(attribuiteType, event.searchTerm, '', this.appName).subscribe((response) => {
 
         // Insert new options to existing options
         response.results.forEach((option) => {
@@ -330,14 +336,21 @@ export class Sage300ExportSettingsComponent implements OnInit {
 
     forkJoin([
       this.exportSettingService.getSage300ExportSettings().pipe(catchError(() => of(null))),
+      this.importSettingsService.getSage300ImportSettings().pipe(catchError(() => of(null))),
       ...groupedAttributes
-    ]).subscribe(([exportSettingsResponse, vendors, accounts, jobs]) => {
+    ]).subscribe(([exportSettingsResponse, importSettingsResponse, vendors, accounts, jobs]) => {
       this.exportSettings = exportSettingsResponse;
       this.vendorOptions = vendors.results;
       this.creditCardAccountOptions = this.debitCardAccountOptions = this.accountsPayableOptions = accounts.results;
       this.sage300Jobs = jobs.results;
 
-      this.addMissingOptions();
+      if (importSettingsResponse) {
+        this.sage300ImportCodeFields = importSettingsResponse.import_settings?.import_code_fields || [];
+      }
+
+      if (exportSettingsResponse) {
+        this.addMissingOptions();
+      }
       this.exportSettingForm = ExportSettingModel.mapAPIResponseToFormGroup(this.exportSettings, vendors.results, accounts.results, jobs.results);
 
       this.helperService.addExportSettingFormValidator(this.exportSettingForm);

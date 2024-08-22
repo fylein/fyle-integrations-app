@@ -31,6 +31,10 @@ export class MappingService {
     return this.apiService.get(`/workspaces/${this.workspaceId}/export_settings/`, {});
   }
 
+  getImportSettings(): Observable<any> {
+    return this.apiService.get(`/workspaces/${this.workspaceId}/import_settings/`, {});
+  }
+
   getDestinationAttributes(attributeTypes: string | string[], version: 'v1' | 'v2', apiPath?: string, accountType?: string, active?: boolean, displayName?: string): Observable<any> {
     const params: {attribute_type__in: string | string[], account_type?: string, active?: boolean, display_name__in?: string} = {
       attribute_type__in: attributeTypes
@@ -166,9 +170,9 @@ export class MappingService {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/mappings/`, mapping);
   }
 
-  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string): Observable<PaginatedDestinationAttribute> {
+  getPaginatedDestinationAttributes(attributeType: string, value?: string, display_name?: string, appName?: string): Observable<PaginatedDestinationAttribute> {
     const workspaceId = this.workspaceService.getWorkspaceId();
-    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, display_name__in?: string} = {
+    const params: {limit: number, offset: number, attribute_type: string, active?: boolean, value__icontains?: string, value?: string, display_name__in?: string} = {
       limit: 100,
       offset: 0,
       attribute_type: attributeType,
@@ -176,7 +180,11 @@ export class MappingService {
     };
 
     if (value) {
-      params.value__icontains = value;
+      if (appName === AppName.SAGE300) {
+        params.value = value;
+      } else {
+        params.value__icontains = value;
+      }
     }
 
     if (display_name) {

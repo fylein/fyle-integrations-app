@@ -1,7 +1,7 @@
-import { TitleCasePipe } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Subject, debounceTime, interval } from 'rxjs';
+import { DropdownFilterOptions } from 'primeng/dropdown';
+import { Subject, debounceTime } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { ExtendedGenericMapping } from 'src/app/core/models/db/extended-generic-mapping.model';
@@ -12,7 +12,6 @@ import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { SentenceCasePipe } from 'src/app/shared/pipes/sentence-case.pipe';
 
 @Component({
   selector: 'app-generic-mapping-table',
@@ -44,6 +43,8 @@ export class GenericMappingTableComponent implements OnInit {
   @Input() isDashboardMappingResolve: boolean;
 
   @Input() displayName: string | undefined;
+
+  @Input() isMultiLineOption: boolean = false;
 
   private searchSubject = new Subject<string>();
 
@@ -84,15 +85,6 @@ export class GenericMappingTableComponent implements OnInit {
     return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
 
-  tableDropdownWidth() {
-    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
-    if (element) {
-      element.style.width = '300px';
-      setTimeout(() => {
-        this.filterInput.nativeElement.focus();
-    }, 0);
-    }
-  }
 
   constructDestinationOptions() {
     const mappingType:string = this.filteredMappings.flatMap(mapping =>
@@ -128,7 +120,7 @@ export class GenericMappingTableComponent implements OnInit {
       const existingOptions = this.destinationOptions.concat();
       const newOptions: DestinationAttribute[] = [];
 
-      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event.searchTerm, this.displayName).subscribe((response) => {
+      this.mappingService.getPaginatedDestinationAttributes(this.destinationField, event.searchTerm, this.displayName, this.appName).subscribe((response) => {
         response.results.forEach((option) => {
           // If option is not already present in the list, add it
           if (!this.optionsMap[option.id.toString()]) {

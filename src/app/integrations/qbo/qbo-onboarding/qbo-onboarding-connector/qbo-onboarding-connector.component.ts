@@ -14,6 +14,7 @@ import { QBOOnboardingModel } from 'src/app/core/models/qbo/qbo-configuration/qb
 import { CloneSettingService } from 'src/app/core/services/common/clone-setting.service';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
+import { StorageService } from 'src/app/core/services/common/storage.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
 import { UserService } from 'src/app/core/services/misc/user.service';
 import { QboConnectorService } from 'src/app/core/services/qbo/qbo-configuration/qbo-connector.service';
@@ -82,7 +83,8 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     private router: Router,
     private toastService: IntegrationsToastService,
     private userService: UserService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private storageService: StorageService
   ) { }
 
   connectQbo(): void {
@@ -182,11 +184,16 @@ export class QboOnboardingConnectorComponent implements OnInit, OnDestroy {
     const payload: QBOConnectorPost = QBOConnectorModel.constructPayload(code, realmId);
 
     this.qboConnectorService.connectQBO(payload).subscribe((qboCredential: QBOCredential) => {
-      this.qboHelperService.refreshQBODimensions().subscribe(() => {
-        this.handlePostQBOConnection(qboCredential);
-      }, () => {
-        this.handlePostQBOConnection(qboCredential);
+      this.qboHelperService.refreshQBODimensions().subscribe();
+
+      const fyleOrgId = this.storageService.get('org').fyle_org_id;
+      this.helperService.pollDimensionsSyncStatus({
+        onPollingComplete: () => {
+          this.handlePostQBOConnection(qboCredential);
+        },
+        getWorkspacesObserver: () => this.workspaceService.getWorkspace(fyleOrgId)
       });
+
     }, (error) => {
       const errorMessage = 'message' in error.error ? error.error.message : 'Failed to connect to QuickBooks Online. Please try again';
       if (errorMessage === 'Please choose the correct QuickBooks Online account') {
