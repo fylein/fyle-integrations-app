@@ -62,8 +62,8 @@ describe('QboEmployeeSettingsComponent', () => {
     tick();
     fixture.detectChanges();
     expect(component.employeeSettingForm).toBeDefined();
-    expect(component.employeeSettingForm.controls['employeeMapping']).toBeDefined();
-    expect(component.employeeSettingForm.controls['autoMapEmployee']).toBeDefined();
-    expect(component.employeeSettingForm.controls['searchOption']).toBeDefined();
+    expect(component.employeeSettingForm.controls.employeeMapping).toBeDefined();
+    expect(component.employeeSettingForm.controls.autoMapEmployee).toBeDefined();
+    expect(component.employeeSettingForm.controls.searchOption).toBeDefined();
   }));
 });
