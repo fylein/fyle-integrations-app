@@ -7,11 +7,11 @@ import { MappingIntacct, MappingResponse, MappingStats } from 'src/app/core/mode
 import { brandingFeatureConfig } from 'src/app/branding/branding-config';
 
 @Component({
-  selector: 'app-mapping-table',
-  templateUrl: './mapping-table.component.html',
-  styleUrls: ['./mapping-table.component.scss']
+  selector: 'app-qbd-mapping-table',
+  templateUrl: './qbd-mapping-table.component.html',
+  styleUrls: ['./qbd-mapping-table.component.scss']
 })
-export class MappingTableComponent implements OnInit {
+export class QbdMappingTableComponent implements OnInit {
 
   @Input() mappings!: QBDMapping[] | EmployeeMapping[];
 

@@ -6,11 +6,11 @@ import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.m
 import { QbdWorkspaceService } from 'src/app/core/services/qbd/qbd-core/qbd-workspace.service';
 
 @Component({
-  selector: 'app-onboarding-stepper',
-  templateUrl: './onboarding-stepper.component.html',
-  styleUrls: ['./onboarding-stepper.component.scss']
+  selector: 'app-qbd-onboarding-stepper',
+  templateUrl: './qbd-onboarding-stepper.component.html',
+  styleUrls: ['./qbd-onboarding-stepper.component.scss']
 })
-export class OnboardingStepperComponent implements OnInit {
+export class QbdOnboardingStepperComponent implements OnInit {
 
   constructor(
     private router: Router,
