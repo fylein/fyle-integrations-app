@@ -63,7 +63,7 @@ export class ImportSettingsModel {
     });
   }
 
-  static getImportCodeField(importCodeFields: string[], destinationField: string, importCodeFieldCodeConfig: ImportCodeFieldConfigType): any {
+  static getImportCodeField(importCodeFields: string[], destinationField: string, importCodeFieldCodeConfig: ImportCodeFieldConfigType): boolean | null {
     if (importCodeFields.includes(destinationField)) {
       return importCodeFields.includes(destinationField);
     } else if (!importCodeFieldCodeConfig[destinationField]) {
