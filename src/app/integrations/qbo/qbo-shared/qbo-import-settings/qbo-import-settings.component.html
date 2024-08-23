@@ -43,7 +43,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="importSettingForm.value.importCategories">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories">
                         <app-configuration-select-field
                             [appName]="appName"
                             [form]="importSettingForm"

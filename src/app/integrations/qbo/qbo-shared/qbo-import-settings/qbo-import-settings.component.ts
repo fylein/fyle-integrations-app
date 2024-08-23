@@ -101,7 +101,7 @@ export class QboImportSettingsComponent implements OnInit {
         subLabel: 'Example: Meals & Entertainment'
       }
     ]
-  }
+  };
 
   constructor(
     @Inject(FormBuilder) private formBuilder: FormBuilder,
@@ -219,7 +219,8 @@ export class QboImportSettingsComponent implements OnInit {
     this.importSettingForm.controls.importCategories.valueChanges.subscribe((isImportCategoriesEnabled) => {
       if (!isImportCategoriesEnabled) {
         this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
-        this.helper.clearValidatorAndResetValue(this.importSettingForm, 'importCategoryCode');
+        this.importSettingForm.controls.importCategoryCode.clearValidators();
+        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.importSettings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.qboImportCodeFieldCodeConfig));
       } if (isImportCategoriesEnabled) {
 		    this.helper.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
       }
@@ -233,7 +234,7 @@ export class QboImportSettingsComponent implements OnInit {
         } else {
           this.updateImportCodeFields(false, DefaultImportFields.ACCOUNT);
         }
-    });	
+    });
   }
 
   private setupFormWatchers(): void {
@@ -281,7 +282,7 @@ export class QboImportSettingsComponent implements OnInit {
       }
 
       this.qboImportCodeFieldCodeConfig = importCodeFieldConfig;
-      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields);
+      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(this.importSettings, this.qboFields, this.qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.updateImportCodeFieldConfig();

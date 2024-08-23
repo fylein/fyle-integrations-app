@@ -378,8 +378,9 @@ export class QboCloneSettingsComponent implements OnInit {
       this.mappingService.getFyleFields('v1'),
       this.qboConnectorService.getQBOCredentials(),
       this.configurationService.getAdditionalEmails(),
-      this.qboImportSettingsService.getQBOFields()
-    ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, qboCredentials, adminEmails, qboFields]) => {
+      this.qboImportSettingsService.getQBOFields(),
+      this.qboImportSettingsService.getImportCodeFieldConfig()
+    ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, qboCredentials, adminEmails, qboFields, qboImportCodeFieldCodeConfig]) => {
       this.cloneSetting = cloneSetting;
 
       // Employee Settings
@@ -426,7 +427,7 @@ export class QboCloneSettingsComponent implements OnInit {
         this.isTaxGroupSyncAllowed = true;
       }
 
-      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields);
+      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
       this.setupImportSettingFormWatcher();

@@ -63,11 +63,16 @@ export class ImportSettingsModel {
     });
   }
 
-  static getImportCodeField(importCodeFields: string[], destinationField: string): boolean {
-    return importCodeFields.includes(destinationField);
+  static getImportCodeField(importCodeFields: string[], destinationField: string, importCodeFieldCodeConfig: ImportCodeFieldConfigType): any {
+    if (importCodeFields.includes(destinationField)) {
+      return importCodeFields.includes(destinationField);
+    } else if (!importCodeFieldCodeConfig[destinationField]) {
+      return false;
+    }
+    return null;
   }
 
-  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[], accountingAppFields: IntegrationField[], isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
+  static constructFormArray(importSettingsMappingSettings: ImportSettingMappingRow[], accountingAppFields: IntegrationField[], importCodeFieldCodeConfig?: ImportCodeFieldConfigType, isDestinationFixedImport: boolean = true, importCodeFields: string[] | [] = []): FormGroup[] {
     const expenseFieldFormArray: FormGroup[] = [];
     const mappedFieldMap = new Map<string, any>();
     const unmappedFieldMap = new Map<string, any>();
@@ -87,7 +92,7 @@ export class ImportSettingsModel {
           import_code: null
       };
       if (mappingSetting) {
-        fieldData.import_code = fieldData.import_to_fyle ? this.getImportCodeField(importCodeFields, accountingAppField.attribute_type) : null;
+        fieldData.import_code = importCodeFieldCodeConfig ? this.getImportCodeField(importCodeFields, accountingAppField.attribute_type, importCodeFieldCodeConfig) : null;
         mappedFieldMap.set(accountingAppField.attribute_type, fieldData);
       } else {
           unmappedFieldMap.set(accountingAppField.attribute_type, fieldData);
