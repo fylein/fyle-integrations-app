@@ -30,7 +30,8 @@ export const c1FeatureConfig: FeatureConfiguration[string] = {
             importItems: true,
             importProjects: true,
             allowCustomSegment: false,
-            dependentField: true
+            dependentField: true,
+            allowImportCode: false
         },
         advancedSettings: {
             autoCreateVendors: false,

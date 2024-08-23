@@ -1,9 +1,8 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsModel } from "../../common/import-settings.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
 import { MappingSetting } from "../../db/mapping-setting.model";
 import { IntegrationField } from "../../db/mapping.model";
-import { QBOField } from "../../enum/enum.model";
 
 export type QBOImportSettingWorkspaceGeneralSetting = {
   import_categories: boolean,
@@ -42,9 +41,9 @@ export class QBOImportSettingModel extends ImportSettingsModel {
     ];
   }
 
-  static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null, qboFields: IntegrationField[]): FormGroup {
+  static mapAPIResponseToFormGroup(importSettings: QBOImportSettingGet | null, qboFields: IntegrationField[], qboImportCodeFieldCodeConfig: ImportCodeFieldConfigType): FormGroup {
     const importCode = importSettings?.workspace_general_settings?.import_code_fields ? importSettings?.workspace_general_settings?.import_code_fields : [];
-    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, qboFields) : [];
+    const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, qboFields, qboImportCodeFieldCodeConfig) : [];
     return new FormGroup({
       importCategories: new FormControl(importSettings?.workspace_general_settings.import_categories ?? false),
       expenseFields: new FormArray(expenseFieldsArray),
@@ -55,7 +54,7 @@ export class QBOImportSettingModel extends ImportSettingsModel {
       defaultTaxCode: new FormControl(importSettings?.general_mappings?.default_tax_code?.id ? importSettings.general_mappings.default_tax_code : null),
       searchOption: new FormControl(''),
       importCodeFields: new FormControl( importSettings?.workspace_general_settings?.import_code_fields ? importSettings.workspace_general_settings.import_code_fields : null),
-      importCategoryCode: new FormControl(importSettings?.workspace_general_settings?.import_categories ? this.getImportCodeField(importCode, 'ACCOUNT') : null)
+      importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', qboImportCodeFieldCodeConfig))
     });
   }
 

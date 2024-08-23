@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode">
             <div *ngFor="let defaultField of defaultImportFields">
                 <div *ngIf="defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value">
                     <app-configuration-select-field
