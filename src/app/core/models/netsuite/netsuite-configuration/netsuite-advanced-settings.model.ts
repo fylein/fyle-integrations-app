@@ -1,7 +1,7 @@
 import { FormControl, FormGroup } from "@angular/forms";
 import { EmailOption, SelectFormOption } from "../../common/select-form-option.model";
 import { DefaultDestinationAttribute } from "../../db/destination-attribute.model";
-import { NetsuiteDefaultLevelOptions, NetsuitePaymentSyncDirection, QBOPaymentSyncDirection } from "../../enum/enum.model";
+import { NetsuiteDefaultLevelOptions, NetsuitePaymentSyncDirection, PaymentSyncDirection } from "../../enum/enum.model";
 import { AdvancedSettingValidatorRule, AdvancedSettingsModel } from "../../common/advanced-settings.model";
 import { HelperUtility } from "../../common/helper.model";
 import { brandingConfig } from "src/app/branding/branding-config";
@@ -101,7 +101,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
 
   static getValidators(): AdvancedSettingValidatorRule {
     return {
-      paymentSync: 'billPaymentAccount',
+      paymentSync: 'paymentAccount',
       exportSchedule: 'exportScheduleFrequency'
     };
   }
@@ -112,7 +112,7 @@ export class NetsuiteAdvancedSettingModel extends HelperUtility {
 
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
-        if (selectedValue) {
+        if (selectedValue && ((keys[index] === 'paymentSync' && selectedValue === NetsuitePaymentSyncDirection.FYLE_TO_NETSUITE) || (keys[index] !== 'paymentSync'))) {
           this.markControllerAsRequired(form, value);
         } else {
           this.clearValidatorAndResetValue(form, value);
