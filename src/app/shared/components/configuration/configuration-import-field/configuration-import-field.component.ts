@@ -64,7 +64,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       {
         label: 'Import Codes + Names',
         value: true,
-        subLabel: 'Example: 4567 Meals & Entertainment'
+        subLabel: 'Example: 4567: Meals & Entertainment'
       },
       {
         label: 'Import Names only',
@@ -76,7 +76,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       {
         label: 'Import Codes + Names',
         value: true,
-        subLabel: 'Example: 4567 Joanna'
+        subLabel: 'Example: 4567: Joanna'
       },
       {
         label: 'Import Names only',
@@ -88,7 +88,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       {
         label: 'Import Codes + Names',
         value: true,
-        subLabel: 'Example: 4567 Test Job'
+        subLabel: 'Example: 4567: Test Job'
       },
       {
         label: 'Import Names only',
@@ -119,6 +119,10 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   get expenseFieldsGetter() {
     return this.form.get('expenseFields') as FormArray;
+  }
+
+  getContentForJob(destinationField: string): string {
+    return destinationField === this.dependentDestinationValue ? 'The option you choose for importing '+ this.helper.sentenseCaseConversion(this.getDestinationField(destinationField)).toLowerCase() +' will also apply to cost codes and cost categories.' : '';
   }
 
   showImportCodeSection(expenseField: AbstractControl<any, any>): any {
