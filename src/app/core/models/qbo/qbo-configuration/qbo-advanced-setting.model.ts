@@ -80,13 +80,18 @@ export class QBOAdvancedSettingModel extends HelperUtility {
   static setConfigurationSettingValidatorsAndWatchers(form: FormGroup): void {
     const validatorRule = this.getValidators();
     const keys = Object.keys(validatorRule);
-
+  
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
         if (selectedValue) {
           this.markControllerAsRequired(form, value);
         } else {
           this.clearValidatorAndResetValue(form, value);
+        }
+        if (!form.value.paymentSync && form.value.paymentSync != 'fyle_to_qbo') {
+          if (selectedValue === 'billPaymentAccount') {
+            this.clearValidatorAndResetValue(form, value);
+          }
         }
       });
     });
