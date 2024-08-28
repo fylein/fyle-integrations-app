@@ -83,7 +83,7 @@ export class QBOAdvancedSettingModel extends HelperUtility {
 
     Object.values(validatorRule).forEach((value, index) => {
       form.controls[keys[index]].valueChanges.subscribe((selectedValue) => {
-        if (selectedValue) {
+        if (selectedValue && ((keys[index] === 'paymentSync' && selectedValue === QBOPaymentSyncDirection.FYLE_TO_QBO) || (keys[index] !== 'paymentSync'))) {
           this.markControllerAsRequired(form, value);
         } else {
           this.clearValidatorAndResetValue(form, value);
