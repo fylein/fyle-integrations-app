@@ -4,7 +4,7 @@ import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/
 import { ImportDefaultField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
 import { AppName, MappingSourceField, Sage300Field, XeroFyleField } from 'src/app/core/models/enum/enum.model';
-import { Sage300DefaultFields, Sage300DependentImportFields, Sage300ImportSettingModel } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
+import { Sage300DefaultFields, Sage300DependentImportFields } from 'src/app/core/models/sage300/sage300-configuration/sage300-import-settings.model';
 import { MappingSetting } from 'src/app/core/models/intacct/intacct-configuration/import-settings.model';
 import { HelperService } from 'src/app/core/services/common/helper.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -122,7 +122,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
   }
 
   showImportCodeSection(expenseField: AbstractControl<any, any>): any {
-    return expenseField.value.import_to_fyle && expenseField.value.source_field;
+    return expenseField.value.import_to_fyle && expenseField.value.source_field && this.importCodeFieldConfig[expenseField.value.destination_field];
   }
 
   getImportCodeSelectorOptions(destinationField: string): SelectFormOption[] {
@@ -276,16 +276,27 @@ export class ConfigurationImportFieldComponent implements OnInit {
 
   setupImportCodeCounter() {
     Object.keys(this.form.controls).forEach(key => {
+      const destinationValue = key === 'importCategories' ? 'ACCOUNT' : 'VENDOR';
       if (['importCategories', 'importVendorAsMerchant'].includes(key) && this.form.get(key)?.value) {
+        if (this.importCodeFieldConfig[destinationValue]) {
         this.isImportCodeEnabledCounter.push(true);
+        } else {
+        this.isImportCodeEnabledCounter.pop();
+        }
       }
     });
     Object.keys(this.expenseFieldsGetter.controls).forEach(key => {
       const importCode = this.expenseFieldsGetter.controls[key as unknown as number].get('import_to_fyle');
-      if (importCode?.value === true) {
+      const destinationValue = this.expenseFieldsGetter.controls[key as unknown as number].get('destination_field')?.value;
+      if (importCode?.value === true ) {
+        if (this.importCodeFieldConfig[destinationValue]) {
         this.isImportCodeEnabledCounter.push(true);
+        } else {
+        this.isImportCodeEnabledCounter.pop();
+        }
       }
     });
+    return true;
   }
 
   ngOnInit(): void {

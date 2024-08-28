@@ -171,15 +171,15 @@
             Add more fields
         </a>
     </div>
-    <div *ngIf="appName === AppName.SAGE300 && isImportCodeEnabledCounter.length > 0">
+    <div *ngIf="appName === AppName.SAGE300 && isImportCodeEnabledCounter.length > 0 && setupImportCodeCounter()">
         <div class="tw-pt-24-px">
             <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                 <div>
                     <h4 class="tw-text-16-px tw-text-normal-text-color tw-mb-8-px">
-                        Configure how each dimension's values should be imported
+                        Configure import method
                     </h4>
                     <p class="tw-text-14-px tw-text-text-muted">
-                        You can import either the names of your chart of accounts or both names and codes, based on how your employees identify these values.
+                        You have the option to import either just the names of your values or both names and code, based on how your employees identify these values.
                     </p>
                 </div>
                 <div class="tw-pt-16-px">
@@ -189,9 +189,9 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode">
+        <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && appName === AppName.SAGE300">
             <div *ngFor="let defaultField of defaultImportFields">
-                <div *ngIf="defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value">
+                <div *ngIf="defaultField.import_code !== undefined && this.form.controls[defaultField.formController].value && importCodeFieldConfig[defaultField.destination_field]">
                     <app-configuration-select-field
                         [appName]="appName"
                         [form]="form"
