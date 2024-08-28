@@ -60,6 +60,8 @@
                     <app-configuration-select-field *ngIf="this.advancedSettingForm.controls.paymentSync.value === 'fyle_to_netsuite' && isPaymentSyncFieldVisible() && brandingFeatureConfig.featureFlags.advancedSettings.paymentsSync"
                         [form]="advancedSettingForm"
                         [destinationAttributes]="paymentAccounts"
+                        [isFieldMandatory]="true"
+                        [mandatoryErrorListName]="'payment account'"
                         [optionLabel]="'name'"
                         [iconPath]="'arrow-rotate'"
                         [label]="brandingContent.defaultPaymentAccount"
