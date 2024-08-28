@@ -2,6 +2,7 @@
     <div *ngIf="!isImportInProgress" class="tw-rounded-8-px tw-bg-white tw-border-1-px tw-border-border-tertiary tw-z-1 tw-relative" [ngClass]="{'tw-shadow-app-card': brandingConfig.brandId === 'fyle', 'tw-shadow-shadow-level-1': brandingConfig.brandId === 'co'}">
         <div class="tw-p-24-px">
             <div class="tw-flex tw-justify-between tw-items-center ">
+                <img *ngIf="brandingConfig.brandId === 'co'" src="{{logoPath}}" width="logoWidth" height="44px" class="tw-mr-24-px"/>
                 <div class="tw-w-4/5">
                     <div class="tw-flex tw-items-center">
                         <app-svg-icon [styleClasses]="'tw-flex tw-mt-1-px tw-pr-8-px'" *ngIf="brandingFeatureConfig.illustrationsAllowed && !isExportInProgress && !exportableAccountingExportIds.length" [svgSource]="'check'" [height]="'24px'" [width]="'24px'"></app-svg-icon>
