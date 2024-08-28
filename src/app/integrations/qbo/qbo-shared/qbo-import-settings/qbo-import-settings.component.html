@@ -43,15 +43,15 @@
                         </div>
                     </div>
 
-                    <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories">
+                    <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
                         <app-configuration-select-field
                             [appName]="appName"
                             [form]="importSettingForm"
                             [isDisableTextRequired]="false"
                             [options]="getImportCodeSelectorOptions(DefaultImportFields.ACCOUNT)"
                             [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()"
-                            [label]="'How to import the '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +' from ' + appName + '?'"
-                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +' or both the names and codes. Choose the option that best suits how your employees identify the values.'"
+                            [label]="'How to import the '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s from ' + appName + '?'"
+                            [subLabel]="'You have the option to import either just the names of your '+ helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s or both the names and codes.'"
                             [isMultiLineOption]="true"
                             [isFieldMandatory]="true"
                             [customErrorMessage]="'Please select how the ' + helper.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() + ' should be imported'"
