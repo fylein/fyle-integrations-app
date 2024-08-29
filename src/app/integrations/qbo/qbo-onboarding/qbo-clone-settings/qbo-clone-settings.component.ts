@@ -160,7 +160,7 @@ export class QboCloneSettingsComponent implements OnInit {
     };
   });
 
-  DefaultImportFields = DefaultImportFields
+  DefaultImportFields = DefaultImportFields;
 
   importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
     "ACCOUNT": [
