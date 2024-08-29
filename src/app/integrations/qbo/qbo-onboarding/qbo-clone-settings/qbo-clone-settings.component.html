@@ -311,21 +311,18 @@
                         [tooltipText]="'By default expense will be selected. Open the dropdown to select more as per your requirements'">
                     </app-clone-setting-field>
                 </div>
-                <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
-                    <app-configuration-select-field
-                        [appName]="appName"
+                <div class="clone-setting--dependent-field" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
+                    <app-clone-setting-field
                         [form]="importSettingForm"
-                        [isDisableTextRequired]="false"
                         [options]="importCodeSelectorOptions[DefaultImportFields.ACCOUNT]"
                         [placeholder]="'Select how to import ' + helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()"
                         [label]="'How to import the '+ helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s from ' + appName + '?'"
-                        [subLabel]="'You have the option to import either just the names of your '+ helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s or both the names and codes.'"
+                        [tooltipText]="'You have the option to import either just the names of your '+ helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s or both the names and codes.'"
                         [isMultiLineOption]="true"
                         [isFieldMandatory]="true"
-                        [customErrorMessage]="'Please select how the ' + helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() + ' should be imported'"
-                        [isDisabled]="!qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]"
+                        [dropdownDisplayKey]="'label'"
                         [formControllerName]="'importCategoryCode'">
-                    </app-configuration-select-field>
+                    </app-clone-setting-field>
                 </div>
             </div>
     
