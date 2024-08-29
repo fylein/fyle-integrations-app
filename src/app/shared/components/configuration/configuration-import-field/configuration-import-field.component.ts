@@ -76,7 +76,7 @@ export class ConfigurationImportFieldComponent implements OnInit {
       {
         label: 'Import Codes + Names',
         value: true,
-        subLabel: 'Example: 4567: Joanna'
+        subLabel: 'Example: 24: Joanna'
       },
       {
         label: 'Import Names only',
@@ -88,12 +88,12 @@ export class ConfigurationImportFieldComponent implements OnInit {
       {
         label: 'Import Codes + Names',
         value: true,
-        subLabel: 'Example: 4567: Test Job'
+        subLabel: 'Example: 12-00-201: PCL Construction'
       },
       {
         label: 'Import Names only',
         value: false,
-        subLabel: 'Example: Test Job'
+        subLabel: 'Example: PCL Construction'
       }
     ]
   };
