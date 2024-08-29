@@ -5,7 +5,7 @@ import { forkJoin } from 'rxjs';
 import { brandingConfig, brandingContent, brandingFeatureConfig } from 'src/app/branding/branding-config';
 import { AdvancedSettingsModel, EmailOption } from 'src/app/core/models/common/advanced-settings.model';
 import { EmployeeSettingModel } from 'src/app/core/models/common/employee-settings.model';
-import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
+import { ExpenseField, ImportCodeFieldConfigType, ImportSettingsModel } from 'src/app/core/models/common/import-settings.model';
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
@@ -183,7 +183,9 @@ export class QboCloneSettingsComponent implements OnInit {
 
   readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
 
-  qboImportCodeFieldCodeConfig: any;
+  qboImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
+
+  cloneQboImportCodeFieldCodeConfig: ImportCodeFieldConfigType;
 
   constructor(
     private cloneSettingService: CloneSettingService,
@@ -342,8 +344,42 @@ export class QboCloneSettingsComponent implements OnInit {
     });
   }
 
+  updateImportCodeFields(isImportCodeEnabled: boolean, value: string): void {
+    let fields = this.importSettingForm.get('importCodeFields')?.value;
+    if (!isImportCodeEnabled && this.qboImportCodeFieldCodeConfig[value]) {
+      fields = fields.filter((field: string) => field !== value);
+    } else if (isImportCodeEnabled && !fields.includes(value)) {
+      fields.push(value);
+    }
+    this.importSettingForm.get('importCodeFields')?.patchValue(fields);
+  }
+
+  private createCOAWatcher(): void {
+    this.importSettingForm.controls.importCategories.valueChanges.subscribe((isImportCategoriesEnabled) => {
+      if (!isImportCategoriesEnabled) {
+        this.importSettingForm.controls.chartOfAccountTypes.setValue(['Expense']);
+        this.importSettingForm.controls.importCategoryCode.clearValidators();
+        this.importSettingForm.controls.importCategoryCode.setValue(ImportSettingsModel.getImportCodeField(this.cloneSetting.import_settings.workspace_general_settings.import_code_fields, DefaultImportFields.ACCOUNT, this.cloneQboImportCodeFieldCodeConfig));
+      } if (isImportCategoriesEnabled) {
+		    this.helperService.markControllerAsRequired(this.importSettingForm, 'importCategoryCode');
+      }
+    });
+  }
+
+  private importCategroyCodeWatcher(): void {
+    this.importSettingForm.controls.importCategoryCode.valueChanges.subscribe((isImportCategorieCode) => {
+      if (isImportCategorieCode && this.importSettingForm.controls.importCategories) {
+          this.updateImportCodeFields(true, DefaultImportFields.ACCOUNT);
+        } else {
+          this.updateImportCodeFields(false, DefaultImportFields.ACCOUNT);
+        }
+    });
+  }
+
   private setupImportSettingFormWatcher(): void {
     this.createTaxCodeWatcher();
+    this.createCOAWatcher();
+    this.importCategroyCodeWatcher();
     const expenseFieldArray = this.importSettingForm.get('expenseFields') as FormArray;
     expenseFieldArray.controls.forEach((control:any) => {
       control.valueChanges.subscribe((value: { source_field: string; destination_field: string; }) => {
@@ -400,70 +436,78 @@ export class QboCloneSettingsComponent implements OnInit {
       this.qboImportSettingsService.getQBOFields(),
       this.qboImportSettingsService.getImportCodeFieldConfig()
     ]).subscribe(([cloneSetting, destinationAttributes, fyleFieldsResponse, qboCredentials, adminEmails, qboFields, qboImportCodeFieldCodeConfig]) => {
-      this.cloneSetting = cloneSetting;
 
-      // Employee Settings
-      this.employeeSettingForm = QBOEmployeeSettingModel.parseAPIResponseToFormGroup(cloneSetting.employee_mappings);
+      const workspaceId = +this.workspaceService.getWorkspaceId();
+      this.workspaceService.setWorkspaceId(cloneSetting.workspace_id);
 
-      // Export Settings
-      this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.cccAccounts = destinationAttributes.CREDIT_CARD_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.accountsPayables = destinationAttributes.ACCOUNTS_PAYABLE.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.vendors = destinationAttributes.VENDOR.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
+      this.qboImportSettingsService.getImportCodeFieldConfig().subscribe((cloneQboImportCodeFieldCodeConfig) => {
+        this.cloneSetting = cloneSetting;
+        this.workspaceService.setWorkspaceId(workspaceId);
 
-      this.isImportItemsEnabled = cloneSetting.import_settings.workspace_general_settings.import_items;
+        // Employee Settings
+        this.employeeSettingForm = QBOEmployeeSettingModel.parseAPIResponseToFormGroup(cloneSetting.employee_mappings);
 
-      this.reimbursableExportTypes = QBOExportSettingModel.getReimbursableExportTypeOptions(cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping);
-      this.showNameInJournalOption = cloneSetting.export_settings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
-      this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(cloneSetting.export_settings, cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping);
+        // Export Settings
+        this.bankAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.cccAccounts = destinationAttributes.CREDIT_CARD_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.accountsPayables = destinationAttributes.ACCOUNTS_PAYABLE.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.vendors = destinationAttributes.VENDOR.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.expenseAccounts = this.bankAccounts.concat(this.cccAccounts);
 
-      this.helperService.addExportSettingFormValidator(this.exportSettingForm);
+        this.isImportItemsEnabled = cloneSetting.import_settings.workspace_general_settings.import_items;
 
-      const [exportSettingValidatorRule, exportModuleRule] = QBOExportSettingModel.getValidators();
+        this.reimbursableExportTypes = QBOExportSettingModel.getReimbursableExportTypeOptions(cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping);
+        this.showNameInJournalOption = cloneSetting.export_settings.workspace_general_settings?.corporate_credit_card_expenses_object === QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY ? true : false;
+        this.exportSettingForm = QBOExportSettingModel.mapAPIResponseToFormGroup(cloneSetting.export_settings, cloneSetting.employee_mappings.workspace_general_settings.employee_field_mapping);
 
-      this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
+        this.helperService.addExportSettingFormValidator(this.exportSettingForm);
 
-      if (cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object);
-      }
+        const [exportSettingValidatorRule, exportModuleRule] = QBOExportSettingModel.getValidators();
 
-      if (cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object) {
-        this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object);
-      }
+        this.helperService.setConfigurationSettingValidatorsAndWatchers(exportSettingValidatorRule, this.exportSettingForm);
 
-      this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+        if (cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object) {
+          this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[0], cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object);
+        }
 
-      this.setupCustomWatchers();
+        if (cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object) {
+          this.exportSettingService.setupDynamicValidators(this.exportSettingForm, exportModuleRule[1], cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object);
+        }
+
+        this.exportSettingService.setExportTypeValidatorsAndWatchers(exportModuleRule, this.exportSettingForm);
+
+        this.setupCustomWatchers();
 
 
-      // Import Settings
-      this.qboFields = qboFields;
-      this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.isImportMerchantsAllowed = !cloneSetting.advanced_configurations.workspace_general_settings.auto_create_merchants_as_vendors;
+        // Import Settings
+        this.qboFields = qboFields;
+        this.taxCodes = destinationAttributes.TAX_CODE.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.isImportMerchantsAllowed = !cloneSetting.advanced_configurations.workspace_general_settings.auto_create_merchants_as_vendors;
 
-      if (qboCredentials && qboCredentials.country !== 'US') {
-        this.isTaxGroupSyncAllowed = true;
-      }
-      this.qboImportCodeFieldCodeConfig = qboImportCodeFieldCodeConfig;
-      this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, qboImportCodeFieldCodeConfig);
-      this.fyleFields = fyleFieldsResponse;
-      this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
-      this.setupImportSettingFormWatcher();
-      this.initializeCustomFieldForm(false);
+        if (qboCredentials && qboCredentials.country !== 'US') {
+          this.isTaxGroupSyncAllowed = true;
+        }
+        this.qboImportCodeFieldCodeConfig = qboImportCodeFieldCodeConfig;
+        this.cloneQboImportCodeFieldCodeConfig = cloneQboImportCodeFieldCodeConfig;
+        this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, cloneQboImportCodeFieldCodeConfig);
+        this.fyleFields = fyleFieldsResponse;
+        this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });
+        this.setupImportSettingFormWatcher();
+        this.initializeCustomFieldForm(false);
 
-      // Advanced Settings
-      this.adminEmails = adminEmails;
-      if (this.cloneSetting.advanced_configurations.workspace_schedules?.additional_email_options && this.cloneSetting.advanced_configurations.workspace_schedules?.additional_email_options.length > 0) {
-        this.adminEmails = this.adminEmails.concat(this.cloneSetting.advanced_configurations.workspace_schedules?.additional_email_options);
-      }
+        // Advanced Settings
+        this.adminEmails = adminEmails;
+        if (this.cloneSetting.advanced_configurations.workspace_schedules?.additional_email_options && this.cloneSetting.advanced_configurations.workspace_schedules?.additional_email_options.length > 0) {
+          this.adminEmails = this.adminEmails.concat(this.cloneSetting.advanced_configurations.workspace_schedules?.additional_email_options);
+        }
 
-      this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
-      this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails);
+        this.billPaymentAccounts = destinationAttributes.BANK_ACCOUNT.map((option: DestinationAttribute) => QBOExportSettingModel.formatGeneralMappingPayload(option));
+        this.advancedSettingForm = QBOAdvancedSettingModel.mapAPIResponseToFormGroup(this.cloneSetting.advanced_configurations, false, this.adminEmails);
 
-      this.setupAdvancedSettingFormWatcher();
+        this.setupAdvancedSettingFormWatcher();
 
-      this.isLoading = false;
+        this.isLoading = false;
+      });
     });
   }
 
