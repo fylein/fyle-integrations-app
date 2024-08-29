@@ -9,7 +9,7 @@ import { ExpenseField, ImportSettingsModel } from 'src/app/core/models/common/im
 import { SelectFormOption } from 'src/app/core/models/common/select-form-option.model';
 import { DefaultDestinationAttribute, DestinationAttribute } from 'src/app/core/models/db/destination-attribute.model';
 import { FyleField, IntegrationField } from 'src/app/core/models/db/mapping.model';
-import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, EmployeeFieldMapping, ExpenseGroupingFieldOption, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { AppName, AutoMapEmployeeOptions, ConfigurationCta, ConfigurationWarningEvent, DefaultImportFields, EmployeeFieldMapping, ExpenseGroupingFieldOption, InputType, NameInJournalEntry, QBOCorporateCreditCardExpensesObject, QBOField, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 import { ConfigurationWarningOut } from 'src/app/core/models/misc/configuration-warning.model';
 import { OnboardingStepper } from 'src/app/core/models/misc/onboarding-stepper.model';
 import { QBOAdvancedSettingModel } from 'src/app/core/models/qbo/qbo-configuration/qbo-advanced-setting.model';
@@ -160,11 +160,30 @@ export class QboCloneSettingsComponent implements OnInit {
     };
   });
 
+  DefaultImportFields = DefaultImportFields
+
+  importCodeSelectorOptions: Record<string, { label: string; value: boolean; subLabel: string; }[]> = {
+    "ACCOUNT": [
+      {
+        label: 'Import Codes + Names',
+        value: true,
+        subLabel: 'Example: 4567 Meals & Entertainment'
+      },
+      {
+        label: 'Import Names only',
+        value: false,
+        subLabel: 'Example: Meals & Entertainment'
+      }
+    ]
+  };
+
   readonly AppName = AppName;
 
   readonly brandingFeatureConfig = brandingFeatureConfig;
 
   readonly brandingContent = brandingContent.netsuite.configuration.advancedSettings;
+
+  qboImportCodeFieldCodeConfig: any;
 
   constructor(
     private cloneSettingService: CloneSettingService,
@@ -426,7 +445,7 @@ export class QboCloneSettingsComponent implements OnInit {
       if (qboCredentials && qboCredentials.country !== 'US') {
         this.isTaxGroupSyncAllowed = true;
       }
-
+      this.qboImportCodeFieldCodeConfig = qboImportCodeFieldCodeConfig;
       this.importSettingForm = QBOImportSettingModel.mapAPIResponseToFormGroup(cloneSetting.import_settings, this.qboFields, qboImportCodeFieldCodeConfig);
       this.fyleFields = fyleFieldsResponse;
       this.fyleFields.push({ attribute_type: 'custom_field', display_name: 'Create a Custom Field', is_dependent: false });

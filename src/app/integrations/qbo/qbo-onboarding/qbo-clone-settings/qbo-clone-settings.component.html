@@ -311,6 +311,22 @@
                         [tooltipText]="'By default expense will be selected. Open the dropdown to select more as per your requirements'">
                     </app-clone-setting-field>
                 </div>
+                <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importSettingForm.value.importCategories && qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]">
+                    <app-configuration-select-field
+                        [appName]="appName"
+                        [form]="importSettingForm"
+                        [isDisableTextRequired]="false"
+                        [options]="importCodeSelectorOptions[DefaultImportFields.ACCOUNT]"
+                        [placeholder]="'Select how to import ' + helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase()"
+                        [label]="'How to import the '+ helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s from ' + appName + '?'"
+                        [subLabel]="'You have the option to import either just the names of your '+ helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() +'s or both the names and codes.'"
+                        [isMultiLineOption]="true"
+                        [isFieldMandatory]="true"
+                        [customErrorMessage]="'Please select how the ' + helperService.sentenseCaseConversion(DefaultImportFields.ACCOUNT).toLowerCase() + ' should be imported'"
+                        [isDisabled]="!qboImportCodeFieldCodeConfig[DefaultImportFields.ACCOUNT]"
+                        [formControllerName]="'importCategoryCode'">
+                    </app-configuration-select-field>
+                </div>
             </div>
     
             <div class="clone-setting--field" *ngIf="cloneSetting.export_settings.workspace_general_settings.reimbursable_expenses_object !== QBOReimbursableExpensesObject.JOURNAL_ENTRY && cloneSetting.export_settings.workspace_general_settings.corporate_credit_card_expenses_object !== QBOCorporateCreditCardExpensesObject.JOURNAL_ENTRY">
