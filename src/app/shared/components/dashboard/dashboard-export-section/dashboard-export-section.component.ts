@@ -56,7 +56,7 @@ export class DashboardExportSectionComponent implements OnInit {
   ]);
 
   get logoPath(): string {
-    return this.logoPathsMap.get(this.appName);
+    return this.logoPathsMap.get(this.appName) || '';
   }
 
   private constructImportStates() {
