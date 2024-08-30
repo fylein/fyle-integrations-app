@@ -10,6 +10,7 @@ import { WorkspaceService } from 'src/app/core/services/common/workspace.service
 import { QboHelperService } from 'src/app/core/services/qbo/qbo-core/qbo-helper.service';
 import { QBOOnboardingState } from 'src/app/core/models/enum/enum.model';
 import { MinimalUser } from 'src/app/core/models/db/user.model';
+import { mockUser, mockWorkspace } from './qbo.fixture';
 
 describe('QboComponent', () => {
   let component: QboComponent;
@@ -21,16 +22,6 @@ describe('QboComponent', () => {
   let userServiceSpy: jasmine.SpyObj<IntegrationsUserService>;
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
   let windowServiceMock: Partial<WindowService>;
-
-  const mockUser: MinimalUser = {
-    org_id: '123',
-    email: 'test@example.com',
-    access_token: 'mock_access_token',
-    refresh_token: 'mock_refresh_token',
-    full_name: 'Test User',
-    user_id: 'user123',
-    org_name: 'Test Org'
-  };
 
   beforeEach(async () => {
     const helperSpy = jasmine.createSpyObj('HelperService', ['setBaseApiURL']);
@@ -84,7 +75,6 @@ describe('QboComponent', () => {
   });
 
   it('should setup workspace on init', () => {
-    const mockWorkspace = { id: '1', onboarding_state: QBOOnboardingState.CONNECTION };
     workspaceServiceSpy.getWorkspace.and.returnValue(of([mockWorkspace]));
 
     fixture.detectChanges();
@@ -98,7 +88,6 @@ describe('QboComponent', () => {
   });
 
   it('should create a new workspace if none exists', () => {
-    const mockWorkspace = { id: '1', onboarding_state: QBOOnboardingState.CONNECTION };
     workspaceServiceSpy.getWorkspace.and.returnValue(of([]));
     workspaceServiceSpy.postWorkspace.and.returnValue(of(mockWorkspace));
 
