@@ -19,7 +19,9 @@
           track_pageview: false,
           persistence: 'localStorage'
         });
-      } catch (e) {}
+      } catch (e) {
+        console.error('Tracking error:', e);
+      }
     }
   </script>
 

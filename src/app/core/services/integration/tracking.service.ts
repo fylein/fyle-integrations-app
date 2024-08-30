@@ -65,7 +65,9 @@ export class TrackingService {
       if (this.tracking) {
         this.tracking.track(`${trackingApp ? trackingApp : 'Integration Settings Web'}: ${action}`, properties);
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error('Tracking error:', e);
+    }
   }
 
   onOpenLandingPage(email: string | undefined, orgId: number, orgName: string, fyleOrgId: string): void {
@@ -79,7 +81,9 @@ export class TrackingService {
         });
         this.identityEmail = email;
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error('Tracking error:', e);
+    }
     this.eventTrack('Opened Landing Page');
   }
 
