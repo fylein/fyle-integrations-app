@@ -48,6 +48,7 @@ do
     sed -i $SED_EXTRA_ARGS "s?{{ENV_ID}}?${ENV_ID}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{SUPPORT_EMAIL}}?${SUPPORT_EMAIL}?g" $f;
     sed -i $SED_EXTRA_ARGS "s?{{HELP_ARTICLE_DOMAIN}}?${HELP_ARTICLE_DOMAIN}?g" $f;
+    sed -i $SED_EXTRA_ARGS "s?{{MIXPANEL_PROJECT_TOKEN}}?${MIXPANEL_PROJECT_TOKEN}?g" $f;
 done
 
 nginx -g "daemon off;"
