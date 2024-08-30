@@ -107,7 +107,7 @@ describe('QboExportSettingsComponent', () => {
       creditCardExportType: ['BILL']
     });
     exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettings));
-    
+
     component.save();
     tick();
 
@@ -123,7 +123,7 @@ describe('QboExportSettingsComponent', () => {
       creditCardExportType: ['BILL']
     });
     exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettings));
-    
+
     component.save();
     tick();
 
@@ -136,9 +136,10 @@ describe('QboExportSettingsComponent', () => {
       creditCardExportType: ['CREDIT_CARD_PURCHASE'],
       creditCardExportGroup: ['']
     });
-    
+
+    // eslint-disable-next-line
     component['updateCCCExpenseGroupingDateOptions'](QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE);
-    
+
     expect(component.cccExpenseGroupingDateOptions.length).toBeGreaterThan(0);
     expect(component.exportSettingForm.get('creditCardExportGroup')?.value).toEqual('expense_id');
     expect(component.exportSettingForm.get('creditCardExportGroup')?.disabled).toBeTrue();
@@ -147,8 +148,8 @@ describe('QboExportSettingsComponent', () => {
   xit('should handle option search', fakeAsync(() => {
     const mockResponse = { results: [{ id: '1', name: 'Test Account' }] };
     mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(of(mockPaginatedDestinationAttributes));
-    
-    component.searchOptionsDropdown({ destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT, searchTerm: 'test', destinationAttributes: [],});
+
+    component.searchOptionsDropdown({ destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT, searchTerm: 'test', destinationAttributes: []});
     tick(1000);
 
     expect(component.bankAccounts.some(account => account.name === 'Test Account')).toBeTrue();
