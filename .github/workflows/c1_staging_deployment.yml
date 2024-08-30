@@ -1,4 +1,4 @@
-name: Deploy to QA
+name: Deploy to C1 Staging
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   staging_deploy:
-    if: (github.event_name != 'pull_request') || (github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'qa_deploy')
+    if: (github.event_name != 'pull_request') || (github.event_name == 'pull_request' && github.event.action == 'labeled' && github.event.label.name == 'c1_staging_deploy')
     runs-on: ubuntu-latest
     environment: QA
     steps:
@@ -39,7 +39,7 @@ jobs:
       - name: Update Image Tag
         run: |
           NEW_TAG="v$(git rev-parse --short HEAD)"
-          cd ${{ vars.STAGING_DEPLOY_REPO }}/${{ vars.C1_STAGING_DEPLOY_DIR }}/qa/integrations
+          cd ${{ vars.STAGING_DEPLOY_REPO }}/${{ vars.C1_STAGING_DEPLOY_DIR }}/staging/integrations
           kustomize edit set image docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integrations-app=docker.io/${{ secrets.DOCKERHUB_USERNAME }}/fyle_integrations-app:$NEW_TAG
 
       - name: Commit and push changes
