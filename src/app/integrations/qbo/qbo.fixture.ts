@@ -165,7 +165,7 @@ export const qboPaginatedDestinationAttribute = {
             "workspace": 512
         }
     ]
-}
+};
 
 export const mockPaginatedDestinationAttributes = {
     "count": 5,
