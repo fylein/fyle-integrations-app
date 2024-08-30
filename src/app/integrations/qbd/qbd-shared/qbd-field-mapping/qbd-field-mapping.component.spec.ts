@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { QbdFieldMappingComponent } from './qbd-field-mapping.component';
 import { errorResponse, QBDFieldMappingResponse, QBDFieldMappingResponse2 } from './qbd-field-mapping.fixture';
 
-xdescribe('QbdFieldMappingComponent', () => {
+describe('QbdFieldMappingComponent', () => {
   let component: QbdFieldMappingComponent;
   let fixture: ComponentFixture<QbdFieldMappingComponent>;
   let service1: any;

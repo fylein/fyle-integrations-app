@@ -9,7 +9,7 @@ import { QbdIifLogsService } from 'src/app/core/services/qbd/qbd-iif-log/qbd-iif
 import { QbdDashboardComponent } from './qbd-dashboard.component';
 import { errorResponse, getQbdAccountingExports, getQbdAccountingExports2, postQbdAccountingExports, postQbdTriggerExportResponse, postQbdTriggerExportResponse2, QBDAdvancedSettingResponse, QBDAdvancedSettingResponse2, QBDAdvancedSettingResponse3 } from './qbd-dashboard.fixture';
 
-xdescribe('QbdDashboardComponent', () => {
+describe('QbdDashboardComponent', () => {
   let component: QbdDashboardComponent;
   let fixture: ComponentFixture<QbdDashboardComponent>;
   let service1: any;

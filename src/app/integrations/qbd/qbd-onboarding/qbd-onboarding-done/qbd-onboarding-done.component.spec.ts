@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { QbdOnboardingDoneComponent } from './qbd-onboarding-done.component';
 
-xdescribe('QbdOnboardingDoneComponent', () => {
+describe('QbdOnboardingDoneComponent', () => {
   let component: QbdOnboardingDoneComponent;
   let fixture: ComponentFixture<QbdOnboardingDoneComponent>;
   let router: Router;

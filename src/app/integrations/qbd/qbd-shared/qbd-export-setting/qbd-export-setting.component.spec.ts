@@ -16,7 +16,7 @@ import { errorResponse, QBDExportSettingResponse, QBDExportSettingResponse2 } fr
 import { QbdMappingService } from 'src/app/core/services/qbd/qbd-mapping/qbd-mapping.service';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 
-xdescribe('QbdExportSettingComponent', () => {
+describe('QbdExportSettingComponent', () => {
   let component: QbdExportSettingComponent;
   let fixture: ComponentFixture<QbdExportSettingComponent>;
   let service1: any;
