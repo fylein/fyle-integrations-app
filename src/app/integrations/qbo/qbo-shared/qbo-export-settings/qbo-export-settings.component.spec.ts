@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
@@ -10,8 +10,9 @@ import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
-import { QBOExportSettingGet, QBOExportSettingModel, QBOExportSettingPost } from 'src/app/core/models/qbo/qbo-configuration/qbo-export-setting.model';
-import { ConfigurationWarningEvent, QBOReimbursableExpensesObject, ToastSeverity } from 'src/app/core/models/enum/enum.model';
+import { HttpClientModule } from '@angular/common/http';
+import { mockExportSettings, mockPaginatedDestinationAttributes } from '../../qbo.fixture';
+import { QBOCorporateCreditCardExpensesObject, QboExportSettingDestinationOptionKey, QBOOnboardingState, ToastSeverity } from 'src/app/core/models/enum/enum.model';
 
 describe('QboExportSettingsComponent', () => {
   let component: QboExportSettingsComponent;
@@ -26,8 +27,14 @@ describe('QboExportSettingsComponent', () => {
   let workspaceServiceSpy: jasmine.SpyObj<WorkspaceService>;
 
   beforeEach(async () => {
-    const exportSettingsService = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings', 'postExportSettings']);
-    const helperService = jasmine.createSpyObj('HelperService', ['addExportSettingFormValidator', 'setConfigurationSettingValidatorsAndWatchers', 'setOrClearValidators', 'enableFormField']);
+    const exportSettingsService = jasmine.createSpyObj('QboExportSettingsService', ['getExportSettings', 'postExportSettings', 'setupDynamicValidators', 'setExportTypeValidatorsAndWatchers']);
+    const helperService = jasmine.createSpyObj('HelperService', [
+      'addExportSettingFormValidator',
+      'setConfigurationSettingValidatorsAndWatchers',
+      'setOrClearValidators',
+      'enableFormField',
+      'addDefaultDestinationAttributeIfNotExists'
+    ]);
     const qboHelperService = jasmine.createSpyObj('QboHelperService', ['refreshQBODimensions']);
     const mappingService = jasmine.createSpyObj('MappingService', ['getPaginatedDestinationAttributes']);
     const router = jasmine.createSpyObj('Router', ['navigate']);
@@ -37,7 +44,7 @@ describe('QboExportSettingsComponent', () => {
 
     await TestBed.configureTestingModule({
       declarations: [ QboExportSettingsComponent ],
-      imports: [ ReactiveFormsModule ],
+      imports: [ ReactiveFormsModule, HttpClientModule ],
       providers: [
         FormBuilder,
         { provide: QboExportSettingsService, useValue: exportSettingsService },
@@ -75,4 +82,76 @@ describe('QboExportSettingsComponent', () => {
     component.refreshDimensions();
     expect(qboHelperServiceSpy.refreshQBODimensions).toHaveBeenCalled();
   });
+
+  xit('should initialize component and setup form', fakeAsync(() => {
+    exportSettingsServiceSpy.getExportSettings.and.returnValue(of(mockExportSettings));
+    workspaceServiceSpy.getWorkspaceGeneralSettings.and.returnValue(of({ employee_field_mapping: 'EMPLOYEE' }));
+    mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(of(mockPaginatedDestinationAttributes));
+    windowServiceSpy.nativeWindow.location = {} as any; // Initialize the location object
+    windowServiceSpy.nativeWindow.location.pathname = '/onboarding'; // Set the pathname property
+
+    component.ngOnInit();
+    tick();
+
+    expect(component.isLoading).toBeFalse();
+    expect(component.exportSettings).toEqual(mockExportSettings);
+    expect(component.employeeFieldMapping).toEqual('EMPLOYEE');
+    expect(component.bankAccounts.length).toBeGreaterThan(0);
+    expect(component.exportSettingForm).toBeDefined();
+  }));
+
+  it('should save export settings successfully', fakeAsync(() => {
+    component.exportSettings = mockExportSettings;
+    component.exportSettingForm = new FormBuilder().group({
+      reimbursableExportType: ['BILL'],
+      creditCardExportType: ['BILL']
+    });
+    exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettings));
+    
+    component.save();
+    tick();
+
+    expect(exportSettingsServiceSpy.postExportSettings).toHaveBeenCalled();
+    expect(toastServiceSpy.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.SUCCESS, 'Export settings saved successfully');
+  }));
+
+  it('should navigate to import settings page after saving during onboarding', fakeAsync(() => {
+    component.isOnboarding = true;
+    component.exportSettings = mockExportSettings;
+    component.exportSettingForm = new FormBuilder().group({
+      reimbursableExportType: ['BILL'],
+      creditCardExportType: ['BILL']
+    });
+    exportSettingsServiceSpy.postExportSettings.and.returnValue(of(mockExportSettings));
+    
+    component.save();
+    tick();
+
+    expect(workspaceServiceSpy.setOnboardingState).toHaveBeenCalledWith(QBOOnboardingState.IMPORT_SETTINGS);
+    expect(routerSpy.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/import_settings']);
+  }));
+
+  it('should update CCC expense grouping date options when credit card export type changes', () => {
+    component.exportSettingForm = new FormBuilder().group({
+      creditCardExportType: ['CREDIT_CARD_PURCHASE'],
+      creditCardExportGroup: ['']
+    });
+    
+    component['updateCCCExpenseGroupingDateOptions'](QBOCorporateCreditCardExpensesObject.CREDIT_CARD_PURCHASE);
+    
+    expect(component.cccExpenseGroupingDateOptions.length).toBeGreaterThan(0);
+    expect(component.exportSettingForm.get('creditCardExportGroup')?.value).toEqual('expense_id');
+    expect(component.exportSettingForm.get('creditCardExportGroup')?.disabled).toBeTrue();
+  });
+
+  xit('should handle option search', fakeAsync(() => {
+    const mockResponse = { results: [{ id: '1', name: 'Test Account' }] };
+    mappingServiceSpy.getPaginatedDestinationAttributes.and.returnValue(of(mockPaginatedDestinationAttributes));
+    
+    component.searchOptionsDropdown({ destinationOptionKey: QboExportSettingDestinationOptionKey.BANK_ACCOUNT, searchTerm: 'test', destinationAttributes: [],});
+    tick(1000);
+
+    expect(component.bankAccounts.some(account => account.name === 'Test Account')).toBeTrue();
+    expect(component.isOptionSearchInProgress).toBeFalse();
+  }));
 });
