@@ -9,11 +9,11 @@ export const mockUser: MinimalUser = {
     full_name: 'Test User',
     user_id: 'user123',
     org_name: 'Test Org'
-  };
-  
+};
+
 export const mockWorkspace = {
-id: '1',
-onboarding_state: QBOOnboardingState.CONNECTION
+    id: '1',
+    onboarding_state: QBOOnboardingState.CONNECTION
 };
 
 export const mockWorkspaces = [mockWorkspace];
