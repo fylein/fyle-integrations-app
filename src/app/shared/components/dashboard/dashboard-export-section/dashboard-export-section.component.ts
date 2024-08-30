@@ -50,7 +50,7 @@ export class DashboardExportSectionComponent implements OnInit {
 
   private logoPathsMap = new Map<AppName, string>([
     [AppName.NETSUITE, 'assets/logos/netsuite-logo.png'],
-    [AppName.QBO, 'assets/logos/quickbooks-logo.png'],
+    [AppName.QBO, 'assets/logos/email/qbo.png'],
     [AppName.INTACCT, 'assets/logos/intacct-logo.png'],
     [AppName.XERO, 'assets/logos/xero-logo.png']
   ]);
