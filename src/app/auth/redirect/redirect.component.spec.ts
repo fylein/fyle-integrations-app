@@ -5,7 +5,7 @@ import { RedirectComponent } from './redirect.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 
-xdescribe('RedirectComponent', () => {
+describe('RedirectComponent', () => {
   let component: RedirectComponent;
   let fixture: ComponentFixture<RedirectComponent>;
   const routerSpy = { navigate: jasmine.createSpy('navigate'), url: '/integrations/travelperk' };
