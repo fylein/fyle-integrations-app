@@ -17,3 +17,61 @@ export const mockWorkspace = {
 };
 
 export const mockWorkspaces = [mockWorkspace];
+
+const qboExportSettingsfixture = {
+    "workspace_general_settings": {
+        "reimbursable_expenses_object": "BILL",
+        "corporate_credit_card_expenses_object": "BILL",
+        "is_simplify_report_closure_enabled": true,
+        "name_in_journal_entry": "EMPLOYEE"
+    },
+    "expense_group_settings": {
+        "reimbursable_expense_group_fields": [
+            "fund_source",
+            "expense_id",
+            "employee_email",
+            "spent_at"
+        ],
+        "corporate_credit_card_expense_group_fields": [
+            "claim_number",
+            "fund_source",
+            "employee_email",
+            "verified_at",
+            "report_id"
+        ],
+        "expense_state": "PAYMENT_PROCESSING",
+        "ccc_expense_state": "APPROVED",
+        "reimbursable_export_date_type": "spent_at",
+        "ccc_export_date_type": "verified_at",
+        "split_expense_grouping": "MULTIPLE_LINE_ITEM"
+    },
+    "general_mappings": {
+        "accounts_payable": {
+            "name": "Accounts Payable (A/P) 2",
+            "id": "91"
+        },
+        "qbo_expense_account": {
+            "name": null,
+            "id": null
+        },
+        "bank_account": {
+            "name": "Checking Debit Card",
+            "id": "131"
+        },
+        "default_ccc_account": {
+            "name": null,
+            "id": null
+        },
+        "default_debit_card_account": {
+            "name": null,
+            "id": null
+        },
+        "default_ccc_vendor": {
+            "name": "Ashwin from NetSuite",
+            "id": "110"
+        }
+    },
+    "workspace_id": 512
+};
+
+export default qboExportSettingsfixture;
