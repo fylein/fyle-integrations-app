@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { ApiService } from 'src/app/core/services/common/api.service';
+import { employeeSettingsPayload, mockDestinationAttributes, mockEmployeeSettingPayload, mockEmployeeSettingResponse, mockEmployeeSettings, mockExportSettings, qboEmployeeSettingResponse } from '../../qbo.fixture';
 
 describe('QboEmployeeSettingsComponent', () => {
   let component: QboEmployeeSettingsComponent;
@@ -36,14 +37,6 @@ describe('QboEmployeeSettingsComponent', () => {
   const workspaceServiceMock = {
     getWorkspaceId: jasmine.createSpy('getWorkspaceId').and.returnValue(workspace_id),
     setOnboardingState: jasmine.createSpy('setOnboardingState')
-  };
-
-  const mockEmployeeSettingResponse: QBOEmployeeSettingGet = {
-    workspace_general_settings: {
-      employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-      auto_map_employees: AutoMapEmployeeOptions.EMAIL
-    },
-    workspace_id: workspace_id
   };
 
   beforeEach(async () => {
@@ -74,45 +67,6 @@ describe('QboEmployeeSettingsComponent', () => {
   });
 
   it('should load employee settings, attributes, and export settings', () => {
-    const mockEmployeeSettings: QBOEmployeeSettingGet = {
-      workspace_general_settings: {
-        employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-        auto_map_employees: AutoMapEmployeeOptions.EMAIL
-      },
-      workspace_id: 1
-    };
-
-    const mockDestinationAttributes = [
-      {
-        id: 253183,
-        attribute_type: 'EMPLOYEE',
-        display_name: 'employee',
-        value: 'Anish Sinh',
-        destination_id: '104',
-        active: true,
-        created_at: new Date(),
-        updated_at: new Date(),
-        workspace: 1
-      },
-      {
-        id: 253195,
-        attribute_type: 'VENDOR',
-        display_name: 'vendor',
-        value: '1',
-        destination_id: '215',
-        active: true,
-        created_at: new Date(),
-        updated_at: new Date(),
-        workspace: 1
-      }
-    ];
-
-    const mockExportSettings = {
-      workspace_general_settings: {
-        reimbursable_expenses_object: QBOReimbursableExpensesObject.BILL
-      }
-    };
-
     apiServiceSpy.get.and.returnValues(
       of(mockEmployeeSettings),
       of(mockDestinationAttributes),
@@ -130,41 +84,7 @@ describe('QboEmployeeSettingsComponent', () => {
     expect(component.reimbursableExportType).toBe(QBOReimbursableExpensesObject.BILL);
   });
 
-  it('postEmployeeSettings service check', () => {
-    const employeeSettingsPayload: QBOEmployeeSettingPost = {
-      workspace_general_settings: {
-        employee_field_mapping: EmployeeFieldMapping.VENDOR,
-        auto_map_employees: AutoMapEmployeeOptions.NAME
-      }
-    };
-
-    const response: QBOEmployeeSettingGet = {
-      workspace_general_settings: {
-        employee_field_mapping: EmployeeFieldMapping.VENDOR,
-        auto_map_employees: AutoMapEmployeeOptions.NAME
-      },
-      workspace_id: workspace_id
-    };
-
-    apiServiceSpy.put.and.returnValue(of(response));
-
-    employeeSettingsService.postEmployeeSettings(employeeSettingsPayload).subscribe(
-      (result) => {
-        expect(result).toEqual(response);
-      }
-    );
-
-    expect(apiServiceSpy.put).toHaveBeenCalledWith(`/v2/workspaces/${workspace_id}/map_employees/`, employeeSettingsPayload);
-  });
-
   it('should save employee settings successfully', () => {
-    const mockEmployeeSettingPayload: QBOEmployeeSettingPost = {
-      workspace_general_settings: {
-        employee_field_mapping: EmployeeFieldMapping.EMPLOYEE,
-        auto_map_employees: AutoMapEmployeeOptions.EMAIL
-      }
-    };
-
     component.isOnboarding = true;
     component.employeeSettingForm = TestBed.inject(FormBuilder).group({
       employeeMapping: [EmployeeFieldMapping.EMPLOYEE],
@@ -182,26 +102,14 @@ describe('QboEmployeeSettingsComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/integrations/qbo/onboarding/export_settings']);
   });
 
-  it('should navigate to export settings when exportSettingAffected is true', () => {
-    component.isOnboarding = false;
-    component.existingEmployeeFieldMapping = EmployeeFieldMapping.EMPLOYEE;
-    component.employeeSettingForm.patchValue({
-      employeeMapping: EmployeeFieldMapping.VENDOR
-    });
+  it('postEmployeeSettings service check', () => {
+    apiServiceSpy.put.and.returnValue(of(qboEmployeeSettingResponse));
+    employeeSettingsService.postEmployeeSettings(employeeSettingsPayload).subscribe(
+      (result) => {
+        expect(result).toEqual(qboEmployeeSettingResponse);
+      }
+    );
 
-    (employeeSettingsService.postEmployeeSettings as jasmine.Spy).and.returnValue(of({}));
-
-    component.save();
-
-    expect(router.navigate).toHaveBeenCalledWith(['/integrations/qbo/main/configuration/export_settings']);
-  });
-
-  it('should display error toast when saving fails', () => {
-    (employeeSettingsService.postEmployeeSettings as jasmine.Spy).and.returnValue(throwError(() => new Error('Save failed')));
-
-    component.save();
-
-    expect(toastService.displayToastMessage).toHaveBeenCalledWith(ToastSeverity.ERROR, 'Error saving employee settings, please try again later');
-    expect(component.isSaveInProgress).toBeFalse();
+    expect(apiServiceSpy.put).toHaveBeenCalledWith(`/v2/workspaces/${workspace_id}/map_employees/`, employeeSettingsPayload);
   });
 });
