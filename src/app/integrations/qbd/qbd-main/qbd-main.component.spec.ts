@@ -21,9 +21,9 @@ describe('QbdMainComponent', () => {
       postQbdExportSettings: () => of(QBDExportSettingResponse)
     };
 
-    let service2 = {
+    const service2 = {
       GetMappingPagesForSideNavBar: () => of(true)
-    }
+    };
 
     await TestBed.configureTestingModule({
       imports: [ HttpClientTestingModule, RouterTestingModule ],
