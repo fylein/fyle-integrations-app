@@ -35,6 +35,8 @@ export class CloneSettingFieldComponent implements OnInit, OnChanges {
 
   @Input() isDisabled: boolean;
 
+  @Input() isMultiLineOption: boolean;
+
   InputType = InputType;
 
   constructor() { }

@@ -24,6 +24,7 @@ export type FeatureConfiguration = {
                 importProjects: boolean;
                 allowCustomSegment: boolean;
                 dependentField: boolean;
+                allowImportCode: boolean;
             },
             advancedSettings: {
                 autoCreateVendors: boolean;
