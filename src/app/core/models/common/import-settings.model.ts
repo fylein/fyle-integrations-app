@@ -64,8 +64,8 @@ export class ImportSettingsModel {
   }
 
   static getImportCodeField(importCodeFields: string[], destinationField: string, importCodeFieldCodeConfig: ImportCodeFieldConfigType): boolean | null {
-    if (importCodeFields.includes(destinationField)) {
-      return importCodeFields.includes(destinationField);
+    if (importCodeFields?.includes(destinationField)) {
+      return importCodeFields?.includes(destinationField);
     } else if (!importCodeFieldCodeConfig[destinationField]) {
       return false;
     }
