@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MappingTableComponent } from './mapping-table.component';
+import { QbdMappingTableComponent } from './qbd-mapping-table.component';
 import { postMappingResponse } from 'src/app/integrations/qbd/qbd-main/qbd-mapping/qbd-generic-mapping/qbd-generic-mapping.fixture';
 import { OperatingSystem } from 'src/app/core/models/enum/enum.model';
 
-describe('MappingTableComponent', () => {
-  let component: MappingTableComponent;
-  let fixture: ComponentFixture<MappingTableComponent>;
+describe('QbdMappingTableComponent', () => {
+  let component: QbdMappingTableComponent;
+  let fixture: ComponentFixture<QbdMappingTableComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MappingTableComponent ]
+      declarations: [ QbdMappingTableComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MappingTableComponent);
+    fixture = TestBed.createComponent(QbdMappingTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

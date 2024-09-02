@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { brandingConfig } from 'src/app/branding/branding-config';
 import { AppName, FieldType, MappingState, PaginatorPage, ToastSeverity } from 'src/app/core/models/enum/enum.model';
-import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
+import { QBDMapping, QBDMappingPost, QBDMappingResponse, QBDMappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
 import { QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { WindowService } from 'src/app/core/services/common/window.service';
@@ -19,11 +19,11 @@ export class QbdGenericMappingComponent implements OnInit {
 
   isLoading: boolean;
 
-  mappingStats: MappingStats;
+  mappingStats: QBDMappingStats;
 
-  mappings: MappingResponse;
+  mappings: QBDMappingResponse;
 
-  filteredMappings: Mapping[];
+  filteredMappings: QBDMapping[];
 
   sourceType: string;
 
@@ -62,7 +62,7 @@ export class QbdGenericMappingComponent implements OnInit {
   ) { }
 
   private getFilteredMappings(): void {
-    this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter, this.fieldMapping?.item_type).subscribe((qbdMappingResult: MappingResponse) => {
+    this.mappingService.getMappings(this.limit, this.pageNo, this.sourceType, this.selectedMappingFilter, this.fieldMapping?.item_type).subscribe((qbdMappingResult: QBDMappingResponse) => {
       this.filteredMappings = qbdMappingResult.results.concat();
       this.totalCount = qbdMappingResult.count;
       this.isLoading = false;
@@ -75,7 +75,7 @@ export class QbdGenericMappingComponent implements OnInit {
 
   mappingSeachingFilter(searchValue: string): void {
     if (searchValue.length > 0) {
-      const results: Mapping[] = this.mappings.results.filter((mapping) =>
+      const results: QBDMapping[] = this.mappings.results.filter((mapping) =>
         mapping.source_value.toLowerCase().includes(searchValue)
       );
       this.filteredMappings = results;
@@ -85,9 +85,9 @@ export class QbdGenericMappingComponent implements OnInit {
     this.totalCount = this.filteredMappings.length;
   }
 
-  postMapping(mappingPayload: MappingPost): void {
+  postMapping(mappingPayload: QBDMappingPost): void {
     this.mappingService.postMappings(mappingPayload).subscribe(() => {
-      this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type).subscribe((mappingStat: MappingStats) => {
+      this.mappingService.getMappingStats(this.sourceType, this.fieldMapping?.item_type).subscribe((mappingStat: QBDMappingStats) => {
         this.mappingStats = mappingStat;
         this.toastService.displayToastMessage(ToastSeverity.SUCCESS, 'Changes saved successfully');
       });

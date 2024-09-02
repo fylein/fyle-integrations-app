@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ConfigurationCta, QBDOnboardingState, QBDFyleField, ToastSeverity, ClickEvent, Page, ProgressPhase, UpdateEvent, TrackingApp } from 'src/app/core/models/enum/enum.model';
 import { QBDExportSettingFormOption } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
-import { FieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
+import { QBDFieldMappingModel, QBDFieldMappingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-field-mapping.model';
 import { TrackingService } from 'src/app/core/services/integration/tracking.service';
 import { QbdFieldMappingService } from 'src/app/core/services/qbd/qbd-configuration/qbd-field-mapping.service';
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
@@ -77,7 +77,7 @@ export class QbdFieldMappingComponent implements OnInit {
 
   constructPayloadAndSave(): void {
     this.saveInProgress = true;
-    const fieldMappingPayload = FieldMappingModel.constructPayload(this.fieldMappingForm);
+    const fieldMappingPayload = QBDFieldMappingModel.constructPayload(this.fieldMappingForm);
 
     this.fieldMappingService.postQbdFieldMapping(fieldMappingPayload).subscribe((response: QBDFieldMappingGet) => {
       this.saveInProgress = false;

@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { QbdWorkspaceService } from '../qbd-core/qbd-workspace.service';
-import { Mapping, MappingPost, MappingResponse, MappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
+import { QBDMapping, QBDMappingPost, QBDMappingResponse, QBDMappingStats } from 'src/app/core/models/qbd/db/qbd-mapping.model';
 import { Observable } from 'rxjs';
 import { QBDExportSettingGet } from 'src/app/core/models/qbd/qbd-configuration/qbd-export-setting.model';
 import { MappingState } from 'src/app/core/models/enum/enum.model';
@@ -18,7 +18,7 @@ export class QbdMappingService {
     private workspaceService: QbdWorkspaceService
   ) { }
 
-  getMappings(limit: number, offset: number, sourceType: string, mappingState: MappingState, itemType: string | null): Observable<MappingResponse> {
+  getMappings(limit: number, offset: number, sourceType: string, mappingState: MappingState, itemType: string | null): Observable<QBDMappingResponse> {
     const params: any = {
       limit,
       offset,
@@ -34,11 +34,11 @@ export class QbdMappingService {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/`, params);
   }
 
-  postMappings(mappingPayload: MappingPost): Observable<Mapping> {
+  postMappings(mappingPayload: QBDMappingPost): Observable<QBDMapping> {
     return this.apiService.post(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/`, mappingPayload);
   }
 
-  getMappingStats(sourceType: string, itemType?: string | null): Observable<MappingStats> {
+  getMappingStats(sourceType: string, itemType?: string | null): Observable<QBDMappingStats> {
     return this.apiService.get(`/workspaces/${this.workspaceService.getWorkspaceId()}/qbd_mappings/stats/`, {
       source_type: sourceType === 'item' ? itemType : sourceType.toUpperCase()
     });
