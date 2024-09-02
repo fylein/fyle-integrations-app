@@ -85,6 +85,18 @@ export class GenericMappingTableComponent implements OnInit {
     return element.offsetWidth < element.scrollWidth ? mapping.value : '';
   }
 
+  tableDropdownWidth() {
+    const element = document.querySelector('.p-dropdown-panel.p-component.ng-star-inserted') as HTMLElement;
+    if (element) {
+      element.style.width = '300px';
+      if (this.isDashboardMappingResolve) {
+        element.style.left = '700px';
+      }
+      setTimeout(() => {
+        this.filterInput.nativeElement.focus();
+    }, 0);
+    }
+  }
 
   constructDestinationOptions() {
     const mappingType:string = this.filteredMappings.flatMap(mapping =>

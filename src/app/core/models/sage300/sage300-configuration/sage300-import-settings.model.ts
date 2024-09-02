@@ -1,5 +1,5 @@
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { ExpenseField, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from "../../common/import-settings.model";
+import { ExpenseField, ImportCodeFieldConfigType, ImportSettingMappingRow, ImportSettingsCustomFieldRow, ImportSettingsModel } from "../../common/import-settings.model";
 import { IntegrationField } from "../../db/mapping.model";
 
 export type Sage300DefaultFields = {
@@ -52,15 +52,15 @@ export class Sage300ImportSettingModel extends ImportSettingsModel {
         };
     }
 
-    static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[]): FormGroup {
+    static mapAPIResponseToFormGroup(importSettings: Sage300ImportSettingGet | null, sage300Fields: IntegrationField[], importCodeFieldConfig: ImportCodeFieldConfigType): FormGroup {
         const importCode = importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings?.import_code_fields : [];
-        const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, sage300Fields, false, importCode) : [] ;
+        const expenseFieldsArray = importSettings?.mapping_settings ? this.constructFormArray(importSettings.mapping_settings, sage300Fields, importCodeFieldConfig, false, importCode) : [] ;
         return new FormGroup({
             importCodeFields: new FormControl(importSettings?.import_settings?.import_code_fields ? importSettings?.import_settings.import_code_fields : []),
             importCategories: new FormControl(importSettings?.import_settings?.import_categories ?? false),
-            importCategoryCode: new FormControl(importSettings?.import_settings?.import_categories ? this.getImportCodeField(importCode, 'ACCOUNT') : null),
+            importCategoryCode: new FormControl(this.getImportCodeField(importCode, 'ACCOUNT', importCodeFieldConfig)),
             importVendorAsMerchant: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ?? false),
-            importVendorCode: new FormControl(importSettings?.import_settings?.import_vendors_as_merchants ? this.getImportCodeField(importCode, 'VENDOR') : null),
+            importVendorCode: new FormControl(this.getImportCodeField(importCode, 'VENDOR', importCodeFieldConfig)),
             expenseFields: new FormArray(expenseFieldsArray),
             isDependentImportEnabled: new FormControl(importSettings?.dependent_field_settings?.is_import_enabled ? importSettings.dependent_field_settings.is_import_enabled : false),
             costCodes: new FormControl(importSettings?.dependent_field_settings?.cost_code_field_name ? this.generateDependentFieldValue(importSettings.dependent_field_settings.cost_code_field_name, importSettings.dependent_field_settings.cost_code_placeholder) : null),
