@@ -160,27 +160,35 @@ export class IntacctImportSettingsComponent implements OnInit {
   }
 
   get importCodeFieldGetter() {
-    console.log(this.importSettingsForm.get('importCodeFields') as FormArray)
     return this.importSettingsForm.get('importCodeFields') as FormArray;
   }
 
-  addImportCodeField(event: InputSwitchChangeEvent,sourceField: string) {
+  addImportCodeField(event: InputSwitchChangeEvent, sourceField: string) {
+    // Get the reference to the FormArray from the form
+    const importCodeFieldsArray = this.importSettingsForm.get('importCodeFields') as FormArray;
+  
     if (event.checked && this.acceptedImportCodeField.includes(sourceField)) {
+      // Create a new FormGroup
       const value = this.formBuilder.group({
         source_field: [sourceField],
         import_code: [ImportSettingsModel.getImportCodeField(this.importSettings.configurations.import_code_fields, sourceField, this.intacctImportCodeConfig), Validators.required]
       });
-      this.importCodeField.push(value);
-      console.log('klkl',this.importCodeField)
-      this.importSettingsForm.controls.importCodeFields.patchValue(this.importCodeField)
-      console.log('lo',this.importSettingsForm.controls.importCodeFields)
+  
+      // Push the new FormGroup into the FormArray
+      importCodeFieldsArray.push(value);
     } else {
-      this.importCodeField.filter((value) => {
-        value.controls.source_field.value !== sourceField
-      })
-      console.log(this.importCodeField)
-      this.importSettingsForm.controls.importCodeFields.patchValue(this.importCodeField)
+      // Find the index of the FormGroup to be removed
+      const index = importCodeFieldsArray.controls.findIndex(control => control?.get('source_field')?.value === sourceField);
+  
+      // If found, remove the FormGroup from the FormArray
+      if (index !== -1) {
+        importCodeFieldsArray.removeAt(index);
+      }
     }
+  }
+
+  getFormGroup(control: AbstractControl): FormGroup {
+    return control as FormGroup;
   }
 
   getDestinationField(destinationField: string): string {
@@ -518,7 +526,7 @@ export class IntacctImportSettingsComponent implements OnInit {
       sageIntacctTaxCodes: [(this.sageIntacctTaxGroup?.find(taxGroup => taxGroup.destination_id === this.importSettings?.general_mappings?.default_tax_code?.id)) || null, importSettings.configurations.import_tax_codes ? [Validators.required] : []],
       expenseFields: this.formBuilder.array(this.constructFormArray()),
       searchOption: [''],
-      importCodeFields:  this.formBuilder.array([])
+      importCodeFields:  this.formBuilder.array(this.importCodeField)
     });
     if (this.importSettingsForm.controls.costCodes.value && this.importSettingsForm.controls.costTypes.value && this.dependentFieldSettings?.is_import_enabled) {
       this.fyleFields = this.fyleFields.filter(field => !field.is_dependent);
@@ -640,7 +648,7 @@ export class IntacctImportSettingsComponent implements OnInit {
     if (!event.checked && formGroup.value.source_field === MappingSourceField.PROJECT && this.costCodeFieldOption[0].attribute_type !== 'custom_field' && this.costTypeFieldOption[0].attribute_type !== 'custom_field') {
       this.showDependentFieldWarning = true;
     }
-    this.addImportCodeField(event, formGroup.value.source_field);
+    this.addImportCodeField(event, formGroup.value.destination_field);
   }
 
   save(): void {

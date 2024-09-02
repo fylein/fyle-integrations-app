@@ -196,7 +196,7 @@
             </div>
         </div>
 
-        <div *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && importCodeField.length > 0">
+        <div class="tw-p-24-px" *ngIf="brandingFeatureConfig.featureFlags.importSettings.allowImportCode && this.importSettingsForm.get('importCodeFields')?.value.length > 0 ">
             <div class="tw-pt-24-px">
                 <div class="tw-p-24-px tw-bg-configuration-bg tw-border tw-border-separator tw-rounded-8-px tw-mb-24-px">
                     <div>
@@ -215,14 +215,11 @@
                 </div>
             </div>
             <div formArrayName="importCodeFields">
-                m,m,m
                 <div *ngFor="let intacctImportCodeField of importCodeFieldGetter.controls; let i = index" [formGroupName]="i">
-                    lklkl
-                    jbmnb{{intacctImportCodeField.value.source_field}} ,mn{{intacctImportCodeConfig[intacctImportCodeField.value.source_field]}}
                     <div *ngIf="intacctImportCodeConfig[intacctImportCodeField.value.source_field]">
                         <app-configuration-select-field
                             [appName]="appName"
-                            [form]="importSettingsForm"
+                            [form]="getFormGroup(intacctImportCodeField)"
                             [isDisableTextRequired]="false"
                             [options]="importCodeSelectorOptions[intacctImportCodeField.value.source_field]"
                             [placeholder]="'Select how to import ' + helper.sentenseCaseConversion(intacctImportCodeField.value.source_field).toLowerCase()"
