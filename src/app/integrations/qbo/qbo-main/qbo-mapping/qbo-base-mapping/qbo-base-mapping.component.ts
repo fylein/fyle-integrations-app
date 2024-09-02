@@ -8,6 +8,7 @@ import { QBOWorkspaceGeneralSetting } from 'src/app/core/models/qbo/db/workspace
 import { IntegrationsToastService } from 'src/app/core/services/common/integrations-toast.service';
 import { MappingService } from 'src/app/core/services/common/mapping.service';
 import { WorkspaceService } from 'src/app/core/services/common/workspace.service';
+import { QboImportSettingsService } from 'src/app/core/services/qbo/qbo-configuration/qbo-import-settings.service';
 
 @Component({
   selector: 'app-qbo-base-mapping',
@@ -38,11 +39,14 @@ export class QboBaseMappingComponent implements OnInit {
 
   displayName: string | undefined = undefined;
 
+  isMultiLineOption: boolean;
+
   constructor(
     private route: ActivatedRoute,
     private mappingService: MappingService,
     private toastService: IntegrationsToastService,
-    private workspaceService: WorkspaceService
+    private workspaceService: WorkspaceService,
+    private importSettingsService: QboImportSettingsService
   ) { }
 
   triggerAutoMapEmployees(): void {
@@ -70,7 +74,8 @@ export class QboBaseMappingComponent implements OnInit {
     this.sourceField = decodeURIComponent(this.route.snapshot.params.source_field.toUpperCase());
     forkJoin([
       this.workspaceService.getWorkspaceGeneralSettings(),
-      this.mappingService.getMappingSettings()
+      this.mappingService.getMappingSettings(),
+      this.importSettingsService.getImportSettings()
     ]).subscribe((responses) => {
       this.reimbursableExpenseObject = responses[0].reimbursable_expenses_object;
       this.cccExpenseObject = responses[0].corporate_credit_card_expenses_object;
@@ -78,6 +83,8 @@ export class QboBaseMappingComponent implements OnInit {
       this.showAutoMapEmployee = responses[0].auto_map_employees ? true : false;
 
       this.destinationField = this.getDestinationField(responses[0], responses[1].results);
+
+      // This.isMultiLineOption = responses[2].workspace_general_settings.import_code_fields?.includes(this.destinationField);
 
       if (this.destinationField === AccountingField.ACCOUNT) {
         this.displayName = responses[0].import_items ? `${AccountingDisplayName.ITEM},${AccountingDisplayName.ACCOUNT}` : AccountingDisplayName.ACCOUNT;

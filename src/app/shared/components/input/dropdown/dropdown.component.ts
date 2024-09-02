@@ -40,6 +40,8 @@ export class DropdownComponent {
 
   @Input() additionalClasses: string;
 
+  @Input() isMultiLineOption: boolean;
+
   constructor() { }
 
 }

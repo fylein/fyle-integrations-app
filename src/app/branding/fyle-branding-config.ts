@@ -30,7 +30,8 @@ export const fyleFeatureConfig: FeatureConfiguration[string] = {
             importItems: true,
             importProjects: true,
             allowCustomSegment: true,
-            dependentField: true
+            dependentField: true,
+            allowImportCode: true
         },
         advancedSettings: {
             autoCreateVendors: true,
